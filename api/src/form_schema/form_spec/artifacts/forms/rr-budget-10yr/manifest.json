@@ -16,6 +16,7 @@
     "ui.json": "generated",
     "sgg/ui-schema.json": "generated",
     "sgg/rule-schema.json": "generated",
+    "targets/grants-gov-xml.json": "generated",
     "evidence.json": "passthrough"
   }
 }

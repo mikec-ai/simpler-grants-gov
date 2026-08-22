@@ -23,6 +23,7 @@ RUNTIME_FORM_FILES = (
     "sgg/rule-schema.json",
     "sgg/ui-schema.json",
 )
+OPTIONAL_RUNTIME_FORM_FILES = ("targets/grants-gov-xml.json",)
 
 
 def _sha256(payload: bytes) -> str:
@@ -75,6 +76,16 @@ def select_artifacts(
     missing = sorted(selected - set(payloads))
     if missing:
         raise ValueError(f"requested forms are missing runtime artifacts: {missing}")
+
+    for form in requested:
+        manifest_path = f"dist/forms/{form}/manifest.json"
+        form_manifest = json.loads(payloads[manifest_path])
+        for name in OPTIONAL_RUNTIME_FORM_FILES:
+            path = f"dist/forms/{form}/{name}"
+            if name in form_manifest.get("artifacts", {}):
+                if path not in payloads:
+                    raise ValueError(f"declared runtime artifact is missing: {path}")
+                selected.add(path)
 
     queue = [f"dist/forms/{form}/schema.json" for form in requested]
     visited: set[str] = set()

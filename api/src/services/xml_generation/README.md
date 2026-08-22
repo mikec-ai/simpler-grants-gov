@@ -508,26 +508,28 @@ FORM_XML_TRANSFORM_RULES = {
 
 ### Arrays of imported form documents
 
-An array can wrap each item as a complete document from an imported XSD without custom
-Python per form. Set `item_wrapper`, `item_namespace`, and (when required)
-`item_attributes` on its `xml_transform`:
+The portable form-spec profile can wrap each array item as a complete document from an
+imported XSD. The declaration stays data, including the wrapper and namespace differences:
 
-```python
-"budget_attachments": {
-    "xml_transform": {
-        "target": "BudgetAttachments",
-        "type": "array",
-        "item_wrapper": "RR_Budget_3_0",
-        "item_namespace": "RR_Budget_3_0",
-        "item_attributes": {"RR_Budget_3_0:FormVersion": "3.0"},
-    },
-    "items": RESEARCH_BUDGET_FIELDS,
+```json
+{
+  "budgetAttachments": {
+    "element": "BudgetAttachments",
+    "kind": "array",
+    "itemElement": "RR_Budget_3_0",
+    "itemNamespace": "RR_Budget_3_0",
+    "itemAttributes": {"RR_Budget_3_0:FormVersion": "3.0"},
+    "items": {"fields": {}}
+  }
 }
 ```
 
-Unqualified descendants inherit the item wrapper's namespace. This lets the R&R Budget,
-10-year Budget, and three Subaward Budget profiles share one complete payload mapping; the
-profiles differ only in their root/wrapper namespace and XSD metadata.
+The form-spec adapter translates these language-neutral keys to `item_wrapper`,
+`item_namespace`, and `item_attributes` for the existing runtime. Unqualified descendants
+inherit the item wrapper's namespace. The R&R Budget, 10-year Budget, and three Subaward
+Budget profiles therefore share one canonical payload mapping and differ only in declarative
+root/wrapper namespace and XSD metadata. The XML engine and adapter contain no knowledge of
+five-year versus ten-year forms.
 
 ### Example: Supplementary Cover Sheet for NEH Grant Programs
 

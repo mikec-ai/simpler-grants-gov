@@ -2,22 +2,14 @@
 
 import copy
 import hashlib
+import json
 from pathlib import Path
 from typing import Any
 
 import pytest
 from lxml import etree
 
-from src.form_schema.form_spec.xml.rr_budget import (
-    RESEARCH_BUDGET_FIELDS,
-    RR_BUDGET_10YR_XML_TRANSFORM_RULES,
-    RR_BUDGET_XML_TRANSFORM_RULES,
-)
-from src.form_schema.form_spec.xml.rr_subaward_budget import (
-    RR_SUBAWARD_BUDGET_10YR_30_XML_TRANSFORM_RULES,
-    RR_SUBAWARD_BUDGET_30_XML_TRANSFORM_RULES,
-    RR_SUBAWARD_BUDGET_XML_TRANSFORM_RULES,
-)
+from src.form_schema.form_spec.bank import ARTIFACTS
 from src.form_schema.forms.rr_budget import RRBudget_v3_0
 from src.form_schema.forms.rr_budget10 import RRBudget10_v3_0
 from src.form_schema.forms.rr_subaward_budget import RRSubawardBudget_v3_0
@@ -28,6 +20,18 @@ from src.services.xml_generation.models import XMLGenerationRequest
 from src.services.xml_generation.service import XMLGenerationService
 from src.services.xml_generation.utils.attachment_mapping import AttachmentInfo
 from src.services.xml_generation.validation.xsd_validator import XSDValidator
+
+RR_BUDGET_XML_TRANSFORM_RULES = RRBudget_v3_0.json_to_xml_schema
+RR_BUDGET_10YR_XML_TRANSFORM_RULES = RRBudget10_v3_0.json_to_xml_schema
+RR_SUBAWARD_BUDGET_XML_TRANSFORM_RULES = RRSubawardBudget_v3_0.json_to_xml_schema
+RR_SUBAWARD_BUDGET_30_XML_TRANSFORM_RULES = RRSubawardBudget30_v3_0.json_to_xml_schema
+RR_SUBAWARD_BUDGET_10YR_30_XML_TRANSFORM_RULES = RRSubawardBudget10_30_v3_0.json_to_xml_schema
+
+assert RR_BUDGET_XML_TRANSFORM_RULES is not None
+assert RR_BUDGET_10YR_XML_TRANSFORM_RULES is not None
+assert RR_SUBAWARD_BUDGET_XML_TRANSFORM_RULES is not None
+assert RR_SUBAWARD_BUDGET_30_XML_TRANSFORM_RULES is not None
+assert RR_SUBAWARD_BUDGET_10YR_30_XML_TRANSFORM_RULES is not None
 
 FORM_NS = "http://apply.grants.gov/forms/RR_Budget_3_0-V3.0"
 ATT_NS = "http://apply.grants.gov/system/Attachments-V1.0"
@@ -284,6 +288,22 @@ def _generate_profile_xml(
     application_data: dict[str, Any] | None = None,
 ) -> str:
     budget_data = _application_data() if application_data is None else application_data
+    budget_fields = (
+        transform_config["budget_attachments"]["items"] if subaward else transform_config
+    )
+    if "sam_uei" in budget_fields and "samuei" in budget_data:
+        budget_data["sam_uei"] = budget_data.pop("samuei")
+    direct_cost_fields = budget_fields["budget_year"]["items"]["other_direct_costs"]
+    if "other_direct_cost1" in direct_cost_fields:
+        direct_costs = budget_data["budget_year"][0]["other_direct_costs"]
+        summary = budget_data["budget_summary"]
+        for index in range(1, 11):
+            underscored = f"other_direct_cost_{index}"
+            if underscored in direct_costs:
+                direct_costs[f"other_direct_cost{index}"] = direct_costs.pop(underscored)
+            summary_underscored = f"cumulative_other_{index}_direct_cost"
+            if summary_underscored in summary:
+                summary[f"cumulative_other{index}_direct_cost"] = summary.pop(summary_underscored)
     response = XMLGenerationService().generate_xml(
         XMLGenerationRequest(
             application_data=({"budget_attachments": [budget_data]} if subaward else budget_data),
@@ -365,22 +385,20 @@ def test_every_budget_family_runtime_form_registers_a_complete_xml_profile(
 
 
 def test_profiles_reuse_one_budget_payload_mapping() -> None:
-    assert {
-        key: value
-        for key, value in RR_BUDGET_XML_TRANSFORM_RULES.items()
-        if not key.startswith("_")
-    } == RESEARCH_BUDGET_FIELDS
-    assert {
-        key: value
-        for key, value in RR_BUDGET_10YR_XML_TRANSFORM_RULES.items()
-        if not key.startswith("_")
-    } == RESEARCH_BUDGET_FIELDS
-    for profile in (
-        RR_SUBAWARD_BUDGET_XML_TRANSFORM_RULES,
-        RR_SUBAWARD_BUDGET_30_XML_TRANSFORM_RULES,
-        RR_SUBAWARD_BUDGET_10YR_30_XML_TRANSFORM_RULES,
+    def portable(form_id: str) -> dict[str, Any]:
+        path = ARTIFACTS / "forms" / form_id / "targets" / "grants-gov-xml.json"
+        return json.loads(path.read_text())
+
+    shared = portable("rr-budget")["mapping"]["fields"]
+    assert portable("rr-budget-10yr")["mapping"]["fields"] == shared
+    for form_id in (
+        "rr-subaward-budget",
+        "rr-subaward-budget-30",
+        "rr-subaward-budget-10yr-30",
     ):
-        assert profile["budget_attachments"]["items"] == RESEARCH_BUDGET_FIELDS
+        assert (
+            portable(form_id)["mapping"]["fields"]["budgetAttachments"]["items"]["fields"] == shared
+        )
 
 
 @pytest.mark.parametrize(
@@ -451,6 +469,7 @@ def test_every_budget_family_profile_emits_official_xsd_valid_xml(
 
     xsd_dir = Path(__file__).parents[4] / "src/services/xml_generation/xsds"
     xsd_path = xsd_dir / xsd_name
+    assert profile["_xml_config"]["xsd_sha256"] == xsd_hash
     assert hashlib.sha256(xsd_path.read_bytes()).hexdigest() == xsd_hash
     result = XSDValidator(xsd_dir).validate_xml(xml, xsd_path)
     assert result["valid"], result["error_message"]

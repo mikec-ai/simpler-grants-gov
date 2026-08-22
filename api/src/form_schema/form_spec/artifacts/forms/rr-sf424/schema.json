@@ -62,7 +62,95 @@
     },
     "applicationType": {
       "$ref": "#/$defs/ResearchApplicationType",
-      "title": "Type of Application"
+      "title": "Type of Application",
+      "properties": {
+        "revisionCode": {
+          "x-encoded-checkbox-group": {
+            "choices": [
+              {
+                "code": "A",
+                "label": "A. Increase Award"
+              },
+              {
+                "code": "B",
+                "label": "B. Decrease Award"
+              },
+              {
+                "code": "C",
+                "label": "C. Increase Duration"
+              },
+              {
+                "code": "D",
+                "label": "D. Decrease Duration"
+              },
+              {
+                "code": "E",
+                "label": "E. Other"
+              }
+            ],
+            "combinations": [
+              {
+                "value": "A",
+                "members": [
+                  "A"
+                ]
+              },
+              {
+                "value": "B",
+                "members": [
+                  "B"
+                ]
+              },
+              {
+                "value": "C",
+                "members": [
+                  "C"
+                ]
+              },
+              {
+                "value": "D",
+                "members": [
+                  "D"
+                ]
+              },
+              {
+                "value": "E",
+                "members": [
+                  "E"
+                ]
+              },
+              {
+                "value": "AC",
+                "members": [
+                  "A",
+                  "C"
+                ]
+              },
+              {
+                "value": "AD",
+                "members": [
+                  "A",
+                  "D"
+                ]
+              },
+              {
+                "value": "BC",
+                "members": [
+                  "B",
+                  "C"
+                ]
+              },
+              {
+                "value": "BD",
+                "members": [
+                  "B",
+                  "D"
+                ]
+              }
+            ]
+          }
+        }
+      }
     },
     "federalAgencyName": {
       "$ref": "../../question-bank/opportunity/agency-name/schema.json",

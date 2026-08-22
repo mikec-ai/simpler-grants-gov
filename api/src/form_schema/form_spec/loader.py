@@ -20,6 +20,7 @@ from src.form_schema.form_spec.projection import (
     project_schema,
     project_ui_schema,
 )
+from src.form_schema.form_spec.xml_profile import project_grants_gov_xml_profile
 
 if TYPE_CHECKING:
     from src.db.models.competition_models import Form
@@ -34,6 +35,7 @@ class LoadedForm:
         self.form_json_schema: dict[str, Any] = artifacts["json_schema"]
         self.form_ui_schema: list[Any] = artifacts["ui_schema"]
         self.form_rule_schema: dict[str, Any] | None = artifacts["rule_schema"]
+        self.json_to_xml_schema: dict[str, Any] | None = artifacts.get("json_to_xml_schema")
 
     @property
     def meta(self) -> dict[str, Any]:
@@ -116,6 +118,12 @@ def load_form(form_id: str, *, artifacts: Path | None = None) -> LoadedForm:
 
     rule_schema = json.loads((root / "sgg" / "rule-schema.json").read_text())
     ui_schema = json.loads((root / "sgg" / "ui-schema.json").read_text())
+    xml_profile_path = root / "targets" / "grants-gov-xml.json"
+    json_to_xml_schema = (
+        project_grants_gov_xml_profile(json.loads(xml_profile_path.read_text()), projection)
+        if xml_profile_path.is_file()
+        else None
+    )
     # All three from the same projection, so a pointer and the property it addresses cannot
     # be spelled differently.
     return LoadedForm(
@@ -124,6 +132,7 @@ def load_form(form_id: str, *, artifacts: Path | None = None) -> LoadedForm:
         json_schema=project_schema(canonical, projection),
         ui_schema=project_ui_schema(ui_schema, projection),
         rule_schema=project_rule_schema(rule_schema, projection) if rule_schema else rule_schema,
+        json_to_xml_schema=json_to_xml_schema,
     )
 
 
@@ -163,7 +172,9 @@ def build_runtime_form(
         # boundary explicitly.
         form_ui_schema=cast(Any, loaded.form_ui_schema),
         form_rule_schema=loaded.form_rule_schema,
-        json_to_xml_schema=json_to_xml_schema,
+        json_to_xml_schema=(
+            json_to_xml_schema if json_to_xml_schema is not None else loaded.json_to_xml_schema
+        ),
         form_instruction_id=form_instruction_id,
         form_type=form_type,
         sgg_version=meta.get("sggVersion"),

@@ -133,8 +133,8 @@
     },
     {
       "path": "dist/forms/rr-budget-10yr/manifest.json",
-      "sha256": "404f522bdc42b7a11dfa72493773e6074bfb9f299f2efeb7e3ea6db9f81f5461",
-      "size": 581
+      "sha256": "53f8b90be34022b12e5f443403babcdbfedef11616b44903efa34fd452ed95bf",
+      "size": 629
     },
     {
       "path": "dist/forms/rr-budget-10yr/schema.json",
@@ -152,14 +152,19 @@
       "size": 28564
     },
     {
+      "path": "dist/forms/rr-budget-10yr/targets/grants-gov-xml.json",
+      "sha256": "55dff38ee8f89fdc5c0c39d42aa34a5e5c5c018de9ef5f15d1074bd5f217b8d0",
+      "size": 29349
+    },
+    {
       "path": "dist/forms/rr-budget/evidence.json",
       "sha256": "710af34a407216e2ea95e86af1daead8044fe697624eeca80fedf32fc30f430f",
       "size": 1118
     },
     {
       "path": "dist/forms/rr-budget/manifest.json",
-      "sha256": "3a05d14d6222952eea7c27a17062a62de45eac4a9ff1a774ea9745197483d88b",
-      "size": 592
+      "sha256": "adaf1cbbae6faeda8abe5bd503f99c0c82b55669c26827145e86e6dec6250749",
+      "size": 640
     },
     {
       "path": "dist/forms/rr-budget/schema.json",
@@ -177,6 +182,11 @@
       "size": 28565
     },
     {
+      "path": "dist/forms/rr-budget/targets/grants-gov-xml.json",
+      "sha256": "8e83ff3106cd75ff5e1bdf70c4352456bbf575430f28c26fc9533149231c6351",
+      "size": 29336
+    },
+    {
       "path": "dist/forms/rr-sf424/evidence.json",
       "sha256": "4940724369cf51604c989af8d6ac748e1d1690332348f8b406c55b962ecc450b",
       "size": 2149
@@ -188,8 +198,8 @@
     },
     {
       "path": "dist/forms/rr-sf424/schema.json",
-      "sha256": "217bd6e5e811b99cbeb9c478c62dc24974c17595a50f1c5d9e9cdee32ae5379d",
-      "size": 12923
+      "sha256": "7006b349db8f16e599de7c060dbba2a043bcaa409b6a32664a68366bf0f05475",
+      "size": 14940
     },
     {
       "path": "dist/forms/rr-sf424/sgg/rule-schema.json",
@@ -208,8 +218,8 @@
     },
     {
       "path": "dist/forms/rr-subaward-budget-10yr-30/manifest.json",
-      "sha256": "771231818cad18d4b712d5d6fa73f384d6bbc8b1f034bea2089b27b72e6ee35d",
-      "size": 661
+      "sha256": "6293c8670188150f668aca31bf9ab436abe0f96ac83082f41b015673c83d266d",
+      "size": 709
     },
     {
       "path": "dist/forms/rr-subaward-budget-10yr-30/schema.json",
@@ -227,14 +237,19 @@
       "size": 37069
     },
     {
+      "path": "dist/forms/rr-subaward-budget-10yr-30/targets/grants-gov-xml.json",
+      "sha256": "808815faba80a29ee08cb0d023866c81e8277f20be73b07e747462d6da168bb8",
+      "size": 34705
+    },
+    {
       "path": "dist/forms/rr-subaward-budget-30/evidence.json",
       "sha256": "9067efe79fb32eb837a69ac273685ac597505bf9f3ddc59382df5cf0f8081b11",
       "size": 1153
     },
     {
       "path": "dist/forms/rr-subaward-budget-30/manifest.json",
-      "sha256": "da124d4435144579f0afb19839263e3df62edbc16621153a76ddb1f11ba03f11",
-      "size": 640
+      "sha256": "86e1221500bce8808ad96623c8b02e71c729a705a518966f840b652ef6f3d7f9",
+      "size": 688
     },
     {
       "path": "dist/forms/rr-subaward-budget-30/schema.json",
@@ -252,14 +267,19 @@
       "size": 37056
     },
     {
+      "path": "dist/forms/rr-subaward-budget-30/targets/grants-gov-xml.json",
+      "sha256": "ed36be0d135d1917b89eada706217a2155c874d104b45c22d91bf730b35036b4",
+      "size": 34680
+    },
+    {
       "path": "dist/forms/rr-subaward-budget/evidence.json",
       "sha256": "f9a2450cdea8958e3a2fed2c3bc0ca2d4364f2adb3b522d2e803b75cacdacaf3",
       "size": 1169
     },
     {
       "path": "dist/forms/rr-subaward-budget/manifest.json",
-      "sha256": "cc3315fe1d154cea54bd291534a5f220525d280891b3aae052ad0122d38804e1",
-      "size": 630
+      "sha256": "c01a9a1c9850132b43ad32424f64f695981f5e873f57f2d50733fee41749c52f",
+      "size": 678
     },
     {
       "path": "dist/forms/rr-subaward-budget/schema.json",
@@ -275,6 +295,11 @@
       "path": "dist/forms/rr-subaward-budget/sgg/ui-schema.json",
       "sha256": "232f52937647cf29bdebfe8f250a89216a7686c264b6c479910da10a0060ba6a",
       "size": 37058
+    },
+    {
+      "path": "dist/forms/rr-subaward-budget/targets/grants-gov-xml.json",
+      "sha256": "33a7c9dbb2f91dd80412b726a60fae965725e735517a54f08cda1ef8b40c43f6",
+      "size": 34669
     },
     {
       "path": "dist/forms/sf424-short/evidence.json",
@@ -708,7 +733,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "49e2e2ed027131a25237bc927aa5a18753257925"
+    "revision": "6caf773199833ab0c178fa8ce6b84cdde06a03fe"
   },
-  "sourceBundleSha256": "8eb58e446adcc8ab001aba10e71708bb76ae33af3abc9c51d0975d2241993c30"
+  "sourceBundleSha256": "2d372835cd08ffdf21cc577cf0390dc54cb27953100cb9042cde9daa2e381171"
 }
