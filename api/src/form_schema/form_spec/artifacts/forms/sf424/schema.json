@@ -26,7 +26,8 @@
     "dateReceived": {
       "$ref": "../../question-bank/application/date-received/schema.json",
       "description": "Completed by Grants.gov upon submission.",
-      "title": "Date Received"
+      "title": "Date Received",
+      "readOnly": true
     },
     "applicantId": {
       "type": "string",
@@ -53,14 +54,16 @@
       "type": "string",
       "format": "date",
       "description": "Leave blank, to be filled out by state.",
-      "title": "Date Received By State"
+      "title": "Date Received By State",
+      "readOnly": true
     },
     "stateApplicationId": {
       "type": "string",
       "minLength": 0,
       "maxLength": 30,
       "description": "Leave blank, to be filled out by state.",
-      "title": "State Application Identifier"
+      "title": "State Application Identifier",
+      "readOnly": true
     },
     "organizationName": {
       "$ref": "../../question-bank/primary-org/legal-name/schema.json",
@@ -250,7 +253,8 @@
     "totalEstimatedFunding": {
       "$ref": "../../question-bank/generics/monetary-amount/schema.json",
       "description": "This field is automatically calculated by Grants.gov",
-      "title": "Total Estimated Funding"
+      "title": "Total Estimated Funding",
+      "readOnly": true
     },
     "stateReview": {
       "$ref": "#/$defs/StateReview",
@@ -303,11 +307,13 @@
     },
     "aorSignature": {
       "$ref": "../../question-bank/aor/signature/schema.json",
-      "title": "AOR Signature"
+      "title": "AOR Signature",
+      "readOnly": true
     },
     "dateSigned": {
       "$ref": "../../question-bank/aor/date-signed/schema.json",
-      "title": "Date Signed"
+      "title": "Date Signed",
+      "readOnly": true
     }
   },
   "required": [

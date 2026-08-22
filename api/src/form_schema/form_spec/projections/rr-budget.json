@@ -1,0 +1,94 @@
+{
+  "renames": {
+    "samUei": {
+      "to": "samuei",
+      "why": "The existing R&R Budget runtime contract preserves the legacy SAMUEI wire spelling."
+    },
+    "otherDirectCost1": {
+      "to": "other_direct_cost_1",
+      "why": "The existing runtime separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "otherDirectCost2": {
+      "to": "other_direct_cost_2",
+      "why": "The existing runtime separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "otherDirectCost3": {
+      "to": "other_direct_cost_3",
+      "why": "The existing runtime separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "otherDirectCost4": {
+      "to": "other_direct_cost_4",
+      "why": "The existing runtime separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "otherDirectCost5": {
+      "to": "other_direct_cost_5",
+      "why": "The existing runtime separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "otherDirectCost6": {
+      "to": "other_direct_cost_6",
+      "why": "The existing runtime separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "otherDirectCost7": {
+      "to": "other_direct_cost_7",
+      "why": "The existing runtime separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "otherDirectCost8": {
+      "to": "other_direct_cost_8",
+      "why": "The existing runtime separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "otherDirectCost9": {
+      "to": "other_direct_cost_9",
+      "why": "The existing runtime separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "otherDirectCost10": {
+      "to": "other_direct_cost_10",
+      "why": "The existing runtime separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "cumulativeOther1DirectCost": {
+      "to": "cumulative_other_1_direct_cost",
+      "why": "The existing summary wire name separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "cumulativeOther2DirectCost": {
+      "to": "cumulative_other_2_direct_cost",
+      "why": "The existing summary wire name separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "cumulativeOther3DirectCost": {
+      "to": "cumulative_other_3_direct_cost",
+      "why": "The existing summary wire name separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "cumulativeOther4DirectCost": {
+      "to": "cumulative_other_4_direct_cost",
+      "why": "The existing summary wire name separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "cumulativeOther5DirectCost": {
+      "to": "cumulative_other_5_direct_cost",
+      "why": "The existing summary wire name separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "cumulativeOther6DirectCost": {
+      "to": "cumulative_other_6_direct_cost",
+      "why": "The existing summary wire name separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "cumulativeOther7DirectCost": {
+      "to": "cumulative_other_7_direct_cost",
+      "why": "The existing summary wire name separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "cumulativeOther8DirectCost": {
+      "to": "cumulative_other_8_direct_cost",
+      "why": "The existing summary wire name separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "cumulativeOther9DirectCost": {
+      "to": "cumulative_other_9_direct_cost",
+      "why": "The existing summary wire name separates the numbered Other Direct Cost suffix with an underscore."
+    },
+    "cumulativeOther10DirectCost": {
+      "to": "cumulative_other_10_direct_cost",
+      "why": "The existing summary wire name separates the numbered Other Direct Cost suffix with an underscore."
+    }
+  },
+  "identifiers": {
+    "budgetOverview": {
+      "to": "budgetOverview",
+      "why": "The existing runtime preserves this lower-camel section identifier."
+    }
+  }
+}

@@ -1,0 +1,282 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/research/other-direct-costs/schema.json",
+  "type": "object",
+  "properties": {
+    "adpComputerServices": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "4. ADP/Computer Services"
+    },
+    "alterationsRenovations": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "7. Alterations and Renovations"
+    },
+    "consultantServices": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "3. Consultant Services"
+    },
+    "equipmentRentalFee": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "6. Equipment or Facility Rental/User Fees"
+    },
+    "materialsSupplies": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "1. Materials and Supplies"
+    },
+    "otherDirectCost1": {
+      "$ref": "#/$defs/ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost1",
+      "title": "Other Direct Cost1"
+    },
+    "otherDirectCost10": {
+      "$ref": "#/$defs/ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost10",
+      "title": "Other Direct Cost10"
+    },
+    "otherDirectCost2": {
+      "$ref": "#/$defs/ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost2",
+      "title": "Other Direct Cost2"
+    },
+    "otherDirectCost3": {
+      "$ref": "#/$defs/ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost3",
+      "title": "Other Direct Cost3"
+    },
+    "otherDirectCost4": {
+      "$ref": "#/$defs/ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost4",
+      "title": "Other Direct Cost4"
+    },
+    "otherDirectCost5": {
+      "$ref": "#/$defs/ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost5",
+      "title": "Other Direct Cost5"
+    },
+    "otherDirectCost6": {
+      "$ref": "#/$defs/ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost6",
+      "title": "Other Direct Cost6"
+    },
+    "otherDirectCost7": {
+      "$ref": "#/$defs/ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost7",
+      "title": "Other Direct Cost7"
+    },
+    "otherDirectCost8": {
+      "$ref": "#/$defs/ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost8",
+      "title": "Other Direct Cost8"
+    },
+    "otherDirectCost9": {
+      "$ref": "#/$defs/ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost9",
+      "title": "Other Direct Cost9"
+    },
+    "publicationCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "2. Publication Costs"
+    },
+    "subawardConsortiumContractualCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "5. Subawards/Consortium/Contractual Costs"
+    },
+    "totalOtherDirectCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total Other Direct Costs",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "totalOtherDirectCost"
+  ],
+  "description": "Other direct costs for one research budget period.",
+  "$defs": {
+    "ResearchBudgetDecimal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    },
+    "ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost1": {
+      "type": "object",
+      "properties": {
+        "cost": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Additional Other Direct Cost Funds Requested"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "title": "Additional Other Direct Cost Description"
+        }
+      },
+      "required": [
+        "cost",
+        "description"
+      ]
+    },
+    "ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost10": {
+      "type": "object",
+      "properties": {
+        "cost": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Additional Other Direct Cost Funds Requested"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "title": "Additional Other Direct Cost Description"
+        }
+      },
+      "required": [
+        "cost",
+        "description"
+      ]
+    },
+    "ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost2": {
+      "type": "object",
+      "properties": {
+        "cost": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Additional Other Direct Cost Funds Requested"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "title": "Additional Other Direct Cost Description"
+        }
+      },
+      "required": [
+        "cost",
+        "description"
+      ]
+    },
+    "ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost3": {
+      "type": "object",
+      "properties": {
+        "cost": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Additional Other Direct Cost Funds Requested"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "title": "Additional Other Direct Cost Description"
+        }
+      },
+      "required": [
+        "cost",
+        "description"
+      ]
+    },
+    "ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost4": {
+      "type": "object",
+      "properties": {
+        "cost": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Additional Other Direct Cost Funds Requested"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "title": "Additional Other Direct Cost Description"
+        }
+      },
+      "required": [
+        "cost",
+        "description"
+      ]
+    },
+    "ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost5": {
+      "type": "object",
+      "properties": {
+        "cost": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Additional Other Direct Cost Funds Requested"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "title": "Additional Other Direct Cost Description"
+        }
+      },
+      "required": [
+        "cost",
+        "description"
+      ]
+    },
+    "ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost6": {
+      "type": "object",
+      "properties": {
+        "cost": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Additional Other Direct Cost Funds Requested"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "title": "Additional Other Direct Cost Description"
+        }
+      },
+      "required": [
+        "cost",
+        "description"
+      ]
+    },
+    "ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost7": {
+      "type": "object",
+      "properties": {
+        "cost": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Additional Other Direct Cost Funds Requested"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "title": "Additional Other Direct Cost Description"
+        }
+      },
+      "required": [
+        "cost",
+        "description"
+      ]
+    },
+    "ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost8": {
+      "type": "object",
+      "properties": {
+        "cost": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Additional Other Direct Cost Funds Requested"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "title": "Additional Other Direct Cost Description"
+        }
+      },
+      "required": [
+        "cost",
+        "description"
+      ]
+    },
+    "ResearchBudgetBudgetYearOtherDirectCostsOtherDirectCost9": {
+      "type": "object",
+      "properties": {
+        "cost": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Additional Other Direct Cost Funds Requested"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "title": "Additional Other Direct Cost Description"
+        }
+      },
+      "required": [
+        "cost",
+        "description"
+      ]
+    }
+  }
+}

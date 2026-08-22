@@ -14,12 +14,14 @@ from tests.src.form_schema.form_spec import parity
 FORM_DIR = "sf424"
 
 RENDERED = {
-    "/properties/state_receive_date#readOnly": "canonical UI carries read-only behavior",
-    "/properties/state_application_id#readOnly": "canonical UI carries read-only behavior",
+    "/properties/date_received#readOnly": "canonical declaration preserves computed behavior",
     "/properties/project_start_date#description": "removes trailing whitespace",
     "/properties/project_end_date#description": "removes trailing whitespace",
     "/properties/debt_explanation#description": "attachment question supplies help text",
     "/properties/authorized_representative_email#maxLength": "shared email constraint is explicit",
+    "/properties/total_estimated_funding#readOnly": "canonical declaration preserves computed behavior",
+    "/properties/aor_signature#readOnly": "canonical declaration preserves system-managed behavior",
+    "/properties/date_signed#readOnly": "canonical declaration preserves system-managed behavior",
 }
 ALLOWED_BEHAVIOR = {
     ("authorized_representative_email", "maxLength"): "shared email constraint is explicit",

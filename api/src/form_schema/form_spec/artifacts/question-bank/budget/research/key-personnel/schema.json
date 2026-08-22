@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/research/key-personnel/schema.json",
+  "type": "object",
+  "properties": {
+    "attachedKeyPersons": {
+      "$ref": "../../../../question-bank/generics/attachment/schema.json",
+      "title": "Additional Senior Key Persons:"
+    },
+    "keyPerson": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ResearchBudgetBudgetYearKeyPersonsKeyPerson",
+        "properties": {
+          "fundsRequested": {
+            "readOnly": true
+          }
+        }
+      },
+      "minItems": 1,
+      "maxItems": 8
+    },
+    "totalFundForAttachedKeyPersons": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total Funds requested for all Senior Key Persons in the attached file"
+    },
+    "totalFundForKeyPersons": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total Senior/Key Person",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "keyPerson",
+    "totalFundForKeyPersons"
+  ],
+  "description": "Senior and key personnel compensation for one budget period.",
+  "$defs": {
+    "ResearchBudgetDecimal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    },
+    "ResearchBudgetBudgetYearKeyPersonsKeyPersonName": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35,
+          "title": "First Name"
+        },
+        "lastName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60,
+          "title": "Last Name"
+        },
+        "middleName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 25,
+          "title": "Middle Name"
+        },
+        "prefixName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10,
+          "title": "Prefix"
+        },
+        "suffixName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 10,
+          "title": "Suffix"
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName"
+      ]
+    },
+    "ResearchBudgetBudgetYearKeyPersonsKeyPerson": {
+      "type": "object",
+      "properties": {
+        "academicMonths": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Senior/Key Person Academic Months"
+        },
+        "baseSalary": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Senior/Key Person Base Salary"
+        },
+        "calendarMonths": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Senior/Key Person Calendar Months"
+        },
+        "fringeBenefits": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Senior/Key Person Fringe Benefits"
+        },
+        "fundsRequested": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Senior/Key Person Funds Requested"
+        },
+        "name": {
+          "$ref": "#/$defs/ResearchBudgetBudgetYearKeyPersonsKeyPersonName",
+          "title": "Name"
+        },
+        "projectRole": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "title": "Project Role:"
+        },
+        "requestedSalary": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Senior/Key Person Requested Salary"
+        },
+        "summerMonths": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Senior/Key Person Summer Months"
+        }
+      },
+      "required": [
+        "fringeBenefits",
+        "fundsRequested",
+        "name",
+        "projectRole",
+        "requestedSalary"
+      ],
+      "title": "Key Person"
+    }
+  }
+}

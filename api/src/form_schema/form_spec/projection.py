@@ -426,37 +426,51 @@ def _flatten_composition(
         return node
 
     kept: list[Any] = []
+    merged_keywords: dict[str, Any] = {}
     merged_properties: dict[str, Any] = {}
     merged_required: list[str] = []
 
     for branch in branches:
-        block_id = _composed_block(branch, projection)
-        if block_id is None:
+        base = _composed_base(branch, projection, path, local_prefix)
+        if base is None:
             kept.append(branch)
             continue
-        base = project_schema(
-            projection.blocks[block_id],
-            projection,
-            path=path,
-            local_prefix=local_prefix,
-        )
+        merged_keywords.update({
+            key: value
+            for key, value in base.items()
+            if key not in {"properties", "required", "$defs", "allOf"}
+        })
         merged_properties.update(base.get("properties", {}))
         merged_required.extend(base.get("required", []))
         if base.get("$defs"):
-            # Hoisting a base's local definitions would need its `#/$defs/...` pointers
-            # rebased onto the extending document. No block needs it yet, and guessing
-            # would be worse than saying so.
-            raise NotImplementedError(
-                f"cannot inline block {block_id!r}: it declares $defs, which would need "
-                "pointer rebasing in the extending document"
-            )
+            # The assembled bank hoists every block's local definitions to its own root.
+            # A form that flattens object composition therefore points at that authoritative
+            # bank location instead of copying definitions into each resolved form.
+            base.pop("$defs")
+            base = _rebase_defs_to_bank(base, projection.bank_uri)
+            merged_properties = {
+                **merged_properties,
+                **base.get("properties", {}),
+            }
         kept.extend(base.get("allOf", []))
 
     if not merged_properties and not merged_required:
         return node
 
+    # Composition contributes the base schema's ordinary constraints as well as its
+    # members. The overlay remains authoritative for any keyword it explicitly sets.
+    node = {**merged_keywords, **node}
+
     # The base's members come first: they are the question, and the extension adds to it.
-    node["properties"] = {**merged_properties, **node.get("properties", {})}
+    combined_properties = dict(merged_properties)
+    for name, patch in node.get("properties", {}).items():
+        existing = combined_properties.get(name)
+        combined_properties[name] = (
+            _merge_subschemas(existing, patch)
+            if isinstance(existing, dict) and isinstance(patch, dict)
+            else patch
+        )
+    node["properties"] = combined_properties
     if merged_required or node.get("required"):
         combined = merged_required + [
             name for name in node.get("required", []) if name not in merged_required
@@ -466,10 +480,103 @@ def _flatten_composition(
         node["allOf"] = kept
     else:
         node.pop("allOf")
+
+    # A parent composition can introduce a referenced child and then apply a nested
+    # overlay to it. Those two pieces did not coexist when the child was first visited
+    # by `_project_node`, so give the newly combined subtree one composition pass now.
+    # This is what preserves, for example, a bank question's decimal constraints when a
+    # form marks that same question read-only.
+    node["properties"] = {
+        name: _flatten_introduced_compositions(
+            child,
+            projection,
+            _join(path, name),
+            local_prefix,
+        )
+        for name, child in node["properties"].items()
+    }
     return node
 
 
-def _composed_block(branch: Any, projection: Projection) -> str | None:
+def _flatten_introduced_compositions(
+    node: Any,
+    projection: Projection,
+    path: str,
+    local_prefix: str,
+) -> Any:
+    """Flatten compositions created by merging a parent block with its overlay."""
+    if isinstance(node, list):
+        return [
+            _flatten_introduced_compositions(item, projection, path, local_prefix) for item in node
+        ]
+    if not isinstance(node, dict):
+        return node
+
+    # A deep merge can put an overlay beside a reference that was bare when first
+    # projected. Wrap it before attempting composition so the legacy resolver cannot
+    # discard the overlay and the base definition remains available to inline.
+    prepared = _wrap_ref(dict(node), projection) if "$ref" in node and len(node) > 1 else dict(node)
+    flattened = _flatten_composition(prepared, projection, path, local_prefix)
+    out: dict[str, Any] = {}
+    for key, value in flattened.items():
+        if key in _PROPERTY_MAPS:
+            out[key] = {
+                name: _flatten_introduced_compositions(
+                    child,
+                    projection,
+                    _join(path, name),
+                    local_prefix,
+                )
+                for name, child in value.items()
+            }
+        elif key in _SUBSCHEMA:
+            out[key] = _flatten_introduced_compositions(value, projection, path, local_prefix)
+        elif key in _SUBSCHEMA_LIST:
+            out[key] = [
+                _flatten_introduced_compositions(item, projection, path, local_prefix)
+                for item in value
+            ]
+        else:
+            out[key] = value
+    return out
+
+
+def _merge_subschemas(base: dict[str, Any], patch: dict[str, Any]) -> dict[str, Any]:
+    """Merge a declarative overlay without erasing the composed block beneath it."""
+    result = dict(base)
+    for key, value in patch.items():
+        existing = result.get(key)
+        if isinstance(existing, dict) and isinstance(value, dict):
+            result[key] = _merge_subschemas(existing, value)
+        elif key == "allOf" and isinstance(existing, list) and isinstance(value, list):
+            result[key] = [*existing, *value]
+        else:
+            result[key] = value
+    return result
+
+
+def _rebase_defs_to_bank(node: Any, bank_uri: str) -> Any:
+    if isinstance(node, list):
+        return [_rebase_defs_to_bank(item, bank_uri) for item in node]
+    if not isinstance(node, dict):
+        return node
+    return {
+        key: (
+            f"{bank_uri}{value}"
+            if key == "$ref" and isinstance(value, str) and value.startswith("#/$defs/")
+            else _rebase_defs_to_bank(value, bank_uri)
+        )
+        for key, value in node.items()
+    }
+
+
+def _composed_base(
+    branch: Any,
+    projection: Projection,
+    path: str,
+    local_prefix: str,
+) -> dict[str, Any] | None:
+    """Return the projected schema composed by a branch, including hoisted `$defs`."""
     if not isinstance(branch, dict):
         return None
     # `_wrap_ref` has already run on the branch, so a bare reference now looks like
@@ -478,4 +585,33 @@ def _composed_block(branch: Any, projection: Projection) -> str | None:
         branch = branch["allOf"][0]
     if not isinstance(branch, dict) or set(branch) != {"$ref"}:
         return None
-    return _block_pointer(branch["$ref"], projection)
+    ref = branch["$ref"]
+    block_id = _block_pointer(ref, projection)
+    if block_id is not None:
+        return project_schema(
+            projection.blocks[block_id],
+            projection,
+            path=path,
+            local_prefix=local_prefix,
+        )
+
+    defs_prefix = f"{projection.bank_uri}#/$defs/"
+    if not ref.startswith(defs_prefix):
+        return None
+    name = ref[len(defs_prefix) :]
+    definitions = [
+        schema["$defs"][name]
+        for schema in projection.blocks.values()
+        if name in schema.get("$defs", {})
+    ]
+    if not definitions:
+        return None
+    if any(definition != definitions[0] for definition in definitions[1:]):
+        raise ValueError(f"question-bank definition {name!r} is ambiguous")
+    projected = project_schema(
+        definitions[0],
+        projection,
+        path=path,
+        local_prefix=local_prefix,
+    )
+    return _rebase_defs_to_bank(projected, projection.bank_uri)

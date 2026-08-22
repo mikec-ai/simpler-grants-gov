@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/research/participant-trainee-support/schema.json",
+  "type": "object",
+  "properties": {
+    "other": {
+      "$ref": "#/$defs/ResearchBudgetBudgetYearParticipantTraineeSupportCostsOther",
+      "title": "Other"
+    },
+    "participantTraineeNumber": {
+      "type": "integer",
+      "minimum": -2147483648,
+      "maximum": 2147483647,
+      "title": "Number of Participants/Trainees"
+    },
+    "stipends": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "2. Stipends"
+    },
+    "subsistence": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "4. Subsistence"
+    },
+    "totalCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total Participant/Trainee Support Costs",
+      "readOnly": true
+    },
+    "travel": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "3. Travel"
+    },
+    "tuitionFeeHealthInsurance": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "1. Tuition/Fees/Health Insurance"
+    }
+  },
+  "required": [
+    "totalCost"
+  ],
+  "description": "Participant and trainee support costs for one research budget period.",
+  "$defs": {
+    "ResearchBudgetDecimal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    },
+    "ResearchBudgetBudgetYearParticipantTraineeSupportCostsOther": {
+      "type": "object",
+      "properties": {
+        "cost": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Other Participant/Trainee Costs"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "title": "5. Other"
+        }
+      },
+      "required": [
+        "cost",
+        "description"
+      ]
+    }
+  }
+}

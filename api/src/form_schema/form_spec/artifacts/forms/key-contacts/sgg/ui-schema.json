@@ -12,6 +12,7 @@
         "type": "fieldList",
         "name": "keyContacts",
         "label": "Key Contact",
+        "definition": "/properties/keyContacts",
         "children": [
           {
             "type": "field",

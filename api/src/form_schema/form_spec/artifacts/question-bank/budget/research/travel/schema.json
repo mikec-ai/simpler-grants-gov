@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/research/travel/schema.json",
+  "type": "object",
+  "properties": {
+    "domesticTravelCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "1. Domestic Travel Costs ( Incl. Canada, Mexico and U.S. Possessions)"
+    },
+    "foreignTravelCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "2. Foreign Travel Costs"
+    },
+    "totalTravelCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total Travel Cost",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "totalTravelCost"
+  ],
+  "description": "Domestic and foreign travel costs for one research budget period.",
+  "$defs": {
+    "ResearchBudgetDecimal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    }
+  }
+}
