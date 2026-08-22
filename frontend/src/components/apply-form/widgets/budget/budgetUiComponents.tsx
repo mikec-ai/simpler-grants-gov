@@ -1,3 +1,4 @@
+import { RJSFSchema } from "@rjsf/utils";
 import { get } from "lodash";
 
 import React, { InputEvent, JSX } from "react";
@@ -64,6 +65,10 @@ export const CurrencyInput: React.FC<{
   formClassName?: string;
   inputClassName?: string;
   disabled?: boolean;
+  readOnly?: boolean;
+  schema?: RJSFSchema;
+  ariaLabel?: string;
+  hideLabel?: boolean;
 }> = ({
   id,
   rawErrors,
@@ -72,10 +77,17 @@ export const CurrencyInput: React.FC<{
   formClassName = "margin-top-0 padding-top-05 simpler-currency-input-wrapper",
   inputClassName = "minw-10",
   disabled,
+  readOnly,
+  schema = amountSchema,
+  ariaLabel,
+  hideLabel = false,
 }) => (
   <TextWidget
     disabled={disabled}
-    schema={amountSchema}
+    readOnly={readOnly}
+    schema={schema}
+    aria-label={ariaLabel}
+    hideLabel={hideLabel}
     id={id}
     rawErrors={rawErrors}
     formClassName={formClassName}

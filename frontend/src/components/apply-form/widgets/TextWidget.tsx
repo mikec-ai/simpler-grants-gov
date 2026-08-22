@@ -42,6 +42,8 @@ function TextWidget<
   onFocus = () => ({}),
   formClassName,
   inputClassName,
+  hideLabel = false,
+  "aria-label": ariaLabel,
 }: UswdsWidgetProps<T, S, F>) {
   const {
     title,
@@ -94,8 +96,10 @@ function TextWidget<
   );
   const error = rawErrors.length ? true : undefined;
 
+  const descriptionId = description ? `description-for-${id}` : undefined;
   const describedby = [
     error ? `error-for-${id}` : undefined,
+    descriptionId,
     additionalDescribedById,
   ]
     .filter(Boolean)
@@ -112,6 +116,8 @@ function TextWidget<
         title={title}
         required={required}
         description={description}
+        descriptionId={descriptionId}
+        visuallyHidden={hideLabel}
         labelType={labelType}
       />
       {error && (
@@ -127,6 +133,7 @@ function TextWidget<
         type={inputType as TextTypes}
         autoFocus={autofocus}
         name={id}
+        aria-label={typeof ariaLabel === "string" ? ariaLabel : undefined}
         aria-required={required}
         disabled={disabled}
         readOnly={readOnly}

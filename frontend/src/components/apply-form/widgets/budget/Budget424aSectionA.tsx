@@ -10,6 +10,7 @@ import React, { JSX } from "react";
 import { Table } from "@trussworks/react-uswds";
 
 import TextWidget from "src/components/apply-form/widgets/TextWidget";
+import InfoTooltip from "src/components/core/tooltip/InfoTooltip";
 import { ACTIVITY_ITEMS } from "./budgetConstants";
 import { getErrorsForSection } from "./budgetErrors";
 import {
@@ -36,6 +37,78 @@ type NormalizedA = {
   items: ActivityItem[];
   totals?: BudgetSummary;
 };
+
+type SectionAFieldSchemas = {
+  activityTitle: RJSFSchema;
+  assistanceListingNumber: RJSFSchema;
+  federalEstimatedUnobligatedAmount: RJSFSchema;
+  nonFederalEstimatedUnobligatedAmount: RJSFSchema;
+  federalNewOrRevisedAmount: RJSFSchema;
+  nonFederalNewOrRevisedAmount: RJSFSchema;
+  totalAmount: RJSFSchema;
+};
+
+function propertySchema(value: unknown, name: string): RJSFSchema {
+  if (!isRecord(value) || !isRecord(value.properties)) return {};
+  const property = value.properties[name];
+  return isRecord(property) ? property : {};
+}
+
+function sectionAFieldSchemas(rootSchema: unknown): SectionAFieldSchemas {
+  const root = isRecord(rootSchema) ? rootSchema : {};
+  const definitions = isRecord(root.$defs) ? root.$defs : {};
+  const activityDefinition = isRecord(definitions.ActivityLineItem)
+    ? definitions.ActivityLineItem
+    : {};
+  const activityItems = propertySchema(root, "activity_line_items");
+  const activityItem = isRecord(activityItems.items) ? activityItems.items : {};
+  const totalBudgetSummary = propertySchema(root, "total_budget_summary");
+  const mergeActivity = (name: string, fallback: RJSFSchema): RJSFSchema => ({
+    ...fallback,
+    ...propertySchema(activityDefinition, name),
+    ...propertySchema(activityItem, name),
+  });
+
+  return {
+    activityTitle: mergeActivity("activity_title", activityTitleSchema),
+    assistanceListingNumber: mergeActivity(
+      "assistance_listing_number",
+      assistanceListingNumberSchema,
+    ),
+    federalEstimatedUnobligatedAmount: propertySchema(
+      totalBudgetSummary,
+      "federal_estimated_unobligated_amount",
+    ),
+    nonFederalEstimatedUnobligatedAmount: propertySchema(
+      totalBudgetSummary,
+      "non_federal_estimated_unobligated_amount",
+    ),
+    federalNewOrRevisedAmount: propertySchema(
+      totalBudgetSummary,
+      "federal_new_or_revised_amount",
+    ),
+    nonFederalNewOrRevisedAmount: propertySchema(
+      totalBudgetSummary,
+      "non_federal_new_or_revised_amount",
+    ),
+    totalAmount: propertySchema(totalBudgetSummary, "total_amount"),
+  };
+}
+
+function title(schema: RJSFSchema, fallback: string): string {
+  return typeof schema.title === "string" ? schema.title : fallback;
+}
+
+function HeaderHelp({ schema }: { schema: RJSFSchema }): JSX.Element | null {
+  if (typeof schema.description !== "string") return null;
+  return (
+    <InfoTooltip
+      text={schema.description}
+      title={`Help for ${title(schema, "this field")}`}
+      wrapperClasses="margin-left-05"
+    />
+  );
+}
 
 function pickBudgetSummary(value: unknown): BudgetSummary {
   if (!isRecord(value)) return {};
@@ -115,6 +188,7 @@ function Budget424aSectionA<
   const rawValue: unknown = rootFormDataFromContext ?? value ?? {};
   const errors = (rawErrors as FormValidationWarning[]) || [];
   const { items, totals } = normalizeSectionAValue(rawValue);
+  const fieldSchemas = sectionAFieldSchemas(formContext?.rootSchema);
   const getErrorsA = getErrorsForSection("A");
   const itemAt = (row: number): ActivityItem => items[row] ?? {};
   const getItemVal = (
@@ -128,108 +202,143 @@ function Budget424aSectionA<
 
   return (
     <div key={id} id={id}>
-      <h3>Instructions</h3>
-      <div style={{ columnCount: 2 }}>
-        <h4>New applications</h4>
-        <p>
-          Leave Columns C and D blank. For each line entry in Columns A and B,
-          enter in Columns E, F, and G the appropriate amounts of funds needed
-          to support the project for the first funding period (usually a year).
-        </p>
-
-        <h4>Supplemental grants and changes to existing grants</h4>
-        <p>
-          Leave Columns C and D blank. In Column E, enter the amount of the
-          increase or decrease of Federal funds and enter in Column F the amount
-          of the increase or decrease of non-Federal funds. In Column G, enter
-          the new total budgeted amount (Federal and non-Federal) which includes
-          the total previous authorized budgeted amounts plus or minus, as
-          appropriate, the amounts shown in Columns E and F. The amount(s) in
-          Column G should not equal the sum of amounts in Columns E and F.
-        </p>
-
-        <h4>Continuing grant applications</h4>
-        <p>
-          In Columns C and D, enter the estimated amounts of funds that will
-          remain unobligated at the end of the grant funding period only if the
-          Federal grantor agency instructions provide for this. Otherwise, leave
-          these columns blank. In Columns E and F, enter the amounts of funds
-          needed for the upcoming period. The amount(s) in Column G should be
-          the sum of amounts in Columns E and F. Submit these forms before the
-          end of each funding period as required by the grantor agency.
-        </p>
-      </div>
-
       <Table
         bordered={false}
         className="sf424__table usa-table--borderless width-full border-1px border-base-light"
       >
         <thead className="text-bold">
           <tr className="bg-base-lighter">
-            <td
+            <th
+              scope="col"
               className="bg-base-lightest text-bold border-bottom-0 width-card border-base-light"
               rowSpan={2}
             >
-              <div>Grant program, function, or activity</div>
-            </td>
-            <td
+              <div>
+                {title(
+                  fieldSchemas.activityTitle,
+                  "Grant program, function, or activity",
+                )}
+                <HeaderHelp schema={fieldSchemas.activityTitle} />
+              </div>
+            </th>
+            <th
+              scope="col"
               className="bg-base-lightest text-bold border-bottom-0 border-x-1px text-center border-base-light"
               rowSpan={2}
             >
-              Assistance listing number
-            </td>
-            <td
+              {title(
+                fieldSchemas.assistanceListingNumber,
+                "Assistance Listing number",
+              )}
+              <HeaderHelp schema={fieldSchemas.assistanceListingNumber} />
+            </th>
+            <th
+              scope="colgroup"
               className="bg-base-lightest text-bold border-x-1px border-base-light"
               colSpan={2}
             >
               <span className="text-no-wrap">Estimated unobligated funds</span>
-            </td>
-            <td
+            </th>
+            <th
+              scope="colgroup"
               className="bg-base-lightest text-bold border-x-1px border-base-light"
               colSpan={2}
             >
               New or revised budget
-            </td>
-            <td
+            </th>
+            <th
+              scope="col"
               className="bg-base-lightest text-bold border-bottom-0 border-x-1px text-center border-base-light"
               rowSpan={2}
             >
               Total
-              <div className="text-normal text-no-wrap text-italic">
-                (sum of C-F)
-              </div>
-            </td>
+              <HeaderHelp schema={fieldSchemas.totalAmount} />
+            </th>
           </tr>
           <tr>
-            <td className="bg-base-lightest text-bold border-bottom-0 border-x-1px border-base-light">
-              Federal
-            </td>
-            <td className="bg-base-lightest text-bold border-bottom-0">
-              Non-federal
-            </td>
-            <td className="bg-base-lightest text-bold border-bottom-0 border-x-1px border-base-light">
-              Federal
-            </td>
-            <td className="bg-base-lightest text-bold border-bottom-0">
-              Non-federal
-            </td>
+            <th
+              scope="col"
+              className="bg-base-lightest text-bold border-bottom-0 border-x-1px border-base-light"
+            >
+              Federal{" "}
+              <HeaderHelp
+                schema={fieldSchemas.federalEstimatedUnobligatedAmount}
+              />
+            </th>
+            <th
+              scope="col"
+              className="bg-base-lightest text-bold border-bottom-0"
+            >
+              Non-federal{" "}
+              <HeaderHelp
+                schema={fieldSchemas.nonFederalEstimatedUnobligatedAmount}
+              />
+            </th>
+            <th
+              scope="col"
+              className="bg-base-lightest text-bold border-bottom-0 border-x-1px border-base-light"
+            >
+              Federal{" "}
+              <HeaderHelp schema={fieldSchemas.federalNewOrRevisedAmount} />
+            </th>
+            <th
+              scope="col"
+              className="bg-base-lightest text-bold border-bottom-0"
+            >
+              Non-federal{" "}
+              <HeaderHelp schema={fieldSchemas.nonFederalNewOrRevisedAmount} />
+            </th>
           </tr>
           <tr className="bg-base-lightest text-bold text-center">
-            <td className="bg-base-lightest text-bold border-top-0">A</td>
-            <td className="bg-base-lightest text-bold border-top-0 border-x-1px border-base-light">
+            <th
+              scope="col"
+              aria-label="Column A"
+              className="bg-base-lightest text-bold border-top-0"
+            >
+              A
+            </th>
+            <th
+              scope="col"
+              aria-label="Column B"
+              className="bg-base-lightest text-bold border-top-0 border-x-1px border-base-light"
+            >
               B
-            </td>
-            <td className="bg-base-lightest text-bold border-top-0">C</td>
-            <td className="bg-base-lightest text-bold border-top-0 border-x-1px border-base-light">
+            </th>
+            <th
+              scope="col"
+              aria-label="Column C"
+              className="bg-base-lightest text-bold border-top-0"
+            >
+              C
+            </th>
+            <th
+              scope="col"
+              aria-label="Column D"
+              className="bg-base-lightest text-bold border-top-0 border-x-1px border-base-light"
+            >
               D
-            </td>
-            <td className="bg-base-lightest text-bold border-top-0 border-x-1px border-base-light">
+            </th>
+            <th
+              scope="col"
+              aria-label="Column E"
+              className="bg-base-lightest text-bold border-top-0 border-x-1px border-base-light"
+            >
               E
-            </td>
-            <td className="bg-base-lightest text-bold border-top-0">F</td>
-            <td className="bg-base-lightest text-bold border-top-0 border-x-1px border-base-light">
+            </th>
+            <th
+              scope="col"
+              aria-label="Column F"
+              className="bg-base-lightest text-bold border-top-0"
+            >
+              F
+            </th>
+            <th
+              scope="col"
+              aria-label="Column G"
+              className="bg-base-lightest text-bold border-top-0 border-x-1px border-base-light"
+            >
               G
-            </td>
+            </th>
           </tr>
         </thead>
 
@@ -245,7 +354,9 @@ function Budget424aSectionA<
                   <div className="margin-top-05 padding-top-0">
                     <div className="sf424a-application-view-only">
                       <TextWidget
-                        schema={activityTitleSchema}
+                        schema={fieldSchemas.activityTitle}
+                        hideLabel
+                        aria-label={`${title(fieldSchemas.activityTitle, "Grant program, function, or activity")}, row ${row + 1}`}
                         id={`activity_line_items[${row}]--activity_title`}
                         rawErrors={getErrorsA({
                           errors,
@@ -277,7 +388,9 @@ function Budget424aSectionA<
                   <div className="margin-top-05 padding-top-0">
                     <div className="sf424a-application-view-only">
                       <TextWidget
-                        schema={assistanceListingNumberSchema}
+                        schema={fieldSchemas.assistanceListingNumber}
+                        hideLabel
+                        aria-label={`${title(fieldSchemas.assistanceListingNumber, "Assistance Listing number")}, row ${row + 1}`}
                         id={`activity_line_items[${row}]--assistance_listing_number`}
                         rawErrors={getErrorsA({
                           errors,
@@ -317,6 +430,10 @@ function Budget424aSectionA<
                         "federal_estimated_unobligated_amount",
                       )}
                       disabled={disabled}
+                      readOnly={readOnly}
+                      schema={fieldSchemas.federalEstimatedUnobligatedAmount}
+                      hideLabel
+                      ariaLabel={`${title(fieldSchemas.federalEstimatedUnobligatedAmount, "Estimated unobligated federal funds")}, row ${row + 1}`}
                     />
                   </div>
                 </div>
@@ -337,6 +454,10 @@ function Budget424aSectionA<
                         "non_federal_estimated_unobligated_amount",
                       )}
                       disabled={disabled}
+                      readOnly={readOnly}
+                      schema={fieldSchemas.nonFederalEstimatedUnobligatedAmount}
+                      hideLabel
+                      ariaLabel={`${title(fieldSchemas.nonFederalEstimatedUnobligatedAmount, "Estimated unobligated non-federal funds")}, row ${row + 1}`}
                     />
                   </div>
                 </div>
@@ -354,6 +475,10 @@ function Budget424aSectionA<
                       })}
                       value={getBudgetVal(row, "federal_new_or_revised_amount")}
                       disabled={disabled}
+                      readOnly={readOnly}
+                      schema={fieldSchemas.federalNewOrRevisedAmount}
+                      hideLabel
+                      ariaLabel={`${title(fieldSchemas.federalNewOrRevisedAmount, "New or revised federal budget")}, row ${row + 1}`}
                     />
                   </div>
                 </div>
@@ -374,6 +499,10 @@ function Budget424aSectionA<
                         "non_federal_new_or_revised_amount",
                       )}
                       disabled={disabled}
+                      readOnly={readOnly}
+                      schema={fieldSchemas.nonFederalNewOrRevisedAmount}
+                      hideLabel
+                      ariaLabel={`${title(fieldSchemas.nonFederalNewOrRevisedAmount, "New or revised non-federal budget")}, row ${row + 1}`}
                     />
                   </div>
                 </div>
@@ -382,11 +511,7 @@ function Budget424aSectionA<
               {/* Column G: total */}
               <DataCell>
                 <div className="display-flex flex-align-end">
-                  <span className="margin-right-1">=</span>
                   <div>
-                    <div className="text-normal text-no-wrap text-italic font-sans-2xs">
-                      Sum of row {row + 1}
-                    </div>
                     <CurrencyInput
                       id={`activity_line_items[${row}]--budget_summary--total_amount`}
                       rawErrors={getErrorsA({
@@ -394,6 +519,11 @@ function Budget424aSectionA<
                         id: `activity_line_items[${row}]--budget_summary--total_amount`,
                       })}
                       value={getBudgetVal(row, "total_amount")}
+                      disabled={disabled}
+                      readOnly={readOnly}
+                      schema={fieldSchemas.totalAmount}
+                      hideLabel
+                      ariaLabel={`${title(fieldSchemas.totalAmount, "Total budgeted amount")}, row ${row + 1}`}
                     />
                   </div>
                 </div>
@@ -403,7 +533,7 @@ function Budget424aSectionA<
 
           {/* Totals row */}
           <tr>
-            <td className="padding-05 text-bold" colSpan={2}>
+            <th scope="row" className="padding-05 text-bold" colSpan={2}>
               <div className="display-flex">
                 <span className="margin-right-5">5.</span>
                 <div>
@@ -413,7 +543,7 @@ function Budget424aSectionA<
                   </div>
                 </div>
               </div>
-            </td>
+            </th>
 
             <td className="padding-05">
               <HelperText hasHorizontalLine>Sum of column C</HelperText>
@@ -428,6 +558,9 @@ function Budget424aSectionA<
                 })}
                 value={totals?.federal_estimated_unobligated_amount}
                 bordered
+                schema={fieldSchemas.federalEstimatedUnobligatedAmount}
+                hideLabel
+                ariaLabel={`${title(fieldSchemas.federalEstimatedUnobligatedAmount, "Estimated unobligated federal funds")}, total row`}
               />
             </td>
 
@@ -444,6 +577,9 @@ function Budget424aSectionA<
                 })}
                 value={totals?.non_federal_estimated_unobligated_amount}
                 bordered
+                schema={fieldSchemas.nonFederalEstimatedUnobligatedAmount}
+                hideLabel
+                ariaLabel={`${title(fieldSchemas.nonFederalEstimatedUnobligatedAmount, "Estimated unobligated non-federal funds")}, total row`}
               />
             </td>
 
@@ -458,6 +594,9 @@ function Budget424aSectionA<
                 })}
                 value={totals?.federal_new_or_revised_amount}
                 bordered
+                schema={fieldSchemas.federalNewOrRevisedAmount}
+                hideLabel
+                ariaLabel={`${title(fieldSchemas.federalNewOrRevisedAmount, "New or revised federal budget")}, total row`}
               />
             </td>
 
@@ -472,6 +611,9 @@ function Budget424aSectionA<
                 })}
                 value={totals?.non_federal_new_or_revised_amount}
                 bordered
+                schema={fieldSchemas.nonFederalNewOrRevisedAmount}
+                hideLabel
+                ariaLabel={`${title(fieldSchemas.nonFederalNewOrRevisedAmount, "New or revised non-federal budget")}, total row`}
               />
             </td>
 
@@ -486,6 +628,9 @@ function Budget424aSectionA<
                 })}
                 value={totals?.total_amount}
                 bordered
+                schema={fieldSchemas.totalAmount}
+                hideLabel
+                ariaLabel={`${title(fieldSchemas.totalAmount, "Total budgeted amount")}, total row`}
               />
             </td>
           </tr>

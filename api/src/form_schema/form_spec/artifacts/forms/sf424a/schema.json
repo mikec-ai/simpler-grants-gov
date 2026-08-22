@@ -6,13 +6,57 @@
     "activityLineItems": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/ActivityLineItem"
+        "$ref": "#/$defs/ActivityLineItem",
+        "properties": {
+          "activityTitle": {
+            "description": "Enter the Assistance Listing title, notice of funding opportunity number, program code, or grant number."
+          },
+          "assistanceListingNumber": {
+            "description": "Enter the Assistance Listing number in ##.### format."
+          },
+          "budgetSummary": {
+            "properties": {
+              "federalEstimatedUnobligatedAmount": {
+                "description": "Federal funds authorized under an award that have not yet been obligated. Enter an amount only when the application instructions require it."
+              },
+              "nonFederalEstimatedUnobligatedAmount": {
+                "description": "Non-federal funds required under an award that have not yet been obligated or used. Enter an amount only when the application instructions require it."
+              },
+              "federalNewOrRevisedAmount": {
+                "description": "Enter federal funds needed for the upcoming period. For a supplemental application, enter the additional amount requested. For a change, enter the increase or decrease."
+              },
+              "nonFederalNewOrRevisedAmount": {
+                "description": "Enter the non-federal share for the upcoming period. For a supplemental application, enter the additional contribution. For a change, enter the increase or decrease."
+              },
+              "totalAmount": {
+                "description": "Enter the total budgeted amount for this row. This value is not calculated automatically."
+              }
+            }
+          }
+        }
       },
       "minItems": 1,
       "maxItems": 4
     },
     "totalBudgetSummary": {
-      "$ref": "../../question-bank/budget/summary/schema.json"
+      "$ref": "../../question-bank/budget/summary/schema.json",
+      "properties": {
+        "federalEstimatedUnobligatedAmount": {
+          "description": "Federal funds authorized under an award that have not yet been obligated. Enter an amount only when the application instructions require it."
+        },
+        "nonFederalEstimatedUnobligatedAmount": {
+          "description": "Non-federal funds required under an award that have not yet been obligated or used. Enter an amount only when the application instructions require it."
+        },
+        "federalNewOrRevisedAmount": {
+          "description": "Enter federal funds needed for the upcoming period. For a supplemental application, enter the additional amount requested. For a change, enter the increase or decrease."
+        },
+        "nonFederalNewOrRevisedAmount": {
+          "description": "Enter the non-federal share for the upcoming period. For a supplemental application, enter the additional contribution. For a change, enter the increase or decrease."
+        },
+        "totalAmount": {
+          "description": "Enter the total budgeted amount for this row. This value is not calculated automatically."
+        }
+      }
     },
     "totalBudgetCategories": {
       "$ref": "../../question-bank/budget/categories/schema.json"
@@ -66,12 +110,14 @@
         "activityTitle": {
           "type": "string",
           "minLength": 0,
-          "maxLength": 120
+          "maxLength": 120,
+          "title": "Grant program, function, or activity"
         },
         "assistanceListingNumber": {
           "type": "string",
           "minLength": 0,
-          "maxLength": 15
+          "maxLength": 15,
+          "title": "Assistance Listing number"
         },
         "budgetSummary": {
           "$ref": "../../question-bank/budget/summary/schema.json"

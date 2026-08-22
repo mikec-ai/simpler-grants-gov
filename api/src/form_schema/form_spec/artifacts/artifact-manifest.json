@@ -38,8 +38,8 @@
     },
     {
       "path": "dist/forms/key-contacts/schema.json",
-      "sha256": "3ea37a6d50d57da5f74e36c4f9981d613f12e8fcbb4c0345c643e518a0f4998e",
-      "size": 1733
+      "sha256": "77720c4a1df4cb95223639b5a97996f179e39c94be0b08334dda40e15a3331a2",
+      "size": 1789
     },
     {
       "path": "dist/forms/key-contacts/sgg/rule-schema.json",
@@ -213,8 +213,8 @@
     },
     {
       "path": "dist/forms/sf424a/schema.json",
-      "sha256": "1ebe64cf2bf273a80ab9ce943a12844e6a181de401a9fb10eb04117c930f5063",
-      "size": 3435
+      "sha256": "792c34d8741d6dc0aafb0d6accbc38119143b60eb569650aabd787ee226a9053",
+      "size": 6310
     },
     {
       "path": "dist/forms/sf424a/sgg/rule-schema.json",
@@ -223,8 +223,8 @@
     },
     {
       "path": "dist/forms/sf424a/sgg/ui-schema.json",
-      "sha256": "f4f6490f803dd44b6c5e57aa5e4dc0ce2c3ab2b530bdf02587834c75c8f3f050",
-      "size": 2576
+      "sha256": "c30fea2192115073296175bbb09f502b20be865a8234b1ee42ea1bd1b6cef323",
+      "size": 3134
     },
     {
       "path": "dist/question-bank/aor/date-signed/schema.json",
@@ -368,8 +368,8 @@
     },
     {
       "path": "dist/question-bank/budget/summary/schema.json",
-      "sha256": "7aaa0ef50dacf6007466f1c9ff4f490afb938064bcee457db42fec135d31ab59",
-      "size": 865
+      "sha256": "398b280d513b0d41f70197b66792f224d3bd0a44d9fd36667f84e4553b8d0bd8",
+      "size": 1938
     },
     {
       "path": "dist/question-bank/generics/address/schema.json",
@@ -538,7 +538,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "f82c772fd8204f1fab8065f451d87a15a7484597"
+    "revision": "eaa74b43356b6d3ee416e2434df2ce6e1acc814c"
   },
-  "sourceBundleSha256": "6ba099a0905537753a33953f3c764957fe232f299a3a5a097ec2e4af61d163f7"
+  "sourceBundleSha256": "24518a6ab3ab74ba6b5b93ad3da19908d91a3fd61074a5ddf24ec7f397eaf5fa"
 }

@@ -68,10 +68,29 @@ def _calculation_count(node: Any) -> int:
     return 0
 
 
-def test_ui_and_rule_schemas_are_identical(projected: Any, golden: Any) -> None:
-    assert projected.form_ui_schema == golden.FORM_UI_SCHEMA
+def test_ui_guidance_is_the_only_declared_presentation_extension(
+    projected: Any, golden: Any
+) -> None:
+    projected_ui = copy.deepcopy(projected.form_ui_schema)
+    section_a = next(section for section in projected_ui if section["name"] == "SectionA")
+    assert "Column G is entered manually" in section_a.pop("description")
+    assert projected_ui == golden.FORM_UI_SCHEMA
+
+
+def test_rule_schema_remains_identical(projected: Any, golden: Any) -> None:
     assert projected.form_rule_schema == golden.FORM_RULE_SCHEMA
     assert _calculation_count(projected.form_rule_schema) == 35
+
+
+def test_portable_schema_carries_sf424a_field_guidance(projected: Any) -> None:
+    activity_items = projected.form_json_schema["properties"]["activity_line_items"]
+    assert activity_items["items"]["properties"]["activity_title"]["description"].startswith(
+        "Enter the Assistance Listing title"
+    )
+    budget_summary = projected.form_json_schema["properties"]["total_budget_summary"]
+    assert budget_summary["properties"]["total_amount"]["description"] == (
+        "Enter the total budgeted amount for this row. This value is not calculated automatically."
+    )
 
 
 def test_every_rendered_difference_is_bounded(
