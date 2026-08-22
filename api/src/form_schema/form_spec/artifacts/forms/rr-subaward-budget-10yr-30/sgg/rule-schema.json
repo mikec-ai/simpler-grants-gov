@@ -1,0 +1,602 @@
+{
+  "budgetAttachments": {
+    "gg_type": "array",
+    "budgetJustificationAttachment": {
+      "gg_validation": {
+        "rule": "attachment"
+      }
+    },
+    "budgetYear": {
+      "gg_type": "array",
+      "equipment": {
+        "additionalEquipmentsAttachment": {
+          "gg_validation": {
+            "rule": "attachment"
+          }
+        },
+        "totalFund": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.equipmentList[*].fundsRequested",
+              "@THIS.totalFundForAttachedEquipment"
+            ],
+            "order": 7
+          }
+        }
+      },
+      "keyPersons": {
+        "attachedKeyPersons": {
+          "gg_validation": {
+            "rule": "attachment"
+          }
+        },
+        "keyPerson": {
+          "gg_type": "array",
+          "fundsRequested": {
+            "gg_pre_population": {
+              "rule": "sum_monetary",
+              "fields": [
+                "@THIS.requestedSalary",
+                "@THIS.fringeBenefits"
+              ],
+              "order": 1
+            }
+          }
+        },
+        "totalFundForKeyPersons": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.keyPerson[*].fundsRequested",
+              "@THIS.totalFundForAttachedKeyPersons"
+            ],
+            "order": 9
+          }
+        }
+      },
+      "otherPersonnel": {
+        "other": {
+          "gg_type": "array",
+          "fundsRequested": {
+            "gg_pre_population": {
+              "rule": "sum_monetary",
+              "fields": [
+                "@THIS.requestedSalary",
+                "@THIS.fringeBenefits"
+              ],
+              "order": 6
+            }
+          }
+        },
+        "graduateStudents": {
+          "fundsRequested": {
+            "gg_pre_population": {
+              "rule": "sum_monetary",
+              "fields": [
+                "@THIS.requestedSalary",
+                "@THIS.fringeBenefits"
+              ],
+              "order": 3
+            }
+          }
+        },
+        "otherPersonnelTotalNumber": {
+          "gg_pre_population": {
+            "rule": "sum_integer",
+            "fields": [
+              "@THIS.postDocAssociates.numberOfPersonnel",
+              "@THIS.graduateStudents.numberOfPersonnel",
+              "@THIS.undergraduateStudents.numberOfPersonnel",
+              "@THIS.secretarialClerical.numberOfPersonnel",
+              "@THIS.other[*].numberOfPersonnel"
+            ],
+            "order": 11
+          }
+        },
+        "postDocAssociates": {
+          "fundsRequested": {
+            "gg_pre_population": {
+              "rule": "sum_monetary",
+              "fields": [
+                "@THIS.requestedSalary",
+                "@THIS.fringeBenefits"
+              ],
+              "order": 2
+            }
+          }
+        },
+        "secretarialClerical": {
+          "fundsRequested": {
+            "gg_pre_population": {
+              "rule": "sum_monetary",
+              "fields": [
+                "@THIS.requestedSalary",
+                "@THIS.fringeBenefits"
+              ],
+              "order": 5
+            }
+          }
+        },
+        "totalOtherPersonnelFund": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.postDocAssociates.fundsRequested",
+              "@THIS.graduateStudents.fundsRequested",
+              "@THIS.undergraduateStudents.fundsRequested",
+              "@THIS.secretarialClerical.fundsRequested",
+              "@THIS.other[*].fundsRequested"
+            ],
+            "order": 12
+          }
+        },
+        "undergraduateStudents": {
+          "fundsRequested": {
+            "gg_pre_population": {
+              "rule": "sum_monetary",
+              "fields": [
+                "@THIS.requestedSalary",
+                "@THIS.fringeBenefits"
+              ],
+              "order": 4
+            }
+          }
+        }
+      },
+      "directCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.keyPersons.totalFundForKeyPersons",
+            "@THIS.otherPersonnel.totalOtherPersonnelFund",
+            "@THIS.equipment.totalFund",
+            "@THIS.travel.totalTravelCost",
+            "@THIS.participantTraineeSupportCosts.totalCost",
+            "@THIS.otherDirectCosts.totalOtherDirectCost"
+          ],
+          "order": 16
+        }
+      },
+      "indirectCosts": {
+        "totalIndirectCosts": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.indirectCost[*].fundRequested"
+            ],
+            "order": 8
+          }
+        }
+      },
+      "otherDirectCosts": {
+        "totalOtherDirectCost": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.materialsSupplies",
+              "@THIS.publicationCosts",
+              "@THIS.consultantServices",
+              "@THIS.adpComputerServices",
+              "@THIS.subawardConsortiumContractualCosts",
+              "@THIS.equipmentRentalFee",
+              "@THIS.alterationsRenovations",
+              "@THIS.otherDirectCost1.cost",
+              "@THIS.otherDirectCost2.cost",
+              "@THIS.otherDirectCost3.cost",
+              "@THIS.otherDirectCost4.cost",
+              "@THIS.otherDirectCost5.cost",
+              "@THIS.otherDirectCost6.cost",
+              "@THIS.otherDirectCost7.cost",
+              "@THIS.otherDirectCost8.cost",
+              "@THIS.otherDirectCost9.cost",
+              "@THIS.otherDirectCost10.cost"
+            ],
+            "order": 10
+          }
+        }
+      },
+      "participantTraineeSupportCosts": {
+        "totalCost": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.tuitionFeeHealthInsurance",
+              "@THIS.stipends",
+              "@THIS.travel",
+              "@THIS.subsistence",
+              "@THIS.other.cost"
+            ],
+            "order": 13
+          }
+        }
+      },
+      "totalCompensation": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.keyPersons.totalFundForKeyPersons",
+            "@THIS.otherPersonnel.totalOtherPersonnelFund"
+          ],
+          "order": 15
+        }
+      },
+      "totalCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.directCosts",
+            "@THIS.indirectCosts.totalIndirectCosts"
+          ],
+          "order": 17
+        }
+      },
+      "totalCostsFee": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.totalCosts",
+            "@THIS.fee"
+          ],
+          "order": 18
+        }
+      },
+      "travel": {
+        "totalTravelCost": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.domesticTravelCost",
+              "@THIS.foreignTravelCost"
+            ],
+            "order": 14
+          }
+        }
+      }
+    },
+    "budgetSummary": {
+      "cumulativeAdpComputerServices": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.adpComputerServices"
+          ],
+          "order": 19
+        }
+      },
+      "cumulativeAlterationsAndRenovations": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.alterationsRenovations"
+          ],
+          "order": 20
+        }
+      },
+      "cumulativeConsultantServices": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.consultantServices"
+          ],
+          "order": 21
+        }
+      },
+      "cumulativeDomesticTravelCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].travel.domesticTravelCost"
+          ],
+          "order": 22
+        }
+      },
+      "cumulativeEquipmentFacilityRentalFees": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.equipmentRentalFee"
+          ],
+          "order": 23
+        }
+      },
+      "cumulativeFee": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].fee"
+          ],
+          "order": 24
+        }
+      },
+      "cumulativeForeignTravelCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].travel.foreignTravelCost"
+          ],
+          "order": 25
+        }
+      },
+      "cumulativeMaterialAndSupplies": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.materialsSupplies"
+          ],
+          "order": 26
+        }
+      },
+      "cumulativeNoofTrainees": {
+        "gg_pre_population": {
+          "rule": "sum_integer",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.participantTraineeNumber"
+          ],
+          "order": 27
+        }
+      },
+      "cumulativeOther10DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost10.cost"
+          ],
+          "order": 28
+        }
+      },
+      "cumulativeOther1DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost1.cost"
+          ],
+          "order": 29
+        }
+      },
+      "cumulativeOther2DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost2.cost"
+          ],
+          "order": 30
+        }
+      },
+      "cumulativeOther3DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost3.cost"
+          ],
+          "order": 31
+        }
+      },
+      "cumulativeOther4DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost4.cost"
+          ],
+          "order": 32
+        }
+      },
+      "cumulativeOther5DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost5.cost"
+          ],
+          "order": 33
+        }
+      },
+      "cumulativeOther6DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost6.cost"
+          ],
+          "order": 34
+        }
+      },
+      "cumulativeOther7DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost7.cost"
+          ],
+          "order": 35
+        }
+      },
+      "cumulativeOther8DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost8.cost"
+          ],
+          "order": 36
+        }
+      },
+      "cumulativeOther9DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost9.cost"
+          ],
+          "order": 37
+        }
+      },
+      "cumulativeOtherTraineeCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.other.cost"
+          ],
+          "order": 38
+        }
+      },
+      "cumulativePublicationCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.publicationCosts"
+          ],
+          "order": 39
+        }
+      },
+      "cumulativeSubawardConsortiumContractualCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.subawardConsortiumContractualCosts"
+          ],
+          "order": 40
+        }
+      },
+      "cumulativeTotalCostsFee": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].totalCostsFee"
+          ],
+          "order": 41
+        }
+      },
+      "cumulativeTotalFundsRequestedDirectCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].directCosts"
+          ],
+          "order": 42
+        }
+      },
+      "cumulativeTotalFundsRequestedDirectIndirectCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].totalCosts"
+          ],
+          "order": 43
+        }
+      },
+      "cumulativeTotalFundsRequestedEquipment": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].equipment.totalFund"
+          ],
+          "order": 44
+        }
+      },
+      "cumulativeTotalFundsRequestedIndirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].indirectCosts.totalIndirectCosts"
+          ],
+          "order": 45
+        }
+      },
+      "cumulativeTotalFundsRequestedOtherDirectCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.totalOtherDirectCost"
+          ],
+          "order": 46
+        }
+      },
+      "cumulativeTotalFundsRequestedOtherPersonnel": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherPersonnel.totalOtherPersonnelFund"
+          ],
+          "order": 47
+        }
+      },
+      "cumulativeTotalFundsRequestedPersonnel": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].totalCompensation"
+          ],
+          "order": 48
+        }
+      },
+      "cumulativeTotalFundsRequestedSeniorKeyPerson": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].keyPersons.totalFundForKeyPersons"
+          ],
+          "order": 49
+        }
+      },
+      "cumulativeTotalFundsRequestedTraineeCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.totalCost"
+          ],
+          "order": 50
+        }
+      },
+      "cumulativeTotalFundsRequestedTravel": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].travel.totalTravelCost"
+          ],
+          "order": 51
+        }
+      },
+      "cumulativeTotalNoOtherPersonnel": {
+        "gg_pre_population": {
+          "rule": "sum_integer",
+          "fields": [
+            "@PARENT.budgetYear[*].otherPersonnel.otherPersonnelTotalNumber"
+          ],
+          "order": 52
+        }
+      },
+      "cumulativeTraineeStipends": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.stipends"
+          ],
+          "order": 53
+        }
+      },
+      "cumulativeTraineeSubsistence": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.subsistence"
+          ],
+          "order": 54
+        }
+      },
+      "cumulativeTraineeTravel": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.travel"
+          ],
+          "order": 55
+        }
+      },
+      "cumulativeTraineeTuitionFeesHealthInsurance": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.tuitionFeeHealthInsurance"
+          ],
+          "order": 56
+        }
+      }
+    }
+  }
+}

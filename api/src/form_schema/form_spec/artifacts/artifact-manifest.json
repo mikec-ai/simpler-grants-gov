@@ -152,6 +152,31 @@
       "size": 28565
     },
     {
+      "path": "dist/forms/rr-subaward-budget-10yr-30/evidence.json",
+      "sha256": "7e4e4953821d19326eb2326c82df3fea90f21971a26956da6f006b616d70f908",
+      "size": 1928
+    },
+    {
+      "path": "dist/forms/rr-subaward-budget-10yr-30/manifest.json",
+      "sha256": "771231818cad18d4b712d5d6fa73f384d6bbc8b1f034bea2089b27b72e6ee35d",
+      "size": 661
+    },
+    {
+      "path": "dist/forms/rr-subaward-budget-10yr-30/schema.json",
+      "sha256": "5216c63582723ef0b23d9b6c1fe49aa688c9acde2e07988315364405b54ae50f",
+      "size": 5156
+    },
+    {
+      "path": "dist/forms/rr-subaward-budget-10yr-30/sgg/rule-schema.json",
+      "sha256": "bc4471a64670e1560d27fceb85484503cc19592ad1515c69f731ed03de8892d4",
+      "size": 16956
+    },
+    {
+      "path": "dist/forms/rr-subaward-budget-10yr-30/sgg/ui-schema.json",
+      "sha256": "3c1931548bf6b3cfb356c4edc64a4ca7919869d4b10255785d63043b26b0213a",
+      "size": 37069
+    },
+    {
       "path": "dist/forms/rr-subaward-budget-30/evidence.json",
       "sha256": "9067efe79fb32eb837a69ac273685ac597505bf9f3ddc59382df5cf0f8081b11",
       "size": 1153
@@ -584,13 +609,14 @@
       "rr-budget",
       "rr-budget-10yr",
       "rr-subaward-budget",
-      "rr-subaward-budget-30"
+      "rr-subaward-budget-30",
+      "rr-subaward-budget-10yr-30"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "81d2e17ff322c92f19f31f6b57aefb058b2f614e"
+    "revision": "6c0235da2eedbaba12dbbce3c1d497a1e917caa1"
   },
-  "sourceBundleSha256": "1ed6e3846684ea00b0c23052c54e0e572660dd934d3eb834b03b7873c2dfb19f"
+  "sourceBundleSha256": "386950838de3351b5af73437b19edeb47fd876c444c67fb3f280c8de536c6524"
 }
