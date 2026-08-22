@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-application/principal-investigator/schema.json",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "../../../question-bank/generics/person-name/schema.json",
+      "description": "Enter the project director or principal investigator's name.",
+      "title": "Name"
+    },
+    "title": {
+      "$ref": "../../../question-bank/generics/contact-title/schema.json",
+      "description": "Enter the position title.",
+      "title": "Position / Title"
+    },
+    "organizationName": {
+      "$ref": "../../../question-bank/generics/organization-name/schema.json",
+      "description": "Enter the organization name.",
+      "title": "Organization Name"
+    },
+    "department": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "description": "Enter the department.",
+      "title": "Department"
+    },
+    "division": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "description": "Enter the division.",
+      "title": "Division"
+    },
+    "address": {
+      "$ref": "../../../question-bank/generics/address/schema.json",
+      "description": "Enter the address.",
+      "title": "Address"
+    },
+    "phone": {
+      "$ref": "../../../question-bank/generics/phone/schema.json",
+      "description": "Enter the daytime telephone number.",
+      "title": "Telephone Number"
+    },
+    "fax": {
+      "$ref": "../../../question-bank/generics/phone/schema.json",
+      "description": "Enter the fax number.",
+      "title": "Fax Number"
+    },
+    "email": {
+      "$ref": "../../../question-bank/generics/email/schema.json",
+      "description": "Enter a valid email address.",
+      "title": "Email"
+    }
+  },
+  "required": [
+    "name",
+    "organizationName",
+    "address",
+    "phone",
+    "email"
+  ],
+  "description": "The project director or principal investigator named on the application."
+}

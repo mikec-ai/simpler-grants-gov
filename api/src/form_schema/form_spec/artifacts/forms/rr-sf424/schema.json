@@ -1,0 +1,470 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rr-sf424/schema.json",
+  "type": "object",
+  "properties": {
+    "submissionTypeCode": {
+      "$ref": "#/$defs/ResearchSubmissionType",
+      "title": "Type of Submission"
+    },
+    "submittedDate": {
+      "$ref": "../../question-bank/generics/submitted-date/schema.json",
+      "title": "Date Submitted",
+      "readOnly": true
+    },
+    "applicantId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30,
+      "title": "Applicant Identifier"
+    },
+    "stateReceivedDate": {
+      "type": "string",
+      "format": "date",
+      "title": "State Received Date",
+      "readOnly": true
+    },
+    "stateId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30,
+      "title": "State Application Identifier"
+    },
+    "federalId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30,
+      "title": "Federal Identifier"
+    },
+    "agencyRoutingNumber": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 75,
+      "title": "Agency Routing Number"
+    },
+    "grantsGovTrackingId": {
+      "type": "string",
+      "minLength": 13,
+      "maxLength": 15,
+      "title": "Previous Grants.gov Tracking ID"
+    },
+    "applicantInfo": {
+      "$ref": "../../question-bank/research-application/applicant/schema.json",
+      "title": "Applicant Information"
+    },
+    "employerId": {
+      "$ref": "../../question-bank/primary-org/ein/schema.json",
+      "title": "Employer Identification Number"
+    },
+    "applicantType": {
+      "$ref": "#/$defs/ResearchApplicantType",
+      "title": "Type of Applicant"
+    },
+    "applicationType": {
+      "$ref": "#/$defs/ResearchApplicationType",
+      "title": "Type of Application"
+    },
+    "federalAgencyName": {
+      "$ref": "../../question-bank/opportunity/agency-name/schema.json",
+      "title": "Federal Agency Name",
+      "readOnly": true
+    },
+    "assistanceListingNumber": {
+      "$ref": "../../question-bank/opportunity/assistance-listing-number/schema.json",
+      "title": "Assistance Listing Number",
+      "readOnly": true
+    },
+    "activityTitle": {
+      "$ref": "../../question-bank/opportunity/assistance-listing-title/schema.json",
+      "title": "Assistance Listing Title",
+      "readOnly": true
+    },
+    "projectTitle": {
+      "$ref": "../../question-bank/project/title/schema.json",
+      "title": "Project Title",
+      "maxLength": 200
+    },
+    "proposedProjectPeriod": {
+      "$ref": "#/$defs/ResearchProjectPeriod",
+      "title": "Proposed Project Period"
+    },
+    "applicantCongressionalDistrict": {
+      "$ref": "../../question-bank/project/congressional-district/schema.json",
+      "title": "Applicant Congressional District",
+      "pattern": "^(?:[A-Z]{2}|00)-[0-9]{3}$"
+    },
+    "principalInvestigator": {
+      "$ref": "../../question-bank/research-application/principal-investigator/schema.json",
+      "title": "Project Director / Principal Investigator"
+    },
+    "estimatedProjectFunding": {
+      "$ref": "#/$defs/ResearchEstimatedFunding",
+      "title": "Estimated Project Funding"
+    },
+    "stateReview": {
+      "$ref": "#/$defs/ResearchStateReview",
+      "title": "State Review"
+    },
+    "trustAgree": {
+      "$ref": "#/$defs/AffirmativeCertification",
+      "title": "I agree"
+    },
+    "sflllAttachment": {
+      "$ref": "../../question-bank/application/disclosure-document/schema.json",
+      "title": "SF-LLL or Other Explanatory Documentation"
+    },
+    "authorizedRepresentative": {
+      "$ref": "../../question-bank/research-application/authorized-representative/schema.json",
+      "title": "Authorized Representative"
+    },
+    "aorSignature": {
+      "$ref": "../../question-bank/aor/signature/schema.json",
+      "title": "Signature of Authorized Representative",
+      "readOnly": true
+    },
+    "aorSignedDate": {
+      "$ref": "../../question-bank/aor/date-signed/schema.json",
+      "title": "Date Signed",
+      "readOnly": true
+    },
+    "preApplicationAttachment": {
+      "$ref": "../../question-bank/application/pre-application-document/schema.json",
+      "title": "Pre-application"
+    },
+    "coverLetterAttachment": {
+      "$ref": "../../question-bank/application/cover-letter/schema.json",
+      "title": "Cover Letter"
+    }
+  },
+  "required": [
+    "submissionTypeCode",
+    "applicantInfo",
+    "employerId",
+    "applicantType",
+    "applicationType",
+    "federalAgencyName",
+    "projectTitle",
+    "proposedProjectPeriod",
+    "applicantCongressionalDistrict",
+    "principalInvestigator",
+    "estimatedProjectFunding",
+    "stateReview",
+    "trustAgree",
+    "authorizedRepresentative"
+  ],
+  "description": "Research & Related Application for Federal Assistance, Grants.gov form version 5.0.",
+  "$defs": {
+    "ResearchSubmissionType": {
+      "type": "string",
+      "enum": [
+        "Preapplication",
+        "Application",
+        "Change/Corrected Application"
+      ]
+    },
+    "ApplicantTypeCode": {
+      "type": "string",
+      "enum": [
+        "A: State Government",
+        "B: County Government",
+        "C: City or Township Government",
+        "D: Special District Government",
+        "E: Regional Organization",
+        "F: U.S. Territory or Possession",
+        "G: Independent School District",
+        "H: Public/state Controlled Institution of Higher Education",
+        "I: Indian/Native American Tribal Government (Federally Recognized)",
+        "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
+        "K: Indian/Native American Tribally Designated Organization",
+        "L: Public/Indian Housing Authority",
+        "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
+        "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
+        "O: Private Institution of Higher Education",
+        "P: Individual",
+        "Q: For-Profit Organization (Other than Small Business)",
+        "R: Small Business",
+        "S: Hispanic-serving Institution",
+        "T: Historically Black Colleges and Universities (HBCUs)",
+        "U: Tribally Controlled Colleges and Universities (TCCUs)",
+        "V: Alaska Native and Native Hawaiian Serving Institutions",
+        "W: Non-domestic (non-US) Entity",
+        "X: Other (specify)"
+      ],
+      "description": "The applicant's category, from the Executive Order 12372 list.",
+      "title": "Type of Applicant"
+    },
+    "ResearchSmallBusinessType": {
+      "type": "object",
+      "properties": {
+        "sociallyEconomicallyDisadvantaged": {
+          "type": "string",
+          "title": "Socially and Economically Disadvantaged"
+        },
+        "womenOwned": {
+          "type": "string",
+          "title": "Women Owned"
+        }
+      }
+    },
+    "ResearchApplicantType": {
+      "type": "object",
+      "properties": {
+        "applicantTypeCode": {
+          "$ref": "#/$defs/ApplicantTypeCode",
+          "title": "Applicant Type"
+        },
+        "applicantTypeCodeOtherExplanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 50,
+          "title": "Other Applicant Type Explanation"
+        },
+        "smallBusinessOrganizationType": {
+          "$ref": "#/$defs/ResearchSmallBusinessType",
+          "title": "Small Business Organization Type"
+        }
+      },
+      "required": [
+        "applicantTypeCode"
+      ]
+    },
+    "ResearchApplicationTypeCode": {
+      "type": "string",
+      "enum": [
+        "New",
+        "Resubmission",
+        "Renewal",
+        "Continuation",
+        "Revision"
+      ]
+    },
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    },
+    "ResearchRevisionCode": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "AC",
+        "AD",
+        "BC",
+        "BD"
+      ]
+    },
+    "ResearchApplicationType": {
+      "type": "object",
+      "properties": {
+        "applicationTypeCode": {
+          "$ref": "#/$defs/ResearchApplicationTypeCode",
+          "title": "Application Type"
+        },
+        "isOtherAgencySubmission": {
+          "$ref": "#/$defs/YesNoCode",
+          "title": "Is this application being submitted to another agency?"
+        },
+        "otherAgencySubmissionExplanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 20,
+          "title": "Other Agency Submission Explanation"
+        },
+        "revisionCode": {
+          "$ref": "#/$defs/ResearchRevisionCode",
+          "title": "Revision Code"
+        },
+        "revisionCodeOtherExplanation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 45,
+          "title": "Other Revision Explanation"
+        }
+      },
+      "required": [
+        "applicationTypeCode",
+        "isOtherAgencySubmission"
+      ]
+    },
+    "ResearchProjectPeriod": {
+      "type": "object",
+      "properties": {
+        "proposedStartDate": {
+          "$ref": "../../question-bank/project/start-date/schema.json",
+          "title": "Proposed Start Date"
+        },
+        "proposedEndDate": {
+          "$ref": "../../question-bank/project/end-date/schema.json",
+          "title": "Proposed End Date"
+        }
+      },
+      "required": [
+        "proposedStartDate",
+        "proposedEndDate"
+      ]
+    },
+    "ResearchEstimatedFunding": {
+      "type": "object",
+      "properties": {
+        "totalEstimatedAmount": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 9999999999999.99,
+          "title": "Total Federal Funds Requested"
+        },
+        "totalNonFederalRequested": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 9999999999999.99,
+          "title": "Total Non-Federal Funds"
+        },
+        "totalFederalNonFederalRequested": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 9999999999999.99,
+          "title": "Total Federal and Non-Federal Funds"
+        },
+        "estimatedProgramIncome": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 9999999999999.99,
+          "title": "Estimated Program Income"
+        }
+      },
+      "required": [
+        "totalEstimatedAmount",
+        "totalNonFederalRequested",
+        "totalFederalNonFederalRequested",
+        "estimatedProgramIncome"
+      ]
+    },
+    "ResearchStateReviewCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "Program is not covered by E.O. 12372",
+        "Program has not been selected by state for review"
+      ]
+    },
+    "ResearchStateReview": {
+      "type": "object",
+      "properties": {
+        "stateReviewCodeType": {
+          "$ref": "#/$defs/ResearchStateReviewCode",
+          "title": "State Review"
+        },
+        "stateReviewDate": {
+          "type": "string",
+          "format": "date",
+          "title": "State Review Date"
+        }
+      },
+      "required": [
+        "stateReviewCodeType"
+      ]
+    },
+    "AffirmativeCertification": {
+      "type": "string",
+      "enum": [
+        "Y: Yes"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "applicationType": {
+            "properties": {
+              "applicationTypeCode": {
+                "const": "Revision"
+              }
+            },
+            "required": [
+              "applicationTypeCode"
+            ]
+          }
+        },
+        "required": [
+          "applicationType"
+        ]
+      },
+      "then": {
+        "required": [
+          "federalId"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "applicationType": {
+            "properties": {
+              "applicationTypeCode": {
+                "const": "Continuation"
+              }
+            },
+            "required": [
+              "applicationTypeCode"
+            ]
+          }
+        },
+        "required": [
+          "applicationType"
+        ]
+      },
+      "then": {
+        "required": [
+          "federalId"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "applicationType": {
+            "properties": {
+              "applicationTypeCode": {
+                "const": "Renewal"
+              }
+            },
+            "required": [
+              "applicationTypeCode"
+            ]
+          }
+        },
+        "required": [
+          "applicationType"
+        ]
+      },
+      "then": {
+        "required": [
+          "federalId"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "submissionTypeCode": {
+            "const": "Change/Corrected Application"
+          }
+        },
+        "required": [
+          "submissionTypeCode"
+        ]
+      },
+      "then": {
+        "required": [
+          "grantsGovTrackingId"
+        ]
+      }
+    }
+  ]
+}

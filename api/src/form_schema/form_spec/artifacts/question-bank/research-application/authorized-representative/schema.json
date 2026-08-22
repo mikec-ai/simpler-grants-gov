@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-application/authorized-representative/schema.json",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "../../../question-bank/aor/name/schema.json",
+      "description": "Enter the authorized representative's name.",
+      "title": "Name"
+    },
+    "title": {
+      "$ref": "../../../question-bank/aor/title/schema.json",
+      "description": "Enter the position title.",
+      "title": "Position / Title"
+    },
+    "organizationName": {
+      "$ref": "../../../question-bank/generics/organization-name/schema.json",
+      "description": "Enter the organization name.",
+      "title": "Organization Name"
+    },
+    "department": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "description": "Enter the department.",
+      "title": "Department"
+    },
+    "division": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "description": "Enter the division.",
+      "title": "Division"
+    },
+    "address": {
+      "$ref": "../../../question-bank/generics/address/schema.json",
+      "description": "Enter the address.",
+      "title": "Address"
+    },
+    "phone": {
+      "$ref": "../../../question-bank/aor/phone/schema.json",
+      "description": "Enter the daytime telephone number.",
+      "title": "Telephone Number"
+    },
+    "fax": {
+      "$ref": "../../../question-bank/aor/fax/schema.json",
+      "description": "Enter the fax number.",
+      "title": "Fax Number"
+    },
+    "email": {
+      "$ref": "../../../question-bank/aor/email/schema.json",
+      "description": "Enter a valid email address.",
+      "title": "Email"
+    }
+  },
+  "required": [
+    "name",
+    "title",
+    "organizationName",
+    "address",
+    "phone",
+    "email"
+  ],
+  "description": "The representative authorized to submit the Research and Related application."
+}

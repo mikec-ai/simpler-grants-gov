@@ -1,4 +1,4 @@
-from src.form_schema.form_spec.projection import Projection, project_schema
+from src.form_schema.form_spec.projection import Projection, project_schema, project_ui_schema
 
 
 def test_object_composition_rebases_local_definitions_to_the_shared_bank() -> None:
@@ -110,4 +110,40 @@ def test_nested_overlay_preserves_a_hoisted_definition() -> None:
                 "readOnly": True,
             },
         },
+    }
+
+
+def test_ui_condition_projects_only_the_data_pointer() -> None:
+    projected = project_ui_schema(
+        {
+            "type": "field",
+            "definition": "/properties/applicantType/properties/otherExplanation",
+            "conditional": {
+                "when": {
+                    "op": "equals",
+                    "ref": {
+                        "scope": "root",
+                        "pointer": "/applicantType/applicantTypeCode",
+                    },
+                    "value": "X: Other (specify)",
+                },
+                "then": {"visible": True},
+                "otherwise": {"visible": False},
+            },
+        },
+        Projection(),
+    )
+
+    assert projected["definition"] == ("/properties/applicant_type/properties/other_explanation")
+    assert projected["conditional"] == {
+        "when": {
+            "op": "equals",
+            "ref": {
+                "scope": "root",
+                "pointer": "/applicant_type/applicant_type_code",
+            },
+            "value": "X: Other (specify)",
+        },
+        "then": {"visible": True},
+        "otherwise": {"visible": False},
     }

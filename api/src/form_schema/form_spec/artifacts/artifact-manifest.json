@@ -177,6 +177,31 @@
       "size": 28565
     },
     {
+      "path": "dist/forms/rr-sf424/evidence.json",
+      "sha256": "4940724369cf51604c989af8d6ac748e1d1690332348f8b406c55b962ecc450b",
+      "size": 2149
+    },
+    {
+      "path": "dist/forms/rr-sf424/manifest.json",
+      "sha256": "4c32da8e5826670caa351137dfd31ef1d57873aa018336b0f9621242889a0cbe",
+      "size": 629
+    },
+    {
+      "path": "dist/forms/rr-sf424/schema.json",
+      "sha256": "217bd6e5e811b99cbeb9c478c62dc24974c17595a50f1c5d9e9cdee32ae5379d",
+      "size": 12923
+    },
+    {
+      "path": "dist/forms/rr-sf424/sgg/rule-schema.json",
+      "sha256": "b296009098ea4765629dcddc4b76c3fbb5ee27e81122cd2e134ba221d9c96356",
+      "size": 992
+    },
+    {
+      "path": "dist/forms/rr-sf424/sgg/ui-schema.json",
+      "sha256": "81319c9e9a5c70412ffbca6f331340e505138e7088295888e8fb063ab968083f",
+      "size": 19846
+    },
+    {
       "path": "dist/forms/rr-subaward-budget-10yr-30/evidence.json",
       "sha256": "7e4e4953821d19326eb2326c82df3fea90f21971a26956da6f006b616d70f908",
       "size": 1928
@@ -362,9 +387,19 @@
       "size": 221
     },
     {
+      "path": "dist/question-bank/application/cover-letter/schema.json",
+      "sha256": "25c97c845055c6dba62ee4c96f022bd1fe5143466ee607f7f538f6641326026b",
+      "size": 227
+    },
+    {
       "path": "dist/question-bank/application/date-received/schema.json",
       "sha256": "46e288d5d537b168ce446f884a3162bb7d58e40e5c52f8cb25d1a24a496a7cd1",
       "size": 243
+    },
+    {
+      "path": "dist/question-bank/application/disclosure-document/schema.json",
+      "sha256": "777709b71bbc7ff1e30cb503fdf8007fa7b4497353cfb3fbe93c44c21dbd2966",
+      "size": 260
     },
     {
       "path": "dist/question-bank/application/federal-debt-explanation/schema.json",
@@ -375,6 +410,11 @@
       "path": "dist/question-bank/application/other-narrative/schema.json",
       "sha256": "9dbc5977ec1a2559c16294230874cd71cf6c28372809ab64de18a062b1cc945d",
       "size": 273
+    },
+    {
+      "path": "dist/question-bank/application/pre-application-document/schema.json",
+      "sha256": "d64bd94041e6705fadec6c92a9454918ebf17098aa91e5e8835c6c93da010cf9",
+      "size": 261
     },
     {
       "path": "dist/question-bank/budget/categories/schema.json",
@@ -512,6 +552,11 @@
       "size": 207
     },
     {
+      "path": "dist/question-bank/generics/submitted-date/schema.json",
+      "sha256": "4d232213207224cdcd0bf7dd655f766384c936c7ac3c4424f805700927df2ff4",
+      "size": 242
+    },
+    {
       "path": "dist/question-bank/opportunity/agency-name/schema.json",
       "sha256": "b658b0db84606fd8569b067bc1fa33c975a3ba10ff104e538d795f50eee2bbc2",
       "size": 244
@@ -625,6 +670,21 @@
       "path": "dist/question-bank/project/title/schema.json",
       "sha256": "41109816c99a87b69d400db6e7771a9756f7ceb0a47cec50b409cbe1394625b6",
       "size": 237
+    },
+    {
+      "path": "dist/question-bank/research-application/applicant/schema.json",
+      "sha256": "fe7964aac3ed76971dec45507645c2ffabd85ae5ee4a64b9bdfbea7b8b04646d",
+      "size": 3617
+    },
+    {
+      "path": "dist/question-bank/research-application/authorized-representative/schema.json",
+      "sha256": "dbede229cb3f7aa2de0aa55e8901b5abc96b948636da4efbfaae35bf5221c295",
+      "size": 1914
+    },
+    {
+      "path": "dist/question-bank/research-application/principal-investigator/schema.json",
+      "sha256": "99f5c0fc1583ed3434fe4acffc4ac46da0da61bf0d857b76a4abd6f0bafe20e2",
+      "size": 1952
     }
   ],
   "selection": {
@@ -641,13 +701,14 @@
       "rr-subaward-budget",
       "rr-subaward-budget-30",
       "rr-subaward-budget-10yr-30",
-      "project-abstract-summary"
+      "project-abstract-summary",
+      "rr-sf424"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "bb4db8f14efae42a96a4abdc39adf8e866bc3e49"
+    "revision": "49e2e2ed027131a25237bc927aa5a18753257925"
   },
-  "sourceBundleSha256": "fd215d72a17c5aedad39d0609cc49e81337cd75a1f31e4f49fc243479df62da9"
+  "sourceBundleSha256": "8eb58e446adcc8ab001aba10e71708bb76ae33af3abc9c51d0975d2241993c30"
 }

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-application/applicant/schema.json",
+  "type": "object",
+  "properties": {
+    "organizationInfo": {
+      "$ref": "#/$defs/ResearchApplicantOrganization",
+      "description": "Enter the applicant organization information.",
+      "title": "Organization Information"
+    },
+    "contactPersonInfo": {
+      "$ref": "#/$defs/ResearchApplicationContact",
+      "description": "Enter the contact person for this application.",
+      "title": "Contact Person Information"
+    }
+  },
+  "required": [
+    "organizationInfo",
+    "contactPersonInfo"
+  ],
+  "description": "Applicant organization and application-contact information.",
+  "$defs": {
+    "ResearchApplicantOrganization": {
+      "type": "object",
+      "properties": {
+        "organizationName": {
+          "$ref": "../../../question-bank/primary-org/legal-name/schema.json",
+          "description": "Enter the applicant organization's legal name.",
+          "title": "Organization Name"
+        },
+        "address": {
+          "$ref": "../../../question-bank/generics/address/schema.json",
+          "description": "Enter the applicant organization's address.",
+          "title": "Address"
+        },
+        "department": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Enter the department.",
+          "title": "Department"
+        },
+        "division": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Enter the division.",
+          "title": "Division"
+        },
+        "samUei": {
+          "$ref": "../../../question-bank/primary-org/uei/schema.json",
+          "description": "The applicant organization's Unique Entity Identifier.",
+          "title": "SAM UEI"
+        },
+        "employerId": {
+          "type": "string",
+          "minLength": 9,
+          "maxLength": 30
+        }
+      },
+      "required": [
+        "organizationName",
+        "address",
+        "samUei"
+      ],
+      "description": "The applicant organization information required by an R&R cover form."
+    },
+    "ResearchApplicationContact": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "../../../question-bank/generics/person-name/schema.json",
+          "description": "Enter the contact person's name.",
+          "title": "Name"
+        },
+        "address": {
+          "$ref": "../../../question-bank/generics/address/schema.json",
+          "description": "Enter the contact person's address.",
+          "title": "Address"
+        },
+        "title": {
+          "$ref": "../../../question-bank/generics/contact-title/schema.json",
+          "description": "Enter the contact person's title.",
+          "title": "Title"
+        },
+        "phone": {
+          "$ref": "../../../question-bank/generics/phone/schema.json",
+          "description": "Enter the daytime telephone number.",
+          "title": "Telephone Number"
+        },
+        "fax": {
+          "$ref": "../../../question-bank/generics/phone/schema.json",
+          "description": "Enter the fax number.",
+          "title": "Fax Number"
+        },
+        "email": {
+          "$ref": "../../../question-bank/generics/email/schema.json",
+          "description": "Enter a valid email address.",
+          "title": "Email"
+        }
+      },
+      "required": [
+        "name",
+        "address",
+        "phone",
+        "email"
+      ],
+      "description": "The person to contact about the Research and Related application."
+    }
+  }
+}

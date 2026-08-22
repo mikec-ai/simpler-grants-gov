@@ -1,0 +1,56 @@
+{
+  "submittedDate": {
+    "gg_post_population": {
+      "rule": "current_date"
+    }
+  },
+  "applicantInfo": {
+    "organizationInfo": {
+      "samUei": {
+        "gg_pre_population": {
+          "rule": "uei"
+        }
+      }
+    }
+  },
+  "federalAgencyName": {
+    "gg_pre_population": {
+      "rule": "agency_name"
+    }
+  },
+  "assistanceListingNumber": {
+    "gg_pre_population": {
+      "rule": "assistance_listing_number"
+    }
+  },
+  "activityTitle": {
+    "gg_pre_population": {
+      "rule": "assistance_listing_program_title"
+    }
+  },
+  "sflllAttachment": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "aorSignature": {
+    "gg_post_population": {
+      "rule": "signature"
+    }
+  },
+  "aorSignedDate": {
+    "gg_post_population": {
+      "rule": "current_date"
+    }
+  },
+  "preApplicationAttachment": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "coverLetterAttachment": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  }
+}
