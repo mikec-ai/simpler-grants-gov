@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "rr-budget/schema.json",
+  "$id": "budget/research/details/schema.json",
   "type": "object",
   "properties": {
     "samUei": {
-      "$ref": "../../question-bank/primary-org/uei/schema.json",
-      "description": "Unique Entity Identifier for the applicant organization.",
+      "$ref": "../../../../question-bank/primary-org/uei/schema.json",
+      "description": "Unique Entity Identifier for the organization responsible for this budget.",
       "title": "UEI:"
     },
     "budgetType": {
@@ -14,19 +14,19 @@
       "title": "Budget Type:"
     },
     "organizationName": {
-      "$ref": "../../question-bank/generics/organization-name/schema.json",
+      "$ref": "../../../../question-bank/generics/organization-name/schema.json",
       "description": "Name of the organization responsible for this budget.",
       "title": "Enter name of Organization:"
     },
     "budgetJustificationAttachment": {
-      "$ref": "../../question-bank/budget/justification/schema.json",
+      "$ref": "../../../../question-bank/budget/justification/schema.json",
       "description": "Attach the budget justification file.",
       "title": "L. Budget Justification (Only attach one file.)"
     },
     "budgetYear": {
       "type": "array",
       "items": {
-        "$ref": "../../question-bank/budget/research/period/schema.json",
+        "$ref": "../../../../question-bank/budget/research/period/schema.json",
         "properties": {
           "directCosts": {
             "readOnly": true
@@ -142,11 +142,11 @@
       },
       "minItems": 1,
       "maxItems": 5,
-      "description": "One to five budget periods.",
+      "description": "One to five budget periods for this project or subaward budget.",
       "title": "Budget Year"
     },
     "budgetSummary": {
-      "$ref": "../../question-bank/budget/research/cumulative-summary/schema.json",
+      "$ref": "../../../../question-bank/budget/research/cumulative-summary/schema.json",
       "description": "Cumulative totals across every budget period.",
       "title": "Budget Summary",
       "properties": {
@@ -274,7 +274,8 @@
     "budgetYear",
     "budgetSummary"
   ],
-  "description": "Research & Related Budget, Grants.gov form version 3.0.",
+  "description": "A complete Research & Related budget that can stand alone or belong to a subaward collection.",
+  "title": "Research & Related Budget",
   "$defs": {
     "ResearchBudgetType": {
       "type": "string",

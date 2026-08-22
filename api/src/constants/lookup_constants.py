@@ -157,6 +157,7 @@ class FormFamily(StrEnum):
 class FormType(StrEnum):
     SF424 = "SF424"
     RR_BUDGET = "RRBudget"
+    RR_SUBAWARD_BUDGET = "RRSubawardBudget"
     SF424_SHORT = "SF424Short"
     SF424A = "SF424A"
     SF424B = "SF424B"

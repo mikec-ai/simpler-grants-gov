@@ -113,8 +113,8 @@
     },
     {
       "path": "dist/forms/rr-budget/schema.json",
-      "sha256": "12fe04dfdedc15880993f06d9431cda292b71022387833bfd42508cde78356b1",
-      "size": 7999
+      "sha256": "c642671ac71f5442513f3feb07ee6764c846969ebf2619a03a30bcc32e3e4343",
+      "size": 8051
     },
     {
       "path": "dist/forms/rr-budget/sgg/rule-schema.json",
@@ -123,8 +123,33 @@
     },
     {
       "path": "dist/forms/rr-budget/sgg/ui-schema.json",
-      "sha256": "ffc157a3c4a5cf917043fc96b706a6603277efdd4568d27f7d3726dd4fd33f60",
-      "size": 28511
+      "sha256": "76cd90317ab4ad15a031b3f0ba7b4fd6a8e0f9c37a695ad5844b3c00160e6f33",
+      "size": 28565
+    },
+    {
+      "path": "dist/forms/rr-subaward-budget/evidence.json",
+      "sha256": "f9a2450cdea8958e3a2fed2c3bc0ca2d4364f2adb3b522d2e803b75cacdacaf3",
+      "size": 1169
+    },
+    {
+      "path": "dist/forms/rr-subaward-budget/manifest.json",
+      "sha256": "cc3315fe1d154cea54bd291534a5f220525d280891b3aae052ad0122d38804e1",
+      "size": 630
+    },
+    {
+      "path": "dist/forms/rr-subaward-budget/schema.json",
+      "sha256": "2718670057a4735dfaaf481702a336519cc23dfc520b29e74f71af5a48e874fb",
+      "size": 8167
+    },
+    {
+      "path": "dist/forms/rr-subaward-budget/sgg/rule-schema.json",
+      "sha256": "c9e130c779dafd410d5a8f38f8d238e52a845e045ae93f171394f107364e887f",
+      "size": 8682
+    },
+    {
+      "path": "dist/forms/rr-subaward-budget/sgg/ui-schema.json",
+      "sha256": "232f52937647cf29bdebfe8f250a89216a7686c264b6c479910da10a0060ba6a",
+      "size": 37058
     },
     {
       "path": "dist/forms/sf424-short/evidence.json",
@@ -295,6 +320,11 @@
       "path": "dist/question-bank/budget/research/cumulative-summary/schema.json",
       "sha256": "ce3860a003495bcab6fa45a5e6330f2ea96047c6ed34798da7529103614600bc",
       "size": 6824
+    },
+    {
+      "path": "dist/question-bank/budget/research/details/schema.json",
+      "sha256": "e6a3c36ca539121a745b01f7ac7dd0ec0d97ed75238c533de5e9cd364e459594",
+      "size": 8227
     },
     {
       "path": "dist/question-bank/budget/research/equipment/schema.json",
@@ -501,13 +531,14 @@
       "project-narrative-attachments",
       "budget-narrative-attachments",
       "other-narrative-attachments",
-      "rr-budget"
+      "rr-budget",
+      "rr-subaward-budget"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "b6b45b84baab5750218b1c25dbc87fd50763012a"
+    "revision": "1ebbd407738e426bd126e98068a2c16126d023b9"
   },
-  "sourceBundleSha256": "327a2433b4fce41c04eb9a6ccab6d6905e2ba3b3ff2b19cd9553f9253cf44af2"
+  "sourceBundleSha256": "1635188899dfbdfd34485e0d9a5b8b934b49d528cda2ac1e09bece0ff54d77dd"
 }
