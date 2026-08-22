@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aor/fax/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 25,
+  "description": "Enter the Fax Number.",
+  "title": "Fax Number"
+}

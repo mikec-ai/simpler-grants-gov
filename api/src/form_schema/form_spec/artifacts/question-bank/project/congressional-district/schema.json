@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project/congressional-district/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 6,
+  "description": "A congressional district, as a two-character state abbreviation and a three-character\ndistrict number: `CA-005`."
+}

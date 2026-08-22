@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aor/title/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 45,
+  "description": "Enter the position title.",
+  "title": "Title"
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project/start-date/schema.json",
+  "type": "string",
+  "format": "date",
+  "description": "Enter the date in the format MM/DD/YYYY.",
+  "title": "Project Start Date"
+}

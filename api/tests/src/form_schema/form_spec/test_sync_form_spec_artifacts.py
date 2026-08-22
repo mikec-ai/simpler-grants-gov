@@ -34,6 +34,7 @@ def _bundle(path, files):
 def test_selects_only_runtime_files_and_transitive_questions(tmp_path):
     files = {
         "dist/forms/example/manifest.json": b"{}",
+        "dist/forms/example/evidence.json": b"{}",
         "dist/forms/example/schema.json": b'{"$ref":"../../question-bank/a/schema.json"}',
         "dist/forms/example/sgg/rule-schema.json": b"{}",
         "dist/forms/example/sgg/ui-schema.json": b"[]",
@@ -49,6 +50,7 @@ def test_selects_only_runtime_files_and_transitive_questions(tmp_path):
 
     assert set(selected) == {
         "forms/example/manifest.json",
+        "forms/example/evidence.json",
         "forms/example/schema.json",
         "forms/example/sgg/rule-schema.json",
         "forms/example/sgg/ui-schema.json",
@@ -56,7 +58,7 @@ def test_selects_only_runtime_files_and_transitive_questions(tmp_path):
         "question-bank/b/schema.json",
     }
     assert manifest["source"]["revision"] == "abc123"
-    assert manifest["selection"]["form"] == "example"
+    assert manifest["selection"]["forms"] == ["example"]
 
     target = tmp_path / "artifacts"
     write_selection(target=target, manifest=manifest, files=selected)
@@ -67,6 +69,7 @@ def test_selects_only_runtime_files_and_transitive_questions(tmp_path):
 def test_rejects_a_reference_outside_the_question_bank(tmp_path):
     files = {
         "dist/forms/example/manifest.json": b"{}",
+        "dist/forms/example/evidence.json": b"{}",
         "dist/forms/example/schema.json": b'{"$ref":"../../../outside.json"}',
         "dist/forms/example/sgg/rule-schema.json": b"{}",
         "dist/forms/example/sgg/ui-schema.json": b"[]",
@@ -77,3 +80,29 @@ def test_rejects_a_reference_outside_the_question_bank(tmp_path):
 
     with pytest.raises(ValueError, match="escapes the question bank"):
         select_artifacts(bundle, "example")
+
+
+def test_selects_multiple_forms_and_deduplicates_their_shared_questions(tmp_path):
+    files = {
+        **{
+            f"dist/forms/{form}/{name}": payload
+            for form in ("first", "second")
+            for name, payload in {
+                "manifest.json": b"{}",
+                "evidence.json": b"{}",
+                "schema.json": b'{"$ref":"../../question-bank/shared/schema.json"}',
+                "sgg/rule-schema.json": b"{}",
+                "sgg/ui-schema.json": b"[]",
+            }.items()
+        },
+        "dist/question-bank/shared/schema.json": b'{"type":"string"}',
+    }
+    bundle = tmp_path / "bundle.tar.gz"
+    _bundle(bundle, files)
+
+    manifest, selected = select_artifacts(bundle, ["first", "second", "first"])
+
+    assert manifest["selection"]["forms"] == ["first", "second"]
+    assert "forms/first/schema.json" in selected
+    assert "forms/second/schema.json" in selected
+    assert list(selected).count("question-bank/shared/schema.json") == 1

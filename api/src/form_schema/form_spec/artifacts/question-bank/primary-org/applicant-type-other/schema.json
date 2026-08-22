@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "primary-org/applicant-type-other/schema.json",
+  "type": "string",
+  "minLength": 0,
+  "maxLength": 30,
+  "description": "Enter the applicant type here if you selected \"Other (specify)\" for Type of applicant.",
+  "title": "Type of Applicant Other Explanation"
+}

@@ -1,0 +1,499 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sf424/schema.json",
+  "type": "object",
+  "properties": {
+    "submissionType": {
+      "$ref": "#/$defs/SubmissionType",
+      "description": "Select one type of submission in accordance with agency instructions.",
+      "title": "Submission Type"
+    },
+    "applicationType": {
+      "$ref": "#/$defs/ApplicationType",
+      "description": "Select one type of application in accordance with agency instructions.",
+      "title": "Application Type"
+    },
+    "revisionType": {
+      "$ref": "#/$defs/RevisionType",
+      "description": "Select a revision type from the list provided. A selection is required if Type of Application is Revision.",
+      "title": "Revision Type"
+    },
+    "revisionOtherSpecify": {
+      "type": "string",
+      "description": "Please specify the type of revision. This field is required if E. Other is checked.",
+      "title": "Other Explanation"
+    },
+    "dateReceived": {
+      "$ref": "../../question-bank/application/date-received/schema.json",
+      "description": "Completed by Grants.gov upon submission.",
+      "title": "Date Received"
+    },
+    "applicantId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30,
+      "description": "Enter the applicant's control number, if applicable.",
+      "title": "Applicant Identifier"
+    },
+    "federalEntityIdentifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30,
+      "description": "Enter the number assigned to your organization by the Federal agency.",
+      "title": "Federal Entity Identifier"
+    },
+    "federalAwardIdentifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 25,
+      "description": "For new applications leave blank. For a continuation or revision to an existing award, enter the previously assigned Federal award identifier number. If a changed/corrected application, enter the Federal Identifier in accordance with agency instructions.",
+      "title": "Federal Award Identifier"
+    },
+    "stateReceiveDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Leave blank, to be filled out by state.",
+      "title": "Date Received By State"
+    },
+    "stateApplicationId": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 30,
+      "description": "Leave blank, to be filled out by state.",
+      "title": "State Application Identifier"
+    },
+    "organizationName": {
+      "$ref": "../../question-bank/primary-org/legal-name/schema.json",
+      "description": "Enter the legal name of the applicant that will undertake the assistance activity. This is the organization that has registered with the System for Award Management (SAM). Information on registering with SAM may be obtained by visiting SAM.gov.",
+      "title": "Legal Name"
+    },
+    "employerTaxpayerIdentificationNumber": {
+      "$ref": "../../question-bank/primary-org/ein/schema.json",
+      "description": "Enter either TIN or EIN as assigned by the Internal Revenue Service.  If your organization is not in the US, enter 44-4444444.",
+      "title": "EIN/TIN"
+    },
+    "samUei": {
+      "$ref": "../../question-bank/primary-org/uei/schema.json",
+      "description": "UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
+      "title": "SAM UEI"
+    },
+    "applicant": {
+      "$ref": "../../question-bank/primary-org/address/schema.json",
+      "description": "Enter information about the applicant.",
+      "title": "Applicant"
+    },
+    "departmentName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 30,
+      "description": "Enter the name of primary organizational department, service, laboratory, or equivalent level within the organization which will undertake the assistance activity.",
+      "title": "Department Name"
+    },
+    "divisionName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "description": "Enter the name of primary organizational division, office, or major subdivision which will undertake the assistance activity.",
+      "title": "Division Name"
+    },
+    "contactPerson": {
+      "$ref": "../../question-bank/generics/person-name/schema.json",
+      "description": "Enter information about the contact person.",
+      "title": "Contact Person"
+    },
+    "contactPersonTitle": {
+      "$ref": "../../question-bank/generics/contact-title/schema.json",
+      "description": "Enter the position title.",
+      "title": "Title"
+    },
+    "organizationAffiliation": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "description": "Enter the organization if different from the applicant organization.",
+      "title": "Organizational Affiliation"
+    },
+    "phoneNumber": {
+      "$ref": "../../question-bank/generics/phone/schema.json",
+      "description": "Enter the daytime Telephone Number.",
+      "title": "Telephone Number"
+    },
+    "fax": {
+      "$ref": "../../question-bank/generics/phone/schema.json",
+      "description": "Enter the fax Number.",
+      "title": "Fax Number"
+    },
+    "email": {
+      "$ref": "../../question-bank/generics/email/schema.json",
+      "description": "Enter a valid email Address.",
+      "title": "Email"
+    },
+    "applicantTypeCode": {
+      "$ref": "../../question-bank/primary-org/applicant-type/schema.json",
+      "description": "Select the appropriate applicant types.",
+      "title": "Type of Applicant"
+    },
+    "applicantTypeOtherSpecify": {
+      "$ref": "../../question-bank/primary-org/applicant-type-other/schema.json",
+      "description": "Enter the applicant type here if you selected \"Other (specify)\" for Type of applicant.",
+      "title": "Type of Applicant Other Explanation"
+    },
+    "agencyName": {
+      "$ref": "../../question-bank/opportunity/agency-name/schema.json",
+      "description": "Pre-populated from the Application cover sheet.",
+      "title": "Agency Name"
+    },
+    "assistanceListingNumber": {
+      "$ref": "../../question-bank/opportunity/assistance-listing-number/schema.json",
+      "description": "Pre-populated from the Application cover sheet.",
+      "title": "Assistance Listing Number"
+    },
+    "assistanceListingProgramTitle": {
+      "$ref": "../../question-bank/opportunity/assistance-listing-title/schema.json",
+      "description": "Pre-populated from the Application cover sheet.",
+      "title": "Assistance Listing Title"
+    },
+    "fundingOpportunityNumber": {
+      "$ref": "../../question-bank/opportunity/number/schema.json",
+      "description": "Pre-populated from the Application cover sheet.",
+      "title": "Opportunity Number"
+    },
+    "fundingOpportunityTitle": {
+      "$ref": "../../question-bank/opportunity/title/schema.json",
+      "description": "Pre-populated from the Application cover sheet.",
+      "title": "Opportunity title"
+    },
+    "competitionIdentificationNumber": {
+      "$ref": "../../question-bank/opportunity/competition-number/schema.json",
+      "description": "Pre-populated from the Application cover sheet.",
+      "title": "Competition Number"
+    },
+    "competitionIdentificationTitle": {
+      "$ref": "../../question-bank/opportunity/competition-title/schema.json",
+      "description": "Pre-populated from the Application cover sheet.",
+      "title": "Competition Title"
+    },
+    "areasAffected": {
+      "$ref": "../../question-bank/generics/attachment/schema.json",
+      "description": "List the areas or entities using the categories (e.g., cities, counties, states, etc.) specified in agency instructions.",
+      "title": "Areas Affected"
+    },
+    "projectTitle": {
+      "$ref": "../../question-bank/project/title/schema.json",
+      "description": "Enter a brief, descriptive title of the project.",
+      "title": "Project Title"
+    },
+    "additionalProjectTitle": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/generics/attachment/schema.json"
+      },
+      "maxItems": 100,
+      "description": "Attach file(s) using the appropriate buttons.",
+      "title": "Additional Project Title"
+    },
+    "congressionalDistrictApplicant": {
+      "$ref": "../../question-bank/project/congressional-district/schema.json",
+      "description": "Enter the Congressional District in the format: 2 character state Abbreviation - 3 character District Number. Examples: CA-005 for California's 5th district, CA-012 for California's 12th district.If outside the US, enter 00-000.",
+      "title": "Applicant District"
+    },
+    "congressionalDistrictProgramProject": {
+      "$ref": "../../question-bank/project/congressional-district/schema.json",
+      "description": "Enter the Congressional District in the format: 2 character state Abbreviation - 3 character District Number. Examples: CA-005 for California's 5th district, CA-012 for California's 12th district.If all districts in a state are affected, enter \"all\" for the district number. Example: MD-all for all congressional districts in Maryland.If nationwide (all districts in all states), enter US-all.If the program/project is outside the US, enter 00-000.",
+      "title": "Program District"
+    },
+    "additionalCongressionalDistricts": {
+      "$ref": "../../question-bank/generics/attachment/schema.json",
+      "description": "Attach an additional list of Program/Project Congressional Districts if needed.",
+      "title": "Additional Congressional Districts"
+    },
+    "projectStartDate": {
+      "$ref": "../../question-bank/project/start-date/schema.json",
+      "description": "Enter the date in the format MM/DD/YYYY.",
+      "title": "Project Start Date"
+    },
+    "projectEndDate": {
+      "$ref": "../../question-bank/project/end-date/schema.json",
+      "description": "Enter the date in the format MM/DD/YYYY.",
+      "title": "Project End Date"
+    },
+    "federalEstimatedFunding": {
+      "$ref": "../../question-bank/generics/monetary-amount/schema.json",
+      "description": "Enter the dollar amount.",
+      "title": "Federal Estimated Funding"
+    },
+    "applicantEstimatedFunding": {
+      "$ref": "../../question-bank/generics/monetary-amount/schema.json",
+      "description": "Enter the dollar amount.",
+      "title": "Applicant Estimated Funding"
+    },
+    "stateEstimatedFunding": {
+      "$ref": "../../question-bank/generics/monetary-amount/schema.json",
+      "description": "Enter the dollar amount.",
+      "title": "State Estimated Funding"
+    },
+    "localEstimatedFunding": {
+      "$ref": "../../question-bank/generics/monetary-amount/schema.json",
+      "description": "Enter the dollar amount.",
+      "title": "Local Estimated Funding"
+    },
+    "otherEstimatedFunding": {
+      "$ref": "../../question-bank/generics/monetary-amount/schema.json",
+      "description": "Enter the dollar amount.",
+      "title": "Other Estimated Funding"
+    },
+    "programIncomeEstimatedFunding": {
+      "$ref": "../../question-bank/generics/monetary-amount/schema.json",
+      "description": "Enter the dollar amount.",
+      "title": "Program Income Estimated Funding"
+    },
+    "totalEstimatedFunding": {
+      "$ref": "../../question-bank/generics/monetary-amount/schema.json",
+      "description": "This field is automatically calculated by Grants.gov",
+      "title": "Total Estimated Funding"
+    },
+    "stateReview": {
+      "$ref": "#/$defs/StateReview",
+      "description": "One selection is required.",
+      "title": "Is Application Subject to Review By State Under Executive Order 12372 Process?"
+    },
+    "stateReviewAvailableDate": {
+      "type": "string",
+      "format": "date",
+      "description": "If 'a' is selected, enter the date the application was submitted to the State.",
+      "title": "State Review Date"
+    },
+    "delinquentFederalDebt": {
+      "type": "boolean",
+      "description": "If 'Yes,' provide explanation in attachment.",
+      "title": "Applicant Delinquent on Federal Debt"
+    },
+    "debtExplanation": {
+      "$ref": "../../question-bank/generics/attachment/schema.json",
+      "title": "Debt Explanation"
+    },
+    "certificationAgree": {
+      "type": "boolean",
+      "description": "By signing this application, I certify (1) to the statements contained in the list of certifications* and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances** and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001)",
+      "title": "Certification Agree"
+    },
+    "authorizedRepresentative": {
+      "$ref": "../../question-bank/aor/name/schema.json",
+      "title": "Authorized Representative"
+    },
+    "authorizedRepresentativeTitle": {
+      "$ref": "../../question-bank/aor/title/schema.json",
+      "description": "Enter the position title.",
+      "title": "Title"
+    },
+    "authorizedRepresentativePhoneNumber": {
+      "$ref": "../../question-bank/aor/phone/schema.json",
+      "description": "Enter the daytime Telephone Number.",
+      "title": "AOR Telephone Number"
+    },
+    "authorizedRepresentativeFax": {
+      "$ref": "../../question-bank/aor/fax/schema.json",
+      "description": "Enter the fax Number.",
+      "title": "AOR fax Number"
+    },
+    "authorizedRepresentativeEmail": {
+      "$ref": "../../question-bank/aor/email/schema.json",
+      "description": "Enter a valid email Address.",
+      "title": "AOR email"
+    },
+    "aorSignature": {
+      "$ref": "../../question-bank/aor/signature/schema.json",
+      "title": "AOR Signature"
+    },
+    "dateSigned": {
+      "$ref": "../../question-bank/aor/date-signed/schema.json",
+      "title": "Date Signed"
+    }
+  },
+  "required": [
+    "submissionType",
+    "applicationType",
+    "organizationName",
+    "employerTaxpayerIdentificationNumber",
+    "samUei",
+    "applicant",
+    "contactPerson",
+    "phoneNumber",
+    "email",
+    "applicantTypeCode",
+    "agencyName",
+    "fundingOpportunityNumber",
+    "fundingOpportunityTitle",
+    "projectTitle",
+    "congressionalDistrictApplicant",
+    "congressionalDistrictProgramProject",
+    "projectStartDate",
+    "projectEndDate",
+    "federalEstimatedFunding",
+    "applicantEstimatedFunding",
+    "stateEstimatedFunding",
+    "localEstimatedFunding",
+    "otherEstimatedFunding",
+    "programIncomeEstimatedFunding",
+    "totalEstimatedFunding",
+    "stateReview",
+    "delinquentFederalDebt",
+    "certificationAgree",
+    "authorizedRepresentative",
+    "authorizedRepresentativeTitle",
+    "authorizedRepresentativePhoneNumber",
+    "authorizedRepresentativeEmail"
+  ],
+  "description": "APPLICATION FOR FEDERAL ASSISTANCE (SF-424)",
+  "$defs": {
+    "SubmissionType": {
+      "type": "string",
+      "enum": [
+        "Preapplication",
+        "Application",
+        "Changed/Corrected Application"
+      ],
+      "description": "Select one type of submission in accordance with agency instructions."
+    },
+    "ApplicationType": {
+      "type": "string",
+      "enum": [
+        "New",
+        "Continuation",
+        "Revision"
+      ],
+      "description": "Select one type of application in accordance with agency instructions."
+    },
+    "RevisionType": {
+      "type": "string",
+      "enum": [
+        "A: Increase Award",
+        "B: Decrease Award",
+        "C: Increase Duration",
+        "D: Decrease Duration",
+        "E: Other (specify)",
+        "AC: Increase Award, Increase Duration",
+        "AD: Increase Award, Decrease Duration",
+        "BC: Decrease Award, Increase Duration",
+        "BD: Decrease Award, Decrease Duration"
+      ],
+      "description": "The kind of change a revision makes to an existing award."
+    },
+    "StateReview": {
+      "type": "string",
+      "enum": [
+        "a. This application was made available to the state under the Executive Order 12372 Process for review on",
+        "b. Program is subject to E.O. 12372 but has not been selected by the state for review.",
+        "c. Program is not covered by E.O. 12372."
+      ],
+      "description": "Whether Executive Order 12372 review applies, and if so what happened."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "applicationType": {
+            "const": "Revision"
+          }
+        },
+        "required": [
+          "applicationType"
+        ]
+      },
+      "then": {
+        "required": [
+          "revisionType",
+          "federalAwardIdentifier"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "revisionType": {
+            "const": "E: Other (specify)"
+          }
+        },
+        "required": [
+          "revisionType"
+        ]
+      },
+      "then": {
+        "required": [
+          "revisionOtherSpecify"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "applicationType": {
+            "const": "Continuation"
+          }
+        },
+        "required": [
+          "applicationType"
+        ]
+      },
+      "then": {
+        "required": [
+          "federalAwardIdentifier"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "applicantTypeCode": {
+            "contains": {
+              "const": "X: Other (specify)"
+            }
+          }
+        },
+        "required": [
+          "applicantTypeCode"
+        ]
+      },
+      "then": {
+        "required": [
+          "applicantTypeOtherSpecify"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "stateReview": {
+            "const": "a. This application was made available to the state under the Executive Order 12372 Process for review on"
+          }
+        },
+        "required": [
+          "stateReview"
+        ]
+      },
+      "then": {
+        "required": [
+          "stateReviewAvailableDate"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "delinquentFederalDebt": {
+            "const": true
+          }
+        },
+        "required": [
+          "delinquentFederalDebt"
+        ]
+      },
+      "then": {
+        "required": [
+          "debtExplanation"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "primary-org/legal-name/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 60,
+  "description": "Enter the legal name of the applicant that will undertake the assistance activity.",
+  "title": "Legal Name"
+}

@@ -1,0 +1,27 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "key-contacts",
+    "kind": "form"
+  },
+  "sources": [
+    {
+      "id": "grantsgov-key-contacts-xsd-2.0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/Key_Contacts_2_0-V2.0.xsd",
+      "version": "2.0",
+      "sha256": "d361843ac5acaf39aa58a10d87cb36647e2f834052ef5d7cf9370442908296e6"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+    "artifact": "artifacts/proof/grantsgov-KeyContacts.jsonl.manifest.json",
+    "sourceSetSha256": "50271fa6cd4b19a6e0ace2f17811a55a863e9b2a98f9b91cda73afeedcce0eb0",
+    "extractedAt": "2026-08-18T14:19:31.338071Z"
+  },
+  "semanticReview": {
+    "status": "unreviewed",
+    "mappings": []
+  }
+}

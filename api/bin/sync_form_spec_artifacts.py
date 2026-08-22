@@ -17,6 +17,7 @@ from typing import Any
 SOURCE_CONTRACT = "grants-form-artifacts/v1"
 SELECTION_CONTRACT = "grants-form-artifact-selection/v1"
 RUNTIME_FORM_FILES = (
+    "evidence.json",
     "manifest.json",
     "schema.json",
     "sgg/rule-schema.json",
@@ -37,8 +38,13 @@ def _references(node: Any) -> list[str]:
     return [*found, *(ref for value in node.values() for ref in _references(value))]
 
 
-def select_artifacts(bundle: Path, form: str) -> tuple[dict[str, Any], dict[str, bytes]]:
-    """Return the minimal runtime selection and its consumer-side manifest."""
+def select_artifacts(
+    bundle: Path, forms: str | list[str]
+) -> tuple[dict[str, Any], dict[str, bytes]]:
+    """Return the minimal runtime selection for one or more forms."""
+    requested = [forms] if isinstance(forms, str) else list(dict.fromkeys(forms))
+    if not requested:
+        raise ValueError("at least one form is required")
     bundle_bytes = bundle.read_bytes()
     with tarfile.open(bundle, mode="r:gz") as archive:
         members = {member.name: member for member in archive.getmembers() if member.isfile()}
@@ -65,13 +71,12 @@ def select_artifacts(bundle: Path, form: str) -> tuple[dict[str, Any], dict[str,
                 raise ValueError(f"source artifact digest mismatch: {name}")
             payloads[name] = payload
 
-    form_root = f"dist/forms/{form}"
-    selected = {f"{form_root}/{name}" for name in RUNTIME_FORM_FILES}
+    selected = {f"dist/forms/{form}/{name}" for form in requested for name in RUNTIME_FORM_FILES}
     missing = sorted(selected - set(payloads))
     if missing:
-        raise ValueError(f"form {form!r} is missing runtime artifacts: {missing}")
+        raise ValueError(f"requested forms are missing runtime artifacts: {missing}")
 
-    queue = [f"{form_root}/schema.json"]
+    queue = [f"dist/forms/{form}/schema.json" for form in requested]
     visited: set[str] = set()
     while queue:
         schema_path = queue.pop()
@@ -98,8 +103,8 @@ def select_artifacts(bundle: Path, form: str) -> tuple[dict[str, Any], dict[str,
         "source": source_manifest["source"],
         "sourceBundleSha256": _sha256(bundle_bytes),
         "selection": {
-            "form": form,
-            "policy": "form runtime artifacts plus transitive question-schema closure",
+            "forms": requested,
+            "policy": "form runtime and evidence artifacts plus transitive question-schema closure",
         },
         "files": [records[path] for path in ordered],
     }
@@ -131,7 +136,9 @@ def write_selection(*, target: Path, manifest: dict[str, Any], files: dict[str, 
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("bundle", type=Path, help="verified grants-form-spec .tar.gz bundle")
-    parser.add_argument("--form", required=True, help="portable form id to select")
+    parser.add_argument(
+        "--form", required=True, action="append", help="portable form id to select (repeatable)"
+    )
     parser.add_argument("--target", required=True, type=Path, help="adapter artifact directory")
     return parser
 
@@ -147,7 +154,7 @@ def main() -> int:
     sys.stdout.write(
         "selection:\n"
         "  status: synchronized\n"
-        f"  form: {args.form}\n"
+        f"  forms[{len(args.form)}]: {','.join(args.form)}\n"
         f"  artifacts: {len(files)}\n"
         f"  revision: {manifest['source']['revision']}\n"
     )
