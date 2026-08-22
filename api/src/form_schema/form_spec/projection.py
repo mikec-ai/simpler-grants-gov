@@ -223,11 +223,13 @@ def _project_reference(reference: str, projection: Projection, path: str) -> str
     """
     prefix = ""
     body = reference
-    if body.startswith("@THIS."):
-        prefix, body = "@THIS.", body[len("@THIS.") :]
-        base = path.split(".")
-    else:
-        base = []
+    base: list[str] = []
+    for relative_prefix, levels_up in (("@THIS.", 0), ("@PARENT.", 1)):
+        if body.startswith(relative_prefix):
+            prefix, body = relative_prefix, body[len(relative_prefix) :]
+            path_segments = path.split(".")
+            base = path_segments[:-levels_up] if levels_up else path_segments
+            break
 
     renamed: list[str] = []
     walked = list(base)

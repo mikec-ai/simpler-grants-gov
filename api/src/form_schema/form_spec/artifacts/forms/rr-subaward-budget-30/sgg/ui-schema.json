@@ -1,0 +1,690 @@
+[
+  {
+    "type": "section",
+    "name": "subawardBudgets",
+    "label": "Subaward budgets",
+    "children": [
+      {
+        "type": "fieldList",
+        "name": "budgetAttachments",
+        "label": "Research & Related Budget",
+        "definition": "/properties/budgetAttachments",
+        "children": [
+          {
+            "type": "field",
+            "definition": "/properties/budgetAttachments/items/properties/samUei"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/budgetAttachments/items/properties/budgetType"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/budgetAttachments/items/properties/organizationName"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/budgetAttachments/items/properties/budgetJustificationAttachment",
+            "widget": "Attachment"
+          },
+          {
+            "type": "fieldList",
+            "name": "budgetYear",
+            "label": "Budget Period",
+            "definition": "/properties/budgetAttachments/items/properties/budgetYear",
+            "children": [
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/budgetPeriodEndDate"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/budgetPeriodStartDate"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/cognizantFederalAgency"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/directCosts"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/equipment/properties/additionalEquipmentsAttachment",
+                "widget": "Attachment"
+              },
+              {
+                "type": "fieldList",
+                "name": "equipmentList",
+                "label": "Equipment List",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/equipment/properties/equipmentList",
+                "children": [
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/equipment/properties/equipmentList/items/properties/equipmentItem"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/equipment/properties/equipmentList/items/properties/fundsRequested"
+                  }
+                ]
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/equipment/properties/totalFund"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/equipment/properties/totalFundForAttachedEquipment"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/fee"
+              },
+              {
+                "type": "fieldList",
+                "name": "indirectCost",
+                "label": "Indirect Cost",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/indirectCosts/properties/indirectCost",
+                "children": [
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/indirectCosts/properties/indirectCost/items/properties/base"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/indirectCosts/properties/indirectCost/items/properties/costType"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/indirectCosts/properties/indirectCost/items/properties/fundRequested"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/indirectCosts/properties/indirectCost/items/properties/rate"
+                  }
+                ]
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/indirectCosts/properties/totalIndirectCosts"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/attachedKeyPersons",
+                "widget": "Attachment"
+              },
+              {
+                "type": "fieldList",
+                "name": "keyPerson",
+                "label": "Key Person",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson",
+                "children": [
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/academicMonths"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/baseSalary"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/calendarMonths"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/fringeBenefits"
+                  },
+                  {
+                    "type": "null",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/fundsRequested"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/name/properties/firstName"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/name/properties/lastName"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/name/properties/middleName"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/name/properties/prefixName"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/name/properties/suffixName"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/projectRole"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/requestedSalary"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/keyPerson/items/properties/summerMonths"
+                  }
+                ]
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/totalFundForAttachedKeyPersons"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/keyPersons/properties/totalFundForKeyPersons"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/adpComputerServices"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/alterationsRenovations"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/consultantServices"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/equipmentRentalFee"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/materialsSupplies"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost1/properties/cost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost1/properties/description"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost10/properties/cost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost10/properties/description"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost2/properties/cost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost2/properties/description"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost3/properties/cost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost3/properties/description"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost4/properties/cost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost4/properties/description"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost5/properties/cost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost5/properties/description"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost6/properties/cost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost6/properties/description"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost7/properties/cost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost7/properties/description"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost8/properties/cost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost8/properties/description"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost9/properties/cost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/otherDirectCost9/properties/description"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/publicationCosts"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/subawardConsortiumContractualCosts"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherDirectCosts/properties/totalOtherDirectCost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/graduateStudents/properties/academicMonths"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/graduateStudents/properties/calendarMonths"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/graduateStudents/properties/fringeBenefits"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/graduateStudents/properties/fundsRequested"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/graduateStudents/properties/numberOfPersonnel"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/graduateStudents/properties/projectRole"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/graduateStudents/properties/requestedSalary"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/graduateStudents/properties/summerMonths"
+              },
+              {
+                "type": "fieldList",
+                "name": "other",
+                "label": "Other",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/other",
+                "children": [
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/other/items/properties/academicMonths"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/other/items/properties/calendarMonths"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/other/items/properties/fringeBenefits"
+                  },
+                  {
+                    "type": "null",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/other/items/properties/fundsRequested"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/other/items/properties/numberOfPersonnel"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/other/items/properties/projectRole"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/other/items/properties/requestedSalary"
+                  },
+                  {
+                    "type": "field",
+                    "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/other/items/properties/summerMonths"
+                  }
+                ]
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/otherPersonnelTotalNumber"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/postDocAssociates/properties/academicMonths"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/postDocAssociates/properties/calendarMonths"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/postDocAssociates/properties/fringeBenefits"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/postDocAssociates/properties/fundsRequested"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/postDocAssociates/properties/numberOfPersonnel"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/postDocAssociates/properties/projectRole"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/postDocAssociates/properties/requestedSalary"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/postDocAssociates/properties/summerMonths"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/secretarialClerical/properties/academicMonths"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/secretarialClerical/properties/calendarMonths"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/secretarialClerical/properties/fringeBenefits"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/secretarialClerical/properties/fundsRequested"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/secretarialClerical/properties/numberOfPersonnel"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/secretarialClerical/properties/projectRole"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/secretarialClerical/properties/requestedSalary"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/secretarialClerical/properties/summerMonths"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/totalOtherPersonnelFund"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/undergraduateStudents/properties/academicMonths"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/undergraduateStudents/properties/calendarMonths"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/undergraduateStudents/properties/fringeBenefits"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/undergraduateStudents/properties/fundsRequested"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/undergraduateStudents/properties/numberOfPersonnel"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/undergraduateStudents/properties/projectRole"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/undergraduateStudents/properties/requestedSalary"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/undergraduateStudents/properties/summerMonths"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/participantTraineeSupportCosts/properties/other/properties/cost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/participantTraineeSupportCosts/properties/other/properties/description"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/participantTraineeSupportCosts/properties/participantTraineeNumber"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/participantTraineeSupportCosts/properties/stipends"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/participantTraineeSupportCosts/properties/subsistence"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/participantTraineeSupportCosts/properties/totalCost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/participantTraineeSupportCosts/properties/travel"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/participantTraineeSupportCosts/properties/tuitionFeeHealthInsurance"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/totalCompensation"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/totalCosts"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/totalCostsFee"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/travel/properties/domesticTravelCost"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/travel/properties/foreignTravelCost"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/travel/properties/totalTravelCost"
+              }
+            ],
+            "description": "One to five budget periods for this project or subaward budget."
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTotalFundsRequestedSeniorKeyPerson"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTotalFundsRequestedOtherPersonnel"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTotalNoOtherPersonnel"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTotalFundsRequestedPersonnel"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTotalFundsRequestedEquipment"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTotalFundsRequestedTravel"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeDomesticTravelCosts"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeForeignTravelCosts"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTotalFundsRequestedTraineeCosts"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTraineeTuitionFeesHealthInsurance"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTraineeStipends"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTraineeTravel"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTraineeSubsistence"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeOtherTraineeCost"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeNoofTrainees"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTotalFundsRequestedOtherDirectCosts"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeMaterialAndSupplies"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativePublicationCosts"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeConsultantServices"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeAdpComputerServices"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeSubawardConsortiumContractualCosts"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeEquipmentFacilityRentalFees"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeAlterationsAndRenovations"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeOther1DirectCost"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeOther2DirectCost"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeOther3DirectCost"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeOther4DirectCost"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeOther5DirectCost"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeOther6DirectCost"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeOther7DirectCost"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeOther8DirectCost"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeOther9DirectCost"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeOther10DirectCost"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTotalFundsRequestedDirectCosts"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTotalFundsRequestedIndirectCost"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTotalFundsRequestedDirectIndirectCosts"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeFee"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/budgetAttachments/items/properties/budgetSummary/properties/cumulativeTotalCostsFee"
+          }
+        ],
+        "description": "Add up to thirty structured five-year R&R budgets for subaward organizations."
+      }
+    ]
+  }
+]
