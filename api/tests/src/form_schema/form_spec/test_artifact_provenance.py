@@ -15,7 +15,7 @@ def test_vendored_artifacts_match_the_pinned_form_spec_build():
     manifest = verify_artifacts()
     assert manifest["source"] == {
         "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-        "revision": "d0037d9a8609c0144f93cef87ecd5609ad964d0f",
+        "revision": "7b1977294129d452e5810c35695d259d8060dd20",
     }
     assert manifest["selection"]["forms"] == [
         "key-contacts",
@@ -33,6 +33,7 @@ def test_vendored_artifacts_match_the_pinned_form_spec_build():
         "project-abstract-summary",
         "rr-sf424",
         "rr-sf424-multi-project-cover",
+        "rr-key-person-expanded",
     ]
 
 

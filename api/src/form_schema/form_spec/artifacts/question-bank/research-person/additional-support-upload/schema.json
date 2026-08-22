@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-person/additional-support-upload/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Overflow file for additional support records after structured entry capacity is reached."
+}

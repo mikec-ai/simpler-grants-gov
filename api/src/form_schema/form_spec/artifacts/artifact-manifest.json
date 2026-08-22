@@ -177,6 +177,31 @@
       "size": 28565
     },
     {
+      "path": "dist/forms/rr-key-person-expanded/evidence.json",
+      "sha256": "50435ce4f9415c69332cc66c519be0986af6fa650d7bcba687b9fb9e0aea7a6a",
+      "size": 2199
+    },
+    {
+      "path": "dist/forms/rr-key-person-expanded/manifest.json",
+      "sha256": "b7cc66503d8608c3f9f108233daab1b419da20fa0b621a5124d567f856a07143",
+      "size": 649
+    },
+    {
+      "path": "dist/forms/rr-key-person-expanded/schema.json",
+      "sha256": "d6d084190958095ca96905406fa5de5aaa6dbac9dcf823462e9a2aa1cf3e4b45",
+      "size": 4557
+    },
+    {
+      "path": "dist/forms/rr-key-person-expanded/sgg/rule-schema.json",
+      "sha256": "81adda8b83de2c1e86c85e6a66bacace4a094e87222b6b5d4ce5df08bd38364a",
+      "size": 768
+    },
+    {
+      "path": "dist/forms/rr-key-person-expanded/sgg/ui-schema.json",
+      "sha256": "6c9362c62d678f34b6150592a95e57c63ac37829ba356f14b5a9e0e0bfed3c85",
+      "size": 11276
+    },
+    {
       "path": "dist/forms/rr-sf424-multi-project-cover/evidence.json",
       "sha256": "4cc2b5995187bdbe8bb59670890e41767cd451c109c251670ff0af71a8da7d85",
       "size": 2216
@@ -710,6 +735,61 @@
       "path": "dist/question-bank/research-application/principal-investigator/schema.json",
       "sha256": "99f5c0fc1583ed3434fe4acffc4ac46da0da61bf0d857b76a4abd6f0bafe20e2",
       "size": 1952
+    },
+    {
+      "path": "dist/question-bank/research-person/additional-biographical-sketches-upload/schema.json",
+      "sha256": "78afff79dbe1064b8010f1c56e653ae229390e6f37e0264fafc1b63fce930a0a",
+      "size": 299
+    },
+    {
+      "path": "dist/question-bank/research-person/additional-profiles-upload/schema.json",
+      "sha256": "195b33e9b7439fafb5c0214036b9275580654b7eb8d7fe38a465aed4c4974015",
+      "size": 291
+    },
+    {
+      "path": "dist/question-bank/research-person/additional-support-upload/schema.json",
+      "sha256": "243e606687ed54ea0a636e87af926078575c2def61d299b75f3de3190a6d7c55",
+      "size": 279
+    },
+    {
+      "path": "dist/question-bank/research-person/biographical-sketch/schema.json",
+      "sha256": "c6424b487633b4cf6231f222760090c06b8efde3a7a47d5eadc4ecf1dc5f95db",
+      "size": 226
+    },
+    {
+      "path": "dist/question-bank/research-person/credential/schema.json",
+      "sha256": "96ec475827f2c091f2057838c1e5268c4fe5abba5f50bd4874ce82a48ac9f4d6",
+      "size": 265
+    },
+    {
+      "path": "dist/question-bank/research-person/current-pending-support/schema.json",
+      "sha256": "eee9dce5159c34999d9bab275b82fdf2b00d66f53649d997c7583494733c7704",
+      "size": 250
+    },
+    {
+      "path": "dist/question-bank/research-person/degree-type/schema.json",
+      "sha256": "f8ef398cfbee183c4fcb486796dcbe4c2a56b1371d5778dfb85b0fa0f637c428",
+      "size": 247
+    },
+    {
+      "path": "dist/question-bank/research-person/degree-year/schema.json",
+      "sha256": "aab560da74ba7bf1197dca6a3847b9b8e9b9d9991e768b126e76dc5be2dce9f5",
+      "size": 259
+    },
+    {
+      "path": "dist/question-bank/research-person/details/schema.json",
+      "sha256": "5f98278751535354bcbf491b28b58ad4f6cad752f327740784c475a7b6bde130",
+      "size": 3541
+    },
+    {
+      "path": "dist/question-bank/research-person/name/schema.json",
+      "sha256": "70ea8a47ce63b6463196af93a8936ceab01646452b33fbdead3fbb4dd8069246",
+      "size": 1237
+    },
+    {
+      "path": "dist/question-bank/research-person/other-project-role/schema.json",
+      "sha256": "a2a2afaf56e11be54e2f2e7372a4f3b58543d5c0c0951f46ba3e2993faf65822",
+      "size": 275
     }
   ],
   "selection": {
@@ -728,13 +808,14 @@
       "rr-subaward-budget-10yr-30",
       "project-abstract-summary",
       "rr-sf424",
-      "rr-sf424-multi-project-cover"
+      "rr-sf424-multi-project-cover",
+      "rr-key-person-expanded"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "d0037d9a8609c0144f93cef87ecd5609ad964d0f"
+    "revision": "7b1977294129d452e5810c35695d259d8060dd20"
   },
-  "sourceBundleSha256": "6ce630a2be86d6d5f6e64776a6ed5eda9034f89f92519222559247a1fa0b18aa"
+  "sourceBundleSha256": "c3a658e590be8782574e8219a400f997d5e6c39b7d5771f579cd18a8a98fafeb"
 }

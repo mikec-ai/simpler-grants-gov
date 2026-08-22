@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-person/details/schema.json",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "../../../question-bank/research-person/name/schema.json",
+      "title": "Name"
+    },
+    "title": {
+      "$ref": "../../../question-bank/generics/contact-title/schema.json",
+      "title": "Position / Title"
+    },
+    "department": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "title": "Department"
+    },
+    "organizationName": {
+      "$ref": "../../../question-bank/generics/organization-name/schema.json",
+      "title": "Organization Name"
+    },
+    "division": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "title": "Division"
+    },
+    "address": {
+      "$ref": "../../../question-bank/generics/address/schema.json",
+      "title": "Address"
+    },
+    "phone": {
+      "$ref": "../../../question-bank/generics/phone/schema.json",
+      "title": "Phone Number"
+    },
+    "fax": {
+      "$ref": "../../../question-bank/generics/phone/schema.json",
+      "title": "Fax Number"
+    },
+    "email": {
+      "$ref": "../../../question-bank/generics/email/schema.json",
+      "title": "Email"
+    },
+    "credential": {
+      "$ref": "../../../question-bank/research-person/credential/schema.json",
+      "title": "Credential, e.g., agency login"
+    },
+    "projectRole": {
+      "$ref": "#/$defs/ResearchProjectRole",
+      "title": "Project Role"
+    },
+    "otherProjectRole": {
+      "$ref": "../../../question-bank/research-person/other-project-role/schema.json",
+      "title": "Other Project Role Category"
+    },
+    "degreeType": {
+      "$ref": "../../../question-bank/research-person/degree-type/schema.json",
+      "title": "Degree Type"
+    },
+    "degreeYear": {
+      "$ref": "../../../question-bank/research-person/degree-year/schema.json",
+      "title": "Degree Year"
+    },
+    "biographicalSketch": {
+      "$ref": "../../../question-bank/research-person/biographical-sketch/schema.json",
+      "title": "Attach Biographical Sketch"
+    },
+    "currentPendingSupport": {
+      "$ref": "../../../question-bank/research-person/current-pending-support/schema.json",
+      "title": "Attach Current & Pending Support"
+    }
+  },
+  "required": [
+    "name",
+    "address",
+    "phone",
+    "email",
+    "projectRole"
+  ],
+  "description": "Reusable identity, affiliation, contact, role, and credential questions for research staff.",
+  "$defs": {
+    "ResearchProjectRole": {
+      "type": "string",
+      "enum": [
+        "PD/PI",
+        "Co-PD/PI",
+        "Faculty",
+        "Post Doctoral",
+        "Post Doctoral Associate",
+        "Post Doctoral Scholar",
+        "Other Professional",
+        "Graduate Student",
+        "Undergraduate Student",
+        "Technician",
+        "Consultant",
+        "Co-Investigator",
+        "Other (Specify)"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "projectRole": {
+            "const": "Other (Specify)"
+          }
+        },
+        "required": [
+          "projectRole"
+        ]
+      },
+      "then": {
+        "required": [
+          "otherProjectRole"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "projectRole": {
+            "const": "Other Professional"
+          }
+        },
+        "required": [
+          "projectRole"
+        ]
+      },
+      "then": {
+        "required": [
+          "otherProjectRole"
+        ]
+      }
+    }
+  ]
+}

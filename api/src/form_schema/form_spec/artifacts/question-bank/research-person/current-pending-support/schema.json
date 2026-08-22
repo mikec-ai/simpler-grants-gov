@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-person/current-pending-support/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Attach this person's current and pending support information."
+}
