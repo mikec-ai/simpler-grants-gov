@@ -249,5 +249,5 @@
       "title": "Subaward Budgets"
     }
   },
-  "description": "R&R Subaward Budget Attachment(s) Form 5 YR 30 ATT, Grants.gov form version 3.0.\nThe source wrapper's ATT1-ATT30 strings are technical capture slots, not thirty\ndistinct semantic questions. This declaration models the structured subaward\nbudgets they carry; consumer-specific wire serialization remains adapter-owned."
+  "description": "R&R Subaward Budget Attachment(s) Form 5 YR 30 ATT, Grants.gov form version 3.0.\nThe source wrapper's ATT1-ATT30 strings are technical capture slots, not thirty\ndistinct semantic questions. This declaration models the structured subaward\nbudgets they carry. Its portable target profile declares the Grants.gov wire shape;\nconsumer-specific execution remains adapter-owned."
 }

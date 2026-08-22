@@ -253,8 +253,8 @@
     },
     {
       "path": "dist/forms/rr-subaward-budget-30/schema.json",
-      "sha256": "724ed725ba2c3854b479f1fca148c9e8876d224c746457d17e1da88a675504cd",
-      "size": 8420
+      "sha256": "b226ee51bad63b0a6f28789bdf827a8d37a6dd8b649da10d5b5b04294df74c9e",
+      "size": 8476
     },
     {
       "path": "dist/forms/rr-subaward-budget-30/sgg/rule-schema.json",
@@ -733,7 +733,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "6caf773199833ab0c178fa8ce6b84cdde06a03fe"
+    "revision": "5bec0f998625f51c0bc8ee57c887a1f10b3dfd1d"
   },
-  "sourceBundleSha256": "2d372835cd08ffdf21cc577cf0390dc54cb27953100cb9042cde9daa2e381171"
+  "sourceBundleSha256": "12627d67a0afab44de9462ba885a394e305de12381b7a529bad34ad0f9abb345"
 }
