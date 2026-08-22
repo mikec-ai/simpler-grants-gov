@@ -58,6 +58,7 @@ export type WidgetTypes =
   | "Attachment"
   | "AttachmentArray"
   | "Checkbox"
+  | "EncodedCheckboxGroup"
   | "Text"
   | "TextArea"
   | "Radio"

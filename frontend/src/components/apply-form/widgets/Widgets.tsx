@@ -15,6 +15,7 @@ import Budget424aSectionD from "./budget/Budget424aSectionD";
 import Budget424aSectionE from "./budget/Budget424aSectionE";
 import Budget424aSectionF from "./budget/Budget424aSectionF";
 import CheckboxWidget from "./CheckboxWidget";
+import EncodedCheckboxGroupWidget from "./EncodedCheckboxGroupWidget";
 import FieldListWidget from "./FieldListWidget";
 import MultiSelect from "./MultiSelectWidget";
 import PrintAttachmentWidget from "./PrintAttachmentWidget";
@@ -34,6 +35,8 @@ export const widgetComponents: Record<
   Radio: (widgetProps: UswdsWidgetProps) => RadioWidget(widgetProps),
   Select: (widgetProps: UswdsWidgetProps) => SelectWidget(widgetProps),
   Checkbox: (widgetProps: UswdsWidgetProps) => CheckboxWidget(widgetProps),
+  EncodedCheckboxGroup: (widgetProps: UswdsWidgetProps) =>
+    EncodedCheckboxGroupWidget(widgetProps),
   Print: (widgetProps: UswdsWidgetProps) => PrintWidget(widgetProps),
   PrintAttachment: (widgetProps: UswdsWidgetProps) =>
     PrintAttachmentWidget(widgetProps),

@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { RJSFSchema } from "@rjsf/utils";
 import { UiSchema } from "src/types/applyForm/types";
 
@@ -52,6 +54,20 @@ describe("validateFormData", () => {
       ];
 
       expect(validateUiSchema(conditionalUiSchema)).toBe(false);
+    });
+
+    it("accepts the complete vendored R&R SF-424 UI artifact", () => {
+      const artifact = JSON.parse(
+        readFileSync(
+          resolve(
+            __dirname,
+            "../../../../api/src/form_schema/form_spec/artifacts/forms/rr-sf424/sgg/ui-schema.json",
+          ),
+          "utf8",
+        ),
+      ) as UiSchema;
+
+      expect(validateUiSchema(artifact)).toBe(false);
     });
 
     it("should validate a correct UI schema", () => {
