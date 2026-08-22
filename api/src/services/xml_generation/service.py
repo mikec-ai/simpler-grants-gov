@@ -40,7 +40,10 @@ class XMLGenerationService:
         try:
             # An empty application_data dict is valid (a form with only optional elements)
             # and is intentionally not rejected here.
-            transformer = RecursiveXMLTransformer(request.transform_config)
+            transformer = RecursiveXMLTransformer(
+                request.transform_config,
+                attachment_mapping=request.attachment_mapping,
+            )
             transformed_data = transformer.transform(request.application_data)
 
             # Generate XML

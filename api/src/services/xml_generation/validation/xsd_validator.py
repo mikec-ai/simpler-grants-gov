@@ -57,7 +57,10 @@ class XSDValidator:
                 root = tree.getroot()
                 ns = root.get("targetNamespace")
                 if ns:
-                    locations[ns] = str(xsd_file)
+                    # xmlschema resolves relative location overrides against the primary
+                    # schema's directory. Store absolute paths so an XSD directory passed
+                    # relatively does not become duplicated (``xsds/src/.../xsds``).
+                    locations[ns] = str(xsd_file.resolve())
             except Exception as e:
                 logger.warning("Failed to parse XSD file for locations map: %s (%s)", xsd_file, e)
         return locations
