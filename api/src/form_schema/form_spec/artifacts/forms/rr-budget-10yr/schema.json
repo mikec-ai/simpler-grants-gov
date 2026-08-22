@@ -1,0 +1,288 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rr-budget-10yr/schema.json",
+  "type": "object",
+  "properties": {
+    "samUei": {
+      "$ref": "../../question-bank/primary-org/uei/schema.json",
+      "description": "Unique Entity Identifier for the applicant organization.",
+      "title": "UEI:"
+    },
+    "budgetType": {
+      "$ref": "#/$defs/ResearchBudgetType",
+      "description": "Whether this is the project budget or a subaward or consortium budget.",
+      "title": "Budget Type:"
+    },
+    "organizationName": {
+      "$ref": "../../question-bank/generics/organization-name/schema.json",
+      "description": "Name of the organization responsible for this budget.",
+      "title": "Enter name of Organization:"
+    },
+    "budgetJustificationAttachment": {
+      "$ref": "../../question-bank/budget/justification/schema.json",
+      "description": "Attach the budget justification file.",
+      "title": "L. Budget Justification (Only attach one file.)"
+    },
+    "budgetYear": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/budget/research/period/schema.json",
+        "properties": {
+          "directCosts": {
+            "readOnly": true
+          },
+          "equipment": {
+            "properties": {
+              "totalFund": {
+                "readOnly": true
+              }
+            }
+          },
+          "indirectCosts": {
+            "properties": {
+              "totalIndirectCosts": {
+                "readOnly": true
+              }
+            }
+          },
+          "keyPersons": {
+            "properties": {
+              "keyPerson": {
+                "items": {
+                  "properties": {
+                    "fundsRequested": {
+                      "readOnly": true
+                    }
+                  }
+                }
+              },
+              "totalFundForKeyPersons": {
+                "readOnly": true
+              }
+            }
+          },
+          "otherDirectCosts": {
+            "properties": {
+              "totalOtherDirectCost": {
+                "readOnly": true
+              }
+            }
+          },
+          "otherPersonnel": {
+            "properties": {
+              "graduateStudents": {
+                "properties": {
+                  "fundsRequested": {
+                    "readOnly": true
+                  }
+                }
+              },
+              "other": {
+                "items": {
+                  "properties": {
+                    "fundsRequested": {
+                      "readOnly": true
+                    }
+                  }
+                }
+              },
+              "otherPersonnelTotalNumber": {
+                "readOnly": true
+              },
+              "postDocAssociates": {
+                "properties": {
+                  "fundsRequested": {
+                    "readOnly": true
+                  }
+                }
+              },
+              "secretarialClerical": {
+                "properties": {
+                  "fundsRequested": {
+                    "readOnly": true
+                  }
+                }
+              },
+              "totalOtherPersonnelFund": {
+                "readOnly": true
+              },
+              "undergraduateStudents": {
+                "properties": {
+                  "fundsRequested": {
+                    "readOnly": true
+                  }
+                }
+              }
+            }
+          },
+          "participantTraineeSupportCosts": {
+            "properties": {
+              "totalCost": {
+                "readOnly": true
+              }
+            }
+          },
+          "totalCompensation": {
+            "readOnly": true
+          },
+          "totalCosts": {
+            "readOnly": true
+          },
+          "totalCostsFee": {
+            "readOnly": true
+          },
+          "travel": {
+            "properties": {
+              "totalTravelCost": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      },
+      "minItems": 1,
+      "maxItems": 10,
+      "description": "One to ten budget periods.",
+      "title": "Budget Year"
+    },
+    "budgetSummary": {
+      "$ref": "../../question-bank/budget/research/cumulative-summary/schema.json",
+      "description": "Cumulative totals across every budget period.",
+      "title": "Budget Summary",
+      "properties": {
+        "cumulativeAdpComputerServices": {
+          "readOnly": true
+        },
+        "cumulativeAlterationsAndRenovations": {
+          "readOnly": true
+        },
+        "cumulativeConsultantServices": {
+          "readOnly": true
+        },
+        "cumulativeDomesticTravelCosts": {
+          "readOnly": true
+        },
+        "cumulativeEquipmentFacilityRentalFees": {
+          "readOnly": true
+        },
+        "cumulativeFee": {
+          "readOnly": true
+        },
+        "cumulativeForeignTravelCosts": {
+          "readOnly": true
+        },
+        "cumulativeMaterialAndSupplies": {
+          "readOnly": true
+        },
+        "cumulativeNoofTrainees": {
+          "readOnly": true
+        },
+        "cumulativeOther10DirectCost": {
+          "readOnly": true
+        },
+        "cumulativeOther1DirectCost": {
+          "readOnly": true
+        },
+        "cumulativeOther2DirectCost": {
+          "readOnly": true
+        },
+        "cumulativeOther3DirectCost": {
+          "readOnly": true
+        },
+        "cumulativeOther4DirectCost": {
+          "readOnly": true
+        },
+        "cumulativeOther5DirectCost": {
+          "readOnly": true
+        },
+        "cumulativeOther6DirectCost": {
+          "readOnly": true
+        },
+        "cumulativeOther7DirectCost": {
+          "readOnly": true
+        },
+        "cumulativeOther8DirectCost": {
+          "readOnly": true
+        },
+        "cumulativeOther9DirectCost": {
+          "readOnly": true
+        },
+        "cumulativeOtherTraineeCost": {
+          "readOnly": true
+        },
+        "cumulativePublicationCosts": {
+          "readOnly": true
+        },
+        "cumulativeSubawardConsortiumContractualCosts": {
+          "readOnly": true
+        },
+        "cumulativeTotalCostsFee": {
+          "readOnly": true
+        },
+        "cumulativeTotalFundsRequestedDirectCosts": {
+          "readOnly": true
+        },
+        "cumulativeTotalFundsRequestedDirectIndirectCosts": {
+          "readOnly": true
+        },
+        "cumulativeTotalFundsRequestedEquipment": {
+          "readOnly": true
+        },
+        "cumulativeTotalFundsRequestedIndirectCost": {
+          "readOnly": true
+        },
+        "cumulativeTotalFundsRequestedOtherDirectCosts": {
+          "readOnly": true
+        },
+        "cumulativeTotalFundsRequestedOtherPersonnel": {
+          "readOnly": true
+        },
+        "cumulativeTotalFundsRequestedPersonnel": {
+          "readOnly": true
+        },
+        "cumulativeTotalFundsRequestedSeniorKeyPerson": {
+          "readOnly": true
+        },
+        "cumulativeTotalFundsRequestedTraineeCosts": {
+          "readOnly": true
+        },
+        "cumulativeTotalFundsRequestedTravel": {
+          "readOnly": true
+        },
+        "cumulativeTotalNoOtherPersonnel": {
+          "readOnly": true
+        },
+        "cumulativeTraineeStipends": {
+          "readOnly": true
+        },
+        "cumulativeTraineeSubsistence": {
+          "readOnly": true
+        },
+        "cumulativeTraineeTravel": {
+          "readOnly": true
+        },
+        "cumulativeTraineeTuitionFeesHealthInsurance": {
+          "readOnly": true
+        }
+      }
+    }
+  },
+  "required": [
+    "samUei",
+    "budgetType",
+    "budgetJustificationAttachment",
+    "budgetYear",
+    "budgetSummary"
+  ],
+  "description": "Research & Related Budget 10YR, Grants.gov form version 3.0.",
+  "$defs": {
+    "ResearchBudgetType": {
+      "type": "string",
+      "enum": [
+        "Project",
+        "Subaward/Consortium"
+      ],
+      "description": "Whether the budget describes the applicant project or a subaward or consortium component."
+    }
+  }
+}
