@@ -56,6 +56,36 @@ def test_rr_sf424_conditionals_cross_the_adapter_naming_boundary() -> None:
     assert all("_" in segment for pointer in pointers for segment in pointer.split("/") if segment)
 
 
+def test_rr_sf424_revision_choices_preserve_the_encoded_wire_contract() -> None:
+    projected = load_form("rr-sf424")
+    revision = projected.form_json_schema["properties"]["application_type"]["properties"][
+        "revision_code"
+    ]
+    revision_enum = projected.form_json_schema["$defs"]["ResearchRevisionCode"]["enum"]
+
+    assert revision_enum == ["A", "B", "C", "D", "E", "AC", "AD", "BC", "BD"]
+    assert revision["x-encoded-checkbox-group"] == {
+        "choices": [
+            {"code": "A", "label": "A. Increase Award"},
+            {"code": "B", "label": "B. Decrease Award"},
+            {"code": "C", "label": "C. Increase Duration"},
+            {"code": "D", "label": "D. Decrease Duration"},
+            {"code": "E", "label": "E. Other"},
+        ],
+        "combinations": [
+            {"value": "A", "members": ["A"]},
+            {"value": "B", "members": ["B"]},
+            {"value": "C", "members": ["C"]},
+            {"value": "D", "members": ["D"]},
+            {"value": "E", "members": ["E"]},
+            {"value": "AC", "members": ["A", "C"]},
+            {"value": "AD", "members": ["A", "D"]},
+            {"value": "BC", "members": ["B", "C"]},
+            {"value": "BD", "members": ["B", "D"]},
+        ],
+    }
+
+
 def test_rr_sf424_evidence_stays_source_bound_and_semantically_unaccepted() -> None:
     evidence = json.loads((ARTIFACTS / "forms" / "rr-sf424" / "evidence.json").read_text())
 

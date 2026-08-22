@@ -55,6 +55,7 @@ export const UiJsonSchema: RJSFSchema = {
             "Attachment",
             "AttachmentArray",
             "Checkbox",
+            "EncodedCheckboxGroup",
             "Text",
             "TextArea",
             "Radio",
