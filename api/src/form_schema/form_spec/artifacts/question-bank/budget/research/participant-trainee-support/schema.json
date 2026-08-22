@@ -8,30 +8,28 @@
       "title": "Other"
     },
     "participantTraineeNumber": {
-      "type": "integer",
-      "minimum": -2147483648,
-      "maximum": 2147483647,
+      "$ref": "#/$defs/ResearchBudgetCount3",
       "title": "Number of Participants/Trainees"
     },
     "stipends": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal14",
       "title": "2. Stipends"
     },
     "subsistence": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal14",
       "title": "4. Subsistence"
     },
     "totalCost": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal15",
       "title": "Total Participant/Trainee Support Costs",
       "readOnly": true
     },
     "travel": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal14",
       "title": "3. Travel"
     },
     "tuitionFeeHealthInsurance": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal14",
       "title": "1. Tuition/Fees/Health Insurance"
     }
   },
@@ -40,7 +38,7 @@
   ],
   "description": "Participant and trainee support costs for one research budget period.",
   "$defs": {
-    "ResearchBudgetDecimal": {
+    "ResearchBudgetDecimal14": {
       "type": "string",
       "minLength": 1,
       "maxLength": 16,
@@ -50,7 +48,7 @@
       "type": "object",
       "properties": {
         "cost": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Other Participant/Trainee Costs"
         },
         "description": {
@@ -64,6 +62,17 @@
         "cost",
         "description"
       ]
+    },
+    "ResearchBudgetCount3": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 999
+    },
+    "ResearchBudgetDecimal15": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 17,
+      "pattern": "^-?(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
     }
   }
 }

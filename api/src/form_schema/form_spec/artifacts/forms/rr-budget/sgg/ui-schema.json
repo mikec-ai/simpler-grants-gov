@@ -528,7 +528,8 @@
             "type": "null",
             "definition": "/properties/budgetYear/items/properties/travel/properties/totalTravelCost"
           }
-        ]
+        ],
+        "description": "One to five budget periods."
       }
     ]
   },

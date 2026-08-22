@@ -68,8 +68,9 @@ def test_repeating_groups_and_rules_are_projected_without_form_code() -> None:
     attachments = [node["gg_validation"] for node in rule_objects if "gg_validation" in node]
 
     assert sum(node.get("type") == "fieldList" for node in ui_objects) == 5
-    assert len(calculations) == 30
-    assert sorted(rule["order"] for rule in calculations) == list(range(1, 31))
+    assert len(calculations) == 56
+    assert sorted(rule["order"] for rule in calculations) == list(range(1, 57))
+    assert sum(rule["rule"] == "sum_integer" for rule in calculations) == 3
     assert len(attachments) == 3
 
 
@@ -80,9 +81,9 @@ def test_decimal_wire_constraints_are_preserved() -> None:
 
     fee = schema["properties"]["budget_year"]["items"]["properties"]["fee"]
     validator = Draft202012Validator(fee)
-    for value in ("0", "12345678901234", "123456789012.34", "-1.2"):
+    for value in ("0", "12345678901234", "123456789012.34"):
         assert list(validator.iter_errors(value)) == []
-    invalid_values: tuple[Any, ...] = (1.2, "1234567890123.45", "1.234")
+    invalid_values: tuple[Any, ...] = (1.2, "-1.2", "1234567890123.45", "1.234")
     for value in invalid_values:
         assert list(validator.iter_errors(value))
 
@@ -97,6 +98,10 @@ def test_source_resolved_calculations_execute_in_declared_order() -> None:
                             {"requested_salary": "100.00", "fringe_benefits": "20.00"},
                             {"requested_salary": "75.50", "fringe_benefits": "4.50"},
                         ]
+                    },
+                    "other_personnel": {
+                        "post_doc_associates": {"number_of_personnel": 2},
+                        "other": [{"number_of_personnel": 3}],
                     },
                     "travel": {"domestic_travel_cost": "10.00"},
                 },
@@ -121,7 +126,13 @@ def test_source_resolved_calculations_execute_in_declared_order() -> None:
 
     people = context.json_data["budget_year"][0]["key_persons"]["key_person"]
     assert [person["funds_requested"] for person in people] == ["120.00", "80.00"]
+    assert context.json_data["budget_year"][0]["key_persons"]["total_fund_for_key_persons"] == "200.00"
+    assert context.json_data["budget_year"][0]["other_personnel"]["other_personnel_total_number"] == 5
+    assert context.json_data["budget_year"][0]["direct_costs"] == "210.00"
+    assert context.json_data["budget_year"][0]["total_costs_fee"] == "210.00"
     assert context.json_data["budget_summary"]["cumulative_domestic_travel_costs"] == "25.25"
+    assert context.json_data["budget_summary"]["cumulative_total_funds_requested_direct_costs"] == "225.25"
+    assert context.json_data["budget_summary"]["cumulative_total_costs_fee"] == "225.25"
 
 
 def test_official_source_and_extraction_provenance_are_pinned() -> None:
@@ -134,7 +145,14 @@ def test_official_source_and_extraction_provenance_are_pinned() -> None:
             "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_Budget_3_0-V3.0.xsd",
             "version": "3.0",
             "sha256": "d474010f85819549990de65fc51292bed08ba98ac0895d0dde9513fbe855cdbc",
-        }
+        },
+        {
+            "id": "grantsgov-rr-budget-dat-3.0-f770",
+            "type": "dat",
+            "uri": "https://apply07.grants.gov/apply/forms/sample/RR_Budget_3_0-V3.0_F770.xls",
+            "version": "3.0",
+            "sha256": "c85158ce7ddcc756d6e8a55a050e00b4a95cdfc8d9a2d91b7bd94c7f8bdb1035",
+        },
     ]
     assert evidence["extraction"]["revision"] == "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef"
     assert (

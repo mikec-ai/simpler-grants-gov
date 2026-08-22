@@ -21,11 +21,11 @@
       "maxItems": 8
     },
     "totalFundForAttachedKeyPersons": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal15",
       "title": "Total Funds requested for all Senior Key Persons in the attached file"
     },
     "totalFundForKeyPersons": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal15",
       "title": "Total Senior/Key Person",
       "readOnly": true
     }
@@ -36,11 +36,21 @@
   ],
   "description": "Senior and key personnel compensation for one budget period.",
   "$defs": {
-    "ResearchBudgetDecimal": {
+    "ResearchBudgetMonth2Whole2Fraction": {
+      "type": "string",
+      "pattern": "^-?(?:\\d{1,4}|\\d{1,3}[.]\\d|\\d{1,2}[.]\\d{2})$"
+    },
+    "ResearchBudgetDecimal14": {
       "type": "string",
       "minLength": 1,
       "maxLength": 16,
       "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    },
+    "ResearchBudgetDecimal15": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 17,
+      "pattern": "^-?(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
     },
     "ResearchBudgetBudgetYearKeyPersonsKeyPersonName": {
       "type": "object",
@@ -85,23 +95,23 @@
       "type": "object",
       "properties": {
         "academicMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth2Whole2Fraction",
           "title": "Senior/Key Person Academic Months"
         },
         "baseSalary": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Senior/Key Person Base Salary"
         },
         "calendarMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth2Whole2Fraction",
           "title": "Senior/Key Person Calendar Months"
         },
         "fringeBenefits": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Senior/Key Person Fringe Benefits"
         },
         "fundsRequested": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal15",
           "title": "Senior/Key Person Funds Requested"
         },
         "name": {
@@ -115,11 +125,11 @@
           "title": "Project Role:"
         },
         "requestedSalary": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Senior/Key Person Requested Salary"
         },
         "summerMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth2Whole2Fraction",
           "title": "Senior/Key Person Summer Months"
         }
       },

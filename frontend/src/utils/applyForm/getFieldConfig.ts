@@ -78,12 +78,14 @@ export function buildFieldListBaseId({
  */
 export function buildFieldListStoragePath({
   fieldListName,
+  fieldListDefinition,
   childDefinition,
 }: {
   fieldListName: string;
+  fieldListDefinition?: string;
   childDefinition: string;
 }): string[] {
-  const fieldListPrefix = `/properties/${fieldListName}/items/properties/`;
+  const fieldListPrefix = `${fieldListDefinition ?? `/properties/${fieldListName}`}/items/properties/`;
 
   if (!childDefinition.startsWith(fieldListPrefix)) {
     const childDefinitionParts = childDefinition.split("/");
@@ -115,12 +117,16 @@ export function buildFieldListStoragePath({
 export const getFieldListRequiredFields = ({
   formSchema,
   fieldListName,
+  fieldListDefinition,
 }: {
   formSchema: RJSFSchema;
   fieldListName: string;
+  fieldListDefinition?: string;
 }): string[] => {
-  const fieldListSchema = formSchema.properties?.[fieldListName] as
-    RJSFSchema | undefined;
+  const fieldListSchema = fieldListDefinition
+    ? (getSchemaObjectFromPointer(formSchema, fieldListDefinition) as
+        RJSFSchema | undefined)
+    : (formSchema.properties?.[fieldListName] as RJSFSchema | undefined);
 
   if (!fieldListSchema || fieldListSchema.type !== "array") {
     return [];
@@ -542,8 +548,14 @@ const getFieldListConfig = ({
 }): FieldListConfig => {
   const groupDefinition: FieldListGroupItem[] = uiFieldObject.children.map(
     (childNode) => {
-      if (childNode.type !== "field" && childNode.type !== "multiField") {
-        throw new Error("fieldList children must be field nodes");
+      if (
+        childNode.type !== "field" &&
+        childNode.type !== "multiField" &&
+        childNode.type !== "fieldList"
+      ) {
+        throw new Error(
+          "fieldList children must be field, multiField, or fieldList nodes",
+        );
       }
 
       if (!childNode.definition) {
@@ -564,29 +576,46 @@ const getFieldListConfig = ({
         requiredField: false,
       });
 
-      if (childWidgetConfig.type === "FieldList") {
-        throw new Error("nested fieldList is not supported");
-      }
-
       if (childWidgetConfig.type === "Table") {
         throw new Error("table inside fieldList is not supported");
       }
-
-      const { value: _value, key: _key, ...rest } = childWidgetConfig.props;
 
       // Build once so the renderer can use the same path for id generation,
       // value lookup, and nested value updates.
       const storagePath = buildFieldListStoragePath({
         fieldListName: uiFieldObject.name,
+        fieldListDefinition: uiFieldObject.definition,
         childDefinition: childNode.definition,
       });
 
+      const baseId = buildFieldListBaseId({
+        fieldListName: uiFieldObject.name,
+        storagePath,
+      });
+
+      if (childWidgetConfig.type === "FieldList") {
+        const {
+          id: _id,
+          key: _key,
+          name: _name,
+          value: _value,
+          onChange: _onChange,
+          ...nestedProps
+        } = childWidgetConfig.props;
+        return {
+          widget: "FieldList",
+          baseId,
+          storagePath,
+          generalProps: nestedProps,
+          definition: childNode.definition,
+        };
+      }
+
+      const { value: _value, key: _key, ...rest } = childWidgetConfig.props;
+
       return {
         widget: childWidgetConfig.type,
-        baseId: buildFieldListBaseId({
-          fieldListName: uiFieldObject.name,
-          storagePath,
-        }),
+        baseId,
         storagePath,
         generalProps: rest,
         definition: childNode.definition,
@@ -602,10 +631,13 @@ const getFieldListConfig = ({
   const requiredFields = getFieldListRequiredFields({
     formSchema,
     fieldListName: uiFieldObject.name,
+    fieldListDefinition: uiFieldObject.definition,
   });
 
-  const fieldListSchema = formSchema.properties?.[uiFieldObject.name] as
-    RJSFSchema | undefined;
+  const fieldListSchema = uiFieldObject.definition
+    ? (getSchemaObjectFromPointer(formSchema, uiFieldObject.definition) as
+        RJSFSchema | undefined)
+    : (formSchema.properties?.[uiFieldObject.name] as RJSFSchema | undefined);
 
   return {
     type: "FieldList",

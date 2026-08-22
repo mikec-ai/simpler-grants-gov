@@ -16,12 +16,12 @@
       "maxItems": 10
     },
     "totalFund": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal15",
       "title": "Total Equipment",
       "readOnly": true
     },
     "totalFundForAttachedEquipment": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal14",
       "title": "Total funds requested for all equipment listed in the attached file"
     }
   },
@@ -30,7 +30,7 @@
   ],
   "description": "Equipment costs for one research budget period.",
   "$defs": {
-    "ResearchBudgetDecimal": {
+    "ResearchBudgetDecimal14": {
       "type": "string",
       "minLength": 1,
       "maxLength": 16,
@@ -46,7 +46,7 @@
           "title": "Equipment Item"
         },
         "fundsRequested": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Equipment Item Funds Requested"
         }
       },
@@ -55,6 +55,12 @@
         "fundsRequested"
       ],
       "title": "Equipment List"
+    },
+    "ResearchBudgetDecimal15": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 17,
+      "pattern": "^-?(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
     }
   }
 }

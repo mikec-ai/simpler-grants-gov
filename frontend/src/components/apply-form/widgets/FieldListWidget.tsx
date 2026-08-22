@@ -14,7 +14,7 @@ import {
 } from "src/utils/applyForm/fieldListHelpers";
 
 import { useTranslations } from "next-intl";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useMemo, useRef, useState } from "react";
 import { Button } from "@trussworks/react-uswds";
 
 import { USWDSIcon } from "src/components/core/USWDSIcon";
@@ -175,6 +175,16 @@ const toBroadlyDefinedWidgetValue = (
     return value;
   }
 
+  if (
+    Array.isArray(value) &&
+    value.every(
+      (item) =>
+        typeof item === "object" && item !== null && !Array.isArray(item),
+    )
+  ) {
+    return value as GeneralRecord[];
+  }
+
   if (typeof value === "object" && value !== null && !Array.isArray(value)) {
     return value as GeneralRecord;
   }
@@ -326,12 +336,40 @@ function FieldListEntry({
           childDefinition: groupItem.definition,
         });
 
-        const currentValue = toBroadlyDefinedWidgetValue(
-          getValueAtPath({
-            value: entryValue,
-            path: groupItem.storagePath,
-          }),
-        );
+        const rawCurrentValue = getValueAtPath({
+          value: entryValue,
+          path: groupItem.storagePath,
+        });
+
+        if (groupItem.widget === "FieldList") {
+          const nestedPath = `${fieldListPath}.${entryIndex}.${groupItem.storagePath.join(".")}`;
+          return (
+            <FieldListWidget
+              {...groupItem.generalProps}
+              id={generatedId}
+              key={`${entryId}-${childKey}`}
+              name={nestedPath.replace(/^\$\./, "")}
+              value={
+                Array.isArray(rawCurrentValue)
+                  ? (rawCurrentValue as GeneralRecord[])
+                  : undefined
+              }
+              disabled={isInteractionDisabled}
+              readOnly={isInteractionDisabled}
+              isFormLocked={isInteractionDisabled}
+              formContext={groupItem.generalProps.formContext}
+              onChange={(nextValue) => {
+                handleFieldChange({
+                  entryId,
+                  storagePath: groupItem.storagePath,
+                  nextValue,
+                });
+              }}
+            />
+          );
+        }
+
+        const currentValue = toBroadlyDefinedWidgetValue(rawCurrentValue);
 
         const childWidgetProps: UswdsWidgetProps = {
           ...groupItem.generalProps,
@@ -356,10 +394,14 @@ function FieldListEntry({
           },
         };
 
-        return renderWidget({
-          type: groupItem.widget,
-          props: childWidgetProps,
-        });
+        return (
+          <Fragment key={`${entryId}-${childKey}`}>
+            {renderWidget({
+              type: groupItem.widget,
+              props: childWidgetProps,
+            })}
+          </Fragment>
+        );
       })}
 
       <div className="field-list-widget__entry-controls margin-top-2 padding-top-2 display-flex flex-align-start flex-justify-between">
