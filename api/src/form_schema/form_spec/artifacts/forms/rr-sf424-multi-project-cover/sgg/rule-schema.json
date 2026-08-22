@@ -1,0 +1,17 @@
+{
+  "sflllAttachment": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "preApplicationAttachment": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "coverLetterAttachment": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  }
+}

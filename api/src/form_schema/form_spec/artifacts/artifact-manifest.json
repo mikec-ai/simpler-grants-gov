@@ -187,6 +187,31 @@
       "size": 29336
     },
     {
+      "path": "dist/forms/rr-sf424-multi-project-cover/evidence.json",
+      "sha256": "4cc2b5995187bdbe8bb59670890e41767cd451c109c251670ff0af71a8da7d85",
+      "size": 2216
+    },
+    {
+      "path": "dist/forms/rr-sf424-multi-project-cover/manifest.json",
+      "sha256": "fa5c732d962dfe7807a3b07c44dd3bf703f9b495bf135131c29fecfafc3e8a09",
+      "size": 649
+    },
+    {
+      "path": "dist/forms/rr-sf424-multi-project-cover/schema.json",
+      "sha256": "0c87bca89a7c4112e94c55cb0fb4e15d51d1df20f55f56ce4142610b858d2c34",
+      "size": 29042
+    },
+    {
+      "path": "dist/forms/rr-sf424-multi-project-cover/sgg/rule-schema.json",
+      "sha256": "efbc70710ed1a1402f920d8a2dd66a6cceeafa9a2fcdfbf83f70c2467b80d2d3",
+      "size": 270
+    },
+    {
+      "path": "dist/forms/rr-sf424-multi-project-cover/sgg/ui-schema.json",
+      "sha256": "0040ced778d13f15bf8958f5084d1a4aa31a69133bbd199b09e59ec79f254be5",
+      "size": 22309
+    },
+    {
       "path": "dist/forms/rr-sf424/evidence.json",
       "sha256": "4940724369cf51604c989af8d6ac748e1d1690332348f8b406c55b962ecc450b",
       "size": 2149
@@ -727,13 +752,14 @@
       "rr-subaward-budget-30",
       "rr-subaward-budget-10yr-30",
       "project-abstract-summary",
-      "rr-sf424"
+      "rr-sf424",
+      "rr-sf424-multi-project-cover"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "5bec0f998625f51c0bc8ee57c887a1f10b3dfd1d"
+    "revision": "efb956c94fa72451255a7411a130fe9d62dac940"
   },
-  "sourceBundleSha256": "12627d67a0afab44de9462ba885a394e305de12381b7a529bad34ad0f9abb345"
+  "sourceBundleSha256": "d5e0780cd0d917b669c67236aea25542d268af8965d712207d27a5e8ba488374"
 }
