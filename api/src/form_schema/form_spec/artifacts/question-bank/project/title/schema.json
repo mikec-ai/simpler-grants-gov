@@ -3,7 +3,6 @@
   "$id": "project/title/schema.json",
   "type": "string",
   "minLength": 1,
-  "maxLength": 200,
   "description": "Enter a brief, descriptive title of the project.",
   "title": "Project Title"
 }

@@ -1,0 +1,41 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "project-abstract-summary",
+    "kind": "form"
+  },
+  "sources": [
+    {
+      "id": "source-1-75114a512cf3",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/Project_AbstractSummary_2_0-V2.0_F591.xls",
+      "version": "2.0",
+      "sha256": "75114a512cf3a768a7a20e837d17adaf18a1a5a3ec57523388120e39ee40413c"
+    },
+    {
+      "id": "source-2-3022f177a7f0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/Project_AbstractSummary_2_0-V2.0.xsd",
+      "version": "2.0",
+      "sha256": "3022f177a7f0ebb9a1888e9b8a4a644ed2ba7857a775d2d05642a9fbd1cc008f"
+    },
+    {
+      "id": "source-3-ff0214de91b9",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "version": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+    "artifact": "artifacts/proof/grantsgov-ProjectAbstractSummary.jsonl.manifest.json",
+    "sourceSetSha256": "1db2a9accecdd883a73cc4a9622a12ae29772a3cf4a874d1b1f8aa57e2cf9558",
+    "extractedAt": "2026-08-18T19:43:17.917258Z"
+  },
+  "semanticReview": {
+    "status": "unreviewed",
+    "mappings": []
+  }
+}

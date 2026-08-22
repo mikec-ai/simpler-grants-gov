@@ -1,0 +1,12 @@
+{
+  "fundingOpportunityNumber": {
+    "gg_pre_population": {
+      "rule": "opportunity_number"
+    }
+  },
+  "assistanceListingNumber": {
+    "gg_pre_population": {
+      "rule": "assistance_listing_number"
+    }
+  }
+}
