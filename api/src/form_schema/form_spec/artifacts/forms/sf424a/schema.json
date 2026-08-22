@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sf424a/schema.json",
+  "type": "object",
+  "properties": {
+    "activityLineItems": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ActivityLineItem"
+      },
+      "minItems": 1,
+      "maxItems": 4
+    },
+    "totalBudgetSummary": {
+      "$ref": "../../question-bank/budget/summary/schema.json"
+    },
+    "totalBudgetCategories": {
+      "$ref": "../../question-bank/budget/categories/schema.json"
+    },
+    "totalNonFederalResources": {
+      "$ref": "../../question-bank/budget/non-federal-resources/schema.json"
+    },
+    "forecastedCashNeeds": {
+      "$ref": "#/$defs/ForecastedCashNeeds"
+    },
+    "totalFederalFundEstimates": {
+      "$ref": "../../question-bank/budget/federal-fund-estimates/schema.json"
+    },
+    "directChargesExplanation": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 50,
+      "description": "Use this space to explain amounts for individual direct object class cost categories that may appear to be out of the ordinary or to explain the details as required by the Federal grantor agency.",
+      "title": "Direct Charges"
+    },
+    "indirectChargesExplanation": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 50,
+      "description": "Enter the type of indirect rate (provisional, predetermined, final or fixed) that will be in effect during the funding period, the estimated amount of the base to which the rate is applied, and the total indirect expense.",
+      "title": "Indirect Charges"
+    },
+    "remarks": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 250,
+      "description": "Provide any other explanations or comments deemed necessary.",
+      "title": "Remarks"
+    },
+    "confirmation": {
+      "type": "boolean",
+      "const": true,
+      "description": "Is this form complete?",
+      "title": "Confirmation"
+    }
+  },
+  "required": [
+    "activityLineItems",
+    "confirmation"
+  ],
+  "description": "Budget Information for Non-Construction Programs (SF-424A)",
+  "$defs": {
+    "ActivityLineItem": {
+      "type": "object",
+      "properties": {
+        "activityTitle": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 120
+        },
+        "assistanceListingNumber": {
+          "type": "string",
+          "minLength": 0,
+          "maxLength": 15
+        },
+        "budgetSummary": {
+          "$ref": "../../question-bank/budget/summary/schema.json"
+        },
+        "budgetCategories": {
+          "$ref": "../../question-bank/budget/categories/schema.json"
+        },
+        "nonFederalResources": {
+          "$ref": "../../question-bank/budget/non-federal-resources/schema.json"
+        },
+        "federalFundEstimates": {
+          "$ref": "../../question-bank/budget/federal-fund-estimates/schema.json"
+        }
+      },
+      "required": [
+        "activityTitle"
+      ]
+    },
+    "ForecastedCashNeeds": {
+      "type": "object",
+      "properties": {
+        "federalForecastedCashNeeds": {
+          "$ref": "../../question-bank/budget/forecasted-cash-needs/schema.json"
+        },
+        "nonFederalForecastedCashNeeds": {
+          "$ref": "../../question-bank/budget/forecasted-cash-needs/schema.json"
+        },
+        "totalForecastedCashNeeds": {
+          "$ref": "../../question-bank/budget/forecasted-cash-needs/schema.json"
+        }
+      }
+    }
+  }
+}

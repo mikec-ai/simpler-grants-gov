@@ -52,6 +52,31 @@
       "size": 10814
     },
     {
+      "path": "dist/forms/sf424a/evidence.json",
+      "sha256": "c2a45a04b99c1b7d69c84fdfcb593f8cf179632406b6a7aba9a5e6df88be4446",
+      "size": 824
+    },
+    {
+      "path": "dist/forms/sf424a/manifest.json",
+      "sha256": "14cfdb83fa90ac223fd9f55de590a9c8366c8454673e3d27f7068fb4bbf30d31",
+      "size": 598
+    },
+    {
+      "path": "dist/forms/sf424a/schema.json",
+      "sha256": "1ebe64cf2bf273a80ab9ce943a12844e6a181de401a9fb10eb04117c930f5063",
+      "size": 3435
+    },
+    {
+      "path": "dist/forms/sf424a/sgg/rule-schema.json",
+      "sha256": "8dc09db4c21857f809699ed7b2c54993895641ca14230694a92897d123e7761d",
+      "size": 8669
+    },
+    {
+      "path": "dist/forms/sf424a/sgg/ui-schema.json",
+      "sha256": "f4f6490f803dd44b6c5e57aa5e4dc0ce2c3ab2b530bdf02587834c75c8f3f050",
+      "size": 2576
+    },
+    {
       "path": "dist/question-bank/aor/date-signed/schema.json",
       "sha256": "fd354540ec8cbf1b2d5e594acb038fe4c269c0f95da5a315d54eb9b2777803c3",
       "size": 231
@@ -90,6 +115,31 @@
       "path": "dist/question-bank/application/date-received/schema.json",
       "sha256": "46e288d5d537b168ce446f884a3162bb7d58e40e5c52f8cb25d1a24a496a7cd1",
       "size": 243
+    },
+    {
+      "path": "dist/question-bank/budget/categories/schema.json",
+      "sha256": "061e4c2038820bdd62086ce9d0d5262f116bd05270c561ec74cfd077fe115110",
+      "size": 1563
+    },
+    {
+      "path": "dist/question-bank/budget/federal-fund-estimates/schema.json",
+      "sha256": "b649b761e8431ee77c527db5867f23105cecfe7f340d30e125963deadf9044fc",
+      "size": 811
+    },
+    {
+      "path": "dist/question-bank/budget/forecasted-cash-needs/schema.json",
+      "sha256": "76a144b58bee364d1641d98968af7fbbb748c9570e6cfaaef1a109971f4097c2",
+      "size": 808
+    },
+    {
+      "path": "dist/question-bank/budget/non-federal-resources/schema.json",
+      "sha256": "0f454c944e6c1f17f44a228319fb8345c4d02782ae9b29d63d3283aad099eabf",
+      "size": 799
+    },
+    {
+      "path": "dist/question-bank/budget/summary/schema.json",
+      "sha256": "7aaa0ef50dacf6007466f1c9ff4f490afb938064bcee457db42fec135d31ab59",
+      "size": 865
     },
     {
       "path": "dist/question-bank/generics/address/schema.json",
@@ -230,7 +280,8 @@
   "selection": {
     "forms": [
       "key-contacts",
-      "sf424"
+      "sf424",
+      "sf424a"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },

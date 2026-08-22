@@ -17,7 +17,7 @@ def test_vendored_artifacts_match_the_pinned_form_spec_build():
         "repository": "https://github.com/mikec-ai/grants-form-spec.git",
         "revision": "2e8ff805d135edeb07de6b23597d087a37bb8f85",
     }
-    assert manifest["selection"]["forms"] == ["key-contacts", "sf424"]
+    assert manifest["selection"]["forms"] == ["key-contacts", "sf424", "sf424a"]
 
 
 def test_manifest_covers_every_vendored_json_artifact():

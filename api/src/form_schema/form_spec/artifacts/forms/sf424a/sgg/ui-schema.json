@@ -1,0 +1,101 @@
+[
+  {
+    "type": "section",
+    "name": "SectionA",
+    "label": "Section A - Budget summary",
+    "children": [
+      {
+        "type": "multiField",
+        "name": "Budget424aSectionA",
+        "widget": "Budget424aSectionA",
+        "definition": [
+          "/properties/activityLineItems",
+          "/properties/totalBudgetSummary"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "SectionB",
+    "label": "Section B - Budget categories",
+    "children": [
+      {
+        "type": "multiField",
+        "name": "Budget424aSectionB",
+        "widget": "Budget424aSectionB",
+        "definition": [
+          "/properties/activityLineItems",
+          "/properties/totalBudgetCategories"
+        ]
+      }
+    ],
+    "description": "Enter funds required for each object class category for the selected program."
+  },
+  {
+    "type": "section",
+    "name": "SectionC",
+    "label": "Section C - Non-federal resources",
+    "children": [
+      {
+        "type": "multiField",
+        "name": "Budget424aSectionC",
+        "widget": "Budget424aSectionC",
+        "definition": [
+          "/properties/activityLineItems",
+          "/properties/totalNonFederalResources"
+        ]
+      }
+    ],
+    "description": "Enter resources provided by the applicant, state, or other sources (e.g., donors) for the selected program."
+  },
+  {
+    "type": "section",
+    "name": "SectionD",
+    "label": "Section D - Forecasted cash needs",
+    "children": [
+      {
+        "type": "multiField",
+        "name": "Budget424aSectionD",
+        "widget": "Budget424aSectionD",
+        "definition": [
+          "/properties/forecastedCashNeeds"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "SectionE",
+    "label": "Section E - Budget estimates of federal funds needed for balance of the project ",
+    "children": [
+      {
+        "type": "multiField",
+        "name": "Budget424aSectionE",
+        "widget": "Budget424aSectionE",
+        "definition": [
+          "/properties/activityLineItems",
+          "/properties/totalFederalFundEstimates"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "SectionF",
+    "label": "Section F - Other budget information",
+    "children": [
+      {
+        "type": "multiField",
+        "name": "Budget424aSectionF",
+        "widget": "Budget424aSectionF",
+        "definition": [
+          "/properties/directChargesExplanation",
+          "/properties/indirectChargesExplanation",
+          "/properties/remarks",
+          "/properties/confirmation"
+        ]
+      }
+    ]
+  }
+]

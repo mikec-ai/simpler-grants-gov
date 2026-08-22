@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/summary/schema.json",
+  "type": "object",
+  "properties": {
+    "federalEstimatedUnobligatedAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "nonFederalEstimatedUnobligatedAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "federalNewOrRevisedAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "nonFederalNewOrRevisedAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "totalAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    }
+  },
+  "description": "Estimated unobligated and new or revised funds, federal and non-federal.",
+  "title": "Budget Summary"
+}
