@@ -9,6 +9,7 @@ import {
   getRequiredProperties,
   isFieldRequired,
 } from "src/utils/applyForm/applyFormUtils";
+import { resolveConditionalUiState } from "src/utils/applyForm/evaluateConditionalUi";
 import { getFieldConfig } from "src/utils/applyForm/getFieldConfig";
 
 import React, { JSX } from "react";
@@ -111,6 +112,12 @@ export const FormFields = ({
 
     // generate fields for all schema elements that are not children of a section
     uiSchema.forEach((node) => {
+      const conditionalState = resolveConditionalUiState(node.conditional, {
+        rootData: formData,
+      });
+      if (!conditionalState.visible) {
+        return;
+      }
       /*
         Only `section` nodes should recurse into `children` here.
         `fieldList` nodes also have `children`, but they are renderable widgets,
@@ -157,6 +164,12 @@ export const FormFields = ({
           type: widgetConfig.type,
           props: {
             ...widgetConfig.props,
+            disabled:
+              Boolean(widgetConfig.props.disabled) ||
+              conditionalState.interaction === "disabled",
+            readOnly:
+              Boolean(widgetConfig.props.readOnly) ||
+              conditionalState.interaction === "readOnly",
             formContext,
             isFormLocked,
           },
@@ -190,7 +203,13 @@ export const FormFields = ({
     // and the section definition will be in the parent. Fields will be rendered (rather than in the
     // iteration above) and wrapped in a section here.
     if (parent) {
-      const sectionFields = uiSchema.map((node) => {
+      const sectionFields = uiSchema.flatMap((node) => {
+        const conditionalState = resolveConditionalUiState(node.conditional, {
+          rootData: formData,
+        });
+        if (!conditionalState.visible) {
+          return [];
+        }
         // assume that any child fields of a section are defined fields, no support for sub sections
         if (!isRenderableFieldNode(node)) {
           throw new Error("section child is not a defined field");
@@ -222,6 +241,12 @@ export const FormFields = ({
           type: widgetConfig.type,
           props: {
             ...widgetConfig.props,
+            disabled:
+              Boolean(widgetConfig.props.disabled) ||
+              conditionalState.interaction === "disabled",
+            readOnly:
+              Boolean(widgetConfig.props.readOnly) ||
+              conditionalState.interaction === "readOnly",
             formContext,
             isFormLocked,
           },

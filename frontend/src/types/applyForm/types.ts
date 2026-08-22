@@ -6,6 +6,7 @@ import {
   StrictRJSFSchema,
   UIOptionsType,
 } from "@rjsf/utils";
+import type { ConditionalUi } from "src/types/applyForm/conditionalUiTypes";
 
 import { HTMLAttributes } from "react";
 
@@ -287,6 +288,7 @@ type UiSchemaBasicField = {
   widget?: WidgetTypes;
   name?: string;
   printDescription?: boolean;
+  conditional?: ConditionalUi;
 } & (
   | {
       definition: DefinitionPath;
@@ -308,6 +310,7 @@ type UiSchemaMultiField = {
   type: "multiField";
   widget?: Exclude<WidgetTypes, "Table">;
   name?: string;
+  conditional?: ConditionalUi;
 } & (
   | {
       definition: DefinitionPath;
@@ -327,6 +330,7 @@ export type UiSchemaTableMultiField = {
   definition: PropertyPath[];
   children: UiSchemaTableChildren;
   schema?: undefined;
+  conditional?: ConditionalUi;
 };
 
 export type UiSchemaField =
@@ -338,6 +342,7 @@ export interface UiSchemaSection {
   name: string;
   children: UiSchema;
   description?: string;
+  conditional?: ConditionalUi;
 }
 
 /**
@@ -358,6 +363,7 @@ export interface UiSchemaFieldList {
   name: string;
   description?: string;
   additionalDescribedById?: string;
+  conditional?: ConditionalUi;
   children: (
     Exclude<UiSchemaField, UiSchemaTableMultiField> | UiSchemaFieldList
   )[];
