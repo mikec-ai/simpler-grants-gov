@@ -24,6 +24,14 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
             "namespacePrefix": "Example",
             "attributes": {"FormVersion": "1.0"},
         },
+        "attachment": {
+            "fields": {
+                "fileName": {"element": "OriginalName", "namespace": "att"},
+                "mimeType": {"element": "MediaType", "namespace": "att"},
+                "fileLocation": {"element": "Location", "namespace": "att"},
+                "hashValue": {"element": "Digest", "namespace": "glob"},
+            }
+        },
         "mapping": {
             "fields": {
                 "samUei": {"element": "SAMUEI", "kind": "value"},
@@ -56,7 +64,7 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
         "type": "attachment",
     }
     assert runtime["people"]["items"]["file"]["file_name"]["xml_transform"] == {
-        "target": "FileName",
+        "target": "OriginalName",
         "namespace": "att",
     }
 
@@ -71,8 +79,21 @@ def test_budget_profiles_are_loaded_from_portable_artifacts_not_python_form_modu
     }
     assert "samuei" not in profile["mapping"]["fields"]
     assert "sam_uei" not in profile["mapping"]["fields"]
+    assert profile["attachment"]["fields"]["hashValue"] == {
+        "element": "HashValue",
+        "namespace": "glob",
+    }
 
 
 def test_rejects_an_unknown_profile_contract() -> None:
     with pytest.raises(ValueError, match="unsupported Grants.gov XML profile"):
         project_grants_gov_xml_profile({"contract": "future/v2"}, Projection())
+
+
+def test_rejects_an_attachment_node_without_portable_wire_fields() -> None:
+    profile_path = ARTIFACTS / "forms/rr-budget/targets/grants-gov-xml.json"
+    profile = json.loads(profile_path.read_text())
+    profile.pop("attachment")
+
+    with pytest.raises(ValueError, match="has no declared wire fields"):
+        project_grants_gov_xml_profile(profile, Projection())

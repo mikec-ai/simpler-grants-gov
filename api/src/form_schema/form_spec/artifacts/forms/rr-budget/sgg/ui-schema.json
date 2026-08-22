@@ -529,7 +529,7 @@
             "definition": "/properties/budgetYear/items/properties/travel/properties/totalTravelCost"
           }
         ],
-        "description": "One to five budget periods."
+        "description": "One to five budget periods for this project or subaward budget."
       }
     ]
   },

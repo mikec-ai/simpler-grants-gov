@@ -33,8 +33,7 @@ def test_runtime_identity_and_both_capacities_come_from_portable_manifest() -> N
     schema = resolve_jsonschema(copy.deepcopy(RRSubawardBudget10_30_v3_0.form_json_schema))
     budgets = schema["properties"]["budget_attachments"]
     assert budgets["maxItems"] == 30
-    profile = budgets["items"]["allOf"][0]
-    assert profile["properties"]["budget_year"]["maxItems"] == 10
+    assert budgets["items"]["properties"]["budget_year"]["maxItems"] == 10
 
 
 def test_profile_requires_no_new_renderer_or_rule_capability() -> None:

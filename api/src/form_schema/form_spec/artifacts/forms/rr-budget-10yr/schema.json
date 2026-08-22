@@ -5,7 +5,7 @@
   "properties": {
     "samUei": {
       "$ref": "../../question-bank/primary-org/uei/schema.json",
-      "description": "Unique Entity Identifier for the applicant organization.",
+      "description": "Unique Entity Identifier for the organization responsible for this budget.",
       "title": "UEI:"
     },
     "budgetType": {
@@ -142,7 +142,7 @@
       },
       "minItems": 1,
       "maxItems": 10,
-      "description": "One to ten budget periods.",
+      "description": "One to ten budget periods for this project or subaward budget.",
       "title": "Budget Year"
     },
     "budgetSummary": {

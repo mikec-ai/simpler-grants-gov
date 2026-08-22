@@ -10,22 +10,23 @@ from __future__ import annotations
 
 from typing import Any
 
-from src.form_schema.form_spec.projection import Projection
+from src.form_schema.form_spec.projection import Projection, snake_case
 
 PROFILE_CONTRACT = "grants-gov-xml-profile/v1"
 
 
-def _field(target: str, namespace: str) -> dict[str, Any]:
-    return {"xml_transform": {"target": target, "namespace": namespace}}
-
-
-def _attachment_children() -> dict[str, Any]:
-    """The standard Grants.gov AttachedFileDataType output shape."""
+def _attachment_children(fields: dict[str, Any], *, path: str) -> dict[str, Any]:
+    """Project declared attachment wire fields onto the runtime attachment record."""
+    if not fields:
+        raise ValueError(f"attachment mapping at {path} has no declared wire fields")
     return {
-        "file_name": _field("FileName", "att"),
-        "mime_type": _field("MimeType", "att"),
-        "file_location": _field("FileLocation", "att"),
-        "hash_value": _field("HashValue", "glob"),
+        snake_case(name): {
+            "xml_transform": {
+                "target": declaration["element"],
+                "namespace": declaration["namespace"],
+            }
+        }
+        for name, declaration in fields.items()
     }
 
 
@@ -40,6 +41,7 @@ def project_grants_gov_xml_profile(
     root = profile.get("root")
     xsd = profile.get("xsd")
     mapping = profile.get("mapping")
+    attachment = profile.get("attachment", {})
     if (
         not isinstance(namespaces, dict)
         or not isinstance(root, dict)
@@ -62,20 +64,42 @@ def project_grants_gov_xml_profile(
                 "root_attributes": dict(root["attributes"]),
             },
         },
-        **_project_fields(mapping["fields"], projection, path=""),
+        **_project_fields(
+            mapping["fields"],
+            projection,
+            path="",
+            attachment_fields=attachment.get("fields", {}),
+        ),
     }
 
 
-def _project_fields(fields: dict[str, Any], projection: Projection, *, path: str) -> dict[str, Any]:
+def _project_fields(
+    fields: dict[str, Any],
+    projection: Projection,
+    *,
+    path: str,
+    attachment_fields: dict[str, Any],
+) -> dict[str, Any]:
     projected: dict[str, Any] = {}
     for canonical_name, node in fields.items():
         canonical_path = f"{path}.{canonical_name}" if path else canonical_name
         source_name = projection.rename(canonical_path, canonical_name)
-        projected[source_name] = _project_node(node, projection, path=canonical_path)
+        projected[source_name] = _project_node(
+            node,
+            projection,
+            path=canonical_path,
+            attachment_fields=attachment_fields,
+        )
     return projected
 
 
-def _project_node(node: dict[str, Any], projection: Projection, *, path: str) -> dict[str, Any]:
+def _project_node(
+    node: dict[str, Any],
+    projection: Projection,
+    *,
+    path: str,
+    attachment_fields: dict[str, Any],
+) -> dict[str, Any]:
     kind = node["kind"]
     runtime_type = {
         "value": None,
@@ -94,7 +118,14 @@ def _project_node(node: dict[str, Any], projection: Projection, *, path: str) ->
 
     rule: dict[str, Any] = {"xml_transform": transform}
     if kind == "object":
-        rule.update(_project_fields(node["fields"], projection, path=path))
+        rule.update(
+            _project_fields(
+                node["fields"],
+                projection,
+                path=path,
+                attachment_fields=attachment_fields,
+            )
+        )
     elif kind == "array":
         if item_element := node.get("itemElement"):
             transform["item_wrapper"] = item_element
@@ -102,7 +133,12 @@ def _project_node(node: dict[str, Any], projection: Projection, *, path: str) ->
             transform["item_namespace"] = item_namespace
         if item_attributes := node.get("itemAttributes"):
             transform["item_attributes"] = dict(item_attributes)
-        rule["items"] = _project_fields(node["items"]["fields"], projection, path=path)
+        rule["items"] = _project_fields(
+            node["items"]["fields"],
+            projection,
+            path=path,
+            attachment_fields=attachment_fields,
+        )
     elif kind == "attachment":
-        rule.update(_attachment_children())
+        rule.update(_attachment_children(attachment_fields, path=path))
     return rule

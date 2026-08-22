@@ -7,7 +7,7 @@
       {
         "type": "fieldList",
         "name": "budgetAttachments",
-        "label": "Subaward Budgets",
+        "label": "Research & Related Budget 10YR",
         "definition": "/properties/budgetAttachments",
         "children": [
           {
@@ -528,7 +528,7 @@
                 "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/travel/properties/totalTravelCost"
               }
             ],
-            "description": "Override only the permitted period count; inherited questions and rules remain shared."
+            "description": "One to ten budget periods for this project or subaward budget."
           },
           {
             "type": "null",

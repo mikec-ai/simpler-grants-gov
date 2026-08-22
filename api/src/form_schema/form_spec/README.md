@@ -6,7 +6,8 @@ question definitions and does not depend on TypeSpec. It reads versioned JSON ar
 projects them into the existing Simpler schema, UI, rule, and shared-schema contracts.
 
 Forms may also publish an optional `targets/grants-gov-xml.json` profile. The profile owns
-the form's root element, namespaces, XSD identity, and canonical response-to-XML mapping.
+the form's root element, namespaces, XSD identity, canonical response-to-XML mapping, and
+standard attachment child wire fields.
 The adapter loads that data and applies the same legacy-name projection used for the JSON
 Schema; it contains no budget-family names, durations, wrappers, or per-form mapping code.
 
@@ -15,7 +16,8 @@ The adapter owns only consumer concerns:
 - canonical `camelCase` to Simpler's legacy field names;
 - reference retargeting into Simpler's shared-schema resolver;
 - compatibility transformations required by the current renderer; and
-- translation of portable XML node kinds into the existing generic XML runtime vocabulary;
+- mechanical translation of portable XML nodes and declared attachment fields into the
+  existing generic XML runtime vocabulary;
 - selection and verification of the exact runtime artifacts shipped with the API.
 
 `artifacts/artifact-manifest.json` records the producer repository and commit, the digest of

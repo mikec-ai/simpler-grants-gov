@@ -6,7 +6,7 @@
     "budgetAttachments": {
       "type": "array",
       "items": {
-        "$ref": "#/$defs/ResearchBudget10YrDetails",
+        "$ref": "../../question-bank/budget/research/details-10yr/schema.json",
         "properties": {
           "budgetYear": {
             "items": {
@@ -123,6 +123,124 @@
                 }
               }
             }
+          },
+          "budgetSummary": {
+            "properties": {
+              "cumulativeAdpComputerServices": {
+                "readOnly": true
+              },
+              "cumulativeAlterationsAndRenovations": {
+                "readOnly": true
+              },
+              "cumulativeConsultantServices": {
+                "readOnly": true
+              },
+              "cumulativeDomesticTravelCosts": {
+                "readOnly": true
+              },
+              "cumulativeEquipmentFacilityRentalFees": {
+                "readOnly": true
+              },
+              "cumulativeFee": {
+                "readOnly": true
+              },
+              "cumulativeForeignTravelCosts": {
+                "readOnly": true
+              },
+              "cumulativeMaterialAndSupplies": {
+                "readOnly": true
+              },
+              "cumulativeNoofTrainees": {
+                "readOnly": true
+              },
+              "cumulativeOther10DirectCost": {
+                "readOnly": true
+              },
+              "cumulativeOther1DirectCost": {
+                "readOnly": true
+              },
+              "cumulativeOther2DirectCost": {
+                "readOnly": true
+              },
+              "cumulativeOther3DirectCost": {
+                "readOnly": true
+              },
+              "cumulativeOther4DirectCost": {
+                "readOnly": true
+              },
+              "cumulativeOther5DirectCost": {
+                "readOnly": true
+              },
+              "cumulativeOther6DirectCost": {
+                "readOnly": true
+              },
+              "cumulativeOther7DirectCost": {
+                "readOnly": true
+              },
+              "cumulativeOther8DirectCost": {
+                "readOnly": true
+              },
+              "cumulativeOther9DirectCost": {
+                "readOnly": true
+              },
+              "cumulativeOtherTraineeCost": {
+                "readOnly": true
+              },
+              "cumulativePublicationCosts": {
+                "readOnly": true
+              },
+              "cumulativeSubawardConsortiumContractualCosts": {
+                "readOnly": true
+              },
+              "cumulativeTotalCostsFee": {
+                "readOnly": true
+              },
+              "cumulativeTotalFundsRequestedDirectCosts": {
+                "readOnly": true
+              },
+              "cumulativeTotalFundsRequestedDirectIndirectCosts": {
+                "readOnly": true
+              },
+              "cumulativeTotalFundsRequestedEquipment": {
+                "readOnly": true
+              },
+              "cumulativeTotalFundsRequestedIndirectCost": {
+                "readOnly": true
+              },
+              "cumulativeTotalFundsRequestedOtherDirectCosts": {
+                "readOnly": true
+              },
+              "cumulativeTotalFundsRequestedOtherPersonnel": {
+                "readOnly": true
+              },
+              "cumulativeTotalFundsRequestedPersonnel": {
+                "readOnly": true
+              },
+              "cumulativeTotalFundsRequestedSeniorKeyPerson": {
+                "readOnly": true
+              },
+              "cumulativeTotalFundsRequestedTraineeCosts": {
+                "readOnly": true
+              },
+              "cumulativeTotalFundsRequestedTravel": {
+                "readOnly": true
+              },
+              "cumulativeTotalNoOtherPersonnel": {
+                "readOnly": true
+              },
+              "cumulativeTraineeStipends": {
+                "readOnly": true
+              },
+              "cumulativeTraineeSubsistence": {
+                "readOnly": true
+              },
+              "cumulativeTraineeTravel": {
+                "readOnly": true
+              },
+              "cumulativeTraineeTuitionFeesHealthInsurance": {
+                "readOnly": true
+              }
+            }
           }
         }
       },
@@ -131,31 +249,5 @@
       "title": "Subaward Budgets"
     }
   },
-  "description": "R&R Subaward Budget Attachment(s) Form 10 YR 30 ATT, Grants.gov form version 3.0.\nThe source wrapper's ATT1-ATT30 strings are technical capture slots. The portable\ndeclaration models the structured ten-period subaward budgets carried by those slots.",
-  "$defs": {
-    "ResearchBudget10YrDetails": {
-      "type": "object",
-      "properties": {
-        "budgetYear": {
-          "type": "array",
-          "items": {
-            "$ref": "../../question-bank/budget/research/period/schema.json"
-          },
-          "minItems": 1,
-          "maxItems": 10,
-          "description": "Override only the permitted period count; inherited questions and rules remain shared.",
-          "title": "Budget Year"
-        }
-      },
-      "required": [
-        "budgetYear"
-      ],
-      "allOf": [
-        {
-          "$ref": "../../question-bank/budget/research/details/schema.json"
-        }
-      ],
-      "description": "A ten-period profile of the shared Research & Related budget details question."
-    }
-  }
+  "description": "R&R Subaward Budget Attachment(s) Form 10 YR 30 ATT, Grants.gov form version 3.0.\nThe source wrapper's ATT1-ATT30 strings are technical capture slots. The portable\ndeclaration models the structured ten-period subaward budgets carried by those slots."
 }
