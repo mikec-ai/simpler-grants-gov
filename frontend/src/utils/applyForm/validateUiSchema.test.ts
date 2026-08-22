@@ -34,6 +34,26 @@ describe("validateFormData", () => {
   });
 
   describe("validateUiSchema", () => {
+    it("accepts the typed portable conditional contract", () => {
+      const conditionalUiSchema: UiSchema = [
+        {
+          type: "field",
+          definition: "/properties/tracking_id",
+          conditional: {
+            when: {
+              op: "equals",
+              ref: { scope: "root", pointer: "/submission_type_code" },
+              value: "Change/Corrected Application",
+            },
+            then: { visible: true },
+            otherwise: { visible: false },
+          },
+        },
+      ];
+
+      expect(validateUiSchema(conditionalUiSchema)).toBe(false);
+    });
+
     it("should validate a correct UI schema", () => {
       const validUiSchema: UiSchema = [
         {

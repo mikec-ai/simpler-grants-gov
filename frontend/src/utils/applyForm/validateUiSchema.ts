@@ -72,6 +72,7 @@ export const UiJsonSchema: RJSFSchema = {
         },
         attachmentType: { type: "string" },
         printDescription: { type: "boolean" },
+        conditional: { $ref: "#/$defs/conditional" },
       },
       required: ["type"],
       anyOf: [
@@ -127,6 +128,7 @@ export const UiJsonSchema: RJSFSchema = {
         children: {
           $ref: "#/$defs/tableChildren",
         },
+        conditional: { $ref: "#/$defs/conditional" },
       },
       required: ["type"],
       allOf: [
@@ -211,6 +213,7 @@ export const UiJsonSchema: RJSFSchema = {
         description: {
           type: "string",
         },
+        conditional: { $ref: "#/$defs/conditional" },
         children: {
           type: "array",
           items: {
@@ -255,6 +258,7 @@ export const UiJsonSchema: RJSFSchema = {
         description: {
           type: "string",
         },
+        conditional: { $ref: "#/$defs/conditional" },
         children: {
           type: "array",
           items: {
@@ -309,6 +313,117 @@ export const UiJsonSchema: RJSFSchema = {
       },
       required: ["columns", "rows"],
       additionalProperties: false,
+    },
+    conditional: {
+      type: "object",
+      properties: {
+        when: { $ref: "#/$defs/conditionalPredicate" },
+        then: { $ref: "#/$defs/conditionalUiState" },
+        otherwise: { $ref: "#/$defs/conditionalUiState" },
+      },
+      required: ["when", "then"],
+      additionalProperties: false,
+    },
+    conditionalUiState: {
+      type: "object",
+      properties: {
+        visible: { type: "boolean" },
+        interaction: {
+          type: "string",
+          enum: ["enabled", "disabled", "readOnly"],
+        },
+      },
+      minProperties: 1,
+      additionalProperties: false,
+    },
+    conditionalValueRef: {
+      type: "object",
+      properties: {
+        scope: { type: "string", enum: ["root", "item"] },
+        pointer: {
+          type: "string",
+          pattern: "^(/([^/~]|~[01])*)*$",
+        },
+        ancestor: { type: "integer", minimum: 0 },
+      },
+      required: ["scope", "pointer"],
+      additionalProperties: false,
+      allOf: [
+        {
+          if: {
+            properties: { scope: { const: "root" } },
+            required: ["scope"],
+          },
+          then: { not: { required: ["ancestor"] } },
+        },
+      ],
+    },
+    conditionalScalar: {
+      anyOf: [
+        { type: "string" },
+        { type: "number" },
+        { type: "boolean" },
+        { type: "null" },
+      ],
+    },
+    conditionalPredicate: {
+      oneOf: [
+        {
+          type: "object",
+          properties: {
+            op: { type: "string", enum: ["equals", "notEquals"] },
+            ref: { $ref: "#/$defs/conditionalValueRef" },
+            value: { $ref: "#/$defs/conditionalScalar" },
+          },
+          required: ["op", "ref", "value"],
+          additionalProperties: false,
+        },
+        {
+          type: "object",
+          properties: {
+            op: { const: "in" },
+            ref: { $ref: "#/$defs/conditionalValueRef" },
+            values: {
+              type: "array",
+              minItems: 1,
+              items: { $ref: "#/$defs/conditionalScalar" },
+            },
+          },
+          required: ["op", "ref", "values"],
+          additionalProperties: false,
+        },
+        {
+          type: "object",
+          properties: {
+            op: { const: "present" },
+            ref: { $ref: "#/$defs/conditionalValueRef" },
+          },
+          required: ["op", "ref"],
+          additionalProperties: false,
+        },
+        {
+          type: "object",
+          properties: {
+            op: { type: "string", enum: ["all", "any"] },
+            predicates: {
+              type: "array",
+              minItems: 1,
+              items: { $ref: "#/$defs/conditionalPredicate" },
+            },
+          },
+          required: ["op", "predicates"],
+          additionalProperties: false,
+        },
+        {
+          type: "object",
+          properties: {
+            op: { const: "not" },
+            predicate: { $ref: "#/$defs/conditionalPredicate" },
+          },
+          required: ["op", "predicate"],
+          additionalProperties: false,
+        },
+      ],
     },
     tableColumn: {
       type: "object",

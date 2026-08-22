@@ -13,6 +13,51 @@ jest.mock("json-schema-merge-allof", () => ({
 }));
 
 describe("buildFormTreeRecursive", () => {
+  it("renders a portable conditional field only when its predicate is true", () => {
+    const schema: RJSFSchema = {
+      type: "object",
+      properties: {
+        submission_type_code: { type: "string", title: "Submission type" },
+        tracking_id: { type: "string", title: "Tracking ID" },
+      },
+    };
+    const uiSchema: UiSchema = [
+      {
+        type: "field",
+        definition: "/properties/tracking_id",
+        conditional: {
+          when: {
+            op: "equals",
+            ref: { scope: "root", pointer: "/submission_type_code" },
+            value: "Change/Corrected Application",
+          },
+          then: { visible: true },
+          otherwise: { visible: false },
+        },
+      },
+    ];
+
+    const { rerender } = render(
+      <FormFields
+        errors={null}
+        formData={{ submission_type_code: "New" }}
+        schema={schema}
+        uiSchema={uiSchema}
+      />,
+    );
+    expect(screen.queryByTestId("tracking_id")).not.toBeInTheDocument();
+
+    rerender(
+      <FormFields
+        errors={null}
+        formData={{ submission_type_code: "Change/Corrected Application" }}
+        schema={schema}
+        uiSchema={uiSchema}
+      />,
+    );
+    expect(screen.getByTestId("tracking_id")).toBeInTheDocument();
+  });
+
   it("prints the SF-424 Short certification description without printing unrelated descriptions", () => {
     const certificationDescription =
       "** The list of certifications and assurances, or an internet site where you may obtain this list, is contained in the announcement or agency specific instructions. By signing this application, I certify (1) to the statements contained in the list of certifications and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001)";
