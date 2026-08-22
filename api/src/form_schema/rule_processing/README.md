@@ -225,6 +225,11 @@ This can be useful when dealing with arrays as if you have an array where
 you want a field to reference the same array item you are already in, you
 don't need to worry about how the indexes of that array work.
 
+Use `@PARENT` when the input is a sibling of the object containing the
+calculated output. For example, a cumulative value inside `budget_summary`
+can read `@PARENT.budget_year[*].travel.domestic_travel_cost` while staying
+scoped to the current subaward budget item.
+
 For example assume the following data and rule:
 
 ```json

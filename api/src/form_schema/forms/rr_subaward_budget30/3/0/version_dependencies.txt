@@ -1,0 +1,4 @@
+# Portable form artifacts and the generic adapter determine this form.
+form_schema/form_spec/artifacts
+form_schema/form_spec/loader.py
+form_schema/form_spec/projection.py

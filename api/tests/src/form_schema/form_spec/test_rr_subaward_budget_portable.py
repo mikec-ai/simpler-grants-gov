@@ -3,12 +3,15 @@
 import copy
 import json
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, cast
 
 from src.constants.lookup_constants import FormType
 from src.form_schema.form_spec.loader import load_form
 from src.form_schema.forms.rr_subaward_budget import RRSubawardBudget_v3_0
 from src.form_schema.jsonschema_resolver import resolve_jsonschema
+from src.form_schema.rule_processing.json_rule_context import JsonRuleConfig, JsonRuleContext
+from src.form_schema.rule_processing.json_rule_processor import process_rule_schema_for_context
 from tests.src.form_schema.form_spec.parity import pointers, rendered_field
 
 ARTIFACTS = Path("src/form_schema/form_spec/artifacts/forms/rr-subaward-budget")
@@ -65,8 +68,48 @@ def test_nested_repeating_groups_and_rules_are_projected_generically() -> None:
     assert len(calculations) == 56
     raw_rules = json.loads((ARTIFACTS / "sgg" / "rule-schema.json").read_text())
     assert "@PARENT." in json.dumps(raw_rules)
+    assert "@PARENT." in json.dumps(RRSubawardBudget_v3_0.form_rule_schema)
     assert sorted(rule["order"] for rule in calculations) == list(range(1, 57))
     assert sum(rule["rule"] == "sum_integer" for rule in calculations) == 3
+
+
+def test_nested_cumulative_calculations_resolve_within_each_subaward() -> None:
+    application_form = SimpleNamespace(
+        application_response={
+            "budget_attachments": [
+                {
+                    "budget_year": [
+                        {"travel": {"domestic_travel_cost": "10.00"}},
+                        {"travel": {"domestic_travel_cost": "15.25"}},
+                    ],
+                    "budget_summary": {},
+                },
+                {
+                    "budget_year": [{"travel": {"domestic_travel_cost": "100.00"}}],
+                    "budget_summary": {},
+                },
+            ]
+        },
+        form=RRSubawardBudget_v3_0,
+        application_form_id="portable-rr-subaward-budget-test",
+        form_id=RRSubawardBudget_v3_0.form_id,
+    )
+    context = JsonRuleContext(
+        cast(Any, application_form),
+        JsonRuleConfig(
+            do_pre_population=True,
+            do_post_population=False,
+            do_field_validation=False,
+        ),
+    )
+
+    process_rule_schema_for_context(context)
+
+    budgets = context.json_data["budget_attachments"]
+    assert [budget["budget_summary"]["cumulative_domestic_travel_costs"] for budget in budgets] == [
+        "25.25",
+        "100.00",
+    ]
 
 
 def test_official_xsd_and_dat_provenance_are_pinned() -> None:

@@ -190,6 +190,8 @@ def test_populate_nested_value_value_is_not_array():
     [
         (["x", "y"], "@THIS.a.b", ["x", "a", "b"]),
         (["x"], "@THIS.a.b", ["a", "b"]),
+        (["x", "y", "z"], "@PARENT.a.b", ["x", "a", "b"]),
+        (["x", "y"], "@PARENT.a.b", ["a", "b"]),
         (["m[0]", "n[*]", "o"], "@THIS.x[1].z[0]", ["m[0]", "n[*]", "x[1]", "z[0]"]),
     ],
 )

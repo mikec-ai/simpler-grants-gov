@@ -7,6 +7,7 @@ from grants_shared.util.dict_util import get_nested_value
 logger = logging.getLogger(__name__)
 
 RELATIVE_PATH_TOKEN = "@THIS."
+PARENT_PATH_TOKEN = "@PARENT."
 
 # Regex to parse strings that end with [*] or [0] (any number of digits)
 ARRAY_INDEX_REGEX = re.compile(
@@ -34,8 +35,8 @@ def build_path_str(path: list[str], index: int | None = None) -> str:
 
 
 def is_relative_path(raw_path: str) -> bool:
-    """If the path starts with @THIS. then we know it's supposed to be a relative path"""
-    return raw_path.startswith(RELATIVE_PATH_TOKEN)
+    """Whether a path is relative to the current rule target or its parent object."""
+    return raw_path.startswith((RELATIVE_PATH_TOKEN, PARENT_PATH_TOKEN))
 
 
 def make_relative_path_absolute(path: list[str], relative_path: str) -> list[str]:
@@ -51,8 +52,12 @@ def make_relative_path_absolute(path: list[str], relative_path: str) -> list[str
 
     These paths can include arrays in either [*] or [1] form.
 
-    NOTE: While we could use the `parent` value in
+    ``@PARENT.x.y`` starts one object above ``@THIS``. For a target path
+    ``["a[*]", "b", "c"]``, it resolves to ``["a[*]", "x", "y"]``.
     """
+    if relative_path.startswith(PARENT_PATH_TOKEN):
+        updated_relative_path = relative_path.removeprefix(PARENT_PATH_TOKEN)
+        return path[:-2] + updated_relative_path.split(".")
     updated_relative_path = relative_path.removeprefix(RELATIVE_PATH_TOKEN)
     return path[:-1] + updated_relative_path.split(".")
 
@@ -62,7 +67,8 @@ def get_field_values(data: dict, fields: list[str], path: list[str]) -> list:
 
     fields should be a list of paths that can either be:
     * absolute: "x.y[*].z[0]"
-    * relative: "@THIS.x.y[*]"
+    * relative to the target object: "@THIS.x.y[*]"
+    * relative to its parent object: "@PARENT.x.y[*]"
 
     Relative paths get appended to the path we're currently processing at
     after removing the current node
