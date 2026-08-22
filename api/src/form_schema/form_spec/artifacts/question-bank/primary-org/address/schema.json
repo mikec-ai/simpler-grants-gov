@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "primary-org/address/schema.json",
+  "type": "object",
+  "properties": {},
+  "allOf": [
+    {
+      "$ref": "../../../question-bank/generics/address/schema.json"
+    }
+  ],
+  "description": "Enter the address of the applicant.",
+  "title": "Address"
+}

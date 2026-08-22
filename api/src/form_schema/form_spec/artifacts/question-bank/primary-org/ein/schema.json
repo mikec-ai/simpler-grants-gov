@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "primary-org/ein/schema.json",
+  "type": "string",
+  "minLength": 9,
+  "maxLength": 30,
+  "description": "Enter either TIN or EIN as assigned by the Internal Revenue Service.",
+  "title": "EIN/TIN"
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "opportunity/number/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 40,
+  "description": "The funding opportunity number.",
+  "title": "Opportunity Number"
+}

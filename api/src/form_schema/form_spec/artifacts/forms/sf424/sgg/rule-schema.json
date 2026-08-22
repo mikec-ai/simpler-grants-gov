@@ -1,0 +1,90 @@
+{
+  "dateReceived": {
+    "gg_post_population": {
+      "rule": "current_date"
+    }
+  },
+  "samUei": {
+    "gg_pre_population": {
+      "rule": "uei"
+    }
+  },
+  "agencyName": {
+    "gg_pre_population": {
+      "rule": "agency_name"
+    }
+  },
+  "assistanceListingNumber": {
+    "gg_pre_population": {
+      "rule": "assistance_listing_number"
+    }
+  },
+  "assistanceListingProgramTitle": {
+    "gg_pre_population": {
+      "rule": "assistance_listing_program_title"
+    }
+  },
+  "fundingOpportunityNumber": {
+    "gg_pre_population": {
+      "rule": "opportunity_number"
+    }
+  },
+  "fundingOpportunityTitle": {
+    "gg_pre_population": {
+      "rule": "opportunity_title"
+    }
+  },
+  "competitionIdentificationNumber": {
+    "gg_pre_population": {
+      "rule": "public_competition_id"
+    }
+  },
+  "competitionIdentificationTitle": {
+    "gg_pre_population": {
+      "rule": "competition_title"
+    }
+  },
+  "areasAffected": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "additionalProjectTitle": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "additionalCongressionalDistricts": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "debtExplanation": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "aorSignature": {
+    "gg_post_population": {
+      "rule": "signature"
+    }
+  },
+  "dateSigned": {
+    "gg_post_population": {
+      "rule": "current_date"
+    }
+  },
+  "totalEstimatedFunding": {
+    "gg_pre_population": {
+      "rule": "sum_monetary",
+      "fields": [
+        "federalEstimatedFunding",
+        "applicantEstimatedFunding",
+        "stateEstimatedFunding",
+        "localEstimatedFunding",
+        "otherEstimatedFunding",
+        "programIncomeEstimatedFunding"
+      ]
+    }
+  }
+}

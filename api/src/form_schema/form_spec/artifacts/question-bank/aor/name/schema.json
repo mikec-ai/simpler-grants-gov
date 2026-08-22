@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "aor/name/schema.json",
+  "type": "object",
+  "properties": {},
+  "allOf": [
+    {
+      "$ref": "../../../question-bank/generics/person-name/schema.json"
+    }
+  ],
+  "description": "Enter the name of the authorized representative.",
+  "title": "Authorized Representative"
+}

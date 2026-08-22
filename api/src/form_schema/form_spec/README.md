@@ -23,9 +23,10 @@ cd api
 uv run python bin/sync_form_spec_artifacts.py \
   /path/to/grants-form-artifacts.tar.gz \
   --form key-contacts \
+  --form sf424 \
   --target src/form_schema/form_spec/artifacts
 ```
 
-The synchronization command follows `$ref` links to select the form's transitive question
-closure. Adding another form therefore does not require copying the whole question bank or
-editing a form-specific Python generator.
+The synchronization command accepts repeated `--form` flags and follows `$ref` links to select
+their combined transitive question closure. Adding another form therefore does not require
+copying the whole question bank or editing a form-specific Python generator.

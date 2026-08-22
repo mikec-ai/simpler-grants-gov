@@ -2,9 +2,14 @@
   "contract": "grants-form-artifact-selection/v1",
   "files": [
     {
+      "path": "dist/forms/key-contacts/evidence.json",
+      "sha256": "49898cc7f5853a48e90faa6d153e6f9c2a098f66a4754ca42a4faf2bbee25301",
+      "size": 851
+    },
+    {
       "path": "dist/forms/key-contacts/manifest.json",
-      "sha256": "0cbd5e8ab5d333d7d3a3732a020a6a9920e203653b8b4c539f93f9b936e55d06",
-      "size": 534
+      "sha256": "769ccfa9c28a6fa12a6933e87abeef1b1f1da4e660d8f32c8e09a53d5b8cc751",
+      "size": 570
     },
     {
       "path": "dist/forms/key-contacts/schema.json",
@@ -22,9 +27,79 @@
       "size": 3276
     },
     {
+      "path": "dist/forms/sf424/evidence.json",
+      "sha256": "843ce7d63cba05bf581c29e4763c5fefa356d430b45d7515bd0c6e55be44a402",
+      "size": 824
+    },
+    {
+      "path": "dist/forms/sf424/manifest.json",
+      "sha256": "8dad694f2b9e65558ce00be1d53041bdee7fac94fd8381cb88ba6af4658af7eb",
+      "size": 584
+    },
+    {
+      "path": "dist/forms/sf424/schema.json",
+      "sha256": "57a5afccff353bffae3a7a69776c1846339d9ab27c4b939ee1201ff70ef1e778",
+      "size": 18263
+    },
+    {
+      "path": "dist/forms/sf424/sgg/rule-schema.json",
+      "sha256": "46738a7bef298f62aecc161f88b12d41cd202520fe54047879c63e1eadf6e083",
+      "size": 1778
+    },
+    {
+      "path": "dist/forms/sf424/sgg/ui-schema.json",
+      "sha256": "080b05ca827f01dd75f05aca9e0bda10e1053b997844a054fc02c598a26cc43f",
+      "size": 10814
+    },
+    {
+      "path": "dist/question-bank/aor/date-signed/schema.json",
+      "sha256": "fd354540ec8cbf1b2d5e594acb038fe4c269c0f95da5a315d54eb9b2777803c3",
+      "size": 231
+    },
+    {
+      "path": "dist/question-bank/aor/email/schema.json",
+      "sha256": "481831cd563f082406c4ab58c8e2d670438bb4d73d96f31d9d5be60078d3ef93",
+      "size": 227
+    },
+    {
+      "path": "dist/question-bank/aor/fax/schema.json",
+      "sha256": "1f389b76677b0dcc2b23afe65f29e4b3c4b2f141b131e82419634503624bb2cc",
+      "size": 220
+    },
+    {
+      "path": "dist/question-bank/aor/name/schema.json",
+      "sha256": "236d629aecac463eed15991dcddf4f7a820c87f5ac22c462e0fd9ecdc2162694",
+      "size": 348
+    },
+    {
+      "path": "dist/question-bank/aor/phone/schema.json",
+      "sha256": "a1965d58ba01a2129d9618a6e3e54d674245df48024652e117c4c7819cdb19e6",
+      "size": 242
+    },
+    {
+      "path": "dist/question-bank/aor/signature/schema.json",
+      "sha256": "3befd157ad7692052b7eb6aefb5122112ffaf02b0c93e401fc015a31446e44ef",
+      "size": 274
+    },
+    {
+      "path": "dist/question-bank/aor/title/schema.json",
+      "sha256": "fb287e34578d187ba6d089fed6886afdd29cdaebd1d53b461922e0c9ee3d9b2d",
+      "size": 221
+    },
+    {
+      "path": "dist/question-bank/application/date-received/schema.json",
+      "sha256": "46e288d5d537b168ce446f884a3162bb7d58e40e5c52f8cb25d1a24a496a7cd1",
+      "size": 243
+    },
+    {
       "path": "dist/question-bank/generics/address/schema.json",
       "sha256": "2ee63e9756398551d4b402ce9ee8d0ef087696e68505f8b05983b8227d82c87a",
       "size": 11241
+    },
+    {
+      "path": "dist/question-bank/generics/attachment/schema.json",
+      "sha256": "4e9054cebf1d3fa9bfde1f55dd7552c1bba697034b2fddadde6c93e80083dff3",
+      "size": 183
     },
     {
       "path": "dist/question-bank/generics/contact-details/schema.json",
@@ -42,6 +117,11 @@
       "size": 221
     },
     {
+      "path": "dist/question-bank/generics/monetary-amount/schema.json",
+      "sha256": "0cb04c90a6a96ace0d19864fd70002df9681903ea265bac31167523d3db28063",
+      "size": 340
+    },
+    {
       "path": "dist/question-bank/generics/organization-name/schema.json",
       "sha256": "ee043744a2c4fe4ba584b3f526bdc39c487226edde15b64ba2d6809c9559e08f",
       "size": 266
@@ -57,18 +137,106 @@
       "size": 207
     },
     {
+      "path": "dist/question-bank/opportunity/agency-name/schema.json",
+      "sha256": "b658b0db84606fd8569b067bc1fa33c975a3ba10ff104e538d795f50eee2bbc2",
+      "size": 244
+    },
+    {
+      "path": "dist/question-bank/opportunity/assistance-listing-number/schema.json",
+      "sha256": "82b4ab81c095a099a6bcd5afb8b472280c7e2fd332028c09d2777628b1794fa0",
+      "size": 290
+    },
+    {
+      "path": "dist/question-bank/opportunity/assistance-listing-title/schema.json",
+      "sha256": "60f5deb63d8c16cbd3f0998cd40d8a5be578dafc4128eb3b7fb825e90aff56bb",
+      "size": 280
+    },
+    {
+      "path": "dist/question-bank/opportunity/competition-number/schema.json",
+      "sha256": "19b7b4464bd0d8e646bd5d08c0e98c1cadebaceb43dba3a4063b3e131ec0b552",
+      "size": 276
+    },
+    {
+      "path": "dist/question-bank/opportunity/competition-title/schema.json",
+      "sha256": "11e4700844f02023af172806bb28d708978d0f5d102e447cd1113e9e01f2c16d",
+      "size": 274
+    },
+    {
+      "path": "dist/question-bank/opportunity/number/schema.json",
+      "sha256": "39c4a5dbbe1834b8650f3f11253ed5916c4ac9d0ce44e395215226d682a2fa6f",
+      "size": 249
+    },
+    {
+      "path": "dist/question-bank/opportunity/title/schema.json",
+      "sha256": "42c00488ca5187921449f36035bd0f3958b901aef97c684c796d84d366177a88",
+      "size": 247
+    },
+    {
       "path": "dist/question-bank/poc/details/schema.json",
       "sha256": "475bd94cf757485768fe22932273ea2a687e4695d0d9248e4e089910667973b1",
       "size": 848
+    },
+    {
+      "path": "dist/question-bank/primary-org/address/schema.json",
+      "sha256": "b20fffd1180adf706dd7c1824339c996abc16b7a95736c97401e306c89b69187",
+      "size": 324
+    },
+    {
+      "path": "dist/question-bank/primary-org/applicant-type-other/schema.json",
+      "sha256": "180b195a24ff97ae4eb6e773c73894385a58f90f6f8210cbca4c35b74586cfa6",
+      "size": 337
+    },
+    {
+      "path": "dist/question-bank/primary-org/applicant-type/schema.json",
+      "sha256": "95b4c1c9e79b85c99755af87bdb10982ba5ca3c4b2385c0b978461cba613e219",
+      "size": 1839
+    },
+    {
+      "path": "dist/question-bank/primary-org/ein/schema.json",
+      "sha256": "ac911f424e63afadb9351a6b984a31d2d5cbafc145e3ea0ed804e279facb2cc9",
+      "size": 272
+    },
+    {
+      "path": "dist/question-bank/primary-org/legal-name/schema.json",
+      "sha256": "9fcb4be24db232717f55e42584864b7b37f4f13665a43c426b70083093ff0980",
+      "size": 296
+    },
+    {
+      "path": "dist/question-bank/primary-org/uei/schema.json",
+      "sha256": "493db65f4697cc47c47e8d9fa437e1858e6522a5990b5060cb8e66e339d95570",
+      "size": 239
+    },
+    {
+      "path": "dist/question-bank/project/congressional-district/schema.json",
+      "sha256": "84f3a61f8fdccd7f720e4efdb1b65409cc948c8b5201fc24dc2173c3ae39f1e5",
+      "size": 309
+    },
+    {
+      "path": "dist/question-bank/project/end-date/schema.json",
+      "sha256": "9f4173e42e3d329ec6b00e8723442aade5f538b9ca555d8b984c3fae7cb0c48e",
+      "size": 237
+    },
+    {
+      "path": "dist/question-bank/project/start-date/schema.json",
+      "sha256": "e440960c8c7613873b0865be41d7daaeac00c0367746c64ea40168395a085a37",
+      "size": 241
+    },
+    {
+      "path": "dist/question-bank/project/title/schema.json",
+      "sha256": "65232f95d14d3fc3253e65836d7636853aed707ae3da1bedc567bfb8748a70e9",
+      "size": 257
     }
   ],
   "selection": {
-    "form": "key-contacts",
-    "policy": "form runtime artifacts plus transitive question-schema closure"
+    "forms": [
+      "key-contacts",
+      "sf424"
+    ],
+    "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "7d64417710751e6972e312a8a48d0a3bcf3c3152"
+    "revision": "2e8ff805d135edeb07de6b23597d087a37bb8f85"
   },
-  "sourceBundleSha256": "3b269ab0a9fb938ac8aa55482ebc2494ccd05c23cebc5fdb65997dde1549ff80"
+  "sourceBundleSha256": "9f29e9022a0ccdf342a6f1229d156087b7f6738815d83ebf4377287bc630f73d"
 }

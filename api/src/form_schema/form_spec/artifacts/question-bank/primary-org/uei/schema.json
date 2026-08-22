@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "primary-org/uei/schema.json",
+  "type": "string",
+  "minLength": 12,
+  "maxLength": 12,
+  "description": "UEI of the applicant organization.",
+  "title": "SAM UEI"
+}
