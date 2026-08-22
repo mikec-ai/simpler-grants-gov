@@ -71,6 +71,34 @@ const nestedGroupDefinition = [
   },
 ];
 
+const recursiveGroupDefinition = [
+  {
+    widget: "FieldList" as const,
+    baseId: "contacts[~~index~~]--periods",
+    definition: "/properties/contacts/items/properties/periods",
+    storagePath: ["periods"],
+    generalProps: {
+      schema: { type: "array" as const, title: "Periods" },
+      label: "Periods",
+      minItems: 1,
+      groupDefinition: [
+        {
+          widget: "Text" as const,
+          baseId: "periods[~~index~~]--amount",
+          definition:
+            "/properties/contacts/items/properties/periods/items/properties/amount",
+          storagePath: ["amount"],
+          generalProps: {
+            schema: { type: "string", title: "Amount" },
+            rawErrors: [],
+            options: {},
+          },
+        },
+      ],
+    },
+  },
+];
+
 describe("FieldListWidget", () => {
   it("renders label, description, and minimum entry widgets", () => {
     render(
@@ -429,6 +457,36 @@ describe("FieldListWidget", () => {
 
     expect(onChangeMock).toHaveBeenLastCalledWith([
       { address: { street1: "123 Main" } },
+    ]);
+  });
+
+  it("renders and updates a recursively nested FieldList", async () => {
+    const user = userEvent.setup();
+    const onChangeMock = jest.fn();
+
+    render(
+      <FieldListWidget
+        id="contacts"
+        key="contacts"
+        schema={{ type: "array", title: "Contacts" }}
+        label="Contacts"
+        minItems={1}
+        value={[{ periods: [{ amount: "10" }] }]}
+        groupDefinition={recursiveGroupDefinition}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="contacts"
+        onChange={onChangeMock}
+      />,
+    );
+
+    const amount = screen.getByLabelText("periods[0]--amount");
+    expect(amount).toHaveValue("10");
+    await user.clear(amount);
+    await user.type(amount, "25");
+
+    expect(onChangeMock).toHaveBeenLastCalledWith([
+      { periods: [{ amount: "25" }] },
     ]);
   });
 

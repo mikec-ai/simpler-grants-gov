@@ -182,10 +182,7 @@ export type FieldListWidgetProps = {
   };
 };
 
-export type FieldListChildWidgetTypes = Exclude<
-  WidgetTypes,
-  "FieldList" | "Table"
->;
+export type FieldListChildWidgetTypes = Exclude<WidgetTypes, "Table">;
 
 /**
  * Configuration for a single child field rendered within a FieldList entry.
@@ -203,13 +200,27 @@ export type FieldListChildWidgetTypes = Exclude<
  *     address.country
  */
 
-export type FieldListGroupItem = {
-  widget: FieldListChildWidgetTypes;
+type FieldListLeafGroupItem = {
+  widget: Exclude<FieldListChildWidgetTypes, "FieldList">;
   generalProps: Omit<UswdsWidgetProps, "id" | "value" | "key">;
   baseId: string;
   definition: string;
   storagePath: string[];
 };
+
+type NestedFieldListGroupItem = {
+  widget: "FieldList";
+  generalProps: Omit<
+    FieldListWidgetProps,
+    "id" | "key" | "name" | "value" | "onChange"
+  >;
+  baseId: string;
+  definition: string;
+  storagePath: string[];
+};
+
+export type FieldListGroupItem =
+  FieldListLeafGroupItem | NestedFieldListGroupItem;
 
 export type UiSchemaTableCellType = "input" | "readOnly" | "plainText";
 
@@ -336,6 +347,7 @@ export interface UiSchemaSection {
 
 export interface UiSchemaFieldList {
   type: "fieldList";
+  definition?: PropertyPath;
   label: string;
   // Hide the top FieldList title while still using `label` for per-entry headings.
   hideFieldListHeading?: boolean;
@@ -346,7 +358,9 @@ export interface UiSchemaFieldList {
   name: string;
   description?: string;
   additionalDescribedById?: string;
-  children: Exclude<UiSchemaField, UiSchemaTableMultiField>[];
+  children: (
+    Exclude<UiSchemaField, UiSchemaTableMultiField> | UiSchemaFieldList
+  )[];
 }
 
 export type UiSchemaNode = UiSchemaField | UiSchemaSection | UiSchemaFieldList;

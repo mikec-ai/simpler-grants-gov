@@ -451,33 +451,80 @@ describe("getFieldConfig", () => {
           uiFieldObject,
           requiredField: false,
         }),
-      ).toThrow("fieldList children must be field nodes");
+      ).toThrow(
+        "fieldList children must be field, multiField, or fieldList nodes",
+      );
     });
 
-    it("throws for nested fieldList", () => {
-      const uiFieldObject = {
+    it("returns recursive config for a nested fieldList", () => {
+      const nestedSchema: RJSFSchema = {
+        type: "object",
+        properties: {
+          outer: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                inner: {
+                  type: "array",
+                  minItems: 1,
+                  items: {
+                    type: "object",
+                    properties: {
+                      amount: { type: "string", title: "Amount" },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      };
+      const uiFieldObject: UiSchemaFieldList = {
         type: "fieldList",
         name: "outer",
         label: "Outer",
+        definition: "/properties/outer",
         children: [
           {
             type: "fieldList",
             name: "inner",
             label: "Inner",
-            children: [],
+            definition: "/properties/outer/items/properties/inner",
+            children: [
+              {
+                type: "field",
+                definition:
+                  "/properties/outer/items/properties/inner/items/properties/amount",
+              },
+            ],
           },
         ],
-      } as unknown as UiSchemaFieldList;
+      };
 
-      expect(() =>
-        getFieldConfig({
-          errors: null,
-          formSchema,
-          formData: {},
-          uiFieldObject,
-          requiredField: false,
-        }),
-      ).toThrow();
+      const result = getFieldConfig({
+        errors: null,
+        formSchema: nestedSchema,
+        formData: {},
+        uiFieldObject,
+        requiredField: false,
+      });
+
+      expect(result.type).toBe("FieldList");
+      if (result.type !== "FieldList") {
+        throw new Error("Expected FieldList");
+      }
+
+      const nested = result.props.groupDefinition[0];
+      expect(nested.widget).toBe("FieldList");
+      expect(nested.storagePath).toEqual(["inner"]);
+      if (nested.widget !== "FieldList") {
+        throw new Error("Expected nested FieldList");
+      }
+      expect(nested.generalProps.minItems).toBe(1);
+      expect(nested.generalProps.groupDefinition[0].storagePath).toEqual([
+        "amount",
+      ]);
     });
   });
 
