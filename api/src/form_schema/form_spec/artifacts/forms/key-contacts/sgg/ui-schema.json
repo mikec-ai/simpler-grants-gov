@@ -1,0 +1,98 @@
+[
+  {
+    "type": "section",
+    "name": "keyContacts",
+    "label": "Key Contacts",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/applicantOrganizationName"
+      },
+      {
+        "type": "fieldList",
+        "name": "keyContacts",
+        "label": "Key Contact",
+        "children": [
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/projectRole"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/name/properties/prefix"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/name/properties/firstName"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/name/properties/middleName"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/name/properties/lastName"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/name/properties/suffix"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/title"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/organizationalAffiliation"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/address/properties/street1"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/address/properties/street2"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/address/properties/city"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/address/properties/county"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/address/properties/state"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/address/properties/province"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/address/properties/country"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/address/properties/zipCode"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/phone"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/fax"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/keyContacts/items/properties/email"
+          }
+        ],
+        "description": "You may enter up to four (4) Key Contacts. At least 1 (one) contact person is required. Additional contacts are optional.",
+        "hideFieldListHeading": true
+      }
+    ]
+  }
+]

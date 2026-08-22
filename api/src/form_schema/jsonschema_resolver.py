@@ -3,6 +3,7 @@ from typing import Any
 
 import jsonref
 
+from src.form_schema.form_spec.bank import QUESTION_BANK_V1
 from src.form_schema.shared import SharedSchema, get_shared_schemas
 
 """
@@ -54,8 +55,9 @@ END hacky fix
 
 
 def _get_shared_schemas_map() -> dict[str, SharedSchema]:
-    """Get a mapping of shared schema URI to the shared schema itself."""
-    return {shared_schema.schema_uri: shared_schema for shared_schema in get_shared_schemas()}
+    """Get built-in shared schemas plus the portable semantic question bank."""
+    schemas = [*get_shared_schemas(), QUESTION_BANK_V1]
+    return {shared_schema.schema_uri: shared_schema for shared_schema in schemas}
 
 
 def _loader(uri: str, **kwargs: dict) -> Any:

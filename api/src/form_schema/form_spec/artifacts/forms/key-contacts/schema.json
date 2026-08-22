@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "key-contacts/schema.json",
+  "type": "object",
+  "properties": {
+    "applicantOrganizationName": {
+      "$ref": "../../question-bank/generics/organization-name/schema.json",
+      "description": "Enter the legal name of the applicant that will undertake the assistance activity. This field is required.",
+      "title": "Applicant Organization Name"
+    },
+    "keyContacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/KeyContactPerson"
+      },
+      "minItems": 1,
+      "maxItems": 4,
+      "description": "Enter between 1 and 4 key contacts and their role on the project.",
+      "title": "Key Contacts"
+    }
+  },
+  "required": [
+    "applicantOrganizationName",
+    "keyContacts"
+  ],
+  "description": "KEY CONTACTS (Grants.gov FID 683, v2.0)",
+  "$defs": {
+    "KeyContactPerson": {
+      "type": "object",
+      "properties": {
+        "projectRole": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 45,
+          "description": "Enter the individual's role on the project (e.g., project manager, fiscal contact).",
+          "title": "Project Role"
+        },
+        "organizationalAffiliation": {
+          "$ref": "../../question-bank/generics/organization-name/schema.json",
+          "description": "Enter the contact's organizational affiliation.",
+          "title": "Organizational Affiliation"
+        }
+      },
+      "required": [
+        "projectRole"
+      ],
+      "allOf": [
+        {
+          "$ref": "../../question-bank/poc/details/schema.json"
+        }
+      ],
+      "description": "One key contact and their role on the project.",
+      "title": "Key Contact"
+    }
+  }
+}

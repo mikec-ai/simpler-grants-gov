@@ -1,0 +1,74 @@
+{
+  "contract": "grants-form-artifact-selection/v1",
+  "files": [
+    {
+      "path": "dist/forms/key-contacts/manifest.json",
+      "sha256": "0cbd5e8ab5d333d7d3a3732a020a6a9920e203653b8b4c539f93f9b936e55d06",
+      "size": 534
+    },
+    {
+      "path": "dist/forms/key-contacts/schema.json",
+      "sha256": "3ea37a6d50d57da5f74e36c4f9981d613f12e8fcbb4c0345c643e518a0f4998e",
+      "size": 1733
+    },
+    {
+      "path": "dist/forms/key-contacts/sgg/rule-schema.json",
+      "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed",
+      "size": 5
+    },
+    {
+      "path": "dist/forms/key-contacts/sgg/ui-schema.json",
+      "sha256": "e49c4f3c7d4de793c5bf095b8af7ac302f4675f92c4369996ce91dc81ce5f9f1",
+      "size": 3276
+    },
+    {
+      "path": "dist/question-bank/generics/address/schema.json",
+      "sha256": "2ee63e9756398551d4b402ce9ee8d0ef087696e68505f8b05983b8227d82c87a",
+      "size": 11241
+    },
+    {
+      "path": "dist/question-bank/generics/contact-details/schema.json",
+      "sha256": "fb01453fa5a8b32dd5d19b1721e7631a6a18fc220b2e3513cb84312bdbd9dbe8",
+      "size": 1455
+    },
+    {
+      "path": "dist/question-bank/generics/contact-title/schema.json",
+      "sha256": "71e433c6dcaf0f26222ec450ace3eb388d96217a662c0b9d11e0bbb55cc23f30",
+      "size": 234
+    },
+    {
+      "path": "dist/question-bank/generics/email/schema.json",
+      "sha256": "56b16051b0af9dedf47ed22dc096a53918f3bd47afac81c34764d845c5841cb5",
+      "size": 221
+    },
+    {
+      "path": "dist/question-bank/generics/organization-name/schema.json",
+      "sha256": "ee043744a2c4fe4ba584b3f526bdc39c487226edde15b64ba2d6809c9559e08f",
+      "size": 266
+    },
+    {
+      "path": "dist/question-bank/generics/person-name/schema.json",
+      "sha256": "a757c56c4194e1d969129513acd9f7fc13909d2861ee86594c126b0e1b32fa6e",
+      "size": 1098
+    },
+    {
+      "path": "dist/question-bank/generics/phone/schema.json",
+      "sha256": "26e199be6aa30efdf2063a497a2b339aa4b4982524809aef3b5c5d7f7ef495ec",
+      "size": 207
+    },
+    {
+      "path": "dist/question-bank/poc/details/schema.json",
+      "sha256": "475bd94cf757485768fe22932273ea2a687e4695d0d9248e4e089910667973b1",
+      "size": 848
+    }
+  ],
+  "selection": {
+    "form": "key-contacts",
+    "policy": "form runtime artifacts plus transitive question-schema closure"
+  },
+  "source": {
+    "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+    "revision": "7d64417710751e6972e312a8a48d0a3bcf3c3152"
+  },
+  "sourceBundleSha256": "3b269ab0a9fb938ac8aa55482ebc2494ccd05c23cebc5fdb65997dde1549ff80"
+}

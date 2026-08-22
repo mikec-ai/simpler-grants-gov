@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "generics/contact-details/schema.json",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "../../../question-bank/generics/person-name/schema.json",
+      "description": "Enter the name.",
+      "title": "Name"
+    },
+    "phone": {
+      "$ref": "../../../question-bank/generics/phone/schema.json",
+      "description": "Enter the daytime Telephone Number.",
+      "title": "Telephone Number"
+    },
+    "fax": {
+      "$ref": "../../../question-bank/generics/phone/schema.json",
+      "description": "Enter the Fax Number.",
+      "title": "Fax Number"
+    },
+    "email": {
+      "$ref": "../../../question-bank/generics/email/schema.json",
+      "description": "Enter a valid email Address.",
+      "title": "Email"
+    }
+  },
+  "required": [
+    "name",
+    "phone",
+    "email"
+  ],
+  "description": "A person and the ways to reach them.\n\nThe shape only. Who the person *is* to the application -- a point of contact, the\nrepresentative authorized to sign -- is a different question, because the roles are not\ninterchangeable and a form asks for both. Those extend this.\n\nThe person's title is deliberately not here. A point of contact may not have one; a\nrepresentative authorized to bind the organization does, because their title is how you\nknow they are authorized. So each of those declares it, with the optionality it has.",
+  "title": "Contact"
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "poc/details/schema.json",
+  "type": "object",
+  "properties": {
+    "title": {
+      "$ref": "../../../question-bank/generics/contact-title/schema.json",
+      "description": "Enter the position title.",
+      "title": "Title"
+    },
+    "address": {
+      "$ref": "../../../question-bank/generics/address/schema.json",
+      "description": "Enter the address."
+    }
+  },
+  "required": [
+    "address"
+  ],
+  "allOf": [
+    {
+      "$ref": "../../../question-bank/generics/contact-details/schema.json"
+    }
+  ],
+  "description": "The person to contact about the application.\n\nStructurally a contact plus an address, and distinct from the representative who signs:\na point of contact answers questions, and forms routinely ask for both.",
+  "title": "Point of Contact"
+}
