@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project/additional-congressional-districts/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Provide additional congressional districts affected by the proposed project."
+}

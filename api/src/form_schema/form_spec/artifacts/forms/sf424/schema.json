@@ -177,7 +177,7 @@
       "title": "Competition Title"
     },
     "areasAffected": {
-      "$ref": "../../question-bank/generics/attachment/schema.json",
+      "$ref": "../../question-bank/project/areas-affected/schema.json",
       "description": "List the areas or entities using the categories (e.g., cities, counties, states, etc.) specified in agency instructions.",
       "title": "Areas Affected"
     },
@@ -189,7 +189,7 @@
     "additionalProjectTitle": {
       "type": "array",
       "items": {
-        "$ref": "../../question-bank/generics/attachment/schema.json"
+        "$ref": "../../question-bank/project/additional-titles/schema.json"
       },
       "maxItems": 100,
       "description": "Attach file(s) using the appropriate buttons.",
@@ -206,7 +206,7 @@
       "title": "Program District"
     },
     "additionalCongressionalDistricts": {
-      "$ref": "../../question-bank/generics/attachment/schema.json",
+      "$ref": "../../question-bank/project/additional-congressional-districts/schema.json",
       "description": "Attach an additional list of Program/Project Congressional Districts if needed.",
       "title": "Additional Congressional Districts"
     },
@@ -273,7 +273,7 @@
       "title": "Applicant Delinquent on Federal Debt"
     },
     "debtExplanation": {
-      "$ref": "../../question-bank/generics/attachment/schema.json",
+      "$ref": "../../question-bank/application/federal-debt-explanation/schema.json",
       "title": "Debt Explanation"
     },
     "certificationAgree": {

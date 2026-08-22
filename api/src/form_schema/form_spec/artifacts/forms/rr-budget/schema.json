@@ -19,7 +19,7 @@
       "title": "Enter name of Organization:"
     },
     "budgetJustificationAttachment": {
-      "$ref": "../../question-bank/generics/attachment/schema.json",
+      "$ref": "../../question-bank/budget/justification/schema.json",
       "description": "Attach the budget justification file.",
       "title": "L. Budget Justification (Only attach one file.)"
     },

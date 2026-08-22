@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/narrative/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Provide the narrative explaining and supporting the proposed budget.",
+  "title": "Budget Narrative"
+}
