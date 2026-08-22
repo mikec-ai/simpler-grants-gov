@@ -48,12 +48,25 @@ PROJECTIONS = Path(__file__).parent / "projections"
 def _projection_for(form_id: str) -> Projection:
     """The bank's projection, extended with this form's declared name exceptions."""
     bank = _bank_projection()
-    overrides_path = PROJECTIONS / f"{form_id}.json"
     renames: dict[str, str] = {}
     annotations: dict[str, dict[str, Any]] = {}
     identifiers: dict[str, str] = {}
-    if overrides_path.is_file():
+
+    def apply_overrides(profile_id: str, stack: tuple[str, ...] = ()) -> None:
+        if profile_id in stack:
+            chain = " -> ".join((*stack, profile_id))
+            raise ValueError(f"projection inheritance cycle: {chain}")
+        overrides_path = PROJECTIONS / f"{profile_id}.json"
+        if not overrides_path.is_file():
+            if stack:
+                raise ValueError(f"projection profile {profile_id!r} does not exist")
+            return
         overrides = json.loads(overrides_path.read_text())
+        parent = overrides.get("extends")
+        if parent is not None:
+            if not isinstance(parent, str) or not parent:
+                raise ValueError(f"projection profile {profile_id!r} has an invalid 'extends'")
+            apply_overrides(parent, (*stack, profile_id))
         declarations = overrides.get("renames", {})
         for source, declaration in declarations.items():
             if not isinstance(declaration, dict):
@@ -81,6 +94,8 @@ def _projection_for(form_id: str) -> Projection:
             if not isinstance(reason, str) or not reason:
                 raise ValueError(f"identifier projection {source!r} has no reason")
             identifiers[source] = target
+
+    apply_overrides(form_id)
     return Projection(
         renames=renames,
         annotations=annotations,

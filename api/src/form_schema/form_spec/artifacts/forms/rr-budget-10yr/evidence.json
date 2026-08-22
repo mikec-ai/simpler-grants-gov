@@ -1,0 +1,27 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "rr-budget-10yr",
+    "kind": "form"
+  },
+  "sources": [
+    {
+      "id": "grantsgov-rr-budget-10yr-xsd-3.0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_Budget10_3_0-V3.0.xsd",
+      "version": "3.0",
+      "sha256": "cccce03554424d59b5958e4443a54db12a5a10780fbdc5df2ec25955d443fc9d"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+    "artifact": "artifacts/proof/grantsgov-RRBudget10.jsonl.manifest.json",
+    "sourceSetSha256": "cccce03554424d59b5958e4443a54db12a5a10780fbdc5df2ec25955d443fc9d",
+    "extractedAt": "2026-08-18T19:43:18.348859Z"
+  },
+  "semanticReview": {
+    "status": "unreviewed",
+    "mappings": []
+  }
+}

@@ -61,6 +61,46 @@ def test_ui_identifier_is_declared_with_a_reason(tmp_path, monkeypatch):
     assert loader._projection_for("example").identifiers == {"legacySection": "legacySection"}
 
 
+def test_projection_profile_can_inherit_and_extend_an_existing_profile(tmp_path, monkeypatch):
+    monkeypatch.setattr(loader, "PROJECTIONS", tmp_path)
+    (tmp_path / "base.json").write_text(
+        json.dumps({
+            "renames": {
+                "phone": {
+                    "to": "phone_number",
+                    "why": "The legacy payload uses a different field name.",
+                }
+            }
+        })
+    )
+    _write(
+        tmp_path,
+        {
+            "extends": "base",
+            "renames": {
+                "email": {
+                    "to": "email_address",
+                    "why": "The derivative adds one legacy naming exception.",
+                }
+            },
+        },
+    )
+
+    assert loader._projection_for("example").renames == {
+        "phone": "phone_number",
+        "email": "email_address",
+    }
+
+
+def test_projection_profile_rejects_inheritance_cycles(tmp_path, monkeypatch):
+    monkeypatch.setattr(loader, "PROJECTIONS", tmp_path)
+    (tmp_path / "example.json").write_text(json.dumps({"extends": "base"}))
+    (tmp_path / "base.json").write_text(json.dumps({"extends": "example"}))
+
+    with pytest.raises(ValueError, match="projection inheritance cycle"):
+        loader._projection_for("example")
+
+
 @pytest.mark.parametrize(
     "declaration",
     [
