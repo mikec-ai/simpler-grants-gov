@@ -425,6 +425,16 @@ class RecursiveXMLTransformer:
                                 if transformed_child is not None:
                                     item_result[child_transform["target"]] = transformed_child
                     if item_result:
+                        # Optional item metadata lets one declarative array mapping express
+                        # XSD wrappers from an imported namespace (for example, a subaward
+                        # container holding complete R&R Budget documents). The XML writer
+                        # consumes these metadata keys; payload fields remain ordinary data.
+                        if item_wrapper := transform_rule.get("item_wrapper"):
+                            item_result["__wrapper"] = item_wrapper
+                        if item_namespace := transform_rule.get("item_namespace"):
+                            item_result["__namespace__"] = item_namespace
+                        if item_attributes := transform_rule.get("item_attributes"):
+                            item_result["__attributes"] = item_attributes
                         transformed_items.append(item_result)
             return transformed_items if transformed_items else None
 

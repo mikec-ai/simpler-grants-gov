@@ -338,7 +338,10 @@ class XMLGenerationService:
                     if target:
                         element_order.append(target)
 
-        return element_order
+        # Multiple source spellings may deliberately map to one XML element at a
+        # compatibility boundary. Emit that target once; arrays express legitimate
+        # repeated elements within their own transform.
+        return list(dict.fromkeys(element_order))
 
     def _add_lxml_element_to_parent(
         self,
@@ -353,6 +356,21 @@ class XMLGenerationService:
         attributes: dict[str, str] | None = None,
     ) -> None:
         """Add an element to a parent using lxml with proper namespace handling."""
+
+        def _parent_namespace(parent_element: Any) -> str:
+            """Return the namespace inherited by an unqualified child element."""
+            try:
+                return lxml_etree.QName(parent_element).namespace or ""
+            except ValueError:
+                return ""
+
+        def _namespace_uri(prefix: str | None, parent_element: Any) -> str:
+            if prefix is not None:
+                if prefix == "default":
+                    return nsmap.get(root_element_name or "", "")
+                return nsmap.get(prefix, "")
+            return _parent_namespace(parent_element)
+
         if isinstance(value, list):
             # Items with __wrapper: field_name is an outer container (BudgetSummary > SummaryLineItem).
             # Items without __wrapper: each item is emitted as field_name (multiple OtherSite siblings).
@@ -360,14 +378,13 @@ class XMLGenerationService:
                 isinstance(item, dict) and "__wrapper" in item for item in value
             )
 
-            def _make_subelement(el_name: str, parent_el: Any) -> Any:
-                if el_name in namespace_fields:
-                    ns_prefix = namespace_fields[el_name]
-                    ns_uri = nsmap.get(ns_prefix, "")
-                    return lxml_etree.SubElement(parent_el, f"{{{ns_uri}}}{el_name}")
-                default_ns = nsmap.get(root_element_name or "", "") if root_element_name else ""
-                if default_ns:
-                    return lxml_etree.SubElement(parent_el, f"{{{default_ns}}}{el_name}")
+            def _make_subelement(
+                el_name: str, parent_el: Any, explicit_namespace: str | None = None
+            ) -> Any:
+                namespace_prefix = explicit_namespace or namespace_fields.get(el_name)
+                namespace_uri = _namespace_uri(namespace_prefix, parent_el)
+                if namespace_uri:
+                    return lxml_etree.SubElement(parent_el, f"{{{namespace_uri}}}{el_name}")
                 return lxml_etree.SubElement(parent_el, el_name)
 
             # Create outer container when items have __wrapper
@@ -377,6 +394,7 @@ class XMLGenerationService:
                 if isinstance(item, dict):
                     # Check for __wrapper and __attributes metadata
                     item_wrapper = item.get("__wrapper")
+                    item_namespace = item.get("__namespace__")
                     item_attributes = item.get("__attributes", {})
 
                     # Create a copy of item without metadata keys
@@ -385,7 +403,7 @@ class XMLGenerationService:
                     # Use wrapper as element name, or fall back to field_name
                     item_element_name = item_wrapper if item_wrapper else field_name
 
-                    item_element = _make_subelement(item_element_name, array_parent)
+                    item_element = _make_subelement(item_element_name, array_parent, item_namespace)
 
                     # Add attributes to the item element
                     if item_attributes:
@@ -399,9 +417,11 @@ class XMLGenerationService:
                                 else:
                                     item_element.set(attr_name, str(attr_value))
                             else:
-                                # For non-namespaced attributes, add namespace prefix
-                                if root_element_name and root_element_name in nsmap:
-                                    attr_qname = f"{{{nsmap[root_element_name]}}}{attr_name}"
+                                # Qualified attributes belong to the item element's own
+                                # namespace, including imported-schema array items.
+                                item_namespace_uri = _parent_namespace(item_element)
+                                if item_namespace_uri:
+                                    attr_qname = f"{{{item_namespace_uri}}}{attr_name}"
                                     item_element.set(attr_qname, str(attr_value))
                                 else:
                                     item_element.set(attr_name, str(attr_value))
@@ -464,12 +484,12 @@ class XMLGenerationService:
                 element_name = f"{{{namespace_uri}}}{field_name}" if namespace_uri else field_name
                 nested_element = lxml_etree.SubElement(parent, element_name)
             else:
-                # Use default namespace (derived from root element name)
-                default_namespace_uri = (
-                    nsmap.get(root_element_name or "", "") if root_element_name else ""
-                )
-                if default_namespace_uri:
-                    element_name = f"{{{default_namespace_uri}}}{field_name}"
+                # Unqualified descendants inherit their parent's namespace. This is
+                # equivalent to the form namespace for ordinary forms and is essential
+                # when a wrapper contains an element imported from another schema.
+                parent_namespace_uri = _parent_namespace(parent)
+                if parent_namespace_uri:
+                    element_name = f"{{{parent_namespace_uri}}}{field_name}"
                     nested_element = lxml_etree.SubElement(parent, element_name)
                 else:
                     nested_element = lxml_etree.SubElement(parent, field_name)
@@ -498,12 +518,9 @@ class XMLGenerationService:
                             else:
                                 nested_element.set(attr_name, str(attr_value))
                         else:
-                            # Use default namespace if available
-                            default_namespace_uri = (
-                                nsmap.get(root_element_name or "", "") if root_element_name else ""
-                            )
-                            if default_namespace_uri:
-                                attr_qname = f"{{{default_namespace_uri}}}{attr_name}"
+                            element_namespace_uri = _parent_namespace(nested_element)
+                            if element_namespace_uri:
+                                attr_qname = f"{{{element_namespace_uri}}}{attr_name}"
                                 nested_element.set(attr_qname, str(attr_value))
                             else:
                                 nested_element.set(attr_name, str(attr_value))
@@ -552,11 +569,9 @@ class XMLGenerationService:
                     element_name = f"{{{namespace_uri}}}{field_name}"
                     lxml_etree.SubElement(parent, element_name)
                 else:
-                    default_namespace_uri = (
-                        nsmap.get(root_element_name or "", "") if root_element_name else ""
-                    )
-                    if default_namespace_uri:
-                        element_name = f"{{{default_namespace_uri}}}{field_name}"
+                    parent_namespace_uri = _parent_namespace(parent)
+                    if parent_namespace_uri:
+                        element_name = f"{{{parent_namespace_uri}}}{field_name}"
                         lxml_etree.SubElement(parent, element_name)
                     else:
                         lxml_etree.SubElement(parent, field_name)
@@ -569,11 +584,9 @@ class XMLGenerationService:
                 element_name = f"{{{namespace_uri}}}{field_name}"
                 element = lxml_etree.SubElement(parent, element_name)
             else:
-                default_namespace_uri = (
-                    nsmap.get(root_element_name or "", "") if root_element_name else ""
-                )
-                if default_namespace_uri:
-                    element_name = f"{{{default_namespace_uri}}}{field_name}"
+                parent_namespace_uri = _parent_namespace(parent)
+                if parent_namespace_uri:
+                    element_name = f"{{{parent_namespace_uri}}}{field_name}"
                     element = lxml_etree.SubElement(parent, element_name)
                 else:
                     element = lxml_etree.SubElement(parent, field_name)

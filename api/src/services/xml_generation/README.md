@@ -506,6 +506,29 @@ FORM_XML_TRANSFORM_RULES = {
 - **Single attachment with nested wrapper** (`type: "single_with_wrapper"`): Generates a nested structure where each attachment slot (e.g., ATT1-ATT15) contains an additional File wrapper element (e.g., `<ATT1><ATT1File>...</ATT1File></ATT1>`) before the attachment metadata.
 - **Attachments inside nested objects or arrays**: Use an ordinary field rule with `{"target": "AttachedKeyPersons", "type": "attachment"}`. The transformer resolves the UUID through the request's attachment mapping at any depth. Declare `FileName`, `MimeType`, and `FileLocation` child targets in the `att` namespace and `HashValue` in the `glob` namespace so the generic writer emits the imported `AttachedFileDataType` wire shape. Root-level `attachment_fields` remains supported for existing forms.
 
+### Arrays of imported form documents
+
+An array can wrap each item as a complete document from an imported XSD without custom
+Python per form. Set `item_wrapper`, `item_namespace`, and (when required)
+`item_attributes` on its `xml_transform`:
+
+```python
+"budget_attachments": {
+    "xml_transform": {
+        "target": "BudgetAttachments",
+        "type": "array",
+        "item_wrapper": "RR_Budget_3_0",
+        "item_namespace": "RR_Budget_3_0",
+        "item_attributes": {"RR_Budget_3_0:FormVersion": "3.0"},
+    },
+    "items": RESEARCH_BUDGET_FIELDS,
+}
+```
+
+Unqualified descendants inherit the item wrapper's namespace. This lets the R&R Budget,
+10-year Budget, and three Subaward Budget profiles share one complete payload mapping; the
+profiles differ only in their root/wrapper namespace and XSD metadata.
+
 ### Example: Supplementary Cover Sheet for NEH Grant Programs
 
 The Supplementary Cover Sheet for NEH Grant Programs form uses enum code mappings to transform human-readable display values to XSD-required numeric codes:
