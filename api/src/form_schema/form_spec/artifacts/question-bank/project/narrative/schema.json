@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project/narrative/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Provide the project narrative requested by the funding opportunity.",
+  "title": "Project Narrative"
+}

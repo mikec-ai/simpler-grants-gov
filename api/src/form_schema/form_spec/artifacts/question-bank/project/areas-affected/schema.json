@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project/areas-affected/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Provide the geographic areas affected by the proposed project."
+}

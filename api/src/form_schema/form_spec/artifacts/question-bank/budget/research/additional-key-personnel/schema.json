@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/research/additional-key-personnel/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Provide additional senior or key-person details beyond the structured entries."
+}

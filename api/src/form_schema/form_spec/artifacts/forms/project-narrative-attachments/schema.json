@@ -6,7 +6,7 @@
     "attachments": {
       "type": "array",
       "items": {
-        "$ref": "../../question-bank/generics/attachment/schema.json"
+        "$ref": "../../question-bank/project/narrative/schema.json"
       },
       "minItems": 1,
       "maxItems": 100,

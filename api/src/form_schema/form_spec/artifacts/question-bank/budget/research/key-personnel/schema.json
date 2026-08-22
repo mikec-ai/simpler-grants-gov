@@ -4,7 +4,7 @@
   "type": "object",
   "properties": {
     "attachedKeyPersons": {
-      "$ref": "../../../../question-bank/generics/attachment/schema.json",
+      "$ref": "../../../../question-bank/budget/research/additional-key-personnel/schema.json",
       "title": "Additional Senior Key Persons:"
     },
     "keyPerson": {

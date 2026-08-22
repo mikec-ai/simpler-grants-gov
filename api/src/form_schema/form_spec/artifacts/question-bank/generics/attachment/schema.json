@@ -1,7 +1,0 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "generics/attachment/schema.json",
-  "type": "string",
-  "format": "uuid",
-  "description": "Attach a file."
-}

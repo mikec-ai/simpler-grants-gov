@@ -4,7 +4,7 @@
   "type": "object",
   "properties": {
     "additionalEquipmentsAttachment": {
-      "$ref": "../../../../question-bank/generics/attachment/schema.json",
+      "$ref": "../../../../question-bank/budget/research/additional-equipment/schema.json",
       "title": "Additional Equipment:"
     },
     "equipmentList": {
