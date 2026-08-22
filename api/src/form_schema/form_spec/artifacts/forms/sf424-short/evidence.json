@@ -1,0 +1,27 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "sf424-short",
+    "kind": "form"
+  },
+  "sources": [
+    {
+      "id": "grantsgov-sf424-short-xsd-3.0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/SF424_Short_3_0-V3.0.xsd",
+      "version": "3.0",
+      "sha256": "82b0f2a0ddbbcfae4ec7e083188287fb05700e201ade3b2f69684241bf8baabd"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+    "artifact": "artifacts/proof/grantsgov-SF424Short.jsonl.manifest.json",
+    "sourceSetSha256": "82b0f2a0ddbbcfae4ec7e083188287fb05700e201ade3b2f69684241bf8baabd",
+    "extractedAt": "2026-08-18T20:59:38.044606Z"
+  },
+  "semanticReview": {
+    "status": "unreviewed",
+    "mappings": []
+  }
+}

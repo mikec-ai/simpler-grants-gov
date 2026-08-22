@@ -46,10 +46,31 @@ def _projection_for(form_id: str) -> Projection:
     bank = _bank_projection()
     overrides_path = PROJECTIONS / f"{form_id}.json"
     renames: dict[str, str] = {}
+    annotations: dict[str, dict[str, Any]] = {}
     if overrides_path.is_file():
-        renames = json.loads(overrides_path.read_text()).get("renames", {})
+        overrides = json.loads(overrides_path.read_text())
+        declarations = overrides.get("renames", {})
+        for source, declaration in declarations.items():
+            if not isinstance(declaration, dict):
+                raise ValueError(f"projection rename {source!r} must declare 'to' and 'why'")
+            target = declaration.get("to")
+            reason = declaration.get("why")
+            if not isinstance(target, str) or not target:
+                raise ValueError(f"projection rename {source!r} has no target")
+            if not isinstance(reason, str) or not reason:
+                raise ValueError(f"projection rename {source!r} has no reason")
+            renames[source] = target
+        for source, declaration in overrides.get("schemaAnnotations", {}).items():
+            values = declaration.get("values") if isinstance(declaration, dict) else None
+            reason = declaration.get("why") if isinstance(declaration, dict) else None
+            if not isinstance(values, dict) or not values:
+                raise ValueError(f"schema annotation {source!r} has no values")
+            if not isinstance(reason, str) or not reason:
+                raise ValueError(f"schema annotation {source!r} has no reason")
+            annotations[source] = values
     return Projection(
         renames=renames,
+        annotations=annotations,
         bank_uri=bank.bank_uri,
         block_ids=bank.block_ids,
         blocks=bank.blocks,

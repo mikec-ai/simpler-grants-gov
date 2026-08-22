@@ -1,0 +1,22 @@
+{
+  "renames": {
+    "phone": {
+      "to": "phone_number",
+      "why": "The legacy SF-424 Short payload stores the shared contact phone question under phone_number."
+    }
+  },
+  "schemaAnnotations": {
+    "dateReceived": {
+      "values": {"readOnly": true},
+      "why": "The legacy form records this submission-populated field as readOnly in JSON Schema."
+    },
+    "aorSignature": {
+      "values": {"readOnly": true},
+      "why": "The legacy form records this submission-populated field as readOnly in JSON Schema."
+    },
+    "authorizedRepresentativeDateSigned": {
+      "values": {"readOnly": true},
+      "why": "The legacy form records this submission-populated field as readOnly in JSON Schema."
+    }
+  }
+}

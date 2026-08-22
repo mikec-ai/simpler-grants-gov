@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sf424-short/schema.json",
+  "type": "object",
+  "properties": {
+    "agencyName": {
+      "$ref": "../../question-bank/opportunity/agency-name/schema.json",
+      "description": "Pre-populated from the Application cover sheet.",
+      "title": "Name of Federal Agency"
+    },
+    "assistanceListingNumber": {
+      "$ref": "../../question-bank/opportunity/assistance-listing-number/schema.json",
+      "description": "Pre-populated from the Application cover sheet.",
+      "title": "Assistance Listing Number"
+    },
+    "assistanceListingProgramTitle": {
+      "$ref": "../../question-bank/opportunity/assistance-listing-title/schema.json",
+      "description": "Pre-populated from the Application cover sheet.",
+      "title": "Assistance Listing Title"
+    },
+    "dateReceived": {
+      "$ref": "../../question-bank/application/date-received/schema.json",
+      "description": "Completed by Grants.gov upon submission.",
+      "title": "Date Received"
+    },
+    "fundingOpportunityNumber": {
+      "$ref": "../../question-bank/opportunity/number/schema.json",
+      "description": "Pre-populated from the Application cover sheet.",
+      "title": "Funding Opportunity Number"
+    },
+    "fundingOpportunityTitle": {
+      "$ref": "../../question-bank/opportunity/title/schema.json",
+      "description": "Pre-populated from the Application cover sheet.",
+      "title": "Funding Opportunity Title"
+    },
+    "organizationName": {
+      "$ref": "../../question-bank/primary-org/legal-name/schema.json",
+      "description": "Enter the legal name of applicant that will undertake the assistance activity. This is the name that the organization has registered with the System for Award Management (SAM.gov). Information on registering with SAM may be obtained by visiting the Grants.gov website.",
+      "title": "Legal Name"
+    },
+    "applicant": {
+      "$ref": "../../question-bank/primary-org/address/schema.json",
+      "description": "Enter the address of the applicant.",
+      "title": "Address"
+    },
+    "applicantWebAddress": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 250,
+      "description": "Enter the applicant's web address, if applicable.",
+      "title": "Web Address"
+    },
+    "applicantTypeCode": {
+      "$ref": "../../question-bank/primary-org/applicant-type/schema.json",
+      "description": "Select a minimum of one applicant type or select up to three applicant types in accordance with agency instructions. If “Other” is selected, then specify Other Type of Applicant in text box.",
+      "title": "Type of Applicant"
+    },
+    "applicantTypeOtherSpecify": {
+      "$ref": "../../question-bank/primary-org/applicant-type-other/schema.json",
+      "description": "Enter the applicant type here if you selected \"Other (specify)\" for Type of applicant.",
+      "title": "Type of Applicant Other Explanation"
+    },
+    "employerTaxpayerIdentificationNumber": {
+      "$ref": "../../question-bank/primary-org/ein/schema.json",
+      "description": "Enter either TIN or EIN as assigned by the Internal Revenue Service.  If your organization is not in the US, enter 44-4444444.",
+      "title": "EIN/TIN"
+    },
+    "samUei": {
+      "$ref": "../../question-bank/primary-org/uei/schema.json",
+      "description": "UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
+      "title": "SAM UEI"
+    },
+    "congressionalDistrictApplicant": {
+      "$ref": "../../question-bank/project/congressional-district/schema.json",
+      "description": "Congressional District of Applicant is required: Enter the Congressional District in the format: 2 character State Abbreviation - 3 character District Number. Examples: CA-005 for California's 5th District, CA-012 for California's 12th District, NC-103 for North Carolina's 103rd District. If outside the U.S., enter 00-000.",
+      "title": "Congressional District of Applicant"
+    },
+    "projectTitle": {
+      "$ref": "../../question-bank/project/title/schema.json",
+      "description": "Enter a brief, descriptive title of the project.",
+      "title": "Project Title"
+    },
+    "projectDescription": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000,
+      "description": "Enter a brief description of the project.",
+      "title": "Project Description"
+    },
+    "projectStartDate": {
+      "$ref": "../../question-bank/project/start-date/schema.json",
+      "description": "Enter the date in the format MM/DD/YYYY.",
+      "title": "Project Start Date"
+    },
+    "projectEndDate": {
+      "$ref": "../../question-bank/project/end-date/schema.json",
+      "description": "Enter the date in the format MM/DD/YYYY.",
+      "title": "Project End Date"
+    },
+    "projectDirector": {
+      "$ref": "#/$defs/Sf424ShortContact",
+      "title": "Project Director"
+    },
+    "sameAsProjectDirector": {
+      "type": "boolean",
+      "title": "Same as Project Director (if checked, fill in information same as Project Director above)"
+    },
+    "contactPerson": {
+      "$ref": "#/$defs/Sf424ShortContact",
+      "title": "Primary Contact/Grants Administrator"
+    },
+    "applicationCertification": {
+      "type": "boolean",
+      "description": "** The list of certifications and assurances, or an internet site where you may obtain this list, is contained in the announcement or agency specific instructions. By signing this application, I certify (1) to the statements contained in the list of certifications and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001)",
+      "title": "** I Agree"
+    },
+    "authorizedRepresentative": {
+      "$ref": "../../question-bank/aor/name/schema.json",
+      "description": "Enter the name of the authorized representative.",
+      "title": "Authorized Representative"
+    },
+    "authorizedRepresentativeTitle": {
+      "$ref": "../../question-bank/aor/title/schema.json",
+      "description": "Enter the position title.",
+      "title": "Title"
+    },
+    "authorizedRepresentativeEmail": {
+      "$ref": "../../question-bank/aor/email/schema.json",
+      "description": "Enter a valid email Address.",
+      "title": "Email"
+    },
+    "authorizedRepresentativePhoneNumber": {
+      "$ref": "../../question-bank/aor/phone/schema.json",
+      "description": "Enter the daytime Telephone Number.",
+      "title": "Telephone Number"
+    },
+    "authorizedRepresentativeFax": {
+      "$ref": "../../question-bank/aor/fax/schema.json",
+      "description": "Enter the Fax Number.",
+      "title": "Fax Number"
+    },
+    "aorSignature": {
+      "$ref": "../../question-bank/aor/signature/schema.json",
+      "description": "Completed by Grants.gov upon submission.",
+      "title": "Signature of Authorized Representative"
+    },
+    "authorizedRepresentativeDateSigned": {
+      "$ref": "../../question-bank/aor/date-signed/schema.json",
+      "description": "Completed by Grants.gov upon submission.",
+      "title": "Date Signed"
+    }
+  },
+  "required": [
+    "agencyName",
+    "fundingOpportunityNumber",
+    "fundingOpportunityTitle",
+    "organizationName",
+    "applicant",
+    "applicantTypeCode",
+    "employerTaxpayerIdentificationNumber",
+    "samUei",
+    "congressionalDistrictApplicant",
+    "projectTitle",
+    "projectDescription",
+    "projectStartDate",
+    "projectEndDate",
+    "projectDirector",
+    "contactPerson",
+    "applicationCertification",
+    "authorizedRepresentative",
+    "authorizedRepresentativeTitle",
+    "authorizedRepresentativeEmail",
+    "authorizedRepresentativePhoneNumber"
+  ],
+  "description": "Application for Federal Domestic Assistance-Short Organizational (SF-424)",
+  "$defs": {
+    "Sf424ShortContact": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "$ref": "../../question-bank/generics/contact-title/schema.json",
+          "description": "Enter the position title.",
+          "title": "Title"
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "allOf": [
+        {
+          "$ref": "../../question-bank/poc/details/schema.json"
+        }
+      ],
+      "description": "A person to contact about this application.",
+      "title": "Contact"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "applicantTypeCode": {
+            "contains": {
+              "const": "X: Other (specify)"
+            }
+          }
+        },
+        "required": [
+          "applicantTypeCode"
+        ]
+      },
+      "then": {
+        "required": [
+          "applicantTypeOtherSpecify"
+        ]
+      }
+    }
+  ]
+}
