@@ -1,0 +1,22 @@
+{
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "id": "rr-sf424-multi-project-cover",
+    "formId": "6d1fcf04-63e9-5951-841f-8ff06071f40c",
+    "legacyFormId": 769,
+    "formName": "[Draft] Research & Related Multi-Project Cover",
+    "shortFormName": "RR_SF424_Multi_Project_Cover_4_0",
+    "formVersion": "4.0",
+    "agencyCode": "GRANTS_GOV",
+    "ombNumber": "4040-0001",
+    "formType": "RRSF424MPCover",
+    "sggVersion": "1.0"
+  },
+  "artifacts": {
+    "schema.json": "generated",
+    "ui.json": "generated",
+    "sgg/ui-schema.json": "generated",
+    "sgg/rule-schema.json": "generated",
+    "evidence.json": "passthrough"
+  }
+}

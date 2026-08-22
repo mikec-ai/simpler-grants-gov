@@ -1,0 +1,62 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "rr-sf424-multi-project-cover",
+    "kind": "form"
+  },
+  "sources": [
+    {
+      "id": "source-1-361e00da500c",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/RR_SF424_Multi_Project_Cover_4_0-V4.0_F769.xls",
+      "version": "4.0",
+      "sha256": "361e00da500cb092997dadefcac9723cba3be63417a46375d2a5845797beae8e"
+    },
+    {
+      "id": "source-2-5d5599068d72",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_SF424_Multi_Project_Cover_4_0-V4.0.xsd",
+      "version": "4.0",
+      "sha256": "5d5599068d721e6554fa442df88711f8d9386a5fafc18b01cb1d1becc41f84e7"
+    },
+    {
+      "id": "source-3-ae2ebb3618f7",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd",
+      "version": "4.0",
+      "sha256": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d"
+    },
+    {
+      "id": "source-4-4b338db91915",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+      "version": "4.0",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb"
+    },
+    {
+      "id": "source-5-ff0214de91b9",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "version": "4.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "source-6-78f33338e931",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+      "version": "4.0",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "c1573287e0664d7b991e69c352038534b771189f",
+    "artifact": "artifacts/proof/grantsgov-RRSF424MPCover.jsonl.manifest.json",
+    "sourceSetSha256": "3224ce9eac55ccc27a8cae4f257efe10b69872ef5bb6c3fa22d82c9ed4427fac",
+    "extractedAt": "2026-08-22T22:34:16.759448Z"
+  },
+  "semanticReview": {
+    "status": "unreviewed",
+    "mappings": []
+  }
+}
