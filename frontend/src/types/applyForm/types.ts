@@ -171,6 +171,7 @@ export type FieldListWidgetProps = {
   formContext?: {
     rootSchema?: RJSFSchema;
     rootFormData?: unknown;
+    activeConditionalRequiredPaths?: string[];
     widgetSupport?: {
       validationWarnings?:
         FormattedFormValidationWarning[] | FormValidationWarning[];
@@ -433,6 +434,7 @@ export interface UswdsWidgetProps<
   formContext?: {
     rootSchema?: RJSFSchema;
     rootFormData?: unknown;
+    activeConditionalRequiredPaths?: string[];
     widgetSupport?: {
       validationWarnings?:
         FormattedFormValidationWarning[] | FormValidationWarning[];

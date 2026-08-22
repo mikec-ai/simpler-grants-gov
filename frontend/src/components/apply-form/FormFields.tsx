@@ -8,6 +8,7 @@ import {
 import {
   getRequiredProperties,
   isFieldRequired,
+  jsonSchemaPointerToPath,
 } from "src/utils/applyForm/applyFormUtils";
 import { resolveConditionalUiState } from "src/utils/applyForm/evaluateConditionalUi";
 import { getFieldConfig } from "src/utils/applyForm/getFieldConfig";
@@ -20,6 +21,7 @@ import { renderWidget, wrapSection } from "./widgets/WidgetRenderers";
 type RootBudgetFormContext = {
   rootSchema: RJSFSchema;
   rootFormData: unknown;
+  activeConditionalRequiredPaths?: string[];
 };
 
 /**
@@ -135,13 +137,18 @@ export const FormFields = ({
       } else if (!parent) {
         // FieldList is a renderable composite widget and does not have its own
         // field definition path in the same way a standard field node does.
-        const requiredField =
-          node.type === "fieldList"
-            ? false
-            : isFieldRequired(
-                node.definition || node.schema?.title || "",
-                requiredFieldPaths,
-              );
+        const definition = "definition" in node ? node.definition : undefined;
+        const requiredField = Boolean(
+          node.type !== "fieldList" &&
+          (isFieldRequired(
+            node.definition || node.schema?.title || "",
+            requiredFieldPaths,
+          ) ||
+            (typeof definition === "string" &&
+              formContext?.activeConditionalRequiredPaths?.includes(
+                jsonSchemaPointerToPath(definition),
+              ))),
+        );
 
         const widgetConfig = getFieldConfig({
           uiFieldObject: node,
@@ -221,13 +228,18 @@ export const FormFields = ({
         //
         // FieldList is a renderable composite widget and does not have its own
         // field definition path in the same way a standard field node does.
-        const requiredField =
-          node.type === "fieldList"
-            ? false
-            : isFieldRequired(
-                node.definition || node.schema?.title || "",
-                requiredFieldPaths,
-              );
+        const definition = "definition" in node ? node.definition : undefined;
+        const requiredField = Boolean(
+          node.type !== "fieldList" &&
+          (isFieldRequired(
+            node.definition || node.schema?.title || "",
+            requiredFieldPaths,
+          ) ||
+            (typeof definition === "string" &&
+              formContext?.activeConditionalRequiredPaths?.includes(
+                jsonSchemaPointerToPath(definition),
+              ))),
+        );
 
         const widgetConfig = getFieldConfig({
           uiFieldObject: node,
