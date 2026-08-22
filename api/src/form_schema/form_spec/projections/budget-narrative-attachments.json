@@ -1,0 +1,8 @@
+{
+  "identifiers": {
+    "budgetNarrativeFiles": {
+      "to": "budgetNarrativeFiles",
+      "why": "The existing Simpler section component uses this lower-camel UI identifier."
+    }
+  }
+}

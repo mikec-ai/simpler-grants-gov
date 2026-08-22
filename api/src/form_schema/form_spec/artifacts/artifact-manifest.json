@@ -2,6 +2,31 @@
   "contract": "grants-form-artifact-selection/v1",
   "files": [
     {
+      "path": "dist/forms/budget-narrative-attachments/evidence.json",
+      "sha256": "6ed646f8ff3b569ef760d8021e3bc27e367d30a57b86fdfcf87058f97278fc68",
+      "size": 912
+    },
+    {
+      "path": "dist/forms/budget-narrative-attachments/manifest.json",
+      "sha256": "b210be3a68738e47a7fc9808fdb53d1fa43527bed44b439a242cdd0ee8fddfeb",
+      "size": 630
+    },
+    {
+      "path": "dist/forms/budget-narrative-attachments/schema.json",
+      "sha256": "872515be57976062e30f55f93b01d73726433f5deb126e0a0a490fa17f5e424c",
+      "size": 569
+    },
+    {
+      "path": "dist/forms/budget-narrative-attachments/sgg/rule-schema.json",
+      "sha256": "c148245c5907f239bda5dcefda141c233a52ac6d60a2765839fae4edb56513db",
+      "size": 83
+    },
+    {
+      "path": "dist/forms/budget-narrative-attachments/sgg/ui-schema.json",
+      "sha256": "6e920ca0826b90339d174e95fbf70f4a41c13bf9d955aa98980bed654d898941",
+      "size": 265
+    },
+    {
       "path": "dist/forms/key-contacts/evidence.json",
       "sha256": "49898cc7f5853a48e90faa6d153e6f9c2a098f66a4754ca42a4faf2bbee25301",
       "size": 851
@@ -25,6 +50,56 @@
       "path": "dist/forms/key-contacts/sgg/ui-schema.json",
       "sha256": "e49c4f3c7d4de793c5bf095b8af7ac302f4675f92c4369996ce91dc81ce5f9f1",
       "size": 3276
+    },
+    {
+      "path": "dist/forms/other-narrative-attachments/evidence.json",
+      "sha256": "a652c81de8f5dbbcaadfe766f542d66c4fe81197a5d595adeef9b3924f92be92",
+      "size": 908
+    },
+    {
+      "path": "dist/forms/other-narrative-attachments/manifest.json",
+      "sha256": "1032b3f137d341d1b8204301e214e7dcf652e12dc779a575296837b16304e3d2",
+      "size": 618
+    },
+    {
+      "path": "dist/forms/other-narrative-attachments/schema.json",
+      "sha256": "d9f02852ad747d5161510d1a06ce98a52f809383a9548ff55262aaf0a30e1e46",
+      "size": 562
+    },
+    {
+      "path": "dist/forms/other-narrative-attachments/sgg/rule-schema.json",
+      "sha256": "c148245c5907f239bda5dcefda141c233a52ac6d60a2765839fae4edb56513db",
+      "size": 83
+    },
+    {
+      "path": "dist/forms/other-narrative-attachments/sgg/ui-schema.json",
+      "sha256": "e5cac9a8096b95fbc0ec4458771b19d6cfa2fc64bbcfc3e6343e88d3418bdb25",
+      "size": 263
+    },
+    {
+      "path": "dist/forms/project-narrative-attachments/evidence.json",
+      "sha256": "3c5df3d5b982731921d2948424b4efa175858bdfb46279aef557235c8294d6df",
+      "size": 916
+    },
+    {
+      "path": "dist/forms/project-narrative-attachments/manifest.json",
+      "sha256": "c2198ccff1fef646025fc60fd4fe2030862131401894a02ce0185d59fc97e2cd",
+      "size": 634
+    },
+    {
+      "path": "dist/forms/project-narrative-attachments/schema.json",
+      "sha256": "1abfceb8d85663835b1983bd7eb74ab6e0c4a88579b057b8ab6c7a0e60bfa803",
+      "size": 572
+    },
+    {
+      "path": "dist/forms/project-narrative-attachments/sgg/rule-schema.json",
+      "sha256": "c148245c5907f239bda5dcefda141c233a52ac6d60a2765839fae4edb56513db",
+      "size": 83
+    },
+    {
+      "path": "dist/forms/project-narrative-attachments/sgg/ui-schema.json",
+      "sha256": "4fe9221afb1a9bcf976d6c05ab7390bb3501e58b0eaabd276962d621f742182f",
+      "size": 267
     },
     {
       "path": "dist/forms/sf424-short/evidence.json",
@@ -307,13 +382,16 @@
       "key-contacts",
       "sf424",
       "sf424a",
-      "sf424-short"
+      "sf424-short",
+      "project-narrative-attachments",
+      "budget-narrative-attachments",
+      "other-narrative-attachments"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "2e8ff805d135edeb07de6b23597d087a37bb8f85"
+    "revision": "df40ac7acb07e54c2637894132eae5993d4e197b"
   },
-  "sourceBundleSha256": "9f29e9022a0ccdf342a6f1229d156087b7f6738815d83ebf4377287bc630f73d"
+  "sourceBundleSha256": "ea39e831590ec0f45c1fae2b04b31bcdf768e2e35fba700e522f4b6c8e8cd521"
 }

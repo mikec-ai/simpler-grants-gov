@@ -29,3 +29,7 @@ The same file may declare `schemaAnnotations` when the legacy runtime requires a
 constraint or annotation to appear directly on a property rather than through its shared
 question reference. Each declaration contains `values` and a `why`; the adapter applies the
 data mechanically.
+
+`identifiers` preserves legacy UI identifiers that are not data keys. Like every other
+exception, each entry declares its target spelling and why it must remain different from the
+adapter's ordinary naming convention.

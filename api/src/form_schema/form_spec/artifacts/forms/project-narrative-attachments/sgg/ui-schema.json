@@ -1,0 +1,14 @@
+[
+  {
+    "type": "section",
+    "name": "projectNarrativeFiles",
+    "label": "1. Project Narrative File(s)",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/attachments",
+        "widget": "AttachmentArray"
+      }
+    ]
+  }
+]
