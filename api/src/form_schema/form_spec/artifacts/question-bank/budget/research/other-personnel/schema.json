@@ -26,9 +26,7 @@
       "maxItems": 6
     },
     "otherPersonnelTotalNumber": {
-      "type": "integer",
-      "minimum": -2147483648,
-      "maximum": 2147483647,
+      "$ref": "#/$defs/ResearchBudgetCount4",
       "title": "Total Number Other Personnel",
       "readOnly": true
     },
@@ -51,7 +49,7 @@
       }
     },
     "totalOtherPersonnelFund": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal15",
       "title": "Total Other Personnel",
       "readOnly": true
     },
@@ -70,35 +68,48 @@
   ],
   "description": "Other personnel compensation for one budget period.",
   "$defs": {
-    "ResearchBudgetDecimal": {
+    "ResearchBudgetMonth3Whole2Fraction": {
+      "type": "string",
+      "pattern": "^-?(?:\\d{1,5}|\\d{1,4}[.]\\d|\\d{1,3}[.]\\d{2})$"
+    },
+    "ResearchBudgetDecimal14": {
       "type": "string",
       "minLength": 1,
       "maxLength": 16,
       "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
     },
+    "ResearchBudgetDecimal15": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 17,
+      "pattern": "^-?(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
+    },
+    "ResearchBudgetCount3": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 999
+    },
     "ResearchBudgetBudgetYearOtherPersonnelGraduateStudents": {
       "type": "object",
       "properties": {
         "academicMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Academic Months Graduate Students"
         },
         "calendarMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Calendar Months Graduate Students"
         },
         "fringeBenefits": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Fringe Benefits Graduate Students"
         },
         "fundsRequested": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal15",
           "title": "Funds Requested Graduate Students"
         },
         "numberOfPersonnel": {
-          "type": "integer",
-          "minimum": -2147483648,
-          "maximum": 2147483647,
+          "$ref": "#/$defs/ResearchBudgetCount3",
           "title": "Number of Personnel Graduate Students"
         },
         "projectRole": {
@@ -108,11 +119,11 @@
           "title": "Project Role Graduate Students"
         },
         "requestedSalary": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Requested Salary Graduate Students"
         },
         "summerMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Summer Months Graduate Students"
         }
       },
@@ -128,25 +139,23 @@
       "type": "object",
       "properties": {
         "academicMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Academic Months Additional Project Role"
         },
         "calendarMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Calendar Months Additional Project Role"
         },
         "fringeBenefits": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Fringe Benefits Additional Project Role"
         },
         "fundsRequested": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal15",
           "title": "Funds Requested Additional Project Role"
         },
         "numberOfPersonnel": {
-          "type": "integer",
-          "minimum": -2147483648,
-          "maximum": 2147483647,
+          "$ref": "#/$defs/ResearchBudgetCount3",
           "title": "Number of Personnel Additional Project Role"
         },
         "projectRole": {
@@ -156,11 +165,11 @@
           "title": "Additional Project Role Description"
         },
         "requestedSalary": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Requested Salary Additional Project Role"
         },
         "summerMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Summer Months Additional Project Role"
         }
       },
@@ -173,29 +182,32 @@
       ],
       "title": "Other"
     },
+    "ResearchBudgetCount4": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9999
+    },
     "ResearchBudgetBudgetYearOtherPersonnelPostDocAssociates": {
       "type": "object",
       "properties": {
         "academicMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Academic Months Post Doctoral Associates"
         },
         "calendarMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Calendar Months Post Doctoral Associates"
         },
         "fringeBenefits": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Fringe Benefits Post Doctoral Associates"
         },
         "fundsRequested": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal15",
           "title": "Funds Requested Post Doctoral Associates"
         },
         "numberOfPersonnel": {
-          "type": "integer",
-          "minimum": -2147483648,
-          "maximum": 2147483647,
+          "$ref": "#/$defs/ResearchBudgetCount3",
           "title": "Number of Personnel Post Doctoral Associates"
         },
         "projectRole": {
@@ -205,11 +217,11 @@
           "title": "Project Role Post Doctoral Associates"
         },
         "requestedSalary": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Requested Salary Post Doctoral Associates"
         },
         "summerMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Summer Months Post Doctoral Associates"
         }
       },
@@ -225,25 +237,23 @@
       "type": "object",
       "properties": {
         "academicMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Academic Months Secretarial/Clerical"
         },
         "calendarMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Calendar Months Secretarial/Clerical"
         },
         "fringeBenefits": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Fringe Benefits Secretarial/Clerical"
         },
         "fundsRequested": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal15",
           "title": "Funds Requested Secretarial/Clerical"
         },
         "numberOfPersonnel": {
-          "type": "integer",
-          "minimum": -2147483648,
-          "maximum": 2147483647,
+          "$ref": "#/$defs/ResearchBudgetCount3",
           "title": "Number of Personnel Secretarial/Clerical"
         },
         "projectRole": {
@@ -253,11 +263,11 @@
           "title": "Project Role Secretarial/Clerical"
         },
         "requestedSalary": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Requested Salary Secretarial/Clerical"
         },
         "summerMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Summer Months Secretarial/Clerical"
         }
       },
@@ -273,25 +283,23 @@
       "type": "object",
       "properties": {
         "academicMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Academic Months Undergraduate Students"
         },
         "calendarMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Calendar Months Undergraduate Students"
         },
         "fringeBenefits": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Fringe Benefits Undergraduate Students"
         },
         "fundsRequested": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal15",
           "title": "Funds Requested Undergraduate Students"
         },
         "numberOfPersonnel": {
-          "type": "integer",
-          "minimum": -2147483648,
-          "maximum": 2147483647,
+          "$ref": "#/$defs/ResearchBudgetCount3",
           "title": "Number of Personnel Undergraduate Students"
         },
         "projectRole": {
@@ -301,11 +309,11 @@
           "title": "Project Role Undergraduate Students"
         },
         "requestedSalary": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Requested Salary Undergraduate Students"
         },
         "summerMonths": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetMonth3Whole2Fraction",
           "title": "Summer Months Undergraduate Students"
         }
       },

@@ -4,23 +4,23 @@
   "type": "object",
   "properties": {
     "adpComputerServices": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal14",
       "title": "4. ADP/Computer Services"
     },
     "alterationsRenovations": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal14",
       "title": "7. Alterations and Renovations"
     },
     "consultantServices": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal14",
       "title": "3. Consultant Services"
     },
     "equipmentRentalFee": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal14",
       "title": "6. Equipment or Facility Rental/User Fees"
     },
     "materialsSupplies": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal14",
       "title": "1. Materials and Supplies"
     },
     "otherDirectCost1": {
@@ -64,15 +64,15 @@
       "title": "Other Direct Cost9"
     },
     "publicationCosts": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal14",
       "title": "2. Publication Costs"
     },
     "subawardConsortiumContractualCosts": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal14",
       "title": "5. Subawards/Consortium/Contractual Costs"
     },
     "totalOtherDirectCost": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal15",
       "title": "Total Other Direct Costs",
       "readOnly": true
     }
@@ -82,7 +82,7 @@
   ],
   "description": "Other direct costs for one research budget period.",
   "$defs": {
-    "ResearchBudgetDecimal": {
+    "ResearchBudgetDecimal14": {
       "type": "string",
       "minLength": 1,
       "maxLength": 16,
@@ -92,7 +92,7 @@
       "type": "object",
       "properties": {
         "cost": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Additional Other Direct Cost Funds Requested"
         },
         "description": {
@@ -111,7 +111,7 @@
       "type": "object",
       "properties": {
         "cost": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Additional Other Direct Cost Funds Requested"
         },
         "description": {
@@ -130,7 +130,7 @@
       "type": "object",
       "properties": {
         "cost": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Additional Other Direct Cost Funds Requested"
         },
         "description": {
@@ -149,7 +149,7 @@
       "type": "object",
       "properties": {
         "cost": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Additional Other Direct Cost Funds Requested"
         },
         "description": {
@@ -168,7 +168,7 @@
       "type": "object",
       "properties": {
         "cost": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Additional Other Direct Cost Funds Requested"
         },
         "description": {
@@ -187,7 +187,7 @@
       "type": "object",
       "properties": {
         "cost": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Additional Other Direct Cost Funds Requested"
         },
         "description": {
@@ -206,7 +206,7 @@
       "type": "object",
       "properties": {
         "cost": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Additional Other Direct Cost Funds Requested"
         },
         "description": {
@@ -225,7 +225,7 @@
       "type": "object",
       "properties": {
         "cost": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Additional Other Direct Cost Funds Requested"
         },
         "description": {
@@ -244,7 +244,7 @@
       "type": "object",
       "properties": {
         "cost": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Additional Other Direct Cost Funds Requested"
         },
         "description": {
@@ -263,7 +263,7 @@
       "type": "object",
       "properties": {
         "cost": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Additional Other Direct Cost Funds Requested"
         },
         "description": {
@@ -277,6 +277,12 @@
         "cost",
         "description"
       ]
+    },
+    "ResearchBudgetDecimal15": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 17,
+      "pattern": "^-?(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
     }
   }
 }

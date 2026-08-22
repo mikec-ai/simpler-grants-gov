@@ -171,6 +171,35 @@ def test_handle_field_population_pre_population_sum_monetary_not_a_monetary_amou
 @pytest.mark.parametrize(
     "rule,json_data,expected_value",
     [
+        ({"rule": "sum_integer", "fields": []}, {}, 0),
+        ({"rule": "sum_integer", "fields": ["x", "y"]}, {"x": 2, "y": 3}, 5),
+        (
+            {"rule": "sum_integer", "fields": ["x[*].count", "y"]},
+            {"x": [{"count": 2}, {"count": 4}], "y": 3},
+            9,
+        ),
+        (
+            {"rule": "sum_integer", "fields": ["x", "y", "z"]},
+            {"x": True, "y": "4", "z": 3},
+            3,
+        ),
+    ],
+)
+def test_handle_field_population_pre_population_sum_integer(
+    rule, json_data, expected_value, enable_factory_create
+):
+    context = setup_context(json_data, {"my_field": rule})
+    handle_field_population(
+        context,
+        JsonRule(handler="gg_pre_population", rule=rule, path=["my_field"]),
+        PRE_POPULATION_MAPPER,
+    )
+    assert context.json_data["my_field"] == expected_value
+
+
+@pytest.mark.parametrize(
+    "rule,json_data,expected_value",
+    [
         # The percentage is a whole number, so 1000 * 5 is 50.00, not 5000
         (
             {"rule": "multiply_by_percentage", "amount": "x", "percentage": "p"},

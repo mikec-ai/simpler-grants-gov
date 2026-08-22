@@ -184,6 +184,28 @@ def sum_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str:
     return str(quantize_decimal(result))
 
 
+def sum_integer_values(context: JsonRuleContext, json_rule: JsonRule) -> int:
+    """Sum integer counts across scalar and repeated paths.
+
+    Missing and invalid values contribute zero, matching the tolerant behavior of
+    ``sum_monetary`` while preserving an integer result for integer JSON schemas.
+    Booleans are rejected explicitly because Python treats them as integers.
+    """
+    fields = json_rule.rule.get("fields", [])
+    values = get_field_values(context.json_data, fields, json_rule.path)
+
+    result = 0
+    for value in values:
+        if value is None:
+            continue
+        if isinstance(value, bool) or not isinstance(value, int):
+            logger.info("Cannot convert integer count entered", extra=json_rule.get_log_context())
+            continue
+        result += value
+
+    return result
+
+
 def _get_single_field_value(context: JsonRuleContext, json_rule: JsonRule, config_key: str) -> Any:
     """Resolve a single value for a configured path on a rule.
 
@@ -293,6 +315,7 @@ PRE_POPULATION_MAPPER: dict[str, population_func] = {
     "public_competition_id": get_public_competition_id,
     "competition_title": get_competition_title,
     "sum_monetary": sum_monetary_values,
+    "sum_integer": sum_integer_values,
     "multiply_by_percentage": multiply_by_percentage,
     "subtract_monetary": subtract_monetary_values,
 }

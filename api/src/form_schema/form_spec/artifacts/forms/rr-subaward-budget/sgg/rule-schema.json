@@ -13,6 +13,16 @@
           "gg_validation": {
             "rule": "attachment"
           }
+        },
+        "totalFund": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.equipmentList[*].fundsRequested",
+              "@THIS.totalFundForAttachedEquipment"
+            ],
+            "order": 7
+          }
         }
       },
       "keyPersons": {
@@ -32,6 +42,16 @@
               ],
               "order": 1
             }
+          }
+        },
+        "totalFundForKeyPersons": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.keyPerson[*].fundsRequested",
+              "@THIS.totalFundForAttachedKeyPersons"
+            ],
+            "order": 9
           }
         }
       },
@@ -61,6 +81,19 @@
             }
           }
         },
+        "otherPersonnelTotalNumber": {
+          "gg_pre_population": {
+            "rule": "sum_integer",
+            "fields": [
+              "@THIS.postDocAssociates.numberOfPersonnel",
+              "@THIS.graduateStudents.numberOfPersonnel",
+              "@THIS.undergraduateStudents.numberOfPersonnel",
+              "@THIS.secretarialClerical.numberOfPersonnel",
+              "@THIS.other[*].numberOfPersonnel"
+            ],
+            "order": 11
+          }
+        },
         "postDocAssociates": {
           "fundsRequested": {
             "gg_pre_population": {
@@ -85,6 +118,19 @@
             }
           }
         },
+        "totalOtherPersonnelFund": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.postDocAssociates.fundsRequested",
+              "@THIS.graduateStudents.fundsRequested",
+              "@THIS.undergraduateStudents.fundsRequested",
+              "@THIS.secretarialClerical.fundsRequested",
+              "@THIS.other[*].fundsRequested"
+            ],
+            "order": 12
+          }
+        },
         "undergraduateStudents": {
           "fundsRequested": {
             "gg_pre_population": {
@@ -98,6 +144,73 @@
           }
         }
       },
+      "directCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.keyPersons.totalFundForKeyPersons",
+            "@THIS.otherPersonnel.totalOtherPersonnelFund",
+            "@THIS.equipment.totalFund",
+            "@THIS.travel.totalTravelCost",
+            "@THIS.participantTraineeSupportCosts.totalCost",
+            "@THIS.otherDirectCosts.totalOtherDirectCost"
+          ],
+          "order": 16
+        }
+      },
+      "indirectCosts": {
+        "totalIndirectCosts": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.indirectCost[*].fundRequested"
+            ],
+            "order": 8
+          }
+        }
+      },
+      "otherDirectCosts": {
+        "totalOtherDirectCost": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.materialsSupplies",
+              "@THIS.publicationCosts",
+              "@THIS.consultantServices",
+              "@THIS.adpComputerServices",
+              "@THIS.subawardConsortiumContractualCosts",
+              "@THIS.equipmentRentalFee",
+              "@THIS.alterationsRenovations",
+              "@THIS.otherDirectCost1.cost",
+              "@THIS.otherDirectCost2.cost",
+              "@THIS.otherDirectCost3.cost",
+              "@THIS.otherDirectCost4.cost",
+              "@THIS.otherDirectCost5.cost",
+              "@THIS.otherDirectCost6.cost",
+              "@THIS.otherDirectCost7.cost",
+              "@THIS.otherDirectCost8.cost",
+              "@THIS.otherDirectCost9.cost",
+              "@THIS.otherDirectCost10.cost"
+            ],
+            "order": 10
+          }
+        }
+      },
+      "participantTraineeSupportCosts": {
+        "totalCost": {
+          "gg_pre_population": {
+            "rule": "sum_monetary",
+            "fields": [
+              "@THIS.tuitionFeeHealthInsurance",
+              "@THIS.stipends",
+              "@THIS.travel",
+              "@THIS.subsistence",
+              "@THIS.other.cost"
+            ],
+            "order": 13
+          }
+        }
+      },
       "totalCompensation": {
         "gg_pre_population": {
           "rule": "sum_monetary",
@@ -105,7 +218,7 @@
             "@THIS.keyPersons.totalFundForKeyPersons",
             "@THIS.otherPersonnel.totalOtherPersonnelFund"
           ],
-          "order": 7
+          "order": 15
         }
       },
       "totalCosts": {
@@ -115,7 +228,7 @@
             "@THIS.directCosts",
             "@THIS.indirectCosts.totalIndirectCosts"
           ],
-          "order": 9
+          "order": 17
         }
       },
       "totalCostsFee": {
@@ -125,7 +238,7 @@
             "@THIS.totalCosts",
             "@THIS.fee"
           ],
-          "order": 10
+          "order": 18
         }
       },
       "travel": {
@@ -136,7 +249,7 @@
               "@THIS.domesticTravelCost",
               "@THIS.foreignTravelCost"
             ],
-            "order": 8
+            "order": 14
           }
         }
       }
@@ -148,7 +261,7 @@
           "fields": [
             "@PARENT.budgetYear[*].otherDirectCosts.adpComputerServices"
           ],
-          "order": 23
+          "order": 19
         }
       },
       "cumulativeAlterationsAndRenovations": {
@@ -157,7 +270,7 @@
           "fields": [
             "@PARENT.budgetYear[*].otherDirectCosts.alterationsRenovations"
           ],
-          "order": 26
+          "order": 20
         }
       },
       "cumulativeConsultantServices": {
@@ -166,7 +279,7 @@
           "fields": [
             "@PARENT.budgetYear[*].otherDirectCosts.consultantServices"
           ],
-          "order": 22
+          "order": 21
         }
       },
       "cumulativeDomesticTravelCosts": {
@@ -175,7 +288,7 @@
           "fields": [
             "@PARENT.budgetYear[*].travel.domesticTravelCost"
           ],
-          "order": 16
+          "order": 22
         }
       },
       "cumulativeEquipmentFacilityRentalFees": {
@@ -184,7 +297,7 @@
           "fields": [
             "@PARENT.budgetYear[*].otherDirectCosts.equipmentRentalFee"
           ],
-          "order": 25
+          "order": 23
         }
       },
       "cumulativeFee": {
@@ -193,7 +306,7 @@
           "fields": [
             "@PARENT.budgetYear[*].fee"
           ],
-          "order": 30
+          "order": 24
         }
       },
       "cumulativeForeignTravelCosts": {
@@ -202,7 +315,7 @@
           "fields": [
             "@PARENT.budgetYear[*].travel.foreignTravelCost"
           ],
-          "order": 17
+          "order": 25
         }
       },
       "cumulativeMaterialAndSupplies": {
@@ -211,16 +324,115 @@
           "fields": [
             "@PARENT.budgetYear[*].otherDirectCosts.materialsSupplies"
           ],
-          "order": 20
+          "order": 26
         }
       },
       "cumulativeNoofTrainees": {
         "gg_pre_population": {
-          "rule": "sum_monetary",
+          "rule": "sum_integer",
           "fields": [
             "@PARENT.budgetYear[*].participantTraineeSupportCosts.participantTraineeNumber"
           ],
-          "order": 18
+          "order": 27
+        }
+      },
+      "cumulativeOther10DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost10.cost"
+          ],
+          "order": 28
+        }
+      },
+      "cumulativeOther1DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost1.cost"
+          ],
+          "order": 29
+        }
+      },
+      "cumulativeOther2DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost2.cost"
+          ],
+          "order": 30
+        }
+      },
+      "cumulativeOther3DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost3.cost"
+          ],
+          "order": 31
+        }
+      },
+      "cumulativeOther4DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost4.cost"
+          ],
+          "order": 32
+        }
+      },
+      "cumulativeOther5DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost5.cost"
+          ],
+          "order": 33
+        }
+      },
+      "cumulativeOther6DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost6.cost"
+          ],
+          "order": 34
+        }
+      },
+      "cumulativeOther7DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost7.cost"
+          ],
+          "order": 35
+        }
+      },
+      "cumulativeOther8DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost8.cost"
+          ],
+          "order": 36
+        }
+      },
+      "cumulativeOther9DirectCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].otherDirectCosts.otherDirectCost9.cost"
+          ],
+          "order": 37
+        }
+      },
+      "cumulativeOtherTraineeCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.other.cost"
+          ],
+          "order": 38
         }
       },
       "cumulativePublicationCosts": {
@@ -229,7 +441,7 @@
           "fields": [
             "@PARENT.budgetYear[*].otherDirectCosts.publicationCosts"
           ],
-          "order": 21
+          "order": 39
         }
       },
       "cumulativeSubawardConsortiumContractualCosts": {
@@ -238,7 +450,16 @@
           "fields": [
             "@PARENT.budgetYear[*].otherDirectCosts.subawardConsortiumContractualCosts"
           ],
-          "order": 24
+          "order": 40
+        }
+      },
+      "cumulativeTotalCostsFee": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].totalCostsFee"
+          ],
+          "order": 41
         }
       },
       "cumulativeTotalFundsRequestedDirectCosts": {
@@ -247,7 +468,7 @@
           "fields": [
             "@PARENT.budgetYear[*].directCosts"
           ],
-          "order": 27
+          "order": 42
         }
       },
       "cumulativeTotalFundsRequestedDirectIndirectCosts": {
@@ -256,7 +477,16 @@
           "fields": [
             "@PARENT.budgetYear[*].totalCosts"
           ],
-          "order": 29
+          "order": 43
+        }
+      },
+      "cumulativeTotalFundsRequestedEquipment": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].equipment.totalFund"
+          ],
+          "order": 44
         }
       },
       "cumulativeTotalFundsRequestedIndirectCost": {
@@ -265,7 +495,7 @@
           "fields": [
             "@PARENT.budgetYear[*].indirectCosts.totalIndirectCosts"
           ],
-          "order": 28
+          "order": 45
         }
       },
       "cumulativeTotalFundsRequestedOtherDirectCosts": {
@@ -274,7 +504,7 @@
           "fields": [
             "@PARENT.budgetYear[*].otherDirectCosts.totalOtherDirectCost"
           ],
-          "order": 19
+          "order": 46
         }
       },
       "cumulativeTotalFundsRequestedOtherPersonnel": {
@@ -283,7 +513,7 @@
           "fields": [
             "@PARENT.budgetYear[*].otherPersonnel.totalOtherPersonnelFund"
           ],
-          "order": 12
+          "order": 47
         }
       },
       "cumulativeTotalFundsRequestedPersonnel": {
@@ -292,7 +522,7 @@
           "fields": [
             "@PARENT.budgetYear[*].totalCompensation"
           ],
-          "order": 14
+          "order": 48
         }
       },
       "cumulativeTotalFundsRequestedSeniorKeyPerson": {
@@ -301,7 +531,16 @@
           "fields": [
             "@PARENT.budgetYear[*].keyPersons.totalFundForKeyPersons"
           ],
-          "order": 11
+          "order": 49
+        }
+      },
+      "cumulativeTotalFundsRequestedTraineeCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.totalCost"
+          ],
+          "order": 50
         }
       },
       "cumulativeTotalFundsRequestedTravel": {
@@ -310,16 +549,52 @@
           "fields": [
             "@PARENT.budgetYear[*].travel.totalTravelCost"
           ],
-          "order": 15
+          "order": 51
         }
       },
       "cumulativeTotalNoOtherPersonnel": {
         "gg_pre_population": {
-          "rule": "sum_monetary",
+          "rule": "sum_integer",
           "fields": [
             "@PARENT.budgetYear[*].otherPersonnel.otherPersonnelTotalNumber"
           ],
-          "order": 13
+          "order": 52
+        }
+      },
+      "cumulativeTraineeStipends": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.stipends"
+          ],
+          "order": 53
+        }
+      },
+      "cumulativeTraineeSubsistence": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.subsistence"
+          ],
+          "order": 54
+        }
+      },
+      "cumulativeTraineeTravel": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.travel"
+          ],
+          "order": 55
+        }
+      },
+      "cumulativeTraineeTuitionFeesHealthInsurance": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.budgetYear[*].participantTraineeSupportCosts.tuitionFeeHealthInsurance"
+          ],
+          "order": 56
         }
       }
     }

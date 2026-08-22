@@ -20,7 +20,7 @@
       "title": "Cognizant Federal Agency (Agency Name, POC Name, and POC Phone Number)"
     },
     "directCosts": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal15",
       "title": "Total Direct Costs (A thru F)",
       "readOnly": true
     },
@@ -34,7 +34,7 @@
       }
     },
     "fee": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetAmount14",
       "title": "Fee"
     },
     "indirectCosts": {
@@ -132,17 +132,17 @@
       }
     },
     "totalCompensation": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal15",
       "title": "Total Salary, Wages and Fringe Benefits (A+B)",
       "readOnly": true
     },
     "totalCosts": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal15",
       "title": "Total Direct and Indirect Institutional Costs (G + H)",
       "readOnly": true
     },
     "totalCostsFee": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetTotalAmount15",
       "title": "Total Costs and Fee (I + J)",
       "readOnly": true
     },
@@ -168,11 +168,23 @@
   "description": "A dated research budget period with personnel, direct, indirect, and total costs.",
   "title": "Budget Period",
   "$defs": {
-    "ResearchBudgetDecimal": {
+    "ResearchBudgetDecimal15": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 17,
+      "pattern": "^-?(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
+    },
+    "ResearchBudgetAmount14": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 15,
+      "pattern": "^(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    },
+    "ResearchBudgetTotalAmount15": {
       "type": "string",
       "minLength": 1,
       "maxLength": 16,
-      "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+      "pattern": "^(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
     }
   }
 }

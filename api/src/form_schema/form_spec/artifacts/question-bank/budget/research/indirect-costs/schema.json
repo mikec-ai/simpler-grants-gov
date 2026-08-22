@@ -12,7 +12,7 @@
       "maxItems": 4
     },
     "totalIndirectCosts": {
-      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "$ref": "#/$defs/ResearchBudgetDecimal15",
       "title": "Total Indirect Costs",
       "readOnly": true
     }
@@ -23,17 +23,21 @@
   ],
   "description": "Indirect cost rates and requested amounts for one research budget period.",
   "$defs": {
-    "ResearchBudgetDecimal": {
+    "ResearchBudgetDecimal14": {
       "type": "string",
       "minLength": 1,
       "maxLength": 16,
       "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
     },
+    "ResearchBudgetIndirectRate": {
+      "type": "string",
+      "pattern": "^(?:\\d{1,3}|\\d{1,3}[.]\\d|\\d{1,3}[.]\\d{2})$"
+    },
     "ResearchBudgetBudgetYearIndirectCostsIndirectCost": {
       "type": "object",
       "properties": {
         "base": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Indirect Cost Base"
         },
         "costType": {
@@ -43,11 +47,11 @@
           "title": "Indirect Cost Type"
         },
         "fundRequested": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetDecimal14",
           "title": "Indirect Costs Funds Requested"
         },
         "rate": {
-          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "$ref": "#/$defs/ResearchBudgetIndirectRate",
           "title": "Indirect Cost Rate"
         }
       },
@@ -56,6 +60,12 @@
         "fundRequested"
       ],
       "title": "Indirect Cost"
+    },
+    "ResearchBudgetDecimal15": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 17,
+      "pattern": "^-?(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
     }
   }
 }

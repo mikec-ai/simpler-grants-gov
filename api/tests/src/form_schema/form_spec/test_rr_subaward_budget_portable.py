@@ -62,10 +62,11 @@ def test_nested_repeating_groups_and_rules_are_projected_generically() -> None:
     ]
 
     assert sum(node.get("type") == "fieldList" for node in ui_objects) == 6
-    assert len(calculations) == 30
+    assert len(calculations) == 56
     raw_rules = json.loads((ARTIFACTS / "sgg" / "rule-schema.json").read_text())
     assert "@PARENT." in json.dumps(raw_rules)
-    assert sorted(rule["order"] for rule in calculations) == list(range(1, 31))
+    assert sorted(rule["order"] for rule in calculations) == list(range(1, 57))
+    assert sum(rule["rule"] == "sum_integer" for rule in calculations) == 3
 
 
 def test_official_xsd_and_dat_provenance_are_pinned() -> None:
