@@ -6,32 +6,38 @@
     "agencyName": {
       "$ref": "../../question-bank/opportunity/agency-name/schema.json",
       "description": "Pre-populated from the Application cover sheet.",
-      "title": "Name of Federal Agency"
+      "title": "Name of Federal Agency",
+      "readOnly": true
     },
     "assistanceListingNumber": {
       "$ref": "../../question-bank/opportunity/assistance-listing-number/schema.json",
       "description": "Pre-populated from the Application cover sheet.",
-      "title": "Assistance Listing Number"
+      "title": "Assistance Listing Number",
+      "readOnly": true
     },
     "assistanceListingProgramTitle": {
       "$ref": "../../question-bank/opportunity/assistance-listing-title/schema.json",
       "description": "Pre-populated from the Application cover sheet.",
-      "title": "Assistance Listing Title"
+      "title": "Assistance Listing Title",
+      "readOnly": true
     },
     "dateReceived": {
       "$ref": "../../question-bank/application/date-received/schema.json",
       "description": "Completed by Grants.gov upon submission.",
-      "title": "Date Received"
+      "title": "Date Received",
+      "readOnly": true
     },
     "fundingOpportunityNumber": {
       "$ref": "../../question-bank/opportunity/number/schema.json",
       "description": "Pre-populated from the Application cover sheet.",
-      "title": "Funding Opportunity Number"
+      "title": "Funding Opportunity Number",
+      "readOnly": true
     },
     "fundingOpportunityTitle": {
       "$ref": "../../question-bank/opportunity/title/schema.json",
       "description": "Pre-populated from the Application cover sheet.",
-      "title": "Funding Opportunity Title"
+      "title": "Funding Opportunity Title",
+      "readOnly": true
     },
     "organizationName": {
       "$ref": "../../question-bank/primary-org/legal-name/schema.json",
@@ -68,7 +74,8 @@
     "samUei": {
       "$ref": "../../question-bank/primary-org/uei/schema.json",
       "description": "UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
-      "title": "SAM UEI"
+      "title": "SAM UEI",
+      "readOnly": true
     },
     "congressionalDistrictApplicant": {
       "$ref": "../../question-bank/project/congressional-district/schema.json",
@@ -142,12 +149,14 @@
     "aorSignature": {
       "$ref": "../../question-bank/aor/signature/schema.json",
       "description": "Completed by Grants.gov upon submission.",
-      "title": "Signature of Authorized Representative"
+      "title": "Signature of Authorized Representative",
+      "readOnly": true
     },
     "authorizedRepresentativeDateSigned": {
       "$ref": "../../question-bank/aor/date-signed/schema.json",
       "description": "Completed by Grants.gov upon submission.",
-      "title": "Date Signed"
+      "title": "Date Signed",
+      "readOnly": true
     }
   },
   "required": [

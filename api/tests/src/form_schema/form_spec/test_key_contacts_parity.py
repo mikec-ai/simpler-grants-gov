@@ -98,8 +98,10 @@ def seeds():
 
 
 def test_ui_schema_is_identical(projected, golden):
-    """Same fields, in the same order, in the same sections."""
-    assert projected.form_ui_schema == golden.FORM_UI_SCHEMA
+    """Same UI, plus the portable list's explicit schema pointer."""
+    expected = copy.deepcopy(golden.FORM_UI_SCHEMA)
+    expected[0]["children"][1]["definition"] = "/properties/key_contacts"
+    assert projected.form_ui_schema == expected
 
 
 def test_rule_schema_is_identical(projected, golden):

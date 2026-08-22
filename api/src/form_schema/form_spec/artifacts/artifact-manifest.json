@@ -48,8 +48,8 @@
     },
     {
       "path": "dist/forms/key-contacts/sgg/ui-schema.json",
-      "sha256": "e49c4f3c7d4de793c5bf095b8af7ac302f4675f92c4369996ce91dc81ce5f9f1",
-      "size": 3276
+      "sha256": "cf11981423a7fa56c6be9db40696800c66abd7c42e23748cf1ada8f800cb35f1",
+      "size": 3325
     },
     {
       "path": "dist/forms/other-narrative-attachments/evidence.json",
@@ -102,6 +102,31 @@
       "size": 267
     },
     {
+      "path": "dist/forms/rr-budget/evidence.json",
+      "sha256": "2406ae66197fb4150fecc3ac0f90de95501e3b59cb15bdea9dbf775c57d1710c",
+      "size": 839
+    },
+    {
+      "path": "dist/forms/rr-budget/manifest.json",
+      "sha256": "3a05d14d6222952eea7c27a17062a62de45eac4a9ff1a774ea9745197483d88b",
+      "size": 592
+    },
+    {
+      "path": "dist/forms/rr-budget/schema.json",
+      "sha256": "9902e1619f614194b58d388e5f5ac7e2abbd7d4fbd68d7a1dac119544a7187a9",
+      "size": 7998
+    },
+    {
+      "path": "dist/forms/rr-budget/sgg/rule-schema.json",
+      "sha256": "133e68bcbc27abfae2b008781b491debb0fe9a2eb76af9d576ace30af98eac13",
+      "size": 7825
+    },
+    {
+      "path": "dist/forms/rr-budget/sgg/ui-schema.json",
+      "sha256": "ffc157a3c4a5cf917043fc96b706a6603277efdd4568d27f7d3726dd4fd33f60",
+      "size": 28511
+    },
+    {
       "path": "dist/forms/sf424-short/evidence.json",
       "sha256": "bd0a25d570ff07b710996bc45b474ea2c189fdabbc51e21e5ce3514efae52d23",
       "size": 847
@@ -113,8 +138,8 @@
     },
     {
       "path": "dist/forms/sf424-short/schema.json",
-      "sha256": "dd8f4cd84d3390670841838530232dfb07b8775c6923f5aa0deda90b03a47022",
-      "size": 8947
+      "sha256": "0c2365ccb485a8d91487eb09fde5d41e581d7eb54430906c26c1d285536ebc44",
+      "size": 9163
     },
     {
       "path": "dist/forms/sf424-short/sgg/rule-schema.json",
@@ -138,8 +163,8 @@
     },
     {
       "path": "dist/forms/sf424/schema.json",
-      "sha256": "57a5afccff353bffae3a7a69776c1846339d9ab27c4b939ee1201ff70ef1e778",
-      "size": 18263
+      "sha256": "c564e9fd411269ce269bb458869b2f996d747d90b1bb1b6015c1e2fbe3fd1d9b",
+      "size": 18407
     },
     {
       "path": "dist/forms/sf424/sgg/rule-schema.json",
@@ -235,6 +260,51 @@
       "path": "dist/question-bank/budget/non-federal-resources/schema.json",
       "sha256": "0f454c944e6c1f17f44a228319fb8345c4d02782ae9b29d63d3283aad099eabf",
       "size": 799
+    },
+    {
+      "path": "dist/question-bank/budget/research/cumulative-summary/schema.json",
+      "sha256": "ce3860a003495bcab6fa45a5e6330f2ea96047c6ed34798da7529103614600bc",
+      "size": 6824
+    },
+    {
+      "path": "dist/question-bank/budget/research/equipment/schema.json",
+      "sha256": "1b0042d0a133cb680a4b64f7ff6f30344fcceafbf966cecc805c76df6376011f",
+      "size": 1645
+    },
+    {
+      "path": "dist/question-bank/budget/research/indirect-costs/schema.json",
+      "sha256": "354a4c36967cb81eee20597dd0f0e6155b91d5c23cd52b866dd375b413d48172",
+      "size": 1615
+    },
+    {
+      "path": "dist/question-bank/budget/research/key-personnel/schema.json",
+      "sha256": "6c075b84b2bcb29f6d1cba40199bdca926d171fd3f13c3c22173b93580e907b5",
+      "size": 3779
+    },
+    {
+      "path": "dist/question-bank/budget/research/other-direct-costs/schema.json",
+      "sha256": "59444f13a5ce5635a36076880a276b78fffd955c03940109e0d87d968a34e457",
+      "size": 8255
+    },
+    {
+      "path": "dist/question-bank/budget/research/other-personnel/schema.json",
+      "sha256": "8d2fe319c9bec16e8edfb6f8c8ca7e9cd7884a24763e80f941c339b265cbc352",
+      "size": 9900
+    },
+    {
+      "path": "dist/question-bank/budget/research/participant-trainee-support/schema.json",
+      "sha256": "e15e679a0408eca1652b34ac060f13a7a19b53dc1cddd529eef31a4e93d41cfc",
+      "size": 1876
+    },
+    {
+      "path": "dist/question-bank/budget/research/period/schema.json",
+      "sha256": "23a5470e8112a0a5ffbb1d6892de18509af71b83278f880b894b8f85bd664e6b",
+      "size": 4631
+    },
+    {
+      "path": "dist/question-bank/budget/research/travel/schema.json",
+      "sha256": "966b9575b5cd0748fed5866f52672426a8654e96878679adf2666295b6442bef",
+      "size": 907
     },
     {
       "path": "dist/question-bank/budget/summary/schema.json",
@@ -385,13 +455,14 @@
       "sf424-short",
       "project-narrative-attachments",
       "budget-narrative-attachments",
-      "other-narrative-attachments"
+      "other-narrative-attachments",
+      "rr-budget"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "df40ac7acb07e54c2637894132eae5993d4e197b"
+    "revision": "5bfce63341e6afa517d1bb159f87906fcbe80b34"
   },
-  "sourceBundleSha256": "ea39e831590ec0f45c1fae2b04b31bcdf768e2e35fba700e522f4b6c8e8cd521"
+  "sourceBundleSha256": "b56a4e4dfb34330ee47ae63495ff82a7eabb95ca6705821c29146e4c64193e43"
 }

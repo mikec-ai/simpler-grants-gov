@@ -15,7 +15,14 @@ from tests.src.form_schema.forms import test_sf424_short as golden_fixtures
 
 FORM_DIR = "sf424_short"
 
-RENDERED: dict[str, str] = {}
+RENDERED: dict[str, str] = {
+    "/properties/agency_name#readOnly": "canonical declaration preserves opportunity-supplied behavior",
+    "/properties/assistance_listing_number#readOnly": "canonical declaration preserves opportunity-supplied behavior",
+    "/properties/assistance_listing_program_title#readOnly": "canonical declaration preserves opportunity-supplied behavior",
+    "/properties/funding_opportunity_number#readOnly": "canonical declaration preserves opportunity-supplied behavior",
+    "/properties/funding_opportunity_title#readOnly": "canonical declaration preserves opportunity-supplied behavior",
+    "/properties/sam_uei#readOnly": "canonical declaration preserves organization-supplied behavior",
+}
 
 
 @pytest.fixture(scope="module")

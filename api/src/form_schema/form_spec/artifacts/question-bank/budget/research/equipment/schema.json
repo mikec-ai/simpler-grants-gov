@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/research/equipment/schema.json",
+  "type": "object",
+  "properties": {
+    "additionalEquipmentsAttachment": {
+      "$ref": "../../../../question-bank/generics/attachment/schema.json",
+      "title": "Additional Equipment:"
+    },
+    "equipmentList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ResearchBudgetBudgetYearEquipmentEquipmentList"
+      },
+      "minItems": 0,
+      "maxItems": 10
+    },
+    "totalFund": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total Equipment",
+      "readOnly": true
+    },
+    "totalFundForAttachedEquipment": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total funds requested for all equipment listed in the attached file"
+    }
+  },
+  "required": [
+    "totalFund"
+  ],
+  "description": "Equipment costs for one research budget period.",
+  "$defs": {
+    "ResearchBudgetDecimal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    },
+    "ResearchBudgetBudgetYearEquipmentEquipmentList": {
+      "type": "object",
+      "properties": {
+        "equipmentItem": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "title": "Equipment Item"
+        },
+        "fundsRequested": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Equipment Item Funds Requested"
+        }
+      },
+      "required": [
+        "equipmentItem",
+        "fundsRequested"
+      ],
+      "title": "Equipment List"
+    }
+  }
+}

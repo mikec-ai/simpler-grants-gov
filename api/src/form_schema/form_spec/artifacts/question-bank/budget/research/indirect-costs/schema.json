@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/research/indirect-costs/schema.json",
+  "type": "object",
+  "properties": {
+    "indirectCost": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ResearchBudgetBudgetYearIndirectCostsIndirectCost"
+      },
+      "minItems": 1,
+      "maxItems": 4
+    },
+    "totalIndirectCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total Indirect Costs",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "indirectCost",
+    "totalIndirectCosts"
+  ],
+  "description": "Indirect cost rates and requested amounts for one research budget period.",
+  "$defs": {
+    "ResearchBudgetDecimal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    },
+    "ResearchBudgetBudgetYearIndirectCostsIndirectCost": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Indirect Cost Base"
+        },
+        "costType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "title": "Indirect Cost Type"
+        },
+        "fundRequested": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Indirect Costs Funds Requested"
+        },
+        "rate": {
+          "$ref": "#/$defs/ResearchBudgetDecimal",
+          "title": "Indirect Cost Rate"
+        }
+      },
+      "required": [
+        "costType",
+        "fundRequested"
+      ],
+      "title": "Indirect Cost"
+    }
+  }
+}

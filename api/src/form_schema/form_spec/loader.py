@@ -10,8 +10,9 @@ from __future__ import annotations
 import json
 import uuid
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any, cast
 
+from src.constants.lookup_constants import FormType
 from src.form_schema.form_spec.bank import ARTIFACTS, _bank_projection, verify_artifacts
 from src.form_schema.form_spec.projection import (
     Projection,
@@ -19,6 +20,9 @@ from src.form_schema.form_spec.projection import (
     project_schema,
     project_ui_schema,
 )
+
+if TYPE_CHECKING:
+    from src.db.models.competition_models import Form
 
 
 class LoadedForm:
@@ -110,3 +114,43 @@ def load_form(form_id: str, *, artifacts: Path | None = None) -> LoadedForm:
 
 def form_uuid(loaded: LoadedForm) -> uuid.UUID:
     return uuid.UUID(loaded.meta["formId"])
+
+
+def build_runtime_form(
+    form_id: str,
+    *,
+    form_type: FormType,
+    form_instruction_id: uuid.UUID | None = None,
+    json_to_xml_schema: dict[str, Any] | None = None,
+) -> Form:
+    """Build the ordinary Simpler runtime record from one portable form package.
+
+    Form-specific semantics remain in the portable declaration. These arguments are only
+    Simpler registry identity and capabilities that are not part of the portable contract.
+    """
+
+    # Local import avoids the existing registry -> question-bank -> adapter import cycle.
+    from src.db.models.competition_models import Form
+
+    loaded = load_form(form_id)
+    meta = loaded.meta
+    return Form(
+        form_id=form_uuid(loaded),
+        legacy_form_id=meta.get("legacyFormId"),
+        form_name=meta["formName"],
+        short_form_name=meta["shortFormName"],
+        form_version=meta["formVersion"],
+        agency_code=meta.get("agencyCode", "SGG"),
+        omb_number=meta.get("ombNumber"),
+        form_json_schema=loaded.form_json_schema,
+        # The persisted model annotation predates the list-shaped UI contract used by
+        # every registered form; keep the adapter's accurate type and cross that legacy
+        # boundary explicitly.
+        form_ui_schema=cast(Any, loaded.form_ui_schema),
+        form_rule_schema=loaded.form_rule_schema,
+        json_to_xml_schema=json_to_xml_schema,
+        form_instruction_id=form_instruction_id,
+        form_type=form_type,
+        sgg_version=meta.get("sggVersion"),
+        is_deprecated=False,
+    )

@@ -1,0 +1,178 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/research/period/schema.json",
+  "type": "object",
+  "properties": {
+    "budgetPeriodEndDate": {
+      "type": "string",
+      "format": "date",
+      "title": "End Date:"
+    },
+    "budgetPeriodStartDate": {
+      "type": "string",
+      "format": "date",
+      "title": "Start Date:"
+    },
+    "cognizantFederalAgency": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 180,
+      "title": "Cognizant Federal Agency (Agency Name, POC Name, and POC Phone Number)"
+    },
+    "directCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total Direct Costs (A thru F)",
+      "readOnly": true
+    },
+    "equipment": {
+      "$ref": "../../../../question-bank/budget/research/equipment/schema.json",
+      "title": "Equipment",
+      "properties": {
+        "totalFund": {
+          "readOnly": true
+        }
+      }
+    },
+    "fee": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Fee"
+    },
+    "indirectCosts": {
+      "$ref": "../../../../question-bank/budget/research/indirect-costs/schema.json",
+      "title": "Indirect Costs",
+      "properties": {
+        "totalIndirectCosts": {
+          "readOnly": true
+        }
+      }
+    },
+    "keyPersons": {
+      "$ref": "../../../../question-bank/budget/research/key-personnel/schema.json",
+      "title": "Key Persons",
+      "properties": {
+        "keyPerson": {
+          "items": {
+            "properties": {
+              "fundsRequested": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "totalFundForKeyPersons": {
+          "readOnly": true
+        }
+      }
+    },
+    "otherDirectCosts": {
+      "$ref": "../../../../question-bank/budget/research/other-direct-costs/schema.json",
+      "title": "Other Direct Costs",
+      "properties": {
+        "totalOtherDirectCost": {
+          "readOnly": true
+        }
+      }
+    },
+    "otherPersonnel": {
+      "$ref": "../../../../question-bank/budget/research/other-personnel/schema.json",
+      "title": "Other Personnel",
+      "properties": {
+        "graduateStudents": {
+          "properties": {
+            "fundsRequested": {
+              "readOnly": true
+            }
+          }
+        },
+        "other": {
+          "items": {
+            "properties": {
+              "fundsRequested": {
+                "readOnly": true
+              }
+            }
+          }
+        },
+        "otherPersonnelTotalNumber": {
+          "readOnly": true
+        },
+        "postDocAssociates": {
+          "properties": {
+            "fundsRequested": {
+              "readOnly": true
+            }
+          }
+        },
+        "secretarialClerical": {
+          "properties": {
+            "fundsRequested": {
+              "readOnly": true
+            }
+          }
+        },
+        "totalOtherPersonnelFund": {
+          "readOnly": true
+        },
+        "undergraduateStudents": {
+          "properties": {
+            "fundsRequested": {
+              "readOnly": true
+            }
+          }
+        }
+      }
+    },
+    "participantTraineeSupportCosts": {
+      "$ref": "../../../../question-bank/budget/research/participant-trainee-support/schema.json",
+      "title": "Participant Trainee Support Costs",
+      "properties": {
+        "totalCost": {
+          "readOnly": true
+        }
+      }
+    },
+    "totalCompensation": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total Salary, Wages and Fringe Benefits (A+B)",
+      "readOnly": true
+    },
+    "totalCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total Direct and Indirect Institutional Costs (G + H)",
+      "readOnly": true
+    },
+    "totalCostsFee": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total Costs and Fee (I + J)",
+      "readOnly": true
+    },
+    "travel": {
+      "$ref": "../../../../question-bank/budget/research/travel/schema.json",
+      "title": "Travel",
+      "properties": {
+        "totalTravelCost": {
+          "readOnly": true
+        }
+      }
+    }
+  },
+  "required": [
+    "budgetPeriodEndDate",
+    "budgetPeriodStartDate",
+    "directCosts",
+    "keyPersons",
+    "totalCompensation",
+    "totalCosts",
+    "totalCostsFee"
+  ],
+  "description": "A dated research budget period with personnel, direct, indirect, and total costs.",
+  "title": "Budget Period",
+  "$defs": {
+    "ResearchBudgetDecimal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    }
+  }
+}

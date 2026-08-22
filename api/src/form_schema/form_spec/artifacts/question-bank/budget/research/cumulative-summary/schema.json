@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/research/cumulative-summary/schema.json",
+  "type": "object",
+  "properties": {
+    "cumulativeAdpComputerServices": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "4. ADP/Computer Services",
+      "readOnly": true
+    },
+    "cumulativeAlterationsAndRenovations": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "7. Alterations and Renovations",
+      "readOnly": true
+    },
+    "cumulativeConsultantServices": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "3. Consultant Services",
+      "readOnly": true
+    },
+    "cumulativeDomesticTravelCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "1. Domestic",
+      "readOnly": true
+    },
+    "cumulativeEquipmentFacilityRentalFees": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "6. Equipment or Facility Rental/User Fees",
+      "readOnly": true
+    },
+    "cumulativeFee": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Section J, Fee",
+      "readOnly": true
+    },
+    "cumulativeForeignTravelCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "2. Foreign",
+      "readOnly": true
+    },
+    "cumulativeMaterialAndSupplies": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "1. Materials and Supplies",
+      "readOnly": true
+    },
+    "cumulativeNoofTrainees": {
+      "type": "integer",
+      "minimum": -2147483648,
+      "maximum": 2147483647,
+      "title": "6. Number of Participants/Trainees",
+      "readOnly": true
+    },
+    "cumulativeOther10DirectCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "17. Other 10",
+      "readOnly": true
+    },
+    "cumulativeOther1DirectCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "8. Other 1",
+      "readOnly": true
+    },
+    "cumulativeOther2DirectCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "9. Other 2",
+      "readOnly": true
+    },
+    "cumulativeOther3DirectCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "10. Other 3",
+      "readOnly": true
+    },
+    "cumulativeOther4DirectCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "11. Other 4",
+      "readOnly": true
+    },
+    "cumulativeOther5DirectCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "12. Other 5",
+      "readOnly": true
+    },
+    "cumulativeOther6DirectCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "13. Other 6",
+      "readOnly": true
+    },
+    "cumulativeOther7DirectCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "14. Other 7",
+      "readOnly": true
+    },
+    "cumulativeOther8DirectCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "15. Other 8",
+      "readOnly": true
+    },
+    "cumulativeOther9DirectCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "16. Other 9",
+      "readOnly": true
+    },
+    "cumulativeOtherTraineeCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "5. Other",
+      "readOnly": true
+    },
+    "cumulativePublicationCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "2. Publication Costs",
+      "readOnly": true
+    },
+    "cumulativeSubawardConsortiumContractualCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "5. Subawards/Consortium/Contractual Costs",
+      "readOnly": true
+    },
+    "cumulativeTotalCostsFee": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Section K, Total Costs and Fee (I + J)",
+      "readOnly": true
+    },
+    "cumulativeTotalFundsRequestedDirectCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Section G, Direct Costs (A thru F)",
+      "readOnly": true
+    },
+    "cumulativeTotalFundsRequestedDirectIndirectCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Section I, Total Direct and Indirect Costs (G + H)",
+      "readOnly": true
+    },
+    "cumulativeTotalFundsRequestedEquipment": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Section C, Equipment",
+      "readOnly": true
+    },
+    "cumulativeTotalFundsRequestedIndirectCost": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Section H, Indirect Costs",
+      "readOnly": true
+    },
+    "cumulativeTotalFundsRequestedOtherDirectCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Section F, Other Direct Costs",
+      "readOnly": true
+    },
+    "cumulativeTotalFundsRequestedOtherPersonnel": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Section B, Other Personnel",
+      "readOnly": true
+    },
+    "cumulativeTotalFundsRequestedPersonnel": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Total Salary, Wages and Fringe Benefits (A + B)",
+      "readOnly": true
+    },
+    "cumulativeTotalFundsRequestedSeniorKeyPerson": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Section A, Senior/Key Person",
+      "readOnly": true
+    },
+    "cumulativeTotalFundsRequestedTraineeCosts": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Section E, Participant/Trainee Support Costs",
+      "readOnly": true
+    },
+    "cumulativeTotalFundsRequestedTravel": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "Section D, Travel",
+      "readOnly": true
+    },
+    "cumulativeTotalNoOtherPersonnel": {
+      "type": "integer",
+      "minimum": -2147483648,
+      "maximum": 2147483647,
+      "title": "Total Number Other Personnel",
+      "readOnly": true
+    },
+    "cumulativeTraineeStipends": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "2. Stipends",
+      "readOnly": true
+    },
+    "cumulativeTraineeSubsistence": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "4. Subsistence",
+      "readOnly": true
+    },
+    "cumulativeTraineeTravel": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "3. Travel",
+      "readOnly": true
+    },
+    "cumulativeTraineeTuitionFeesHealthInsurance": {
+      "$ref": "#/$defs/ResearchBudgetDecimal",
+      "title": "1. Tuition/Fees/Health Insurance",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "cumulativeTotalCostsFee",
+    "cumulativeTotalFundsRequestedDirectCosts",
+    "cumulativeTotalFundsRequestedDirectIndirectCosts",
+    "cumulativeTotalFundsRequestedPersonnel",
+    "cumulativeTotalFundsRequestedSeniorKeyPerson"
+  ],
+  "description": "Cumulative totals across all research budget periods.",
+  "$defs": {
+    "ResearchBudgetDecimal": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^-?(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    }
+  }
+}
