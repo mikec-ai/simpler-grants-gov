@@ -504,6 +504,32 @@ FORM_XML_TRANSFORM_RULES = {
 - **Multiple attachments** (`type: "multiple"`): Used by Project Narrative, Budget Narrative, and Other Narrative Attachments
 - **Single attachment** (`type: "single"`): Used by Project Abstract with wrapper element `ProjectAbstractAddAttachment`. Generates a simple structure where attachment metadata (FileName, MimeType, etc.) is placed directly within the specified XML element.
 - **Single attachment with nested wrapper** (`type: "single_with_wrapper"`): Generates a nested structure where each attachment slot (e.g., ATT1-ATT15) contains an additional File wrapper element (e.g., `<ATT1><ATT1File>...</ATT1File></ATT1>`) before the attachment metadata.
+- **Attachments inside nested objects or arrays**: Use an ordinary field rule with `{"target": "AttachedKeyPersons", "type": "attachment"}`. The transformer resolves the UUID through the request's attachment mapping at any depth. Portable profiles declare the `FileName`, `MimeType`, `FileLocation`, and `HashValue` child targets and namespaces; the adapter projects that data mechanically. Root-level `attachment_fields` remains supported for existing forms.
+
+### Arrays of imported form documents
+
+The portable form-spec profile can wrap each array item as a complete document from an
+imported XSD. The declaration stays data, including the wrapper and namespace differences:
+
+```json
+{
+  "budgetAttachments": {
+    "element": "BudgetAttachments",
+    "kind": "array",
+    "itemElement": "RR_Budget_3_0",
+    "itemNamespace": "RR_Budget_3_0",
+    "itemAttributes": {"RR_Budget_3_0:FormVersion": "3.0"},
+    "items": {"fields": {}}
+  }
+}
+```
+
+The form-spec adapter translates these language-neutral keys to `item_wrapper`,
+`item_namespace`, and `item_attributes` for the existing runtime. Unqualified descendants
+inherit the item wrapper's namespace. The R&R Budget, 10-year Budget, and three Subaward
+Budget profiles therefore share one canonical payload mapping and differ only in declarative
+root/wrapper namespace and XSD metadata. The XML engine and adapter contain no knowledge of
+five-year versus ten-year forms.
 
 ### Example: Supplementary Cover Sheet for NEH Grant Programs
 

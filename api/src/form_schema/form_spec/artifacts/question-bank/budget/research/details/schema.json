@@ -274,7 +274,7 @@
     "budgetYear",
     "budgetSummary"
   ],
-  "description": "A complete Research & Related budget that can stand alone or belong to a subaward collection.",
+  "description": "A complete five-period Research & Related budget.",
   "title": "Research & Related Budget",
   "$defs": {
     "ResearchBudgetType": {

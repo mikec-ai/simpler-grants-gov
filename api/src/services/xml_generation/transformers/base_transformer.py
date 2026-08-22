@@ -18,8 +18,13 @@ FIELD_REFERENCE_PATTERN = re.compile(r"^[a-z_][a-z0-9_]*$")
 class RecursiveXMLTransformer:
     """Recursive transformer using patterns from JSON rule processing."""
 
-    def __init__(self, transform_config: dict[str, Any]):
+    def __init__(
+        self,
+        transform_config: dict[str, Any],
+        attachment_mapping: dict[str, Any] | None = None,
+    ):
         self.transform_config = transform_config
+        self.attachment_mapping = attachment_mapping or {}
         self.root_source_data: dict[str, Any] = {}
 
     def transform(self, source_data: dict[str, Any]) -> dict[str, Any]:
@@ -420,8 +425,44 @@ class RecursiveXMLTransformer:
                                 if transformed_child is not None:
                                     item_result[child_transform["target"]] = transformed_child
                     if item_result:
+                        # Optional item metadata lets one declarative array mapping express
+                        # XSD wrappers from an imported namespace (for example, a subaward
+                        # container holding complete R&R Budget documents). The XML writer
+                        # consumes these metadata keys; payload fields remain ordinary data.
+                        if item_wrapper := transform_rule.get("item_wrapper"):
+                            item_result["__wrapper"] = item_wrapper
+                        if item_namespace := transform_rule.get("item_namespace"):
+                            item_result["__namespace__"] = item_namespace
+                        if item_attributes := transform_rule.get("item_attributes"):
+                            item_result["__attributes"] = item_attributes
                         transformed_items.append(item_result)
             return transformed_items if transformed_items else None
+
+        elif transform_type == "attachment":
+            # Resolve an attachment UUID wherever it occurs in the form data. Existing
+            # attachment_fields configuration remains supported for legacy root-level
+            # mappings; this declarative transform also works inside objects and arrays.
+            uuid_value = str(source_value)
+            attachment_info = self.attachment_mapping.get(uuid_value)
+            if attachment_info is None:
+                raise ValueError(
+                    f"Attachment UUID {uuid_value} for field '{'.'.join(path)}' not found "
+                    f"in attachment mapping. Available UUIDs: {list(self.attachment_mapping.keys())}"
+                )
+
+            attachment_data = attachment_info.to_dict()
+            return {
+                "FileName": attachment_data["FileName"],
+                "MimeType": attachment_data["MimeType"],
+                "FileLocation": "",
+                "__FileLocation__attributes": {
+                    "att:href": attachment_data["FileLocation"]["@href"]
+                },
+                "HashValue": attachment_data["HashValue"]["#text"],
+                "__HashValue__attributes": {
+                    "glob:hashAlgorithm": attachment_data["HashValue"]["@hashAlgorithm"]
+                },
+            }
 
         else:
             # Simple transformation - apply value transformation if specified
