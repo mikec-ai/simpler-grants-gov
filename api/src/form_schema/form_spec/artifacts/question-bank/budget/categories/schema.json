@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/categories/schema.json",
+  "type": "object",
+  "properties": {
+    "personnelAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "fringeBenefitsAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "travelAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "equipmentAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "suppliesAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "contractualAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "constructionAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "otherAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "totalDirectChargeAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "totalIndirectChargeAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "totalAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "programIncomeAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    }
+  },
+  "description": "Funds required for each object class category.",
+  "title": "Budget Categories"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/forecasted-cash-needs/schema.json",
+  "type": "object",
+  "properties": {
+    "firstQuarterAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "secondQuarterAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "thirdQuarterAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "fourthQuarterAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "totalAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    }
+  },
+  "description": "Cash needed by quarter for the first year.",
+  "title": "Forecasted Cash Needs"
+}

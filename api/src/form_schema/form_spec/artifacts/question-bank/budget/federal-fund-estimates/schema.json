@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/federal-fund-estimates/schema.json",
+  "type": "object",
+  "properties": {
+    "grantProgram": {
+      "type": "string",
+      "minLength": 0,
+      "maxLength": 120
+    },
+    "firstYearAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "secondYearAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "thirdYearAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    },
+    "fourthYearAmount": {
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+    }
+  },
+  "description": "Federal funds needed for the balance of the project, by year.",
+  "title": "Federal Fund Estimates"
+}
