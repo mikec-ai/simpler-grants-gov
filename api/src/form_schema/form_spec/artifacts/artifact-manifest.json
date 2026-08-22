@@ -77,6 +77,31 @@
       "size": 263
     },
     {
+      "path": "dist/forms/project-abstract-summary/evidence.json",
+      "sha256": "6f375ab7f9b8514fb7b8454e6038c8591572c87c5a80a1f2059799d2f1844e20",
+      "size": 1423
+    },
+    {
+      "path": "dist/forms/project-abstract-summary/manifest.json",
+      "sha256": "70b40c71ce30572acb5604022fe740ffd0a42e74a650b65f96ec80b8cba64ae4",
+      "size": 619
+    },
+    {
+      "path": "dist/forms/project-abstract-summary/schema.json",
+      "sha256": "aff8c3d21ca798205e25156139bee30ee68adefdfd5c36c688ea17dd104e1541",
+      "size": 1249
+    },
+    {
+      "path": "dist/forms/project-abstract-summary/sgg/rule-schema.json",
+      "sha256": "f12170c71e91d43d1b0fe4e7e6e2cd4acc36608d4bd2d55dbda435f2377be336",
+      "size": 219
+    },
+    {
+      "path": "dist/forms/project-abstract-summary/sgg/ui-schema.json",
+      "sha256": "92f7aa57483e04e5baf99bfd914d334c5ff88d478b34d02b8e60418aaf1d9bc9",
+      "size": 1256
+    },
+    {
       "path": "dist/forms/project-narrative-attachments/evidence.json",
       "sha256": "3c5df3d5b982731921d2948424b4efa175858bdfb46279aef557235c8294d6df",
       "size": 916
@@ -238,8 +263,8 @@
     },
     {
       "path": "dist/forms/sf424-short/schema.json",
-      "sha256": "0c2365ccb485a8d91487eb09fde5d41e581d7eb54430906c26c1d285536ebc44",
-      "size": 9163
+      "sha256": "01be77c8bde02133f86d9b39dffc5b4476a0ccff63004ec243891d330e41ec1e",
+      "size": 9187
     },
     {
       "path": "dist/forms/sf424-short/sgg/rule-schema.json",
@@ -263,8 +288,8 @@
     },
     {
       "path": "dist/forms/sf424/schema.json",
-      "sha256": "36305d22ca65b210215e91e2a2b9d0eb35bb7a1c2f57d7572e03f3691e5e7693",
-      "size": 18456
+      "sha256": "df9bbfc66b2aa58e37ebf83b2b5cb8b9e99a57a2b3a1b7b7af82565a884e539a",
+      "size": 18480
     },
     {
       "path": "dist/forms/sf424/sgg/rule-schema.json",
@@ -557,6 +582,11 @@
       "size": 239
     },
     {
+      "path": "dist/question-bank/project/abstract/schema.json",
+      "sha256": "91be023b8107218fc9ba3050aa836cab470c106c020c6f1947c3957c464cb9b2",
+      "size": 373
+    },
+    {
       "path": "dist/question-bank/project/additional-congressional-districts/schema.json",
       "sha256": "70c1574e6bac0f7489f2fbb6c1cd008840636db0811fef8c8c65307063f9e2f0",
       "size": 268
@@ -593,8 +623,8 @@
     },
     {
       "path": "dist/question-bank/project/title/schema.json",
-      "sha256": "65232f95d14d3fc3253e65836d7636853aed707ae3da1bedc567bfb8748a70e9",
-      "size": 257
+      "sha256": "41109816c99a87b69d400db6e7771a9756f7ceb0a47cec50b409cbe1394625b6",
+      "size": 237
     }
   ],
   "selection": {
@@ -610,13 +640,14 @@
       "rr-budget-10yr",
       "rr-subaward-budget",
       "rr-subaward-budget-30",
-      "rr-subaward-budget-10yr-30"
+      "rr-subaward-budget-10yr-30",
+      "project-abstract-summary"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "6c0235da2eedbaba12dbbce3c1d497a1e917caa1"
+    "revision": "bb4db8f14efae42a96a4abdc39adf8e866bc3e49"
   },
-  "sourceBundleSha256": "386950838de3351b5af73437b19edeb47fd876c444c67fb3f280c8de536c6524"
+  "sourceBundleSha256": "fd215d72a17c5aedad39d0609cc49e81337cd75a1f31e4f49fc243479df62da9"
 }

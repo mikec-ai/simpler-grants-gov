@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project-abstract-summary/schema.json",
+  "type": "object",
+  "properties": {
+    "fundingOpportunityNumber": {
+      "$ref": "../../question-bank/opportunity/number/schema.json",
+      "title": "Funding Opportunity Number"
+    },
+    "assistanceListingNumber": {
+      "$ref": "../../question-bank/opportunity/assistance-listing-number/schema.json",
+      "title": "Assistance Listing Number"
+    },
+    "applicantName": {
+      "$ref": "../../question-bank/primary-org/legal-name/schema.json",
+      "title": "Applicant Name",
+      "description": "This should match the 'Legal Name' field from the SF-424 form"
+    },
+    "projectTitle": {
+      "$ref": "../../question-bank/project/title/schema.json",
+      "title": "Descriptive Title of Applicant's Project",
+      "description": "This should match the 'Project Title' field from the SF-424 form",
+      "maxLength": 250
+    },
+    "projectAbstract": {
+      "$ref": "../../question-bank/project/abstract/schema.json"
+    }
+  },
+  "required": [
+    "fundingOpportunityNumber",
+    "applicantName",
+    "projectTitle",
+    "projectAbstract"
+  ],
+  "description": "Project Abstract Summary, Grants.gov form version 2.0."
+}

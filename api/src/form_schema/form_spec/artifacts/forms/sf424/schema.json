@@ -184,7 +184,8 @@
     "projectTitle": {
       "$ref": "../../question-bank/project/title/schema.json",
       "description": "Enter a brief, descriptive title of the project.",
-      "title": "Project Title"
+      "title": "Project Title",
+      "maxLength": 200
     },
     "additionalProjectTitle": {
       "type": "array",

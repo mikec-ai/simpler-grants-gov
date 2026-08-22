@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project/abstract/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 4000,
+  "description": "Summarize the proposed project in plain language suitable for public release. Do not include\npersonally identifiable, sensitive, or proprietary information.",
+  "title": "Project Abstract"
+}
