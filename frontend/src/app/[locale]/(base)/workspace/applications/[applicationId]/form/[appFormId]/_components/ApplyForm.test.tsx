@@ -266,6 +266,71 @@ describe("ApplyForm", () => {
     expect(screen.getByText("returnToApplication")).toBeInTheDocument();
   });
 
+  it("updates conditional visibility and requiredness from live form data", async () => {
+    const user = userEvent.setup();
+    const conditionalSchema: RJSFSchema = {
+      type: "object",
+      properties: {
+        includeDetails: { type: "boolean", title: "Include details" },
+        details: { type: "string", title: "Details" },
+      },
+    };
+    const conditionalUiSchema: UiSchema = [
+      { type: "field", definition: "/properties/includeDetails" },
+      {
+        type: "section",
+        name: "detailsSection",
+        label: "Details section",
+        conditional: {
+          when: {
+            op: "equals",
+            ref: { scope: "root", pointer: "/includeDetails" },
+            value: true,
+          },
+          then: { visible: true },
+          otherwise: { visible: false },
+        },
+        children: [{ type: "field", definition: "/properties/details" }],
+      },
+    ];
+    render(
+      <ApplyForm
+        applicationId="application-123"
+        formId="conditional-form"
+        formSchema={conditionalSchema}
+        savedFormData={{ includeDetails: false }}
+        uiSchema={conditionalUiSchema}
+        conditionalRequiredRules={[
+          {
+            scope: [],
+            schemaPointer: "#/allOf/0",
+            condition: {
+              properties: { includeDetails: { const: true } },
+              required: ["includeDetails"],
+            },
+            thenRequired: ["details"],
+            elseRequired: [],
+            order: 0,
+          },
+        ]}
+        validationWarnings={null}
+        attachments={[]}
+        applicationStatus="in_progress"
+      />,
+    );
+
+    expect(screen.queryByTestId("details")).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("checkbox", { name: "Include details" }));
+
+    await waitFor(() => expect(screen.getByTestId("details")).toBeVisible());
+    expect(screen.getByTestId("details")).toBeRequired();
+    expect(screen.getByText("Details is required")).toBeInTheDocument();
+    expect(screen.getByTestId("InPageNavigation")).toHaveTextContent(
+      "Details section",
+    );
+  });
+
   it("cannot be edited or saved when application is submitted", () => {
     render(
       <ApplyForm
