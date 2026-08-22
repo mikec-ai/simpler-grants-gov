@@ -58,6 +58,7 @@ export type WidgetTypes =
   | "Attachment"
   | "AttachmentArray"
   | "Checkbox"
+  | "EncodedCheckboxGroup"
   | "Text"
   | "TextArea"
   | "Radio"
@@ -170,6 +171,7 @@ export type FieldListWidgetProps = {
   formContext?: {
     rootSchema?: RJSFSchema;
     rootFormData?: unknown;
+    activeConditionalRequiredPaths?: string[];
     widgetSupport?: {
       validationWarnings?:
         FormattedFormValidationWarning[] | FormValidationWarning[];
@@ -432,6 +434,7 @@ export interface UswdsWidgetProps<
   formContext?: {
     rootSchema?: RJSFSchema;
     rootFormData?: unknown;
+    activeConditionalRequiredPaths?: string[];
     widgetSupport?: {
       validationWarnings?:
         FormattedFormValidationWarning[] | FormValidationWarning[];

@@ -4,6 +4,7 @@ import type {
   ConditionalUiValueRef,
   ResolvedConditionalUiState,
 } from "src/types/applyForm/conditionalUiTypes";
+import type { UiSchema } from "src/types/applyForm/types";
 import { getByPointer } from "src/utils/formData/formDataUtils";
 
 type EvaluationContext = {
@@ -91,3 +92,30 @@ export const resolveConditionalUiState = (
     : conditional.otherwise;
   return { ...DEFAULT_STATE, ...branch };
 };
+
+export const hasConditionalUi = (uiSchema: UiSchema): boolean =>
+  uiSchema.some(
+    (node) =>
+      Boolean(node.conditional) ||
+      ("children" in node &&
+        Array.isArray(node.children) &&
+        hasConditionalUi(node.children as UiSchema)),
+  );
+
+export const filterVisibleUiSchema = (
+  uiSchema: UiSchema,
+  rootData: object,
+): UiSchema =>
+  uiSchema.reduce<UiSchema>((visibleNodes, node) => {
+    const state = resolveConditionalUiState(node.conditional, { rootData });
+    if (!state.visible) return visibleNodes;
+    if (node.type === "section") {
+      visibleNodes.push({
+        ...node,
+        children: filterVisibleUiSchema(node.children, rootData),
+      });
+      return visibleNodes;
+    }
+    visibleNodes.push(node);
+    return visibleNodes;
+  }, []);

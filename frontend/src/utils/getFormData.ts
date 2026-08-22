@@ -15,6 +15,10 @@ import { Attachment } from "src/types/attachmentTypes";
 import { FormDetail } from "src/types/formResponseTypes";
 
 import { processFormSchema } from "./applyForm/applyFormUtils";
+import {
+  ConditionalRequiredRule,
+  extractConditionalRequiredRules,
+} from "./applyForm/conditionalRequiredRules";
 import { validateUiSchema } from "./applyForm/validateUiSchema";
 
 // either return error or data, not both
@@ -29,6 +33,7 @@ type FormDataResult =
         formName: string;
         formSchema: RJSFSchema;
         formUiSchema: UiSchema;
+        conditionalRequiredRules: ConditionalRequiredRule[];
         formValidationWarnings: FormValidationWarning[] | null;
         applicationAttachments: Attachment[];
         createdAt?: string;
@@ -167,6 +172,8 @@ export default async function getFormData({
         formName,
         formSchema: result.formSchema,
         formUiSchema,
+        conditionalRequiredRules:
+          extractConditionalRequiredRules(form_json_schema),
         formValidationWarnings,
         createdAt: applicationFormData.created_at,
         updatedAt: applicationFormData.updated_at,
