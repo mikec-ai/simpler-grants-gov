@@ -153,8 +153,31 @@ def project_ui_schema(ui_schema: Any, projection: Projection) -> Any:
                 out[key] = projection.rename(str(value), str(value))
         elif key == "children":
             out[key] = [project_ui_schema(child, projection) for child in value]
+        elif key == "conditional":
+            out[key] = _project_ui_conditional(value, projection)
         else:
             out[key] = value
+    return out
+
+
+def _project_ui_conditional(conditional: Any, projection: Projection) -> Any:
+    """Project data pointers inside the portable conditional-UI contract.
+
+    Conditional expressions are UI behavior, but their ``ref.pointer`` values address
+    form data. They therefore cross the same canonical-to-legacy naming boundary as field
+    definitions. All operators and outcomes remain consumer-neutral data.
+    """
+    if isinstance(conditional, list):
+        return [_project_ui_conditional(value, projection) for value in conditional]
+    if not isinstance(conditional, dict):
+        return conditional
+
+    out: dict[str, Any] = {}
+    for key, value in conditional.items():
+        if key == "pointer" and isinstance(value, str):
+            out[key] = _project_pointer(value, projection)
+        else:
+            out[key] = _project_ui_conditional(value, projection)
     return out
 
 

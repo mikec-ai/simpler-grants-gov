@@ -1,0 +1,705 @@
+[
+  {
+    "type": "section",
+    "name": "submissionType",
+    "label": "1. Type of Submission",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/submissionTypeCode"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "submittedDate",
+    "label": "2. Date Submitted",
+    "children": [
+      {
+        "type": "null",
+        "definition": "/properties/submittedDate"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "applicantIdentifier",
+    "label": "3. Applicant Identifier",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/applicantId"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "stateUse",
+    "label": "4. Federal and State Identifiers",
+    "children": [
+      {
+        "type": "null",
+        "definition": "/properties/stateReceivedDate"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/stateId"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/federalId"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/agencyRoutingNumber"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/grantsGovTrackingId",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/submissionTypeCode"
+            },
+            "value": "Change/Corrected Application"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "applicantInformation",
+    "label": "5. Applicant Information",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/organizationInfo/properties/organizationName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/organizationInfo/properties/address/properties/street1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/organizationInfo/properties/address/properties/street2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/organizationInfo/properties/address/properties/city"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/organizationInfo/properties/address/properties/county"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/organizationInfo/properties/address/properties/state"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/organizationInfo/properties/address/properties/province"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/organizationInfo/properties/address/properties/country"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/organizationInfo/properties/address/properties/zipCode"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/organizationInfo/properties/department"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/organizationInfo/properties/division"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/organizationInfo/properties/samUei"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/name/properties/prefix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/name/properties/firstName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/name/properties/middleName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/name/properties/lastName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/name/properties/suffix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/address/properties/street1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/address/properties/street2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/address/properties/city"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/address/properties/county"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/address/properties/state"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/address/properties/province"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/address/properties/country"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/address/properties/zipCode"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/title"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/phone"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/fax"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantInfo/properties/contactPersonInfo/properties/email"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "employerId",
+    "label": "6. Employer Identification Number",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/employerId"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "applicantType",
+    "label": "7. Type of Applicant",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/applicantType/properties/applicantTypeCode"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantType/properties/applicantTypeCodeOtherExplanation",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/applicantType/applicantTypeCode"
+            },
+            "value": "X: Other (specify)"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantType/properties/smallBusinessOrganizationType/properties/sociallyEconomicallyDisadvantaged",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/applicantType/applicantTypeCode"
+            },
+            "value": "R: Small Business"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantType/properties/smallBusinessOrganizationType/properties/womenOwned",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/applicantType/applicantTypeCode"
+            },
+            "value": "R: Small Business"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "applicationType",
+    "label": "8. Type of Application",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/applicationType/properties/applicationTypeCode"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicationType/properties/isOtherAgencySubmission"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicationType/properties/otherAgencySubmissionExplanation",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/applicationType/isOtherAgencySubmission"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicationType/properties/revisionCode",
+        "widget": "EncodedCheckboxGroup",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/applicationType/applicationTypeCode"
+            },
+            "value": "Revision"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicationType/properties/revisionCodeOtherExplanation",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/applicationType/revisionCode"
+            },
+            "value": "E"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "federalAgency",
+    "label": "9. Name of Federal Agency",
+    "children": [
+      {
+        "type": "null",
+        "definition": "/properties/federalAgencyName"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "assistanceListing",
+    "label": "10. Assistance Listing Number and Title",
+    "children": [
+      {
+        "type": "null",
+        "definition": "/properties/assistanceListingNumber"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/activityTitle"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "projectTitle",
+    "label": "11. Descriptive Title of Applicant's Project",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/projectTitle"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "projectPeriod",
+    "label": "12. Proposed Project Period",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/proposedProjectPeriod/properties/proposedStartDate"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/proposedProjectPeriod/properties/proposedEndDate"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "congressionalDistrict",
+    "label": "13. Congressional District of Applicant",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/applicantCongressionalDistrict"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "principalInvestigator",
+    "label": "14. Project Director / Principal Investigator",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/name/properties/prefix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/name/properties/firstName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/name/properties/middleName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/name/properties/lastName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/name/properties/suffix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/title"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/organizationName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/department"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/division"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/address/properties/street1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/address/properties/street2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/address/properties/city"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/address/properties/county"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/address/properties/state"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/address/properties/province"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/address/properties/country"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/address/properties/zipCode"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/phone"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/fax"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/principalInvestigator/properties/email"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "estimatedFunding",
+    "label": "15. Estimated Project Funding",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/estimatedProjectFunding/properties/totalEstimatedAmount"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/estimatedProjectFunding/properties/totalNonFederalRequested"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/estimatedProjectFunding/properties/totalFederalNonFederalRequested"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/estimatedProjectFunding/properties/estimatedProgramIncome"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "stateReview",
+    "label": "16. State Review",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/stateReview/properties/stateReviewCodeType"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/stateReview/properties/stateReviewDate",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/stateReview/stateReviewCodeType"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "certification",
+    "label": "17. Certification",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/trustAgree"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "lobbyingDisclosure",
+    "label": "18. Lobbying Disclosure",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/sflllAttachment",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "authorizedRepresentative",
+    "label": "19. Authorized Representative",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/name/properties/prefix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/name/properties/firstName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/name/properties/middleName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/name/properties/lastName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/name/properties/suffix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/title"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/organizationName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/department"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/division"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/address/properties/street1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/address/properties/street2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/address/properties/city"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/address/properties/county"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/address/properties/state"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/address/properties/province"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/address/properties/country"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/address/properties/zipCode"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/phone"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/fax"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/email"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/aorSignature"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/aorSignedDate"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "preApplication",
+    "label": "20. Pre-application",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/preApplicationAttachment",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "coverLetter",
+    "label": "21. Cover Letter",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/coverLetterAttachment",
+        "widget": "Attachment"
+      }
+    ]
+  }
+]
