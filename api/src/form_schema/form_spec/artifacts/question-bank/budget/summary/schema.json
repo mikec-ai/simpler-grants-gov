@@ -4,19 +4,29 @@
   "type": "object",
   "properties": {
     "federalEstimatedUnobligatedAmount": {
-      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json",
+      "title": "Estimated unobligated federal funds",
+      "description": "Federal funds authorized under an award that have not yet been obligated. Enter an amount only when the application instructions require it."
     },
     "nonFederalEstimatedUnobligatedAmount": {
-      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json",
+      "title": "Estimated unobligated non-federal funds",
+      "description": "Non-federal funds required under an award that have not yet been obligated or used. Enter an amount only when the application instructions require it."
     },
     "federalNewOrRevisedAmount": {
-      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json",
+      "title": "New or revised federal budget",
+      "description": "Enter federal funds needed for the upcoming period. For a supplemental application, enter the additional amount requested. For a change, enter the increase or decrease."
     },
     "nonFederalNewOrRevisedAmount": {
-      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json",
+      "title": "New or revised non-federal budget",
+      "description": "Enter the non-federal share for the upcoming period. For a supplemental application, enter the additional contribution. For a change, enter the increase or decrease."
     },
     "totalAmount": {
-      "$ref": "../../../question-bank/generics/monetary-amount/schema.json"
+      "$ref": "../../../question-bank/generics/monetary-amount/schema.json",
+      "title": "Total",
+      "description": "Enter the total budgeted amount for this row. This value is not calculated automatically."
     }
   },
   "description": "Estimated unobligated and new or revised funds, federal and non-federal.",

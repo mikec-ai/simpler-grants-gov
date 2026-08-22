@@ -10,6 +10,8 @@ type DynamicFieldLabelProps = {
   title: string | undefined;
   required?: boolean;
   description?: string;
+  descriptionId?: string;
+  visuallyHidden?: boolean;
   labelType?: DynamicLabelType;
 };
 
@@ -18,6 +20,8 @@ export const DynamicFieldLabel = ({
   title,
   required = false,
   description,
+  descriptionId,
+  visuallyHidden = false,
   labelType = "default",
 }: DynamicFieldLabelProps) => {
   if (!title) return null;
@@ -34,7 +38,11 @@ export const DynamicFieldLabel = ({
   switch (labelType) {
     case "hide-helper-text":
       return (
-        <Label htmlFor={idFor} id={`label-for-${idFor}`}>
+        <Label
+          htmlFor={idFor}
+          id={`label-for-${idFor}`}
+          className={visuallyHidden ? "usa-sr-only" : undefined}
+        >
           {labelContent}
         </Label>
       );
@@ -62,11 +70,22 @@ export const DynamicFieldLabel = ({
     default:
       return (
         <>
-          <Label htmlFor={idFor} id={`label-for-${idFor}`}>
+          <Label
+            htmlFor={idFor}
+            id={`label-for-${idFor}`}
+            className={visuallyHidden ? "usa-sr-only" : undefined}
+          >
             {labelContent}
           </Label>
           {description && (
-            <p className="text-base-dark margin-top-0">{description}</p>
+            <p
+              id={descriptionId}
+              className={
+                visuallyHidden ? "usa-sr-only" : "text-base-dark margin-top-0"
+              }
+            >
+              {description}
+            </p>
           )}
         </>
       );

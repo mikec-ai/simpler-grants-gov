@@ -13,7 +13,8 @@
           "/properties/totalBudgetSummary"
         ]
       }
-    ]
+    ],
+    "description": "Use one row for each grant program, function, or activity. At least one row is required.\nFor new applications, leave Columns C and D blank and enter the federal and non-federal\namounts needed in Columns E and F. For continuing applications, complete Columns C and D\nonly when directed by the grantor agency. For supplemental grants and changes, enter the\nincrease or decrease in Columns E and F, then enter the new total authorized budget in\nColumn G. Column G is entered manually and may not equal the sum of Columns C through F."
   },
   {
     "type": "section",
