@@ -69,6 +69,7 @@ class Projection:
     """
 
     renames: dict[str, str] = dataclasses.field(default_factory=dict)
+    annotations: dict[str, dict[str, Any]] = dataclasses.field(default_factory=dict)
     bank_uri: str = ""
     #: canonical block ref (a relative artifact path) -> block id, e.g. `poc/details`
     block_ids: dict[str, str] = dataclasses.field(default_factory=dict)
@@ -294,12 +295,19 @@ def _project_node(
         if key == "$ref":
             out[key] = _project_ref(value, projection, local_prefix)
         elif key in _PROPERTY_MAPS:
-            out[key] = {
-                projection.rename(_join(path, name), name): _project_node(
-                    sub, projection, _join(path, name), local_prefix, in_condition
-                )
-                for name, sub in value.items()
-            }
+            projected_properties: dict[str, Any] = {}
+            for name, sub in value.items():
+                here = _join(path, name)
+                projected = _project_node(sub, projection, here, local_prefix, in_condition)
+                annotation = None
+                if not in_condition:
+                    annotation = projection.annotations.get(here) or projection.annotations.get(
+                        name
+                    )
+                if annotation:
+                    projected.update(annotation)
+                projected_properties[projection.rename(here, name)] = projected
+            out[key] = projected_properties
         elif key == "required":
             out[key] = [projection.rename(_join(path, name), name) for name in value]
         elif key == "$defs":

@@ -1,0 +1,355 @@
+[
+  {
+    "type": "section",
+    "name": "federalAgency",
+    "label": "1. Name of Federal Agency",
+    "children": [
+      {
+        "type": "null",
+        "definition": "/properties/agencyName"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "assistanceListing",
+    "label": "2. Assistance Listing Number and Title",
+    "children": [
+      {
+        "type": "null",
+        "definition": "/properties/assistanceListingNumber"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/assistanceListingProgramTitle"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "dateReceived",
+    "label": "3. Date Received",
+    "children": [
+      {
+        "type": "null",
+        "definition": "/properties/dateReceived"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "fundingOpportunity",
+    "label": "4. Funding Opportunity Number and Title",
+    "children": [
+      {
+        "type": "null",
+        "definition": "/properties/fundingOpportunityNumber"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/fundingOpportunityTitle"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "applicantInformation",
+    "label": "5. Applicant Information",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/organizationName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicant/properties/street1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicant/properties/street2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicant/properties/city"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicant/properties/county"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicant/properties/state"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicant/properties/province"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicant/properties/country"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicant/properties/zipCode"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantWebAddress"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantTypeCode",
+        "widget": "MultiSelect"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicantTypeOtherSpecify"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/employerTaxpayerIdentificationNumber"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/samUei"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/congressionalDistrictApplicant"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "projectInformation",
+    "label": "6. Project Information",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/projectTitle"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDescription"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectStartDate"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectEndDate"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "projectDirector",
+    "label": "7. Project Director",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/name/properties/prefix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/name/properties/firstName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/name/properties/middleName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/name/properties/lastName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/name/properties/suffix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/title"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/email"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/phone"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/fax"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/address/properties/street1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/address/properties/street2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/address/properties/city"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/address/properties/county"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/address/properties/state"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/address/properties/province"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/address/properties/country"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/address/properties/zipCode"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "contactPerson",
+    "label": "8. Primary Contact/Grants Administrator",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/sameAsProjectDirector"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/name/properties/prefix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/name/properties/firstName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/name/properties/middleName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/name/properties/lastName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/name/properties/suffix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/title"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/email"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/phone"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/fax"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/address/properties/street1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/address/properties/street2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/address/properties/city"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/address/properties/county"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/address/properties/state"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/address/properties/province"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/address/properties/country"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/contactPerson/properties/address/properties/zipCode"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "authorizedRepresentative",
+    "label": "9. Authorized Representative",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/applicationCertification",
+        "printDescription": true
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/prefix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/firstName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/middleName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/lastName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentative/properties/suffix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentativeTitle"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentativeEmail"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentativePhoneNumber"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/authorizedRepresentativeFax"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/aorSignature"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/authorizedRepresentativeDateSigned"
+      }
+    ]
+  }
+]

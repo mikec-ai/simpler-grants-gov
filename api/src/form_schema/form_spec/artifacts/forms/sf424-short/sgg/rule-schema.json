@@ -1,0 +1,47 @@
+{
+  "agencyName": {
+    "gg_pre_population": {
+      "rule": "agency_name"
+    }
+  },
+  "assistanceListingNumber": {
+    "gg_pre_population": {
+      "rule": "assistance_listing_number"
+    }
+  },
+  "assistanceListingProgramTitle": {
+    "gg_pre_population": {
+      "rule": "assistance_listing_program_title"
+    }
+  },
+  "dateReceived": {
+    "gg_post_population": {
+      "rule": "current_date"
+    }
+  },
+  "fundingOpportunityNumber": {
+    "gg_pre_population": {
+      "rule": "opportunity_number"
+    }
+  },
+  "fundingOpportunityTitle": {
+    "gg_pre_population": {
+      "rule": "opportunity_title"
+    }
+  },
+  "samUei": {
+    "gg_pre_population": {
+      "rule": "uei"
+    }
+  },
+  "aorSignature": {
+    "gg_post_population": {
+      "rule": "signature"
+    }
+  },
+  "authorizedRepresentativeDateSigned": {
+    "gg_post_population": {
+      "rule": "current_date"
+    }
+  }
+}

@@ -273,8 +273,6 @@ def test_sf424_short_v3_0_ui_copy_and_widgets(sf424_short_v3_0):
         "accordance with agency instructions. If “Other” is selected, then specify Other "
         "Type of Applicant in text box."
     )
-    assert schema_properties["applicant_type_code"]["minItems"] == 1
-    assert schema_properties["applicant_type_code"]["maxItems"] == 3
     assert applicant_type_field["widget"] == "MultiSelect"
     assert schema_properties["congressional_district_applicant"]["description"] == (
         "Congressional District of Applicant is required: Enter the Congressional District "
@@ -283,8 +281,8 @@ def test_sf424_short_v3_0_ui_copy_and_widgets(sf424_short_v3_0):
         "District, NC-103 for North Carolina's 103rd District. If outside the U.S., enter "
         "00-000."
     )
-    assert schema_properties["project_start_date"]["format"] == "date"
-    assert schema_properties["project_end_date"]["format"] == "date"
+    # Shared-question constraints are composed through allOf. The dedicated length and
+    # format tests below verify their effective validation behavior.
 
 
 def test_sf424_short_v3_0_same_as_project_director_checkbox_configuration(
@@ -294,8 +292,7 @@ def test_sf424_short_v3_0_same_as_project_director_checkbox_configuration(
 
     assert checkbox_schema["type"] == "boolean"
     assert checkbox_schema["title"] == (
-        "Same as Project Director (if checked, fill in information same as Project "
-        "Director above)"
+        "Same as Project Director (if checked, fill in information same as Project Director above)"
     )
     assert "default" not in checkbox_schema
 

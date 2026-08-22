@@ -27,6 +27,31 @@
       "size": 3276
     },
     {
+      "path": "dist/forms/sf424-short/evidence.json",
+      "sha256": "bd0a25d570ff07b710996bc45b474ea2c189fdabbc51e21e5ce3514efae52d23",
+      "size": 847
+    },
+    {
+      "path": "dist/forms/sf424-short/manifest.json",
+      "sha256": "390f3c988c2e579524f0e329bb8fe89a63739474bfbeb446e459833da37d351d",
+      "size": 632
+    },
+    {
+      "path": "dist/forms/sf424-short/schema.json",
+      "sha256": "dd8f4cd84d3390670841838530232dfb07b8775c6923f5aa0deda90b03a47022",
+      "size": 8947
+    },
+    {
+      "path": "dist/forms/sf424-short/sgg/rule-schema.json",
+      "sha256": "2fd6946452a1ceb4afcdba32a8b77273fd3317bf8e27f51f1aeab88bb2e507f1",
+      "size": 885
+    },
+    {
+      "path": "dist/forms/sf424-short/sgg/ui-schema.json",
+      "sha256": "067ad4ad04a716b0455654c0d0a9c1b29ff3827e5d29c7799b852ecb1f5ce300",
+      "size": 9484
+    },
+    {
       "path": "dist/forms/sf424/evidence.json",
       "sha256": "843ce7d63cba05bf581c29e4763c5fefa356d430b45d7515bd0c6e55be44a402",
       "size": 824
@@ -281,7 +306,8 @@
     "forms": [
       "key-contacts",
       "sf424",
-      "sf424a"
+      "sf424a",
+      "sf424-short"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
