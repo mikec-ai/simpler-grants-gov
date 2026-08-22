@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rr-subaward-budget-10yr-30/schema.json",
+  "type": "object",
+  "properties": {
+    "budgetAttachments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ResearchBudget10YrDetails",
+        "properties": {
+          "budgetYear": {
+            "items": {
+              "properties": {
+                "directCosts": {
+                  "readOnly": true
+                },
+                "equipment": {
+                  "properties": {
+                    "totalFund": {
+                      "readOnly": true
+                    }
+                  }
+                },
+                "indirectCosts": {
+                  "properties": {
+                    "totalIndirectCosts": {
+                      "readOnly": true
+                    }
+                  }
+                },
+                "keyPersons": {
+                  "properties": {
+                    "keyPerson": {
+                      "items": {
+                        "properties": {
+                          "fundsRequested": {
+                            "readOnly": true
+                          }
+                        }
+                      }
+                    },
+                    "totalFundForKeyPersons": {
+                      "readOnly": true
+                    }
+                  }
+                },
+                "otherDirectCosts": {
+                  "properties": {
+                    "totalOtherDirectCost": {
+                      "readOnly": true
+                    }
+                  }
+                },
+                "otherPersonnel": {
+                  "properties": {
+                    "graduateStudents": {
+                      "properties": {
+                        "fundsRequested": {
+                          "readOnly": true
+                        }
+                      }
+                    },
+                    "other": {
+                      "items": {
+                        "properties": {
+                          "fundsRequested": {
+                            "readOnly": true
+                          }
+                        }
+                      }
+                    },
+                    "otherPersonnelTotalNumber": {
+                      "readOnly": true
+                    },
+                    "postDocAssociates": {
+                      "properties": {
+                        "fundsRequested": {
+                          "readOnly": true
+                        }
+                      }
+                    },
+                    "secretarialClerical": {
+                      "properties": {
+                        "fundsRequested": {
+                          "readOnly": true
+                        }
+                      }
+                    },
+                    "totalOtherPersonnelFund": {
+                      "readOnly": true
+                    },
+                    "undergraduateStudents": {
+                      "properties": {
+                        "fundsRequested": {
+                          "readOnly": true
+                        }
+                      }
+                    }
+                  }
+                },
+                "participantTraineeSupportCosts": {
+                  "properties": {
+                    "totalCost": {
+                      "readOnly": true
+                    }
+                  }
+                },
+                "totalCompensation": {
+                  "readOnly": true
+                },
+                "totalCosts": {
+                  "readOnly": true
+                },
+                "totalCostsFee": {
+                  "readOnly": true
+                },
+                "travel": {
+                  "properties": {
+                    "totalTravelCost": {
+                      "readOnly": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "maxItems": 30,
+      "description": "Add up to thirty structured ten-year R&R budgets for subaward organizations.",
+      "title": "Subaward Budgets"
+    }
+  },
+  "description": "R&R Subaward Budget Attachment(s) Form 10 YR 30 ATT, Grants.gov form version 3.0.\nThe source wrapper's ATT1-ATT30 strings are technical capture slots. The portable\ndeclaration models the structured ten-period subaward budgets carried by those slots.",
+  "$defs": {
+    "ResearchBudget10YrDetails": {
+      "type": "object",
+      "properties": {
+        "budgetYear": {
+          "type": "array",
+          "items": {
+            "$ref": "../../question-bank/budget/research/period/schema.json"
+          },
+          "minItems": 1,
+          "maxItems": 10,
+          "description": "Override only the permitted period count; inherited questions and rules remain shared.",
+          "title": "Budget Year"
+        }
+      },
+      "required": [
+        "budgetYear"
+      ],
+      "allOf": [
+        {
+          "$ref": "../../question-bank/budget/research/details/schema.json"
+        }
+      ],
+      "description": "A ten-period profile of the shared Research & Related budget details question."
+    }
+  }
+}
