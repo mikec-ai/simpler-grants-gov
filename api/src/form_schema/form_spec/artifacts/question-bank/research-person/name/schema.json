@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-person/name/schema.json",
+  "type": "object",
+  "properties": {
+    "prefix": {
+      "$ref": "#/$defs/ResearchPersonPrefix",
+      "title": "Prefix"
+    },
+    "firstName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 35,
+      "title": "First Name"
+    },
+    "middleName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 25,
+      "title": "Middle Name"
+    },
+    "lastName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "title": "Last Name"
+    },
+    "suffix": {
+      "$ref": "#/$defs/ResearchPersonSuffix",
+      "title": "Suffix"
+    }
+  },
+  "required": [
+    "firstName",
+    "lastName"
+  ],
+  "description": "Enter the research person's name as it appears in official records.",
+  "title": "Name",
+  "$defs": {
+    "ResearchPersonPrefix": {
+      "type": "string",
+      "enum": [
+        "Mr.",
+        "Mrs.",
+        "Miss",
+        "Ms.",
+        "Dr.",
+        "Rev.",
+        "Prof."
+      ]
+    },
+    "ResearchPersonSuffix": {
+      "type": "string",
+      "enum": [
+        "Jr.",
+        "Sr.",
+        "M.D.",
+        "Ph.D",
+        "JD"
+      ]
+    }
+  }
+}
