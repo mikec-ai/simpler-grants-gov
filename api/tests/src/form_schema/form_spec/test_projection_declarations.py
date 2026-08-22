@@ -44,6 +44,23 @@ def test_schema_annotation_is_declared_with_a_reason(tmp_path, monkeypatch):
     assert loader._projection_for("example").annotations == {"submittedDate": {"readOnly": True}}
 
 
+def test_ui_identifier_is_declared_with_a_reason(tmp_path, monkeypatch):
+    monkeypatch.setattr(loader, "PROJECTIONS", tmp_path)
+    _write(
+        tmp_path,
+        {
+            "identifiers": {
+                "legacySection": {
+                    "to": "legacySection",
+                    "why": "The existing component consumes this identifier.",
+                }
+            }
+        },
+    )
+
+    assert loader._projection_for("example").identifiers == {"legacySection": "legacySection"}
+
+
 @pytest.mark.parametrize(
     "declaration",
     [

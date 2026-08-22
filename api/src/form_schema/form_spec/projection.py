@@ -70,6 +70,7 @@ class Projection:
 
     renames: dict[str, str] = dataclasses.field(default_factory=dict)
     annotations: dict[str, dict[str, Any]] = dataclasses.field(default_factory=dict)
+    identifiers: dict[str, str] = dataclasses.field(default_factory=dict)
     bank_uri: str = ""
     #: canonical block ref (a relative artifact path) -> block id, e.g. `poc/details`
     block_ids: dict[str, str] = dataclasses.field(default_factory=dict)
@@ -147,7 +148,7 @@ def project_ui_schema(ui_schema: Any, projection: Projection) -> Any:
             if kind == "multiField":
                 out[key] = value
             elif kind == "section":
-                out[key] = _project_identifier(str(value))
+                out[key] = _project_identifier(str(value), projection)
             else:
                 out[key] = projection.rename(str(value), str(value))
         elif key == "children":
@@ -157,8 +158,10 @@ def project_ui_schema(ui_schema: Any, projection: Projection) -> Any:
     return out
 
 
-def _project_identifier(name: str) -> str:
+def _project_identifier(name: str, projection: Projection) -> str:
     """A UI identifier: projected when it is lowerCamel, left alone otherwise."""
+    if name in projection.identifiers:
+        return projection.identifiers[name]
     return snake_case(name) if name[:1].islower() else name
 
 

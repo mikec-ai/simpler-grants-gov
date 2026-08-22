@@ -47,6 +47,7 @@ def _projection_for(form_id: str) -> Projection:
     overrides_path = PROJECTIONS / f"{form_id}.json"
     renames: dict[str, str] = {}
     annotations: dict[str, dict[str, Any]] = {}
+    identifiers: dict[str, str] = {}
     if overrides_path.is_file():
         overrides = json.loads(overrides_path.read_text())
         declarations = overrides.get("renames", {})
@@ -68,9 +69,18 @@ def _projection_for(form_id: str) -> Projection:
             if not isinstance(reason, str) or not reason:
                 raise ValueError(f"schema annotation {source!r} has no reason")
             annotations[source] = values
+        for source, declaration in overrides.get("identifiers", {}).items():
+            target = declaration.get("to") if isinstance(declaration, dict) else None
+            reason = declaration.get("why") if isinstance(declaration, dict) else None
+            if not isinstance(target, str) or not target:
+                raise ValueError(f"identifier projection {source!r} has no target")
+            if not isinstance(reason, str) or not reason:
+                raise ValueError(f"identifier projection {source!r} has no reason")
+            identifiers[source] = target
     return Projection(
         renames=renames,
         annotations=annotations,
+        identifiers=identifiers,
         bank_uri=bank.bank_uri,
         block_ids=bank.block_ids,
         blocks=bank.blocks,

@@ -1,0 +1,8 @@
+{
+  "identifiers": {
+    "otherNarrativeFiles": {
+      "to": "otherNarrativeFiles",
+      "why": "The existing Simpler section component uses this lower-camel UI identifier."
+    }
+  }
+}

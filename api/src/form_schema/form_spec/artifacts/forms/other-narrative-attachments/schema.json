@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "other-narrative-attachments/schema.json",
+  "type": "object",
+  "properties": {
+    "attachments": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/generics/attachment/schema.json"
+      },
+      "minItems": 1,
+      "maxItems": 100,
+      "description": "At least one file must be attached",
+      "title": "Other Narrative Files"
+    }
+  },
+  "required": [
+    "attachments"
+  ],
+  "description": "Other Narrative Attachments (Grants.gov FID 542, v1.2)."
+}

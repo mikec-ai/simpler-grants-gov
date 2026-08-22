@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget-narrative-attachments/schema.json",
+  "type": "object",
+  "properties": {
+    "attachments": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/generics/attachment/schema.json"
+      },
+      "minItems": 1,
+      "maxItems": 100,
+      "description": "At least one file must be attached",
+      "title": "Budget Narrative Files"
+    }
+  },
+  "required": [
+    "attachments"
+  ],
+  "description": "Budget Narrative Attachment Form (Grants.gov FID 543, v1.2)."
+}
