@@ -27,6 +27,16 @@ EXPECTED_RUNTIME_IDENTITIES = {
         "formType": "KEY_CONTACTS",
         "sggVersion": "1.0",
     },
+    "individual-sf424b": {
+        "formId": "c34d48e7-92de-5cc4-8c25-ae347d40a55a",
+        "formType": "SF424B",
+        "sggVersion": "1.0",
+    },
+    "mandatory-sf424b": {
+        "formId": "8842eb9b-5a66-5795-b30a-d0001a4928a4",
+        "formType": "SF424B",
+        "sggVersion": "1.0",
+    },
     "other-narrative-attachments": {
         "formId": "8899954c-2919-4398-96aa-73961179fe16",
         "formType": "OTHER_NARRATIVE_ATTACHMENT",
@@ -110,6 +120,11 @@ EXPECTED_RUNTIME_IDENTITIES = {
     "sf424a": {
         "formId": "08e6603f-d197-4a60-98cd-d49acb1fc1fd",
         "formType": "SF424A",
+        "sggVersion": "1.0",
+    },
+    "sf424b": {
+        "formId": "1d0681f8-26f9-4ff1-a75e-e33477668f73",
+        "formType": "SF424B",
         "sggVersion": "1.0",
     },
     "sflll": {

@@ -19,6 +19,12 @@ elements. The optional producer flag `repeatElementPerItem` instead emits one ou
 per item. The adapter projects that distinction directly; it does not infer cardinality from
 form ids, element names, or namespaces.
 
+Forms may also publish `policy-content.json` and `policy-binding.json`. The former is a
+versioned, source-pinned static policy or assurance bundle; the latter binds it to presentation,
+response ownership, an acceptance event, and release gates. Simpler vendors both for audit and
+inspection, while rendering their producer-generated UI projection. The adapter contains no
+policy text, assurance-item list, or form-specific attestation branch.
+
 The adapter owns only consumer concerns:
 
 - canonical `camelCase` to Simpler's legacy field names;
@@ -30,7 +36,7 @@ The adapter owns only consumer concerns:
 
 Runtime identity and registration are declarative but intentionally separate. The versioned
 SGG target record `runtime-identities.json` preserves one form UUID, `FormType`, and SGG schema
-version for each of the 21 selected portable forms. Those are generated and interpreted by
+version for each of the 25 selected portable forms. Those are generated and interpreted by
 SGG, so they do not appear in the producer's canonical `FormMeta`. `registrations.json` is the
 smaller SGG release opt-in list: its five current records contain only instruction UUIDs, and
 no absent instruction UUID is inferred. The portable form id joins both files to the producer

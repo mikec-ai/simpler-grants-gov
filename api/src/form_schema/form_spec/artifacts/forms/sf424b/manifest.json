@@ -1,0 +1,22 @@
+{
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "id": "sf424b",
+    "legacyFormId": 240,
+    "formName": "Assurances for Non-Construction Programs (SF-424B)",
+    "shortFormName": "SF424B",
+    "formVersion": "1.1",
+    "agencyCode": "SGG",
+    "ombNumber": "4040-0007"
+  },
+  "artifacts": {
+    "schema.json": "generated",
+    "ui.json": "generated",
+    "sgg/ui-schema.json": "generated",
+    "sgg/rule-schema.json": "generated",
+    "policy-content.json": "generated",
+    "policy-binding.json": "generated",
+    "targets/grants-gov-xml.json": "generated",
+    "evidence.json": "passthrough"
+  }
+}

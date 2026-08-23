@@ -1,0 +1,82 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "sf424b",
+    "kind": "form",
+    "formVersion": "1.1"
+  },
+  "sources": [
+    {
+      "id": "sf424b-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/SF424B-V1.1.xsd",
+      "nativeVersion": "1.1",
+      "sha256": "b0da616d262329e869b7c2a12146396fd8a279d2a1723521271c519f4571075d"
+    },
+    {
+      "id": "sf424b-dat",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/SF424B-V1.1_F240.xls",
+      "nativeVersion": null,
+      "sha256": "15944ea4df287b94e27e2f7e459c05a88e3fad74d39f2abd0bcad170c475665d"
+    },
+    {
+      "id": "sf424b-instructions",
+      "type": "instructions",
+      "uri": "https://apply07.grants.gov/apply/forms/instructions/SF424B-V1.1-Instructions.pdf",
+      "nativeVersion": null,
+      "sha256": "61d72e945392ca0ae8494ab0fa6b21200f71583d5313e0843a25231d505f3ce7"
+    },
+    {
+      "id": "sf424b-pdf",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/SF424B-V1.1.pdf",
+      "nativeVersion": null,
+      "sha256": "2ab0e5c91ac98824991bcfa22a283bc6e7b6b99a4f1125506e9befe57c68e51e"
+    },
+    {
+      "id": "sgg-oracle",
+      "type": "implementation",
+      "uri": "https://github.com/mikec-ai/simpler-grants-gov/blob/30dd50cf0493146c32f89f78398979523e040080/api/src/form_schema/forms/sf424b/1/0/form_json.py",
+      "nativeVersion": "1.0",
+      "sha256": "ca94f236d449f5e4437d03c33ebe09504fe1d02948d7bb17d16fc4a646d7d39a"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/authoring/assurances-family/forms/SF424B.json",
+    "sourceSetSha256": "d318e0cb5b8535f13987c2106dda31a78424e536e6ea99bf593fedde4497959e",
+    "extractedAt": "2026-08-19T23:24:18Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/signature",
+        "sourceId": "sf424b-xsd",
+        "sourcePath": "Assurances.AuthorizedRepresentative.RepresentativeName",
+        "status": "proposed"
+      },
+      {
+        "canonicalPointer": "#/properties/title",
+        "sourceId": "sf424b-xsd",
+        "sourcePath": "Assurances.AuthorizedRepresentative.RepresentativeTitle",
+        "status": "proposed"
+      },
+      {
+        "canonicalPointer": "#/properties/applicantOrganization",
+        "sourceId": "sf424b-xsd",
+        "sourcePath": "Assurances.ApplicantOrganizationName",
+        "status": "proposed"
+      },
+      {
+        "canonicalPointer": "#/properties/signedDate",
+        "sourceId": "sf424b-xsd",
+        "sourcePath": "Assurances.SubmittedDate",
+        "status": "proposed"
+      }
+    ]
+  },
+  "behaviorEvidence": []
+}

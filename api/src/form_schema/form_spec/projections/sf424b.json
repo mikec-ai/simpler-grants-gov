@@ -1,0 +1,14 @@
+{
+  "renames": {
+    "signedDate": {
+      "to": "date_signed",
+      "why": "The legacy SF-424B response stores the submission timestamp under date_signed."
+    }
+  },
+  "identifiers": {
+    "acceptance": {
+      "to": "signature",
+      "why": "The legacy SF-424B renderer identifies its acceptance section as signature."
+    }
+  }
+}

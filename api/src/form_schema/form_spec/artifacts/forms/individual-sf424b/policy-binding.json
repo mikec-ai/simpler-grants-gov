@@ -1,0 +1,85 @@
+{
+  "contract": "form-policy-binding/v1",
+  "formId": "individual-sf424b",
+  "policy": {
+    "id": "grants-gov/nonconstruction-assurances",
+    "version": "1.1"
+  },
+  "presentation": {
+    "sections": [
+      {
+        "sectionId": "burden",
+        "name": "directions",
+        "before": "acceptance"
+      },
+      {
+        "sectionId": "assurances",
+        "name": "acknowledgement",
+        "before": "acceptance"
+      }
+    ]
+  },
+  "acceptance": {
+    "event": "submission",
+    "actor": "authorizedRepresentative",
+    "statement": "Submission records the authorized representative's certification of the assurances.",
+    "attestsTo": [
+      "assurances"
+    ],
+    "fields": [
+      {
+        "role": "signature",
+        "pointer": "/signature",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "grants.gov submission identity",
+        "editable": false
+      },
+      {
+        "role": "signerTitle",
+        "pointer": "/title",
+        "responseRole": "applicantInput",
+        "required": true,
+        "source": "entered on the Individual SF-424B",
+        "editable": true
+      },
+      {
+        "role": "applicantOrganization",
+        "pointer": "/applicantOrganization",
+        "responseRole": "applicantInput",
+        "required": true,
+        "source": "entered on the Individual SF-424B",
+        "editable": true
+      },
+      {
+        "role": "acceptedAt",
+        "pointer": "/signedDate",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "grants.gov submission timestamp",
+        "editable": false
+      }
+    ]
+  },
+  "release": {
+    "status": "draft",
+    "gates": [
+      {
+        "id": "policy-owner-review",
+        "status": "pending"
+      },
+      {
+        "id": "accessibility-review",
+        "status": "pending"
+      },
+      {
+        "id": "instructions-review",
+        "status": "pending"
+      },
+      {
+        "id": "production-registration",
+        "status": "pending"
+      }
+    ]
+  }
+}
