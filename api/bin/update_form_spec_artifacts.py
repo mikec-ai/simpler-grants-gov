@@ -4,12 +4,14 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import re
 import subprocess
 import sys
 import tempfile
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+from urllib.parse import unquote, urlparse
 
 API_ROOT = Path(__file__).resolve().parents[1]
 if str(API_ROOT) not in sys.path:
@@ -86,8 +88,8 @@ def resolve_revision(producer: Path, revision: str) -> str:
     return resolved
 
 
-def build_bundle(producer: Path, revision: str, workspace: Path) -> Path:
-    """Clone at one commit, run producer preflight, and return its verified bundle.
+def build_bundle(producer: Path, revision: str, workspace: Path) -> tuple[Path, Path]:
+    """Clone at one commit, run producer preflight, and return its bundle and checkout.
 
     Prefer the checkout's configured origin over a local-path clone. A local checkout may be a
     partial/promisor clone whose object database does not contain blobs fetched by another
@@ -121,7 +123,66 @@ def build_bundle(producer: Path, revision: str, workspace: Path) -> Path:
     bundle = source / "build" / "grants-form-artifacts.tar.gz"
     if not bundle.is_file():
         raise ValueError("producer preflight did not create an artifact bundle")
-    return bundle
+    return bundle, source
+
+
+def provision_selected_xsds(
+    files: dict[str, bytes], *, producer: Path, xsd_directory: Path
+) -> list[Path]:
+    """Vendor missing declared XSDs from the immutable producer checkout.
+
+    Existing consumer XSDs remain immutable and are checked by ``verify_selected_xsds``.
+    A missing XSD is copied only from the producer's pinned official fixtures and only when
+    its bytes match the profile's declared SHA-256.
+    """
+
+    fixture_root = producer / "tests" / "fixtures" / "grants-gov-xsd"
+    additions: dict[Path, bytes] = {}
+    suffix = "/targets/grants-gov-xml.json"
+    for relative, payload in sorted(files.items()):
+        if not relative.endswith(suffix):
+            continue
+        profile = json.loads(payload)
+        xsd = profile.get("xsd")
+        if not isinstance(xsd, dict):
+            raise ValueError(f"{relative} has no XSD declaration")
+        uri = xsd.get("uri")
+        expected = xsd.get("sha256")
+        if not isinstance(uri, str) or not uri:
+            raise ValueError(f"{relative} has no XSD URI")
+        if not isinstance(expected, str) or not re.fullmatch(r"[0-9a-f]{64}", expected):
+            raise ValueError(f"{relative} has no valid XSD SHA-256")
+
+        filename = PurePosixPath(unquote(urlparse(uri).path)).name
+        if not filename or filename in {".", ".."}:
+            raise ValueError(f"{relative} XSD URI has no filename: {uri}")
+        destination = xsd_directory / filename
+        if destination.is_file():
+            continue
+
+        candidates = sorted(fixture_root.rglob(filename)) if fixture_root.is_dir() else []
+        matching = [
+            candidate
+            for candidate in candidates
+            if hashlib.sha256(candidate.read_bytes()).hexdigest() == expected
+        ]
+        if not matching:
+            raise ValueError(
+                f"{relative} requires XSD {filename} at {expected}, but the pinned producer "
+                "checkout has no matching official fixture"
+            )
+        candidate_payload = matching[0].read_bytes()
+        if destination in additions and additions[destination] != candidate_payload:
+            raise ValueError(f"selected XML profiles declare conflicting XSDs for {filename}")
+        additions[destination] = candidate_payload
+
+    for destination, payload in additions.items():
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.NamedTemporaryFile(dir=destination.parent, delete=False) as staged:
+            staged.write(payload)
+            staged_path = Path(staged.name)
+        staged_path.replace(destination)
+    return sorted(additions)
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -163,13 +224,18 @@ def main() -> int:
             add_csv=args.add_forms,
         )
         with tempfile.TemporaryDirectory(prefix="form-spec-update-") as directory:
-            bundle = build_bundle(producer, revision, Path(directory))
+            bundle, producer_checkout = build_bundle(producer, revision, Path(directory))
             manifest, files = select_artifacts(bundle, forms)
             if manifest["source"]["revision"] != revision:
                 raise ValueError(
                     "producer bundle revision mismatch: "
                     f"expected {revision}, got {manifest['source']['revision']}"
                 )
+            provision_selected_xsds(
+                files,
+                producer=producer_checkout,
+                xsd_directory=XSD_DIRECTORY,
+            )
             verify_selected_xsds(files, xsd_directory=XSD_DIRECTORY)
             write_selection(target=args.target, manifest=manifest, files=files)
         if args.receipt is not None:

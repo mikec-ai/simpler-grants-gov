@@ -662,6 +662,46 @@
       "size": 21200
     },
     {
+      "path": "dist/forms/rr-sf424b/evidence.json",
+      "sha256": "71bf81e85cf02d9aee160ce594be54b0c6dc0482f96900c953704393b5914977",
+      "size": 1702
+    },
+    {
+      "path": "dist/forms/rr-sf424b/manifest.json",
+      "sha256": "a6b361a29bd052f0f0d088bf5a4ec435e120eab3890a29c061ff401c46e790c9",
+      "size": 639
+    },
+    {
+      "path": "dist/forms/rr-sf424b/policy-binding.json",
+      "sha256": "c2568b2e2498609ae72d5490d7f77bf82566231a9bfbc26ef518bc358890486b",
+      "size": 2540
+    },
+    {
+      "path": "dist/forms/rr-sf424b/policy-content.json",
+      "sha256": "b92939baa1a320a8d85b18e28e7d89542b0601b0c9217afb4f449a2ca6080410",
+      "size": 14869
+    },
+    {
+      "path": "dist/forms/rr-sf424b/schema.json",
+      "sha256": "78ab3b7c7697625d65d752ac1dc6a94b9415eb187b54edaaf26d79e347c09fbb",
+      "size": 1240
+    },
+    {
+      "path": "dist/forms/rr-sf424b/sgg/rule-schema.json",
+      "sha256": "b0d094574e3a97e804692660ae119925b4a6e8ac9e1a5910847079b8b9bea484",
+      "size": 171
+    },
+    {
+      "path": "dist/forms/rr-sf424b/sgg/ui-schema.json",
+      "sha256": "2490188a087470d823d85a465ae45b7bd67e0696a4be3898be2258f795003a08",
+      "size": 9057
+    },
+    {
+      "path": "dist/forms/rr-sf424b/targets/grants-gov-xml.json",
+      "sha256": "164a09586ef790e9c2da4d3bb40ed035a8370d4bc24188d7db7be69796a1e238",
+      "size": 2008
+    },
+    {
       "path": "dist/forms/rr-subaward-budget-10yr-30/evidence.json",
       "sha256": "a3e2aad1f4397e32f1fc8bd7f6d1005776cdc7260aaa37df7dfefdc7a98ed228",
       "size": 27440
@@ -1744,13 +1784,14 @@
       "individual-sf424d",
       "sf424c",
       "phs-assignment-request",
-      "attachment-form"
+      "attachment-form",
+      "rr-sf424b"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "2fde5118f440f31c7527fde784d573bb3ab3d912"
+    "revision": "7089fa6b0cca70e63e805a971c192a1849394d20"
   },
-  "sourceBundleSha256": "72aee82f3d5d04ff7862a978a5953e876489622c219d9482f2b712347e5a622e"
+  "sourceBundleSha256": "7fe91aab00b3a2403efabd81f1a242a636cc544530beb9043ae0b00add17fa9c"
 }

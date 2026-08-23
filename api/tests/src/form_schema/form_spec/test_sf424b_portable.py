@@ -139,9 +139,9 @@ def test_missing_required_identity_matches_the_legacy_oracle() -> None:
         assert list(validator.iter_errors(VALID_RESPONSE)) == []
         missing_title = [
             error.json_path
-            for error in validator.iter_errors(
-                {"applicant_organization": "Example Research Organization"}
-            )
+            for error in validator.iter_errors({
+                "applicant_organization": "Example Research Organization"
+            })
         ]
         assert missing_title == ["$"]
 
@@ -200,15 +200,26 @@ def test_print_shape_and_artifact_lock_are_generic() -> None:
                 assert name in loaded.form_json_schema["properties"]
 
 
-def test_profiles_remain_unregistered_and_rr_stays_out_of_the_consumer() -> None:
+def test_profiles_remain_unregistered_and_rr_is_banked_only() -> None:
     registrations = json.loads(REGISTRATIONS.read_text())["forms"]
     selected = json.loads((ARTIFACTS / "artifact-manifest.json").read_text())["selection"]["forms"]
     for form_id in RELEASABLE_PROFILES:
         assert form_id not in registrations
         runtime_identity(form_id)
 
-    # The producer records R&R's official V1.1 XSD/version inconsistency as a blocked
-    # release gate. It is banked upstream but intentionally has no SGG artifact or identity.
-    assert "rr-sf424b" not in selected
+    assert "rr-sf424b" in selected
+    release = json.loads((ARTIFACTS / "forms/rr-sf424b/policy-binding.json").read_text())["release"]
+    xsd_gate = next(
+        gate for gate in release["gates"] if gate["id"] == "official-xsd-version-consistency"
+    )
+    assert release["status"] == "draft"
+    assert xsd_gate["status"] == "passed"
+    assert "upstream metadata defect" in xsd_gate["note"]
+    assert {gate["id"] for gate in release["gates"] if gate["status"] == "pending"} == {
+        "policy-owner-review",
+        "accessibility-review",
+        "instructions-review",
+        "production-registration",
+    }
     with pytest.raises(ValueError, match="no SGG runtime identity"):
         runtime_identity("rr-sf424b")

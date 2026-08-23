@@ -1,0 +1,67 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "rr-sf424b",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/RRSF424_SF424B-V1.1.xsd",
+    "sha256": "511de9a5594a739ce596a33a92d3dec1bac2a32f193a2fe6b4799b45f29ff296"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/RRSF424_SF424B-V1.1",
+    "RRSF424_SF424B": "http://apply.grants.gov/forms/RRSF424_SF424B-V1.1",
+    "glob": "http://apply.grants.gov/system/Global-V1.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0"
+  },
+  "root": {
+    "element": "Assurances",
+    "namespacePrefix": "RRSF424_SF424B",
+    "attributes": {
+      "programType": "Non-Construction",
+      "FormVersion": "1.1"
+    }
+  },
+  "mapping": {
+    "fields": {
+      "formVersionIdentifier": {
+        "element": "FormVersionIdentifier",
+        "kind": "value",
+        "namespace": "glob",
+        "constant": "1.1"
+      },
+      "authorizedRepresentative": {
+        "element": "AuthorizedRepresentative",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "signature": {
+            "element": "RepresentativeName",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/signature"
+          },
+          "title": {
+            "element": "RepresentativeTitle",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/title"
+          }
+        }
+      },
+      "applicantOrganization": {
+        "element": "ApplicantOrganizationName",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "signedDate": {
+        "element": "SubmittedDate",
+        "kind": "value",
+        "namespace": "default"
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/portfolio/ingestion-acquisition-results.json"
+  }
+}

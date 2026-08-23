@@ -1,0 +1,50 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "rr-sf424b",
+    "kind": "form",
+    "formVersion": "1.1"
+  },
+  "sources": [
+    {
+      "id": "rr-sf424b-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/RRSF424_SF424B-V1.1.xsd",
+      "nativeVersion": "1.1",
+      "sha256": "511de9a5594a739ce596a33a92d3dec1bac2a32f193a2fe6b4799b45f29ff296"
+    },
+    {
+      "id": "rr-sf424b-dat",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/RRSF424_SF424B-V1.1_F325.xls",
+      "nativeVersion": null,
+      "sha256": "40d86b271c47beca5f5bcd9bfd34f6b05a555a63a58cb7a714474498e3c2731d"
+    },
+    {
+      "id": "rr-sf424b-instructions",
+      "type": "instructions",
+      "uri": "https://apply07.grants.gov/apply/forms/instructions/RRSF424_SF424B-V1.1-Instructions.pdf",
+      "nativeVersion": null,
+      "sha256": "7403e9356b095107e64a409fd1a9ab190ca50f6fdbb6bccbdc45c33938af9216"
+    },
+    {
+      "id": "rr-sf424b-pdf",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/RRSF424_SF424B-V1.1.pdf",
+      "nativeVersion": null,
+      "sha256": "510fcd6d6d328ba5c617f65f69af7e172aaab44695694d1068b193eca257bcd8"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/portfolio/ingestion-acquisition-results.json",
+    "sourceSetSha256": "5a69b4b59388c70e0ed5cba2352eb30c11f673245d1836b949fc1b7f93164933",
+    "extractedAt": "2026-08-19T23:24:18Z"
+  },
+  "semanticReview": {
+    "status": "unreviewed",
+    "mappings": []
+  },
+  "behaviorEvidence": []
+}

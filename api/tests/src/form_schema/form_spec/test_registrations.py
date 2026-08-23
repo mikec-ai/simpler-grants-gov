@@ -197,13 +197,14 @@ def test_runtime_identity_target_enables_a_subset_of_banked_forms_without_leakin
     assert set(selected) - set(EXPECTED_RUNTIME_IDENTITIES) == {
         "attachment-form",
         "phs-assignment-request",
+        "rr-sf424b",
     }
     for portable_id in selected:
         meta = json.loads((ARTIFACTS / "forms" / portable_id / "manifest.json").read_text())["form"]
         assert {"formId", "formType", "sggVersion"}.isdisjoint(meta)
 
 
-@pytest.mark.parametrize("portable_id", ["attachment-form", "phs-assignment-request"])
+@pytest.mark.parametrize("portable_id", ["attachment-form", "phs-assignment-request", "rr-sf424b"])
 def test_banked_only_forms_are_verified_but_fail_closed_at_runtime(portable_id):
     manifest = verify_artifacts()
 
@@ -221,14 +222,12 @@ def test_banked_only_forms_are_verified_but_fail_closed_at_runtime(portable_id):
 def test_registration_cannot_enable_a_banked_form_without_runtime_identity(tmp_path, monkeypatch):
     registration_file = tmp_path / "registrations.json"
     registration_file.write_text(
-        json.dumps(
-            {
-                "contract": "sgg-portable-form-registrations/v1",
-                "forms": {
-                    "attachment-form": {"formInstructionId": "00000000-0000-4000-8000-000000000001"}
-                },
-            }
-        )
+        json.dumps({
+            "contract": "sgg-portable-form-registrations/v1",
+            "forms": {
+                "attachment-form": {"formInstructionId": "00000000-0000-4000-8000-000000000001"}
+            },
+        })
     )
     monkeypatch.setattr(registration_module, "REGISTRATIONS", registration_file)
     registration_module._records.cache_clear()
