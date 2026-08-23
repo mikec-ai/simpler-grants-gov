@@ -1,0 +1,22 @@
+{
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "id": "gg-lobbying",
+    "legacyFormId": 255,
+    "formName": "Grants.gov Lobbying Form",
+    "shortFormName": "GG_LobbyingForm",
+    "formVersion": "1.1",
+    "agencyCode": "SGG",
+    "ombNumber": "4040-0013"
+  },
+  "artifacts": {
+    "schema.json": "generated",
+    "ui.json": "generated",
+    "sgg/ui-schema.json": "generated",
+    "sgg/rule-schema.json": "generated",
+    "policy-content.json": "generated",
+    "policy-binding.json": "generated",
+    "targets/grants-gov-xml.json": "generated",
+    "evidence.json": "passthrough"
+  }
+}
