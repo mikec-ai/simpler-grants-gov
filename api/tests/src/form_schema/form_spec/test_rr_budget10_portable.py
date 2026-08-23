@@ -107,7 +107,14 @@ def test_official_xsd_and_extraction_provenance_are_pinned() -> None:
             "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_Budget10_3_0-V3.0.xsd",
             "nativeVersion": "3.0",
             "sha256": "cccce03554424d59b5958e4443a54db12a5a10780fbdc5df2ec25955d443fc9d",
-        }
+        },
+        {
+            "id": "grantsgov-rr-budget-dat-3.0-f770",
+            "type": "dat",
+            "uri": "https://apply07.grants.gov/apply/forms/sample/RR_Budget_3_0-V3.0_F770.xls",
+            "nativeVersion": None,
+            "sha256": "c85158ce7ddcc756d6e8a55a050e00b4a95cdfc8d9a2d91b7bd94c7f8bdb1035",
+        },
     ]
     assert evidence["extraction"]["revision"] == ("dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef")
     assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}

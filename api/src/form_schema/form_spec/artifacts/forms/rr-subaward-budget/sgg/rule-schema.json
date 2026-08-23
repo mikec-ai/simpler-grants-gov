@@ -21,6 +21,11 @@
               "@THIS.equipmentList[*].fundsRequested",
               "@THIS.totalFundForAttachedEquipment"
             ],
+            "materialize": "when_any_source_present",
+            "presence_fields": [
+              "@THIS.equipmentList[*].fundsRequested",
+              "@THIS.totalFundForAttachedEquipment"
+            ],
             "order": 7
           }
         }
@@ -65,6 +70,11 @@
                 "@THIS.requestedSalary",
                 "@THIS.fringeBenefits"
               ],
+              "materialize": "when_any_source_present",
+              "presence_fields": [
+                "@THIS.requestedSalary",
+                "@THIS.fringeBenefits"
+              ],
               "order": 6
             }
           }
@@ -74,6 +84,11 @@
             "gg_pre_population": {
               "rule": "sum_monetary",
               "fields": [
+                "@THIS.requestedSalary",
+                "@THIS.fringeBenefits"
+              ],
+              "materialize": "when_any_source_present",
+              "presence_fields": [
                 "@THIS.requestedSalary",
                 "@THIS.fringeBenefits"
               ],
@@ -102,6 +117,11 @@
                 "@THIS.requestedSalary",
                 "@THIS.fringeBenefits"
               ],
+              "materialize": "when_any_source_present",
+              "presence_fields": [
+                "@THIS.requestedSalary",
+                "@THIS.fringeBenefits"
+              ],
               "order": 2
             }
           }
@@ -111,6 +131,11 @@
             "gg_pre_population": {
               "rule": "sum_monetary",
               "fields": [
+                "@THIS.requestedSalary",
+                "@THIS.fringeBenefits"
+              ],
+              "materialize": "when_any_source_present",
+              "presence_fields": [
                 "@THIS.requestedSalary",
                 "@THIS.fringeBenefits"
               ],
@@ -139,6 +164,11 @@
                 "@THIS.requestedSalary",
                 "@THIS.fringeBenefits"
               ],
+              "materialize": "when_any_source_present",
+              "presence_fields": [
+                "@THIS.requestedSalary",
+                "@THIS.fringeBenefits"
+              ],
               "order": 4
             }
           }
@@ -163,6 +193,10 @@
           "gg_pre_population": {
             "rule": "sum_monetary",
             "fields": [
+              "@THIS.indirectCost[*].fundRequested"
+            ],
+            "materialize": "when_any_source_present",
+            "presence_fields": [
               "@THIS.indirectCost[*].fundRequested"
             ],
             "order": 8
@@ -207,6 +241,14 @@
               "@THIS.subsistence",
               "@THIS.other.cost"
             ],
+            "materialize": "when_any_source_present",
+            "presence_fields": [
+              "@THIS.tuitionFeeHealthInsurance",
+              "@THIS.stipends",
+              "@THIS.travel",
+              "@THIS.subsistence",
+              "@THIS.other.cost"
+            ],
             "order": 13
           }
         }
@@ -228,6 +270,11 @@
             "@THIS.directCosts",
             "@THIS.indirectCosts.totalIndirectCosts"
           ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.directCosts",
+            "@THIS.indirectCosts.totalIndirectCosts"
+          ],
           "order": 17
         }
       },
@@ -235,6 +282,11 @@
         "gg_pre_population": {
           "rule": "sum_monetary",
           "fields": [
+            "@THIS.totalCosts",
+            "@THIS.fee"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
             "@THIS.totalCosts",
             "@THIS.fee"
           ],
@@ -246,6 +298,11 @@
           "gg_pre_population": {
             "rule": "sum_monetary",
             "fields": [
+              "@THIS.domesticTravelCost",
+              "@THIS.foreignTravelCost"
+            ],
+            "materialize": "when_any_source_present",
+            "presence_fields": [
               "@THIS.domesticTravelCost",
               "@THIS.foreignTravelCost"
             ],
@@ -459,6 +516,10 @@
           "fields": [
             "@PARENT.budgetYear[*].totalCostsFee"
           ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.budgetYear[*].totalCostsFee"
+          ],
           "order": 41
         }
       },
@@ -466,6 +527,10 @@
         "gg_pre_population": {
           "rule": "sum_monetary",
           "fields": [
+            "@PARENT.budgetYear[*].directCosts"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
             "@PARENT.budgetYear[*].directCosts"
           ],
           "order": 42
@@ -477,6 +542,10 @@
           "fields": [
             "@PARENT.budgetYear[*].totalCosts"
           ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.budgetYear[*].totalCosts"
+          ],
           "order": 43
         }
       },
@@ -486,6 +555,10 @@
           "fields": [
             "@PARENT.budgetYear[*].equipment.totalFund"
           ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.budgetYear[*].equipment.totalFund"
+          ],
           "order": 44
         }
       },
@@ -493,6 +566,10 @@
         "gg_pre_population": {
           "rule": "sum_monetary",
           "fields": [
+            "@PARENT.budgetYear[*].indirectCosts.totalIndirectCosts"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
             "@PARENT.budgetYear[*].indirectCosts.totalIndirectCosts"
           ],
           "order": 45
@@ -513,6 +590,10 @@
           "fields": [
             "@PARENT.budgetYear[*].otherPersonnel.totalOtherPersonnelFund"
           ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.budgetYear[*].otherPersonnel.totalOtherPersonnelFund"
+          ],
           "order": 47
         }
       },
@@ -522,6 +603,10 @@
           "fields": [
             "@PARENT.budgetYear[*].totalCompensation"
           ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.budgetYear[*].totalCompensation"
+          ],
           "order": 48
         }
       },
@@ -529,6 +614,10 @@
         "gg_pre_population": {
           "rule": "sum_monetary",
           "fields": [
+            "@PARENT.budgetYear[*].keyPersons.totalFundForKeyPersons"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
             "@PARENT.budgetYear[*].keyPersons.totalFundForKeyPersons"
           ],
           "order": 49
@@ -556,6 +645,10 @@
         "gg_pre_population": {
           "rule": "sum_integer",
           "fields": [
+            "@PARENT.budgetYear[*].otherPersonnel.otherPersonnelTotalNumber"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
             "@PARENT.budgetYear[*].otherPersonnel.otherPersonnelTotalNumber"
           ],
           "order": 52
