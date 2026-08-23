@@ -278,10 +278,11 @@ we'll add it to a list of validation issues.
 For validation, this rule group is `gg_validation` with the following
 rules currently implemented:
 * `attachment` - verifies that the field representing an attachment ID corresponds to an attachment ID on the application itself.
+* `date_not_before` - verifies that an ISO date is the same as or later than the one field named in `fields`; relative paths use the same `@THIS` and `@PARENT` vocabulary as calculations.
 
 # Future Work
 
 ## Cross-field Validation
-We likely want some form of cross-field validation. I don't think
-JSON Schema supports a way to validate dates are in order for something
-like start/end dates.
+Date ordering is supported through `date_not_before`. Additional cross-field
+relationships should use the same declarative field-reference model rather than
+introducing form-specific validation code.

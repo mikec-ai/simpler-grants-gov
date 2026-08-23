@@ -28,6 +28,16 @@
       "rule": "assistance_listing_program_title"
     }
   },
+  "proposedProjectPeriod": {
+    "proposedEndDate": {
+      "gg_validation": {
+        "rule": "date_not_before",
+        "fields": [
+          "@THIS.proposedStartDate"
+        ]
+      }
+    }
+  },
   "sflllAttachment": {
     "gg_validation": {
       "rule": "attachment"

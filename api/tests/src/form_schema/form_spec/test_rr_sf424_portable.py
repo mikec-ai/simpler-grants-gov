@@ -240,6 +240,20 @@ def test_rr_sf424_executes_conditional_submission_requirements() -> None:
         ValidationCase("renewal with its federal identifier", renewal, frozenset()),
     )
 
+    invalid_period = copy.deepcopy(valid)
+    invalid_period["proposed_project_period"] = {
+        "proposed_start_date": "2029-10-01",
+        "proposed_end_date": "2029-09-30",
+    }
+    assert_validation_case(
+        "rr-sf424",
+        ValidationCase(
+            "project end date before its start date",
+            invalid_period,
+            frozenset({"$.proposed_project_period.proposed_end_date"}),
+        ),
+    )
+
 
 def test_rr_sf424_submit_populates_the_aor_signature_and_dates() -> None:
     application_form = submit_form("rr-sf424", VALID_RESPONSE)

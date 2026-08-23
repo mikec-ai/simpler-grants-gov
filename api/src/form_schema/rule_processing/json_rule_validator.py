@@ -1,11 +1,12 @@
 import logging
 import typing
+from datetime import date
 
 from grants_shared.api.response import ValidationErrorDetail
 from grants_shared.util.dict_util import get_nested_value
 
 from src.form_schema.rule_processing.json_rule_context import JsonRule, JsonRuleContext
-from src.form_schema.rule_processing.json_rule_util import build_path_str
+from src.form_schema.rule_processing.json_rule_util import build_path_str, get_field_values
 from src.validation.validation_constants import ValidationErrorType
 
 logger = logging.getLogger(__name__)
@@ -93,7 +94,47 @@ def validate_attachments(context: JsonRuleContext, json_rule: JsonRule) -> None:
         )
 
 
-VALIDATION_RULES = {"attachment": validate_attachments}
+def validate_date_not_before(context: JsonRuleContext, json_rule: JsonRule) -> None:
+    """Require the target ISO date to be the same as or later than one reference date."""
+
+    fields = json_rule.rule.get("fields")
+    if not isinstance(fields, list) or len(fields) != 1 or not isinstance(fields[0], str):
+        logger.warning(
+            "date_not_before requires exactly one field reference",
+            extra=context.get_log_context() | json_rule.get_log_context(),
+        )
+        return
+
+    target_value = get_nested_value(context.json_data, json_rule.path)
+    reference_values = get_field_values(context.json_data, fields, json_rule.path)
+    if not isinstance(target_value, str) or len(reference_values) != 1:
+        return
+    reference_value = reference_values[0]
+    if not isinstance(reference_value, str):
+        return
+
+    try:
+        target_date = date.fromisoformat(target_value)
+        reference_date = date.fromisoformat(reference_value)
+    except ValueError:
+        # JSON Schema owns date-format errors. Avoid reporting a misleading order error too.
+        return
+
+    if target_date < reference_date:
+        context.validation_issues.append(
+            ValidationErrorDetail(
+                type=ValidationErrorType.INVALID_DATE_ORDER,
+                message="Date must be the same as or later than the referenced date",
+                field=build_path_str(json_rule.path),
+                value=target_value,
+            )
+        )
+
+
+VALIDATION_RULES = {
+    "attachment": validate_attachments,
+    "date_not_before": validate_date_not_before,
+}
 
 
 def handle_validation(context: JsonRuleContext, json_rule: JsonRule) -> None:
