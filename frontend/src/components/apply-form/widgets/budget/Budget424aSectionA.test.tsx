@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
 import { RJSFSchema } from "@rjsf/utils";
+import { render, screen } from "@testing-library/react";
+import { axe } from "jest-axe";
 
 import Budget424aSectionA from "src/components/apply-form/widgets/budget/Budget424aSectionA";
 import budget424a from "./budget424a.mock.json";
@@ -89,6 +90,12 @@ const WidgetProps = {
 };
 
 describe("Budget424aSectionA", () => {
+  it("passes an automated accessibility scan", async () => {
+    const { container } = render(<Budget424aSectionA {...WidgetProps} />);
+
+    expect(await axe(container)).toHaveNoViolations();
+  });
+
   it("sets the correct default value", () => {
     render(<Budget424aSectionA {...WidgetProps} />);
     const A1 = screen.getByTestId("activity_line_items[0]--activity_title");
@@ -147,5 +154,43 @@ describe("Budget424aSectionA", () => {
         name: "New or revised federal budget, row 1",
       }),
     ).toBeDisabled();
+  });
+
+  it("preserves the manually entered Column G value in the locked view", () => {
+    const rootFormData = {
+      ...budget424a,
+      activity_line_items: [
+        {
+          ...budget424a.activity_line_items[0],
+          budget_summary: {
+            ...budget424a.activity_line_items[0].budget_summary,
+            federal_estimated_unobligated_amount: "1.00",
+            non_federal_estimated_unobligated_amount: "2.00",
+            federal_new_or_revised_amount: "3.00",
+            non_federal_new_or_revised_amount: "4.00",
+            total_amount: "100.00",
+          },
+        },
+      ],
+    };
+    const props = {
+      ...WidgetProps,
+      formContext: {
+        ...WidgetProps.formContext,
+        rootFormData,
+      },
+    };
+
+    render(<Budget424aSectionA {...props} disabled />);
+
+    expect(screen.getByRole("textbox", { name: "Total, row 1" })).toHaveValue(
+      "100.00",
+    );
+    expect(
+      screen.getByRole("textbox", { name: "Total, row 1" }),
+    ).toBeDisabled();
+    expect(
+      screen.getByRole("columnheader", { name: "Column G" }),
+    ).toBeInTheDocument();
   });
 });
