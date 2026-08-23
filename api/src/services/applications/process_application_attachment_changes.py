@@ -1,9 +1,10 @@
 import logging
 import uuid
+from collections.abc import Iterator
+from enum import Enum, auto
 
 import grants_shared.adapters.db as db
 import grants_shared.util.file_util as file_util
-from grants_shared.util.dict_util import get_nested_value
 from sqlalchemy import select
 
 from src.constants.lookup_constants import ApplicationAuditEvent
@@ -17,16 +18,61 @@ logger = logging.getLogger(__name__)
 ATTACHMENT_WIDGETS = {"Attachment", "AttachmentArray"}
 
 
-def _definition_to_path(definition: str) -> list[str]:
+class _AttachmentPathMarker(Enum):
+    ARRAY_ITEM = auto()
+
+
+ARRAY_ITEM_PATH_TOKEN = _AttachmentPathMarker.ARRAY_ITEM
+
+type AttachmentPathToken = str | int | _AttachmentPathMarker
+type AttachmentFieldPath = list[AttachmentPathToken]
+
+
+def _decode_json_pointer_token(token: str) -> str:
+    """Decode the escaping used for property names in a JSON pointer."""
+    return token.replace("~1", "/").replace("~0", "~")
+
+
+def _definition_to_path(definition: str) -> AttachmentFieldPath:
     """Convert a UI schema field definition JSON pointer into a response path.
 
     For example ``/properties/att1`` becomes ``["att1"]`` and a nested
     ``/properties/foo/properties/bar`` becomes ``["foo", "bar"]``.
+
+    JSON Schema ``items`` tokens become array wildcards because application
+    responses contain array values, not a literal ``items`` key. Numeric tokens
+    outside ``properties`` are retained as concrete array indices so this path
+    representation can also traverse already-resolved response pointers.
     """
-    return [token for token in definition.split("/") if token and token != "properties"]
+    pointer = definition[1:] if definition.startswith("#") else definition
+    tokens = [_decode_json_pointer_token(token) for token in pointer.split("/") if token]
+    path: AttachmentFieldPath = []
+
+    index = 0
+    while index < len(tokens):
+        token = tokens[index]
+        if token == "properties" and index + 1 < len(tokens):
+            # The token after ``properties`` is always a literal property name,
+            # including names such as "items" or numeric-looking names.
+            path.append(tokens[index + 1])
+            index += 2
+        elif token == "items":
+            path.append(ARRAY_ITEM_PATH_TOKEN)
+            index += 1
+        elif token.isdecimal():
+            path.append(int(token))
+            index += 1
+        else:
+            # Preserve the previous permissive behavior for non-schema pointers.
+            path.append(token)
+            index += 1
+
+    return path
 
 
-def _collect_attachment_field_paths(ui_schema_node: object, paths: list[list[str]]) -> None:
+def _collect_attachment_field_paths(
+    ui_schema_node: object, paths: list[AttachmentFieldPath]
+) -> None:
     """Recursively walk a form UI schema collecting attachment field paths."""
     if isinstance(ui_schema_node, list):
         for child in ui_schema_node:
@@ -40,29 +86,58 @@ def _collect_attachment_field_paths(ui_schema_node: object, paths: list[list[str
         _collect_attachment_field_paths(ui_schema_node.get("children"), paths)
 
 
-def get_attachment_field_paths(form: Form) -> list[list[str]]:
+def get_attachment_field_paths(form: Form) -> list[AttachmentFieldPath]:
     """Determine which form fields contain attachment data from the UI schema.
 
     Attachment fields are identified by their ``Attachment`` (single) or
     ``AttachmentArray`` (multi) widget in the form's UI schema.
     """
-    paths: list[list[str]] = []
+    paths: list[AttachmentFieldPath] = []
     _collect_attachment_field_paths(form.form_ui_schema, paths)
     return paths
 
 
+def _iter_values_at_path(
+    value: object, path: AttachmentFieldPath, path_index: int = 0
+) -> Iterator[object]:
+    """Yield every value selected by a response path, expanding array wildcards."""
+    if path_index == len(path):
+        yield value
+        return
+
+    token = path[path_index]
+    if token is ARRAY_ITEM_PATH_TOKEN:
+        if isinstance(value, list):
+            for item in value:
+                yield from _iter_values_at_path(item, path, path_index + 1)
+        return
+
+    if isinstance(token, int):
+        if isinstance(value, list) and 0 <= token < len(value):
+            yield from _iter_values_at_path(value[token], path, path_index + 1)
+        return
+
+    if isinstance(value, dict) and token in value:
+        yield from _iter_values_at_path(value[token], path, path_index + 1)
+
+
+def _iter_attachment_ids(value: object) -> Iterator[str]:
+    """Yield string field values while flattening attachment arrays."""
+    if isinstance(value, str):
+        yield value
+    elif isinstance(value, list):
+        for item in value:
+            yield from _iter_attachment_ids(item)
+
+
 def collect_attachment_ids(
-    application_response: dict, attachment_field_paths: list[list[str]]
+    application_response: dict, attachment_field_paths: list[AttachmentFieldPath]
 ) -> set[str]:
     """Gather every attachment UUID referenced by the attachment fields in a response."""
     attachment_ids: set[str] = set()
     for path in attachment_field_paths:
-        value = get_nested_value(application_response, path)
-        if value is None:
-            continue
-        # Multi-attachment fields store a list of UUIDs, single fields a lone UUID
-        values = value if isinstance(value, list) else [value]
-        attachment_ids.update(v for v in values if isinstance(v, str))
+        for value in _iter_values_at_path(application_response, path):
+            attachment_ids.update(_iter_attachment_ids(value))
     return attachment_ids
 
 
