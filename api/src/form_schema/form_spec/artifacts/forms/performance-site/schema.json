@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "performance-site/schema.json",
+  "type": "object",
+  "properties": {
+    "primarySite": {
+      "$ref": "#/$defs/PerformanceSiteDetails",
+      "title": "Primary Project / Performance Site"
+    },
+    "additionalSites": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PerformanceSiteDetails"
+      },
+      "maxItems": 299,
+      "title": "Additional Project / Performance Site"
+    },
+    "additionalLocations": {
+      "$ref": "../../question-bank/project-site/additional-locations-upload/schema.json",
+      "title": "Additional Locations"
+    }
+  },
+  "required": [
+    "primarySite"
+  ],
+  "description": "Project/Performance Site Location(s), Grants.gov version 4.0.",
+  "$defs": {
+    "StateCode": {
+      "type": "string",
+      "enum": [
+        "AL: Alabama",
+        "AK: Alaska",
+        "AZ: Arizona",
+        "AR: Arkansas",
+        "CA: California",
+        "CO: Colorado",
+        "CT: Connecticut",
+        "DE: Delaware",
+        "DC: District of Columbia",
+        "FL: Florida",
+        "GA: Georgia",
+        "HI: Hawaii",
+        "ID: Idaho",
+        "IL: Illinois",
+        "IN: Indiana",
+        "IA: Iowa",
+        "KS: Kansas",
+        "KY: Kentucky",
+        "LA: Louisiana",
+        "ME: Maine",
+        "MD: Maryland",
+        "MA: Massachusetts",
+        "MI: Michigan",
+        "MN: Minnesota",
+        "MS: Mississippi",
+        "MO: Missouri",
+        "MT: Montana",
+        "NE: Nebraska",
+        "NV: Nevada",
+        "NH: New Hampshire",
+        "NJ: New Jersey",
+        "NM: New Mexico",
+        "NY: New York",
+        "NC: North Carolina",
+        "ND: North Dakota",
+        "OH: Ohio",
+        "OK: Oklahoma",
+        "OR: Oregon",
+        "PA: Pennsylvania",
+        "RI: Rhode Island",
+        "SC: South Carolina",
+        "SD: South Dakota",
+        "TN: Tennessee",
+        "TX: Texas",
+        "UT: Utah",
+        "VT: Vermont",
+        "VA: Virginia",
+        "WA: Washington",
+        "WV: West Virginia",
+        "WI: Wisconsin",
+        "WY: Wyoming",
+        "AS: American Samoa",
+        "FM: Federated States of Micronesia",
+        "GU: Guam",
+        "MH: Marshall Islands",
+        "MP: Northern Mariana Islands",
+        "PW: Palau",
+        "PR: Puerto Rico",
+        "VI: Virgin Islands",
+        "FQ: Baker Island",
+        "HQ: Howland Island",
+        "DQ: Jarvis Island",
+        "JQ: Johnston Atoll",
+        "KQ: Kingman Reef",
+        "MQ: Midway Islands",
+        "BQ: Navassa Island",
+        "LQ: Palmyra Atoll",
+        "WQ: Wake Island",
+        "AA: Armed Forces Americas (except Canada)",
+        "AE: Armed Forces Europe, the Middle East, and Canada",
+        "AP: Armed Forces Pacific"
+      ],
+      "description": "US State or Territory Code",
+      "title": "State"
+    },
+    "PerformanceSiteAddress": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "#/$defs/StateCode",
+          "title": "State"
+        },
+        "province": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30,
+          "title": "Province"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "../../question-bank/generics/address/schema.json"
+        }
+      ]
+    },
+    "PerformanceSiteDetails": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/$defs/PerformanceSiteAddress",
+          "title": "Address"
+        }
+      },
+      "required": [
+        "address"
+      ],
+      "allOf": [
+        {
+          "$ref": "../../question-bank/project-site/details/schema.json"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project-site/details/schema.json",
+  "type": "object",
+  "properties": {
+    "individual": {
+      "$ref": "#/$defs/SiteIndividualIndicator",
+      "title": "Submitting as an Individual"
+    },
+    "organizationName": {
+      "$ref": "../../../question-bank/generics/organization-name/schema.json",
+      "title": "Organization Name"
+    },
+    "samUei": {
+      "$ref": "../../../question-bank/primary-org/uei/schema.json",
+      "title": "UEI"
+    },
+    "address": {
+      "$ref": "../../../question-bank/generics/address/schema.json",
+      "title": "Address"
+    },
+    "congressionalDistrict": {
+      "$ref": "../../../question-bank/project/congressional-district/schema.json",
+      "title": "Project / Performance Site Congressional District",
+      "minLength": 6,
+      "maxLength": 6,
+      "pattern": "^..-...$"
+    }
+  },
+  "required": [
+    "address"
+  ],
+  "description": "Organization, address, and congressional district for a project performance site.",
+  "$defs": {
+    "SiteIndividualIndicator": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "address": {
+            "properties": {
+              "country": {
+                "const": "USA: UNITED STATES"
+              }
+            },
+            "required": [
+              "country"
+            ]
+          }
+        },
+        "required": [
+          "address"
+        ]
+      },
+      "then": {
+        "required": [
+          "congressionalDistrict"
+        ]
+      }
+    }
+  ]
+}
