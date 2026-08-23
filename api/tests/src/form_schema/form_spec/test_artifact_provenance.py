@@ -40,6 +40,9 @@ def test_vendored_artifacts_match_the_pinned_form_spec_build():
         "sflll",
         "cd511",
         "gg-lobbying",
+        "sf424b",
+        "mandatory-sf424b",
+        "individual-sf424b",
     ]
 
 

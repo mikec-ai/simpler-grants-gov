@@ -107,6 +107,46 @@
       "size": 2524
     },
     {
+      "path": "dist/forms/individual-sf424b/evidence.json",
+      "sha256": "009a1b0879765e527e205236352e62289f9f8163f0c247fcdb4779d962e3c6f2",
+      "size": 1776
+    },
+    {
+      "path": "dist/forms/individual-sf424b/manifest.json",
+      "sha256": "50d92c9b55fa91bebda51135a3d414d2de312da75f55acf9915c7a5ca4212763",
+      "size": 653
+    },
+    {
+      "path": "dist/forms/individual-sf424b/policy-binding.json",
+      "sha256": "2e2460bf9d85f5445c696d128ddefc404616f8c579c5d35e64074622584f84c5",
+      "size": 2022
+    },
+    {
+      "path": "dist/forms/individual-sf424b/policy-content.json",
+      "sha256": "b92939baa1a320a8d85b18e28e7d89542b0601b0c9217afb4f449a2ca6080410",
+      "size": 14869
+    },
+    {
+      "path": "dist/forms/individual-sf424b/schema.json",
+      "sha256": "5dbd038d1cd39d7dbb98a2a352e593d11395008d3b81ae409eedb4f857249ced",
+      "size": 1021
+    },
+    {
+      "path": "dist/forms/individual-sf424b/sgg/rule-schema.json",
+      "sha256": "b0d094574e3a97e804692660ae119925b4a6e8ac9e1a5910847079b8b9bea484",
+      "size": 171
+    },
+    {
+      "path": "dist/forms/individual-sf424b/sgg/ui-schema.json",
+      "sha256": "2d8c6892f25aee6115f7dbff01a640b4d33fa354e67d182b0fb49af236004914",
+      "size": 9059
+    },
+    {
+      "path": "dist/forms/individual-sf424b/targets/grants-gov-xml.json",
+      "sha256": "36cbeeddd536cd670c6e329cc2463c795e8772ffbe7ccaca9db9c0711a06b5c3",
+      "size": 1829
+    },
+    {
       "path": "dist/forms/key-contacts/evidence.json",
       "sha256": "a984c3af342312e26edb2748783c89492e0e5cc73844e7031618f25d98d872a3",
       "size": 1363
@@ -130,6 +170,46 @@
       "path": "dist/forms/key-contacts/sgg/ui-schema.json",
       "sha256": "cf11981423a7fa56c6be9db40696800c66abd7c42e23748cf1ada8f800cb35f1",
       "size": 3325
+    },
+    {
+      "path": "dist/forms/mandatory-sf424b/evidence.json",
+      "sha256": "b18514205cedfd2cf6d3f1df62ca74e545d8a22bc9c475da8b6c83379d514557",
+      "size": 1766
+    },
+    {
+      "path": "dist/forms/mandatory-sf424b/manifest.json",
+      "sha256": "fb18ca86e9ed79e475fba7ea0b62bfb9c6d57bfb795833302f07335b0ea52a27",
+      "size": 652
+    },
+    {
+      "path": "dist/forms/mandatory-sf424b/policy-binding.json",
+      "sha256": "4451e25e711f8984daeb46ec43684c8d2e59ea8081fc173bc9f1080d0cbb1d59",
+      "size": 2038
+    },
+    {
+      "path": "dist/forms/mandatory-sf424b/policy-content.json",
+      "sha256": "b92939baa1a320a8d85b18e28e7d89542b0601b0c9217afb4f449a2ca6080410",
+      "size": 14869
+    },
+    {
+      "path": "dist/forms/mandatory-sf424b/schema.json",
+      "sha256": "5948ff586e7a445a258c49b3d5b3dbf8df81eaa873e94f1b303927d6361d3eb2",
+      "size": 1260
+    },
+    {
+      "path": "dist/forms/mandatory-sf424b/sgg/rule-schema.json",
+      "sha256": "b0d094574e3a97e804692660ae119925b4a6e8ac9e1a5910847079b8b9bea484",
+      "size": 171
+    },
+    {
+      "path": "dist/forms/mandatory-sf424b/sgg/ui-schema.json",
+      "sha256": "2490188a087470d823d85a465ae45b7bd67e0696a4be3898be2258f795003a08",
+      "size": 9057
+    },
+    {
+      "path": "dist/forms/mandatory-sf424b/targets/grants-gov-xml.json",
+      "sha256": "3046d5b6bd082650a2cae47e7f7c4e1a16773e5b46651ee270707ae8efef5297",
+      "size": 1822
     },
     {
       "path": "dist/forms/other-narrative-attachments/evidence.json",
@@ -605,6 +685,46 @@
       "path": "dist/forms/sf424a/sgg/ui-schema.json",
       "sha256": "c30fea2192115073296175bbb09f502b20be865a8234b1ee42ea1bd1b6cef323",
       "size": 3134
+    },
+    {
+      "path": "dist/forms/sf424b/evidence.json",
+      "sha256": "c098f86f1687c30513286c46153c66942982358a72b0a334a80ff49afbac0d19",
+      "size": 2819
+    },
+    {
+      "path": "dist/forms/sf424b/manifest.json",
+      "sha256": "706c3f8e098a7b081bcdb8ea13ae798f68648b8ce65a09afb0c6449eefd9fa7f",
+      "size": 613
+    },
+    {
+      "path": "dist/forms/sf424b/policy-binding.json",
+      "sha256": "d4442122dbc771fa123da9f101dea4633f54608da8a2c26cd33c591aebb1d73d",
+      "size": 2006
+    },
+    {
+      "path": "dist/forms/sf424b/policy-content.json",
+      "sha256": "b92939baa1a320a8d85b18e28e7d89542b0601b0c9217afb4f449a2ca6080410",
+      "size": 14869
+    },
+    {
+      "path": "dist/forms/sf424b/schema.json",
+      "sha256": "e1fff5b46b97c43df0056c1e04de0cec77389f748ee02b9380a989a54b509e12",
+      "size": 1240
+    },
+    {
+      "path": "dist/forms/sf424b/sgg/rule-schema.json",
+      "sha256": "b0d094574e3a97e804692660ae119925b4a6e8ac9e1a5910847079b8b9bea484",
+      "size": 171
+    },
+    {
+      "path": "dist/forms/sf424b/sgg/ui-schema.json",
+      "sha256": "2490188a087470d823d85a465ae45b7bd67e0696a4be3898be2258f795003a08",
+      "size": 9057
+    },
+    {
+      "path": "dist/forms/sf424b/targets/grants-gov-xml.json",
+      "sha256": "6393c59b66a100f50ba993f8cf1b338dd6820d76af99bd6e245d53abdbcfe7ee",
+      "size": 1977
     },
     {
       "path": "dist/forms/sflll/evidence.json",
@@ -1235,13 +1355,16 @@
       "phs398-modular-budget",
       "sflll",
       "cd511",
-      "gg-lobbying"
+      "gg-lobbying",
+      "sf424b",
+      "mandatory-sf424b",
+      "individual-sf424b"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "7ebb2033de2cd7c31a6039fd3b7f492adb70aeed"
+    "revision": "bc1d60325e52fbffd782756ec40c9dba232fd978"
   },
-  "sourceBundleSha256": "56eb417f18a9050c2af155f1658b5fc4d612ae0556213fe2294d32d82e1162d8"
+  "sourceBundleSha256": "ccd7841782345717486b2d0ea197ec5d1a7b0427990dd3f76ced5d69e53b23f6"
 }

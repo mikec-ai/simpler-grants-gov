@@ -1,0 +1,50 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "mandatory-sf424b",
+    "kind": "form",
+    "formVersion": "1.1"
+  },
+  "sources": [
+    {
+      "id": "mandatory-sf424b-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/Mandatory_SF424B-V1.1.xsd",
+      "nativeVersion": "1.1",
+      "sha256": "bcbe0010ba734ebeb0e3b6bd331a936d716b9896446231be90a11b005faf9579"
+    },
+    {
+      "id": "mandatory-sf424b-dat",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/Mandatory_SF424B-V1.1_F328.xls",
+      "nativeVersion": null,
+      "sha256": "77b0e06aefac0765b482e769ec0a5dcbea6628909e2e7a7f5965e9674355bc51"
+    },
+    {
+      "id": "mandatory-sf424b-instructions",
+      "type": "instructions",
+      "uri": "https://apply07.grants.gov/apply/forms/instructions/Mandatory_SF424B-V1.1-Instructions.pdf",
+      "nativeVersion": null,
+      "sha256": "2084122b4d991e46b7accfbef9f041cf3e711912d586006f0109b0440d4e48e1"
+    },
+    {
+      "id": "mandatory-sf424b-pdf",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/Mandatory_SF424B-V1.1.pdf",
+      "nativeVersion": null,
+      "sha256": "fb1fc7bb8cb2825dd400f951f2875876a36d78acb46506bc3993ce56f1ee80d1"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/authoring/assurances-family/forms/Mandatory_SF424B-V1.1_F328.json",
+    "sourceSetSha256": "98e5ca9cd31c71e13abf4031db716d1eaaae458099bc128419bbda9e324fc7f1",
+    "extractedAt": "2026-08-19T23:24:18Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": []
+  },
+  "behaviorEvidence": []
+}
