@@ -218,10 +218,12 @@ class TestRecursiveXMLTransformer:
             },
         }
 
-        result = RecursiveXMLTransformer(transform_config).transform({
-            "organization": "Applicant University",
-            "project": {"organization": "Performing University"},
-        })
+        result = RecursiveXMLTransformer(transform_config).transform(
+            {
+                "organization": "Applicant University",
+                "project": {"organization": "Performing University"},
+            }
+        )
 
         assert result == {
             "OrganizationName": {
@@ -309,9 +311,9 @@ class TestRecursiveXMLTransformer:
         }
         transformer = RecursiveXMLTransformer(transform_config)
 
-        result = transformer.transform({
-            "sites": [{"name": "Lab A", "city": "Boston"}, {"name": "Lab B", "city": "Austin"}]
-        })
+        result = transformer.transform(
+            {"sites": [{"name": "Lab A", "city": "Boston"}, {"name": "Lab B", "city": "Austin"}]}
+        )
 
         assert result["Sites"] == [
             {"Name": "Lab A", "City": "Boston"},

@@ -11,7 +11,6 @@ from src.services.xml_generation.validation.xsd_validator import XSDValidator
 from tests.src.form_schema.form_spec.lifecycle import submit_form
 from tests.src.form_schema.form_spec.test_rr_sf424_portable import VALID_RESPONSE
 
-
 XSD_DIRECTORY = Path("src/services/xml_generation/xsds")
 FORM_NAMESPACE = "http://apply.grants.gov/forms/RR_SF424_5_0-V5.0"
 

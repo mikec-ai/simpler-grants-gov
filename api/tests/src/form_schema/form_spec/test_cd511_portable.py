@@ -16,7 +16,6 @@ from tests.src.form_schema.form_spec.lifecycle import (
     submit_form,
 )
 
-
 VALID_RESPONSE = {
     "applicant_name": "Example Research Institute",
     "project_name": "Portable Grants Forms",
@@ -39,7 +38,10 @@ def test_cd511_loads_without_a_form_specific_projection_profile() -> None:
     }
     assert len(projected.form_ui_schema) == 7
     assert [section["name"] for section in projected.form_ui_schema[:4]] == [
-        "directions1", "directions2", "directions3", "directions4",
+        "directions1",
+        "directions2",
+        "directions3",
+        "directions4",
     ]
 
 
@@ -69,7 +71,8 @@ def test_cd511_preserves_source_limits_and_aor_name_requiredness() -> None:
     assert schema["properties"]["award_number"]["maxLength"] == 25
     assert schema["properties"]["project_name"]["maxLength"] == 60
     assert schema["properties"]["contact_person"]["required"] == [
-        "first_name", "last_name",
+        "first_name",
+        "last_name",
     ]
 
 

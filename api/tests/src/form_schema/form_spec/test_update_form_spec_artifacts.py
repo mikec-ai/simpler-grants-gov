@@ -12,10 +12,12 @@ def test_preserves_the_existing_selection_allowlist(tmp_path):
     target = tmp_path / "artifacts"
     target.mkdir()
     (target / "artifact-manifest.json").write_text(
-        json.dumps({
-            "contract": "grants-form-artifact-selection/v1",
-            "selection": {"forms": ["first", "second", "first"]},
-        })
+        json.dumps(
+            {
+                "contract": "grants-form-artifact-selection/v1",
+                "selection": {"forms": ["first", "second", "first"]},
+            }
+        )
     )
 
     assert selected_forms(target) == ["first", "second"]
@@ -34,10 +36,12 @@ def test_additive_promotion_preserves_order_and_reports_only_new_forms(tmp_path)
     target = tmp_path / "artifacts"
     target.mkdir()
     (target / "artifact-manifest.json").write_text(
-        json.dumps({
-            "contract": "grants-form-artifact-selection/v1",
-            "selection": {"forms": ["first", "second"]},
-        })
+        json.dumps(
+            {
+                "contract": "grants-form-artifact-selection/v1",
+                "selection": {"forms": ["first", "second"]},
+            }
+        )
     )
 
     forms, added = promotion_forms(
@@ -54,10 +58,12 @@ def test_exact_and_additive_selection_are_mutually_exclusive(tmp_path):
     target = tmp_path / "artifacts"
     target.mkdir()
     (target / "artifact-manifest.json").write_text(
-        json.dumps({
-            "contract": "grants-form-artifact-selection/v1",
-            "selection": {"forms": ["first"]},
-        })
+        json.dumps(
+            {
+                "contract": "grants-form-artifact-selection/v1",
+                "selection": {"forms": ["first"]},
+            }
+        )
     )
 
     with pytest.raises(ValueError, match="cannot be combined"):
@@ -69,10 +75,12 @@ def test_rejects_invalid_additive_form_ids(tmp_path, invalid):
     target = tmp_path / "artifacts"
     target.mkdir()
     (target / "artifact-manifest.json").write_text(
-        json.dumps({
-            "contract": "grants-form-artifact-selection/v1",
-            "selection": {"forms": ["first"]},
-        })
+        json.dumps(
+            {
+                "contract": "grants-form-artifact-selection/v1",
+                "selection": {"forms": ["first"]},
+            }
+        )
     )
 
     with pytest.raises(ValueError, match="invalid form ids"):

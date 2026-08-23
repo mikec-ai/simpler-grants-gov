@@ -21,7 +21,6 @@ from tests.src.form_schema.form_spec.lifecycle import (
     submit_form,
 )
 
-
 RELEASABLE_PROFILES = ("sf424b", "mandatory-sf424b", "individual-sf424b")
 VALID_RESPONSE = {
     "title": "Executive Director",
@@ -140,9 +139,9 @@ def test_missing_required_identity_matches_the_legacy_oracle() -> None:
         assert list(validator.iter_errors(VALID_RESPONSE)) == []
         missing_title = [
             error.json_path
-            for error in validator.iter_errors({
-                "applicant_organization": "Example Research Organization"
-            })
+            for error in validator.iter_errors(
+                {"applicant_organization": "Example Research Organization"}
+            )
         ]
         assert missing_title == ["$"]
 

@@ -17,7 +17,6 @@ from src.services.xml_generation.service import XMLGenerationService
 from src.services.xml_generation.utils.attachment_mapping import AttachmentInfo
 from src.services.xml_generation.validation.xsd_validator import XSDValidator
 
-
 XSD_DIRECTORY = Path("src/services/xml_generation/xsds")
 XSD_NAME = "RR_KeyPersonExpanded_4_0-V4.0.xsd"
 XSD_CLOSURE_SHA256 = {
@@ -93,11 +92,13 @@ def _response() -> dict[str, Any]:
         state="VA: Virginia",
         zip_code="222011234",
     )
-    senior_us.update({
-        "project_role": "Co-Investigator",
-        "biographical_sketch": ATTACHMENT_IDS["senior-us-bio"],
-        "current_pending_support": ATTACHMENT_IDS["senior-us-support"],
-    })
+    senior_us.update(
+        {
+            "project_role": "Co-Investigator",
+            "biographical_sketch": ATTACHMENT_IDS["senior-us-bio"],
+            "current_pending_support": ATTACHMENT_IDS["senior-us-support"],
+        }
+    )
     senior_foreign = _person(
         "Katherine",
         "Johnson",
@@ -105,11 +106,13 @@ def _response() -> dict[str, Any]:
         province="Ontario",
         zip_code="K1A0B1",
     )
-    senior_foreign.update({
-        "project_role": "Co-Investigator",
-        "biographical_sketch": ATTACHMENT_IDS["senior-foreign-bio"],
-        "current_pending_support": ATTACHMENT_IDS["senior-foreign-support"],
-    })
+    senior_foreign.update(
+        {
+            "project_role": "Co-Investigator",
+            "biographical_sketch": ATTACHMENT_IDS["senior-foreign-bio"],
+            "current_pending_support": ATTACHMENT_IDS["senior-foreign-support"],
+        }
+    )
     return {
         "principal_investigator": pi,
         "senior_key_persons": [senior_us, senior_foreign],

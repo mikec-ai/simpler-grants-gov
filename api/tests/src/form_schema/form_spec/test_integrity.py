@@ -48,8 +48,6 @@ def test_verifies_every_profile_in_an_artifact_selection(tmp_path):
     xsd.write_bytes(payload)
     import json
 
-    profile_path.write_text(
-        json.dumps(_profile(xsd.name, hashlib.sha256(payload).hexdigest()))
-    )
+    profile_path.write_text(json.dumps(_profile(xsd.name, hashlib.sha256(payload).hexdigest())))
 
     verify_artifact_xsds(artifacts=artifacts, xsd_directory=xsd_directory)

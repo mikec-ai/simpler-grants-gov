@@ -13,7 +13,6 @@ from src.services.xml_generation.service import XMLGenerationService
 from src.services.xml_generation.validation.xsd_validator import XSDValidator
 from tests.src.form_schema.form_spec.test_sf424c_portable import calculated_response
 
-
 XSD_DIRECTORY = Path("src/services/xml_generation/xsds")
 XSD_NAME = "SF424C_2_0-V2.0.xsd"
 XSD_SHA256 = "a3ec5d6bae8173fce080709a8071787293dbe6271415d905d230c584c200982a"

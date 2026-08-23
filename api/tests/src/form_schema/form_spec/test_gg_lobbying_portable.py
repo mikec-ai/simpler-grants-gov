@@ -12,12 +12,8 @@ from lxml import etree as lxml_etree
 from src.form_schema.form_spec.bank import ARTIFACTS
 from src.form_schema.form_spec.loader import load_form
 from src.form_schema.form_spec.registrations import REGISTRATIONS
-from src.form_schema.forms.gg_lobbying_form import (
-    FORM_UI_SCHEMA as LEGACY_UI_SCHEMA,
-)
-from src.form_schema.forms.gg_lobbying_form import (
-    FORM_XML_TRANSFORM_RULES as LEGACY_XML_RULES,
-)
+from src.form_schema.forms.gg_lobbying_form import FORM_UI_SCHEMA as LEGACY_UI_SCHEMA
+from src.form_schema.forms.gg_lobbying_form import FORM_XML_TRANSFORM_RULES as LEGACY_XML_RULES
 from src.form_schema.forms.gg_lobbying_form import GG_LobbyingForm_v1_1
 from src.form_schema.jsonschema_validator import validate_json_schema_for_form
 from src.services.applications.application_validation import (
