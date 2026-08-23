@@ -83,6 +83,58 @@ describe("conditional UI evaluation", () => {
     ).toBe(false);
   });
 
+  it("keeps an overflow attachment enabled at capacity or while its saved value is present", () => {
+    const predicate = {
+      op: "any" as const,
+      predicates: [
+        {
+          op: "countAtLeast" as const,
+          ref: { scope: "root" as const, pointer: "/people" },
+          minimum: 99,
+        },
+        {
+          op: "present" as const,
+          ref: { scope: "root" as const, pointer: "/overflow_attachment" },
+        },
+      ],
+    };
+
+    expect(
+      evaluateConditionalUiPredicate(predicate, {
+        rootData: { people: Array.from({ length: 99 }, () => ({})) },
+      }),
+    ).toBe(true);
+    expect(
+      evaluateConditionalUiPredicate(predicate, {
+        rootData: { people: [], overflow_attachment: "attachment-uuid" },
+      }),
+    ).toBe(true);
+    expect(
+      evaluateConditionalUiPredicate(predicate, {
+        rootData: { people: [], overflow_attachment: "" },
+      }),
+    ).toBe(false);
+  });
+
+  it("treats false and zero as present scalar answers but null, blank, and empty lists as absent", () => {
+    const present = (value: unknown) =>
+      evaluateConditionalUiPredicate(
+        {
+          op: "present",
+          ref: { scope: "root", pointer: "/value" },
+        },
+        { rootData: { value } },
+      );
+
+    expect(present(false)).toBe(true);
+    expect(present(0)).toBe(true);
+    expect(present("attachment-uuid")).toBe(true);
+    expect(present({ id: "attachment-uuid" })).toBe(true);
+    expect(present(null)).toBe(false);
+    expect(present("")).toBe(false);
+    expect(present([])).toBe(false);
+  });
+
   it("resolves the selected branch over safe defaults", () => {
     expect(
       resolveConditionalUiState(
