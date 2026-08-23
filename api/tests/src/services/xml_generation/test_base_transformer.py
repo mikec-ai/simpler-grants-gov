@@ -161,6 +161,39 @@ class TestRecursiveXMLTransformer:
         assert nested_result["City"] == "Washington"
         assert nested_result["State"] == "DC"
 
+    def test_transform_output_group_from_an_explicit_root_source(self):
+        transform_config = {
+            "congressional_district": {
+                "xml_transform": {"target": "CongressionalDistrict", "type": "group"},
+                "applicant_district": {
+                    "xml_transform": {
+                        "target": "ApplicantCongressionalDistrict",
+                        "source": "/applicant_congressional_district",
+                    }
+                },
+            }
+        }
+        transformer = RecursiveXMLTransformer(transform_config)
+
+        result = transformer.transform({"applicant_congressional_district": "MD-008"})
+
+        assert result == {
+            "CongressionalDistrict": {"ApplicantCongressionalDistrict": "MD-008"}
+        }
+
+    def test_rejects_a_relative_explicit_source_path(self):
+        transform_config = {
+            "field": {
+                "xml_transform": {
+                    "target": "Field",
+                    "source": "field",
+                }
+            }
+        }
+
+        with pytest.raises(ValueError, match="absolute JSON pointer"):
+            RecursiveXMLTransformer(transform_config).transform({"field": "value"})
+
     def test_transform_array_of_dicts(self):
         transform_config = {
             "sites": {

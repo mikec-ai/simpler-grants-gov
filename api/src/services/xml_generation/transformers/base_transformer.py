@@ -27,6 +27,26 @@ class RecursiveXMLTransformer:
         self.attachment_mapping = attachment_mapping or {}
         self.root_source_data: dict[str, Any] = {}
 
+    @staticmethod
+    def _pointer_parts(pointer: str) -> list[str]:
+        if not pointer.startswith("/"):
+            raise ValueError(f"XML transform source must be an absolute JSON pointer: {pointer!r}")
+        return [part.replace("~1", "/").replace("~0", "~") for part in pointer[1:].split("/")]
+
+    def _source_value(
+        self,
+        transform_rule: dict[str, Any],
+        *,
+        fallback_data: dict[str, Any],
+        fallback_path: list[str],
+    ) -> Any:
+        source = transform_rule.get("source")
+        if source is not None:
+            if not isinstance(source, str):
+                raise ValueError("XML transform source must be a JSON pointer string")
+            return get_nested_value(self.root_source_data, self._pointer_parts(source))
+        return get_nested_value(fallback_data, fallback_path)
+
     def transform(self, source_data: dict[str, Any]) -> dict[str, Any]:
         """Transform source data using recursive rule processing.
 
@@ -135,7 +155,15 @@ class RecursiveXMLTransformer:
 
         # Get the source value from the input data
         transform_type = transform_rule.get("type", "simple")
-        source_value = get_nested_value(source_data, current_path)
+        source_value = (
+            self.root_source_data
+            if transform_type == "group"
+            else self._source_value(
+                transform_rule,
+                fallback_data=source_data,
+                fallback_path=current_path,
+            )
+        )
 
         # Handle None values based on configuration
         processed_source_value = self._handle_none_values(
@@ -327,7 +355,7 @@ class RecursiveXMLTransformer:
                 )
                 return None
 
-        elif transform_type == "nested_object":
+        elif transform_type in {"nested_object", "group"}:
             # For nested objects, we need to process the child rules recursively
             if not isinstance(source_value, dict):
                 return None
@@ -373,8 +401,12 @@ class RecursiveXMLTransformer:
                 for child_key, child_config in nested_fields.items():
                     if isinstance(child_config, dict) and "xml_transform" in child_config:
                         child_transform = child_config["xml_transform"]
-                        if child_key in source_value and source_value[child_key] is not None:
-                            child_value = source_value[child_key]
+                        child_value = self._source_value(
+                            child_transform,
+                            fallback_data=source_value,
+                            fallback_path=[child_key],
+                        )
+                        if child_value is not None:
 
                             # Recursively process nested transformations
                             transformed_child = self._apply_transform_rule(
@@ -390,8 +422,12 @@ class RecursiveXMLTransformer:
                         continue
                     if isinstance(child_config, dict) and "xml_transform" in child_config:
                         child_transform = child_config["xml_transform"]
-                        if child_key in source_value and source_value[child_key] is not None:
-                            child_value = source_value[child_key]
+                        child_value = self._source_value(
+                            child_transform,
+                            fallback_data=source_value,
+                            fallback_path=[child_key],
+                        )
+                        if child_value is not None:
 
                             # Recursively process nested transformations
                             transformed_child = self._apply_transform_rule(
