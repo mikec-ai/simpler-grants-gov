@@ -35,11 +35,11 @@ The adapter owns only consumer concerns:
 - selection and verification of the exact runtime artifacts shipped with the API.
 
 Artifact banking, runtime enablement, and registration are declarative but intentionally
-separate. The artifact manifest currently banks 31 digest-verified portable forms for provenance,
+separate. The artifact manifest currently banks 32 digest-verified portable forms for provenance,
 review, and analysis. The versioned SGG target record `runtime-identities.json` explicitly enables
 29 of them by assigning one form UUID, `FormType`, and SGG schema version. Those values are
 generated and interpreted by SGG, so they do not appear in the producer's canonical `FormMeta`.
-The two banked-only forms cannot be loaded or previewed through the runtime adapter until an
+The three banked-only forms cannot be loaded or previewed through the runtime adapter until an
 identity record is deliberately added. `registrations.json` is the still smaller release opt-in
 list: its five current records contain only instruction UUIDs, and no absent identity or
 instruction UUID is inferred. The portable form id joins these files to the producer manifest.
@@ -79,6 +79,10 @@ a form-specific Python generator.
 For a routine pin update, use the higher-level command. It makes an isolated local clone at the
 explicit revision, runs the producer's complete preflight, preserves the current form allowlist,
 checks XSD pins, and atomically replaces the selection:
+
+When a selected XML profile references an XSD that SGG has not vendored yet, the updater copies
+the exact fixture from that immutable producer checkout after verifying its declared SHA-256. It
+does not download mutable live bytes or overwrite a conflicting consumer XSD.
 
 ```shell
 cd api

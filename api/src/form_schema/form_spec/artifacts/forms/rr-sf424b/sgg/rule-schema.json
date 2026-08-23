@@ -1,0 +1,12 @@
+{
+  "signature": {
+    "gg_post_population": {
+      "rule": "signature"
+    }
+  },
+  "signedDate": {
+    "gg_post_population": {
+      "rule": "current_date"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "contract": "form-policy-binding/v1",
+  "formId": "rr-sf424b",
+  "policy": {
+    "id": "grants-gov/nonconstruction-assurances",
+    "version": "1.1"
+  },
+  "presentation": {
+    "sections": [
+      {
+        "sectionId": "burden",
+        "name": "directions",
+        "before": "acceptance"
+      },
+      {
+        "sectionId": "assurances",
+        "name": "acknowledgement",
+        "before": "acceptance"
+      }
+    ]
+  },
+  "acceptance": {
+    "event": "submission",
+    "actor": "authorizedRepresentative",
+    "statement": "Submission records the authorized representative's certification of the assurances.",
+    "attestsTo": [
+      "assurances"
+    ],
+    "fields": [
+      {
+        "role": "signature",
+        "pointer": "/signature",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "grants.gov submission identity",
+        "editable": false
+      },
+      {
+        "role": "signerTitle",
+        "pointer": "/title",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "R&R SF-424 authorized representative title",
+        "editable": false
+      },
+      {
+        "role": "applicantOrganization",
+        "pointer": "/applicantOrganization",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "R&R SF-424 applicant organization",
+        "editable": false
+      },
+      {
+        "role": "acceptedAt",
+        "pointer": "/signedDate",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "grants.gov submission timestamp",
+        "editable": false
+      }
+    ]
+  },
+  "release": {
+    "status": "draft",
+    "gates": [
+      {
+        "id": "official-xsd-version-consistency",
+        "status": "passed",
+        "note": "Accepted as an upstream metadata defect without altering the pinned official bytes: xsd:schema/@version is 1.0, but that attribute has no defined validation semantics; the official URL and filename, target namespace, fixed FormVersion, and FormVersionIdentifier are all 1.1, and emitted XML validates against the exact official XSD (SHA-256 511de9a5594a739ce596a33a92d3dec1bac2a32f193a2fe6b4799b45f29ff296)."
+      },
+      {
+        "id": "policy-owner-review",
+        "status": "pending"
+      },
+      {
+        "id": "accessibility-review",
+        "status": "pending"
+      },
+      {
+        "id": "instructions-review",
+        "status": "pending"
+      },
+      {
+        "id": "production-registration",
+        "status": "pending"
+      }
+    ]
+  }
+}
