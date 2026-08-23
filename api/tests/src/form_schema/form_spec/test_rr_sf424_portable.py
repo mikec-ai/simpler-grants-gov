@@ -5,10 +5,99 @@ the remaining source-review gates must become declarative before it can replace 
 production implementation.
 """
 
+import copy
 import json
 
 from src.form_schema.form_spec.bank import ARTIFACTS
 from src.form_schema.form_spec.loader import load_form
+from tests.src.form_schema.form_spec.lifecycle import (
+    ValidationCase,
+    assert_json_round_trip,
+    assert_validation_case,
+    submit_form,
+)
+
+
+VALID_RESPONSE = {
+    "submission_type_code": "Application",
+    "applicant_info": {
+        "organization_info": {
+            "organization_name": "Example Research Institute",
+            "address": {
+                "street1": "1 Research Way",
+                "city": "Bethesda",
+                "state": "MD: Maryland",
+                "zip_code": "20852",
+                "country": "USA: UNITED STATES",
+            },
+            "sam_uei": "EXAMPLE12345",
+        },
+        "contact_person_info": {
+            "name": {"first_name": "Casey", "last_name": "Contact"},
+            "address": {
+                "street1": "1 Research Way",
+                "city": "Bethesda",
+                "state": "MD: Maryland",
+                "zip_code": "20852",
+                "country": "USA: UNITED STATES",
+            },
+            "phone": "301-555-0100",
+            "email": "casey@example.gov",
+        },
+    },
+    "employer_id": "123456789",
+    "applicant_type": {
+        "applicant_type_code": (
+            "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)"
+        )
+    },
+    "application_type": {
+        "application_type_code": "New",
+        "is_other_agency_submission": "N: No",
+    },
+    "federal_agency_name": "Example Federal Agency",
+    "project_title": "Example research project",
+    "proposed_project_period": {
+        "proposed_start_date": "2026-10-01",
+        "proposed_end_date": "2029-09-30",
+    },
+    "applicant_congressional_district": "MD-008",
+    "principal_investigator": {
+        "name": {"first_name": "Parker", "last_name": "Investigator"},
+        "organization_name": "Example Research Institute",
+        "address": {
+            "street1": "1 Research Way",
+            "city": "Bethesda",
+            "state": "MD: Maryland",
+            "zip_code": "20852",
+            "country": "USA: UNITED STATES",
+        },
+        "phone": "301-555-0101",
+        "email": "parker@example.gov",
+    },
+    "estimated_project_funding": {
+        "total_estimated_amount": 100000,
+        "total_non_federal_requested": 0,
+        "total_federal_non_federal_requested": 100000,
+        "estimated_program_income": 0,
+    },
+    "state_review": {"state_review_code_type": "Program is not covered by E.O. 12372"},
+    "trust_agree": "Y: Yes",
+    "authorized_representative": {
+        "name": {"first_name": "Avery", "last_name": "Representative"},
+        "title": "Authorized Organizational Representative",
+        "organization_name": "Example Research Institute",
+        "address": {
+            "street1": "1 Research Way",
+            "city": "Bethesda",
+            "state": "MD: Maryland",
+            "zip_code": "20852",
+            "country": "USA: UNITED STATES",
+        },
+        "phone": "301-555-0102",
+        "email": "avery@example.gov",
+    },
+}
 
 
 def _walk(nodes: list[object]):
@@ -105,6 +194,59 @@ def test_rr_sf424_evidence_stays_source_bound_and_semantically_unaccepted() -> N
         ("xsd", "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"),
         ("xsd", "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"),
     ]
+
+
+def test_rr_sf424_response_survives_save_and_reload_without_loss() -> None:
+    assert_json_round_trip(VALID_RESPONSE)
+
+
+def test_rr_sf424_executes_conditional_submission_requirements() -> None:
+    valid = copy.deepcopy(VALID_RESPONSE)
+    assert_validation_case(
+        "rr-sf424",
+        ValidationCase("ordinary new application", valid, frozenset()),
+    )
+
+    corrected = copy.deepcopy(valid)
+    corrected["submission_type_code"] = "Change/Corrected Application"
+    assert_validation_case(
+        "rr-sf424",
+        ValidationCase(
+            "corrected application without a Grants.gov tracking ID",
+            corrected,
+            frozenset({"$.grants_gov_tracking_id"}),
+        ),
+    )
+    corrected["grants_gov_tracking_id"] = "GRANT12345678"
+    assert_validation_case(
+        "rr-sf424",
+        ValidationCase("corrected application with its tracking ID", corrected, frozenset()),
+    )
+
+    renewal = copy.deepcopy(valid)
+    renewal["application_type"]["application_type_code"] = "Renewal"
+    assert_validation_case(
+        "rr-sf424",
+        ValidationCase(
+            "renewal without its federal identifier",
+            renewal,
+            frozenset({"$.federal_id"}),
+        ),
+    )
+    renewal["federal_id"] = "R01EXAMPLE"
+    assert_validation_case(
+        "rr-sf424",
+        ValidationCase("renewal with its federal identifier", renewal, frozenset()),
+    )
+
+
+def test_rr_sf424_submit_populates_the_aor_signature_and_dates() -> None:
+    application_form = submit_form("rr-sf424", VALID_RESPONSE)
+    response = application_form.application_response
+
+    assert response["aor_signature"] == "reviewer@example.gov"
+    assert response["aor_signed_date"] == response["submitted_date"]
+    assert len(response["submitted_date"].split("-")) == 3
 
 
 def test_rr_sf424_remains_unregistered_until_xml_is_declarative() -> None:
