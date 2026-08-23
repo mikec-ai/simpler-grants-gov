@@ -49,20 +49,29 @@ export function sf424aHappyPathTestData(
   // ********* Section A - Budget summary *********
   ACTIVITY_TITLES.forEach((title, i) => {
     const activityValue = getFillValue(i);
+    const summaryValues: [string, string, string, string] =
+      i === 0
+        ? ["01", "02", "03", "04"]
+        : [activityValue, activityValue, activityValue, activityValue];
     data[`activity_line_items[${i}]--activity_title`] = title;
     data[`activity_line_items[${i}]--assistance_listing_number`] = CFDA;
     data[
       `activity_line_items[${i}]--budget_summary--federal_estimated_unobligated_amount`
-    ] = activityValue;
+    ] = summaryValues[0];
     data[
       `activity_line_items[${i}]--budget_summary--non_federal_estimated_unobligated_amount`
-    ] = activityValue;
+    ] = summaryValues[1];
     data[
       `activity_line_items[${i}]--budget_summary--federal_new_or_revised_amount`
-    ] = activityValue;
+    ] = summaryValues[2];
     data[
       `activity_line_items[${i}]--budget_summary--non_federal_new_or_revised_amount`
-    ] = activityValue;
+    ] = summaryValues[3];
+    // Column G is applicant-entered. Row 1 deliberately differs from C-F
+    // (1 + 2 + 3 + 4 = 10, while G = 100) to preserve the source exception
+    // through save, submission, and print view.
+    data[`activity_line_items[${i}]--budget_summary--total_amount`] =
+      i === 0 ? "100.00" : `${(i + 1) * 4}.00`;
   });
 
   // ********* Section B - Budget categories *********
