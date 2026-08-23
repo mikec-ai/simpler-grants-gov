@@ -4,11 +4,13 @@
  */
 
 import {
+  expect,
   test,
   type BrowserContext,
   type Page,
   type TestInfo,
 } from "@playwright/test";
+import { SF424A_EXPECTED } from "tests/e2e/apply/fixtures/sf424a-field-definitions";
 import playwrightEnv from "tests/e2e/playwright-env";
 import { VALID_TAGS } from "tests/e2e/tags";
 import { createApplication } from "tests/e2e/utils/application/create-application-utils";
@@ -24,6 +26,7 @@ import type { FilledFormEntry } from "tests/e2e/utils/submission/opportunity-pri
 import {
   buildHappyPathTestData,
   buildPrintUrl,
+  navigateToPrintView,
   validateAllPrintViews,
   validatePrintViewField,
 } from "tests/e2e/utils/submission/print-view-utils";
@@ -95,6 +98,38 @@ for (const { testName, orgLabel } of applicantScenarios) {
         await verifyFormStatusAfterSave(page, "complete");
 
         // SF-424A row totals are not calculated after save as they are manually entered - Ref !11223
+        if (form.formKey === "sf424a") {
+          const rowOneFields = [
+            "activity_line_items[0]--activity_title",
+            "activity_line_items[0]--assistance_listing_number",
+            "activity_line_items[0]--budget_summary--federal_estimated_unobligated_amount",
+            "activity_line_items[0]--budget_summary--non_federal_estimated_unobligated_amount",
+            "activity_line_items[0]--budget_summary--federal_new_or_revised_amount",
+            "activity_line_items[0]--budget_summary--non_federal_new_or_revised_amount",
+            "activity_line_items[0]--budget_summary--total_amount",
+          ];
+          const rowOneCThroughF = rowOneFields.slice(2, 6);
+
+          expect(
+            rowOneCThroughF.reduce(
+              (sum, field) => sum + Number(testData[field]),
+              0,
+            ),
+          ).toBe(Number(SF424A_EXPECTED.sectionA.rowOneSourceSum));
+
+          // Browser-level keyboard gate: Section A follows its visible A-G order.
+          await page.getByTestId(rowOneFields[0]).focus();
+          for (const nextField of rowOneFields.slice(1)) {
+            await page.keyboard.press("Tab");
+            await expect(page.getByTestId(nextField)).toBeFocused();
+          }
+
+          // Accessibility-tree gate: the source-defined meaning, not just the
+          // visual column letter, names the applicant-entered total.
+          await expect(
+            page.getByRole("textbox", { name: "Total, row 1" }),
+          ).toHaveValue(SF424A_EXPECTED.sectionA.rowOneEnteredTotal);
+        }
 
         // Capture the form URL now - verifyFormStatusOnApplication navigates away
         const formUrl = page.url();
@@ -133,30 +168,55 @@ for (const { testName, orgLabel } of applicantScenarios) {
       await verifySubmissionConfirmation(page);
 
       // --- Print View Validation (one page per form) ---
-      // Skip editable input check for SF-424A as it uses custom table rendering with visible inputs
-      await validateAllPrintViews(page, filledForms, ["sf424a"]);
+      await validateAllPrintViews(page, filledForms);
 
       // --- SF-424A Form-Specific Validation ---
-      for (const { formKey } of filledForms) {
+      for (const { formKey, printUrl } of filledForms) {
         // SF-424A validation - strict computed totals checks with activity-specific expectations
         // Test data uses unique values per activity (01, 02, 03, 04)
         // requirement. Totals are still deterministic and calculated per activity index.
         if (formKey === "sf424a") {
+          await navigateToPrintView(page, printUrl);
+          await page.emulateMedia({ media: "print" });
+
           // Section A - Budget Summary
+
+          // This is the real post-submission print route. It must preserve the
+          // applicant's row-1 exception rather than replacing G with C-F.
+          await validatePrintViewField(
+            page,
+            "activity_line_items[0]--budget_summary--total_amount",
+            SF424A_EXPECTED.sectionA.rowOneEnteredTotal,
+          );
+          await expect(
+            page.getByRole("textbox", { name: "Total, row 1" }),
+          ).toBeDisabled();
+          await expect(
+            page.getByRole("columnheader", { name: "Column G" }),
+          ).toBeVisible();
 
           // Helper to format numeric activity value to two decimal places
           const toTwoDecimals = (num: number): string => num.toFixed(2);
-          const sectionATotalColumns = toTwoDecimals(1 + 2 + 3 + 4);
-          const budgetSummaryCols = [
-            "federal_estimated_unobligated_amount",
-            "non_federal_estimated_unobligated_amount",
-            "federal_new_or_revised_amount",
-            "non_federal_new_or_revised_amount",
-          ];
-          for (const col of budgetSummaryCols) {
+          const sectionAColumnTotals = {
+            federal_estimated_unobligated_amount:
+              SF424A_EXPECTED.sectionA.columnCDEF.federalEstimatedUnobligated,
+            non_federal_estimated_unobligated_amount:
+              SF424A_EXPECTED.sectionA.columnCDEF
+                .nonFederalEstimatedUnobligated,
+            federal_new_or_revised_amount:
+              SF424A_EXPECTED.sectionA.columnCDEF.federalNewOrRevised,
+            non_federal_new_or_revised_amount:
+              SF424A_EXPECTED.sectionA.columnCDEF.nonFederalNewOrRevised,
+          };
+          for (const [col, expected] of Object.entries(sectionAColumnTotals)) {
             const totalId = `total_budget_summary--${col}`;
-            await validatePrintViewField(page, totalId, sectionATotalColumns);
+            await validatePrintViewField(page, totalId, expected);
           }
+          await validatePrintViewField(
+            page,
+            "total_budget_summary--total_amount",
+            SF424A_EXPECTED.sectionA.columnG,
+          );
 
           // Section B - Budget Categories totals
           // Individual category row totals (Column 5: sum of 1-4)

@@ -19,12 +19,17 @@ const QUARTERS = 4;
 
 export const SF424A_EXPECTED = {
   sectionA: {
-    // budget_summary.total_amount = sum(C+D+E+F) per row
-    rowTotalAmount: numberToTwoDecimalString(4 * FILL),
-    // total_budget_summary columns C/D/E/F = ROWS × FILL
-    columnCDEF: numberToTwoDecimalString(ROWS * FILL),
+    // Row 1 deliberately proves that applicant-entered G need not equal C-F.
+    rowOneSourceSum: numberToTwoDecimalString(1 + 2 + 3 + 4),
+    rowOneEnteredTotal: "100.00",
+    columnCDEF: {
+      federalEstimatedUnobligated: "10.00",
+      nonFederalEstimatedUnobligated: "11.00",
+      federalNewOrRevised: "12.00",
+      nonFederalNewOrRevised: "13.00",
+    },
     // total_budget_summary.total_amount = sum(activity[*].budget_summary.total_amount)
-    columnG: numberToTwoDecimalString(ROWS * 4 * FILL),
+    columnG: "136.00",
   },
   sectionB: {
     // total_budget_categories.{category} = sum across ROWS
@@ -119,6 +124,12 @@ export const SF424A_FORM_CONFIG: FillFormConfig = {
         field:
           "activity_line_items[0]--budget_summary--non_federal_new_or_revised_amount",
       },
+    "activity_line_items[0]--budget_summary--total_amount": {
+      testId: "activity_line_items[0]--budget_summary--total_amount",
+      type: "text",
+      section: "SectionA",
+      field: "activity_line_items[0]--budget_summary--total_amount",
+    },
 
     // Row 2
     "activity_line_items[1]--activity_title": {
@@ -168,6 +179,12 @@ export const SF424A_FORM_CONFIG: FillFormConfig = {
         field:
           "activity_line_items[1]--budget_summary--non_federal_new_or_revised_amount",
       },
+    "activity_line_items[1]--budget_summary--total_amount": {
+      testId: "activity_line_items[1]--budget_summary--total_amount",
+      type: "text",
+      section: "SectionA",
+      field: "activity_line_items[1]--budget_summary--total_amount",
+    },
 
     // Row 3
     "activity_line_items[2]--activity_title": {
@@ -217,6 +234,12 @@ export const SF424A_FORM_CONFIG: FillFormConfig = {
         field:
           "activity_line_items[2]--budget_summary--non_federal_new_or_revised_amount",
       },
+    "activity_line_items[2]--budget_summary--total_amount": {
+      testId: "activity_line_items[2]--budget_summary--total_amount",
+      type: "text",
+      section: "SectionA",
+      field: "activity_line_items[2]--budget_summary--total_amount",
+    },
 
     // Row 4
     "activity_line_items[3]--activity_title": {
@@ -266,6 +289,12 @@ export const SF424A_FORM_CONFIG: FillFormConfig = {
         field:
           "activity_line_items[3]--budget_summary--non_federal_new_or_revised_amount",
       },
+    "activity_line_items[3]--budget_summary--total_amount": {
+      testId: "activity_line_items[3]--budget_summary--total_amount",
+      type: "text",
+      section: "SectionA",
+      field: "activity_line_items[3]--budget_summary--total_amount",
+    },
 
     // ********* Section B - Budget categories *********
     // User-editable rows: a–h and j per activity column (i and k are rule-computed)
