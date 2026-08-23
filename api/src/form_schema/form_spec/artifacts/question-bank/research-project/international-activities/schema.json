@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-project/international-activities/schema.json",
+  "type": "object",
+  "properties": {
+    "involvesInternationalActivities": {
+      "$ref": "#/$defs/ResearchProjectYesNoCode",
+      "description": "Does the project involve activities outside the United States or partnerships with international collaborators?",
+      "title": "Does the project involve international activities or partnerships?"
+    },
+    "countries": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 55,
+      "description": "Identify the countries involved in the international activities or partnerships.",
+      "title": "Countries Involved"
+    },
+    "explanation": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 55,
+      "description": "Explain the international activities or partnerships.",
+      "title": "International Activities Explanation"
+    }
+  },
+  "required": [
+    "involvesInternationalActivities"
+  ],
+  "description": "International activities and partnerships involved in the project.",
+  "$defs": {
+    "ResearchProjectYesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ],
+      "description": "The exact yes/no wire values used by the R&R Other Project Information source."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "involvesInternationalActivities": {
+            "const": "Y: Yes"
+          }
+        },
+        "required": [
+          "involvesInternationalActivities"
+        ]
+      },
+      "then": {
+        "required": [
+          "countries"
+        ]
+      }
+    }
+  ]
+}

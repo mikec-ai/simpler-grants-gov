@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-project/historic-designation/schema.json",
+  "type": "object",
+  "properties": {
+    "hasHistoricDesignation": {
+      "$ref": "#/$defs/ResearchProjectYesNoCode",
+      "description": "Is the research performance site designated, or eligible to be designated, as a historic place?",
+      "title": "Is the research performance site designated or eligible as a historic place?"
+    },
+    "explanation": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 55,
+      "description": "Explain the historic-place designation.",
+      "title": "Historic Place Explanation"
+    }
+  },
+  "required": [
+    "hasHistoricDesignation"
+  ],
+  "description": "Historic-place designation information for the project.",
+  "$defs": {
+    "ResearchProjectYesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ],
+      "description": "The exact yes/no wire values used by the R&R Other Project Information source."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "hasHistoricDesignation": {
+            "const": "Y: Yes"
+          }
+        },
+        "required": [
+          "hasHistoricDesignation"
+        ]
+      },
+      "then": {
+        "required": [
+          "explanation"
+        ]
+      }
+    }
+  ]
+}

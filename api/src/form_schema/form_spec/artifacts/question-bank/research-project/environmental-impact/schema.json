@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-project/environmental-impact/schema.json",
+  "type": "object",
+  "properties": {
+    "hasEnvironmentalImpact": {
+      "$ref": "#/$defs/ResearchProjectYesNoCode",
+      "description": "Does the proposed project have an actual or potential impact on the environment?",
+      "title": "Does the project have an actual or potential environmental impact?"
+    },
+    "environmentalImpactExplanation": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 55,
+      "description": "Explain the actual or potential environmental impact.",
+      "title": "Environmental Impact Explanation"
+    },
+    "hasEnvironmentalExemptionOrAssessment": {
+      "$ref": "#/$defs/ResearchProjectYesNoCode",
+      "description": "Has an environmental exemption been authorized or an environmental assessment approved?",
+      "title": "Has an environmental exemption been authorized or an environmental assessment approved?"
+    },
+    "environmentalExemptionOrAssessmentExplanation": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 55,
+      "description": "Explain the environmental exemption or approved environmental assessment.",
+      "title": "Environmental Exemption or Assessment Explanation"
+    }
+  },
+  "required": [
+    "hasEnvironmentalImpact"
+  ],
+  "description": "Environmental impact and exemption information for the project.",
+  "$defs": {
+    "ResearchProjectYesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ],
+      "description": "The exact yes/no wire values used by the R&R Other Project Information source."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "hasEnvironmentalImpact": {
+            "const": "Y: Yes"
+          }
+        },
+        "required": [
+          "hasEnvironmentalImpact"
+        ]
+      },
+      "then": {
+        "required": [
+          "environmentalImpactExplanation",
+          "hasEnvironmentalExemptionOrAssessment"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "hasEnvironmentalExemptionOrAssessment": {
+            "const": "Y: Yes"
+          }
+        },
+        "required": [
+          "hasEnvironmentalExemptionOrAssessment"
+        ]
+      },
+      "then": {
+        "required": [
+          "environmentalExemptionOrAssessmentExplanation"
+        ]
+      }
+    }
+  ]
+}

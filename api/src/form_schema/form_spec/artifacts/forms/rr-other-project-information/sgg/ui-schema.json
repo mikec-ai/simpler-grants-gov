@@ -1,0 +1,369 @@
+[
+  {
+    "type": "section",
+    "name": "humanSubjects",
+    "label": "1. Human Subjects",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/humanSubjects/properties/involvesHumanSubjects"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/humanSubjects/properties/exemptFromFederalRegulations",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/humanSubjects/involvesHumanSubjects"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/humanSubjects/properties/exemptions",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/humanSubjects/exemptFromFederalRegulations"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/humanSubjects/properties/irbReviewPending",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/humanSubjects/exemptFromFederalRegulations"
+            },
+            "value": "N: No"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/humanSubjects/properties/irbApprovalDate",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/humanSubjects/irbReviewPending"
+            },
+            "value": "N: No"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/humanSubjects/properties/assuranceNumber",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/humanSubjects/involvesHumanSubjects"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "vertebrateAnimals",
+    "label": "2. Vertebrate Animals",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/vertebrateAnimals/properties/involvesVertebrateAnimals"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/vertebrateAnimals/properties/iacucReviewPending",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/vertebrateAnimals/involvesVertebrateAnimals"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/vertebrateAnimals/properties/iacucApprovalDate",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/vertebrateAnimals/iacucReviewPending"
+            },
+            "value": "N: No"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/vertebrateAnimals/properties/assuranceNumber",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/vertebrateAnimals/iacucReviewPending"
+            },
+            "value": "N: No"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "proprietaryInformation",
+    "label": "3. Proprietary or Privileged Information",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/proprietaryInformation/properties/includesProprietaryInformation"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "environmentalImpact",
+    "label": "4. Environmental Impact",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/environmentalImpact/properties/hasEnvironmentalImpact"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/environmentalImpact/properties/environmentalImpactExplanation",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/environmentalImpact/hasEnvironmentalImpact"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/environmentalImpact/properties/hasEnvironmentalExemptionOrAssessment",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/environmentalImpact/hasEnvironmentalImpact"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/environmentalImpact/properties/environmentalExemptionOrAssessmentExplanation",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/environmentalImpact/hasEnvironmentalExemptionOrAssessment"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "historicPlaces",
+    "label": "5. Historic Places",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/historicPlaces/properties/hasHistoricDesignation"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/historicPlaces/properties/explanation",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/historicPlaces/hasHistoricDesignation"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "internationalActivities",
+    "label": "6. International Activities",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/internationalActivities/properties/involvesInternationalActivities"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/internationalActivities/properties/countries",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/internationalActivities/involvesInternationalActivities"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/internationalActivities/properties/explanation"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "supportingDocuments",
+    "label": "7. Supporting Documents",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/projectSummaryAbstract",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectNarrative",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/bibliographyReferences",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/facilitiesResources",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/equipment",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/otherAttachments",
+        "widget": "AttachmentArray"
+      }
+    ]
+  }
+]

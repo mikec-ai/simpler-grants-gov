@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-project/vertebrate-animals/schema.json",
+  "type": "object",
+  "properties": {
+    "involvesVertebrateAnimals": {
+      "$ref": "#/$defs/ResearchProjectYesNoCode",
+      "description": "Does the proposed project involve vertebrate animals?",
+      "title": "Does the proposed project involve vertebrate animals?"
+    },
+    "iacucReviewPending": {
+      "$ref": "#/$defs/ResearchProjectYesNoCode",
+      "description": "Is institutional animal care and use committee review pending?",
+      "title": "Is IACUC review pending?"
+    },
+    "iacucApprovalDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Enter the institutional animal care and use committee approval date.",
+      "title": "IACUC Approval Date"
+    },
+    "assuranceNumber": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 9,
+      "description": "Enter the animal welfare assurance number.",
+      "title": "Animal Welfare Assurance Number"
+    }
+  },
+  "required": [
+    "involvesVertebrateAnimals"
+  ],
+  "description": "Vertebrate-animal protections and institutional review information for the project.",
+  "$defs": {
+    "ResearchProjectYesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ],
+      "description": "The exact yes/no wire values used by the R&R Other Project Information source."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "involvesVertebrateAnimals": {
+            "const": "Y: Yes"
+          }
+        },
+        "required": [
+          "involvesVertebrateAnimals"
+        ]
+      },
+      "then": {
+        "required": [
+          "iacucReviewPending"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "iacucReviewPending": {
+            "const": "N: No"
+          }
+        },
+        "required": [
+          "iacucReviewPending"
+        ]
+      },
+      "then": {
+        "required": [
+          "iacucApprovalDate",
+          "assuranceNumber"
+        ]
+      }
+    }
+  ]
+}

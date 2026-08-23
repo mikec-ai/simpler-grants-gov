@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-project/proprietary-information/schema.json",
+  "type": "object",
+  "properties": {
+    "includesProprietaryInformation": {
+      "$ref": "#/$defs/ResearchProjectYesNoCode",
+      "description": "Does the application include proprietary or privileged information?",
+      "title": "Does the application include proprietary or privileged information?"
+    }
+  },
+  "required": [
+    "includesProprietaryInformation"
+  ],
+  "description": "Whether the application includes proprietary or privileged information.",
+  "$defs": {
+    "ResearchProjectYesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ],
+      "description": "The exact yes/no wire values used by the R&R Other Project Information source."
+    }
+  }
+}
