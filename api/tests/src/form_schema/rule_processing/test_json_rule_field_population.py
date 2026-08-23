@@ -147,6 +147,70 @@ def test_handle_field_population_pre_population_sum_monetary(
 
 
 @pytest.mark.parametrize(
+    "json_data,expected",
+    [
+        ({"my_field": "99.00"}, {}),
+        ({"x": "0.00"}, {"x": "0.00", "my_field": "0.00"}),
+        ({"x": "2.50"}, {"x": "2.50", "my_field": "2.50"}),
+    ],
+)
+def test_sum_monetary_materializes_only_when_a_source_is_present(
+    json_data, expected, enable_factory_create
+):
+    rule = {
+        "rule": "sum_monetary",
+        "fields": ["x", "y"],
+        "presence_fields": ["x", "y"],
+        "materialize": "when_any_source_present",
+    }
+    context = setup_context(json_data, {"my_field": rule})
+
+    handle_field_population(
+        context,
+        JsonRule(handler="gg_pre_population", rule=rule, path=["my_field"]),
+        PRE_POPULATION_MAPPER,
+    )
+
+    assert context.json_data == expected
+
+
+def test_sum_integer_materializes_explicit_zero(enable_factory_create):
+    rule = {
+        "rule": "sum_integer",
+        "fields": ["count"],
+        "presence_fields": ["count"],
+        "materialize": "when_any_source_present",
+    }
+    context = setup_context({"count": 0}, {"total": rule})
+
+    handle_field_population(
+        context,
+        JsonRule(handler="gg_pre_population", rule=rule, path=["total"]),
+        PRE_POPULATION_MAPPER,
+    )
+
+    assert context.json_data == {"count": 0, "total": 0}
+
+
+def test_null_values_from_repeated_sources_do_not_materialize(enable_factory_create):
+    rule = {
+        "rule": "sum_monetary",
+        "fields": ["items[*].amount"],
+        "presence_fields": ["items[*].amount"],
+        "materialize": "when_any_source_present",
+    }
+    context = setup_context({"items": [{"amount": None}, {}], "total": "99.00"}, {"total": rule})
+
+    handle_field_population(
+        context,
+        JsonRule(handler="gg_pre_population", rule=rule, path=["total"]),
+        PRE_POPULATION_MAPPER,
+    )
+
+    assert context.json_data == {"items": [{"amount": None}, {}]}
+
+
+@pytest.mark.parametrize(
     "rule,json_data",
     [
         ({"rule": "sum_monetary", "fields": ["x"]}, {"x": 100}),

@@ -41,6 +41,12 @@ from typing import Any
 
 _CAMEL_BOUNDARY = re.compile(r"(?<=[a-z0-9])(?=[A-Z])")
 _ARRAY_MARKER = re.compile(r"^(?P<name>.*?)(?P<marker>\[(?:\*|\d+)\])?$")
+_MATERIALIZABLE_CALCULATION_RULES = {
+    "sum_monetary",
+    "sum_integer",
+    "subtract_monetary",
+    "multiply_by_percentage",
+}
 
 # JSON Schema keywords whose value is a map of property name to subschema. Their keys are
 # form field names and must be projected; every other mapping's keys must not be.
@@ -343,6 +349,8 @@ def _schema_pointer_field_positions(steps: list[str]) -> list[int]:
 
 def project_rule_schema(rules: Any, projection: Projection, path: str = "") -> Any:
     """Rename a rule schema's keys and the field paths its rules reference."""
+    if path == "":
+        _validate_rule_schema(rules)
     if not isinstance(rules, dict):
         return rules
 
@@ -365,7 +373,59 @@ def _project_rule(rule: Any, projection: Projection, path: str) -> Any:
     fields = rule.get("fields")
     if isinstance(fields, list):
         out["fields"] = [_project_reference(f, projection, path) for f in fields]
+    presence_fields = rule.get("presence_fields")
+    if isinstance(presence_fields, list):
+        out["presence_fields"] = [_project_reference(f, projection, path) for f in presence_fields]
+    for key in ("amount", "percentage"):
+        reference = rule.get(key)
+        if isinstance(reference, str):
+            out[key] = _project_reference(reference, projection, path)
     return out
+
+
+def _validate_rule_schema(node: Any) -> None:
+    if isinstance(node, list):
+        for value in node:
+            _validate_rule_schema(value)
+        return
+    if not isinstance(node, dict):
+        return
+    pre_population = node.get("gg_pre_population")
+    if isinstance(pre_population, dict) and "materialize" in pre_population:
+        rule = pre_population.get("rule")
+        if rule not in _MATERIALIZABLE_CALCULATION_RULES:
+            raise ValueError(
+                "calculation materialization policy requires a supported calculation rule"
+            )
+        if pre_population["materialize"] != "when_any_source_present":
+            raise ValueError(
+                f"unknown calculation materialization policy: {pre_population['materialize']!r}"
+            )
+        presence_fields = pre_population.get("presence_fields")
+        if (
+            not isinstance(presence_fields, list)
+            or not presence_fields
+            or not all(isinstance(field, str) and field for field in presence_fields)
+        ):
+            raise ValueError("when_any_source_present requires non-empty string presence_fields")
+        if rule == "multiply_by_percentage":
+            if not all(
+                isinstance(pre_population.get(key), str) and pre_population[key]
+                for key in ("amount", "percentage")
+            ):
+                raise ValueError(
+                    "materialized multiply_by_percentage requires non-empty amount and percentage paths"
+                )
+        else:
+            fields = pre_population.get("fields")
+            if (
+                not isinstance(fields, list)
+                or not fields
+                or not all(isinstance(field, str) and field for field in fields)
+            ):
+                raise ValueError(f"materialized {rule} requires non-empty string fields")
+    for value in node.values():
+        _validate_rule_schema(value)
 
 
 def _project_reference(reference: str, projection: Projection, path: str) -> str:

@@ -38,19 +38,23 @@ def test_runtime_identity_and_both_capacities_come_from_portable_manifest() -> N
 
 def test_profile_requires_no_new_renderer_or_rule_capability() -> None:
     assert (
-        len([
-            node
-            for node in _objects(RRSubawardBudget10_30_v3_0.form_ui_schema)
-            if node.get("type") == "fieldList"
-        ])
+        len(
+            [
+                node
+                for node in _objects(RRSubawardBudget10_30_v3_0.form_ui_schema)
+                if node.get("type") == "fieldList"
+            ]
+        )
         == 6
     )
     assert (
-        len([
-            node
-            for node in _objects(RRSubawardBudget10_30_v3_0.form_rule_schema)
-            if "gg_pre_population" in node
-        ])
+        len(
+            [
+                node
+                for node in _objects(RRSubawardBudget10_30_v3_0.form_rule_schema)
+                if "gg_pre_population" in node
+            ]
+        )
         == 56
     )
     assert "@PARENT." in json.dumps(RRSubawardBudget10_30_v3_0.form_rule_schema)

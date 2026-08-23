@@ -7,13 +7,135 @@ from grants_shared.util.datetime_util import get_now_us_eastern_date
 from grants_shared.util.decimal_util import ZERO_DECIMAL, convert_monetary_field, quantize_decimal
 
 from src.form_schema.rule_processing.json_rule_context import JsonRule, JsonRuleContext
-from src.form_schema.rule_processing.json_rule_util import get_field_values, populate_nested_value
+from src.form_schema.rule_processing.json_rule_util import (
+    ARRAY_INDEX_REGEX,
+    get_field_values,
+    is_relative_path,
+    make_relative_path_absolute,
+    populate_nested_value,
+)
 
 logger = logging.getLogger(__name__)
 
 INDIVIDUAL_UEI = "00000000INDV"
 EXCLUDE_VALUE = "exclude_value"
 UNKNOWN_VALUE = "unknown"
+WHEN_ANY_SOURCE_PRESENT = "when_any_source_present"
+CALCULATION_RULES = {
+    "sum_monetary",
+    "sum_integer",
+    "subtract_monetary",
+    "multiply_by_percentage",
+}
+
+
+def _calculation_source_fields(rule: dict[str, Any]) -> list[str]:
+    if rule.get("rule") == "multiply_by_percentage":
+        fields = [rule.get("amount"), rule.get("percentage")]
+    else:
+        fields = rule.get("fields", [])
+    if (
+        not isinstance(fields, list)
+        or not fields
+        or not all(isinstance(field, str) and field for field in fields)
+    ):
+        raise ValueError("Calculation source fields must be non-empty paths")
+    return fields
+
+
+def _reference_path(path: list[str], reference: str) -> list[str]:
+    if is_relative_path(reference):
+        return make_relative_path_absolute(path, reference)
+    return reference.split(".")
+
+
+def _path_matches(pattern: list[str], concrete: list[str]) -> bool:
+    if len(pattern) != len(concrete):
+        return False
+    for expected, actual in zip(pattern, concrete, strict=True):
+        match = ARRAY_INDEX_REGEX.search(expected)
+        if match and match.group(1) == "*":
+            expected_name = expected[: expected.rfind("[")]
+            actual_match = ARRAY_INDEX_REGEX.search(actual)
+            if not actual_match or actual[: actual.rfind("[")] != expected_name:
+                return False
+            continue
+        if expected != actual:
+            return False
+    return True
+
+
+def _calculation_dependencies(
+    context: JsonRuleContext, json_rule: JsonRule, reference: str
+) -> list[JsonRule]:
+    pattern = _reference_path(json_rule.path, reference)
+    return [
+        candidate
+        for candidate in context.rules
+        if candidate.handler == "gg_pre_population"
+        and candidate.rule.get("rule") in CALCULATION_RULES
+        and _path_matches(pattern, candidate.path)
+    ]
+
+
+def _has_entered_source(
+    context: JsonRuleContext,
+    json_rule: JsonRule,
+    references: list[str],
+    visiting: set[tuple[str, ...]],
+) -> bool:
+    key = tuple(json_rule.path)
+    if key in visiting:
+        raise ValueError(f"Calculation presence cycle at {'.'.join(json_rule.path)}")
+    visiting.add(key)
+    try:
+        for reference in references:
+            dependencies = _calculation_dependencies(context, json_rule, reference)
+            if dependencies:
+                for dependency in dependencies:
+                    dependency_sources = dependency.rule.get("presence_fields")
+                    if dependency_sources is None:
+                        dependency_sources = _calculation_source_fields(dependency.rule)
+                    if not isinstance(dependency_sources, list) or not all(
+                        isinstance(field, str) for field in dependency_sources
+                    ):
+                        raise ValueError("Calculation presence_fields must be a list of paths")
+                    if _has_entered_source(context, dependency, dependency_sources, visiting):
+                        return True
+                continue
+            if any(
+                value is not None
+                for value in get_field_values(context.json_data, [reference], json_rule.path)
+            ):
+                return True
+        return False
+    finally:
+        visiting.remove(key)
+
+
+def _materialize_calculation(
+    context: JsonRuleContext, json_rule: JsonRule, fields: list[str]
+) -> bool:
+    """Whether a calculation should write its target under its declared policy.
+
+    The default preserves the existing zero-materializing behavior. The opt-in policy treats a
+    resolved value of zero as present, while an absent or null source does not materialize an
+    output. Invalid source values still count as entered data; normal calculation validation and
+    tolerant conversion behavior remain unchanged.
+    """
+    policy = json_rule.rule.get("materialize")
+    if policy is None:
+        return True
+    if policy != WHEN_ANY_SOURCE_PRESENT:
+        raise ValueError(f"Unknown calculation materialization policy: {policy}")
+    presence_fields = json_rule.rule.get("presence_fields")
+    if (
+        not isinstance(presence_fields, list)
+        or not presence_fields
+        or not all(isinstance(field, str) for field in presence_fields)
+    ):
+        raise ValueError("when_any_source_present requires non-empty presence_fields")
+    return _has_entered_source(context, json_rule, presence_fields, set())
 
 
 def get_opportunity_number(context: JsonRuleContext, json_rule: JsonRule) -> str:
@@ -144,7 +266,7 @@ def get_signature(context: JsonRuleContext, json_rule: JsonRule) -> str | None:
     return UNKNOWN_VALUE
 
 
-def sum_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str:
+def sum_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str | None:
     """Sum monetary amounts based on configuration
 
     The rule schema for this needs to specify a set of fields
@@ -157,6 +279,8 @@ def sum_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str:
     If no values are fetched, "0.00" will be returned.
     """
     fields = json_rule.rule.get("fields", [])
+    if not _materialize_calculation(context, json_rule, fields):
+        return None
     values = get_field_values(context.json_data, fields, json_rule.path)
 
     result = ZERO_DECIMAL
@@ -184,7 +308,7 @@ def sum_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str:
     return str(quantize_decimal(result))
 
 
-def sum_integer_values(context: JsonRuleContext, json_rule: JsonRule) -> int:
+def sum_integer_values(context: JsonRuleContext, json_rule: JsonRule) -> int | None:
     """Sum integer counts across scalar and repeated paths.
 
     Missing and invalid values contribute zero, matching the tolerant behavior of
@@ -192,6 +316,8 @@ def sum_integer_values(context: JsonRuleContext, json_rule: JsonRule) -> int:
     Booleans are rejected explicitly because Python treats them as integers.
     """
     fields = json_rule.rule.get("fields", [])
+    if not _materialize_calculation(context, json_rule, fields):
+        return None
     values = get_field_values(context.json_data, fields, json_rule.path)
 
     result = 0
@@ -224,7 +350,7 @@ def _get_single_field_value(context: JsonRuleContext, json_rule: JsonRule, confi
     return values[0]
 
 
-def multiply_by_percentage(context: JsonRuleContext, json_rule: JsonRule) -> str:
+def multiply_by_percentage(context: JsonRuleContext, json_rule: JsonRule) -> str | None:
     """Multiply a monetary amount by a whole-number percentage.
 
     Config: ``{"amount": "<path>", "percentage": "<path>"}``, where amount is a
@@ -234,6 +360,10 @@ def multiply_by_percentage(context: JsonRuleContext, json_rule: JsonRule) -> str
 
     Missing values are treated as zero; invalid data raises ValueError.
     """
+    source_fields = _calculation_source_fields(json_rule.rule)
+    if not _materialize_calculation(context, json_rule, source_fields):
+        return None
+
     amount_value = _get_single_field_value(context, json_rule, "amount")
     percentage_value = _get_single_field_value(context, json_rule, "percentage")
 
@@ -262,7 +392,7 @@ def _convert_percentage(value: Any) -> Decimal:
     return Decimal(value)
 
 
-def subtract_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str:
+def subtract_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str | None:
     """Subtract monetary amounts based on configuration
 
     Mirrors sum_monetary, but the first field is the minuend and every
@@ -272,6 +402,8 @@ def subtract_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> s
     Value returned is a string of format "0.00" with two decimal points.
     """
     fields = json_rule.rule.get("fields", [])
+    if not _materialize_calculation(context, json_rule, fields):
+        return None
 
     result = ZERO_DECIMAL
     for index, field in enumerate(fields):

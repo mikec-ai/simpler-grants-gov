@@ -65,6 +65,7 @@ def test_nested_repeating_groups_and_rules_are_projected_generically() -> None:
 
     assert sum(node.get("type") == "fieldList" for node in ui_objects) == 6
     assert len(calculations) == 56
+    assert sum(rule.get("materialize") == "when_any_source_present" for rule in calculations) == 20
     raw_rules = json.loads((ARTIFACTS / "sgg" / "rule-schema.json").read_text())
     assert "@PARENT." in json.dumps(raw_rules)
     assert "@PARENT." in json.dumps(RRSubawardBudget_v3_0.form_rule_schema)
@@ -111,6 +112,76 @@ def test_nested_cumulative_calculations_resolve_within_each_subaward() -> None:
     ]
 
 
+def test_nested_source_conditioned_calculation_distinguishes_absence_from_zero() -> None:
+    application_form = SimpleNamespace(
+        application_response={
+            "budget_attachments": [
+                {
+                    "budget_year": [{"travel": {"total_travel_cost": "99.00"}}],
+                    "budget_summary": {},
+                },
+                {
+                    "budget_year": [{"travel": {"domestic_travel_cost": "0.00"}}],
+                    "budget_summary": {},
+                },
+            ]
+        },
+        form=RRSubawardBudget_v3_0,
+        application_form_id="portable-subaward-materialization-test",
+        form_id=RRSubawardBudget_v3_0.form_id,
+    )
+    context = JsonRuleContext(
+        cast(Any, application_form), JsonRuleConfig(do_field_validation=False)
+    )
+
+    process_rule_schema_for_context(context)
+
+    budgets = context.json_data["budget_attachments"]
+    first_travel = budgets[0]["budget_year"][0]["travel"]
+    second_travel = budgets[1]["budget_year"][0]["travel"]
+    assert "total_travel_cost" not in first_travel
+    assert second_travel["total_travel_cost"] == "0.00"
+
+
+def test_nested_cumulative_other_personnel_presence_follows_entered_sources() -> None:
+    application_form = SimpleNamespace(
+        application_response={
+            "budget_attachments": [
+                {"budget_year": [{"other_personnel": {}}], "budget_summary": {}},
+                {
+                    "budget_year": [
+                        {
+                            "other_personnel": {
+                                "post_doc_associates": {
+                                    "requested_salary": "0.00",
+                                    "number_of_personnel": 0,
+                                }
+                            }
+                        }
+                    ],
+                    "budget_summary": {},
+                },
+            ]
+        },
+        form=RRSubawardBudget_v3_0,
+        application_form_id="portable-subaward-transitive-presence-test",
+        form_id=RRSubawardBudget_v3_0.form_id,
+    )
+    context = JsonRuleContext(
+        cast(Any, application_form), JsonRuleConfig(do_field_validation=False)
+    )
+
+    process_rule_schema_for_context(context)
+
+    absent, explicit_zero = [
+        budget["budget_summary"] for budget in context.json_data["budget_attachments"]
+    ]
+    assert "cumulative_total_funds_requested_other_personnel" not in absent
+    assert "cumulative_total_no_other_personnel" not in absent
+    assert explicit_zero["cumulative_total_funds_requested_other_personnel"] == "0.00"
+    assert explicit_zero["cumulative_total_no_other_personnel"] == 0
+
+
 def test_official_xsd_and_dat_provenance_are_pinned() -> None:
     evidence = json.loads((ARTIFACTS / "evidence.json").read_text())
 
@@ -119,4 +190,8 @@ def test_official_xsd_and_dat_provenance_are_pinned() -> None:
         ("dat", "4eab979aa62d4a4e79da6ee536140da7b76545a8fc20a9897c1c13527b3c56fd"),
         ("dat", "c85158ce7ddcc756d6e8a55a050e00b4a95cdfc8d9a2d91b7bd94c7f8bdb1035"),
     ]
+    assert len(evidence["behaviorEvidence"]) == 20
+    assert {
+        (record["sourceId"], record["inheritedFrom"]) for record in evidence["behaviorEvidence"]
+    } == {("grantsgov-rr-budget-dat-3.0-f770", "rr-budget")}
     assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}

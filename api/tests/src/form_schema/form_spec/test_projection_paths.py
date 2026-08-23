@@ -125,6 +125,128 @@ def test_rule_paths_reject_multiple_array_selectors_on_one_segment() -> None:
         project_rule_schema(rules, Projection())
 
 
+@pytest.mark.parametrize("policy", ["unknown", "", None])
+def test_rule_projection_rejects_unknown_materialization_policy(policy) -> None:
+    rules = {
+        "total": {
+            "gg_pre_population": {
+                "rule": "sum_monetary",
+                "fields": ["amount"],
+                "presence_fields": ["amount"],
+                "materialize": policy,
+            }
+        }
+    }
+
+    with pytest.raises(ValueError, match="unknown calculation materialization policy"):
+        project_rule_schema(rules, Projection())
+
+
+def test_rule_projection_requires_presence_fields_for_conditional_materialization() -> None:
+    rules = {
+        "total": {
+            "gg_pre_population": {
+                "rule": "sum_monetary",
+                "fields": ["amount"],
+                "materialize": "when_any_source_present",
+            }
+        }
+    }
+
+    with pytest.raises(ValueError, match="requires non-empty string presence_fields"):
+        project_rule_schema(rules, Projection())
+
+
+def test_rule_projection_rejects_materialization_on_non_calculation_rule() -> None:
+    rules = {
+        "submitted_at": {
+            "gg_pre_population": {
+                "rule": "current_date",
+                "presence_fields": ["signature"],
+                "materialize": "when_any_source_present",
+            }
+        }
+    }
+
+    with pytest.raises(ValueError, match="requires a supported calculation rule"):
+        project_rule_schema(rules, Projection())
+
+
+def test_rule_projection_renames_percentage_operands_and_presence_fields() -> None:
+    rules = {
+        "fee": {
+            "gg_pre_population": {
+                "rule": "multiply_by_percentage",
+                "amount": "directCost",
+                "percentage": "feeRate",
+                "presence_fields": ["directCost", "feeRate"],
+                "materialize": "when_any_source_present",
+            }
+        }
+    }
+
+    projected = project_rule_schema(rules, Projection())
+
+    assert projected["fee"]["gg_pre_population"] == {
+        "rule": "multiply_by_percentage",
+        "amount": "direct_cost",
+        "percentage": "fee_rate",
+        "presence_fields": ["direct_cost", "fee_rate"],
+        "materialize": "when_any_source_present",
+    }
+
+
+@pytest.mark.parametrize(
+    "rule",
+    [
+        {
+            "rule": "sum_monetary",
+            "presence_fields": ["amount"],
+            "materialize": "when_any_source_present",
+        },
+        {
+            "rule": "sum_integer",
+            "fields": [],
+            "presence_fields": ["count"],
+            "materialize": "when_any_source_present",
+        },
+        {
+            "rule": "subtract_monetary",
+            "fields": [""],
+            "presence_fields": ["amount"],
+            "materialize": "when_any_source_present",
+        },
+    ],
+)
+def test_rule_projection_rejects_materialized_sum_with_malformed_fields(rule) -> None:
+    with pytest.raises(ValueError, match="requires non-empty string fields"):
+        project_rule_schema({"total": {"gg_pre_population": rule}}, Projection())
+
+
+@pytest.mark.parametrize(
+    "operands",
+    [
+        {},
+        {"amount": "amount"},
+        {"percentage": "percentage"},
+        {"amount": "", "percentage": "percentage"},
+        {"amount": "amount", "percentage": ""},
+    ],
+)
+def test_rule_projection_rejects_materialized_percentage_with_malformed_operands(
+    operands,
+) -> None:
+    rule = {
+        "rule": "multiply_by_percentage",
+        "presence_fields": ["amount", "percentage"],
+        "materialize": "when_any_source_present",
+        **operands,
+    }
+
+    with pytest.raises(ValueError, match="requires non-empty amount and percentage paths"):
+        project_rule_schema({"fee": {"gg_pre_population": rule}}, Projection())
+
+
 def test_response_pointer_uses_json_pointer_escaping_and_path_qualified_renames() -> None:
     projection = Projection(
         renames={

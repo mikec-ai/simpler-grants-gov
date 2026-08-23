@@ -95,6 +95,7 @@ rules currently implemented:
 * `public_competition_id` - from the competition
 * `competition_title` - from the competition
 * `sum_monetary` - calculated based on other fields in the JSON, see Monetary Summation section below for further details
+* `sum_integer` - sums integer counts using the same `fields` path contract
 * `multiply_by_percentage` - a monetary amount multiplied by a whole-number percentage, see Multiply by Percentage section below for further details
 * `subtract_monetary` - calculated based on other fields in the JSON, see Monetary Subtraction section below for further details
 
@@ -144,11 +145,19 @@ For details on how the fields parameter works, see the Fields section below.
 A few important details about our summation logic:
 * We will always populate the configured field, if no fields fetched are populated, "0.00" will be populated.
 * Any null-field is treated as "0.00".
+* A source-backed calculation may opt into `"materialize": "when_any_source_present"`. In that
+  mode, an absent or null set of source fields leaves the output absent (and removes a stale output),
+  while an explicitly entered zero is present and materializes the appropriate zero value. The same
+  option is supported by `sum_integer`, `subtract_monetary`, and `multiply_by_percentage`; the
+  default remains unchanged.
+  The required `presence_fields` list declares which inputs establish presence. If one of those
+  inputs is itself calculated, server-side rule processing follows its declared dependencies until
+  it reaches entered source data, so an eagerly calculated zero cannot make a downstream optional
+  output appear by itself.
 
 
-NOTE: Only monetary summation is supported right now. All math done by this summing
-logic assumes the input values are strings of the format "0.00". If we need to support
-summing integers or other numeric types, we'll need to add a separate rule for those.
+Monetary summation expects string inputs in the format `"0.00"`. Integer counts use the separate
+`sum_integer` rule so their JSON values and results remain integers.
 
 ## Multiply by Percentage
 We support multiplying a monetary amount by a whole-number percentage. This is
