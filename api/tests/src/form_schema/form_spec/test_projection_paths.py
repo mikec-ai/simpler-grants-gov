@@ -157,6 +157,45 @@ def test_rule_projection_requires_presence_fields_for_conditional_materializatio
         project_rule_schema(rules, Projection())
 
 
+def test_rule_projection_rejects_materialization_on_non_calculation_rule() -> None:
+    rules = {
+        "submitted_at": {
+            "gg_pre_population": {
+                "rule": "current_date",
+                "presence_fields": ["signature"],
+                "materialize": "when_any_source_present",
+            }
+        }
+    }
+
+    with pytest.raises(ValueError, match="requires a supported calculation rule"):
+        project_rule_schema(rules, Projection())
+
+
+def test_rule_projection_renames_percentage_operands_and_presence_fields() -> None:
+    rules = {
+        "fee": {
+            "gg_pre_population": {
+                "rule": "multiply_by_percentage",
+                "amount": "directCost",
+                "percentage": "feeRate",
+                "presence_fields": ["directCost", "feeRate"],
+                "materialize": "when_any_source_present",
+            }
+        }
+    }
+
+    projected = project_rule_schema(rules, Projection())
+
+    assert projected["fee"]["gg_pre_population"] == {
+        "rule": "multiply_by_percentage",
+        "amount": "direct_cost",
+        "percentage": "fee_rate",
+        "presence_fields": ["direct_cost", "fee_rate"],
+        "materialize": "when_any_source_present",
+    }
+
+
 def test_response_pointer_uses_json_pointer_escaping_and_path_qualified_renames() -> None:
     projection = Projection(
         renames={

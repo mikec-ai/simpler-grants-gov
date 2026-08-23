@@ -148,7 +148,8 @@ A few important details about our summation logic:
 * A source-backed calculation may opt into `"materialize": "when_any_source_present"`. In that
   mode, an absent or null set of source fields leaves the output absent (and removes a stale output),
   while an explicitly entered zero is present and materializes the appropriate zero value. The same
-  option is supported by `sum_integer` and `subtract_monetary`; the default remains unchanged.
+  option is supported by `sum_integer`, `subtract_monetary`, and `multiply_by_percentage`; the
+  default remains unchanged.
   The required `presence_fields` list declares which inputs establish presence. If one of those
   inputs is itself calculated, server-side rule processing follows its declared dependencies until
   it reaches entered source data, so an eagerly calculated zero cannot make a downstream optional

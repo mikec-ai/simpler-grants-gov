@@ -54,23 +54,29 @@ def test_manifest_covers_every_vendored_json_artifact():
 
 
 @pytest.mark.parametrize(
-    "form_id,inherited_from",
+    "form_id,inherited_from,mount_prefix",
     [
-        ("rr-budget", None),
-        ("rr-budget-10yr", "rr-budget"),
-        ("rr-subaward-budget", "rr-budget"),
-        ("rr-subaward-budget-30", "rr-budget"),
-        ("rr-subaward-budget-10yr-30", "rr-budget"),
+        ("rr-budget", None, ""),
+        ("rr-budget-10yr", "rr-budget", ""),
+        ("rr-subaward-budget", "rr-budget", "budgetAttachments[*]."),
+        ("rr-subaward-budget-30", "rr-budget", "budgetAttachments[*]."),
+        ("rr-subaward-budget-10yr-30", "rr-budget", "budgetAttachments[*]."),
     ],
 )
-def test_budget_family_behavior_evidence_pins_exact_f770_records(form_id, inherited_from):
+def test_budget_family_behavior_evidence_pins_exact_f770_records(
+    form_id, inherited_from, mount_prefix
+):
     evidence = json.loads((ARTIFACTS / "forms" / form_id / "evidence.json").read_text())
     records = evidence["behaviorEvidence"]
+    root = json.loads((ARTIFACTS / "forms" / "rr-budget" / "evidence.json").read_text())
 
     assert len(records) == 20
     assert {record["sourceId"] for record in records} == {"grantsgov-rr-budget-dat-3.0-f770"}
     assert len({record["sourceRecord"] for record in records}) == 20
-    assert all(record["canonicalPath"] and record["sourcePath"] for record in records)
+    assert {record["canonicalPath"] for record in records} == {
+        f"{mount_prefix}{record['canonicalPath']}" for record in root["behaviorEvidence"]
+    }
+    assert all(record["sourcePath"] for record in records)
     if inherited_from is None:
         assert all("inheritedFrom" not in record for record in records)
     else:

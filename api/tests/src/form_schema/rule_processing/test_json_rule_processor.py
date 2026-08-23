@@ -376,6 +376,76 @@ def test_calculation_materialization_in_nested_array_contexts(enable_factory_cre
     }
 
 
+@pytest.mark.parametrize(
+    "json_data,expected",
+    [
+        ({}, {"derived_percentage": "0.00"}),
+        (
+            {"amount": "0.00"},
+            {
+                "amount": "0.00",
+                "derived_percentage": "0.00",
+                "downstream": "0.00",
+            },
+        ),
+    ],
+)
+def test_transitive_presence_ignores_eager_percentage_zero(
+    enable_factory_create, json_data, expected
+):
+    rule_schema = {
+        "derived_percentage": {
+            "gg_pre_population": {
+                "rule": "multiply_by_percentage",
+                "amount": "amount",
+                "percentage": "percentage",
+            }
+        },
+        "downstream": {
+            "gg_pre_population": {
+                "rule": "sum_monetary",
+                "fields": ["derived_percentage"],
+                "presence_fields": ["derived_percentage"],
+                "materialize": "when_any_source_present",
+                "order": 1,
+            }
+        },
+    }
+    context = setup_context(json_data, rule_schema=rule_schema)
+
+    process_rule_schema_for_context(context)
+
+    assert context.json_data == expected
+
+
+@pytest.mark.parametrize(
+    "json_data,expected",
+    [
+        ({}, {}),
+        ({"amount": "0.00"}, {"amount": "0.00", "fee": "0.00"}),
+    ],
+)
+def test_percentage_materialization_distinguishes_absence_from_zero(
+    enable_factory_create, json_data, expected
+):
+    rule_schema = {
+        "fee": {
+            "gg_pre_population": {
+                "rule": "multiply_by_percentage",
+                "amount": "amount",
+                "percentage": "percentage",
+                "presence_fields": ["amount", "percentage"],
+                "materialize": "when_any_source_present",
+            }
+        }
+    }
+    context = setup_context(json_data, rule_schema=rule_schema)
+
+    process_rule_schema_for_context(context)
+
+    assert context.json_data == expected
+
+
 def test_process_null_rule_schema(enable_factory_create):
     # Null rule schema means nothing will get processed
     context = setup_context({}, None)

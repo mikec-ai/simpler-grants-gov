@@ -21,7 +21,26 @@ INDIVIDUAL_UEI = "00000000INDV"
 EXCLUDE_VALUE = "exclude_value"
 UNKNOWN_VALUE = "unknown"
 WHEN_ANY_SOURCE_PRESENT = "when_any_source_present"
-CALCULATION_RULES = {"sum_monetary", "sum_integer", "subtract_monetary"}
+CALCULATION_RULES = {
+    "sum_monetary",
+    "sum_integer",
+    "subtract_monetary",
+    "multiply_by_percentage",
+}
+
+
+def _calculation_source_fields(rule: dict[str, Any]) -> list[str]:
+    if rule.get("rule") == "multiply_by_percentage":
+        fields = [rule.get("amount"), rule.get("percentage")]
+    else:
+        fields = rule.get("fields", [])
+    if (
+        not isinstance(fields, list)
+        or not fields
+        or not all(isinstance(field, str) and field for field in fields)
+    ):
+        raise ValueError("Calculation source fields must be non-empty paths")
+    return fields
 
 
 def _reference_path(path: list[str], reference: str) -> list[str]:
@@ -74,9 +93,9 @@ def _has_entered_source(
             dependencies = _calculation_dependencies(context, json_rule, reference)
             if dependencies:
                 for dependency in dependencies:
-                    dependency_sources = dependency.rule.get(
-                        "presence_fields", dependency.rule.get("fields", [])
-                    )
+                    dependency_sources = dependency.rule.get("presence_fields")
+                    if dependency_sources is None:
+                        dependency_sources = _calculation_source_fields(dependency.rule)
                     if not isinstance(dependency_sources, list) or not all(
                         isinstance(field, str) for field in dependency_sources
                     ):
@@ -331,7 +350,7 @@ def _get_single_field_value(context: JsonRuleContext, json_rule: JsonRule, confi
     return values[0]
 
 
-def multiply_by_percentage(context: JsonRuleContext, json_rule: JsonRule) -> str:
+def multiply_by_percentage(context: JsonRuleContext, json_rule: JsonRule) -> str | None:
     """Multiply a monetary amount by a whole-number percentage.
 
     Config: ``{"amount": "<path>", "percentage": "<path>"}``, where amount is a
@@ -341,6 +360,10 @@ def multiply_by_percentage(context: JsonRuleContext, json_rule: JsonRule) -> str
 
     Missing values are treated as zero; invalid data raises ValueError.
     """
+    source_fields = _calculation_source_fields(json_rule.rule)
+    if not _materialize_calculation(context, json_rule, source_fields):
+        return None
+
     amount_value = _get_single_field_value(context, json_rule, "amount")
     percentage_value = _get_single_field_value(context, json_rule, "percentage")
 
