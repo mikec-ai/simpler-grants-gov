@@ -1,0 +1,16 @@
+{
+  "identifiers": {
+    "certification": {
+      "to": "directions",
+      "why": "The legacy renderer identifies this policy-only section as directions."
+    },
+    "applicantOrganization": {
+      "to": "applicantsOrganization",
+      "why": "Preserve the existing browser and print-view section identifier."
+    },
+    "authorizedRepresentative": {
+      "to": "authorizedRepresentative",
+      "why": "Preserve the existing browser and print-view section identifier."
+    }
+  }
+}

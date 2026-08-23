@@ -17,6 +17,11 @@ EXPECTED_RUNTIME_IDENTITIES = {
         "formType": "CD511",
         "sggVersion": "1.0",
     },
+    "gg-lobbying": {
+        "formId": "295d60a6-a3d1-4413-88fe-f4e5ee43b409",
+        "formType": "GGLobbyingForm",
+        "sggVersion": "1.0",
+    },
     "key-contacts": {
         "formId": "f140c7db-724d-4954-bebd-081c0527908c",
         "formType": "KEY_CONTACTS",

@@ -1,0 +1,84 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "gg-lobbying",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/GG_LobbyingForm-V1.1.xsd",
+    "sha256": "a41d88b19e240dbb5f9b13815c0426d2396414fc1af8d6ab6a96f35855a0a5f7"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/GG_LobbyingForm-V1.1",
+    "GG_LobbyingForm": "http://apply.grants.gov/forms/GG_LobbyingForm-V1.1",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0"
+  },
+  "root": {
+    "element": "LobbyingForm",
+    "namespacePrefix": "GG_LobbyingForm",
+    "attributes": {
+      "FormVersion": "1.1"
+    }
+  },
+  "mapping": {
+    "fields": {
+      "organizationName": {
+        "element": "ApplicantName",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "authorizedRepresentativeName": {
+        "element": "AuthorizedRepresentativeName",
+        "kind": "object",
+        "namespace": "default",
+        "fields": {
+          "prefix": {
+            "element": "PrefixName",
+            "kind": "value",
+            "namespace": "globLib"
+          },
+          "firstName": {
+            "element": "FirstName",
+            "kind": "value",
+            "namespace": "globLib"
+          },
+          "middleName": {
+            "element": "MiddleName",
+            "kind": "value",
+            "namespace": "globLib"
+          },
+          "lastName": {
+            "element": "LastName",
+            "kind": "value",
+            "namespace": "globLib"
+          },
+          "suffix": {
+            "element": "SuffixName",
+            "kind": "value",
+            "namespace": "globLib"
+          }
+        }
+      },
+      "authorizedRepresentativeTitle": {
+        "element": "AuthorizedRepresentativeTitle",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "authorizedRepresentativeSignature": {
+        "element": "AuthorizedRepresentativeSignature",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "submittedDate": {
+        "element": "SubmittedDate",
+        "kind": "value",
+        "namespace": "default"
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-GGLobbyingForm.jsonl.manifest.json"
+  }
+}

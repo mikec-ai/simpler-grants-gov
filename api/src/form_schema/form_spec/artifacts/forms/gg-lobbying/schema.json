@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gg-lobbying/schema.json",
+  "type": "object",
+  "properties": {
+    "organizationName": {
+      "$ref": "../../question-bank/primary-org/legal-name/schema.json",
+      "description": "Enter the legal name of the applicant's organization that will undertake the assistance activity. This is the organization that has registered with the System for Award Management (SAM). Information on registering with SAM may be obtained by visiting SAM.gov.",
+      "title": "Applicant's Organization"
+    },
+    "authorizedRepresentativeName": {
+      "$ref": "../../question-bank/aor/name/schema.json",
+      "description": "Enter the name of the authorized representative certifying on the applicant's behalf.",
+      "title": "Authorized Representative",
+      "required": [
+        "firstName",
+        "lastName"
+      ]
+    },
+    "authorizedRepresentativeTitle": {
+      "$ref": "../../question-bank/aor/title/schema.json",
+      "description": "Enter the authorized representative's position title.",
+      "title": "Title"
+    },
+    "authorizedRepresentativeSignature": {
+      "$ref": "../../question-bank/aor/signature/schema.json",
+      "description": "Completed by Grants.gov upon submission.",
+      "title": "Signature",
+      "readOnly": true
+    },
+    "submittedDate": {
+      "$ref": "../../question-bank/aor/date-signed/schema.json",
+      "description": "Completed by Grants.gov upon submission.",
+      "title": "Date",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "organizationName",
+    "authorizedRepresentativeName",
+    "authorizedRepresentativeTitle"
+  ],
+  "description": "Grants.gov Lobbying Form, version 1.1: a certification profile distinct from SF-LLL."
+}
