@@ -21,14 +21,24 @@ from tests.src.form_schema.forms import test_sf424a as golden_fixtures
 
 def _valid_response_with_manual_column_g() -> dict:
     line_item = copy.deepcopy(golden_fixtures.full_valid_activity_line_item_v1_0.__wrapped__())
-    line_item["budget_summary"].update({
-        "federal_estimated_unobligated_amount": "1.00",
-        "non_federal_estimated_unobligated_amount": "2.00",
-        "federal_new_or_revised_amount": "3.00",
-        "non_federal_new_or_revised_amount": "4.00",
-        "total_amount": "100.00",
-    })
-    return golden_fixtures.full_valid_json_v1_0.__wrapped__(line_item)
+    line_item["budget_summary"].update(
+        {
+            "federal_estimated_unobligated_amount": "1.00",
+            "non_federal_estimated_unobligated_amount": "2.00",
+            "federal_new_or_revised_amount": "3.00",
+            "non_federal_new_or_revised_amount": "4.00",
+            "total_amount": "100.00",
+        }
+    )
+    response = golden_fixtures.full_valid_json_v1_0.__wrapped__(line_item)
+    response.update(
+        {
+            "direct_charges_explanation": "Direct charges explanation",
+            "indirect_charges_explanation": "Indirect charges explanation",
+            "remarks": "Lifecycle fixture remarks",
+        }
+    )
+    return response
 
 
 def test_sf424a_manual_column_g_survives_database_reload_and_validation(
