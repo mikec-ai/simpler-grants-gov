@@ -18,7 +18,7 @@ API_ROOT = Path(__file__).resolve().parents[1]
 if str(API_ROOT) not in sys.path:
     sys.path.insert(0, str(API_ROOT))
 
-from src.form_schema.form_spec.integrity import (  # ruff: ignore[module-import-not-at-top-of-file]
+from src.form_schema.form_spec_integrity import (  # ruff: ignore[module-import-not-at-top-of-file]
     verify_xml_profile_xsd,
 )
 
