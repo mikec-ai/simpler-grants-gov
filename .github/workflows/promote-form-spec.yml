@@ -73,6 +73,12 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Install producer system dependencies
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes libxml2-utils
+
       - name: Build, verify, and ingest producer bundle
         shell: bash
         run: |
