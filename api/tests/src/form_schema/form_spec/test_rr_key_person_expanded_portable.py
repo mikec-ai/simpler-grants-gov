@@ -48,7 +48,7 @@ def _person(
             "street1": "1 Research Way",
             "city": "Bethesda",
             "state": "MD: Maryland",
-            "zip_code": "20852",
+            "zip_code": "208521234",
             "country": "USA: UNITED STATES",
         },
         "phone": "301-555-0100",
@@ -159,9 +159,16 @@ def test_person_attachments_compile_while_overflow_semantics_stay_review_gated()
         "sourceSetSha256": "8866396d99e32eeec6618ea63c52c2b205718dc481482b27ab61699ecd2efeb0",
         "extractedAt": "2026-08-18T16:54:30.352133Z",
     }
-    assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}
-    assert "targets/grants-gov-xml.json" not in manifest["artifacts"]
-    assert projected.json_to_xml_schema is None
+    semantic_review = evidence["semanticReview"]
+    assert semantic_review["status"] == "proposed"
+    assert [mapping["sourcePath"] for mapping in semantic_review["mappings"]] == [
+        "Form DAT!row 25 (Field # 1-17), Business Rules",
+        "Form DAT!row 54 (Field # 2-17), Business Rules",
+        "Form DAT!row 30 (Field # 1-22), Business Rules",
+    ]
+    assert {mapping["status"] for mapping in semantic_review["mappings"]} == {"proposed"}
+    assert manifest["artifacts"]["targets/grants-gov-xml.json"] == "generated"
+    assert projected.json_to_xml_schema is not None
 
 
 def test_repeated_people_survive_add_edit_delete_before_persistence() -> None:

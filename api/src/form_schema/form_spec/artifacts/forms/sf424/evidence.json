@@ -2,15 +2,16 @@
   "contract": "grants-form-evidence/v1",
   "block": {
     "id": "sf424",
-    "kind": "form"
+    "kind": "form",
+    "formVersion": "4.0"
   },
   "sources": [
     {
       "id": "grantsgov-sf424-xsd-4.0",
       "type": "xsd",
       "uri": "https://apply07.grants.gov/apply/forms/schemas/SF424_4_0-V4.0.xsd",
-      "version": "4.0",
-      "sha256": "21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364"
+      "sha256": "21670776cc2751c806b1ec43a59d6296628e219733bc654cf518ede5b9ae0364",
+      "nativeVersion": "4.0"
     }
   ],
   "extraction": {

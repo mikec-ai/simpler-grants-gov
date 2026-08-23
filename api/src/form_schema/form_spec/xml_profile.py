@@ -128,6 +128,27 @@ def _project_node(
     if kind not in {"value", "object", "group", "array", "attachment"}:
         raise ValueError(f"unsupported Grants.gov XML mapping kind at {path}: {kind!r}")
 
+    container = node.get("container")
+    if container is not None:
+        if kind not in {"value", "attachment"}:
+            raise ValueError(f"only value or attachment mappings may use a container at {path}")
+        if not isinstance(container, dict):
+            raise ValueError(f"container mapping at {path} must be an object")
+        element = container.get("element")
+        namespace = container.get("namespace")
+        if not isinstance(element, str) or not element:
+            raise ValueError(f"container mapping at {path} has no element")
+        if not isinstance(namespace, str) or not namespace:
+            raise ValueError(f"container mapping at {path} has no namespace")
+
+    repeat_element_per_item = node.get("repeatElementPerItem", False)
+    if not isinstance(repeat_element_per_item, bool):
+        raise ValueError(f"repeatElementPerItem at {path} must be a boolean")
+    if repeat_element_per_item and (kind != "array" or not node.get("itemElement")):
+        raise ValueError(
+            f"repeatElementPerItem at {path} requires an array mapping with itemElement"
+        )
+
     transform: dict[str, Any] = {"target": node["element"]}
     if runtime_type is not None:
         transform["type"] = runtime_type
@@ -135,6 +156,13 @@ def _project_node(
         transform["namespace"] = namespace
     if source := node.get("source"):
         transform["source"] = _project_source_pointer(source, projection)
+    if container is not None:
+        transform["container"] = {
+            "target": container["element"],
+            "namespace": container["namespace"],
+        }
+    if repeat_element_per_item:
+        transform["repeat_element_per_item"] = True
 
     rule: dict[str, Any] = {"xml_transform": transform}
     if kind in {"object", "group"}:

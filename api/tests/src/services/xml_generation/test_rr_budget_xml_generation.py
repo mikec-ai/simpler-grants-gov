@@ -286,6 +286,7 @@ def _generate_profile_xml(
     *,
     subaward: bool,
     application_data: dict[str, Any] | None = None,
+    subaward_count: int = 1,
 ) -> str:
     budget_data = _application_data() if application_data is None else application_data
     budget_fields = (
@@ -306,7 +307,11 @@ def _generate_profile_xml(
                 summary[f"cumulative_other{index}_direct_cost"] = summary.pop(summary_underscored)
     response = XMLGenerationService().generate_xml(
         XMLGenerationRequest(
-            application_data=({"budget_attachments": [budget_data]} if subaward else budget_data),
+            application_data=(
+                {"budget_attachments": [copy.deepcopy(budget_data) for _ in range(subaward_count)]}
+                if subaward
+                else budget_data
+            ),
             transform_config=transform_config,
             attachment_mapping=_attachment_mapping(),
         )
@@ -314,6 +319,27 @@ def _generate_profile_xml(
     assert response.success, response.error_message
     assert response.xml_data is not None
     return response.xml_data
+
+
+def test_subaward_array_keeps_one_collection_wrapper_for_multiple_budgets() -> None:
+    xml = _generate_profile_xml(
+        RR_SUBAWARD_BUDGET_XML_TRANSFORM_RULES,
+        subaward=True,
+        subaward_count=2,
+    )
+    root = etree.fromstring(xml.encode())
+    wrappers = root.findall(
+        "{http://apply.grants.gov/forms/RR_SubawardBudget_3_0-V3.0}BudgetAttachments"
+    )
+    assert len(wrappers) == 1
+    assert len(wrappers[0].findall(f"{{{FORM_NS}}}RR_Budget_3_0")) == 2
+
+    xsd_dir = Path(__file__).parents[4] / "src/services/xml_generation/xsds"
+    result = XSDValidator(xsd_dir).validate_xml(
+        xml,
+        xsd_dir / "RR_SubawardBudget_3_0-V3.0.xsd",
+    )
+    assert result["valid"], result["error_message"]
 
 
 def _schema_paths(node: Any, path: tuple[str, ...] = ()) -> set[tuple[str, ...]]:

@@ -2,29 +2,30 @@
   "contract": "grants-form-evidence/v1",
   "block": {
     "id": "project-abstract-summary",
-    "kind": "form"
+    "kind": "form",
+    "formVersion": "2.0"
   },
   "sources": [
     {
       "id": "source-1-75114a512cf3",
       "type": "dat",
       "uri": "https://apply07.grants.gov/apply/forms/sample/Project_AbstractSummary_2_0-V2.0_F591.xls",
-      "version": "2.0",
-      "sha256": "75114a512cf3a768a7a20e837d17adaf18a1a5a3ec57523388120e39ee40413c"
+      "sha256": "75114a512cf3a768a7a20e837d17adaf18a1a5a3ec57523388120e39ee40413c",
+      "nativeVersion": null
     },
     {
       "id": "source-2-3022f177a7f0",
       "type": "xsd",
       "uri": "https://apply07.grants.gov/apply/forms/schemas/Project_AbstractSummary_2_0-V2.0.xsd",
-      "version": "2.0",
-      "sha256": "3022f177a7f0ebb9a1888e9b8a4a644ed2ba7857a775d2d05642a9fbd1cc008f"
+      "sha256": "3022f177a7f0ebb9a1888e9b8a4a644ed2ba7857a775d2d05642a9fbd1cc008f",
+      "nativeVersion": "2.0"
     },
     {
       "id": "source-3-ff0214de91b9",
       "type": "xsd",
       "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
-      "version": "2.0",
-      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8",
+      "nativeVersion": "2.0"
     }
   ],
   "extraction": {

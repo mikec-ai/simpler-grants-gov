@@ -333,8 +333,15 @@ class RecursiveXMLTransformer:
         value: Any,
         path: list[str],
     ) -> None:
-        """Assign one transformed value, deep-merging shared declarative groups."""
+        """Assign one transformed value, optionally under one declared leaf wrapper."""
         payload: dict[str, Any] = {transform_rule["target"]: value}
+        if container := transform_rule.get("container"):
+            payload = {
+                container["target"]: {
+                    "__namespace__": container["namespace"],
+                    **payload,
+                }
+            }
         self._merge_mapping(result, payload, path)
 
     def _merge_mapping(
@@ -350,8 +357,7 @@ class RecursiveXMLTransformer:
                 self._merge_mapping(existing, value, [*path, key])
             elif existing != value:
                 raise ValueError(
-                    f"Conflicting XML target at {'.'.join([*path, key])}: "
-                    f"{existing!r} != {value!r}"
+                    f"Conflicting XML target at {'.'.join([*path, key])}: {existing!r} != {value!r}"
                 )
 
     def _apply_transform_rule(
@@ -544,6 +550,8 @@ class RecursiveXMLTransformer:
                         # consumes these metadata keys; payload fields remain ordinary data.
                         if item_wrapper := transform_rule.get("item_wrapper"):
                             item_result["__wrapper"] = item_wrapper
+                        if transform_rule.get("repeat_element_per_item"):
+                            item_result["__repeat_element_per_item__"] = True
                         if item_namespace := transform_rule.get("item_namespace"):
                             item_result["__namespace__"] = item_namespace
                         if item_attributes := transform_rule.get("item_attributes"):

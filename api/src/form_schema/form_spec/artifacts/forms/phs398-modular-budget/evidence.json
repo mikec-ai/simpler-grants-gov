@@ -1,7 +1,8 @@
 {
   "block": {
     "id": "phs398-modular-budget",
-    "kind": "form"
+    "kind": "form",
+    "formVersion": "1.2"
   },
   "contract": "grants-form-evidence/v1",
   "extraction": {
@@ -21,35 +22,35 @@
       "sha256": "71a974be770b1e8fcd5f1edc739618deea7474fa83b1dd19b33b27a0867bdc44",
       "type": "dat",
       "uri": "https://apply07.grants.gov/apply/forms/sample/PHS398_ModularBudget_1_2-V1.2_F403.xls",
-      "version": "1.2"
+      "nativeVersion": null
     },
     {
       "id": "source-2-f166abebd40e",
       "sha256": "f166abebd40e6912861dca5c5c4a83c7a82779f1ae67a2c0fa8b4aafc25d5bff",
       "type": "xsd",
       "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS398_ModularBudget_1_2-V1.2.xsd",
-      "version": "1.2"
+      "nativeVersion": "1.2"
     },
     {
       "id": "source-3-ae2ebb3618f7",
       "sha256": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d",
       "type": "xsd",
       "uri": "https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd",
-      "version": "1.2"
+      "nativeVersion": "1.0"
     },
     {
       "id": "source-4-4b338db91915",
       "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb",
       "type": "xsd",
       "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
-      "version": "1.2"
+      "nativeVersion": "1.0"
     },
     {
       "id": "source-5-ff0214de91b9",
       "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8",
       "type": "xsd",
       "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
-      "version": "1.2"
+      "nativeVersion": "2.0"
     }
   ]
 }

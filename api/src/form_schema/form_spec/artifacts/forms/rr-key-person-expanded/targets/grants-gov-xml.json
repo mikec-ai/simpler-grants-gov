@@ -1,0 +1,419 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "rr-key-person-expanded",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_KeyPersonExpanded_4_0-V4.0.xsd",
+    "sha256": "c1522304f37bb91a1fc18f2b84656c570581969f9c1795d18352bc273d691b8b"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/RR_KeyPersonExpanded_4_0-V4.0",
+    "RR_KeyPersonExpanded_4_0": "http://apply.grants.gov/forms/RR_KeyPersonExpanded_4_0-V4.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0"
+  },
+  "root": {
+    "element": "RR_KeyPersonExpanded_4_0",
+    "namespacePrefix": "RR_KeyPersonExpanded_4_0",
+    "attributes": {
+      "FormVersion": "4.0"
+    }
+  },
+  "attachment": {
+    "fields": {
+      "fileName": {
+        "element": "FileName",
+        "namespace": "att"
+      },
+      "mimeType": {
+        "element": "MimeType",
+        "namespace": "att"
+      },
+      "fileLocation": {
+        "element": "FileLocation",
+        "namespace": "att"
+      },
+      "hashValue": {
+        "element": "HashValue",
+        "namespace": "glob"
+      }
+    }
+  },
+  "mapping": {
+    "fields": {
+      "principalInvestigator": {
+        "element": "PDPI",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "profile": {
+            "element": "Profile",
+            "kind": "object",
+            "namespace": "default",
+            "source": "/principalInvestigator",
+            "fields": {
+              "name": {
+                "element": "Name",
+                "kind": "object",
+                "namespace": "default",
+                "fields": {
+                  "prefix": {
+                    "element": "PrefixName",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  },
+                  "firstName": {
+                    "element": "FirstName",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  },
+                  "middleName": {
+                    "element": "MiddleName",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  },
+                  "lastName": {
+                    "element": "LastName",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  },
+                  "suffix": {
+                    "element": "SuffixName",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  }
+                }
+              },
+              "title": {
+                "element": "Title",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "address": {
+                "element": "Address",
+                "kind": "object",
+                "namespace": "default",
+                "fields": {
+                  "street1": {
+                    "element": "Street1",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  },
+                  "street2": {
+                    "element": "Street2",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  },
+                  "city": {
+                    "element": "City",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  },
+                  "county": {
+                    "element": "County",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  },
+                  "state": {
+                    "element": "State",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  },
+                  "province": {
+                    "element": "Province",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  },
+                  "zipCode": {
+                    "element": "ZipPostalCode",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  },
+                  "country": {
+                    "element": "Country",
+                    "kind": "value",
+                    "namespace": "globLib"
+                  }
+                }
+              },
+              "phone": {
+                "element": "Phone",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "fax": {
+                "element": "Fax",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "email": {
+                "element": "Email",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "organizationName": {
+                "element": "OrganizationName",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "department": {
+                "element": "Department",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "division": {
+                "element": "Division",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "credential": {
+                "element": "Credential",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "projectRole": {
+                "element": "ProjectRole",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "otherProjectRole": {
+                "element": "OtherProjectRoleCategory",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "degreeType": {
+                "element": "DegreeType",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "degreeYear": {
+                "element": "DegreeYear",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "biographicalSketch": {
+                "element": "BioSketchAttached",
+                "kind": "attachment",
+                "namespace": "default",
+                "container": {
+                  "element": "BioSketchsAttached",
+                  "namespace": "default"
+                }
+              },
+              "currentPendingSupport": {
+                "element": "SupportAttached",
+                "kind": "attachment",
+                "namespace": "default",
+                "container": {
+                  "element": "SupportsAttached",
+                  "namespace": "default"
+                }
+              }
+            }
+          }
+        }
+      },
+      "seniorKeyPersons": {
+        "element": "KeyPerson",
+        "kind": "array",
+        "itemElement": "Profile",
+        "itemNamespace": "default",
+        "repeatElementPerItem": true,
+        "items": {
+          "fields": {
+            "name": {
+              "element": "Name",
+              "kind": "object",
+              "namespace": "default",
+              "fields": {
+                "prefix": {
+                  "element": "PrefixName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "firstName": {
+                  "element": "FirstName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "middleName": {
+                  "element": "MiddleName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "lastName": {
+                  "element": "LastName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "suffix": {
+                  "element": "SuffixName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                }
+              }
+            },
+            "title": {
+              "element": "Title",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "address": {
+              "element": "Address",
+              "kind": "object",
+              "namespace": "default",
+              "fields": {
+                "street1": {
+                  "element": "Street1",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "street2": {
+                  "element": "Street2",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "city": {
+                  "element": "City",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "county": {
+                  "element": "County",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "state": {
+                  "element": "State",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "province": {
+                  "element": "Province",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "zipCode": {
+                  "element": "ZipPostalCode",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "country": {
+                  "element": "Country",
+                  "kind": "value",
+                  "namespace": "globLib"
+                }
+              }
+            },
+            "phone": {
+              "element": "Phone",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "fax": {
+              "element": "Fax",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "email": {
+              "element": "Email",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "organizationName": {
+              "element": "OrganizationName",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "department": {
+              "element": "Department",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "division": {
+              "element": "Division",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "credential": {
+              "element": "Credential",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "projectRole": {
+              "element": "ProjectRole",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "otherProjectRole": {
+              "element": "OtherProjectRoleCategory",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "degreeType": {
+              "element": "DegreeType",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "degreeYear": {
+              "element": "DegreeYear",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "biographicalSketch": {
+              "element": "BioSketchAttached",
+              "kind": "attachment",
+              "namespace": "default",
+              "container": {
+                "element": "BioSketchsAttached",
+                "namespace": "default"
+              }
+            },
+            "currentPendingSupport": {
+              "element": "SupportAttached",
+              "kind": "attachment",
+              "namespace": "default",
+              "container": {
+                "element": "SupportsAttached",
+                "namespace": "default"
+              }
+            }
+          }
+        }
+      },
+      "additionalProfiles": {
+        "element": "AdditionalProfileAttached",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "AdditionalProfilesAttached",
+          "namespace": "default"
+        }
+      },
+      "additionalBiographicalSketches": {
+        "element": "BioSketchAttached",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "BioSketchsAttached",
+          "namespace": "default"
+        }
+      },
+      "additionalCurrentPendingSupport": {
+        "element": "SupportAttached",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "SupportsAttached",
+          "namespace": "default"
+        }
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-RRKeyPersonExpanded.jsonl.manifest.json"
+  }
+}

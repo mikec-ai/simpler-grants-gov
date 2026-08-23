@@ -149,14 +149,14 @@ def test_official_source_and_extraction_provenance_are_pinned() -> None:
             "id": "grantsgov-rr-budget-xsd-3.0",
             "type": "xsd",
             "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_Budget_3_0-V3.0.xsd",
-            "version": "3.0",
+            "nativeVersion": "3.0",
             "sha256": "d474010f85819549990de65fc51292bed08ba98ac0895d0dde9513fbe855cdbc",
         },
         {
             "id": "grantsgov-rr-budget-dat-3.0-f770",
             "type": "dat",
             "uri": "https://apply07.grants.gov/apply/forms/sample/RR_Budget_3_0-V3.0_F770.xls",
-            "version": "3.0",
+            "nativeVersion": None,
             "sha256": "c85158ce7ddcc756d6e8a55a050e00b4a95cdfc8d9a2d91b7bd94c7f8bdb1035",
         },
     ]
