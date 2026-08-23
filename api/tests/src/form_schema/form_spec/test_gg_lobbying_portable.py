@@ -35,7 +35,6 @@ from tests.src.form_schema.form_spec.lifecycle import (
 )
 from tests.src.form_schema.forms.conftest import setup_resolved_form
 
-
 VALID_RESPONSE = {
     "organization_name": "Example Research Organization",
     "authorized_representative_name": {
