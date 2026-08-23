@@ -8,7 +8,7 @@ import tarfile
 
 import pytest
 
-from bin.sync_form_spec_artifacts import select_artifacts, write_selection
+from bin.sync_form_spec_artifacts import select_artifacts, verify_selected_xsds, write_selection
 
 
 def _bundle(path, files):
@@ -108,3 +108,24 @@ def test_selects_multiple_forms_and_deduplicates_their_shared_questions(tmp_path
     assert "forms/first/schema.json" in selected
     assert "forms/second/schema.json" in selected
     assert list(selected).count("question-bank/shared/schema.json") == 1
+
+
+def test_selected_xml_profiles_must_match_a_vendored_xsd(tmp_path):
+    payload = b"<schema/>"
+    digest = hashlib.sha256(payload).hexdigest()
+    profile = json.dumps(
+        {
+            "xsd": {
+                "uri": "https://apply.grants.gov/forms/Example-V1.0.xsd",
+                "sha256": digest,
+            }
+        }
+    ).encode()
+    xsd_directory = tmp_path / "xsds"
+    xsd_directory.mkdir()
+    (xsd_directory / "Example-V1.0.xsd").write_bytes(payload)
+
+    verify_selected_xsds(
+        {"forms/example/targets/grants-gov-xml.json": profile},
+        xsd_directory=xsd_directory,
+    )

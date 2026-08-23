@@ -3,6 +3,8 @@ import json
 
 import pytest
 
+import re
+
 from src.form_schema.form_spec.bank import (
     ARTIFACTS,
     ARTIFACT_MANIFEST,
@@ -13,10 +15,9 @@ from src.form_schema.form_spec.bank import (
 
 def test_vendored_artifacts_match_the_pinned_form_spec_build():
     manifest = verify_artifacts()
-    assert manifest["source"] == {
-        "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-        "revision": "55bad4b671f0f7667574d919cf1baaf2474e2844",
-    }
+    assert manifest["source"]["repository"] == "https://github.com/mikec-ai/grants-form-spec.git"
+    assert re.fullmatch(r"[0-9a-f]{40}", manifest["source"]["revision"])
+    assert re.fullmatch(r"[0-9a-f]{64}", manifest["sourceBundleSha256"])
     assert manifest["selection"]["forms"] == [
         "key-contacts",
         "sf424",

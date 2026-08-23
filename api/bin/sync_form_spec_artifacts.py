@@ -14,6 +14,14 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
+API_ROOT = Path(__file__).resolve().parents[1]
+if str(API_ROOT) not in sys.path:
+    sys.path.insert(0, str(API_ROOT))
+
+from src.form_schema.form_spec.integrity import (  # ruff: ignore[module-import-not-at-top-of-file]
+    verify_xml_profile_xsd,
+)
+
 SOURCE_CONTRACT = "grants-form-artifacts/v1"
 SELECTION_CONTRACT = "grants-form-artifact-selection/v1"
 RUNTIME_FORM_FILES = (
@@ -24,6 +32,7 @@ RUNTIME_FORM_FILES = (
     "sgg/ui-schema.json",
 )
 OPTIONAL_RUNTIME_FORM_FILES = ("targets/grants-gov-xml.json",)
+XSD_DIRECTORY = API_ROOT / "src" / "services" / "xml_generation" / "xsds"
 
 
 def _sha256(payload: bytes) -> str:
@@ -144,6 +153,19 @@ def write_selection(*, target: Path, manifest: dict[str, Any], files: dict[str, 
             shutil.rmtree(backup)
 
 
+def verify_selected_xsds(files: dict[str, bytes], *, xsd_directory: Path) -> None:
+    """Fail before writing when a selected XML target does not match its vendored XSD."""
+    suffix = "/targets/grants-gov-xml.json"
+    for relative, payload in sorted(files.items()):
+        if not relative.endswith(suffix):
+            continue
+        verify_xml_profile_xsd(
+            json.loads(payload),
+            xsd_directory=xsd_directory,
+            source=relative,
+        )
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("bundle", type=Path, help="verified grants-form-spec .tar.gz bundle")
@@ -158,6 +180,7 @@ def main() -> int:
     args = _parser().parse_args()
     try:
         manifest, files = select_artifacts(args.bundle, args.form)
+        verify_selected_xsds(files, xsd_directory=XSD_DIRECTORY)
         write_selection(target=args.target, manifest=manifest, files=files)
     except (OSError, ValueError, tarfile.TarError, json.JSONDecodeError) as exc:
         sys.stderr.write(f"error: {exc}\n")

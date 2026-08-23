@@ -1,12 +1,6 @@
-from src.constants.lookup_constants import FormType
-from src.form_schema.form_spec.loader import build_runtime_form
-from src.form_schema.forms.rr_subaward_budget.config import FORM_INSTRUCTION_ID
+from src.form_schema.form_spec.registrations import portable_form
 
-RRSubawardBudget_v3_0 = build_runtime_form(
-    "rr-subaward-budget",
-    form_type=FormType.RR_SUBAWARD_BUDGET,
-    form_instruction_id=FORM_INSTRUCTION_ID,
-)
+RRSubawardBudget_v3_0 = portable_form("rr-subaward-budget")
 
 FORM_JSON_SCHEMA = RRSubawardBudget_v3_0.form_json_schema
 FORM_UI_SCHEMA = RRSubawardBudget_v3_0.form_ui_schema

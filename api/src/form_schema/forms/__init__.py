@@ -1,6 +1,7 @@
 import logging
 
 from src.db.models.competition_models import Form
+from src.form_schema.form_spec.registrations import registered_portable_forms
 
 from ..registry.form_template_registry import form_template_registry
 from .attachment_form import AttachmentForm_v1_2
@@ -15,11 +16,6 @@ from .project_abstract import ProjectAbstract_v1_2
 from .project_abstract_summary import ProjectAbstractSummary_v2_0
 from .project_narrative_attachment import ProjectNarrativeAttachment_v1_2
 from .project_performance_site_location import ProjectPerformanceSiteLocation_v4_0
-from .rr_budget import RRBudget_v3_0
-from .rr_budget10 import RRBudget10_v3_0
-from .rr_subaward_budget import RRSubawardBudget_v3_0
-from .rr_subaward_budget30 import RRSubawardBudget30_v3_0
-from .rr_subaward_budget10_30 import RRSubawardBudget10_30_v3_0
 from .sf424 import SF424_v4_0
 from .sf424_short import SF424Short_v3_0
 from .sf424a import SF424a_v1_0
@@ -52,11 +48,7 @@ _ALL_FORMS: list[Form] = [
     EPA_KEY_CONTACT_v2_0,
     KeyContacts_v2_0,
     ProjectPerformanceSiteLocation_v4_0,
-    RRBudget_v3_0,
-    RRBudget10_v3_0,
-    RRSubawardBudget_v3_0,
-    RRSubawardBudget30_v3_0,
-    RRSubawardBudget10_30_v3_0,
+    *registered_portable_forms(),
 ]
 
 

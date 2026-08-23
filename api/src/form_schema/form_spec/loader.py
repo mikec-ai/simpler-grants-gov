@@ -143,9 +143,7 @@ def form_uuid(loaded: LoadedForm) -> uuid.UUID:
 def build_runtime_form(
     form_id: str,
     *,
-    form_type: FormType,
     form_instruction_id: uuid.UUID | None = None,
-    json_to_xml_schema: dict[str, Any] | None = None,
 ) -> Form:
     """Build the ordinary Simpler runtime record from one portable form package.
 
@@ -172,11 +170,9 @@ def build_runtime_form(
         # boundary explicitly.
         form_ui_schema=cast(Any, loaded.form_ui_schema),
         form_rule_schema=loaded.form_rule_schema,
-        json_to_xml_schema=(
-            json_to_xml_schema if json_to_xml_schema is not None else loaded.json_to_xml_schema
-        ),
+        json_to_xml_schema=loaded.json_to_xml_schema,
         form_instruction_id=form_instruction_id,
-        form_type=form_type,
+        form_type=FormType(meta["formType"]),
         sgg_version=meta.get("sggVersion"),
         is_deprecated=False,
     )

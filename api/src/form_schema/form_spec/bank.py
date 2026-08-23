@@ -27,12 +27,14 @@ import json
 from pathlib import Path
 from typing import Any
 
+from src.form_schema.form_spec.integrity import verify_artifact_xsds
 from src.form_schema.form_spec.projection import Projection, project_schema
 from src.form_schema.shared.shared_schema import SharedSchema, get_shared_schema_config
 
 #: Emitted artifacts selected from the pinned ``grants-form-spec`` build bundle.
 ARTIFACTS = Path(__file__).parent / "artifacts"
 ARTIFACT_MANIFEST = ARTIFACTS / "artifact-manifest.json"
+XSD_DIRECTORY = Path(__file__).parents[2] / "services" / "xml_generation" / "xsds"
 
 BANK_SCHEMA_NAME = "question_bank_v1"
 
@@ -69,7 +71,9 @@ def verify_artifact_selection(*, artifacts: Path, manifest_path: Path) -> dict[s
 @functools.cache
 def verify_artifacts() -> dict[str, Any]:
     """Fail closed if a vendored runtime artifact differs from its source manifest."""
-    return verify_artifact_selection(artifacts=ARTIFACTS, manifest_path=ARTIFACT_MANIFEST)
+    manifest = verify_artifact_selection(artifacts=ARTIFACTS, manifest_path=ARTIFACT_MANIFEST)
+    verify_artifact_xsds(artifacts=ARTIFACTS, xsd_directory=XSD_DIRECTORY)
+    return manifest
 
 
 def bank_uri() -> str:
