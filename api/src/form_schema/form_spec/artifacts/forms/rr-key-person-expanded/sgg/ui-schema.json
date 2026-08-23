@@ -351,17 +351,101 @@
       {
         "type": "field",
         "definition": "/properties/additionalProfiles",
-        "widget": "Attachment"
+        "widget": "Attachment",
+        "conditional": {
+          "when": {
+            "op": "any",
+            "predicates": [
+              {
+                "op": "countAtLeast",
+                "ref": {
+                  "scope": "root",
+                  "pointer": "/seniorKeyPersons"
+                },
+                "minimum": 99
+              },
+              {
+                "op": "present",
+                "ref": {
+                  "scope": "root",
+                  "pointer": "/additionalProfiles"
+                }
+              }
+            ]
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
       },
       {
         "type": "field",
         "definition": "/properties/additionalBiographicalSketches",
-        "widget": "Attachment"
+        "widget": "Attachment",
+        "conditional": {
+          "when": {
+            "op": "any",
+            "predicates": [
+              {
+                "op": "countAtLeast",
+                "ref": {
+                  "scope": "root",
+                  "pointer": "/seniorKeyPersons"
+                },
+                "minimum": 99
+              },
+              {
+                "op": "present",
+                "ref": {
+                  "scope": "root",
+                  "pointer": "/additionalBiographicalSketches"
+                }
+              }
+            ]
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
       },
       {
         "type": "field",
         "definition": "/properties/additionalCurrentPendingSupport",
-        "widget": "Attachment"
+        "widget": "Attachment",
+        "conditional": {
+          "when": {
+            "op": "any",
+            "predicates": [
+              {
+                "op": "countAtLeast",
+                "ref": {
+                  "scope": "root",
+                  "pointer": "/seniorKeyPersons"
+                },
+                "minimum": 99
+              },
+              {
+                "op": "present",
+                "ref": {
+                  "scope": "root",
+                  "pointer": "/additionalCurrentPendingSupport"
+                }
+              }
+            ]
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
       }
     ]
   }

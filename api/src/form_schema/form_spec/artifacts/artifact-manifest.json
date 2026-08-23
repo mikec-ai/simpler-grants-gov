@@ -268,8 +268,8 @@
     },
     {
       "path": "dist/forms/rr-key-person-expanded/sgg/ui-schema.json",
-      "sha256": "f39177589271c0789bfdeab9e24770870e7bd79a4ae16bae5551cd59cbf1542d",
-      "size": 11380
+      "sha256": "abd4988af506657f3601b4cb27943a2a73af88a42a1560e3ddce0e534db0e7d9",
+      "size": 13517
     },
     {
       "path": "dist/forms/rr-key-person-expanded/targets/grants-gov-xml.json",
@@ -1038,7 +1038,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "3ba1c1c25a111c91085bec9ca89ab1fc2be645ef"
+    "revision": "3c6fd775476aa45e6e10d4972e5d581131b19a28"
   },
-  "sourceBundleSha256": "a0f656261fa48cc07449b3a7d6f9f2f5debc4ea4ff5b5388bef190ff4af2f2e5"
+  "sourceBundleSha256": "d8b868604a37f4d12d1157e1c3cf975fa0048b69c187b8c057384e0432e30c7e"
 }
