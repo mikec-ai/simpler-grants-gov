@@ -1,0 +1,95 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "phs-assignment-request",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS_AssignmentRequestForm_4_0-V4.0.xsd",
+    "sha256": "7e697ee33ea6f72271c0d74fc48c61f4f81faa242a712a4c73e7898f6c4ab976"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/PHS_AssignmentRequestForm_4_0-V4.0",
+    "PHS_AssignmentRequestForm_4_0": "http://apply.grants.gov/forms/PHS_AssignmentRequestForm_4_0-V4.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0"
+  },
+  "root": {
+    "element": "PHS_AssignmentRequestForm_4_0",
+    "namespacePrefix": "PHS_AssignmentRequestForm_4_0",
+    "attributes": {
+      "FormVersion": "4.0"
+    }
+  },
+  "mapping": {
+    "fields": {
+      "suggestedAwardingComponent1": {
+        "element": "SuggestedAwardingComponent1",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "suggestedAwardingComponent2": {
+        "element": "SuggestedAwardingComponent2",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "suggestedAwardingComponent3": {
+        "element": "SuggestedAwardingComponent3",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "suggestedStudySection1": {
+        "element": "SuggestedStudySection1",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "suggestedStudySection2": {
+        "element": "SuggestedStudySection2",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "suggestedStudySection3": {
+        "element": "SuggestedStudySection3",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "rationaleSuggestions": {
+        "element": "RationaleSuggestions",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "expertise1": {
+        "element": "Expertise1",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "expertise2": {
+        "element": "Expertise2",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "expertise3": {
+        "element": "Expertise3",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "expertise4": {
+        "element": "Expertise4",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "expertise5": {
+        "element": "Expertise5",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "notReview": {
+        "element": "NotReview",
+        "kind": "value",
+        "namespace": "default"
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-PHSAssignmentRequest.jsonl.manifest.json"
+  }
+}

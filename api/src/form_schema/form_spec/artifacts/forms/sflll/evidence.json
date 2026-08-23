@@ -96,5 +96,94 @@
       "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd"
     }
   ],
-  "behaviorEvidence": []
+  "behaviorEvidence": [
+    {
+      "ruleKind": "condition",
+      "canonicalPath": "materialChange.year",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+    },
+    {
+      "ruleKind": "condition",
+      "canonicalPath": "materialChange.quarter",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+    },
+    {
+      "ruleKind": "condition",
+      "canonicalPath": "materialChange.lastReportDate",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+    },
+    {
+      "ruleKind": "condition",
+      "canonicalPath": "tier",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+    },
+    {
+      "ruleKind": "condition",
+      "canonicalPath": "primeOrganization.organizationName",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+    },
+    {
+      "ruleKind": "condition",
+      "canonicalPath": "primeOrganization.address.street1",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+    },
+    {
+      "ruleKind": "condition",
+      "canonicalPath": "primeOrganization.address.street2",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+    },
+    {
+      "ruleKind": "condition",
+      "canonicalPath": "primeOrganization.address.city",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+    },
+    {
+      "ruleKind": "condition",
+      "canonicalPath": "primeOrganization.address.state",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+    },
+    {
+      "ruleKind": "condition",
+      "canonicalPath": "primeOrganization.address.zipCode",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+    },
+    {
+      "ruleKind": "condition",
+      "canonicalPath": "primeOrganization.congressionalDistrict",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+    }
+  ]
 }

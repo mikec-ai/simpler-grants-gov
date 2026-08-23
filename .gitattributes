@@ -1,1 +1,2 @@
 *.sh text=auto eol=lf
+api/src/services/xml_generation/xsds/AttachmentForm_1_2-V1.2.xsd binary

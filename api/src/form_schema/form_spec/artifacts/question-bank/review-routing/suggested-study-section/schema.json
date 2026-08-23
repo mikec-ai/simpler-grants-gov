@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-routing/suggested-study-section/schema.json",
+  "type": "string",
+  "maxLength": 20,
+  "description": "Suggest one scientific review group or special-emphasis-panel code."
+}

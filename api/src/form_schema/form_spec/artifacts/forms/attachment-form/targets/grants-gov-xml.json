@@ -1,0 +1,187 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "attachment-form",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/AttachmentForm_1_2-V1.2.xsd",
+    "sha256": "c6b7f40614a2077818f5f3b5df72959f867611b887c5b888005df8adeaa5e8e9"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/AttachmentForm_1_2-V1.2",
+    "AttachmentForm_1_2": "http://apply.grants.gov/forms/AttachmentForm_1_2-V1.2",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0"
+  },
+  "root": {
+    "element": "AttachmentForm_1_2",
+    "namespacePrefix": "AttachmentForm_1_2",
+    "attributes": {
+      "FormVersion": "1.2"
+    }
+  },
+  "attachment": {
+    "fields": {
+      "fileName": {
+        "element": "FileName",
+        "namespace": "att"
+      },
+      "mimeType": {
+        "element": "MimeType",
+        "namespace": "att"
+      },
+      "fileLocation": {
+        "element": "FileLocation",
+        "namespace": "att"
+      },
+      "hashValue": {
+        "element": "HashValue",
+        "namespace": "glob"
+      }
+    }
+  },
+  "mapping": {
+    "fields": {
+      "att1": {
+        "element": "ATT1File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT1",
+          "namespace": "default"
+        }
+      },
+      "att2": {
+        "element": "ATT2File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT2",
+          "namespace": "default"
+        }
+      },
+      "att3": {
+        "element": "ATT3File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT3",
+          "namespace": "default"
+        }
+      },
+      "att4": {
+        "element": "ATT4File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT4",
+          "namespace": "default"
+        }
+      },
+      "att5": {
+        "element": "ATT5File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT5",
+          "namespace": "default"
+        }
+      },
+      "att6": {
+        "element": "ATT6File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT6",
+          "namespace": "default"
+        }
+      },
+      "att7": {
+        "element": "ATT7File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT7",
+          "namespace": "default"
+        }
+      },
+      "att8": {
+        "element": "ATT8File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT8",
+          "namespace": "default"
+        }
+      },
+      "att9": {
+        "element": "ATT9File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT9",
+          "namespace": "default"
+        }
+      },
+      "att10": {
+        "element": "ATT10File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT10",
+          "namespace": "default"
+        }
+      },
+      "att11": {
+        "element": "ATT11File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT11",
+          "namespace": "default"
+        }
+      },
+      "att12": {
+        "element": "ATT12File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT12",
+          "namespace": "default"
+        }
+      },
+      "att13": {
+        "element": "ATT13File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT13",
+          "namespace": "default"
+        }
+      },
+      "att14": {
+        "element": "ATT14File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT14",
+          "namespace": "default"
+        }
+      },
+      "att15": {
+        "element": "ATT15File",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ATT15",
+          "namespace": "default"
+        }
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+    "artifact": "artifacts/proof/grantsgov-AttachmentForm.jsonl.manifest.json"
+  }
+}

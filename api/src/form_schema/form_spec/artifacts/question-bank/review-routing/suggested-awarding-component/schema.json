@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-routing/suggested-awarding-component/schema.json",
+  "type": "string",
+  "maxLength": 7,
+  "description": "Suggest one awarding component by its short abbreviation."
+}

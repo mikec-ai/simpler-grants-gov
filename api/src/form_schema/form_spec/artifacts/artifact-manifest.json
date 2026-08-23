@@ -2,6 +2,36 @@
   "contract": "grants-form-artifact-selection/v1",
   "files": [
     {
+      "path": "dist/forms/attachment-form/evidence.json",
+      "sha256": "60a8c7eb90ba25abf1d8bbcd3b2ac3d6ab7fa9db2444c50f0a7d5117b408f724",
+      "size": 3496
+    },
+    {
+      "path": "dist/forms/attachment-form/manifest.json",
+      "sha256": "17861ef970eb80b84ec9aa079eeb03b588dbd2d75aceb2fafdbdb56f8db5e5b7",
+      "size": 510
+    },
+    {
+      "path": "dist/forms/attachment-form/schema.json",
+      "sha256": "e0b608209af7eef47028e0eee958620d7ae2eb49dc042b864fbfffc1b4d3101f",
+      "size": 2937
+    },
+    {
+      "path": "dist/forms/attachment-form/sgg/rule-schema.json",
+      "sha256": "1a5668c1cd03d20b99f1ff037f464aab4148700ceb4946bead096c02eeda0f0e",
+      "size": 1104
+    },
+    {
+      "path": "dist/forms/attachment-form/sgg/ui-schema.json",
+      "sha256": "286a5863533c498b6da0fbe19a0890ce3990829a21803f7bb6c6474f0a664173",
+      "size": 4119
+    },
+    {
+      "path": "dist/forms/attachment-form/targets/grants-gov-xml.json",
+      "sha256": "5dc22689995875c55ba8c1bd28f2064b6276c5b139dc84cc6c7ad6ec7c50e8ee",
+      "size": 4713
+    },
+    {
       "path": "dist/forms/budget-narrative-attachments/evidence.json",
       "sha256": "ad968e400e879438bb924cf934b85f77bc90965bb1ce4200c1ee71dc659133de",
       "size": 970
@@ -318,8 +348,8 @@
     },
     {
       "path": "dist/forms/performance-site/evidence.json",
-      "sha256": "d053169d72f3e0bca1cf954958f3c4f7165bd92d8a5f2d04537279f96f3a3c99",
-      "size": 2266
+      "sha256": "fda72bceeab9e96dd4bbb1f7ad3cb4896f2628846929f40f7268b7821b1a4920",
+      "size": 4287
     },
     {
       "path": "dist/forms/performance-site/manifest.json",
@@ -347,9 +377,39 @@
       "size": 5377
     },
     {
-      "path": "dist/forms/phs398-modular-budget/evidence.json",
-      "sha256": "c93869a198c5b1121a3ec29a5a6fec788faf259d684d153492e23eee50dcf01b",
+      "path": "dist/forms/phs-assignment-request/evidence.json",
+      "sha256": "17ce6d2debf2d9ca5ffdb444e761010e69511559cb649e468603f42ba8064eb8",
+      "size": 6491
+    },
+    {
+      "path": "dist/forms/phs-assignment-request/manifest.json",
+      "sha256": "738e92df33a7d2bd36fe009088de62f16a5517de8934421dfc78f161ce3acf1c",
+      "size": 556
+    },
+    {
+      "path": "dist/forms/phs-assignment-request/schema.json",
+      "sha256": "6e452200555c98a5999d22df5958a50db7fdc30d9a806d55fbe826d3826b0f7c",
+      "size": 3762
+    },
+    {
+      "path": "dist/forms/phs-assignment-request/sgg/rule-schema.json",
+      "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed",
+      "size": 5
+    },
+    {
+      "path": "dist/forms/phs-assignment-request/sgg/ui-schema.json",
+      "sha256": "7a95d155b33c68cfcb7329be3fb1e33625b147be7d7a765a995e5a8f03055d55",
       "size": 2013
+    },
+    {
+      "path": "dist/forms/phs-assignment-request/targets/grants-gov-xml.json",
+      "sha256": "ccd04229526f23d84c8c99a31dac9b1e62a498c7d386456d40de724cd1d1fb26",
+      "size": 2808
+    },
+    {
+      "path": "dist/forms/phs398-modular-budget/evidence.json",
+      "sha256": "0231721723a655d5ec2baabbe78349f973c38c75fde8efb0d149fab48ac8a714",
+      "size": 5486
     },
     {
       "path": "dist/forms/phs398-modular-budget/manifest.json",
@@ -428,8 +488,8 @@
     },
     {
       "path": "dist/forms/rr-budget-10yr/evidence.json",
-      "sha256": "7a000c6d8021edc98bd2f1c8a98152d247e0a979a4b7a48629c77135f58dd685",
-      "size": 7132
+      "sha256": "bf72d493624fe0e4da7260a4173bab94839e15c6e0533d92180fb48e8f3d9ddf",
+      "size": 25165
     },
     {
       "path": "dist/forms/rr-budget-10yr/manifest.json",
@@ -458,8 +518,8 @@
     },
     {
       "path": "dist/forms/rr-budget/evidence.json",
-      "sha256": "f5574f93c06d315c1b426ec6385ad9a341a878356817e56c30f62eecf9bc871f",
-      "size": 6398
+      "sha256": "30cafffbc76307f782e14dd1b8769c9ed490f4318b26a12cd00039d9163544ce",
+      "size": 23135
     },
     {
       "path": "dist/forms/rr-budget/manifest.json",
@@ -488,8 +548,8 @@
     },
     {
       "path": "dist/forms/rr-key-person-expanded/evidence.json",
-      "sha256": "17884525f99d115d6123147e6f97e8119409e01cf441ea22db61fc00ec7da8e4",
-      "size": 3466
+      "sha256": "c47332385d7479c9e01f5693c1b34d3914f9b2285d992ae579b1c4303da0b60b",
+      "size": 7147
     },
     {
       "path": "dist/forms/rr-key-person-expanded/manifest.json",
@@ -518,8 +578,8 @@
     },
     {
       "path": "dist/forms/rr-other-project-information/evidence.json",
-      "sha256": "835cdf78ea1f4b416f9871753b264c0a9b2a23a5e72281e6e086c69661fb13e9",
-      "size": 2023
+      "sha256": "8ae5a2d8bb153c1f0ed6eff377f4da872a15b64a43dbeb7530387f2ca24a0487",
+      "size": 7402
     },
     {
       "path": "dist/forms/rr-other-project-information/manifest.json",
@@ -548,8 +608,8 @@
     },
     {
       "path": "dist/forms/rr-sf424-multi-project-cover/evidence.json",
-      "sha256": "1daf489cf724a1b416aed46e99001880313802e275f6d1a45cb2e18b77ac9e34",
-      "size": 11170
+      "sha256": "0f522038c78da72a0da2eb12acdc2181cee7ddfcbe86add5c2c0ad6c85e9d52e",
+      "size": 17062
     },
     {
       "path": "dist/forms/rr-sf424-multi-project-cover/manifest.json",
@@ -573,8 +633,8 @@
     },
     {
       "path": "dist/forms/rr-sf424/evidence.json",
-      "sha256": "32053ba3750efd80ca22e696127aab5e6ac8e420e1dbacb4f4f2a10fb69c5ea0",
-      "size": 10947
+      "sha256": "27c9146732d60583c4ae11d9ae7521beb856c3efed91ba4f8ed4dcdc02b120e1",
+      "size": 14301
     },
     {
       "path": "dist/forms/rr-sf424/manifest.json",
@@ -603,8 +663,8 @@
     },
     {
       "path": "dist/forms/rr-subaward-budget-10yr-30/evidence.json",
-      "sha256": "6c72f1e7530c1f7c79c3a75e7ff218b702fbaec5da823210628e05ae93cfd6cf",
-      "size": 8651
+      "sha256": "a3e2aad1f4397e32f1fc8bd7f6d1005776cdc7260aaa37df7dfefdc7a98ed228",
+      "size": 27440
     },
     {
       "path": "dist/forms/rr-subaward-budget-10yr-30/manifest.json",
@@ -633,8 +693,8 @@
     },
     {
       "path": "dist/forms/rr-subaward-budget-30/evidence.json",
-      "sha256": "e8f62ed62ccf38b8534293ca8d68921166d906fa1025b89260ad8ab045825388",
-      "size": 7858
+      "sha256": "a84d549c24ee840a71ffc1ff4d49e8658193e5ef9eb887db40ee9e62bc0272ef",
+      "size": 26647
     },
     {
       "path": "dist/forms/rr-subaward-budget-30/manifest.json",
@@ -663,8 +723,8 @@
     },
     {
       "path": "dist/forms/rr-subaward-budget/evidence.json",
-      "sha256": "e637ff4475deb9d050da8bca4b3e40cdb3d115f833136cbc617833848a37603e",
-      "size": 7873
+      "sha256": "7e153a7a725c65af226c679602f8654fb066c29da296b77ee1668d898a22416e",
+      "size": 26662
     },
     {
       "path": "dist/forms/rr-subaward-budget/manifest.json",
@@ -718,8 +778,8 @@
     },
     {
       "path": "dist/forms/sf424/evidence.json",
-      "sha256": "de89dbff2909a0f5081db761a8e91c3075b467c3ef608c8c0ae3a7f25b130e69",
-      "size": 5603
+      "sha256": "4a82f11c9d381a958561b7649e9f51fb9b898ee2292d2e54c89134909f892f4e",
+      "size": 6008
     },
     {
       "path": "dist/forms/sf424/manifest.json",
@@ -743,8 +803,8 @@
     },
     {
       "path": "dist/forms/sf424a/evidence.json",
-      "sha256": "98105624259419d97a92a2c1292eef15f10f0c00b25d963e414897a90f69298c",
-      "size": 3028
+      "sha256": "348056db75d974b86faa07c8629339e6efce78385c718e1226f0162d96a786cd",
+      "size": 17997
     },
     {
       "path": "dist/forms/sf424a/manifest.json",
@@ -808,8 +868,8 @@
     },
     {
       "path": "dist/forms/sf424c/evidence.json",
-      "sha256": "3431e9b8a96f543c17e173cbf7714aa2087c60f703e2df95e75b2993be7d7fe5",
-      "size": 14923
+      "sha256": "c09129fabcf62cd2f8fa09b0a3e264529cdc5092f160e3d76324707a7b9f16fa",
+      "size": 16627
     },
     {
       "path": "dist/forms/sf424c/manifest.json",
@@ -878,8 +938,8 @@
     },
     {
       "path": "dist/forms/sflll/evidence.json",
-      "sha256": "430a9707c70746612a0067b4b21ebb58bc6267bd80dfea760d697552e70674bb",
-      "size": 4445
+      "sha256": "470eaaa4a12a534258a6d2d7d941c62d129ad4e8c4ff6020af72fe78f0df3cfc",
+      "size": 8890
     },
     {
       "path": "dist/forms/sflll/manifest.json",
@@ -1297,6 +1357,11 @@
       "size": 340
     },
     {
+      "path": "dist/question-bank/generics/ordered-attachment-slot/schema.json",
+      "sha256": "09e01d906165cdc6cd745372450039c12eabf99b3e616ab5b431d006f37238db",
+      "size": 252
+    },
+    {
       "path": "dist/question-bank/generics/organization-name/schema.json",
       "sha256": "ee043744a2c4fe4ba584b3f526bdc39c487226edde15b64ba2d6809c9559e08f",
       "size": 266
@@ -1620,6 +1685,31 @@
       "path": "dist/question-bank/research-project/vertebrate-animals/schema.json",
       "sha256": "74d387c4c3ead1632cbfac4454ed59c6b4968a3d182b79be8892181775f71ef2",
       "size": 2101
+    },
+    {
+      "path": "dist/question-bank/review-routing/assignment-suggestion-rationale/schema.json",
+      "sha256": "a7121a3d962b070c492ba5e9e86c665a7f06cbcf420669db6cf7c0358fffd1a3",
+      "size": 277
+    },
+    {
+      "path": "dist/question-bank/review-routing/excluded-reviewer-request/schema.json",
+      "sha256": "868761a8ceb9eacdfb51f2b8daf6c9ea422cbd0f3e512843a0ecc81285f82f0f",
+      "size": 266
+    },
+    {
+      "path": "dist/question-bank/review-routing/reviewer-expertise/schema.json",
+      "sha256": "452f3f6c9694cb608d198f24c779b7bebccd06aecbd4ebfd42cef79c353ad535",
+      "size": 257
+    },
+    {
+      "path": "dist/question-bank/review-routing/suggested-awarding-component/schema.json",
+      "sha256": "a96d043d593c1b95e3d0f698bfb4fc326b1fedbc80f53afdfe942e88f93d7e91",
+      "size": 248
+    },
+    {
+      "path": "dist/question-bank/review-routing/suggested-study-section/schema.json",
+      "sha256": "4173b215e64ab90cfed13405030bd897c05c89c5da26f6c6fe6080f52d515702",
+      "size": 254
     }
   ],
   "selection": {
@@ -1652,13 +1742,15 @@
       "sf424d",
       "mandatory-sf424d",
       "individual-sf424d",
-      "sf424c"
+      "sf424c",
+      "phs-assignment-request",
+      "attachment-form"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "825ee6b1dc3c038e4dbacbb38ffab52e4b4f6100"
+    "revision": "2fde5118f440f31c7527fde784d573bb3ab3d912"
   },
-  "sourceBundleSha256": "3c58f0d8006054f425402f99e36019f23d9675e2c159c8ac49ff7fd83fd350b6"
+  "sourceBundleSha256": "72aee82f3d5d04ff7862a978a5953e876489622c219d9482f2b712347e5a622e"
 }

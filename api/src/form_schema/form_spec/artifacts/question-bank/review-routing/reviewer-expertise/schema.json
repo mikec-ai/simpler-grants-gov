@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-routing/reviewer-expertise/schema.json",
+  "type": "string",
+  "maxLength": 40,
+  "description": "Identify one scientific area of expertise needed to review the application."
+}

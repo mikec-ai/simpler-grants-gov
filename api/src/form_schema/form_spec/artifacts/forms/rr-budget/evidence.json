@@ -33,121 +33,449 @@
       "canonicalPath": "budgetYear[*].otherPersonnel.postDocAssociates.fundsRequested",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.FundsRequested",
-      "sourceRecord": "B-1-8"
+      "sourceRecord": "B-1-8",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetYear[*].otherPersonnel.graduateStudents.fundsRequested",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.FundsRequested",
-      "sourceRecord": "B-2-8"
+      "sourceRecord": "B-2-8",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetYear[*].otherPersonnel.undergraduateStudents.fundsRequested",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.FundsRequested",
-      "sourceRecord": "B-3-8"
+      "sourceRecord": "B-3-8",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetYear[*].otherPersonnel.secretarialClerical.fundsRequested",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.FundsRequested",
-      "sourceRecord": "B-4-8"
+      "sourceRecord": "B-4-8",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetYear[*].otherPersonnel.other[*].fundsRequested",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.FundsRequested",
-      "sourceRecord": "B-5-8"
+      "sourceRecord": "B-5-8",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetYear[*].equipment.totalFund",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetYear.Equipment.TotalFund",
-      "sourceRecord": "C-3-1"
+      "sourceRecord": "C-3-1",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetYear[*].travel.totalTravelCost",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetYear.Travel.TotalTravelCost",
-      "sourceRecord": "D-3-1"
+      "sourceRecord": "D-3-1",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetYear[*].participantTraineeSupportCosts.totalCost",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.TotalCost",
-      "sourceRecord": "E-6-2"
+      "sourceRecord": "E-6-2",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetYear[*].indirectCosts.totalIndirectCosts",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetYear.IndirectCosts.TotalIndirectCosts",
-      "sourceRecord": "H-2-1"
+      "sourceRecord": "H-2-1",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetYear[*].totalCosts",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetYear.TotalCosts",
-      "sourceRecord": "I-1-1"
+      "sourceRecord": "I-1-1",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetYear[*].totalCostsFee",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetYear.TotalCostsFee",
-      "sourceRecord": "K-1-1"
+      "sourceRecord": "K-1-1",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedSeniorKeyPerson",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedSeniorKeyPerson",
-      "sourceRecord": "L-CB-A"
+      "sourceRecord": "L-CB-A",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedOtherPersonnel",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedOtherPersonnel",
-      "sourceRecord": "L-CB-B-1"
+      "sourceRecord": "L-CB-B-1",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetSummary.cumulativeTotalNoOtherPersonnel",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalNoOtherPersonnel",
-      "sourceRecord": "L-CB-B-2"
+      "sourceRecord": "L-CB-B-2",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedPersonnel",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedPersonnel",
-      "sourceRecord": "L-CB-B-3"
+      "sourceRecord": "L-CB-B-3",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedEquipment",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedEquipment",
-      "sourceRecord": "L-CB-C-1"
+      "sourceRecord": "L-CB-C-1",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedDirectCosts",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedDirectCosts",
-      "sourceRecord": "L-CB-G-1"
+      "sourceRecord": "L-CB-G-1",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedIndirectCost",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedIndirectCost",
-      "sourceRecord": "L-CB-H-1"
+      "sourceRecord": "L-CB-H-1",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedDirectIndirectCosts",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedDirectIndirectCosts",
-      "sourceRecord": "L-CB-I-1"
+      "sourceRecord": "L-CB-I-1",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetSummary.cumulativeTotalCostsFee",
       "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
       "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalCostsFee",
-      "sourceRecord": "L-CB-K-1"
+      "sourceRecord": "L-CB-K-1",
+      "ruleKind": "calculation",
+      "authority": "official_source"
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetYear[*].keyPersons.keyPerson[*].fundsRequested",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetYear[*].keyPersons.totalFundForKeyPersons",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetYear[*].otherPersonnel.otherPersonnelTotalNumber",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetYear[*].otherPersonnel.totalOtherPersonnelFund",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetYear[*].directCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetYear[*].otherDirectCosts.totalOtherDirectCost",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetYear[*].totalCompensation",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeAdpComputerServices",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeAlterationsAndRenovations",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeConsultantServices",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeDomesticTravelCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeEquipmentFacilityRentalFees",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeFee",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeForeignTravelCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeMaterialAndSupplies",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeNoofTrainees",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeOther10DirectCost",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeOther1DirectCost",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeOther2DirectCost",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeOther3DirectCost",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeOther4DirectCost",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeOther5DirectCost",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeOther6DirectCost",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeOther7DirectCost",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeOther8DirectCost",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeOther9DirectCost",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeOtherTraineeCost",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativePublicationCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeSubawardConsortiumContractualCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedOtherDirectCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedTraineeCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedTravel",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeTraineeStipends",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeTraineeSubsistence",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeTraineeTravel",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "budgetSummary.cumulativeTraineeTuitionFeesHealthInsurance",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
     }
   ],
   "semanticReview": {

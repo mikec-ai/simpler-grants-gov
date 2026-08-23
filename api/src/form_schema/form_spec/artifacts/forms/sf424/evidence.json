@@ -131,5 +131,14 @@
       }
     ]
   },
-  "behaviorEvidence": []
+  "behaviorEvidence": [
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalEstimatedFunding",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    }
+  ]
 }

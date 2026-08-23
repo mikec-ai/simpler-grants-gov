@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "generics/ordered-attachment-slot/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "One optional position in a source-defined ordered attachment sequence."
+}

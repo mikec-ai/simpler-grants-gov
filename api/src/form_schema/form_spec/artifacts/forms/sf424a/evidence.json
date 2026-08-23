@@ -61,5 +61,286 @@
       }
     ]
   },
-  "behaviorEvidence": []
+  "behaviorEvidence": [
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "activityLineItems[*].budgetCategories.totalDirectChargeAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "activityLineItems[*].budgetCategories.totalAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "activityLineItems[*].nonFederalResources.totalAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetSummary.federalEstimatedUnobligatedAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetSummary.nonFederalEstimatedUnobligatedAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetSummary.federalNewOrRevisedAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetSummary.nonFederalNewOrRevisedAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetSummary.totalAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetCategories.personnelAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetCategories.fringeBenefitsAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetCategories.travelAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetCategories.equipmentAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetCategories.suppliesAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetCategories.contractualAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetCategories.constructionAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetCategories.otherAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetCategories.totalDirectChargeAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetCategories.totalIndirectChargeAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetCategories.totalAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalBudgetCategories.programIncomeAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalNonFederalResources.applicantAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalNonFederalResources.stateAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalNonFederalResources.otherAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalNonFederalResources.totalAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "forecastedCashNeeds.federalForecastedCashNeeds.totalAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "forecastedCashNeeds.nonFederalForecastedCashNeeds.totalAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "forecastedCashNeeds.totalForecastedCashNeeds.firstQuarterAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "forecastedCashNeeds.totalForecastedCashNeeds.secondQuarterAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "forecastedCashNeeds.totalForecastedCashNeeds.thirdQuarterAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "forecastedCashNeeds.totalForecastedCashNeeds.fourthQuarterAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "forecastedCashNeeds.totalForecastedCashNeeds.totalAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalFederalFundEstimates.firstYearAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalFederalFundEstimates.secondYearAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalFederalFundEstimates.thirdYearAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "totalFederalFundEstimates.fourthYearAmount",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    }
+  ]
 }

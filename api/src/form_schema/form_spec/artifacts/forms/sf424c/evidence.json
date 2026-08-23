@@ -54,145 +54,193 @@
       "canonicalPath": "budgetInformation.administrativeAndLegalExpenses.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.AdministrationCost.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "01-c"
+      "sourceRecord": "01-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.landStructuresRightsOfWay.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.LandCost.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "02-c"
+      "sourceRecord": "02-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.relocationExpenses.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.RelocationCost.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "03-c"
+      "sourceRecord": "03-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.architecturalEngineeringFees.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.ArchitecturalCost.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "04-c"
+      "sourceRecord": "04-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.otherArchitecturalEngineeringFees.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.OtherArchitecturalCost.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "05-c"
+      "sourceRecord": "05-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.projectInspectionFees.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.InspectionFeesCost.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "06-c"
+      "sourceRecord": "06-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.siteWork.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.SiteWorkCost.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "07-c"
+      "sourceRecord": "07-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.demolitionAndRemoval.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.DemolitionCost.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "08-c"
+      "sourceRecord": "08-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.construction.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.ConstructionCost.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "09-c"
+      "sourceRecord": "09-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.equipment.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.EquipmentCost.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "10-c"
+      "sourceRecord": "10-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.miscellaneous.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.Miscellaneous.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "11-c"
+      "sourceRecord": "11-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.subtotalBeforeContingencies.totalCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalBeforeContingencies.BudgetEstimatedCostAmount",
-      "sourceRecord": "12-a"
+      "sourceRecord": "12-a",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.subtotalBeforeContingencies.nonAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalBeforeContingencies.BudgetNonAllowableCostAmount",
-      "sourceRecord": "12-b"
+      "sourceRecord": "12-b",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.subtotalBeforeContingencies.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalBeforeContingencies.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "12-c"
+      "sourceRecord": "12-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.contingencies.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.Contingencies.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "13-c"
+      "sourceRecord": "13-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.subtotalAfterContingencies.totalCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalAfterContingencies.BudgetEstimatedCostAmount",
-      "sourceRecord": "14-a"
+      "sourceRecord": "14-a",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.subtotalAfterContingencies.nonAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalAfterContingencies.BudgetNonAllowableCostAmount",
-      "sourceRecord": "14-b"
+      "sourceRecord": "14-b",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.subtotalAfterContingencies.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalAfterContingencies.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "14-c"
+      "sourceRecord": "14-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.programIncome.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.ProgramIncome.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "15-c"
+      "sourceRecord": "15-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.totalProjectCosts.totalCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.TotalProjectCosts.BudgetEstimatedCostAmount",
-      "sourceRecord": "16-a"
+      "sourceRecord": "16-a",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.totalProjectCosts.nonAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.TotalProjectCosts.BudgetNonAllowableCostAmount",
-      "sourceRecord": "16-b"
+      "sourceRecord": "16-b",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "budgetInformation.totalProjectCosts.totalAllowableCost",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.ProjectCosts.TotalProjectCosts.BudgetTotalAllowableCostAmount",
-      "sourceRecord": "16-c"
+      "sourceRecord": "16-c",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "federalFunding.totalProjectCosts",
       "sourceId": "grantsgov-sf424c-pdf-2.0",
       "sourcePath": "PDF page 1, line 17: Total Project Costs (from line 16c)",
-      "sourceRecord": "17-1"
+      "sourceRecord": "17-1",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     },
     {
       "canonicalPath": "federalFunding.federalFundingShare",
       "sourceId": "grantsgov-sf424c-dat-2.0-f408",
       "sourcePath": "SF424C_2_0.FederalFundingShareValue",
-      "sourceRecord": "17-4"
+      "sourceRecord": "17-4",
+      "ruleKind": "calculation",
+      "authority": "official_source"
     }
   ],
   "semanticReview": {
