@@ -49,6 +49,15 @@ _SUBSCHEMA = ("items", "additionalProperties", "contains", "not", "if", "then", 
 # Keywords whose value is a list of subschemas.
 _SUBSCHEMA_LIST = ("allOf", "anyOf", "oneOf", "prefixItems")
 
+# Grants.gov's authoritative UniversalCodes V2.0 XSD uses a typographic apostrophe for
+# this country value. Simpler's existing CountryCode enum, persisted responses, and
+# translations use the ASCII spelling. Keep the portable artifact source-faithful and
+# adapt only at this consumer boundary so imported forms remain compatible with the
+# runtime contract.
+_SGG_ENUM_VALUES = {
+    "CIV: CÔTE D’IVOIRE": "CIV: CÔTE D'IVOIRE",
+}
+
 
 def snake_case(name: str) -> str:
     """`applicantOrganizationName` -> `applicant_organization_name`."""
@@ -81,6 +90,8 @@ class Projection:
     within_bank: bool = False
     #: Collects `$defs` hoisted out of individual blocks to the bank document's root.
     hoisted_defs: dict[str, Any] | None = None
+    #: Source-faithful enum literal -> this consumer's established persisted spelling.
+    enum_values: dict[str, str] = dataclasses.field(default_factory=lambda: dict(_SGG_ENUM_VALUES))
 
     def rename(self, path: str, name: str) -> str:
         if path in self.renames:
@@ -359,6 +370,8 @@ def _project_node(
                 ]
                 for name, deps in value.items()
             }
+        elif key == "enum" and isinstance(value, list):
+            out[key] = [projection.enum_values.get(item, item) for item in value]
         else:
             out[key] = value
 
@@ -460,11 +473,13 @@ def _flatten_composition(
         if base is None:
             kept.append(branch)
             continue
-        merged_keywords.update({
-            key: value
-            for key, value in base.items()
-            if key not in {"properties", "required", "$defs", "allOf"}
-        })
+        merged_keywords.update(
+            {
+                key: value
+                for key, value in base.items()
+                if key not in {"properties", "required", "$defs", "allOf"}
+            }
+        )
         merged_properties.update(base.get("properties", {}))
         merged_required.extend(base.get("required", []))
         if base.get("$defs"):
