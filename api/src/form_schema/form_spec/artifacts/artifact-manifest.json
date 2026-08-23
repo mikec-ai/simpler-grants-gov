@@ -67,6 +67,46 @@
       "size": 2451
     },
     {
+      "path": "dist/forms/gg-lobbying/evidence.json",
+      "sha256": "c2926dc320751195468e379c3137657c697f983ff32256e929aab0c4645ef6c3",
+      "size": 4723
+    },
+    {
+      "path": "dist/forms/gg-lobbying/manifest.json",
+      "sha256": "39b49bbd09533d30cb6fe7d32cb6db329fda62a4db0b255ee6de170131ff7b2d",
+      "size": 601
+    },
+    {
+      "path": "dist/forms/gg-lobbying/policy-binding.json",
+      "sha256": "59f49779ba7e942353ab118c54313e94e3f2ee1db11b3ff55f638ba985a7ab7a",
+      "size": 1946
+    },
+    {
+      "path": "dist/forms/gg-lobbying/policy-content.json",
+      "sha256": "21f0e972f0a7b7929bfa3644d4efeebdfddd344994772c3ad1725d3f4e8ef403",
+      "size": 4119
+    },
+    {
+      "path": "dist/forms/gg-lobbying/schema.json",
+      "sha256": "66f5463936935cf9e72d74a545118c24d94ea4b557cd76314cd04cfc2c1a98f1",
+      "size": 1761
+    },
+    {
+      "path": "dist/forms/gg-lobbying/sgg/rule-schema.json",
+      "sha256": "28482f7076487a11148783534675eaed08c6990169c412058030cb93142f5155",
+      "size": 198
+    },
+    {
+      "path": "dist/forms/gg-lobbying/sgg/ui-schema.json",
+      "sha256": "932c6adfe89a5883f4de91a22a625816f4190f49e02a31c913c8332d55e27fd3",
+      "size": 4458
+    },
+    {
+      "path": "dist/forms/gg-lobbying/targets/grants-gov-xml.json",
+      "sha256": "ea9ef71378ad83704abaae9ab0a6102888787427be752f2258784dfda012f5b8",
+      "size": 2524
+    },
+    {
       "path": "dist/forms/key-contacts/evidence.json",
       "sha256": "a984c3af342312e26edb2748783c89492e0e5cc73844e7031618f25d98d872a3",
       "size": 1363
@@ -1194,13 +1234,14 @@
       "rr-other-project-information",
       "phs398-modular-budget",
       "sflll",
-      "cd511"
+      "cd511",
+      "gg-lobbying"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "a7f900c636d8eeaad68a4069e745e397593c9459"
+    "revision": "7ed5463423853a80d50794aa82a606748120c981"
   },
-  "sourceBundleSha256": "6c1701584a4d18ce670754a6d03b2d65212bf3fe18299803f8e5ed570db4bb4e"
+  "sourceBundleSha256": "6b19c89d3e1a1b616aaf9f2d660deebc766333911301cf11b8e0dfb571b1fa61"
 }
