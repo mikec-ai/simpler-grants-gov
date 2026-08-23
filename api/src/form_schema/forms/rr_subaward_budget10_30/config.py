@@ -1,6 +1,6 @@
-import uuid
+from src.form_schema.form_spec.registrations import registration_metadata
 
 # Stable identifiers for this form. Do not change across versions.
-FORM_ID = uuid.UUID("8e208eec-a423-440b-9596-f71a33cec25f")
-SHORT_FORM_NAME = "RR_SubawardBudget10_30_3_0"
-FORM_INSTRUCTION_ID = uuid.UUID("f75a27cd-770b-41e9-bca8-ef0097201852")
+FORM_ID, SHORT_FORM_NAME, FORM_INSTRUCTION_ID = registration_metadata(
+    "rr-subaward-budget-10yr-30"
+)
