@@ -343,6 +343,8 @@ def _schema_pointer_field_positions(steps: list[str]) -> list[int]:
 
 def project_rule_schema(rules: Any, projection: Projection, path: str = "") -> Any:
     """Rename a rule schema's keys and the field paths its rules reference."""
+    if path == "":
+        _validate_rule_schema(rules)
     if not isinstance(rules, dict):
         return rules
 
@@ -365,7 +367,34 @@ def _project_rule(rule: Any, projection: Projection, path: str) -> Any:
     fields = rule.get("fields")
     if isinstance(fields, list):
         out["fields"] = [_project_reference(f, projection, path) for f in fields]
+    presence_fields = rule.get("presence_fields")
+    if isinstance(presence_fields, list):
+        out["presence_fields"] = [_project_reference(f, projection, path) for f in presence_fields]
     return out
+
+
+def _validate_rule_schema(node: Any) -> None:
+    if isinstance(node, list):
+        for value in node:
+            _validate_rule_schema(value)
+        return
+    if not isinstance(node, dict):
+        return
+    pre_population = node.get("gg_pre_population")
+    if isinstance(pre_population, dict) and "materialize" in pre_population:
+        if pre_population["materialize"] != "when_any_source_present":
+            raise ValueError(
+                f"unknown calculation materialization policy: {pre_population['materialize']!r}"
+            )
+        presence_fields = pre_population.get("presence_fields")
+        if (
+            not isinstance(presence_fields, list)
+            or not presence_fields
+            or not all(isinstance(field, str) and field for field in presence_fields)
+        ):
+            raise ValueError("when_any_source_present requires non-empty string presence_fields")
+    for value in node.values():
+        _validate_rule_schema(value)
 
 
 def _project_reference(reference: str, projection: Projection, path: str) -> str:

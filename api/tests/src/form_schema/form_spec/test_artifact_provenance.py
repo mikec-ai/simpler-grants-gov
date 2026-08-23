@@ -1,13 +1,12 @@
 import hashlib
 import json
+import re
 
 import pytest
 
-import re
-
 from src.form_schema.form_spec.bank import (
-    ARTIFACTS,
     ARTIFACT_MANIFEST,
+    ARTIFACTS,
     verify_artifact_selection,
     verify_artifacts,
 )
@@ -52,6 +51,31 @@ def test_manifest_covers_every_vendored_json_artifact():
         if path != ARTIFACT_MANIFEST
     }
     assert present == expected
+
+
+@pytest.mark.parametrize(
+    "form_id,inherited_from",
+    [
+        ("rr-budget", None),
+        ("rr-budget-10yr", "rr-budget"),
+        ("rr-subaward-budget", "rr-budget"),
+        ("rr-subaward-budget-30", "rr-budget"),
+        ("rr-subaward-budget-10yr-30", "rr-budget"),
+    ],
+)
+def test_budget_family_behavior_evidence_pins_exact_f770_records(form_id, inherited_from):
+    evidence = json.loads((ARTIFACTS / "forms" / form_id / "evidence.json").read_text())
+    records = evidence["behaviorEvidence"]
+
+    assert len(records) == 20
+    assert {record["sourceId"] for record in records} == {"grantsgov-rr-budget-dat-3.0-f770"}
+    assert len({record["sourceRecord"] for record in records}) == 20
+    assert all(record["canonicalPath"] and record["sourcePath"] for record in records)
+    if inherited_from is None:
+        assert all("inheritedFrom" not in record for record in records)
+    else:
+        assert {record["inheritedFrom"] for record in records} == {inherited_from}
+    assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}
 
 
 def test_changed_artifact_fails_closed(tmp_path):

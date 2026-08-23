@@ -160,6 +160,7 @@ def test_sum_monetary_materializes_only_when_a_source_is_present(
     rule = {
         "rule": "sum_monetary",
         "fields": ["x", "y"],
+        "presence_fields": ["x", "y"],
         "materialize": "when_any_source_present",
     }
     context = setup_context(json_data, {"my_field": rule})
@@ -177,6 +178,7 @@ def test_sum_integer_materializes_explicit_zero(enable_factory_create):
     rule = {
         "rule": "sum_integer",
         "fields": ["count"],
+        "presence_fields": ["count"],
         "materialize": "when_any_source_present",
     }
     context = setup_context({"count": 0}, {"total": rule})
@@ -194,6 +196,7 @@ def test_null_values_from_repeated_sources_do_not_materialize(enable_factory_cre
     rule = {
         "rule": "sum_monetary",
         "fields": ["items[*].amount"],
+        "presence_fields": ["items[*].amount"],
         "materialize": "when_any_source_present",
     }
     context = setup_context({"items": [{"amount": None}, {}], "total": "99.00"}, {"total": rule})

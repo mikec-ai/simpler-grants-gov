@@ -125,6 +125,38 @@ def test_rule_paths_reject_multiple_array_selectors_on_one_segment() -> None:
         project_rule_schema(rules, Projection())
 
 
+@pytest.mark.parametrize("policy", ["unknown", "", None])
+def test_rule_projection_rejects_unknown_materialization_policy(policy) -> None:
+    rules = {
+        "total": {
+            "gg_pre_population": {
+                "rule": "sum_monetary",
+                "fields": ["amount"],
+                "presence_fields": ["amount"],
+                "materialize": policy,
+            }
+        }
+    }
+
+    with pytest.raises(ValueError, match="unknown calculation materialization policy"):
+        project_rule_schema(rules, Projection())
+
+
+def test_rule_projection_requires_presence_fields_for_conditional_materialization() -> None:
+    rules = {
+        "total": {
+            "gg_pre_population": {
+                "rule": "sum_monetary",
+                "fields": ["amount"],
+                "materialize": "when_any_source_present",
+            }
+        }
+    }
+
+    with pytest.raises(ValueError, match="requires non-empty string presence_fields"):
+        project_rule_schema(rules, Projection())
+
+
 def test_response_pointer_uses_json_pointer_escaping_and_path_qualified_renames() -> None:
     projection = Projection(
         renames={

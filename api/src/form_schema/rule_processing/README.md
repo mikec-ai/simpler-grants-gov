@@ -149,6 +149,10 @@ A few important details about our summation logic:
   mode, an absent or null set of source fields leaves the output absent (and removes a stale output),
   while an explicitly entered zero is present and materializes the appropriate zero value. The same
   option is supported by `sum_integer` and `subtract_monetary`; the default remains unchanged.
+  The required `presence_fields` list declares which inputs establish presence. If one of those
+  inputs is itself calculated, server-side rule processing follows its declared dependencies until
+  it reaches entered source data, so an eagerly calculated zero cannot make a downstream optional
+  output appear by itself.
 
 
 Monetary summation expects string inputs in the format `"0.00"`. Integer counts use the separate

@@ -348,6 +348,7 @@ def test_calculation_materialization_in_nested_array_contexts(enable_factory_cre
                 "gg_pre_population": {
                     "rule": "sum_monetary",
                     "fields": ["@THIS.direct", "@THIS.indirect"],
+                    "presence_fields": ["@THIS.direct", "@THIS.indirect"],
                     "materialize": "when_any_source_present",
                 }
             },

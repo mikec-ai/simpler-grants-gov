@@ -7,7 +7,13 @@ from grants_shared.util.datetime_util import get_now_us_eastern_date
 from grants_shared.util.decimal_util import ZERO_DECIMAL, convert_monetary_field, quantize_decimal
 
 from src.form_schema.rule_processing.json_rule_context import JsonRule, JsonRuleContext
-from src.form_schema.rule_processing.json_rule_util import get_field_values, populate_nested_value
+from src.form_schema.rule_processing.json_rule_util import (
+    ARRAY_INDEX_REGEX,
+    get_field_values,
+    is_relative_path,
+    make_relative_path_absolute,
+    populate_nested_value,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -15,6 +21,77 @@ INDIVIDUAL_UEI = "00000000INDV"
 EXCLUDE_VALUE = "exclude_value"
 UNKNOWN_VALUE = "unknown"
 WHEN_ANY_SOURCE_PRESENT = "when_any_source_present"
+CALCULATION_RULES = {"sum_monetary", "sum_integer", "subtract_monetary"}
+
+
+def _reference_path(path: list[str], reference: str) -> list[str]:
+    if is_relative_path(reference):
+        return make_relative_path_absolute(path, reference)
+    return reference.split(".")
+
+
+def _path_matches(pattern: list[str], concrete: list[str]) -> bool:
+    if len(pattern) != len(concrete):
+        return False
+    for expected, actual in zip(pattern, concrete, strict=True):
+        match = ARRAY_INDEX_REGEX.search(expected)
+        if match and match.group(1) == "*":
+            expected_name = expected[: expected.rfind("[")]
+            actual_match = ARRAY_INDEX_REGEX.search(actual)
+            if not actual_match or actual[: actual.rfind("[")] != expected_name:
+                return False
+            continue
+        if expected != actual:
+            return False
+    return True
+
+
+def _calculation_dependencies(
+    context: JsonRuleContext, json_rule: JsonRule, reference: str
+) -> list[JsonRule]:
+    pattern = _reference_path(json_rule.path, reference)
+    return [
+        candidate
+        for candidate in context.rules
+        if candidate.handler == "gg_pre_population"
+        and candidate.rule.get("rule") in CALCULATION_RULES
+        and _path_matches(pattern, candidate.path)
+    ]
+
+
+def _has_entered_source(
+    context: JsonRuleContext,
+    json_rule: JsonRule,
+    references: list[str],
+    visiting: set[tuple[str, ...]],
+) -> bool:
+    key = tuple(json_rule.path)
+    if key in visiting:
+        raise ValueError(f"Calculation presence cycle at {'.'.join(json_rule.path)}")
+    visiting.add(key)
+    try:
+        for reference in references:
+            dependencies = _calculation_dependencies(context, json_rule, reference)
+            if dependencies:
+                for dependency in dependencies:
+                    dependency_sources = dependency.rule.get(
+                        "presence_fields", dependency.rule.get("fields", [])
+                    )
+                    if not isinstance(dependency_sources, list) or not all(
+                        isinstance(field, str) for field in dependency_sources
+                    ):
+                        raise ValueError("Calculation presence_fields must be a list of paths")
+                    if _has_entered_source(context, dependency, dependency_sources, visiting):
+                        return True
+                continue
+            if any(
+                value is not None
+                for value in get_field_values(context.json_data, [reference], json_rule.path)
+            ):
+                return True
+        return False
+    finally:
+        visiting.remove(key)
 
 
 def _materialize_calculation(
@@ -32,9 +109,14 @@ def _materialize_calculation(
         return True
     if policy != WHEN_ANY_SOURCE_PRESENT:
         raise ValueError(f"Unknown calculation materialization policy: {policy}")
-    return any(
-        value is not None for value in get_field_values(context.json_data, fields, json_rule.path)
-    )
+    presence_fields = json_rule.rule.get("presence_fields")
+    if (
+        not isinstance(presence_fields, list)
+        or not presence_fields
+        or not all(isinstance(field, str) for field in presence_fields)
+    ):
+        raise ValueError("when_any_source_present requires non-empty presence_fields")
+    return _has_entered_source(context, json_rule, presence_fields, set())
 
 
 def get_opportunity_number(context: JsonRuleContext, json_rule: JsonRule) -> str:

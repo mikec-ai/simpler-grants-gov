@@ -166,6 +166,39 @@ def test_source_conditioned_calculation_distinguishes_absence_from_zero() -> Non
     assert travel[1]["total_travel_cost"] == "0.00"
 
 
+def test_cumulative_other_personnel_presence_follows_entered_sources() -> None:
+    def calculate(other_personnel: dict[str, Any]) -> dict[str, Any]:
+        application_form = SimpleNamespace(
+            application_response={
+                "budget_year": [{"other_personnel": other_personnel}],
+                "budget_summary": {},
+            },
+            form=RRBudget_v3_0,
+            application_form_id="portable-form-transitive-presence-test",
+            form_id=RRBudget_v3_0.form_id,
+        )
+        context = JsonRuleContext(
+            cast(Any, application_form), JsonRuleConfig(do_field_validation=False)
+        )
+        process_rule_schema_for_context(context)
+        return context.json_data["budget_summary"]
+
+    absent = calculate({})
+    assert "cumulative_total_funds_requested_other_personnel" not in absent
+    assert "cumulative_total_no_other_personnel" not in absent
+
+    explicit_zero = calculate(
+        {
+            "post_doc_associates": {
+                "requested_salary": "0.00",
+                "number_of_personnel": 0,
+            }
+        }
+    )
+    assert explicit_zero["cumulative_total_funds_requested_other_personnel"] == "0.00"
+    assert explicit_zero["cumulative_total_no_other_personnel"] == 0
+
+
 def test_official_source_and_extraction_provenance_are_pinned() -> None:
     evidence = json.loads((ARTIFACTS / "evidence.json").read_text())
 
