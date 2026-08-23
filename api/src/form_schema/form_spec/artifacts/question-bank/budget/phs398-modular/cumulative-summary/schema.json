@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/phs398-modular/cumulative-summary/schema.json",
+  "type": "object",
+  "properties": {
+    "cumulativeDirectCostLessConsortiumFandA": {
+      "$ref": "#/$defs/ResearchBudgetTotalAmount15",
+      "description": "Cumulative direct costs excluding consortium indirect costs.",
+      "title": "Cumulative Direct Cost less Consortium Indirect (F&A)",
+      "readOnly": true
+    },
+    "cumulativeConsortiumFandA": {
+      "$ref": "#/$defs/ResearchBudgetTotalAmount15",
+      "description": "Cumulative consortium indirect costs.",
+      "title": "Cumulative Consortium Indirect (F&A)",
+      "readOnly": true
+    },
+    "cumulativeTotalDirectCosts": {
+      "$ref": "#/$defs/ResearchBudgetTotalAmount15",
+      "description": "Cumulative total direct costs.",
+      "title": "Cumulative Total Direct Costs",
+      "readOnly": true
+    },
+    "cumulativeTotalIndirectCosts": {
+      "$ref": "#/$defs/ResearchBudgetTotalAmount15",
+      "description": "Cumulative total indirect costs.",
+      "title": "Cumulative Total Indirect Costs",
+      "readOnly": true
+    },
+    "cumulativeTotalDirectAndIndirectCosts": {
+      "$ref": "#/$defs/ResearchBudgetTotalAmount15",
+      "description": "Cumulative total direct and indirect costs.",
+      "title": "Cumulative Total Direct and Indirect Costs",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "cumulativeDirectCostLessConsortiumFandA",
+    "cumulativeTotalDirectCosts",
+    "cumulativeTotalDirectAndIndirectCosts"
+  ],
+  "description": "Cumulative totals across all PHS 398 modular budget periods.",
+  "$defs": {
+    "ResearchBudgetTotalAmount15": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
+    }
+  }
+}
