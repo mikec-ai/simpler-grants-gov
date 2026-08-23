@@ -6,6 +6,7 @@ from sqlalchemy import select
 from src.constants.lookup_constants import ApplicationAuditEvent
 from src.db.models.competition_models import ApplicationAudit
 from src.services.applications.process_application_attachment_changes import (
+    ARRAY_ITEM_PATH_TOKEN,
     collect_attachment_ids,
     get_attachment_field_paths,
     process_application_attachment_changes,
@@ -67,6 +68,22 @@ def test_get_attachment_field_paths_nested_definition(create_test_form):
     assert get_attachment_field_paths(form) == [["group", "att"]]
 
 
+def test_get_attachment_field_paths_repeated_definition(create_test_form):
+    form = _make_form(
+        create_test_form,
+        form_ui_schema=[
+            {
+                "type": "field",
+                "definition": "/properties/people/items/properties/supportingDocument",
+                "widget": "Attachment",
+            }
+        ],
+    )
+    assert get_attachment_field_paths(form) == [
+        ["people", ARRAY_ITEM_PATH_TOKEN, "supportingDocument"]
+    ]
+
+
 def test_get_attachment_field_paths_no_attachments(create_test_form):
     form = _make_form(
         create_test_form,
@@ -89,6 +106,48 @@ def test_collect_attachment_ids_handles_missing_and_non_string():
     paths = [["att1"], ["attachments"]]
     response = {"attachments": ["id-b", None, 5]}
     assert collect_attachment_ids(response, paths) == {"id-b"}
+
+
+def test_collect_attachment_ids_from_repeated_rows_and_nested_attachment_arrays():
+    paths = [
+        ["people", ARRAY_ITEM_PATH_TOKEN, "documents"],
+        ["group", "attachment"],
+    ]
+    response = {
+        "people": [
+            {"documents": ["id-a", "id-b"]},
+            {"documents": ["id-c", None]},
+            {"name": "No attachment"},
+        ],
+        "group": {"attachment": "id-d"},
+    }
+    assert collect_attachment_ids(response, paths) == {"id-a", "id-b", "id-c", "id-d"}
+
+
+def test_collect_attachment_ids_supports_concrete_array_indices():
+    response = {
+        "people": [
+            {"attachment": "id-a"},
+            {"attachment": "id-b"},
+        ]
+    }
+    assert collect_attachment_ids(response, [["people", 1, "attachment"]]) == {"id-b"}
+
+
+def test_items_property_name_is_not_treated_as_an_array_wildcard(create_test_form):
+    form = _make_form(
+        create_test_form,
+        form_ui_schema=[
+            {
+                "type": "field",
+                "definition": "/properties/items",
+                "widget": "Attachment",
+            }
+        ],
+    )
+    paths = get_attachment_field_paths(form)
+    assert paths == [["items"]]
+    assert collect_attachment_ids({"items": "id-a"}, paths) == {"id-a"}
 
 
 def test_process_added_attachment_emits_audit(enable_factory_create, db_session, create_test_form):
@@ -143,6 +202,66 @@ def test_process_added_attachment_array(enable_factory_create, db_session, creat
         attachment_2.application_attachment_id,
     }
     assert all(a.application_audit_event == ApplicationAuditEvent.ATTACHMENT_ADDED for a in audits)
+
+
+def test_process_repeated_row_attachment_additions_and_removals(
+    enable_factory_create, db_session, create_test_form
+):
+    application = ApplicationFactory.create()
+    removed_attachment = ApplicationAttachmentFactory.create(application=application)
+    unchanged_attachment = ApplicationAttachmentFactory.create(application=application)
+    added_attachment = ApplicationAttachmentFactory.create(application=application)
+    user = removed_attachment.user
+    form = _make_form(
+        create_test_form,
+        form_ui_schema=[
+            {
+                "type": "field",
+                "definition": "/properties/people/items/properties/documents",
+                "widget": "AttachmentArray",
+            }
+        ],
+    )
+
+    old_response = {
+        "people": [
+            {
+                "documents": [
+                    str(removed_attachment.application_attachment_id),
+                    str(unchanged_attachment.application_attachment_id),
+                ]
+            }
+        ]
+    }
+    new_response = {
+        "people": [
+            {"documents": [str(unchanged_attachment.application_attachment_id)]},
+            {"documents": [str(added_attachment.application_attachment_id)]},
+        ]
+    }
+
+    with db_session.begin():
+        process_application_attachment_changes(
+            db_session=db_session,
+            application=application,
+            form=form,
+            user=user,
+            old_application_response=old_response,
+            new_application_response=new_response,
+        )
+
+    db_session.refresh(removed_attachment)
+    assert removed_attachment.is_deleted is True
+    assert removed_attachment.file_location == "DELETED"
+
+    audits = _get_audits(db_session, application)
+    assert {(audit.application_audit_event, audit.target_attachment_id) for audit in audits} == {
+        (
+            ApplicationAuditEvent.ATTACHMENT_DELETED,
+            removed_attachment.application_attachment_id,
+        ),
+        (ApplicationAuditEvent.ATTACHMENT_ADDED, added_attachment.application_attachment_id),
+    }
 
 
 def test_process_deleted_attachment_removes_file_and_audits(
