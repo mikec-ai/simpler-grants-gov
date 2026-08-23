@@ -16,7 +16,6 @@ from src.services.xml_generation.service import XMLGenerationService
 from src.services.xml_generation.validation.xsd_validator import XSDValidator
 from tests.src.form_schema.form_spec.test_cd511_portable import VALID_RESPONSE
 
-
 XSD_DIRECTORY = Path("src/services/xml_generation/xsds")
 XSD_NAME = "CD511-V1.1.xsd"
 FORM_NS = "http://apply.grants.gov/forms/CD511-V1.1"
@@ -26,11 +25,13 @@ XSD_SHA256 = "f13c05b8e62fe1e7cf0198053f79fdd34efe4b7d10b56974d27a7dd45d013fde"
 
 def _generate_xml() -> str:
     response = copy.deepcopy(VALID_RESPONSE)
-    response.update({
-        "award_number": "AWARD-123",
-        "signature": "reviewer@example.gov",
-        "submitted_date": "2026-08-23",
-    })
+    response.update(
+        {
+            "award_number": "AWARD-123",
+            "signature": "reviewer@example.gov",
+            "submitted_date": "2026-08-23",
+        }
+    )
     form = load_form("cd511")
     schema = resolve_jsonschema(copy.deepcopy(form.form_json_schema))
     assert list(Draft202012Validator(schema).iter_errors(response)) == []

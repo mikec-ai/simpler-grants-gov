@@ -26,10 +26,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from src.form_schema.form_spec.integrity import (
-    verify_artifact_selection,
-    verify_artifact_xsds,
-)
+from src.form_schema.form_spec.integrity import verify_artifact_selection, verify_artifact_xsds
 from src.form_schema.form_spec.projection import Projection, project_schema
 from src.form_schema.shared.shared_schema import SharedSchema, get_shared_schema_config
 

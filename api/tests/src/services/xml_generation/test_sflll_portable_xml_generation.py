@@ -16,7 +16,6 @@ from src.services.xml_generation.service import XMLGenerationService
 from src.services.xml_generation.validation.xsd_validator import XSDValidator
 from tests.src.form_schema.form_spec.test_sflll_portable import VALID_RESPONSE
 
-
 XSD_DIRECTORY = Path("src/services/xml_generation/xsds")
 XSD_NAME = "SFLLL_2_0-V2.0.xsd"
 FORM_NS = "http://apply.grants.gov/forms/SFLLL_2_0-V2.0"
@@ -25,42 +24,46 @@ XSD_SHA256 = "fff7449d00c715efb79d83b572bc7b1ef3e8171f6a9ba841436b26242e883664"
 
 def _response() -> dict:
     response = copy.deepcopy(VALID_RESPONSE)
-    response.update({
-        "report_type": "MaterialChange",
-        "material_change": {
-            "year": "2026",
-            "quarter": "2",
-            "last_report_date": "2026-04-01",
-        },
-        "reporting_entity_type": "SubAwardee",
-        "tier": 0,
-        "prime_organization": {
-            "organization_name": "Prime Research Institute",
-            "address": {
-                "street1": "3 Research Way",
-                "city": "Washington",
-                "state": "DC: District of Columbia",
-                "zip_code": "20001",
+    response.update(
+        {
+            "report_type": "MaterialChange",
+            "material_change": {
+                "year": "2026",
+                "quarter": "2",
+                "last_report_date": "2026-04-01",
             },
-            "congressional_district": "DC-000",
-        },
-        "individuals_performing_services": [
-            {
-                "name": {"first_name": "Grace", "last_name": "Hopper"},
+            "reporting_entity_type": "SubAwardee",
+            "tier": 0,
+            "prime_organization": {
+                "organization_name": "Prime Research Institute",
                 "address": {
-                    "street1": "4 Research Way",
-                    "city": "Arlington",
-                    "state": "VA: Virginia",
-                    "zip_code": "22201",
+                    "street1": "3 Research Way",
+                    "city": "Washington",
+                    "state": "DC: District of Columbia",
+                    "zip_code": "20001",
                 },
+                "congressional_district": "DC-000",
             },
-            {"name": {"first_name": "Katherine", "last_name": "Johnson"}},
-        ],
-    })
-    response["signature_block"].update({
-        "signed_date": "2026-08-23",
-        "signature": "reviewer@example.gov",
-    })
+            "individuals_performing_services": [
+                {
+                    "name": {"first_name": "Grace", "last_name": "Hopper"},
+                    "address": {
+                        "street1": "4 Research Way",
+                        "city": "Arlington",
+                        "state": "VA: Virginia",
+                        "zip_code": "22201",
+                    },
+                },
+                {"name": {"first_name": "Katherine", "last_name": "Johnson"}},
+            ],
+        }
+    )
+    response["signature_block"].update(
+        {
+            "signed_date": "2026-08-23",
+            "signature": "reviewer@example.gov",
+        }
+    )
     return response
 
 

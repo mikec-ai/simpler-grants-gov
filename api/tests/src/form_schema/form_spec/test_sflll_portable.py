@@ -16,7 +16,6 @@ from tests.src.form_schema.form_spec.lifecycle import (
     submit_form,
 )
 
-
 VALID_RESPONSE = {
     "federal_action_type": "Grant",
     "federal_action_status": "InitialAward",

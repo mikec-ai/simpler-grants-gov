@@ -26,10 +26,7 @@ from tests.src.db.models.factories import (
     RoleFactory,
     UserFactory,
 )
-from tests.src.form_schema.form_spec.test_sf424d_portable import (
-    RELEASABLE_PROFILES,
-    VALID_RESPONSE,
-)
+from tests.src.form_schema.form_spec.test_sf424d_portable import RELEASABLE_PROFILES, VALID_RESPONSE
 
 
 def _register_runtime_form(form_id: str) -> tuple[Any, FormTemplateKey]:

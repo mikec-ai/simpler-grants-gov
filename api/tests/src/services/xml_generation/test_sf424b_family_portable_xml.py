@@ -17,7 +17,6 @@ from src.services.xml_generation.service import XMLGenerationService
 from src.services.xml_generation.validation.xsd_validator import XSDValidator
 from tests.src.form_schema.form_spec.test_sf424b_portable import VALID_RESPONSE
 
-
 XSD_DIRECTORY = Path("src/services/xml_generation/xsds")
 PROFILES = {
     "sf424b": {

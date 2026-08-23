@@ -9,9 +9,9 @@ from __future__ import annotations
 
 import copy
 import json
+from collections.abc import Iterable
 from dataclasses import dataclass
 from types import SimpleNamespace
-from collections.abc import Iterable
 from typing import Any, cast
 
 from src.constants.lookup_constants import ApplicationFormStatus

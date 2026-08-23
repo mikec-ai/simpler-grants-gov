@@ -12,10 +12,7 @@ from sqlalchemy import select
 from src.constants.lookup_constants import ApplicationStatus, Privilege
 from src.db.models.competition_models import ApplicationForm
 from src.form_schema.form_spec.loader import build_runtime_form
-from src.form_schema.registry.form_template_registry import (
-    FormTemplateKey,
-    form_template_registry,
-)
+from src.form_schema.registry.form_template_registry import FormTemplateKey, form_template_registry
 from src.services.applications.submit_application import submit_application
 from src.services.applications.update_application_form import update_application_form
 from tests.src.db.models.factories import (
@@ -63,9 +60,9 @@ def test_sflll_save_and_reload_preserves_repeated_service_individuals(
         )
         user = _link_user(application, [Privilege.MODIFY_APPLICATION])
         response = copy.deepcopy(VALID_RESPONSE)
-        response["individuals_performing_services"].append({
-            "name": {"first_name": "Katherine", "last_name": "Johnson"}
-        })
+        response["individuals_performing_services"].append(
+            {"name": {"first_name": "Katherine", "last_name": "Johnson"}}
+        )
 
         with db_session.begin():
             saved, warnings = update_application_form(
