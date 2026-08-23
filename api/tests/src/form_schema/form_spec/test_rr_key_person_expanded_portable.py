@@ -124,9 +124,13 @@ def test_key_person_is_registration_ready_but_not_release_opted_in() -> None:
 def test_repeated_person_conditions_use_current_item_scope() -> None:
     projected = load_form("rr-key-person-expanded")
     conditional = [node for node in _walk(projected.form_ui_schema) if "conditional" in node]
-    root = [node for node in conditional if node["conditional"]["when"]["ref"]["scope"] == "root"]
-    item = [node for node in conditional if node["conditional"]["when"]["ref"]["scope"] == "item"]
+    direct = [node for node in conditional if "ref" in node["conditional"]["when"]]
+    compound = [node for node in conditional if node["conditional"]["when"]["op"] == "any"]
+    root = [node for node in direct if node["conditional"]["when"]["ref"]["scope"] == "root"]
+    item = [node for node in direct if node["conditional"]["when"]["ref"]["scope"] == "item"]
 
+    assert len(conditional) == 9
+    assert len(direct) == 6
     assert len(root) == 3
     assert len(item) == 3
     assert {node["conditional"]["when"]["ref"]["pointer"] for node in item} == {
@@ -138,6 +142,34 @@ def test_repeated_person_conditions_use_current_item_scope() -> None:
         "Other Professional",
         "Other (Specify)",
     ]
+
+    overflow_fields = {
+        "additional_profiles",
+        "additional_biographical_sketches",
+        "additional_current_pending_support",
+    }
+    assert len(compound) == 3
+    assert {node["definition"].removeprefix("/properties/") for node in compound} == overflow_fields
+    for node in compound:
+        own_target = node["definition"].removeprefix("/properties/")
+        assert node["conditional"] == {
+            "when": {
+                "op": "any",
+                "predicates": [
+                    {
+                        "op": "countAtLeast",
+                        "ref": {"scope": "root", "pointer": "/senior_key_persons"},
+                        "minimum": 99,
+                    },
+                    {
+                        "op": "present",
+                        "ref": {"scope": "root", "pointer": f"/{own_target}"},
+                    },
+                ],
+            },
+            "then": {"interaction": "enabled"},
+            "otherwise": {"interaction": "disabled"},
+        }
 
 
 def test_person_attachments_compile_while_overflow_semantics_stay_review_gated() -> None:
