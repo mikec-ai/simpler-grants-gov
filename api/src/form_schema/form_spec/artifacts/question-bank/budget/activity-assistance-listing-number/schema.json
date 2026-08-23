@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/activity-assistance-listing-number/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 15,
+  "description": "Enter the Assistance Listing number associated with this budget activity, when applicable.",
+  "title": "Assistance Listing number"
+}

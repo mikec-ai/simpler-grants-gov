@@ -91,11 +91,10 @@
       ]
     },
     "applicantWebAddress": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 250,
+      "$ref": "../../question-bank/primary-org/website/schema.json",
       "description": "Enter the applicant's web address, if applicable.",
-      "title": "Web Address"
+      "title": "Web Address",
+      "maxLength": 250
     },
     "applicantTypeCode": {
       "$ref": "../../question-bank/primary-org/applicant-type/schema.json",
@@ -130,9 +129,7 @@
       "maxLength": 200
     },
     "projectDescription": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 1000,
+      "$ref": "../../question-bank/project/description/schema.json",
       "description": "Enter a brief description of the project.",
       "title": "Project Description"
     },

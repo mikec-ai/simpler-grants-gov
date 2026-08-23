@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "application/previous-grants-gov-tracking-number/schema.json",
+  "type": "string",
+  "description": "The previous Grants.gov tracking number for a changed or corrected application.",
+  "title": "Grants.gov Identifier"
+}

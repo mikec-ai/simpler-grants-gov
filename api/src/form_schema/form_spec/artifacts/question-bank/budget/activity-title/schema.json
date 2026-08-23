@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/activity-title/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 120,
+  "description": "Identify the grant program, function, or activity represented by a budget row.",
+  "title": "Grant program, function, or activity"
+}

@@ -12,6 +12,13 @@
       "uri": "https://apply07.grants.gov/apply/forms/schemas/SF424_Short_3_0-V3.0.xsd",
       "sha256": "82b0f2a0ddbbcfae4ec7e083188287fb05700e201ade3b2f69684241bf8baabd",
       "nativeVersion": "3.0"
+    },
+    {
+      "id": "grantsgov-sf424-short-dat-3.0",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/SF424_Short_3_0-V3.0_F711.xls",
+      "sha256": "a905f905928a730b10d48d0b77cbb59397edb3ad3c99770391e1e160c3fb06df",
+      "nativeVersion": "3.0"
     }
   ],
   "extraction": {
@@ -22,7 +29,22 @@
     "extractedAt": "2026-08-18T20:59:38.044606Z"
   },
   "semanticReview": {
-    "status": "unreviewed",
-    "mappings": []
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/applicantWebAddress",
+        "sourceId": "grantsgov-sf424-short-xsd-3.0",
+        "sourcePath": "SF424_Short_3_0.ApplicantWebAddress",
+        "status": "proposed",
+        "note": "The pinned XSD defines this optional applicant-organization value as xs:anyURI. The existing 250-character form-use limit remains an occurrence constraint."
+      },
+      {
+        "canonicalPointer": "#/properties/projectDescription",
+        "sourceId": "grantsgov-sf424-short-xsd-3.0",
+        "sourcePath": "SF424_Short_3_0.ProjectDescription",
+        "status": "proposed",
+        "note": "The pinned XSD defines this required project description as a string with length 1-1000. It remains distinct from project abstract and attachment questions."
+      }
+    ]
   }
 }

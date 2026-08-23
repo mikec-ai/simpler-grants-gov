@@ -22,7 +22,22 @@
     "extractedAt": "2026-08-18T14:19:30.742962Z"
   },
   "semanticReview": {
-    "status": "unreviewed",
-    "mappings": []
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/stateReceiveDate",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.StateReceiveDate",
+        "status": "proposed",
+        "note": "Proposed shared identity for the date the State received the application. Lifecycle ownership remains systemValue; the cross-family proposal is not accepted for published similarity."
+      },
+      {
+        "canonicalPointer": "#/properties/stateApplicationId",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.StateApplicationID",
+        "status": "proposed",
+        "note": "Proposed shared identity for the application identifier assigned by the State. Lifecycle ownership remains systemValue; the cross-family proposal is not accepted for published similarity."
+      }
+    ]
   }
 }

@@ -71,23 +71,17 @@
       "$ref": "../../question-bank/budget/federal-fund-estimates/schema.json"
     },
     "directChargesExplanation": {
-      "type": "string",
-      "minLength": 0,
-      "maxLength": 50,
+      "$ref": "../../question-bank/budget/direct-charges-explanation/schema.json",
       "description": "Use this space to explain amounts for individual direct object class cost categories that may appear to be out of the ordinary or to explain the details as required by the Federal grantor agency.",
       "title": "Direct Charges"
     },
     "indirectChargesExplanation": {
-      "type": "string",
-      "minLength": 0,
-      "maxLength": 50,
+      "$ref": "../../question-bank/budget/indirect-charges-explanation/schema.json",
       "description": "Enter the type of indirect rate (provisional, predetermined, final or fixed) that will be in effect during the funding period, the estimated amount of the base to which the rate is applied, and the total indirect expense.",
       "title": "Indirect Charges"
     },
     "remarks": {
-      "type": "string",
-      "minLength": 0,
-      "maxLength": 250,
+      "$ref": "../../question-bank/budget/remarks/schema.json",
       "description": "Provide any other explanations or comments deemed necessary.",
       "title": "Remarks"
     },
@@ -108,16 +102,12 @@
       "type": "object",
       "properties": {
         "activityTitle": {
-          "type": "string",
-          "minLength": 0,
-          "maxLength": 120,
+          "$ref": "../../question-bank/budget/activity-title/schema.json",
           "title": "Grant program, function, or activity",
           "description": "Enter the Assistance Listing title, notice of funding opportunity number, program code, or grant number."
         },
         "assistanceListingNumber": {
-          "type": "string",
-          "minLength": 0,
-          "maxLength": 15,
+          "$ref": "../../question-bank/budget/activity-assistance-listing-number/schema.json",
           "title": "Assistance Listing number",
           "description": "Enter the Assistance Listing number in ##.### format."
         },

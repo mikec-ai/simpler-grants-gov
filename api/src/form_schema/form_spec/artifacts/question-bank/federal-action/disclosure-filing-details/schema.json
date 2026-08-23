@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "federal-action/disclosure-filing-details/schema.json",
+  "type": "object",
+  "properties": {
+    "federalActionType": {
+      "$ref": "#/$defs/FederalActionType",
+      "default": "Grant",
+      "description": "Identify the type of covered Federal action influenced by the lobbying activity.",
+      "title": "Type of Federal Action"
+    },
+    "federalActionStatus": {
+      "$ref": "#/$defs/FederalActionStatus",
+      "default": "InitialAward",
+      "description": "Identify the status of the covered Federal action.",
+      "title": "Status of Federal Action"
+    },
+    "reportType": {
+      "$ref": "#/$defs/LobbyingReportType",
+      "default": "InitialFiling",
+      "description": "Identify whether this is an initial filing or a report of a material change.",
+      "title": "Report Type"
+    },
+    "materialChange": {
+      "$ref": "#/$defs/MaterialChangeDetails",
+      "title": "Material Change Details"
+    },
+    "reportingEntityType": {
+      "$ref": "#/$defs/ReportingEntityType",
+      "default": "Prime",
+      "description": "Select Prime when filing for the direct award or Subawardee when filing below it.",
+      "title": "Entity Type"
+    },
+    "tier": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 99,
+      "title": "Tier"
+    }
+  },
+  "required": [
+    "federalActionType",
+    "federalActionStatus",
+    "reportType",
+    "reportingEntityType"
+  ],
+  "description": "Classify the covered Federal action, filing, and reporting entity for a lobbying disclosure.",
+  "$defs": {
+    "FederalActionType": {
+      "type": "string",
+      "enum": [
+        "Contract",
+        "Grant",
+        "CoopAgree",
+        "Loan",
+        "LoanGuarantee",
+        "LoanInsurance"
+      ]
+    },
+    "FederalActionStatus": {
+      "type": "string",
+      "enum": [
+        "BidOffer",
+        "InitialAward",
+        "PostAward"
+      ]
+    },
+    "LobbyingReportType": {
+      "type": "string",
+      "enum": [
+        "MaterialChange",
+        "InitialFiling"
+      ]
+    },
+    "MaterialChangeYear": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{3}$",
+      "description": "A four-digit year in which a material change occurred."
+    },
+    "MaterialChangeQuarter": {
+      "type": "string",
+      "enum": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ]
+    },
+    "MaterialChangeDetails": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "$ref": "#/$defs/MaterialChangeYear",
+          "title": "Material Change Year"
+        },
+        "quarter": {
+          "$ref": "#/$defs/MaterialChangeQuarter",
+          "title": "Material Change Quarter"
+        },
+        "lastReportDate": {
+          "type": "string",
+          "format": "date",
+          "title": "Date of Last Report"
+        }
+      },
+      "required": [
+        "year",
+        "quarter",
+        "lastReportDate"
+      ]
+    },
+    "ReportingEntityType": {
+      "type": "string",
+      "enum": [
+        "SubAwardee",
+        "Prime"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "reportType": {
+            "const": "MaterialChange"
+          }
+        },
+        "required": [
+          "reportType"
+        ]
+      },
+      "then": {
+        "required": [
+          "materialChange"
+        ]
+      }
+    }
+  ]
+}

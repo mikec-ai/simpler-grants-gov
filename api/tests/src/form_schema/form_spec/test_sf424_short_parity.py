@@ -22,6 +22,7 @@ RENDERED: dict[str, str] = {
     "/properties/funding_opportunity_number#readOnly": "canonical declaration preserves opportunity-supplied behavior",
     "/properties/funding_opportunity_title#readOnly": "canonical declaration preserves opportunity-supplied behavior",
     "/properties/sam_uei#readOnly": "canonical declaration preserves organization-supplied behavior",
+    "/properties/applicant_web_address#format": "canonical website question preserves URI-reference validation",
 }
 
 

@@ -55,6 +55,11 @@ class RecursiveXMLTransformer:
         fallback_path: list[str],
     ) -> Any:
         """Resolve a transform source, treating source-less groups as wire-only."""
+        # Nested child rules are evaluated by ``_apply_transform_rule`` rather than the
+        # top-level rule dispatcher. Resolve constants here as well so declarative wire-only
+        # fields behave identically at every depth.
+        if "static_value" in transform_rule:
+            return transform_rule["static_value"]
         if transform_rule.get("type") == "group" and "source" not in transform_rule:
             return self.root_source_data
         return self._source_value(
@@ -419,6 +424,23 @@ class RecursiveXMLTransformer:
             if "attributes" in transform_rule:
                 attributes = {}
                 for attr_name, attr_source_path in transform_rule["attributes"].items():
+                    if isinstance(attr_source_path, dict):
+                        if "static_value" in attr_source_path:
+                            attr_value = attr_source_path["static_value"]
+                        else:
+                            attr_value = self._source_value(
+                                attr_source_path,
+                                fallback_data=source_value,
+                                fallback_path=[],
+                            )
+                        if attr_value is not None and "value_transform" in attr_source_path:
+                            attr_value = apply_value_transformation(
+                                attr_value,
+                                attr_source_path["value_transform"],
+                            )
+                        if attr_value is not None:
+                            attributes[attr_name] = attr_value
+                        continue
                     # attr_source_path can be a simple field name, a dotted path, or a static/literal value
                     if "." in attr_source_path:
                         # It's a dotted path - not supported yet for parent attributes

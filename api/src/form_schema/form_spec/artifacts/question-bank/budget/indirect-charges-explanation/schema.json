@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/indirect-charges-explanation/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 50,
+  "description": "Explain the indirect rate, its base, and the resulting indirect expense.",
+  "title": "Indirect Charges"
+}

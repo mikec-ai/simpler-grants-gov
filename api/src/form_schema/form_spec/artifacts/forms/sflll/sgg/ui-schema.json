@@ -1,0 +1,495 @@
+[
+  {
+    "type": "section",
+    "name": "federalActionType",
+    "label": "1. Type of Federal Action",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/federalActionType"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "federalActionStatus",
+    "label": "2. Status of Federal Action",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/federalActionStatus"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "reportType",
+    "label": "3. Report Type",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/reportType"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/materialChange/properties/year",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/reportType"
+            },
+            "value": "MaterialChange"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/materialChange/properties/quarter",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/reportType"
+            },
+            "value": "MaterialChange"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/materialChange/properties/lastReportDate",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/reportType"
+            },
+            "value": "MaterialChange"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "reportingEntity",
+    "label": "4. Name and Address of Reporting Entity",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/reportingEntityType"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/tier",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/reportingEntityType"
+            },
+            "value": "SubAwardee"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/reportingOrganization/properties/organizationName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/reportingOrganization/properties/address/properties/street1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/reportingOrganization/properties/address/properties/street2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/reportingOrganization/properties/address/properties/city"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/reportingOrganization/properties/address/properties/state"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/reportingOrganization/properties/address/properties/zipCode"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/reportingOrganization/properties/congressionalDistrict"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "primeEntity",
+    "label": "5. If Reporting Entity in No. 4 is Subawardee, Enter Name and Address of Prime",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/primeOrganization/properties/organizationName",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/reportingEntityType"
+            },
+            "value": "SubAwardee"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primeOrganization/properties/address/properties/street1",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/reportingEntityType"
+            },
+            "value": "SubAwardee"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primeOrganization/properties/address/properties/street2",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/reportingEntityType"
+            },
+            "value": "SubAwardee"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primeOrganization/properties/address/properties/city",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/reportingEntityType"
+            },
+            "value": "SubAwardee"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primeOrganization/properties/address/properties/state",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/reportingEntityType"
+            },
+            "value": "SubAwardee"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primeOrganization/properties/address/properties/zipCode",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/reportingEntityType"
+            },
+            "value": "SubAwardee"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primeOrganization/properties/congressionalDistrict",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/reportingEntityType"
+            },
+            "value": "SubAwardee"
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "federalAgency",
+    "label": "6. Federal Department / Agency",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/federalAgencyDepartment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "federalProgram",
+    "label": "7. Federal Program Name / Description",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/federalProgram/properties/name"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/federalProgram/properties/assistanceListingNumber"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "federalActionNumber",
+    "label": "8. Federal Action Number",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/federalActionNumber"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "awardAmount",
+    "label": "9. Award Amount",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/awardAmount"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "registrant",
+    "label": "10a. Name and Address of Lobbying Registrant",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/lobbyingRegistrant/properties/name/properties/prefix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/lobbyingRegistrant/properties/name/properties/firstName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/lobbyingRegistrant/properties/name/properties/middleName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/lobbyingRegistrant/properties/name/properties/lastName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/lobbyingRegistrant/properties/name/properties/suffix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/lobbyingRegistrant/properties/address/properties/street1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/lobbyingRegistrant/properties/address/properties/street2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/lobbyingRegistrant/properties/address/properties/city"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/lobbyingRegistrant/properties/address/properties/state"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/lobbyingRegistrant/properties/address/properties/zipCode"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "lobbyingIndividuals",
+    "label": "10b. Individuals Performing Services",
+    "children": [
+      {
+        "type": "fieldList",
+        "name": "individualsPerformingServices",
+        "label": "Individual",
+        "definition": "/properties/individualsPerformingServices",
+        "children": [
+          {
+            "type": "field",
+            "definition": "/properties/individualsPerformingServices/items/properties/name/properties/prefix"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/individualsPerformingServices/items/properties/name/properties/firstName"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/individualsPerformingServices/items/properties/name/properties/middleName"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/individualsPerformingServices/items/properties/name/properties/lastName"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/individualsPerformingServices/items/properties/name/properties/suffix"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/individualsPerformingServices/items/properties/address/properties/street1"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/individualsPerformingServices/items/properties/address/properties/street2"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/individualsPerformingServices/items/properties/address/properties/city"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/individualsPerformingServices/items/properties/address/properties/state"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/individualsPerformingServices/items/properties/address/properties/zipCode"
+          }
+        ],
+        "validateBeforeAdd": true
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "certification",
+    "label": "11. Certification and Signature",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/signatureBlock/properties/name/properties/prefix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/signatureBlock/properties/name/properties/firstName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/signatureBlock/properties/name/properties/middleName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/signatureBlock/properties/name/properties/lastName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/signatureBlock/properties/name/properties/suffix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/signatureBlock/properties/title"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/signatureBlock/properties/phone"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/signatureBlock/properties/signedDate"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/signatureBlock/properties/signature"
+      }
+    ]
+  }
+]

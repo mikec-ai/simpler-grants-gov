@@ -22,7 +22,43 @@
     "extractedAt": "2026-08-18T14:19:31.058775Z"
   },
   "semanticReview": {
-    "status": "unreviewed",
-    "mappings": []
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/activityLineItems/items/properties/activityTitle",
+        "sourceId": "grantsgov-sf424a-xsd-1.0",
+        "sourcePath": "BudgetInformation.BudgetSummary.SummaryLineItem.@activityTitle",
+        "status": "proposed",
+        "note": "The pinned XSD requires this 1-120 character attribute on each SummaryLineItem. The identity is budget-row-specific because the form permits an Assistance Listing title, opportunity number, program code, or grant number."
+      },
+      {
+        "canonicalPointer": "#/properties/activityLineItems/items/properties/assistanceListingNumber",
+        "sourceId": "grantsgov-sf424a-xsd-1.0",
+        "sourcePath": "BudgetInformation.BudgetSummary.SummaryLineItem.CFDANumber",
+        "status": "proposed",
+        "note": "The pinned XSD defines the optional per-row CFDANumber as a 1-15 character Assistance Listing number. This proposal gives it a conservative budget-row identity; the XSD does not establish equivalence with the opportunity-level value or prove which workflow actor supplies it."
+      },
+      {
+        "canonicalPointer": "#/properties/directChargesExplanation",
+        "sourceId": "grantsgov-sf424a-xsd-1.0",
+        "sourcePath": "BudgetInformation.OtherInformation.OtherDirectChargesExplanation",
+        "status": "proposed",
+        "note": "The pinned XSD defines this optional direct-charge explanation as a string with length 1-50."
+      },
+      {
+        "canonicalPointer": "#/properties/indirectChargesExplanation",
+        "sourceId": "grantsgov-sf424a-xsd-1.0",
+        "sourcePath": "BudgetInformation.OtherInformation.OtherIndirectChargesExplanation",
+        "status": "proposed",
+        "note": "The pinned XSD defines this optional indirect-charge explanation as a string with length 1-50."
+      },
+      {
+        "canonicalPointer": "#/properties/remarks",
+        "sourceId": "grantsgov-sf424a-xsd-1.0",
+        "sourcePath": "BudgetInformation.OtherInformation.Remarks",
+        "status": "proposed",
+        "note": "The pinned XSD defines these optional budget remarks as a string with length 1-250."
+      }
+    ]
   }
 }

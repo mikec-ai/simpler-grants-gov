@@ -29,9 +29,7 @@
       "type": "object",
       "properties": {
         "projectRole": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 45,
+          "$ref": "../../question-bank/poc/project-role/schema.json",
           "description": "Enter the individual's role on the project (e.g., project manager, fiscal contact).",
           "title": "Project Role"
         },

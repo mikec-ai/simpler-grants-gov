@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/remarks/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 250,
+  "description": "Provide any other explanation or comment needed for this budget.",
+  "title": "Remarks"
+}

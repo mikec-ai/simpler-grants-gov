@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project/description/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 1000,
+  "description": "Enter a brief description of the proposed project.",
+  "title": "Project Description"
+}
