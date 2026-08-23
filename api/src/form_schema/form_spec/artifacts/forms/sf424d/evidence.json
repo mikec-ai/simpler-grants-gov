@@ -1,0 +1,114 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "sf424d",
+    "kind": "form",
+    "formVersion": "1.1"
+  },
+  "sources": [
+    {
+      "id": "sf424d-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/SF424D-V1.1.xsd",
+      "nativeVersion": "1.1",
+      "sha256": "22026ea7130a01b8674e1c3ce1668e1b57d5be65498b5a76042eb80d38de77f1"
+    },
+    {
+      "id": "sf424d-dat",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/SF424D-V1.1_F238.xls",
+      "nativeVersion": null,
+      "sha256": "1a2f94459b9a98591c7413062bdbede3d5bd12b5063f5ac64694b287ee1065ac"
+    },
+    {
+      "id": "sf424d-instructions",
+      "type": "instructions",
+      "uri": "https://apply07.grants.gov/apply/forms/instructions/SF424D-V1.1-Instructions.pdf",
+      "nativeVersion": null,
+      "sha256": "ea9a907bde88bf769d7b2837d049e3ef9a8b9bbe4305c23a180d44b2c110b2d5"
+    },
+    {
+      "id": "sf424d-sample-pdf",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/SF424D-V1.1.pdf",
+      "nativeVersion": null,
+      "sha256": "55ad3f62b818a5aa2be52ee0d9a4646a3d1f9ce073f3646fab3d28822e81ebe5"
+    },
+    {
+      "id": "sf424d-readonly-pdf",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/SF424D-V1.1.pdf",
+      "nativeVersion": null,
+      "sha256": "7f7370e5a9bca317c48c8ab77fd77aa9d3e55d38df5653d460fa878fbb8ac864"
+    },
+    {
+      "id": "global-v1-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb"
+    },
+    {
+      "id": "global-library-v2-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "universal-codes-v2-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"
+    },
+    {
+      "id": "sgg-oracle",
+      "type": "implementation",
+      "uri": "https://github.com/mikec-ai/simpler-grants-gov/blob/30dd50cf0493146c32f89f78398979523e040080/api/src/form_schema/forms/sf424d/1/0/form_json.py",
+      "nativeVersion": "1.0",
+      "sha256": "8236db821592dc3b36e3e95971b514af4657b3b41e781259f0797e46d091fb2a"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/authoring/assurances-family/forms/SF424D.json",
+    "sourceSetSha256": "bfbb75b5f6eaac199f1e2498c0a2cfa983380d6e16d33f453a24943892dcc67d",
+    "extractedAt": "2026-08-19T23:24:18Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/signature",
+        "sourceId": "sf424d-xsd",
+        "sourcePath": "Assurances.AuthorizedRepresentative.RepresentativeName",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/signature; the official XSD describes this element as the signature placeholder."
+      },
+      {
+        "canonicalPointer": "#/properties/title",
+        "sourceId": "sf424d-xsd",
+        "sourcePath": "Assurances.AuthorizedRepresentative.RepresentativeTitle",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/title; this profile prepopulates the value from the primary application."
+      },
+      {
+        "canonicalPointer": "#/properties/applicantOrganization",
+        "sourceId": "sf424d-xsd",
+        "sourcePath": "Assurances.ApplicantOrganizationName",
+        "status": "proposed",
+        "note": "Proposed reuse of primary-org/legal-name; this profile prepopulates the value from the primary application."
+      },
+      {
+        "canonicalPointer": "#/properties/signedDate",
+        "sourceId": "sf424d-xsd",
+        "sourcePath": "Assurances.SubmittedDate",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/date-signed; Grants.gov supplies this value on submission."
+      }
+    ]
+  },
+  "behaviorEvidence": []
+}

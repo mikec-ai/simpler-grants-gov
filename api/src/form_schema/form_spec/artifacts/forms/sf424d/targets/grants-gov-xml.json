@@ -1,0 +1,68 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "sf424d",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/SF424D-V1.1.xsd",
+    "sha256": "22026ea7130a01b8674e1c3ce1668e1b57d5be65498b5a76042eb80d38de77f1"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/SF424D-V1.1",
+    "SF424D": "http://apply.grants.gov/forms/SF424D-V1.1",
+    "glob": "http://apply.grants.gov/system/Global-V1.0"
+  },
+  "root": {
+    "element": "Assurances",
+    "namespacePrefix": "SF424D",
+    "attributes": {
+      "SF424D:programType": "Construction",
+      "glob:coreSchemaVersion": "1.1"
+    }
+  },
+  "mapping": {
+    "fields": {
+      "formVersionIdentifier": {
+        "element": "FormVersionIdentifier",
+        "kind": "value",
+        "namespace": "glob",
+        "constant": "1.1"
+      },
+      "authorizedRepresentative": {
+        "element": "AuthorizedRepresentative",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "signature": {
+            "element": "RepresentativeName",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/signature"
+          },
+          "title": {
+            "element": "RepresentativeTitle",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/title"
+          }
+        }
+      },
+      "applicantOrganization": {
+        "element": "ApplicantOrganizationName",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/applicantOrganization"
+      },
+      "signedDate": {
+        "element": "SubmittedDate",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/signedDate"
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/authoring/assurances-family/forms/SF424D.json"
+  }
+}

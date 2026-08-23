@@ -1,0 +1,61 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "individual-sf424d",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/Individual_SF424D-V1.1.xsd",
+    "sha256": "52187d42b9ca30cf1f2f95de50be13bbd9ae333ede4b843e8c43b23db4489356"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/Individual_SF424D-V1.1",
+    "Individual_SF424D": "http://apply.grants.gov/forms/Individual_SF424D-V1.1"
+  },
+  "root": {
+    "element": "Assurances",
+    "namespacePrefix": "Individual_SF424D",
+    "attributes": {
+      "Individual_SF424D:programType": "Construction",
+      "Individual_SF424D:FormVersion": "1.1"
+    }
+  },
+  "mapping": {
+    "fields": {
+      "authorizedRepresentative": {
+        "element": "AuthorizedRepresentative",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "signature": {
+            "element": "RepresentativeName",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/signature"
+          },
+          "title": {
+            "element": "RepresentativeTitle",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/title"
+          }
+        }
+      },
+      "applicantOrganization": {
+        "element": "ApplicantOrganizationName",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/applicantOrganization"
+      },
+      "signedDate": {
+        "element": "SubmittedDate",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/signedDate"
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/authoring/assurances-family/forms/Individual_SF424D-V1.1_F522.json"
+  }
+}
