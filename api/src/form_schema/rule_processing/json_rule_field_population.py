@@ -32,7 +32,9 @@ def _materialize_calculation(
         return True
     if policy != WHEN_ANY_SOURCE_PRESENT:
         raise ValueError(f"Unknown calculation materialization policy: {policy}")
-    return bool(get_field_values(context.json_data, fields, json_rule.path))
+    return any(
+        value is not None for value in get_field_values(context.json_data, fields, json_rule.path)
+    )
 
 
 def get_opportunity_number(context: JsonRuleContext, json_rule: JsonRule) -> str:

@@ -190,6 +190,23 @@ def test_sum_integer_materializes_explicit_zero(enable_factory_create):
     assert context.json_data == {"count": 0, "total": 0}
 
 
+def test_null_values_from_repeated_sources_do_not_materialize(enable_factory_create):
+    rule = {
+        "rule": "sum_monetary",
+        "fields": ["items[*].amount"],
+        "materialize": "when_any_source_present",
+    }
+    context = setup_context({"items": [{"amount": None}, {}], "total": "99.00"}, {"total": rule})
+
+    handle_field_population(
+        context,
+        JsonRule(handler="gg_pre_population", rule=rule, path=["total"]),
+        PRE_POPULATION_MAPPER,
+    )
+
+    assert context.json_data == {"items": [{"amount": None}, {}]}
+
+
 @pytest.mark.parametrize(
     "rule,json_data",
     [
