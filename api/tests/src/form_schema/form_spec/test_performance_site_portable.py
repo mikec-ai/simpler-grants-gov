@@ -31,6 +31,16 @@ def test_performance_site_loads_without_form_specific_adapter_code() -> None:
         "additional_locations",
     ]
     assert projected.form_json_schema["properties"]["additional_sites"]["maxItems"] == 299
+    address = projected.form_json_schema["$defs"]["PerformanceSiteAddress"]
+    assert any(
+        branch.get("then", {}).get("properties", {}).get("zip_code") == {"minLength": 9}
+        for branch in address["allOf"]
+    )
+    primary = projected.form_json_schema["$defs"]["PrimaryPerformanceSiteDetails"]
+    assert any(
+        branch.get("then", {}).get("required") == ["organization_name"]
+        for branch in primary["allOf"]
+    )
     assert len(fields) == 25
 
 
@@ -40,12 +50,28 @@ def test_repeating_site_conditions_retain_row_scope() -> None:
     root = [node for node in conditional if node["conditional"]["when"]["ref"]["scope"] == "root"]
     item = [node for node in conditional if node["conditional"]["when"]["ref"]["scope"] == "item"]
 
-    assert len(root) == 2
+    assert len(root) == 3
     assert len(item) == 2
     assert {node["conditional"]["when"]["ref"]["pointer"] for node in item} == {"/address/country"}
+    overflow = next(
+        node for node in conditional if node.get("definition") == "/properties/additional_locations"
+    )
+    assert overflow["conditional"]["when"] == {
+        "op": "countAtLeast",
+        "ref": {"scope": "root", "pointer": "/additional_sites"},
+        "minimum": 299,
+    }
+    additional_sites = next(
+        node
+        for node in _walk(projected.form_ui_schema)
+        if node.get("type") == "fieldList" and node.get("name") == "additional_sites"
+    )
+    assert additional_sites["validateBeforeAdd"] is True
     assert projected.form_rule_schema == {
         "additional_locations": {"gg_validation": {"rule": "attachment"}}
     }
+    assert projected.json_to_xml_schema is not None
+    assert projected.json_to_xml_schema["primary_site"]["xml_transform"]["target"] == "PrimarySite"
 
 
 def test_performance_site_evidence_and_release_gates_remain_explicit() -> None:
@@ -58,4 +84,4 @@ def test_performance_site_evidence_and_release_gates_remain_explicit() -> None:
         "ba3348472c48a2fac951308c9a8f44fc078c5b014771d7e9d1a4b0521a00d879"
     )
     assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}
-    assert "xml-schema.json" not in manifest["artifacts"]
+    assert manifest["artifacts"]["targets/grants-gov-xml.json"] == "generated"

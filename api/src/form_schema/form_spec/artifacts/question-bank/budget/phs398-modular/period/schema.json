@@ -12,7 +12,7 @@
     "budgetPeriodEndDate": {
       "type": "string",
       "format": "date",
-      "description": "The end date cannot be earlier than the start date. Cross-field date comparison remains a runtime review gate.",
+      "description": "The end date cannot be earlier than the start date.",
       "title": "End Date"
     },
     "directCosts": {
@@ -22,9 +22,6 @@
       "properties": {
         "totalDirectCosts": {
           "readOnly": true
-        },
-        "directCostLessConsortiumFandA": {
-          "description": "The source form presents modular values from $0 to $250,000. Exact option-to-wire encoding remains a review gate."
         }
       }
     },
@@ -52,6 +49,23 @@
   "description": "A dated period in a PHS 398 modular budget.",
   "title": "Budget Period",
   "$defs": {
+    "PHSModularDirectCostAmount": {
+      "type": "string",
+      "enum": [
+        "0.00",
+        "25000.00",
+        "50000.00",
+        "75000.00",
+        "100000.00",
+        "125000.00",
+        "150000.00",
+        "175000.00",
+        "200000.00",
+        "225000.00",
+        "250000.00"
+      ],
+      "description": "Grants.gov modular direct-cost choices, in exact wire format."
+    },
     "ResearchBudgetAmount14": {
       "type": "string",
       "minLength": 1,
@@ -68,7 +82,8 @@
       "type": "object",
       "properties": {
         "directCostLessConsortiumFandA": {
-          "$ref": "#/$defs/ResearchBudgetAmount14",
+          "$ref": "#/$defs/PHSModularDirectCostAmount",
+          "default": "0.00",
           "description": "Enter direct costs excluding consortium indirect costs.",
           "title": "Direct Cost less Consortium Indirect (F&A)"
         },
@@ -80,7 +95,8 @@
         "totalDirectCosts": {
           "$ref": "#/$defs/ResearchBudgetTotalAmount15",
           "description": "Total direct costs requested for the period.",
-          "title": "Total Funds Requested for Direct Costs"
+          "title": "Total Funds Requested for Direct Costs",
+          "readOnly": true
         }
       },
       "required": [
@@ -151,7 +167,8 @@
         "totalIndirectCosts": {
           "$ref": "#/$defs/ResearchBudgetTotalAmount15",
           "description": "Total indirect costs requested for the period.",
-          "title": "Total Funds Requested for Indirect Costs"
+          "title": "Total Funds Requested for Indirect Costs",
+          "readOnly": true
         }
       },
       "description": "Indirect costs requested for one modular budget period."

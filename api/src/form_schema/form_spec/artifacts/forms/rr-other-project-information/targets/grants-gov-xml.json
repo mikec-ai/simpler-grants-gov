@@ -1,0 +1,270 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "rr-other-project-information",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_OtherProjectInfo_1_4-V1.4.xsd",
+    "sha256": "b2144c290ed5ad6d942e70815d195d7d6aa4e8e6c82fc3932d8540e3aa303ef5"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/RR_OtherProjectInfo_1_4-V1.4",
+    "RR_OtherProjectInfo_1_4": "http://apply.grants.gov/forms/RR_OtherProjectInfo_1_4-V1.4",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0"
+  },
+  "root": {
+    "element": "RR_OtherProjectInfo_1_4",
+    "namespacePrefix": "RR_OtherProjectInfo_1_4",
+    "attributes": {
+      "FormVersion": "1.4"
+    }
+  },
+  "attachment": {
+    "fields": {
+      "fileName": {
+        "element": "FileName",
+        "namespace": "att"
+      },
+      "mimeType": {
+        "element": "MimeType",
+        "namespace": "att"
+      },
+      "fileLocation": {
+        "element": "FileLocation",
+        "namespace": "att"
+      },
+      "hashValue": {
+        "element": "HashValue",
+        "namespace": "glob"
+      }
+    }
+  },
+  "mapping": {
+    "fields": {
+      "humanSubjects": {
+        "element": "HumanSubjects",
+        "kind": "group",
+        "flatten": true,
+        "fields": {
+          "involvesHumanSubjects": {
+            "element": "HumanSubjectsIndicator",
+            "kind": "value",
+            "source": "/humanSubjects/involvesHumanSubjects"
+          },
+          "humanSubjectsSupplement": {
+            "element": "HumanSubjectsSupplement",
+            "kind": "group",
+            "fields": {
+              "exemptFromFederalRegulations": {
+                "element": "ExemptFedReg",
+                "kind": "value",
+                "source": "/humanSubjects/exemptFromFederalRegulations"
+              },
+              "exemptions": {
+                "element": "ExemptionNumbers",
+                "kind": "array",
+                "source": "/humanSubjects/exemptions",
+                "items": {
+                  "node": {
+                    "element": "ExemptionNumber",
+                    "kind": "value"
+                  }
+                }
+              },
+              "irbReviewPending": {
+                "element": "HumanSubjectIRBReviewIndicator",
+                "kind": "value",
+                "source": "/humanSubjects/irbReviewPending"
+              },
+              "irbApprovalDate": {
+                "element": "HumanSubjectIRBReviewDate",
+                "kind": "value",
+                "source": "/humanSubjects/irbApprovalDate"
+              },
+              "assuranceNumber": {
+                "element": "HumanSubjectAssuranceNumber",
+                "kind": "value",
+                "source": "/humanSubjects/assuranceNumber"
+              }
+            }
+          }
+        }
+      },
+      "vertebrateAnimals": {
+        "element": "VertebrateAnimals",
+        "kind": "group",
+        "flatten": true,
+        "fields": {
+          "involvesVertebrateAnimals": {
+            "element": "VertebrateAnimalsIndicator",
+            "kind": "value",
+            "source": "/vertebrateAnimals/involvesVertebrateAnimals"
+          },
+          "vertebrateAnimalsSupplement": {
+            "element": "VertebrateAnimalsSupplement",
+            "kind": "group",
+            "fields": {
+              "iacucReviewPending": {
+                "element": "VertebrateAnimalsIACUCReviewIndicator",
+                "kind": "value",
+                "source": "/vertebrateAnimals/iacucReviewPending"
+              },
+              "iacucApprovalDate": {
+                "element": "VertebrateAnimalsIACUCApprovalDateReviewDate",
+                "kind": "value",
+                "source": "/vertebrateAnimals/iacucApprovalDate"
+              },
+              "assuranceNumber": {
+                "element": "AssuranceNumber",
+                "kind": "value",
+                "source": "/vertebrateAnimals/assuranceNumber"
+              }
+            }
+          }
+        }
+      },
+      "proprietaryInformation": {
+        "element": "ProprietaryInformation",
+        "kind": "group",
+        "flatten": true,
+        "fields": {
+          "includesProprietaryInformation": {
+            "element": "ProprietaryInformationIndicator",
+            "kind": "value",
+            "source": "/proprietaryInformation/includesProprietaryInformation"
+          }
+        }
+      },
+      "environmentalImpact": {
+        "element": "EnvironmentalImpact",
+        "kind": "object",
+        "fields": {
+          "hasEnvironmentalImpact": {
+            "element": "EnvironmentalImpactIndicator",
+            "kind": "value"
+          },
+          "environmentalImpactExplanation": {
+            "element": "EnvironmentalImpactExplanation",
+            "kind": "value"
+          },
+          "environmentalExemption": {
+            "element": "EnvironmentalExemption",
+            "kind": "group",
+            "fields": {
+              "hasEnvironmentalExemptionOrAssessment": {
+                "element": "EnvironmentalExemptionIndicator",
+                "kind": "value",
+                "source": "/environmentalImpact/hasEnvironmentalExemptionOrAssessment"
+              },
+              "environmentalExemptionOrAssessmentExplanation": {
+                "element": "EnvironmentalExemptionExplanation",
+                "kind": "value",
+                "source": "/environmentalImpact/environmentalExemptionOrAssessmentExplanation"
+              }
+            }
+          }
+        }
+      },
+      "historicPlaces": {
+        "element": "HistoricPlaces",
+        "kind": "group",
+        "flatten": true,
+        "fields": {
+          "hasHistoricDesignation": {
+            "element": "HistoricDesignation",
+            "kind": "value",
+            "source": "/historicPlaces/hasHistoricDesignation"
+          },
+          "explanation": {
+            "element": "HistoricDesignationExplanation",
+            "kind": "value",
+            "source": "/historicPlaces/explanation"
+          }
+        }
+      },
+      "internationalActivities": {
+        "element": "InternationalActivities",
+        "kind": "object",
+        "fields": {
+          "involvesInternationalActivities": {
+            "element": "InternationalActivitiesIndicator",
+            "kind": "value"
+          },
+          "countries": {
+            "element": "ActivitiesPartnershipsCountries",
+            "kind": "value"
+          },
+          "explanation": {
+            "element": "InternationalActivitiesExplanation",
+            "kind": "value"
+          }
+        }
+      },
+      "projectSummaryAbstract": {
+        "element": "AbstractAttachments",
+        "kind": "group",
+        "fields": {
+          "abstractAttachment": {
+            "element": "AbstractAttachment",
+            "kind": "attachment",
+            "source": "/projectSummaryAbstract"
+          }
+        }
+      },
+      "projectNarrative": {
+        "element": "ProjectNarrativeAttachments",
+        "kind": "group",
+        "fields": {
+          "projectNarrativeAttachment": {
+            "element": "ProjectNarrativeAttachment",
+            "kind": "attachment",
+            "source": "/projectNarrative"
+          }
+        }
+      },
+      "bibliographyReferences": {
+        "element": "BibliographyAttachments",
+        "kind": "group",
+        "fields": {
+          "bibliographyAttachment": {
+            "element": "BibliographyAttachment",
+            "kind": "attachment",
+            "source": "/bibliographyReferences"
+          }
+        }
+      },
+      "facilitiesResources": {
+        "element": "FacilitiesAttachments",
+        "kind": "group",
+        "fields": {
+          "facilitiesAttachment": {
+            "element": "FacilitiesAttachment",
+            "kind": "attachment",
+            "source": "/facilitiesResources"
+          }
+        }
+      },
+      "equipment": {
+        "element": "EquipmentAttachments",
+        "kind": "group",
+        "fields": {
+          "equipmentAttachment": {
+            "element": "EquipmentAttachment",
+            "kind": "attachment",
+            "source": "/equipment"
+          }
+        }
+      },
+      "otherAttachments": {
+        "element": "OtherAttachments",
+        "kind": "array",
+        "items": {
+          "node": {
+            "element": "OtherAttachment",
+            "kind": "attachment"
+          }
+        }
+      }
+    }
+  }
+}

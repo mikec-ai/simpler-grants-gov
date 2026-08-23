@@ -62,6 +62,10 @@ export const evaluateConditionalUiPredicate = (
       return !evaluateConditionalUiPredicate(predicate.predicate, context);
     case "present":
       return isPresent(resolveRef(predicate.ref, context));
+    case "countAtLeast": {
+      const value = resolveRef(predicate.ref, context);
+      return Array.isArray(value) && value.length >= predicate.minimum;
+    }
     case "equals": {
       const value = resolveRef(predicate.ref, context);
       return value !== MISSING_VALUE && value === predicate.value;

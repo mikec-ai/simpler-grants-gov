@@ -69,10 +69,10 @@
             "value": "USA: UNITED STATES"
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       },
@@ -89,10 +89,10 @@
             "value": "USA: UNITED STATES"
           },
           "then": {
-            "readOnly": true
+            "interaction": "readOnly"
           },
           "otherwise": {
-            "readOnly": false
+            "interaction": "enabled"
           }
         }
       },
@@ -140,10 +140,10 @@
             ]
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       },
@@ -243,10 +243,10 @@
                 "value": "USA: UNITED STATES"
               },
               "then": {
-                "enabled": true
+                "interaction": "enabled"
               },
               "otherwise": {
-                "enabled": false
+                "interaction": "disabled"
               }
             }
           },
@@ -263,10 +263,10 @@
                 "value": "USA: UNITED STATES"
               },
               "then": {
-                "readOnly": true
+                "interaction": "readOnly"
               },
               "otherwise": {
-                "readOnly": false
+                "interaction": "enabled"
               }
             }
           },
@@ -314,10 +314,10 @@
                 ]
               },
               "then": {
-                "enabled": true
+                "interaction": "enabled"
               },
               "otherwise": {
-                "enabled": false
+                "interaction": "disabled"
               }
             }
           },

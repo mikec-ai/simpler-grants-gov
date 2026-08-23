@@ -22,6 +22,11 @@ export type ConditionalUiPredicate =
       ref: ConditionalUiValueRef;
     }
   | {
+      op: "countAtLeast";
+      ref: ConditionalUiValueRef;
+      minimum: number;
+    }
+  | {
       op: "all" | "any";
       predicates: ConditionalUiPredicate[];
     }

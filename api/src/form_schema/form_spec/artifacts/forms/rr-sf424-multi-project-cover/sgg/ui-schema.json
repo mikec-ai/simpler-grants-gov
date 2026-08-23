@@ -97,10 +97,10 @@
             "value": "USA: UNITED STATES"
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       },
@@ -117,10 +117,10 @@
             "value": "USA: UNITED STATES"
           },
           "then": {
-            "readOnly": true
+            "interaction": "readOnly"
           },
           "otherwise": {
-            "readOnly": false
+            "interaction": "enabled"
           }
         }
       },
@@ -193,10 +193,10 @@
             "value": "USA: UNITED STATES"
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       },
@@ -213,10 +213,10 @@
             "value": "USA: UNITED STATES"
           },
           "then": {
-            "readOnly": true
+            "interaction": "readOnly"
           },
           "otherwise": {
-            "readOnly": false
+            "interaction": "enabled"
           }
         }
       },
@@ -279,10 +279,10 @@
             "value": "X: Other (specify)"
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       },
@@ -299,10 +299,10 @@
             "value": "R: Small Business"
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       },
@@ -319,10 +319,10 @@
             "value": "R: Small Business"
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       }
@@ -354,10 +354,10 @@
             "value": "Y: Yes"
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       },
@@ -375,10 +375,10 @@
             "value": "Revision"
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       },
@@ -395,10 +395,10 @@
             "value": "E"
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       }
@@ -541,10 +541,10 @@
             "value": "USA: UNITED STATES"
           },
           "then": {
-            "readOnly": true
+            "interaction": "readOnly"
           },
           "otherwise": {
-            "readOnly": false
+            "interaction": "enabled"
           }
         }
       },
@@ -615,10 +615,10 @@
             "value": "Y: Yes"
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       }
@@ -717,10 +717,10 @@
             "value": "USA: UNITED STATES"
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       },
@@ -737,10 +737,10 @@
             "value": "USA: UNITED STATES"
           },
           "then": {
-            "readOnly": true
+            "interaction": "readOnly"
           },
           "otherwise": {
-            "readOnly": false
+            "interaction": "enabled"
           }
         }
       },

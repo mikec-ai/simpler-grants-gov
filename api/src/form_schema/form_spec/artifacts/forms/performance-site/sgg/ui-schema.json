@@ -45,10 +45,10 @@
             "value": "USA: UNITED STATES"
           },
           "then": {
-            "enabled": true
+            "interaction": "enabled"
           },
           "otherwise": {
-            "enabled": false
+            "interaction": "disabled"
           }
         }
       },
@@ -65,10 +65,10 @@
             "value": "USA: UNITED STATES"
           },
           "then": {
-            "readOnly": true
+            "interaction": "readOnly"
           },
           "otherwise": {
-            "readOnly": false
+            "interaction": "enabled"
           }
         }
       },
@@ -138,10 +138,10 @@
                 "value": "USA: UNITED STATES"
               },
               "then": {
-                "enabled": true
+                "interaction": "enabled"
               },
               "otherwise": {
-                "enabled": false
+                "interaction": "disabled"
               }
             }
           },
@@ -158,10 +158,10 @@
                 "value": "USA: UNITED STATES"
               },
               "then": {
-                "readOnly": true
+                "interaction": "readOnly"
               },
               "otherwise": {
-                "readOnly": false
+                "interaction": "enabled"
               }
             }
           },
@@ -177,7 +177,8 @@
             "type": "field",
             "definition": "/properties/additionalSites/items/properties/congressionalDistrict"
           }
-        ]
+        ],
+        "validateBeforeAdd": true
       }
     ]
   },
@@ -189,7 +190,23 @@
       {
         "type": "field",
         "definition": "/properties/additionalLocations",
-        "widget": "Attachment"
+        "widget": "Attachment",
+        "conditional": {
+          "when": {
+            "op": "countAtLeast",
+            "ref": {
+              "scope": "root",
+              "pointer": "/additionalSites"
+            },
+            "minimum": 299
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
       }
     ]
   }

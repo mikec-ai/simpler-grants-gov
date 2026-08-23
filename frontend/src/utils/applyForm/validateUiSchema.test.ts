@@ -56,12 +56,53 @@ describe("validateFormData", () => {
       expect(validateUiSchema(conditionalUiSchema)).toBe(false);
     });
 
+    it("accepts a count threshold and field-list add-validation option", () => {
+      const uiSchema: UiSchema = [
+        {
+          type: "fieldList",
+          name: "sites",
+          label: "Site",
+          validateBeforeAdd: true,
+          children: [],
+        },
+        {
+          type: "field",
+          definition: "/properties/overflow",
+          conditional: {
+            when: {
+              op: "countAtLeast",
+              ref: { scope: "root", pointer: "/sites" },
+              minimum: 299,
+            },
+            then: { interaction: "enabled" },
+            otherwise: { interaction: "disabled" },
+          },
+        },
+      ];
+
+      expect(validateUiSchema(uiSchema)).toBe(false);
+    });
+
     it("accepts the complete vendored R&R SF-424 UI artifact", () => {
       const artifact = JSON.parse(
         readFileSync(
           resolve(
             __dirname,
             "../../../../api/src/form_schema/form_spec/artifacts/forms/rr-sf424/sgg/ui-schema.json",
+          ),
+          "utf8",
+        ),
+      ) as UiSchema;
+
+      expect(validateUiSchema(artifact)).toBe(false);
+    });
+
+    it("accepts the vendored Performance Site count and row-validation contract", () => {
+      const artifact = JSON.parse(
+        readFileSync(
+          resolve(
+            __dirname,
+            "../../../../api/src/form_schema/form_spec/artifacts/forms/performance-site/sgg/ui-schema.json",
           ),
           "utf8",
         ),

@@ -60,6 +60,29 @@ describe("conditional UI evaluation", () => {
     ).toBe(false);
   });
 
+  it("evaluates array-count thresholds", () => {
+    expect(
+      evaluateConditionalUiPredicate(
+        {
+          op: "countAtLeast",
+          ref: { scope: "root", pointer: "/sites" },
+          minimum: 2,
+        },
+        { rootData: { sites: [{}, {}] } },
+      ),
+    ).toBe(true);
+    expect(
+      evaluateConditionalUiPredicate(
+        {
+          op: "countAtLeast",
+          ref: { scope: "root", pointer: "/sites" },
+          minimum: 3,
+        },
+        { rootData: { sites: [{}, {}] } },
+      ),
+    ).toBe(false);
+  });
+
   it("resolves the selected branch over safe defaults", () => {
     expect(
       resolveConditionalUiState(

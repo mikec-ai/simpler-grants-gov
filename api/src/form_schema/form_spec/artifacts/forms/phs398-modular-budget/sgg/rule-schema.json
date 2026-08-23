@@ -1,6 +1,14 @@
 {
   "periods": {
     "gg_type": "array",
+    "budgetPeriodEndDate": {
+      "gg_validation": {
+        "rule": "date_not_before",
+        "fields": [
+          "@THIS.budgetPeriodStartDate"
+        ]
+      }
+    },
     "directCosts": {
       "totalDirectCosts": {
         "gg_pre_population": {

@@ -39,6 +39,16 @@ def test_other_project_information_loads_without_form_specific_adapter_code() ->
         )
         == 6
     )
+    assert projected.json_to_xml_schema is not None
+    assert "xml_transform" not in projected.json_to_xml_schema["human_subjects"]
+    supplement = projected.json_to_xml_schema["human_subjects"]["human_subjects_supplement"]
+    assert supplement["xml_transform"] == {
+        "target": "HumanSubjectsSupplement",
+        "type": "group",
+    }
+    assert supplement["exempt_from_federal_regulations"]["xml_transform"]["target"] == (
+        "ExemptFedReg"
+    )
 
 
 def test_cross_form_requirement_and_semantic_review_gates_remain_explicit() -> None:
@@ -55,4 +65,4 @@ def test_cross_form_requirement_and_semantic_review_gates_remain_explicit() -> N
         "c3ebbfc4870fb5be7c7afc3ad84bec0717329458745e5d36b3361de04fe79a04"
     )
     assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}
-    assert "targets/grants-gov-xml.json" not in manifest["artifacts"]
+    assert manifest["artifacts"]["targets/grants-gov-xml.json"] == "generated"

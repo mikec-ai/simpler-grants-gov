@@ -337,6 +337,10 @@ class XMLGenerationService:
                     target = xml_transform.get("target")
                     if target:
                         element_order.append(target)
+            elif value:
+                # A rule without xml_transform is a transparent canonical object. Its
+                # children are emitted as siblings at the current XML level.
+                element_order.extend(self._get_element_order_from_config(value))
 
         # Multiple source spellings may deliberately map to one XML element at a
         # compatibility boundary. Emit that target once; arrays express legitimate
@@ -405,6 +409,9 @@ class XMLGenerationService:
 
                     item_element = _make_subelement(item_element_name, array_parent, item_namespace)
 
+                    if "__value" in item:
+                        item_element.text = str(item["__value"])
+
                     # Add attributes to the item element
                     if item_attributes:
                         for attr_name, attr_value in item_attributes.items():
@@ -429,6 +436,8 @@ class XMLGenerationService:
                     # Add the data fields as child elements
                     for data_field, data_value in item_data.items():
                         if data_value is not None:
+                            nested_attr_key = f"__{data_field}__attributes"
+                            nested_attributes = item.get(nested_attr_key)
                             self._add_lxml_element_to_parent(
                                 item_element,
                                 data_field,
@@ -438,6 +447,7 @@ class XMLGenerationService:
                                 xsd_url,
                                 transform_config,
                                 root_element_name,
+                                nested_attributes,
                             )
                 else:
                     # Simple value in array

@@ -1,0 +1,204 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "phs398-modular-budget",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS398_ModularBudget_1_2-V1.2.xsd",
+    "sha256": "f166abebd40e6912861dca5c5c4a83c7a82779f1ae67a2c0fa8b4aafc25d5bff"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/PHS398_ModularBudget_1_2-V1.2",
+    "PHS398_ModularBudget_1_2": "http://apply.grants.gov/forms/PHS398_ModularBudget_1_2-V1.2",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0"
+  },
+  "root": {
+    "element": "PHS398_ModularBudget_1_2",
+    "namespacePrefix": "PHS398_ModularBudget_1_2",
+    "attributes": {
+      "FormVersion": "1.2"
+    }
+  },
+  "attachment": {
+    "fields": {
+      "fileName": {
+        "element": "FileName",
+        "namespace": "att"
+      },
+      "mimeType": {
+        "element": "MimeType",
+        "namespace": "att"
+      },
+      "fileLocation": {
+        "element": "FileLocation",
+        "namespace": "att"
+      },
+      "hashValue": {
+        "element": "HashValue",
+        "namespace": "glob"
+      }
+    }
+  },
+  "mapping": {
+    "fields": {
+      "periods": {
+        "element": "Periods",
+        "kind": "array",
+        "items": {
+          "fields": {
+            "budgetPeriodStartDate": {
+              "element": "BudgetPeriodStartDate",
+              "kind": "value"
+            },
+            "budgetPeriodEndDate": {
+              "element": "BudgetPeriodEndDate",
+              "kind": "value"
+            },
+            "directCosts": {
+              "element": "DirectCost",
+              "kind": "object",
+              "fields": {
+                "directCostLessConsortiumFandA": {
+                  "element": "DirectCostLessConsortiumFandA",
+                  "kind": "value"
+                },
+                "consortiumFandA": {
+                  "element": "ConsortiumFandA",
+                  "kind": "value"
+                },
+                "totalDirectCosts": {
+                  "element": "TotalFundsRequestedDirectCosts",
+                  "kind": "value"
+                }
+              }
+            },
+            "indirectCosts": {
+              "element": "IndirectCost",
+              "kind": "object",
+              "fields": {
+                "indirectCostItems": {
+                  "element": "IndirectCostItems",
+                  "kind": "array",
+                  "items": {
+                    "fields": {
+                      "indirectCostType": {
+                        "element": "IndirectCostTypeDescription",
+                        "kind": "value"
+                      },
+                      "indirectCostRate": {
+                        "element": "IndirectCostRate",
+                        "kind": "value"
+                      },
+                      "indirectCostBase": {
+                        "element": "IndirectCostBase",
+                        "kind": "value"
+                      },
+                      "indirectCostFundsRequested": {
+                        "element": "IndirectCostFundsRequested",
+                        "kind": "value"
+                      }
+                    }
+                  }
+                },
+                "cognizantFederalAgency": {
+                  "element": "CognizantFederalAgency",
+                  "kind": "value"
+                },
+                "indirectCostAgreementDate": {
+                  "element": "IndirectCostAgreementDate",
+                  "kind": "value"
+                },
+                "totalIndirectCosts": {
+                  "element": "TotalFundsRequestedIndirectCost",
+                  "kind": "value"
+                }
+              }
+            },
+            "totalDirectAndIndirectCosts": {
+              "element": "TotalFundsRequestedDirectIndirectCosts",
+              "kind": "value"
+            }
+          }
+        }
+      },
+      "cumulativeBudgetInformation": {
+        "element": "CummulativeBudgetInfo",
+        "kind": "group",
+        "fields": {
+          "entirePeriodTotalCost": {
+            "element": "EntirePeriodTotalCost",
+            "kind": "object",
+            "source": "/cumulativeBudgetInformation",
+            "fields": {
+              "cumulativeDirectCostLessConsortiumFandA": {
+                "element": "CumulativeDirectCostLessConsortiumFandA",
+                "kind": "value"
+              },
+              "cumulativeConsortiumFandA": {
+                "element": "CumulativeConsortiumFandA",
+                "kind": "value"
+              },
+              "cumulativeTotalDirectCosts": {
+                "element": "CumulativeTotalFundsRequestedDirectCosts",
+                "kind": "value"
+              },
+              "cumulativeTotalIndirectCosts": {
+                "element": "CumulativeTotalFundsRequestedIndirectCost",
+                "kind": "value"
+              },
+              "cumulativeTotalDirectAndIndirectCosts": {
+                "element": "CumulativeTotalFundsRequestedDirectIndirectCosts",
+                "kind": "value"
+              }
+            }
+          }
+        }
+      },
+      "budgetJustifications": {
+        "element": "CummulativeBudgetInfo",
+        "kind": "group",
+        "fields": {
+          "justifications": {
+            "element": "BudgetJustifications",
+            "kind": "group",
+            "fields": {
+              "personnelJustification": {
+                "element": "PersonnelJustification",
+                "kind": "group",
+                "fields": {
+                  "attachment": {
+                    "element": "attFile",
+                    "kind": "attachment",
+                    "source": "/personnelJustification"
+                  }
+                }
+              },
+              "consortiumJustification": {
+                "element": "ConsortiumJustification",
+                "kind": "group",
+                "fields": {
+                  "attachment": {
+                    "element": "attFile",
+                    "kind": "attachment",
+                    "source": "/consortiumJustification"
+                  }
+                }
+              },
+              "additionalNarrativeJustification": {
+                "element": "AdditionalNarrativeJustification",
+                "kind": "group",
+                "fields": {
+                  "attachment": {
+                    "element": "attFile",
+                    "kind": "attachment",
+                    "source": "/additionalNarrativeJustification"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
