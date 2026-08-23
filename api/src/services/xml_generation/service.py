@@ -444,6 +444,18 @@ class XMLGenerationService:
                     item_element = _make_subelement(field_name, array_parent)
                     item_element.text = str(item)
 
+        elif isinstance(value, dict) and "__value__" in value:
+            # Scalar transforms carry path-local namespace metadata in-band. This avoids
+            # collisions in the legacy flat namespace_fields index when identical local
+            # names appear under different schema namespaces.
+            explicit_ns = value.get("__namespace__")
+            namespace_uri = _namespace_uri(explicit_ns, parent)
+            element_name = f"{{{namespace_uri}}}{field_name}" if namespace_uri else field_name
+            element = lxml_etree.SubElement(parent, element_name)
+            scalar_value = value["__value__"]
+            if scalar_value != "INCLUDE_NULL_MARKER" and scalar_value is not None:
+                element.text = str(scalar_value)
+
         elif isinstance(value, dict):
             # Check if value contains __attributes metadata
             # nested_object transforms with an "attributes" config. This allows the transform

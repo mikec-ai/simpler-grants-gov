@@ -407,7 +407,6 @@ class RecursiveXMLTransformer:
                             fallback_path=[child_key],
                         )
                         if child_value is not None:
-
                             # Recursively process nested transformations
                             transformed_child = self._apply_transform_rule(
                                 child_value, child_transform, child_config, path + [child_key]
@@ -428,7 +427,6 @@ class RecursiveXMLTransformer:
                             fallback_path=[child_key],
                         )
                         if child_value is not None:
-
                             # Recursively process nested transformations
                             transformed_child = self._apply_transform_rule(
                                 child_value, child_transform, child_config, path + [child_key]
@@ -512,6 +510,17 @@ class RecursiveXMLTransformer:
                 logger.debug(
                     f"Applied value transformation at {'.'.join(path)}: {source_value} -> {transformed_value}"
                 )
+
+            # Preserve an explicitly declared namespace alongside scalar values. A flat
+            # element-name-to-namespace index cannot distinguish the same XML local name
+            # used in different namespaces at different paths (for example,
+            # globLib:OrganizationName and a form-local OrganizationName). The XML writer
+            # consumes this metadata wrapper and emits only the scalar value.
+            if "namespace" in transform_rule:
+                return {
+                    "__value__": transformed_value,
+                    "__namespace__": transform_rule["namespace"],
+                }
 
             return transformed_value
 
