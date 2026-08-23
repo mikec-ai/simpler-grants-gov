@@ -374,6 +374,33 @@ describe("FieldListWidget", () => {
     expect(screen.getByRole("button", { name: /addEntry/i })).toBeDisabled();
   });
 
+  it("locks repeated entries, including add, edit, and delete controls", () => {
+    render(
+      <FieldListWidget
+        id="contacts"
+        key="contacts"
+        schema={{ type: "array", title: "Contacts" }}
+        label="Contacts"
+        value={[{ first_name: "One" }, { first_name: "Two" }]}
+        groupDefinition={baseGroupDefinition}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="contacts"
+        isFormLocked={true}
+      />,
+    );
+
+    expect(screen.getByRole("button", { name: /addEntry/i })).toBeDisabled();
+    screen
+      .getAllByRole("button", { name: /deleteEntry/i })
+      .forEach((button) => {
+        expect(button).toBeDisabled();
+      });
+    screen.getAllByTestId("mock-widget").forEach((field) => {
+      expect(field).toHaveAttribute("data-disabled", "true");
+    });
+  });
+
   it("removes a row without going below minItems", async () => {
     const user = userEvent.setup();
 

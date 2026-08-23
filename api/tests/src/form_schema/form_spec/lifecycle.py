@@ -11,6 +11,7 @@ import copy
 import json
 from dataclasses import dataclass
 from types import SimpleNamespace
+from collections.abc import Iterable
 from typing import Any, cast
 
 from src.constants.lookup_constants import ApplicationFormStatus
@@ -37,6 +38,7 @@ def application_form_for(
     response: dict[str, Any],
     *,
     submitter_email: str = "reviewer@example.gov",
+    attachment_ids: Iterable[str] = (),
 ) -> ApplicationForm:
     """Build the smallest object graph needed by Simpler's real form lifecycle."""
 
@@ -47,7 +49,10 @@ def application_form_for(
     registry.register(form, major_version=1)
     application = SimpleNamespace(
         submitted_by_user=SimpleNamespace(email=submitter_email),
-        application_attachments=[],
+        application_attachments=[
+            SimpleNamespace(application_attachment_id=attachment_id)
+            for attachment_id in attachment_ids
+        ],
     )
     return cast(
         ApplicationForm,
@@ -69,10 +74,19 @@ def assert_json_round_trip(response: dict[str, Any]) -> None:
     assert json.loads(json.dumps(response, sort_keys=True)) == response
 
 
-def assert_validation_case(form_id: str, case: ValidationCase) -> None:
+def assert_validation_case(
+    form_id: str,
+    case: ValidationCase,
+    *,
+    attachment_ids: Iterable[str] = (),
+) -> None:
     """Execute a validation vector through Simpler's GET lifecycle."""
 
-    application_form = application_form_for(form_id, case.response)
+    application_form = application_form_for(
+        form_id,
+        case.response,
+        attachment_ids=attachment_ids,
+    )
     errors = validate_application_form(application_form, ApplicationAction.GET)
 
     assert {error.field for error in errors} == case.expected_fields, case.name
@@ -81,15 +95,24 @@ def assert_validation_case(form_id: str, case: ValidationCase) -> None:
         if case.expected_fields
         else ApplicationFormStatus.COMPLETE
     )
-    assert application_form.application_form_status is expected_status
+    assert cast(Any, application_form).application_form_status is expected_status
 
 
-def submit_form(form_id: str, response: dict[str, Any]) -> ApplicationForm:
+def submit_form(
+    form_id: str,
+    response: dict[str, Any],
+    *,
+    attachment_ids: Iterable[str] = (),
+) -> ApplicationForm:
     """Execute submit-time population and validation for a portable form."""
 
-    application_form = application_form_for(form_id, response)
+    application_form = application_form_for(
+        form_id,
+        response,
+        attachment_ids=attachment_ids,
+    )
     errors = validate_application_form(application_form, ApplicationAction.SUBMIT)
 
     assert errors == []
-    assert application_form.application_form_status is ApplicationFormStatus.COMPLETE
+    assert cast(Any, application_form).application_form_status is ApplicationFormStatus.COMPLETE
     return application_form

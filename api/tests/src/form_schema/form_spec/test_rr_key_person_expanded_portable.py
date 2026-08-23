@@ -1,11 +1,78 @@
-"""R&R Senior/Key Person is a portable repeating-person canary, not a registered form."""
+"""R&R Senior/Key Person lifecycle canary without production registration."""
 
+import copy
 import json
 from collections.abc import Iterator
 from typing import Any
 
 from src.form_schema.form_spec.bank import ARTIFACTS
-from src.form_schema.form_spec.loader import load_form
+from src.form_schema.form_spec.loader import build_runtime_form, load_form
+from src.form_schema.form_spec.registrations import REGISTRATIONS
+from tests.src.form_schema.form_spec.lifecycle import (
+    ValidationCase,
+    assert_json_round_trip,
+    assert_validation_case,
+    submit_form,
+)
+
+PI_BIOGRAPHICAL_SKETCH = "00000000-0000-4000-8000-000000000001"
+PI_CURRENT_SUPPORT = "00000000-0000-4000-8000-000000000002"
+KEY_PERSON_BIOGRAPHICAL_SKETCH = "00000000-0000-4000-8000-000000000003"
+KEY_PERSON_CURRENT_SUPPORT = "00000000-0000-4000-8000-000000000004"
+ADDITIONAL_PROFILES = "00000000-0000-4000-8000-000000000005"
+ADDITIONAL_BIOGRAPHICAL_SKETCHES = "00000000-0000-4000-8000-000000000006"
+ADDITIONAL_CURRENT_SUPPORT = "00000000-0000-4000-8000-000000000007"
+
+ATTACHMENT_IDS = frozenset({
+    PI_BIOGRAPHICAL_SKETCH,
+    PI_CURRENT_SUPPORT,
+    KEY_PERSON_BIOGRAPHICAL_SKETCH,
+    KEY_PERSON_CURRENT_SUPPORT,
+    ADDITIONAL_PROFILES,
+    ADDITIONAL_BIOGRAPHICAL_SKETCHES,
+    ADDITIONAL_CURRENT_SUPPORT,
+})
+
+
+def _person(
+    first_name: str,
+    last_name: str,
+    *,
+    project_role: str = "Co-Investigator",
+) -> dict[str, Any]:
+    return {
+        "name": {"first_name": first_name, "last_name": last_name},
+        "organization_name": "Example Research Institute",
+        "address": {
+            "street1": "1 Research Way",
+            "city": "Bethesda",
+            "state": "MD: Maryland",
+            "zip_code": "20852",
+            "country": "USA: UNITED STATES",
+        },
+        "phone": "301-555-0100",
+        "email": f"{first_name.lower()}@example.gov",
+        "project_role": project_role,
+    }
+
+
+VALID_RESPONSE: dict[str, Any] = {
+    "principal_investigator": {
+        **_person("Parker", "Investigator", project_role="PD/PI"),
+        "biographical_sketch": PI_BIOGRAPHICAL_SKETCH,
+        "current_pending_support": PI_CURRENT_SUPPORT,
+    },
+    "senior_key_persons": [
+        {
+            **_person("Casey", "Collaborator"),
+            "biographical_sketch": KEY_PERSON_BIOGRAPHICAL_SKETCH,
+            "current_pending_support": KEY_PERSON_CURRENT_SUPPORT,
+        }
+    ],
+    "additional_profiles": ADDITIONAL_PROFILES,
+    "additional_biographical_sketches": ADDITIONAL_BIOGRAPHICAL_SKETCHES,
+    "additional_current_pending_support": ADDITIONAL_CURRENT_SUPPORT,
+}
 
 
 def _walk(value: object) -> Iterator[dict[str, Any]]:
@@ -40,6 +107,17 @@ def test_key_person_loads_without_form_specific_adapter_code() -> None:
     ]
     assert projected.form_json_schema["properties"]["senior_key_persons"]["maxItems"] == 99
     assert len(fields) == 57
+
+
+def test_key_person_is_registration_ready_but_not_release_opted_in() -> None:
+    runtime_form = build_runtime_form("rr-key-person-expanded")
+    registrations = json.loads(REGISTRATIONS.read_text())
+
+    assert runtime_form.form_type is not None
+    assert runtime_form.form_type.value == "RRKeyPersonExpanded"
+    assert str(runtime_form.form_id) == "2a638e46-7680-55ba-a11a-4d152f37ca1e"
+    assert runtime_form.form_instruction_id is None
+    assert "rr-key-person-expanded" not in registrations["forms"]
 
 
 def test_repeated_person_conditions_use_current_item_scope() -> None:
@@ -81,4 +159,113 @@ def test_person_attachments_compile_while_overflow_semantics_stay_review_gated()
         "extractedAt": "2026-08-18T16:54:30.352133Z",
     }
     assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}
-    assert "xml-schema.json" not in manifest["artifacts"]
+    assert "targets/grants-gov-xml.json" not in manifest["artifacts"]
+    assert projected.json_to_xml_schema is None
+
+
+def test_repeated_people_survive_add_edit_delete_and_save_reload() -> None:
+    response = copy.deepcopy(VALID_RESPONSE)
+    assert_json_round_trip(response)
+
+    response["senior_key_persons"].append(_person("Morgan", "Mentor"))
+    response["senior_key_persons"][0]["department"] = "Biomedical Informatics"
+    del response["senior_key_persons"][1]
+
+    assert response["senior_key_persons"] == [
+        {
+            **_person("Casey", "Collaborator"),
+            "department": "Biomedical Informatics",
+            "biographical_sketch": KEY_PERSON_BIOGRAPHICAL_SKETCH,
+            "current_pending_support": KEY_PERSON_CURRENT_SUPPORT,
+        }
+    ]
+    assert_json_round_trip(response)
+    assert_validation_case(
+        "rr-key-person-expanded",
+        ValidationCase("edited repeated person", response, frozenset()),
+        attachment_ids=ATTACHMENT_IDS,
+    )
+
+
+def test_repeated_people_enforce_the_declared_99_person_limit() -> None:
+    at_limit = copy.deepcopy(VALID_RESPONSE)
+    at_limit["senior_key_persons"] = [
+        _person(f"Person{index}", "Researcher") for index in range(99)
+    ]
+    assert_validation_case(
+        "rr-key-person-expanded",
+        ValidationCase("99 structured senior key people", at_limit, frozenset()),
+        attachment_ids=ATTACHMENT_IDS,
+    )
+
+    over_limit = copy.deepcopy(at_limit)
+    over_limit["senior_key_persons"].append(_person("Overflow", "Researcher"))
+    assert_validation_case(
+        "rr-key-person-expanded",
+        ValidationCase(
+            "100 structured senior key people",
+            over_limit,
+            frozenset({"$.senior_key_persons"}),
+        ),
+        attachment_ids=ATTACHMENT_IDS,
+    )
+
+
+def test_key_person_validation_covers_nested_and_conditional_requirements() -> None:
+    missing_last_name = copy.deepcopy(VALID_RESPONSE)
+    del missing_last_name["senior_key_persons"][0]["name"]["last_name"]
+    assert_validation_case(
+        "rr-key-person-expanded",
+        ValidationCase(
+            "repeated person missing a last name",
+            missing_last_name,
+            frozenset({"$.senior_key_persons[0].name.last_name"}),
+        ),
+        attachment_ids=ATTACHMENT_IDS,
+    )
+
+    other_role = copy.deepcopy(VALID_RESPONSE)
+    other_role["senior_key_persons"][0]["project_role"] = "Other (Specify)"
+    assert_validation_case(
+        "rr-key-person-expanded",
+        ValidationCase(
+            "other role without its explanation",
+            other_role,
+            frozenset({"$.senior_key_persons[0].other_project_role"}),
+        ),
+        attachment_ids=ATTACHMENT_IDS,
+    )
+    other_role["senior_key_persons"][0]["other_project_role"] = "Data steward"
+    assert_validation_case(
+        "rr-key-person-expanded",
+        ValidationCase("other role with its explanation", other_role, frozenset()),
+        attachment_ids=ATTACHMENT_IDS,
+    )
+
+
+def test_nested_and_overflow_attachments_must_belong_to_the_application() -> None:
+    assert_validation_case(
+        "rr-key-person-expanded",
+        ValidationCase("all attachment references owned", VALID_RESPONSE, frozenset()),
+        attachment_ids=ATTACHMENT_IDS,
+    )
+    assert_validation_case(
+        "rr-key-person-expanded",
+        ValidationCase(
+            "nested key-person attachment not owned",
+            VALID_RESPONSE,
+            frozenset({"$.senior_key_persons[0].biographical_sketch"}),
+        ),
+        attachment_ids=ATTACHMENT_IDS - {KEY_PERSON_BIOGRAPHICAL_SKETCH},
+    )
+
+
+def test_key_person_submission_scaffolding_accepts_a_valid_response() -> None:
+    application_form = submit_form(
+        "rr-key-person-expanded",
+        VALID_RESPONSE,
+        attachment_ids=ATTACHMENT_IDS,
+    )
+
+    assert application_form.application_response == VALID_RESPONSE
+    assert application_form.form.form_instruction_id is None

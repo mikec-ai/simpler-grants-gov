@@ -162,6 +162,7 @@ class FormType(StrEnum):
     RR_SUBAWARD_BUDGET_30 = "RRSubawardBudget30"
     RR_SUBAWARD_BUDGET_10_30 = "RRSubawardBudget10_30"
     RR_SF424 = "RRSF424"
+    RR_KEY_PERSON_EXPANDED = "RRKeyPersonExpanded"
     SF424_SHORT = "SF424Short"
     SF424A = "SF424A"
     SF424B = "SF424B"
