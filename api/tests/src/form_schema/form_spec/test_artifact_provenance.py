@@ -39,6 +39,7 @@ def test_vendored_artifacts_match_the_pinned_form_spec_build():
         "rr-other-project-information",
         "phs398-modular-budget",
         "sflll",
+        "cd511",
     ]
 
 

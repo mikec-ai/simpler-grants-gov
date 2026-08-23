@@ -1,0 +1,92 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "cd511",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/CD511-V1.1.xsd",
+    "sha256": "f13c05b8e62fe1e7cf0198053f79fdd34efe4b7d10b56974d27a7dd45d013fde"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/CD511-V1.1",
+    "CD511": "http://apply.grants.gov/forms/CD511-V1.1",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0"
+  },
+  "root": {
+    "element": "CD511",
+    "namespacePrefix": "CD511",
+    "attributes": {
+      "FormVersion": "1.1"
+    }
+  },
+  "mapping": {
+    "fields": {
+      "applicantName": {
+        "element": "OrganizationName",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "awardNumber": {
+        "element": "AwardNumber",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "projectName": {
+        "element": "ProjectName",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "contactPerson": {
+        "element": "ContactName",
+        "kind": "object",
+        "namespace": "default",
+        "fields": {
+          "prefix": {
+            "element": "PrefixName",
+            "kind": "value",
+            "namespace": "globLib"
+          },
+          "firstName": {
+            "element": "FirstName",
+            "kind": "value",
+            "namespace": "globLib"
+          },
+          "middleName": {
+            "element": "MiddleName",
+            "kind": "value",
+            "namespace": "globLib"
+          },
+          "lastName": {
+            "element": "LastName",
+            "kind": "value",
+            "namespace": "globLib"
+          },
+          "suffix": {
+            "element": "SuffixName",
+            "kind": "value",
+            "namespace": "globLib"
+          }
+        }
+      },
+      "contactPersonTitle": {
+        "element": "Title",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "signature": {
+        "element": "Signature",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "submittedDate": {
+        "element": "SubmittedDate",
+        "kind": "value",
+        "namespace": "default"
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/simpler-grants-gov",
+    "revision": "30dd50cf0493146c32f89f78398979523e040080",
+    "artifact": "api/src/form_schema/forms/cd511/1/0/form_json.py"
+  }
+}

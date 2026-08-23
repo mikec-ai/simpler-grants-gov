@@ -27,6 +27,46 @@
       "size": 265
     },
     {
+      "path": "dist/forms/cd511/evidence.json",
+      "sha256": "65632585f37a44755c25009e4aae374ca91b8576f8e5c3b7d65016823a54cb04",
+      "size": 3982
+    },
+    {
+      "path": "dist/forms/cd511/manifest.json",
+      "sha256": "e284226ca4da716aa9106e16efd99107b66d53dec0915adc782d024383472fa2",
+      "size": 557
+    },
+    {
+      "path": "dist/forms/cd511/policy-binding.json",
+      "sha256": "7da3a661782e590b55eb47505302a83b683233db35b0453c0c77ea401c22ae71",
+      "size": 2436
+    },
+    {
+      "path": "dist/forms/cd511/policy-content.json",
+      "sha256": "b9ec89d234e3aef8482d5eb402909616adc79837d6a2a655f95594f674b24eb9",
+      "size": 6489
+    },
+    {
+      "path": "dist/forms/cd511/schema.json",
+      "sha256": "49511a31674458927c1b117bda4937b8ff4ba397bc9d445e357aa98206d8247a",
+      "size": 2001
+    },
+    {
+      "path": "dist/forms/cd511/sgg/rule-schema.json",
+      "sha256": "03fe9d82209ab6d3c733a0d0bc5299100b5c7eef87e67c547e8d13fa18ad0949",
+      "size": 174
+    },
+    {
+      "path": "dist/forms/cd511/sgg/ui-schema.json",
+      "sha256": "d80e3f754730afa12d0bd3cd1e8e7261a0c1bb8224cf6e5d4bcc3c22c5003858",
+      "size": 5933
+    },
+    {
+      "path": "dist/forms/cd511/targets/grants-gov-xml.json",
+      "sha256": "b72b96e7e589793e7948b86cf24708bdba367192e8615aa0f7d6d341b9f1e3a4",
+      "size": 2451
+    },
+    {
       "path": "dist/forms/key-contacts/evidence.json",
       "sha256": "3e4ed1f9224d1b79422ed02e67e5cf202bee14b7741e3d325c69de011ce58cfa",
       "size": 1337
@@ -1153,13 +1193,14 @@
       "performance-site",
       "rr-other-project-information",
       "phs398-modular-budget",
-      "sflll"
+      "sflll",
+      "cd511"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "7db589062431f3db063e847ddf6bfc2046b38c7b"
+    "revision": "13f01d9561280f60e3dcebecefc60e65b8bdf82f"
   },
-  "sourceBundleSha256": "087988e9d55015e4057bf7195d79d4122f397079cf6f9b9f0db8618e9eea10d6"
+  "sourceBundleSha256": "6acb4942811b433c37c20b2cca0cce51a6a6e51707ce126cdb04f3156c0c1baf"
 }

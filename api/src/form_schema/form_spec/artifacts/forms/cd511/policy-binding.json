@@ -1,0 +1,95 @@
+{
+  "contract": "form-policy-binding/v1",
+  "formId": "cd511",
+  "policy": {
+    "id": "doc/lobbying-certification",
+    "version": "2005-01"
+  },
+  "presentation": {
+    "sections": [
+      {
+        "sectionId": "certification-directions",
+        "name": "directions1",
+        "before": "award"
+      },
+      {
+        "sectionId": "lobbying",
+        "name": "directions2",
+        "before": "award"
+      },
+      {
+        "sectionId": "loan-guarantees",
+        "name": "directions3",
+        "before": "award"
+      },
+      {
+        "sectionId": "acknowledgement",
+        "name": "directions4",
+        "before": "award"
+      }
+    ]
+  },
+  "acceptance": {
+    "event": "submission",
+    "actor": "authorized representative of the applicant",
+    "statement": "The authorized representative certifies that the applicant will comply with the applicable certification.",
+    "attestsTo": [
+      "certification-directions",
+      "lobbying",
+      "loan-guarantees",
+      "acknowledgement"
+    ],
+    "fields": [
+      {
+        "role": "applicantOrganization",
+        "pointer": "/applicantName",
+        "responseRole": "applicantInput",
+        "required": true,
+        "editable": true
+      },
+      {
+        "role": "signerTitle",
+        "pointer": "/contactPersonTitle",
+        "responseRole": "applicantInput",
+        "required": true,
+        "editable": true
+      },
+      {
+        "role": "signature",
+        "pointer": "/signature",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "Grants.gov submission identity",
+        "editable": false
+      },
+      {
+        "role": "acceptedAt",
+        "pointer": "/submittedDate",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "Grants.gov submission timestamp",
+        "editable": false
+      }
+    ]
+  },
+  "release": {
+    "status": "draft",
+    "gates": [
+      {
+        "id": "policy-text-reviewed",
+        "status": "pending",
+        "note": "Verify transcription against the pinned official read-only PDF."
+      },
+      {
+        "id": "semantic-role-reviewed",
+        "status": "pending",
+        "note": "Confirm the form's Contact Person is the authorized representative named by the certification."
+      },
+      {
+        "id": "consumer-parity",
+        "status": "pending",
+        "note": "Run the portable SGG consumer canary before release."
+      }
+    ]
+  }
+}

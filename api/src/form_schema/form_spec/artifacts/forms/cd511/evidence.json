@@ -1,0 +1,99 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "cd511",
+    "kind": "form",
+    "formVersion": "1.1"
+  },
+  "sources": [
+    {
+      "id": "source-xsd-f13c05b8e62f",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/CD511-V1.1.xsd",
+      "nativeVersion": "1.1",
+      "sha256": "f13c05b8e62fe1e7cf0198053f79fdd34efe4b7d10b56974d27a7dd45d013fde"
+    },
+    {
+      "id": "source-dat-0910535d9bf5",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/CD511-V1.1_F276.xls",
+      "nativeVersion": "1.1",
+      "sha256": "0910535d9bf55262ae383482e8e18753b142b828fb580b68cf452a5fc6e2ed8e"
+    },
+    {
+      "id": "source-pdf-9c77e249ecb0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/CD511-V1.1.pdf",
+      "nativeVersion": "1-05",
+      "sha256": "9c77e249ecb0755f6e000eaa0becd9f6a459fe91adf766f2c64e898d6253d92e"
+    },
+    {
+      "id": "source-implementation-573a8757193f",
+      "type": "implementation",
+      "uri": "https://github.com/mikec-ai/simpler-grants-gov/blob/30dd50cf0493146c32f89f78398979523e040080/api/src/form_schema/forms/cd511/1/0/form_json.py",
+      "nativeVersion": "1.1",
+      "sha256": "573a8757193f0fdb7c79ed8099b66ef936f067254cbf442679768750a6a6ae2e"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/simpler-grants-gov",
+    "revision": "30dd50cf0493146c32f89f78398979523e040080",
+    "artifact": "api/src/form_schema/forms/cd511/1/0/form_json.py",
+    "sourceSetSha256": "3a55d83271db5d7e057895c207b6c22942ac8c5b70b9ed4071518ea49feb0b83",
+    "extractedAt": "2026-08-23T20:00:00Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/applicantName",
+        "sourceId": "source-xsd-f13c05b8e62f",
+        "sourcePath": "CD511.OrganizationName",
+        "status": "proposed",
+        "note": "Proposed reuse of generics/organization-name; the PDF labels the same value Name of Applicant."
+      },
+      {
+        "canonicalPointer": "#/properties/awardNumber",
+        "sourceId": "source-xsd-f13c05b8e62f",
+        "sourcePath": "CD511.AwardNumber",
+        "status": "proposed",
+        "note": "Proposed reuse of federal-action/number with the source-specific 25-character occurrence limit."
+      },
+      {
+        "canonicalPointer": "#/properties/projectName",
+        "sourceId": "source-xsd-f13c05b8e62f",
+        "sourcePath": "CD511.ProjectName",
+        "status": "proposed",
+        "note": "Proposed reuse of project/title with the source-specific 60-character occurrence limit."
+      },
+      {
+        "canonicalPointer": "#/properties/contactPerson",
+        "sourceId": "source-pdf-9c77e249ecb0",
+        "sourcePath": "page 1, Contact Person name fields",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/name because the certification identifies this signer as the duly authorized representative; preserve the source label Contact Person."
+      },
+      {
+        "canonicalPointer": "#/properties/contactPersonTitle",
+        "sourceId": "source-pdf-9c77e249ecb0",
+        "sourcePath": "page 1, Contact Person Title",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/title under the same explicit authorized-representative role evidence."
+      },
+      {
+        "canonicalPointer": "#/properties/signature",
+        "sourceId": "source-pdf-9c77e249ecb0",
+        "sourcePath": "page 1, Signature",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/signature; the official form states Grants.gov completes it upon submission."
+      },
+      {
+        "canonicalPointer": "#/properties/submittedDate",
+        "sourceId": "source-pdf-9c77e249ecb0",
+        "sourcePath": "page 1, Date",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/date-signed; the official form states Grants.gov completes it upon submission."
+      }
+    ]
+  }
+}

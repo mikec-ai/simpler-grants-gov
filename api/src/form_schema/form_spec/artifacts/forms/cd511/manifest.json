@@ -1,0 +1,22 @@
+{
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "id": "cd511",
+    "legacyFormId": 276,
+    "formName": "CD511",
+    "shortFormName": "CD511",
+    "formVersion": "1.1",
+    "agencyCode": "SGG",
+    "ombNumber": ""
+  },
+  "artifacts": {
+    "schema.json": "generated",
+    "ui.json": "generated",
+    "sgg/ui-schema.json": "generated",
+    "sgg/rule-schema.json": "generated",
+    "policy-content.json": "generated",
+    "policy-binding.json": "generated",
+    "targets/grants-gov-xml.json": "generated",
+    "evidence.json": "passthrough"
+  }
+}

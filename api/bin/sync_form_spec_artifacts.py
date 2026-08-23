@@ -31,7 +31,11 @@ RUNTIME_FORM_FILES = (
     "sgg/rule-schema.json",
     "sgg/ui-schema.json",
 )
-OPTIONAL_RUNTIME_FORM_FILES = ("targets/grants-gov-xml.json",)
+OPTIONAL_RUNTIME_FORM_FILES = (
+    "policy-binding.json",
+    "policy-content.json",
+    "targets/grants-gov-xml.json",
+)
 XSD_DIRECTORY = API_ROOT / "src" / "services" / "xml_generation" / "xsds"
 
 

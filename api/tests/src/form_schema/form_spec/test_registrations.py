@@ -12,6 +12,11 @@ EXPECTED_RUNTIME_IDENTITIES = {
         "formType": "BUDGET_NARRATIVE_ATTACHMENT",
         "sggVersion": "1.0",
     },
+    "cd511": {
+        "formId": "7057eaee-f043-4029-b7f2-c932f11ce900",
+        "formType": "CD511",
+        "sggVersion": "1.0",
+    },
     "key-contacts": {
         "formId": "f140c7db-724d-4954-bebd-081c0527908c",
         "formType": "KEY_CONTACTS",
