@@ -45,6 +45,17 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
                         }
                     },
                 },
+                "districtWrapper": {
+                    "element": "CongressionalDistrict",
+                    "kind": "group",
+                    "fields": {
+                        "applicantDistrict": {
+                            "element": "ApplicantCongressionalDistrict",
+                            "kind": "value",
+                            "source": "/applicantDistrict",
+                        }
+                    },
+                },
             }
         },
     }
@@ -57,7 +68,7 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
 
     runtime = project_grants_gov_xml_profile(profile, projection)
 
-    assert set(runtime) == {"_xml_config", "samuei", "people"}
+    assert set(runtime) == {"_xml_config", "samuei", "people", "district_wrapper"}
     assert set(runtime["people"]["items"]) == {"given_name", "file"}
     assert runtime["people"]["items"]["file"]["xml_transform"] == {
         "target": "File",
@@ -66,6 +77,15 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
     assert runtime["people"]["items"]["file"]["file_name"]["xml_transform"] == {
         "target": "OriginalName",
         "namespace": "att",
+    }
+    assert runtime["district_wrapper"] == {
+        "xml_transform": {"target": "CongressionalDistrict", "type": "group"},
+        "applicant_district": {
+            "xml_transform": {
+                "target": "ApplicantCongressionalDistrict",
+                "source": "/applicant_district",
+            }
+        },
     }
 
 

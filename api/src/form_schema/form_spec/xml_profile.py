@@ -15,6 +15,21 @@ from src.form_schema.form_spec.projection import Projection, snake_case
 PROFILE_CONTRACT = "grants-gov-xml-profile/v1"
 
 
+def _project_source_pointer(source: str, projection: Projection) -> str:
+    """Project an absolute canonical response pointer into Simpler field names."""
+
+    if not source.startswith("/"):
+        raise ValueError(f"Grants.gov XML source must be an absolute JSON pointer: {source!r}")
+    canonical_path = ""
+    projected: list[str] = []
+    for raw_segment in source[1:].split("/"):
+        segment = raw_segment.replace("~1", "/").replace("~0", "~")
+        canonical_path = f"{canonical_path}.{segment}" if canonical_path else segment
+        projected_segment = projection.rename(canonical_path, segment)
+        projected.append(projected_segment.replace("~", "~0").replace("/", "~1"))
+    return f"/{'/'.join(projected)}"
+
+
 def _attachment_children(fields: dict[str, Any], *, path: str) -> dict[str, Any]:
     """Project declared attachment wire fields onto the runtime attachment record."""
     if not fields:
@@ -104,10 +119,11 @@ def _project_node(
     runtime_type = {
         "value": None,
         "object": "nested_object",
+        "group": "group",
         "array": "array",
         "attachment": "attachment",
     }.get(kind)
-    if kind not in {"value", "object", "array", "attachment"}:
+    if kind not in {"value", "object", "group", "array", "attachment"}:
         raise ValueError(f"unsupported Grants.gov XML mapping kind at {path}: {kind!r}")
 
     transform: dict[str, Any] = {"target": node["element"]}
@@ -115,9 +131,11 @@ def _project_node(
         transform["type"] = runtime_type
     if namespace := node.get("namespace"):
         transform["namespace"] = namespace
+    if source := node.get("source"):
+        transform["source"] = _project_source_pointer(source, projection)
 
     rule: dict[str, Any] = {"xml_transform": transform}
-    if kind == "object":
+    if kind in {"object", "group"}:
         rule.update(
             _project_fields(
                 node["fields"],
