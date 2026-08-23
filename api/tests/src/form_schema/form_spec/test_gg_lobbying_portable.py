@@ -64,6 +64,8 @@ def _canonical_xml(xml: bytes) -> bytes:
 
 def test_gg_lobbying_loads_as_a_distinct_certification_profile() -> None:
     projected = load_form("gg-lobbying")
+    policy = json.loads((ARTIFACTS / "forms/gg-lobbying/policy-content.json").read_text())
+    binding = json.loads((ARTIFACTS / "forms/gg-lobbying/policy-binding.json").read_text())
 
     assert projected.meta == {
         "id": "gg-lobbying",
@@ -87,6 +89,12 @@ def test_gg_lobbying_loads_as_a_distinct_certification_profile() -> None:
         "authorized_representative_title",
     ]
     assert projected.meta["id"] != "sflll"
+    assert policy["contract"] == "policy-content/v1"
+    assert policy["id"] == "grants-gov/lobbying-certification"
+    assert policy["kind"] == "certification"
+    assert binding["contract"] == "form-policy-binding/v1"
+    assert binding["policy"] == {"id": policy["id"], "version": policy["version"]}
+    assert binding["acceptance"]["attestsTo"] == ["certification"]
 
 
 def test_gg_lobbying_preserves_the_legacy_browser_and_print_input() -> None:

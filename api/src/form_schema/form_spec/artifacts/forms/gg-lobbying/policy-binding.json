@@ -1,0 +1,80 @@
+{
+  "contract": "form-policy-binding/v1",
+  "formId": "gg-lobbying",
+  "policy": {
+    "id": "grants-gov/lobbying-certification",
+    "version": "1.1"
+  },
+  "presentation": {
+    "sections": [
+      {
+        "sectionId": "certification",
+        "name": "certification",
+        "before": "applicantOrganization"
+      }
+    ]
+  },
+  "acceptance": {
+    "event": "submission",
+    "actor": "authorizedRepresentative",
+    "statement": "Submission records the authorized representative's certification regarding lobbying.",
+    "attestsTo": [
+      "certification"
+    ],
+    "fields": [
+      {
+        "role": "signature",
+        "pointer": "/authorizedRepresentativeSignature",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "Grants.gov submission identity",
+        "editable": false
+      },
+      {
+        "role": "signerTitle",
+        "pointer": "/authorizedRepresentativeTitle",
+        "responseRole": "applicantInput",
+        "required": true,
+        "source": "authorized representative",
+        "editable": true
+      },
+      {
+        "role": "applicantOrganization",
+        "pointer": "/organizationName",
+        "responseRole": "applicantInput",
+        "required": true,
+        "source": "applicant organization",
+        "editable": true
+      },
+      {
+        "role": "acceptedAt",
+        "pointer": "/submittedDate",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "Grants.gov submission timestamp",
+        "editable": false
+      }
+    ]
+  },
+  "release": {
+    "status": "draft",
+    "gates": [
+      {
+        "id": "policy-owner-review",
+        "status": "pending"
+      },
+      {
+        "id": "accessibility-review",
+        "status": "pending"
+      },
+      {
+        "id": "instructions-review",
+        "status": "pending"
+      },
+      {
+        "id": "production-registration",
+        "status": "pending"
+      }
+    ]
+  }
+}
