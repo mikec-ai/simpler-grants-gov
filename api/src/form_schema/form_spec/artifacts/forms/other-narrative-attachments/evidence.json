@@ -2,15 +2,16 @@
   "contract": "grants-form-evidence/v1",
   "block": {
     "id": "other-narrative-attachments",
-    "kind": "form"
+    "kind": "form",
+    "formVersion": "1.2"
   },
   "sources": [
     {
       "id": "grantsgov-other-narrative-attachments-xsd-1.2",
       "type": "xsd",
       "uri": "https://apply07.grants.gov/apply/forms/schemas/OtherNarrativeAttachments_1_2-V1.2.xsd",
-      "version": "1.2",
-      "sha256": "38b9c9869db4c22220b92da5ca09bdd61f69a4484b6cf39139ea0fd09d6d388f"
+      "sha256": "38b9c9869db4c22220b92da5ca09bdd61f69a4484b6cf39139ea0fd09d6d388f",
+      "nativeVersion": "1.2"
     }
   ],
   "extraction": {

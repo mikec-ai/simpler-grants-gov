@@ -38,6 +38,8 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
                 "people": {
                     "element": "People",
                     "kind": "array",
+                    "itemElement": "Profile",
+                    "repeatElementPerItem": True,
                     "items": {
                         "fields": {
                             "firstName": {"element": "FirstName", "kind": "value"},
@@ -95,6 +97,12 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
         "files",
     }
     assert set(runtime["people"]["items"]) == {"given_name", "file"}
+    assert runtime["people"]["xml_transform"] == {
+        "target": "People",
+        "type": "array",
+        "item_wrapper": "Profile",
+        "repeat_element_per_item": True,
+    }
     assert runtime["people"]["items"]["file"]["xml_transform"] == {
         "target": "File",
         "type": "attachment",
@@ -149,4 +157,123 @@ def test_rejects_an_attachment_node_without_portable_wire_fields() -> None:
     profile.pop("attachment")
 
     with pytest.raises(ValueError, match="has no declared wire fields"):
+        project_grants_gov_xml_profile(profile, Projection())
+
+
+def test_projects_one_explicit_container_around_a_leaf() -> None:
+    profile = {
+        "contract": "grants-gov-xml-profile/v1",
+        "xsd": {"uri": "https://example.gov/form.xsd", "sha256": "a" * 64},
+        "namespaces": {"default": "https://example.gov/form"},
+        "root": {
+            "element": "Example",
+            "namespacePrefix": "Example",
+            "attributes": {},
+        },
+        "mapping": {
+            "fields": {
+                "answer": {
+                    "element": "Answer",
+                    "kind": "value",
+                    "namespace": "default",
+                    "container": {"element": "Answers", "namespace": "default"},
+                }
+            }
+        },
+    }
+
+    runtime = project_grants_gov_xml_profile(profile, Projection())
+
+    assert runtime["answer"] == {
+        "xml_transform": {
+            "target": "Answer",
+            "namespace": "default",
+            "container": {"target": "Answers", "namespace": "default"},
+        }
+    }
+
+
+@pytest.mark.parametrize("kind", ["object", "group", "array"])
+def test_rejects_a_container_on_a_non_leaf_mapping(kind: str) -> None:
+    node: dict[str, object] = {
+        "element": "Invalid",
+        "kind": kind,
+        "container": {"element": "Container", "namespace": "default"},
+    }
+    if kind in {"object", "group"}:
+        node["fields"] = {}
+    else:
+        node["items"] = {"fields": {}}
+    profile = {
+        "contract": "grants-gov-xml-profile/v1",
+        "xsd": {"uri": "https://example.gov/form.xsd", "sha256": "a" * 64},
+        "namespaces": {"default": "https://example.gov/form"},
+        "root": {
+            "element": "Example",
+            "namespacePrefix": "Example",
+            "attributes": {},
+        },
+        "mapping": {"fields": {"invalid": node}},
+    }
+
+    with pytest.raises(ValueError, match="only value or attachment mappings"):
+        project_grants_gov_xml_profile(profile, Projection())
+
+
+@pytest.mark.parametrize(
+    ("container", "message"),
+    [
+        ("Container", "must be an object"),
+        ({"namespace": "default"}, "has no element"),
+        ({"element": "Container"}, "has no namespace"),
+    ],
+)
+def test_rejects_an_incomplete_leaf_container(container: object, message: str) -> None:
+    profile = {
+        "contract": "grants-gov-xml-profile/v1",
+        "xsd": {"uri": "https://example.gov/form.xsd", "sha256": "a" * 64},
+        "namespaces": {"default": "https://example.gov/form"},
+        "root": {
+            "element": "Example",
+            "namespacePrefix": "Example",
+            "attributes": {},
+        },
+        "mapping": {
+            "fields": {
+                "answer": {
+                    "element": "Answer",
+                    "kind": "value",
+                    "container": container,
+                }
+            }
+        },
+    }
+
+    with pytest.raises(ValueError, match=message):
+        project_grants_gov_xml_profile(profile, Projection())
+
+
+def test_rejects_repeated_outer_mode_without_array_item_wrapper() -> None:
+    profile = {
+        "contract": "grants-gov-xml-profile/v1",
+        "xsd": {"uri": "https://example.gov/form.xsd", "sha256": "a" * 64},
+        "namespaces": {"default": "https://example.gov/form"},
+        "root": {
+            "element": "Example",
+            "namespacePrefix": "Example",
+            "attributes": {},
+        },
+        "mapping": {
+            "fields": {
+                "answers": {
+                    "element": "Answers",
+                    "kind": "array",
+                    "repeatElementPerItem": True,
+                    "items": {"fields": {"answer": {"element": "Answer", "kind": "value"}}},
+                }
+            }
+        },
+    }
+
+    with pytest.raises(ValueError, match="requires an array mapping with itemElement"):
         project_grants_gov_xml_profile(profile, Projection())

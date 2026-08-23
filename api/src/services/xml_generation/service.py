@@ -334,7 +334,12 @@ class XMLGenerationService:
                             element_order.append(target)
                 else:
                     # Regular transform - use target
-                    target = xml_transform.get("target")
+                    container = xml_transform.get("container")
+                    target = (
+                        container.get("target")
+                        if isinstance(container, dict)
+                        else xml_transform.get("target")
+                    )
                     if target:
                         element_order.append(target)
             elif value:
@@ -381,6 +386,10 @@ class XMLGenerationService:
             has_wrapped_items = any(
                 isinstance(item, dict) and "__wrapper" in item for item in value
             )
+            repeats_outer = any(
+                isinstance(item, dict) and item.get("__repeat_element_per_item__") is True
+                for item in value
+            )
 
             def _make_subelement(
                 el_name: str, parent_el: Any, explicit_namespace: str | None = None
@@ -392,7 +401,11 @@ class XMLGenerationService:
                 return lxml_etree.SubElement(parent_el, el_name)
 
             # Create outer container when items have __wrapper
-            array_parent = _make_subelement(field_name, parent) if has_wrapped_items else parent
+            array_parent = (
+                _make_subelement(field_name, parent)
+                if has_wrapped_items and not repeats_outer
+                else parent
+            )
 
             for item in value:
                 if isinstance(item, dict):
@@ -407,7 +420,10 @@ class XMLGenerationService:
                     # Use wrapper as element name, or fall back to field_name
                     item_element_name = item_wrapper if item_wrapper else field_name
 
-                    item_element = _make_subelement(item_element_name, array_parent, item_namespace)
+                    item_parent = (
+                        _make_subelement(field_name, parent) if repeats_outer else array_parent
+                    )
+                    item_element = _make_subelement(item_element_name, item_parent, item_namespace)
 
                     if "__value" in item:
                         item_element.text = str(item["__value"])

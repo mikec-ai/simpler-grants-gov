@@ -2,22 +2,23 @@
   "contract": "grants-form-evidence/v1",
   "block": {
     "id": "rr-subaward-budget-30",
-    "kind": "form"
+    "kind": "form",
+    "formVersion": "3.0"
   },
   "sources": [
     {
       "id": "grantsgov-rr-subaward-budget-30-xsd-3.0",
       "type": "xsd",
       "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_SubawardBudget30_3_0-V3.0.xsd",
-      "version": "3.0",
-      "sha256": "d5d534326e8f7e4416baf98c95c1f9234c0a23628259ee2d7e3199181a24e08a"
+      "sha256": "d5d534326e8f7e4416baf98c95c1f9234c0a23628259ee2d7e3199181a24e08a",
+      "nativeVersion": "3.0"
     },
     {
       "id": "grantsgov-rr-budget-xsd-3.0",
       "type": "xsd",
       "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_Budget_3_0-V3.0.xsd",
-      "version": "3.0",
-      "sha256": "d474010f85819549990de65fc51292bed08ba98ac0895d0dde9513fbe855cdbc"
+      "sha256": "d474010f85819549990de65fc51292bed08ba98ac0895d0dde9513fbe855cdbc",
+      "nativeVersion": "3.0"
     }
   ],
   "extraction": {

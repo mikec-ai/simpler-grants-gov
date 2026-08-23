@@ -105,7 +105,7 @@ def test_official_xsd_and_extraction_provenance_are_pinned() -> None:
             "id": "grantsgov-rr-budget-10yr-xsd-3.0",
             "type": "xsd",
             "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_Budget10_3_0-V3.0.xsd",
-            "version": "3.0",
+            "nativeVersion": "3.0",
             "sha256": "cccce03554424d59b5958e4443a54db12a5a10780fbdc5df2ec25955d443fc9d",
         }
     ]

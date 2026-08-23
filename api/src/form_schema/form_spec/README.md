@@ -10,6 +10,14 @@ the form's root element, namespaces, XSD identity, canonical response-to-XML map
 standard attachment child wire fields.
 The adapter loads that data and applies the same legacy-name projection used for the JSON
 Schema; it contains no budget-family names, durations, wrappers, or per-form mapping code.
+Portable `value` and `attachment` leaves may also declare one explicit wire-only `container`.
+The generic adapter projects that declaration into the XML runtime, which emits the wrapper
+only when the leaf has a value. Containers do not select data and are rejected on objects,
+groups, and arrays.
+Arrays with an `itemElement` default to one collection wrapper containing repeated item
+elements. The optional producer flag `repeatElementPerItem` instead emits one outer element
+per item. The adapter projects that distinction directly; it does not infer cardinality from
+form ids, element names, or namespaces.
 
 The adapter owns only consumer concerns:
 

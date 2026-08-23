@@ -33,6 +33,24 @@
   ],
   "description": "Research & Related Senior/Key Person Profile (Expanded), Grants.gov version 4.0.",
   "$defs": {
+    "ResearchProjectRole": {
+      "type": "string",
+      "enum": [
+        "PD/PI",
+        "Co-PD/PI",
+        "Faculty",
+        "Post Doctoral",
+        "Post Doctoral Associate",
+        "Post Doctoral Scholar",
+        "Other Professional",
+        "Graduate Student",
+        "Undergraduate Student",
+        "Technician",
+        "Consultant",
+        "Co-Investigator",
+        "Other (Specify)"
+      ]
+    },
     "StateCode": {
       "type": "string",
       "enum": [
@@ -123,6 +141,12 @@
           "minLength": 1,
           "maxLength": 30,
           "title": "Province"
+        },
+        "zipCode": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 30,
+          "title": "Zip / Postal Code"
         }
       },
       "allOf": [
@@ -143,7 +167,12 @@
           "then": {
             "required": [
               "state"
-            ]
+            ],
+            "properties": {
+              "zipCode": {
+                "minLength": 9
+              }
+            }
           }
         }
       ]
@@ -168,12 +197,18 @@
     "PrincipalInvestigatorProfile": {
       "type": "object",
       "properties": {
+        "projectRole": {
+          "$ref": "#/$defs/ResearchProjectRole",
+          "default": "PD/PI",
+          "title": "Project Role"
+        },
         "biographicalSketch": {
           "$ref": "../../question-bank/research-person/biographical-sketch/schema.json",
           "title": "Attach Biographical Sketch"
         }
       },
       "required": [
+        "projectRole",
         "biographicalSketch"
       ],
       "allOf": [

@@ -3,6 +3,7 @@
 import pytest
 
 from src.services.xml_generation.transformers.base_transformer import RecursiveXMLTransformer
+from src.services.xml_generation.utils.attachment_mapping import AttachmentInfo
 
 
 class TestRecursiveXMLTransformer:
@@ -217,12 +218,10 @@ class TestRecursiveXMLTransformer:
             },
         }
 
-        result = RecursiveXMLTransformer(transform_config).transform(
-            {
-                "organization": "Applicant University",
-                "project": {"organization": "Performing University"},
-            }
-        )
+        result = RecursiveXMLTransformer(transform_config).transform({
+            "organization": "Applicant University",
+            "project": {"organization": "Performing University"},
+        })
 
         assert result == {
             "OrganizationName": {
@@ -234,6 +233,53 @@ class TestRecursiveXMLTransformer:
                 "OrganizationName": {
                     "__value__": "Performing University",
                     "__namespace__": "default",
+                },
+            },
+        }
+
+    def test_transform_wraps_value_and_attachment_leaves_without_form_logic(self):
+        transform_config = {
+            "answer": {
+                "xml_transform": {
+                    "target": "Answer",
+                    "namespace": "globLib",
+                    "container": {"target": "Answers", "namespace": "default"},
+                }
+            },
+            "file": {
+                "xml_transform": {
+                    "target": "AttachedFile",
+                    "type": "attachment",
+                    "namespace": "default",
+                    "container": {"target": "Files", "namespace": "default"},
+                }
+            },
+        }
+        attachment = AttachmentInfo(
+            filename="evidence.pdf",
+            mime_type="application/pdf",
+            file_location="evidence.pdf",
+            hash_value="YWJj",
+        )
+
+        result = RecursiveXMLTransformer(
+            transform_config, attachment_mapping={"file-id": attachment}
+        ).transform({"answer": "Yes", "file": "file-id"})
+
+        assert result == {
+            "Answers": {
+                "__namespace__": "default",
+                "Answer": {"__value__": "Yes", "__namespace__": "globLib"},
+            },
+            "Files": {
+                "__namespace__": "default",
+                "AttachedFile": {
+                    "FileName": "evidence.pdf",
+                    "MimeType": "application/pdf",
+                    "FileLocation": "",
+                    "__FileLocation__attributes": {"att:href": "evidence.pdf"},
+                    "HashValue": "YWJj",
+                    "__HashValue__attributes": {"glob:hashAlgorithm": "SHA-1"},
                 },
             },
         }
@@ -263,9 +309,9 @@ class TestRecursiveXMLTransformer:
         }
         transformer = RecursiveXMLTransformer(transform_config)
 
-        result = transformer.transform(
-            {"sites": [{"name": "Lab A", "city": "Boston"}, {"name": "Lab B", "city": "Austin"}]}
-        )
+        result = transformer.transform({
+            "sites": [{"name": "Lab A", "city": "Boston"}, {"name": "Lab B", "city": "Austin"}]
+        })
 
         assert result["Sites"] == [
             {"Name": "Lab A", "City": "Boston"},
