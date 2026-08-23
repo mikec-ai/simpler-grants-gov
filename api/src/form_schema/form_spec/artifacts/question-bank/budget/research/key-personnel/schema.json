@@ -112,7 +112,8 @@
         },
         "fundsRequested": {
           "$ref": "#/$defs/ResearchBudgetDecimal15",
-          "title": "Senior/Key Person Funds Requested"
+          "title": "Senior/Key Person Funds Requested",
+          "readOnly": true
         },
         "name": {
           "$ref": "#/$defs/ResearchBudgetBudgetYearKeyPersonsKeyPersonName",

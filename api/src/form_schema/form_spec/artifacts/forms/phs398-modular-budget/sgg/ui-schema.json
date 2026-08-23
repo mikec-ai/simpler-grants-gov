@@ -20,7 +20,8 @@
           },
           {
             "type": "field",
-            "definition": "/properties/periods/items/properties/directCosts/properties/directCostLessConsortiumFandA"
+            "definition": "/properties/periods/items/properties/directCosts/properties/directCostLessConsortiumFandA",
+            "widget": "Select"
           },
           {
             "type": "field",

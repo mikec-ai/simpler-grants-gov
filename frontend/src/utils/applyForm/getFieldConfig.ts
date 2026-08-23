@@ -608,6 +608,7 @@ const getFieldListConfig = ({
           storagePath,
           generalProps: nestedProps,
           definition: childNode.definition,
+          conditional: childNode.conditional,
         };
       }
 
@@ -619,6 +620,7 @@ const getFieldListConfig = ({
         storagePath,
         generalProps: rest,
         definition: childNode.definition,
+        conditional: childNode.conditional,
       };
     },
   );
@@ -654,6 +656,7 @@ const getFieldListConfig = ({
       name: uiFieldObject.name,
       minItems: fieldListSchema?.minItems,
       hideFieldListHeading: uiFieldObject.hideFieldListHeading,
+      validateBeforeAdd: uiFieldObject.validateBeforeAdd,
       maxItems: fieldListSchema?.maxItems,
       groupDefinition,
       rawErrors: errors ?? [],

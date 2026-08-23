@@ -8,7 +8,7 @@
     "shortFormName": "PHS398_ModularBudget_1_2",
     "formVersion": "1.2",
     "agencyCode": "GRANTS_GOV",
-    "ombNumber": "0925-0001 and 0925-0002",
+    "ombNumber": "0925-0001",
     "formType": "PHS398ModularBudget",
     "sggVersion": "1.0"
   },
@@ -17,6 +17,7 @@
     "ui.json": "generated",
     "sgg/ui-schema.json": "generated",
     "sgg/rule-schema.json": "generated",
+    "targets/grants-gov-xml.json": "generated",
     "evidence.json": "passthrough"
   }
 }

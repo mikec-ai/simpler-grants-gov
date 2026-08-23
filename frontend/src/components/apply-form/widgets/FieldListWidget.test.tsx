@@ -13,6 +13,8 @@ jest.mock("src/components/apply-form/widgets/WidgetRenderers", () => ({
         value?: unknown;
         rawErrors?: string[];
         additionalDescribedById?: string;
+        disabled?: boolean;
+        readOnly?: boolean;
         onChange?: (value: unknown) => void;
       };
     }) => {
@@ -29,6 +31,8 @@ jest.mock("src/components/apply-form/widgets/WidgetRenderers", () => ({
             data-testid="mock-widget"
             data-widget-id={props.id}
             data-entry-description-id={props.additionalDescribedById}
+            data-disabled={String(Boolean(props.disabled))}
+            data-read-only={String(Boolean(props.readOnly))}
             aria-label={props.id}
             value={displayValue}
             onChange={(event) => props.onChange?.(event.target.value)}
@@ -100,6 +104,71 @@ const recursiveGroupDefinition = [
 ];
 
 describe("FieldListWidget", () => {
+  it("requires a valid current row before adding when configured", async () => {
+    const user = userEvent.setup();
+    render(
+      <FieldListWidget
+        id="contacts"
+        key="contacts"
+        schema={{ type: "array", title: "Contacts" }}
+        label="Contacts"
+        minItems={1}
+        validateBeforeAdd={true}
+        groupDefinition={baseGroupDefinition}
+        rawErrors={[]}
+        requiredFields={["contact_people_test/first_name"]}
+        name="contacts"
+      />,
+    );
+
+    const add = screen.getByRole("button", { name: /addEntry/i });
+    expect(add).toBeDisabled();
+    await user.type(screen.getByTestId("mock-widget"), "Ada");
+    expect(add).toBeEnabled();
+  });
+
+  it("evaluates item-scoped interaction conditions independently for each row", () => {
+    const conditionalGroupDefinition = [
+      {
+        ...nestedGroupDefinition[0],
+        conditional: {
+          when: {
+            op: "equals" as const,
+            ref: { scope: "item" as const, pointer: "/address/country" },
+            value: "USA: UNITED STATES",
+          },
+          then: { interaction: "enabled" as const },
+          otherwise: { interaction: "disabled" as const },
+        },
+        generalProps: {
+          ...nestedGroupDefinition[0].generalProps,
+          formContext: { rootFormData: {} },
+        },
+      },
+    ];
+
+    render(
+      <FieldListWidget
+        id="contacts"
+        key="contacts"
+        schema={{ type: "array", title: "Contacts" }}
+        label="Contacts"
+        groupDefinition={conditionalGroupDefinition}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="contacts"
+        value={[
+          { address: { country: "USA: UNITED STATES", street1: "One" } },
+          { address: { country: "CAN: CANADA", street1: "Two" } },
+        ]}
+      />,
+    );
+
+    const fields = screen.getAllByTestId("mock-widget");
+    expect(fields[0]).toHaveAttribute("data-disabled", "false");
+    expect(fields[1]).toHaveAttribute("data-disabled", "true");
+  });
+
   it("renders label, description, and minimum entry widgets", () => {
     render(
       <FieldListWidget

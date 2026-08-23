@@ -8,6 +8,7 @@ import {
   UswdsWidgetProps,
 } from "src/types/applyForm/types";
 import { isFieldRequired } from "src/utils/applyForm/applyFormUtils";
+import { resolveConditionalUiState } from "src/utils/applyForm/evaluateConditionalUi";
 import {
   getFieldListChildErrors,
   getFieldListGroupErrors,
@@ -226,6 +227,52 @@ const getValueAtPath = ({
   }, value);
 };
 
+const isPresentFieldListValue = (value: unknown): boolean =>
+  value !== undefined &&
+  value !== null &&
+  value !== "" &&
+  (!Array.isArray(value) || value.length > 0);
+
+/** Whether the current row has its required values and no reported child errors. */
+const isFieldListEntryValid = ({
+  entry,
+  entryIndex,
+  fieldListPath,
+  groupDefinition,
+  rawErrors,
+  requiredFields,
+}: {
+  entry: FieldListEntry | undefined;
+  entryIndex: number;
+  fieldListPath: string;
+  groupDefinition: FieldListGroupItem[];
+  rawErrors?: FormattedFormValidationWarning[];
+  requiredFields?: string[];
+}): boolean => {
+  if (!entry) return true;
+  return groupDefinition.every((groupItem) => {
+    const value = getValueAtPath({
+      value: entry.value,
+      path: groupItem.storagePath,
+    });
+    if (
+      isFieldRequired(groupItem.definition, requiredFields ?? []) &&
+      !isPresentFieldListValue(value)
+    ) {
+      return false;
+    }
+    return (
+      getFieldListChildErrors({
+        rawErrors,
+        fieldListPath,
+        entryIndex,
+        storagePath: groupItem.storagePath,
+        childDefinition: groupItem.definition,
+      }).length === 0
+    );
+  });
+};
+
 /**
  * Writes a child value into a FieldList entry while preserving nested object
  * structure, for example address.street1.
@@ -285,6 +332,8 @@ function FieldListEntry({
   requiredFields,
   minItemsHeading,
   minItemsHelperText,
+  itemStack = [],
+  rootFormData,
 }: {
   entryId: string;
   entryIndex: number;
@@ -300,6 +349,8 @@ function FieldListEntry({
   requiredFields?: string[];
   minItemsHeading?: string;
   minItemsHelperText?: string;
+  itemStack?: object[];
+  rootFormData?: unknown;
 }) {
   const t = useTranslations("Application.applyForm.fieldListWidget");
   const fieldListId = fieldListPath.replace("$.", "").replace(/\W/g, "-");
@@ -314,6 +365,22 @@ function FieldListEntry({
       </div>
 
       {groupDefinition.map((groupItem: FieldListGroupItem) => {
+        const conditionalState = resolveConditionalUiState(
+          groupItem.conditional,
+          {
+            rootData:
+              typeof rootFormData === "object" && rootFormData !== null
+                ? rootFormData
+                : {},
+            itemStack: [...itemStack, entryValue],
+          },
+        );
+        if (!conditionalState.visible) return null;
+
+        const isConditionallyDisabled =
+          conditionalState.interaction === "disabled";
+        const isConditionallyReadOnly =
+          conditionalState.interaction === "readOnly";
         const isRequired = isFieldRequired(
           groupItem.definition,
           requiredFields ?? [],
@@ -354,9 +421,10 @@ function FieldListEntry({
                   ? (rawCurrentValue as GeneralRecord[])
                   : undefined
               }
-              disabled={isInteractionDisabled}
-              readOnly={isInteractionDisabled}
+              disabled={isInteractionDisabled || isConditionallyDisabled}
+              readOnly={isInteractionDisabled || isConditionallyReadOnly}
               isFormLocked={isInteractionDisabled}
+              itemStack={[...itemStack, entryValue]}
               formContext={groupItem.generalProps.formContext}
               onChange={(nextValue) => {
                 handleFieldChange({
@@ -382,8 +450,8 @@ function FieldListEntry({
           required: isRequired,
           updateOnInput: true,
           additionalDescribedById: entryHeadingId,
-          disabled: isInteractionDisabled,
-          readOnly: isInteractionDisabled,
+          disabled: isInteractionDisabled || isConditionallyDisabled,
+          readOnly: isInteractionDisabled || isConditionallyReadOnly,
           isFormLocked: isInteractionDisabled,
           onChange: (nextValue) => {
             handleFieldChange({
@@ -456,6 +524,8 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
     readOnly,
     isFormLocked,
     rawErrors,
+    itemStack,
+    validateBeforeAdd,
   } = widgetProps;
   const t = useTranslations("Application.applyForm.fieldListWidget");
   const fieldListPath = `$.${name}`;
@@ -498,7 +568,18 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
   const isAtMaximumEntryCount =
     maximumEntryCount !== undefined && entries.length >= maximumEntryCount;
 
-  const canAddEntry = !isInteractionDisabled && !isAtMaximumEntryCount;
+  const currentEntryIsValid =
+    !validateBeforeAdd ||
+    isFieldListEntryValid({
+      entry: entries.at(-1),
+      entryIndex: Math.max(entries.length - 1, 0),
+      fieldListPath,
+      groupDefinition,
+      rawErrors,
+      requiredFields: widgetProps.requiredFields,
+    });
+  const canAddEntry =
+    !isInteractionDisabled && !isAtMaximumEntryCount && currentEntryIsValid;
   const canDeleteEntry = !isInteractionDisabled && !isAtMinimumEntryCount;
 
   const resolvedMinItemsHeading =
@@ -655,6 +736,8 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
             requiredFields={widgetProps.requiredFields}
             minItemsHeading={resolvedMinItemsHeading}
             minItemsHelperText={resolvedMinItemsHelperText}
+            itemStack={itemStack}
+            rootFormData={widgetProps.formContext?.rootFormData}
           />
         );
       })}

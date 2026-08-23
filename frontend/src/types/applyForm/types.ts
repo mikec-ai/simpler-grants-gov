@@ -151,6 +151,7 @@ export type FieldListWidgetProps = {
   };
   label: string;
   hideFieldListHeading?: boolean;
+  validateBeforeAdd?: boolean;
   description?: string;
   additionalDescribedById?: string;
   name: string;
@@ -183,6 +184,8 @@ export type FieldListWidgetProps = {
       markFormDirty?: () => void;
     };
   };
+  /** Ancestor rows used to resolve portable item-scoped UI conditions. */
+  itemStack?: object[];
 };
 
 export type FieldListChildWidgetTypes = Exclude<WidgetTypes, "Table">;
@@ -209,6 +212,7 @@ type FieldListLeafGroupItem = {
   baseId: string;
   definition: string;
   storagePath: string[];
+  conditional?: ConditionalUi;
 };
 
 type NestedFieldListGroupItem = {
@@ -220,6 +224,7 @@ type NestedFieldListGroupItem = {
   baseId: string;
   definition: string;
   storagePath: string[];
+  conditional?: ConditionalUi;
 };
 
 export type FieldListGroupItem =
@@ -358,6 +363,7 @@ export interface UiSchemaFieldList {
   label: string;
   // Hide the top FieldList title while still using `label` for per-entry headings.
   hideFieldListHeading?: boolean;
+  validateBeforeAdd?: boolean;
   minItemsHeading?: string;
   minItemsHelperText?: string;
   maxItemsHeading?: string;

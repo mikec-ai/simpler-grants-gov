@@ -249,12 +249,17 @@ export const UiJsonSchema: RJSFSchema = {
           type: "string",
         },
         hideFieldListHeading: { type: "boolean" },
+        validateBeforeAdd: { type: "boolean" },
         minItemsHeading: { type: "string" },
         minItemsHelperText: { type: "string" },
         maxItemsHeading: { type: "string" },
         maxItemsHelperText: { type: "string" },
         name: {
           type: "string",
+        },
+        definition: {
+          type: "string",
+          pattern: "^/(properties|\\$defs)(/[a-zA-Z0-9_]+)+$",
         },
         description: {
           type: "string",
@@ -400,6 +405,16 @@ export const UiJsonSchema: RJSFSchema = {
             ref: { $ref: "#/$defs/conditionalValueRef" },
           },
           required: ["op", "ref"],
+          additionalProperties: false,
+        },
+        {
+          type: "object",
+          properties: {
+            op: { const: "countAtLeast" },
+            ref: { $ref: "#/$defs/conditionalValueRef" },
+            minimum: { type: "integer", minimum: 0 },
+          },
+          required: ["op", "ref", "minimum"],
           additionalProperties: false,
         },
         {

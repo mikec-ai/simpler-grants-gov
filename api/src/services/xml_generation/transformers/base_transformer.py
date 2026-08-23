@@ -47,6 +47,22 @@ class RecursiveXMLTransformer:
             return get_nested_value(self.root_source_data, self._pointer_parts(source))
         return get_nested_value(fallback_data, fallback_path)
 
+    def _source_for_transform(
+        self,
+        transform_rule: dict[str, Any],
+        *,
+        fallback_data: dict[str, Any],
+        fallback_path: list[str],
+    ) -> Any:
+        """Resolve a transform source, treating source-less groups as wire-only."""
+        if transform_rule.get("type") == "group" and "source" not in transform_rule:
+            return self.root_source_data
+        return self._source_value(
+            transform_rule,
+            fallback_data=fallback_data,
+            fallback_path=fallback_path,
+        )
+
     def transform(self, source_data: dict[str, Any]) -> dict[str, Any]:
         """Transform source data using recursive rule processing.
 
@@ -155,14 +171,10 @@ class RecursiveXMLTransformer:
 
         # Get the source value from the input data
         transform_type = transform_rule.get("type", "simple")
-        source_value = (
-            self.root_source_data
-            if transform_type == "group"
-            else self._source_value(
-                transform_rule,
-                fallback_data=source_data,
-                fallback_path=current_path,
-            )
+        source_value = self._source_for_transform(
+            transform_rule,
+            fallback_data=source_data,
+            fallback_path=current_path,
         )
 
         # Handle None values based on configuration
@@ -308,10 +320,38 @@ class RecursiveXMLTransformer:
             else:
                 # Standard field assignment for all other cases
                 target_field = transform_rule["target"]
-                result[target_field] = transformed_value
+                self._assign_target(result, transform_rule, transformed_value, current_path)
 
                 logger.debug(
                     f"Transformed {'.'.join(current_path)} -> {target_field}: {source_value}"
+                )
+
+    def _assign_target(
+        self,
+        result: dict[str, Any],
+        transform_rule: dict[str, Any],
+        value: Any,
+        path: list[str],
+    ) -> None:
+        """Assign one transformed value, deep-merging shared declarative groups."""
+        payload: dict[str, Any] = {transform_rule["target"]: value}
+        self._merge_mapping(result, payload, path)
+
+    def _merge_mapping(
+        self, target: dict[str, Any], incoming: dict[str, Any], path: list[str]
+    ) -> None:
+        """Deep-merge shared XML containers while rejecting ambiguous collisions."""
+        for key, value in incoming.items():
+            if key not in target:
+                target[key] = value
+                continue
+            existing = target[key]
+            if isinstance(existing, dict) and isinstance(value, dict):
+                self._merge_mapping(existing, value, [*path, key])
+            elif existing != value:
+                raise ValueError(
+                    f"Conflicting XML target at {'.'.join([*path, key])}: "
+                    f"{existing!r} != {value!r}"
                 )
 
     def _apply_transform_rule(
@@ -401,7 +441,7 @@ class RecursiveXMLTransformer:
                 for child_key, child_config in nested_fields.items():
                     if isinstance(child_config, dict) and "xml_transform" in child_config:
                         child_transform = child_config["xml_transform"]
-                        child_value = self._source_value(
+                        child_value = self._source_for_transform(
                             child_transform,
                             fallback_data=source_value,
                             fallback_path=[child_key],
@@ -413,7 +453,12 @@ class RecursiveXMLTransformer:
                             )
 
                             if transformed_child is not None:
-                                nested_result[child_transform["target"]] = transformed_child
+                                self._assign_target(
+                                    nested_result,
+                                    child_transform,
+                                    transformed_child,
+                                    path + [child_key],
+                                )
             else:
                 # Nested fields may be siblings of xml_transform in full_rule_config
                 for child_key, child_config in full_rule_config.items():
@@ -421,7 +466,7 @@ class RecursiveXMLTransformer:
                         continue
                     if isinstance(child_config, dict) and "xml_transform" in child_config:
                         child_transform = child_config["xml_transform"]
-                        child_value = self._source_value(
+                        child_value = self._source_for_transform(
                             child_transform,
                             fallback_data=source_value,
                             fallback_path=[child_key],
@@ -433,7 +478,12 @@ class RecursiveXMLTransformer:
                             )
 
                             if transformed_child is not None:
-                                nested_result[child_transform["target"]] = transformed_child
+                                self._assign_target(
+                                    nested_result,
+                                    child_transform,
+                                    transformed_child,
+                                    path + [child_key],
+                                )
 
             return nested_result if nested_result else None
 
@@ -442,6 +492,30 @@ class RecursiveXMLTransformer:
             if not isinstance(source_value, list):
                 return None
             items_config = full_rule_config.get("items", {})
+            scalar_item_config = full_rule_config.get("item")
+            if scalar_item_config:
+                item_transform = scalar_item_config["xml_transform"]
+                transformed_items = []
+                for index, item in enumerate(source_value):
+                    transformed_item = self._apply_transform_rule(
+                        item,
+                        item_transform,
+                        scalar_item_config,
+                        path + [str(index)],
+                    )
+                    if transformed_item is None:
+                        continue
+                    item_result = (
+                        transformed_item
+                        if isinstance(transformed_item, dict)
+                        else {"__value": transformed_item}
+                    )
+                    item_result = dict(item_result)
+                    item_result["__wrapper"] = item_transform["target"]
+                    if namespace := item_transform.get("namespace"):
+                        item_result["__namespace__"] = namespace
+                    transformed_items.append(item_result)
+                return transformed_items or None
             if not items_config:
                 return source_value or None
             transformed_items = []
@@ -457,7 +531,12 @@ class RecursiveXMLTransformer:
                                     child_value, child_transform, child_config, path + [child_key]
                                 )
                                 if transformed_child is not None:
-                                    item_result[child_transform["target"]] = transformed_child
+                                    self._assign_target(
+                                        item_result,
+                                        child_transform,
+                                        transformed_child,
+                                        path + [child_key],
+                                    )
                     if item_result:
                         # Optional item metadata lets one declarative array mapping express
                         # XSD wrappers from an imported namespace (for example, a subaward

@@ -116,6 +116,15 @@ def _project_node(
     attachment_fields: dict[str, Any],
 ) -> dict[str, Any]:
     kind = node["kind"]
+    if node.get("flatten"):
+        if kind != "group":
+            raise ValueError(f"only group mappings may be flattened at {path}")
+        return _project_fields(
+            node["fields"],
+            projection,
+            path=path,
+            attachment_fields=attachment_fields,
+        )
     runtime_type = {
         "value": None,
         "object": "nested_object",
@@ -151,12 +160,20 @@ def _project_node(
             transform["item_namespace"] = item_namespace
         if item_attributes := node.get("itemAttributes"):
             transform["item_attributes"] = dict(item_attributes)
-        rule["items"] = _project_fields(
-            node["items"]["fields"],
-            projection,
-            path=path,
-            attachment_fields=attachment_fields,
-        )
+        if item_fields := node["items"].get("fields"):
+            rule["items"] = _project_fields(
+                item_fields,
+                projection,
+                path=path,
+                attachment_fields=attachment_fields,
+            )
+        else:
+            rule["item"] = _project_node(
+                node["items"]["node"],
+                projection,
+                path=f"{path}[*]",
+                attachment_fields=attachment_fields,
+            )
     elif kind == "attachment":
         rule.update(_attachment_children(attachment_fields, path=path))
     return rule

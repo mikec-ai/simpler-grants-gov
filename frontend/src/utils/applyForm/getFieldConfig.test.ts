@@ -389,6 +389,40 @@ describe("getFieldConfig", () => {
       ]);
     });
 
+    it("preserves portable conditions on FieldList children", () => {
+      const conditional = {
+        when: {
+          op: "equals" as const,
+          ref: { scope: "item" as const, pointer: "/active" },
+          value: true,
+        },
+        then: { interaction: "enabled" as const },
+        otherwise: { interaction: "disabled" as const },
+      };
+      const uiFieldObject: UiSchemaFieldList = {
+        type: "fieldList",
+        name: "contacts",
+        label: "Contacts",
+        children: [
+          {
+            type: "field",
+            definition: "/properties/contacts/items/properties/firstName",
+            conditional,
+          },
+        ],
+      };
+
+      const result = getFieldConfig({
+        errors: null,
+        formSchema,
+        formData: {},
+        uiFieldObject,
+        requiredField: false,
+      });
+      if (result.type !== "FieldList") throw new Error("Expected FieldList");
+      expect(result.props.groupDefinition[0].conditional).toEqual(conditional);
+    });
+
     it("returns nested storagePath and baseId for nested FieldList child fields", () => {
       const uiFieldObject: UiSchemaFieldList = {
         type: "fieldList",

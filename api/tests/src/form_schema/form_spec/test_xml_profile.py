@@ -56,6 +56,23 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
                         }
                     },
                 },
+                "details": {
+                    "element": "Details",
+                    "kind": "group",
+                    "flatten": True,
+                    "fields": {
+                        "answer": {
+                            "element": "Answer",
+                            "kind": "value",
+                            "source": "/details/answer",
+                        }
+                    },
+                },
+                "files": {
+                    "element": "Files",
+                    "kind": "array",
+                    "items": {"node": {"element": "File", "kind": "attachment"}},
+                },
             }
         },
     }
@@ -68,7 +85,14 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
 
     runtime = project_grants_gov_xml_profile(profile, projection)
 
-    assert set(runtime) == {"_xml_config", "samuei", "people", "district_wrapper"}
+    assert set(runtime) == {
+        "_xml_config",
+        "samuei",
+        "people",
+        "district_wrapper",
+        "details",
+        "files",
+    }
     assert set(runtime["people"]["items"]) == {"given_name", "file"}
     assert runtime["people"]["items"]["file"]["xml_transform"] == {
         "target": "File",
@@ -86,6 +110,14 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
                 "source": "/applicant_district",
             }
         },
+    }
+    assert runtime["details"]["answer"]["xml_transform"] == {
+        "target": "Answer",
+        "source": "/details/answer",
+    }
+    assert runtime["files"]["item"]["xml_transform"] == {
+        "target": "File",
+        "type": "attachment",
     }
 
 

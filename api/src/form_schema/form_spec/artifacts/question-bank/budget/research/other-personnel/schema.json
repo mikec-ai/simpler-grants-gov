@@ -106,7 +106,8 @@
         },
         "fundsRequested": {
           "$ref": "#/$defs/ResearchBudgetDecimal15",
-          "title": "Funds Requested Graduate Students"
+          "title": "Funds Requested Graduate Students",
+          "readOnly": true
         },
         "numberOfPersonnel": {
           "$ref": "#/$defs/ResearchBudgetCount3",
@@ -152,7 +153,8 @@
         },
         "fundsRequested": {
           "$ref": "#/$defs/ResearchBudgetDecimal15",
-          "title": "Funds Requested Additional Project Role"
+          "title": "Funds Requested Additional Project Role",
+          "readOnly": true
         },
         "numberOfPersonnel": {
           "$ref": "#/$defs/ResearchBudgetCount3",
@@ -204,7 +206,8 @@
         },
         "fundsRequested": {
           "$ref": "#/$defs/ResearchBudgetDecimal15",
-          "title": "Funds Requested Post Doctoral Associates"
+          "title": "Funds Requested Post Doctoral Associates",
+          "readOnly": true
         },
         "numberOfPersonnel": {
           "$ref": "#/$defs/ResearchBudgetCount3",
@@ -250,7 +253,8 @@
         },
         "fundsRequested": {
           "$ref": "#/$defs/ResearchBudgetDecimal15",
-          "title": "Funds Requested Secretarial/Clerical"
+          "title": "Funds Requested Secretarial/Clerical",
+          "readOnly": true
         },
         "numberOfPersonnel": {
           "$ref": "#/$defs/ResearchBudgetCount3",
@@ -296,7 +300,8 @@
         },
         "fundsRequested": {
           "$ref": "#/$defs/ResearchBudgetDecimal15",
-          "title": "Funds Requested Undergraduate Students"
+          "title": "Funds Requested Undergraduate Students",
+          "readOnly": true
         },
         "numberOfPersonnel": {
           "$ref": "#/$defs/ResearchBudgetCount3",

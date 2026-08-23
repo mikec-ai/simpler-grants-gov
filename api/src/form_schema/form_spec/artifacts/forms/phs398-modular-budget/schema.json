@@ -12,9 +12,6 @@
             "properties": {
               "totalDirectCosts": {
                 "readOnly": true
-              },
-              "directCostLessConsortiumFandA": {
-                "description": "The source form presents modular values from $0 to $250,000. Exact option-to-wire encoding remains a review gate."
               }
             }
           },
@@ -29,7 +26,7 @@
             "readOnly": true
           },
           "budgetPeriodEndDate": {
-            "description": "The end date cannot be earlier than the start date. Cross-field date comparison remains a runtime review gate."
+            "description": "The end date cannot be earlier than the start date."
           }
         }
       },

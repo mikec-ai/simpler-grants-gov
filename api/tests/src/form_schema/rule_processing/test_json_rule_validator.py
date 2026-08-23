@@ -9,6 +9,17 @@ from src.validation.validation_constants import ValidationErrorType
 from tests.src.form_schema.rule_processing.conftest import setup_context
 
 
+def setup_unit_context(json_data: dict, rule_schema: dict) -> JsonRuleContext:
+    """Create a rule context without a database-backed factory for pure rule tests."""
+    application_form = SimpleNamespace(
+        application_response=json_data,
+        application_form_id=uuid.uuid4(),
+        form_id=uuid.uuid4(),
+        form=SimpleNamespace(form_rule_schema=rule_schema),
+    )
+    return JsonRuleContext(application_form, JsonRuleConfig())
+
+
 class TestScalarAttachmentIdCollection:
     def test_valid_attachment_id_collected(self, enable_factory_create):
         att_id = str(uuid.uuid4())
@@ -139,3 +150,29 @@ class TestCollectionAttachmentIdCollection:
         )
         process_rule_schema_for_context(context)
         assert context.attachment_ids == set()
+
+
+def test_date_not_before_scopes_each_repeated_period() -> None:
+    context = setup_unit_context(
+        {
+            "periods": [
+                {"start_date": "2027-01-01", "end_date": "2027-12-31"},
+                {"start_date": "2028-12-31", "end_date": "2028-01-01"},
+            ]
+        },
+        {
+            "periods": {
+                "gg_type": "array",
+                "end_date": {
+                    "gg_validation": {
+                        "rule": "date_not_before",
+                        "fields": ["@THIS.start_date"],
+                    }
+                },
+            }
+        },
+    )
+
+    process_rule_schema_for_context(context)
+
+    assert [issue.field for issue in context.validation_issues] == ["$.periods[1].end_date"]

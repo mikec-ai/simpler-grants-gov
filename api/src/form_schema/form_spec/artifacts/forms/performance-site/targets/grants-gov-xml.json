@@ -1,0 +1,188 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "performance-site",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/PerformanceSite_4_0-V4.0.xsd",
+    "sha256": "d47dbb254b112f69dc308c01dea2fe15b29114d0e3bdc5a137d3178b5af7bc6c"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/PerformanceSite_4_0-V4.0",
+    "PerformanceSite_4_0": "http://apply.grants.gov/forms/PerformanceSite_4_0-V4.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0"
+  },
+  "root": {
+    "element": "PerformanceSite_4_0",
+    "namespacePrefix": "PerformanceSite_4_0",
+    "attributes": {
+      "FormVersion": "4.0"
+    }
+  },
+  "attachment": {
+    "fields": {
+      "fileName": {
+        "element": "FileName",
+        "namespace": "att"
+      },
+      "mimeType": {
+        "element": "MimeType",
+        "namespace": "att"
+      },
+      "fileLocation": {
+        "element": "FileLocation",
+        "namespace": "att"
+      },
+      "hashValue": {
+        "element": "HashValue",
+        "namespace": "glob"
+      }
+    }
+  },
+  "mapping": {
+    "fields": {
+      "primarySite": {
+        "element": "PrimarySite",
+        "kind": "object",
+        "fields": {
+          "individual": {
+            "element": "Individual",
+            "kind": "value"
+          },
+          "organizationName": {
+            "element": "OrganizationName",
+            "kind": "value"
+          },
+          "samUei": {
+            "element": "SAMUEI",
+            "kind": "value"
+          },
+          "address": {
+            "element": "Address",
+            "kind": "object",
+            "fields": {
+              "street1": {
+                "element": "Street1",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "street2": {
+                "element": "Street2",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "city": {
+                "element": "City",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "county": {
+                "element": "County",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "state": {
+                "element": "State",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "province": {
+                "element": "Province",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "zipCode": {
+                "element": "ZipPostalCode",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "country": {
+                "element": "Country",
+                "kind": "value",
+                "namespace": "globLib"
+              }
+            }
+          },
+          "congressionalDistrict": {
+            "element": "CongressionalDistrictProgramProject",
+            "kind": "value"
+          }
+        }
+      },
+      "additionalSites": {
+        "element": "OtherSite",
+        "kind": "array",
+        "items": {
+          "fields": {
+            "individual": {
+              "element": "Individual",
+              "kind": "value"
+            },
+            "organizationName": {
+              "element": "OrganizationName",
+              "kind": "value"
+            },
+            "samUei": {
+              "element": "SAMUEI",
+              "kind": "value"
+            },
+            "address": {
+              "element": "Address",
+              "kind": "object",
+              "fields": {
+                "street1": {
+                  "element": "Street1",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "street2": {
+                  "element": "Street2",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "city": {
+                  "element": "City",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "county": {
+                  "element": "County",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "state": {
+                  "element": "State",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "province": {
+                  "element": "Province",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "zipCode": {
+                  "element": "ZipPostalCode",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "country": {
+                  "element": "Country",
+                  "kind": "value",
+                  "namespace": "globLib"
+                }
+              }
+            },
+            "congressionalDistrict": {
+              "element": "CongressionalDistrictProgramProject",
+              "kind": "value"
+            }
+          }
+        }
+      },
+      "additionalLocations": {
+        "element": "AttachedFile",
+        "kind": "attachment"
+      }
+    }
+  }
+}

@@ -179,6 +179,21 @@ class TestRecursiveXMLTransformer:
 
         assert result == {"CongressionalDistrict": {"ApplicantCongressionalDistrict": "MD-008"}}
 
+    def test_transform_nested_output_groups_from_explicit_root_sources(self):
+        transform_config = {
+            "outer": {
+                "xml_transform": {"target": "Outer", "type": "group"},
+                "middle": {
+                    "xml_transform": {"target": "Middle", "type": "group"},
+                    "answer": {"xml_transform": {"target": "Answer", "source": "/answer"}},
+                },
+            }
+        }
+
+        result = RecursiveXMLTransformer(transform_config).transform({"answer": "Yes"})
+
+        assert result == {"Outer": {"Middle": {"Answer": "Yes"}}}
+
     def test_transform_preserves_namespace_on_scalar_values(self):
         transform_config = {
             "organization": {
@@ -202,10 +217,12 @@ class TestRecursiveXMLTransformer:
             },
         }
 
-        result = RecursiveXMLTransformer(transform_config).transform({
-            "organization": "Applicant University",
-            "project": {"organization": "Performing University"},
-        })
+        result = RecursiveXMLTransformer(transform_config).transform(
+            {
+                "organization": "Applicant University",
+                "project": {"organization": "Performing University"},
+            }
+        )
 
         assert result == {
             "OrganizationName": {
@@ -246,9 +263,9 @@ class TestRecursiveXMLTransformer:
         }
         transformer = RecursiveXMLTransformer(transform_config)
 
-        result = transformer.transform({
-            "sites": [{"name": "Lab A", "city": "Boston"}, {"name": "Lab B", "city": "Austin"}]
-        })
+        result = transformer.transform(
+            {"sites": [{"name": "Lab A", "city": "Boston"}, {"name": "Lab B", "city": "Austin"}]}
+        )
 
         assert result["Sites"] == [
             {"Name": "Lab A", "City": "Boston"},
