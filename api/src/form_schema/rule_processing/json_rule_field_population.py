@@ -14,6 +14,25 @@ logger = logging.getLogger(__name__)
 INDIVIDUAL_UEI = "00000000INDV"
 EXCLUDE_VALUE = "exclude_value"
 UNKNOWN_VALUE = "unknown"
+WHEN_ANY_SOURCE_PRESENT = "when_any_source_present"
+
+
+def _materialize_calculation(
+    context: JsonRuleContext, json_rule: JsonRule, fields: list[str]
+) -> bool:
+    """Whether a calculation should write its target under its declared policy.
+
+    The default preserves the existing zero-materializing behavior. The opt-in policy treats a
+    resolved value of zero as present, while an absent or null source does not materialize an
+    output. Invalid source values still count as entered data; normal calculation validation and
+    tolerant conversion behavior remain unchanged.
+    """
+    policy = json_rule.rule.get("materialize")
+    if policy is None:
+        return True
+    if policy != WHEN_ANY_SOURCE_PRESENT:
+        raise ValueError(f"Unknown calculation materialization policy: {policy}")
+    return bool(get_field_values(context.json_data, fields, json_rule.path))
 
 
 def get_opportunity_number(context: JsonRuleContext, json_rule: JsonRule) -> str:
@@ -144,7 +163,7 @@ def get_signature(context: JsonRuleContext, json_rule: JsonRule) -> str | None:
     return UNKNOWN_VALUE
 
 
-def sum_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str:
+def sum_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str | None:
     """Sum monetary amounts based on configuration
 
     The rule schema for this needs to specify a set of fields
@@ -157,6 +176,8 @@ def sum_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str:
     If no values are fetched, "0.00" will be returned.
     """
     fields = json_rule.rule.get("fields", [])
+    if not _materialize_calculation(context, json_rule, fields):
+        return None
     values = get_field_values(context.json_data, fields, json_rule.path)
 
     result = ZERO_DECIMAL
@@ -184,7 +205,7 @@ def sum_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str:
     return str(quantize_decimal(result))
 
 
-def sum_integer_values(context: JsonRuleContext, json_rule: JsonRule) -> int:
+def sum_integer_values(context: JsonRuleContext, json_rule: JsonRule) -> int | None:
     """Sum integer counts across scalar and repeated paths.
 
     Missing and invalid values contribute zero, matching the tolerant behavior of
@@ -192,6 +213,8 @@ def sum_integer_values(context: JsonRuleContext, json_rule: JsonRule) -> int:
     Booleans are rejected explicitly because Python treats them as integers.
     """
     fields = json_rule.rule.get("fields", [])
+    if not _materialize_calculation(context, json_rule, fields):
+        return None
     values = get_field_values(context.json_data, fields, json_rule.path)
 
     result = 0
@@ -262,7 +285,7 @@ def _convert_percentage(value: Any) -> Decimal:
     return Decimal(value)
 
 
-def subtract_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str:
+def subtract_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> str | None:
     """Subtract monetary amounts based on configuration
 
     Mirrors sum_monetary, but the first field is the minuend and every
@@ -272,6 +295,8 @@ def subtract_monetary_values(context: JsonRuleContext, json_rule: JsonRule) -> s
     Value returned is a string of format "0.00" with two decimal points.
     """
     fields = json_rule.rule.get("fields", [])
+    if not _materialize_calculation(context, json_rule, fields):
+        return None
 
     result = ZERO_DECIMAL
     for index, field in enumerate(fields):

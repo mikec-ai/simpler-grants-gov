@@ -65,6 +65,7 @@ def test_nested_repeating_groups_and_rules_are_projected_generically() -> None:
 
     assert sum(node.get("type") == "fieldList" for node in ui_objects) == 6
     assert len(calculations) == 56
+    assert sum(rule.get("materialize") == "when_any_source_present" for rule in calculations) == 20
     raw_rules = json.loads((ARTIFACTS / "sgg" / "rule-schema.json").read_text())
     assert "@PARENT." in json.dumps(raw_rules)
     assert "@PARENT." in json.dumps(RRSubawardBudget_v3_0.form_rule_schema)
@@ -109,6 +110,37 @@ def test_nested_cumulative_calculations_resolve_within_each_subaward() -> None:
         "25.25",
         "100.00",
     ]
+
+
+def test_nested_source_conditioned_calculation_distinguishes_absence_from_zero() -> None:
+    application_form = SimpleNamespace(
+        application_response={
+            "budget_attachments": [
+                {
+                    "budget_year": [{"travel": {"total_travel_cost": "99.00"}}],
+                    "budget_summary": {},
+                },
+                {
+                    "budget_year": [{"travel": {"domestic_travel_cost": "0.00"}}],
+                    "budget_summary": {},
+                },
+            ]
+        },
+        form=RRSubawardBudget_v3_0,
+        application_form_id="portable-subaward-materialization-test",
+        form_id=RRSubawardBudget_v3_0.form_id,
+    )
+    context = JsonRuleContext(
+        cast(Any, application_form), JsonRuleConfig(do_field_validation=False)
+    )
+
+    process_rule_schema_for_context(context)
+
+    budgets = context.json_data["budget_attachments"]
+    first_travel = budgets[0]["budget_year"][0]["travel"]
+    second_travel = budgets[1]["budget_year"][0]["travel"]
+    assert "total_travel_cost" not in first_travel
+    assert second_travel["total_travel_cost"] == "0.00"
 
 
 def test_official_xsd_and_dat_provenance_are_pinned() -> None:

@@ -68,6 +68,7 @@ def test_repeating_groups_and_rules_are_projected_without_form_code() -> None:
 
     assert sum(node.get("type") == "fieldList" for node in ui_objects) == 5
     assert len(calculations) == 56
+    assert sum(rule.get("materialize") == "when_any_source_present" for rule in calculations) == 20
     assert sorted(rule["order"] for rule in calculations) == list(range(1, 57))
     assert sum(rule["rule"] == "sum_integer" for rule in calculations) == 3
     assert len(attachments) == 3
@@ -139,6 +140,30 @@ def test_source_resolved_calculations_execute_in_declared_order() -> None:
         == "225.25"
     )
     assert context.json_data["budget_summary"]["cumulative_total_costs_fee"] == "225.25"
+
+
+def test_source_conditioned_calculation_distinguishes_absence_from_zero() -> None:
+    application_form = SimpleNamespace(
+        application_response={
+            "budget_year": [
+                {"travel": {"total_travel_cost": "99.00"}},
+                {"travel": {"domestic_travel_cost": "0.00"}},
+            ],
+            "budget_summary": {},
+        },
+        form=RRBudget_v3_0,
+        application_form_id="portable-form-materialization-test",
+        form_id=RRBudget_v3_0.form_id,
+    )
+    context = JsonRuleContext(
+        cast(Any, application_form), JsonRuleConfig(do_field_validation=False)
+    )
+
+    process_rule_schema_for_context(context)
+
+    travel = [period["travel"] for period in context.json_data["budget_year"]]
+    assert "total_travel_cost" not in travel[0]
+    assert travel[1]["total_travel_cost"] == "0.00"
 
 
 def test_official_source_and_extraction_provenance_are_pinned() -> None:

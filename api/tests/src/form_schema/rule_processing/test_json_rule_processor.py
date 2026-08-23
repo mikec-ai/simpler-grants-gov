@@ -340,6 +340,41 @@ def test_process_rule_schema_with_arrays(enable_factory_create, json_data, expec
     assert context.json_data == expected_result
 
 
+def test_calculation_materialization_in_nested_array_contexts(enable_factory_create):
+    rule_schema = {
+        "subawards": {
+            "gg_type": "array",
+            "total": {
+                "gg_pre_population": {
+                    "rule": "sum_monetary",
+                    "fields": ["@THIS.direct", "@THIS.indirect"],
+                    "materialize": "when_any_source_present",
+                }
+            },
+        }
+    }
+    context = setup_context(
+        {
+            "subawards": [
+                {"total": "99.00"},
+                {"direct": "0.00"},
+                {"direct": "2.50", "indirect": "1.25"},
+            ]
+        },
+        rule_schema=rule_schema,
+    )
+
+    process_rule_schema_for_context(context)
+
+    assert context.json_data == {
+        "subawards": [
+            {},
+            {"direct": "0.00", "total": "0.00"},
+            {"direct": "2.50", "indirect": "1.25", "total": "3.75"},
+        ]
+    }
+
+
 def test_process_null_rule_schema(enable_factory_create):
     # Null rule schema means nothing will get processed
     context = setup_context({}, None)
