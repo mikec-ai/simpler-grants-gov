@@ -1,0 +1,415 @@
+{
+  "budgetInformation": {
+    "administrativeAndLegalExpenses": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "landStructuresRightsOfWay": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "relocationExpenses": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "architecturalEngineeringFees": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "otherArchitecturalEngineeringFees": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "projectInspectionFees": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "siteWork": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "demolitionAndRemoval": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "construction": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "equipment": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "miscellaneous": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "subtotalBeforeContingencies": {
+      "totalCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.administrativeAndLegalExpenses.totalCost",
+            "@PARENT.landStructuresRightsOfWay.totalCost",
+            "@PARENT.relocationExpenses.totalCost",
+            "@PARENT.architecturalEngineeringFees.totalCost",
+            "@PARENT.otherArchitecturalEngineeringFees.totalCost",
+            "@PARENT.projectInspectionFees.totalCost",
+            "@PARENT.siteWork.totalCost",
+            "@PARENT.demolitionAndRemoval.totalCost",
+            "@PARENT.construction.totalCost",
+            "@PARENT.equipment.totalCost",
+            "@PARENT.miscellaneous.totalCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.administrativeAndLegalExpenses.totalCost",
+            "@PARENT.landStructuresRightsOfWay.totalCost",
+            "@PARENT.relocationExpenses.totalCost",
+            "@PARENT.architecturalEngineeringFees.totalCost",
+            "@PARENT.otherArchitecturalEngineeringFees.totalCost",
+            "@PARENT.projectInspectionFees.totalCost",
+            "@PARENT.siteWork.totalCost",
+            "@PARENT.demolitionAndRemoval.totalCost",
+            "@PARENT.construction.totalCost",
+            "@PARENT.equipment.totalCost",
+            "@PARENT.miscellaneous.totalCost"
+          ]
+        }
+      },
+      "nonAllowableCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.administrativeAndLegalExpenses.nonAllowableCost",
+            "@PARENT.landStructuresRightsOfWay.nonAllowableCost",
+            "@PARENT.relocationExpenses.nonAllowableCost",
+            "@PARENT.architecturalEngineeringFees.nonAllowableCost",
+            "@PARENT.otherArchitecturalEngineeringFees.nonAllowableCost",
+            "@PARENT.projectInspectionFees.nonAllowableCost",
+            "@PARENT.siteWork.nonAllowableCost",
+            "@PARENT.demolitionAndRemoval.nonAllowableCost",
+            "@PARENT.construction.nonAllowableCost",
+            "@PARENT.equipment.nonAllowableCost",
+            "@PARENT.miscellaneous.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.administrativeAndLegalExpenses.nonAllowableCost",
+            "@PARENT.landStructuresRightsOfWay.nonAllowableCost",
+            "@PARENT.relocationExpenses.nonAllowableCost",
+            "@PARENT.architecturalEngineeringFees.nonAllowableCost",
+            "@PARENT.otherArchitecturalEngineeringFees.nonAllowableCost",
+            "@PARENT.projectInspectionFees.nonAllowableCost",
+            "@PARENT.siteWork.nonAllowableCost",
+            "@PARENT.demolitionAndRemoval.nonAllowableCost",
+            "@PARENT.construction.nonAllowableCost",
+            "@PARENT.equipment.nonAllowableCost",
+            "@PARENT.miscellaneous.nonAllowableCost"
+          ]
+        }
+      },
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "order": 2
+        }
+      }
+    },
+    "contingencies": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "subtotalAfterContingencies": {
+      "totalCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.subtotalBeforeContingencies.totalCost",
+            "@PARENT.contingencies.totalCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.subtotalBeforeContingencies.totalCost",
+            "@PARENT.contingencies.totalCost"
+          ],
+          "order": 2
+        }
+      },
+      "nonAllowableCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.subtotalBeforeContingencies.nonAllowableCost",
+            "@PARENT.contingencies.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.subtotalBeforeContingencies.nonAllowableCost",
+            "@PARENT.contingencies.nonAllowableCost"
+          ],
+          "order": 2
+        }
+      },
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@PARENT.subtotalBeforeContingencies.totalAllowableCost",
+            "@PARENT.contingencies.totalAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.subtotalBeforeContingencies.totalAllowableCost",
+            "@PARENT.contingencies.totalAllowableCost"
+          ],
+          "order": 3
+        }
+      }
+    },
+    "programIncome": {
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.totalCost",
+            "@THIS.nonAllowableCost"
+          ]
+        }
+      }
+    },
+    "totalProjectCosts": {
+      "totalCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@PARENT.subtotalAfterContingencies.totalCost",
+            "@PARENT.programIncome.totalCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.subtotalAfterContingencies.totalCost",
+            "@PARENT.programIncome.totalCost"
+          ],
+          "order": 3
+        }
+      },
+      "nonAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@PARENT.subtotalAfterContingencies.nonAllowableCost",
+            "@PARENT.programIncome.nonAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.subtotalAfterContingencies.nonAllowableCost",
+            "@PARENT.programIncome.nonAllowableCost"
+          ],
+          "order": 3
+        }
+      },
+      "totalAllowableCost": {
+        "gg_pre_population": {
+          "rule": "subtract_monetary",
+          "fields": [
+            "@PARENT.subtotalAfterContingencies.totalAllowableCost",
+            "@PARENT.programIncome.totalAllowableCost"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@PARENT.subtotalAfterContingencies.totalAllowableCost",
+            "@PARENT.programIncome.totalAllowableCost"
+          ],
+          "order": 4
+        }
+      }
+    }
+  },
+  "federalFunding": {
+    "totalProjectCosts": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "budgetInformation.totalProjectCosts.totalAllowableCost"
+        ],
+        "materialize": "when_any_source_present",
+        "presence_fields": [
+          "budgetInformation.totalProjectCosts.totalAllowableCost"
+        ],
+        "order": 5
+      }
+    },
+    "federalFundingShare": {
+      "gg_pre_population": {
+        "rule": "multiply_by_percentage",
+        "amount": "@THIS.totalProjectCosts",
+        "percentage": "@THIS.federalPercentageShare",
+        "materialize": "when_any_source_present",
+        "presence_fields": [
+          "@THIS.totalProjectCosts",
+          "@THIS.federalPercentageShare"
+        ],
+        "order": 6
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "application/federal-entity-identifier/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 30,
+  "description": "Enter the Federal entity identifier assigned to the applicant organization."
+}

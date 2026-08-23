@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/construction/federal-funding/schema.json",
+  "type": "object",
+  "properties": {
+    "totalProjectCosts": {
+      "$ref": "#/$defs/ConstructionTotalAmount",
+      "description": "Eligible costs copied from line 16c for display and the share calculation only.",
+      "title": "Total eligible project costs",
+      "readOnly": true
+    },
+    "federalPercentageShare": {
+      "$ref": "../../../../question-bank/budget/construction/federal-share-percentage/schema.json"
+    },
+    "federalFundingShare": {
+      "$ref": "#/$defs/ConstructionTotalAmount",
+      "title": "Federal funding share",
+      "readOnly": true
+    }
+  },
+  "description": "Federal assistance requested for the construction project.",
+  "title": "Federal funding",
+  "$defs": {
+    "ConstructionTotalAmount": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 15,
+      "pattern": "^\\d{1,12}(?:[.]\\d{2})?$",
+      "description": "A non-negative calculated construction-budget subtotal."
+    }
+  }
+}

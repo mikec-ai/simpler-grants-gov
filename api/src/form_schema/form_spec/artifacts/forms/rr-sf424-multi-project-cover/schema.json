@@ -12,9 +12,7 @@
       "title": "Date Submitted"
     },
     "applicantId": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 30,
+      "$ref": "../../question-bank/research-application/applicant-control-identifier/schema.json",
       "title": "Applicant Identifier"
     },
     "stateReceivedDate": {
@@ -28,9 +26,7 @@
       "title": "State Application Identifier"
     },
     "federalId": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 30,
+      "$ref": "../../question-bank/research-application/previous-federal-award-identifier/schema.json",
       "title": "Federal Identifier"
     },
     "agencyRoutingNumber": {
@@ -59,95 +55,7 @@
     },
     "applicationType": {
       "$ref": "#/$defs/MultiProjectApplicationType",
-      "title": "Type of Application",
-      "properties": {
-        "revisionCode": {
-          "x-encoded-checkbox-group": {
-            "choices": [
-              {
-                "code": "A",
-                "label": "A. Increase Award"
-              },
-              {
-                "code": "B",
-                "label": "B. Decrease Award"
-              },
-              {
-                "code": "C",
-                "label": "C. Increase Duration"
-              },
-              {
-                "code": "D",
-                "label": "D. Decrease Duration"
-              },
-              {
-                "code": "E",
-                "label": "E. Other"
-              }
-            ],
-            "combinations": [
-              {
-                "value": "A",
-                "members": [
-                  "A"
-                ]
-              },
-              {
-                "value": "B",
-                "members": [
-                  "B"
-                ]
-              },
-              {
-                "value": "C",
-                "members": [
-                  "C"
-                ]
-              },
-              {
-                "value": "D",
-                "members": [
-                  "D"
-                ]
-              },
-              {
-                "value": "E",
-                "members": [
-                  "E"
-                ]
-              },
-              {
-                "value": "AC",
-                "members": [
-                  "A",
-                  "C"
-                ]
-              },
-              {
-                "value": "AD",
-                "members": [
-                  "A",
-                  "D"
-                ]
-              },
-              {
-                "value": "BC",
-                "members": [
-                  "B",
-                  "C"
-                ]
-              },
-              {
-                "value": "BD",
-                "members": [
-                  "B",
-                  "D"
-                ]
-              }
-            ]
-          }
-        }
-      }
+      "title": "Type of Application"
     },
     "federalAgencyName": {
       "$ref": "../../question-bank/opportunity/agency-name/schema.json",
@@ -227,7 +135,8 @@
         "Preapplication",
         "Application",
         "Change/Corrected Application"
-      ]
+      ],
+      "description": "Exact R&R submission vocabulary shared by the standalone and Multi-Project covers."
     },
     "StateCode": {
       "type": "string",
@@ -445,212 +354,23 @@
         }
       ]
     },
-    "ApplicantTypeCode": {
-      "type": "string",
-      "enum": [
-        "A: State Government",
-        "B: County Government",
-        "C: City or Township Government",
-        "D: Special District Government",
-        "E: Regional Organization",
-        "F: U.S. Territory or Possession",
-        "G: Independent School District",
-        "H: Public/state Controlled Institution of Higher Education",
-        "I: Indian/Native American Tribal Government (Federally Recognized)",
-        "J: Indian/Native American Tribal Government (Other than Federally Recognized)",
-        "K: Indian/Native American Tribally Designated Organization",
-        "L: Public/Indian Housing Authority",
-        "M: Nonprofit with 501C3 IRS Status (Other than Institution of Higher Education)",
-        "N: Nonprofit without 501C3 IRS Status (Other than Institution of Higher Education)",
-        "O: Private Institution of Higher Education",
-        "P: Individual",
-        "Q: For-Profit Organization (Other than Small Business)",
-        "R: Small Business",
-        "S: Hispanic-serving Institution",
-        "T: Historically Black Colleges and Universities (HBCUs)",
-        "U: Tribally Controlled Colleges and Universities (TCCUs)",
-        "V: Alaska Native and Native Hawaiian Serving Institutions",
-        "W: Non-domestic (non-US) Entity",
-        "X: Other (specify)"
-      ],
-      "description": "The applicant's category, from the Executive Order 12372 list.",
-      "title": "Type of Applicant"
-    },
-    "ResearchSmallBusinessType": {
-      "type": "object",
-      "properties": {
-        "sociallyEconomicallyDisadvantaged": {
-          "type": "string",
-          "title": "Socially and Economically Disadvantaged"
-        },
-        "womenOwned": {
-          "type": "string",
-          "title": "Women Owned"
-        }
-      }
-    },
     "MultiProjectApplicantType": {
       "type": "object",
-      "properties": {
-        "applicantTypeCode": {
-          "$ref": "#/$defs/ApplicantTypeCode",
-          "title": "Applicant Type"
-        },
-        "applicantTypeCodeOtherExplanation": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 50,
-          "title": "Other Applicant Type Explanation"
-        },
-        "smallBusinessOrganizationType": {
-          "$ref": "#/$defs/ResearchSmallBusinessType",
-          "title": "Small Business Organization Type"
+      "properties": {},
+      "allOf": [
+        {
+          "$ref": "../../question-bank/primary-org/research-applicant-type/schema.json"
         }
-      }
-    },
-    "ResearchApplicationTypeCode": {
-      "type": "string",
-      "enum": [
-        "New",
-        "Resubmission",
-        "Renewal",
-        "Continuation",
-        "Revision"
-      ]
-    },
-    "YesNoCode": {
-      "type": "string",
-      "enum": [
-        "Y: Yes",
-        "N: No"
-      ]
-    },
-    "ResearchRevisionCode": {
-      "type": "string",
-      "enum": [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "AC",
-        "AD",
-        "BC",
-        "BD"
       ]
     },
     "MultiProjectApplicationType": {
       "type": "object",
-      "properties": {
-        "applicationTypeCode": {
-          "$ref": "#/$defs/ResearchApplicationTypeCode",
-          "title": "Application Type"
-        },
-        "isOtherAgencySubmission": {
-          "$ref": "#/$defs/YesNoCode",
-          "title": "Is this application being submitted to another agency?"
-        },
-        "otherAgencySubmissionExplanation": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 20,
-          "title": "Other Agency Submission Explanation"
-        },
-        "revisionCode": {
-          "$ref": "#/$defs/ResearchRevisionCode",
-          "title": "Revision Code",
-          "x-encoded-checkbox-group": {
-            "choices": [
-              {
-                "code": "A",
-                "label": "A. Increase Award"
-              },
-              {
-                "code": "B",
-                "label": "B. Decrease Award"
-              },
-              {
-                "code": "C",
-                "label": "C. Increase Duration"
-              },
-              {
-                "code": "D",
-                "label": "D. Decrease Duration"
-              },
-              {
-                "code": "E",
-                "label": "E. Other"
-              }
-            ],
-            "combinations": [
-              {
-                "value": "A",
-                "members": [
-                  "A"
-                ]
-              },
-              {
-                "value": "B",
-                "members": [
-                  "B"
-                ]
-              },
-              {
-                "value": "C",
-                "members": [
-                  "C"
-                ]
-              },
-              {
-                "value": "D",
-                "members": [
-                  "D"
-                ]
-              },
-              {
-                "value": "E",
-                "members": [
-                  "E"
-                ]
-              },
-              {
-                "value": "AC",
-                "members": [
-                  "A",
-                  "C"
-                ]
-              },
-              {
-                "value": "AD",
-                "members": [
-                  "A",
-                  "D"
-                ]
-              },
-              {
-                "value": "BC",
-                "members": [
-                  "B",
-                  "C"
-                ]
-              },
-              {
-                "value": "BD",
-                "members": [
-                  "B",
-                  "D"
-                ]
-              }
-            ]
-          }
-        },
-        "revisionCodeOtherExplanation": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 45,
-          "title": "Other Revision Explanation"
+      "properties": {},
+      "allOf": [
+        {
+          "$ref": "../../question-bank/research-application/application-type/schema.json"
         }
-      }
+      ]
     },
     "MultiProjectPeriod": {
       "type": "object",
@@ -696,54 +416,21 @@
     },
     "MultiProjectEstimatedFunding": {
       "type": "object",
-      "properties": {
-        "totalEstimatedAmount": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 9999999999999.99,
-          "title": "Total Federal Funds Requested"
-        },
-        "totalNonFederalRequested": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 9999999999999.99,
-          "title": "Total Non-Federal Funds"
-        },
-        "totalFederalNonFederalRequested": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 9999999999999.99,
-          "title": "Total Federal and Non-Federal Funds"
-        },
-        "estimatedProgramIncome": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 9999999999999.99,
-          "title": "Estimated Program Income"
+      "properties": {},
+      "allOf": [
+        {
+          "$ref": "../../question-bank/research-application/estimated-project-funding/schema.json"
         }
-      }
-    },
-    "ResearchStateReviewCode": {
-      "type": "string",
-      "enum": [
-        "Y: Yes",
-        "Program is not covered by E.O. 12372",
-        "Program has not been selected by state for review"
       ]
     },
     "MultiProjectStateReview": {
       "type": "object",
-      "properties": {
-        "stateReviewCodeType": {
-          "$ref": "#/$defs/ResearchStateReviewCode",
-          "title": "State Review"
-        },
-        "stateReviewDate": {
-          "type": "string",
-          "format": "date",
-          "title": "State Review Date"
+      "properties": {},
+      "allOf": [
+        {
+          "$ref": "../../question-bank/research-application/state-review/schema.json"
         }
-      }
+      ]
     },
     "AffirmativeCertification": {
       "type": "string",

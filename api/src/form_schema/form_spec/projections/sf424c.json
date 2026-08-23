@@ -1,0 +1,16 @@
+{
+  "renames": {
+    "budgetInformation.programIncome": {
+      "to": "project_income",
+      "why": "Preserve the existing SF-424C response key while the portable question uses the source label's program-income terminology."
+    },
+    "budgetInformation.subtotalAfterContingencies": {
+      "to": "subtotal_2",
+      "why": "Preserve the existing SF-424C response key for the second calculated subtotal."
+    },
+    "budgetInformation.subtotalBeforeContingencies": {
+      "to": "subtotal_1",
+      "why": "Preserve the existing SF-424C response key for the first calculated subtotal."
+    }
+  }
+}

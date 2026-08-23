@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-application/estimated-project-funding/schema.json",
+  "type": "object",
+  "properties": {
+    "totalEstimatedAmount": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 9999999999999.99,
+      "title": "Total Federal Funds Requested"
+    },
+    "totalNonFederalRequested": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 9999999999999.99,
+      "title": "Total Non-Federal Funds"
+    },
+    "totalFederalNonFederalRequested": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 9999999999999.99,
+      "title": "Total Federal and Non-Federal Funds"
+    },
+    "estimatedProgramIncome": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 9999999999999.99,
+      "title": "Estimated Program Income"
+    }
+  },
+  "description": "Enter estimated funding for the complete R&R project period."
+}

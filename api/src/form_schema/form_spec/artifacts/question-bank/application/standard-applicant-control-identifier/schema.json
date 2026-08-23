@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "application/standard-applicant-control-identifier/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 30,
+  "description": "Enter the applicant's control number, if applicable, on the SF-424."
+}

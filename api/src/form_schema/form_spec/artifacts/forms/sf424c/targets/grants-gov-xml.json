@@ -1,0 +1,412 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "sf424c",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/SF424C_2_0-V2.0.xsd",
+    "sha256": "a3ec5d6bae8173fce080709a8071787293dbe6271415d905d230c584c200982a"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/SF424C_2_0-V2.0",
+    "SF424C_2_0": "http://apply.grants.gov/forms/SF424C_2_0-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0"
+  },
+  "root": {
+    "element": "SF424C_2_0",
+    "namespacePrefix": "SF424C_2_0",
+    "attributes": {
+      "programType": "Construction",
+      "FormVersion": "2.0"
+    }
+  },
+  "mapping": {
+    "fields": {
+      "budgetInformation": {
+        "element": "ProjectCosts",
+        "kind": "object",
+        "namespace": "default",
+        "fields": {
+          "administrativeAndLegalExpenses": {
+            "element": "AdministrationCost",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "landStructuresRightsOfWay": {
+            "element": "LandCost",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "relocationExpenses": {
+            "element": "RelocationCost",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "architecturalEngineeringFees": {
+            "element": "ArchitecturalCost",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "otherArchitecturalEngineeringFees": {
+            "element": "OtherArchitecturalCost",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "projectInspectionFees": {
+            "element": "InspectionFeesCost",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "siteWork": {
+            "element": "SiteWorkCost",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "demolitionAndRemoval": {
+            "element": "DemolitionCost",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "construction": {
+            "element": "ConstructionCost",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "equipment": {
+            "element": "EquipmentCost",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "miscellaneous": {
+            "element": "Miscellaneous",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "subtotalBeforeContingencies": {
+            "element": "CostSubtotalBeforeContingencies",
+            "kind": "object",
+            "namespace": "default",
+            "emitWhenParentPresent": true,
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "contingencies": {
+            "element": "Contingencies",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "subtotalAfterContingencies": {
+            "element": "CostSubtotalAfterContingencies",
+            "kind": "object",
+            "namespace": "default",
+            "emitWhenParentPresent": true,
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "programIncome": {
+            "element": "ProgramIncome",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "totalProjectCosts": {
+            "element": "TotalProjectCosts",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "totalCost": {
+                "element": "BudgetEstimatedCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "nonAllowableCost": {
+                "element": "BudgetNonAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "totalAllowableCost": {
+                "element": "BudgetTotalAllowableCostAmount",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          }
+        }
+      },
+      "federalFunding": {
+        "element": "FederalFunding",
+        "kind": "group",
+        "flatten": true,
+        "fields": {
+          "federalPercentageShare": {
+            "element": "FederalFundingPercentageShareValue",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/federalFunding/federalPercentageShare"
+          },
+          "federalFundingShare": {
+            "element": "FederalFundingShareValue",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/federalFunding/federalFundingShare"
+          }
+        }
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/simpler-grants-gov",
+    "revision": "f6affacded160c1585a9e148091b27d45eb7689c",
+    "artifact": "api/src/form_schema/forms/sf424c/1/0/form_json.py"
+  }
+}

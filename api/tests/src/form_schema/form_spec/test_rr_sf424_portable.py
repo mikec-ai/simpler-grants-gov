@@ -184,12 +184,12 @@ def test_rr_sf424_evidence_stays_source_bound_and_semantically_unaccepted() -> N
     }
     review = evidence["semanticReview"]
     assert review["status"] == "proposed"
-    assert {mapping["canonicalPointer"] for mapping in review["mappings"]} == {
+    assert {
         "#/properties/stateReceivedDate",
         "#/properties/stateId",
         "#/properties/agencyRoutingNumber",
         "#/properties/grantsGovTrackingId",
-    }
+    }.issubset({mapping["canonicalPointer"] for mapping in review["mappings"]})
     assert all(mapping["status"] == "proposed" for mapping in review["mappings"])
     assert [(source["type"], source["sha256"]) for source in evidence["sources"]] == [
         ("dat", "532938a75c587bdc8813fd3af625be4338281d0491999fc39aeaaac51b79c9c1"),

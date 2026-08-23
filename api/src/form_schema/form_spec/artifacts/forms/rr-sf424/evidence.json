@@ -85,14 +85,14 @@
         "sourceId": "source-2-f140f32afed9",
         "sourcePath": "RR_SF424_5_0.StateReceivedDate",
         "status": "proposed",
-        "note": "Proposed shared identity for the date the State received the application. The pinned instructions direct the applicant to enter it, so this occurrence is applicantInput; the cross-family proposal is not accepted for published similarity."
+        "note": "Proposed shared identity for the date the State received the application. Lifecycle ownership remains systemValue; the cross-family proposal is not accepted for published similarity."
       },
       {
         "canonicalPointer": "#/properties/stateId",
         "sourceId": "source-2-f140f32afed9",
         "sourcePath": "RR_SF424_5_0.StateID",
         "status": "proposed",
-        "note": "Proposed shared identity for the application identifier assigned by the State. The pinned instructions direct the applicant to enter it, so this occurrence is applicantInput; the cross-family proposal is not accepted for published similarity."
+        "note": "Proposed shared identity for the application identifier assigned by the State. Lifecycle ownership remains systemValue; the cross-family proposal is not accepted for published similarity."
       },
       {
         "canonicalPointer": "#/properties/agencyRoutingNumber",
@@ -100,6 +100,132 @@
         "sourcePath": "RR_SF424_5_0.AgencyRoutingNumber",
         "status": "proposed",
         "note": "Proposed identity for the Federal-agency-assigned routing number. The pinned instructions direct the applicant to enter it, so this occurrence is applicantInput; this is not accepted for published similarity."
+      },
+      {
+        "canonicalPointer": "#/properties/submissionTypeCode",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.SubmissionTypeCode",
+        "status": "proposed",
+        "note": "Proposed R&R-family submission identity; unpublished."
+      },
+      {
+        "canonicalPointer": "#/properties/applicantId",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.ApplicantID",
+        "status": "proposed",
+        "note": "Proposed R&R-family applicant control identifier; no standard-form equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/federalId",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.FederalID",
+        "status": "proposed",
+        "note": "Proposed R&R-family prior Federal award identifier; unpublished."
+      },
+      {
+        "canonicalPointer": "#/properties/applicantType/properties/applicantTypeCode",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.ApplicantType.ApplicantTypeCode",
+        "status": "proposed",
+        "note": "Proposed R&R single-category applicant type occurrence."
+      },
+      {
+        "canonicalPointer": "#/properties/applicantType/properties/applicantTypeCodeOtherExplanation",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.ApplicantType.ApplicantTypeCodeOtherExplanation",
+        "status": "proposed",
+        "note": "Proposed R&R other-applicant-type explanation occurrence."
+      },
+      {
+        "canonicalPointer": "#/properties/applicantType/properties/smallBusinessOrganizationType/properties/sociallyEconomicallyDisadvantaged",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.ApplicantType.SmallBusinessOrganizationType.isSociallyEconomicallyDisadvantaged",
+        "status": "proposed",
+        "note": "Proposed R&R small-business characteristic; source path spelling is preserved."
+      },
+      {
+        "canonicalPointer": "#/properties/applicantType/properties/smallBusinessOrganizationType/properties/womenOwned",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.ApplicantType.SmallBusinessOrganizationType.isWomenOwned",
+        "status": "proposed",
+        "note": "Proposed R&R small-business characteristic; source path spelling is preserved."
+      },
+      {
+        "canonicalPointer": "#/properties/applicationType/properties/applicationTypeCode",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.ApplicationType.ApplicationTypeCode",
+        "status": "proposed",
+        "note": "Proposed R&R-family application lifecycle identity."
+      },
+      {
+        "canonicalPointer": "#/properties/applicationType/properties/isOtherAgencySubmission",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.ApplicationType.isOtherAgencySubmission",
+        "status": "proposed",
+        "note": "Proposed R&R other-agency submission response."
+      },
+      {
+        "canonicalPointer": "#/properties/applicationType/properties/otherAgencySubmissionExplanation",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.ApplicationType.OtherAgencySubmissionExplanation",
+        "status": "proposed",
+        "note": "Proposed R&R other-agency explanation."
+      },
+      {
+        "canonicalPointer": "#/properties/applicationType/properties/revisionCode",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.ApplicationType.RevisionCode",
+        "status": "proposed",
+        "note": "Proposed R&R encoded revision selection."
+      },
+      {
+        "canonicalPointer": "#/properties/applicationType/properties/revisionCodeOtherExplanation",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.ApplicationType.RevisionCodeOtherExplanation",
+        "status": "proposed",
+        "note": "Proposed R&R other-revision explanation."
+      },
+      {
+        "canonicalPointer": "#/properties/estimatedProjectFunding/properties/totalEstimatedAmount",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.EstimatedProjectFunding.TotalEstimatedAmount",
+        "status": "proposed",
+        "note": "Proposed total Federal funds requested for the R&R project period."
+      },
+      {
+        "canonicalPointer": "#/properties/estimatedProjectFunding/properties/totalNonFederalRequested",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.EstimatedProjectFunding.TotalNonfedrequested",
+        "status": "proposed",
+        "note": "Proposed total non-Federal funds occurrence; exact source casing preserved."
+      },
+      {
+        "canonicalPointer": "#/properties/estimatedProjectFunding/properties/totalFederalNonFederalRequested",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.EstimatedProjectFunding.TotalfedNonfedrequested",
+        "status": "proposed",
+        "note": "Proposed combined Federal and non-Federal funds occurrence; exact source casing preserved."
+      },
+      {
+        "canonicalPointer": "#/properties/estimatedProjectFunding/properties/estimatedProgramIncome",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.EstimatedProjectFunding.EstimatedProgramIncome",
+        "status": "proposed",
+        "note": "Proposed estimated program income occurrence."
+      },
+      {
+        "canonicalPointer": "#/properties/stateReview/properties/stateReviewCodeType",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.StateReview.StateReviewCodeType",
+        "status": "proposed",
+        "note": "Proposed R&R-family State review response; standard-form equivalence remains unaccepted."
+      },
+      {
+        "canonicalPointer": "#/properties/stateReview/properties/stateReviewDate",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.StateReview.StateReviewDate",
+        "status": "proposed",
+        "note": "Proposed R&R-family State review date; unpublished."
       },
       {
         "canonicalPointer": "#/properties/grantsGovTrackingId",

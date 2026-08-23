@@ -37,6 +37,97 @@
         "sourcePath": "SF424_4_0.StateApplicationID",
         "status": "proposed",
         "note": "Proposed shared identity for the application identifier assigned by the State. Lifecycle ownership remains systemValue; the cross-family proposal is not accepted for published similarity."
+      },
+      {
+        "canonicalPointer": "#/properties/submissionType",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.SubmissionType",
+        "status": "proposed",
+        "note": "Source-bound standard submission question; no cross-family equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/applicationType",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.ApplicationType",
+        "status": "proposed",
+        "note": "Source-bound standard application lifecycle question."
+      },
+      {
+        "canonicalPointer": "#/properties/revisionType",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.RevisionType",
+        "status": "proposed",
+        "note": "Source-bound standard revision selection with its exact encoded values."
+      },
+      {
+        "canonicalPointer": "#/properties/revisionOtherSpecify",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.RevisionOtherSpecify",
+        "status": "proposed",
+        "note": "Source-bound standard revision explanation, length zero through 21."
+      },
+      {
+        "canonicalPointer": "#/properties/applicantId",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.ApplicantID",
+        "status": "proposed",
+        "note": "Source-bound SF-424 applicant control identifier; cross-family reuse remains unaccepted."
+      },
+      {
+        "canonicalPointer": "#/properties/federalEntityIdentifier",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.FederalEntityIdentifier",
+        "status": "proposed",
+        "note": "Identifier assigned to the applicant organization, distinct from the prior award identifier."
+      },
+      {
+        "canonicalPointer": "#/properties/federalAwardIdentifier",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.FederalAwardIdentifier",
+        "status": "proposed",
+        "note": "Source-bound SF-424 prior award identifier; R&R equivalence remains unaccepted."
+      },
+      {
+        "canonicalPointer": "#/properties/departmentName",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.DepartmentName",
+        "status": "proposed",
+        "note": "Applicant organizational department occurrence."
+      },
+      {
+        "canonicalPointer": "#/properties/divisionName",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.DivisionName",
+        "status": "proposed",
+        "note": "Applicant organizational division occurrence."
+      },
+      {
+        "canonicalPointer": "#/properties/organizationAffiliation",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.OrganizationAffiliation",
+        "status": "proposed",
+        "note": "Organization affiliated with the application contact when different from the applicant."
+      },
+      {
+        "canonicalPointer": "#/properties/stateReview",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.StateReview",
+        "status": "proposed",
+        "note": "Source-bound standard Executive Order review response; R&R equivalence remains unaccepted."
+      },
+      {
+        "canonicalPointer": "#/properties/stateReviewAvailableDate",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.StateReviewAvailableDate",
+        "status": "proposed",
+        "note": "Date made available for standard State review."
+      },
+      {
+        "canonicalPointer": "#/properties/delinquentFederalDebt",
+        "sourceId": "grantsgov-sf424-xsd-4.0",
+        "sourcePath": "SF424_4_0.DelinquentFederalDebt",
+        "status": "proposed",
+        "note": "Applicant Federal debt status that controls the existing explanation attachment."
       }
     ]
   },

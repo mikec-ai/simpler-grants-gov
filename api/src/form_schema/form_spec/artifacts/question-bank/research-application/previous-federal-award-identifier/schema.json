@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-application/previous-federal-award-identifier/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 30,
+  "description": "Enter the previously assigned Federal identifier for an R&R application."
+}

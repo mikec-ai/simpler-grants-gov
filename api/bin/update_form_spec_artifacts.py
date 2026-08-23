@@ -24,6 +24,8 @@ from bin.sync_form_spec_artifacts import (  # ruff: ignore[module-import-not-at-
 
 DEFAULT_TARGET = API_ROOT / "src" / "form_schema" / "form_spec" / "artifacts"
 SELECTION_CONTRACT = "grants-form-artifact-selection/v1"
+PROMOTION_RECEIPT_CONTRACT = "sgg-form-spec-promotion/v1"
+FORM_ID = re.compile(r"[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
 
 
 def selected_forms(target: Path) -> list[str]:
@@ -36,6 +38,38 @@ def selected_forms(target: Path) -> list[str]:
     if not isinstance(forms, list) or not forms or not all(isinstance(item, str) for item in forms):
         raise ValueError("target artifact selection has no form allowlist")
     return list(dict.fromkeys(forms))
+
+
+def promotion_forms(
+    target: Path,
+    *,
+    exact: list[str] | None = None,
+    add: list[str] | None = None,
+    add_csv: str | None = None,
+) -> tuple[list[str], list[str]]:
+    """Resolve an exact or additive selection and report newly added form ids.
+
+    Routine promotions are additive: they retain the already reviewed consumer selection and
+    append requested forms in caller order. ``--form`` remains available for the deliberate
+    exact-selection operation used by the lower-level updater.
+    """
+
+    additions = list(add or [])
+    if add_csv is not None:
+        additions.extend(part.strip() for part in add_csv.split(","))
+    if exact and additions:
+        raise ValueError("--form cannot be combined with additive form options")
+
+    requested = list(exact) if exact else [*selected_forms(target), *additions]
+    if not requested:
+        raise ValueError("promotion has no forms")
+    invalid = [form_id for form_id in requested if FORM_ID.fullmatch(form_id) is None]
+    if invalid:
+        raise ValueError(f"promotion has invalid form ids: {invalid}")
+
+    forms = list(dict.fromkeys(requested))
+    previous = set(selected_forms(target))
+    return forms, [form_id for form_id in forms if form_id not in previous]
 
 
 def resolve_revision(producer: Path, revision: str) -> str:
@@ -53,10 +87,30 @@ def resolve_revision(producer: Path, revision: str) -> str:
 
 
 def build_bundle(producer: Path, revision: str, workspace: Path) -> Path:
-    """Clone locally at one commit, run producer preflight, and return its verified bundle."""
+    """Clone at one commit, run producer preflight, and return its verified bundle.
+
+    Prefer the checkout's configured origin over a local-path clone. A local checkout may be a
+    partial/promisor clone whose object database does not contain blobs fetched by another
+    worktree yet; copying that database can produce an apparently successful clone that cannot
+    check out the pinned tree. The remote clone is isolated and retrieves the commit's objects
+    independently. Repositories without an origin (including local test fixtures) retain the
+    local-path fallback.
+    """
+
     source = workspace / "grants-form-spec"
+    try:
+        clone_source = subprocess.run(
+            ["git", "-C", str(producer), "remote", "get-url", "origin"],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+    except subprocess.CalledProcessError:
+        clone_source = str(producer)
+    if not clone_source:
+        clone_source = str(producer)
     subprocess.run(
-        ["git", "clone", "--no-hardlinks", "--quiet", "--no-checkout", str(producer), str(source)],
+        ["git", "clone", "--quiet", "--no-checkout", clone_source, str(source)],
         check=True,
     )
     subprocess.run(
@@ -77,9 +131,23 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--form",
         action="append",
-        help="portable form id to select; omit to preserve the current allowlist",
+        help="portable form id in an exact replacement selection (repeatable)",
+    )
+    parser.add_argument(
+        "--add-form",
+        action="append",
+        help="portable form id to append while preserving the current allowlist (repeatable)",
+    )
+    parser.add_argument(
+        "--add-forms",
+        help="comma-separated portable form ids to append while preserving the current allowlist",
     )
     parser.add_argument("--target", type=Path, default=DEFAULT_TARGET)
+    parser.add_argument(
+        "--receipt",
+        type=Path,
+        help="optional path for a machine-readable promotion receipt",
+    )
     return parser
 
 
@@ -88,7 +156,12 @@ def main() -> int:
     try:
         producer = args.producer.resolve(strict=True)
         revision = resolve_revision(producer, args.revision)
-        forms = list(dict.fromkeys(args.form)) if args.form else selected_forms(args.target)
+        forms, added_forms = promotion_forms(
+            args.target,
+            exact=args.form,
+            add=args.add_form,
+            add_csv=args.add_forms,
+        )
         with tempfile.TemporaryDirectory(prefix="form-spec-update-") as directory:
             bundle = build_bundle(producer, revision, Path(directory))
             manifest, files = select_artifacts(bundle, forms)
@@ -99,6 +172,18 @@ def main() -> int:
                 )
             verify_selected_xsds(files, xsd_directory=XSD_DIRECTORY)
             write_selection(target=args.target, manifest=manifest, files=files)
+        if args.receipt is not None:
+            receipt = {
+                "contract": PROMOTION_RECEIPT_CONTRACT,
+                "source": manifest["source"],
+                "sourceBundleSha256": manifest["sourceBundleSha256"],
+                "addedForms": added_forms,
+                "selection": forms,
+                "artifactCount": len(files),
+                "registrationChanged": False,
+            }
+            args.receipt.parent.mkdir(parents=True, exist_ok=True)
+            args.receipt.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
     except (
         OSError,
         ValueError,
@@ -112,6 +197,7 @@ def main() -> int:
         "  status: synchronized\n"
         f"  revision: {revision}\n"
         f"  forms[{len(forms)}]: {','.join(forms)}\n"
+        f"  added[{len(added_forms)}]: {','.join(added_forms)}\n"
         f"  artifacts: {len(files)}\n"
     )
     return 0

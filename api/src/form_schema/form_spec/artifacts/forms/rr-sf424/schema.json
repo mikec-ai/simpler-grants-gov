@@ -13,9 +13,7 @@
       "readOnly": true
     },
     "applicantId": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 30,
+      "$ref": "../../question-bank/research-application/applicant-control-identifier/schema.json",
       "title": "Applicant Identifier"
     },
     "stateReceivedDate": {
@@ -29,9 +27,7 @@
       "title": "State Application Identifier"
     },
     "federalId": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 30,
+      "$ref": "../../question-bank/research-application/previous-federal-award-identifier/schema.json",
       "title": "Federal Identifier"
     },
     "agencyRoutingNumber": {
@@ -646,7 +642,8 @@
         "Preapplication",
         "Application",
         "Change/Corrected Application"
-      ]
+      ],
+      "description": "Exact R&R submission vocabulary shared by the standalone and Multi-Project covers."
     },
     "ApplicantTypeCode": {
       "type": "string",
@@ -679,7 +676,7 @@
       "description": "The applicant's category, from the Executive Order 12372 list.",
       "title": "Type of Applicant"
     },
-    "ResearchSmallBusinessType": {
+    "QuestionResearchSmallBusinessType": {
       "type": "object",
       "properties": {
         "sociallyEconomicallyDisadvantaged": {
@@ -706,7 +703,7 @@
           "title": "Other Applicant Type Explanation"
         },
         "smallBusinessOrganizationType": {
-          "$ref": "#/$defs/ResearchSmallBusinessType",
+          "$ref": "#/$defs/QuestionResearchSmallBusinessType",
           "title": "Small Business Organization Type"
         }
       },
@@ -714,6 +711,9 @@
         "applicantTypeCode"
       ],
       "allOf": [
+        {
+          "$ref": "../../question-bank/primary-org/research-applicant-type/schema.json"
+        },
         {
           "if": {
             "properties": {
@@ -741,7 +741,8 @@
         "Renewal",
         "Continuation",
         "Revision"
-      ]
+      ],
+      "description": "R&R application lifecycle vocabulary."
     },
     "YesNoCode": {
       "type": "string",
@@ -762,7 +763,8 @@
         "AD",
         "BC",
         "BD"
-      ]
+      ],
+      "description": "R&R's encoded revision choices."
     },
     "ResearchApplicationType": {
       "type": "object",
@@ -882,6 +884,9 @@
       ],
       "allOf": [
         {
+          "$ref": "../../question-bank/research-application/application-type/schema.json"
+        },
+        {
           "if": {
             "properties": {
               "isOtherAgencySubmission": {
@@ -984,6 +989,11 @@
         "totalNonFederalRequested",
         "totalFederalNonFederalRequested",
         "estimatedProgramIncome"
+      ],
+      "allOf": [
+        {
+          "$ref": "../../question-bank/research-application/estimated-project-funding/schema.json"
+        }
       ]
     },
     "ResearchStateReviewCode": {
@@ -1011,6 +1021,9 @@
         "stateReviewCodeType"
       ],
       "allOf": [
+        {
+          "$ref": "../../question-bank/research-application/state-review/schema.json"
+        },
         {
           "if": {
             "properties": {

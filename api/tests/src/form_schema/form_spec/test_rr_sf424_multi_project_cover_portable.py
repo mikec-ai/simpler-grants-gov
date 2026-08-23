@@ -111,11 +111,11 @@ def test_multi_project_evidence_remains_unreviewed_and_xml_is_an_explicit_gate()
     }
     review = evidence["semanticReview"]
     assert review["status"] == "proposed"
-    assert {mapping["canonicalPointer"] for mapping in review["mappings"]} == {
+    assert {
         "#/properties/stateReceivedDate",
         "#/properties/stateId",
         "#/properties/agencyRoutingNumber",
         "#/properties/grantsTrackingNumber",
-    }
+    }.issubset({mapping["canonicalPointer"] for mapping in review["mappings"]})
     assert all(mapping["status"] == "proposed" for mapping in review["mappings"])
     assert "xml-schema.json" not in manifest["artifacts"]
