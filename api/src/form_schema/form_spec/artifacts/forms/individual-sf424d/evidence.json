@@ -1,0 +1,100 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "individual-sf424d",
+    "kind": "form",
+    "formVersion": "1.1"
+  },
+  "sources": [
+    {
+      "id": "individual-sf424d-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/Individual_SF424D-V1.1.xsd",
+      "nativeVersion": "1.1",
+      "sha256": "52187d42b9ca30cf1f2f95de50be13bbd9ae333ede4b843e8c43b23db4489356"
+    },
+    {
+      "id": "individual-sf424d-dat",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/Individual_SF424D-V1.1_F522.xls",
+      "nativeVersion": null,
+      "sha256": "6e81457ae7c0e39d70f13b31fc4022f37b169645f732ad04245065543362c455"
+    },
+    {
+      "id": "individual-sf424d-instructions",
+      "type": "instructions",
+      "uri": "https://apply07.grants.gov/apply/forms/instructions/Individual_SF424D-V1.1-Instructions.pdf",
+      "nativeVersion": null,
+      "sha256": "888763019a918a284906c37787a44f0b79f4c8e1360eab579e84faac37760d9e"
+    },
+    {
+      "id": "individual-sf424d-sample-pdf",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/Individual_SF424D-V1.1.pdf",
+      "nativeVersion": null,
+      "sha256": "0f0b0e7080369d15bf8059ee8a2951d83acc2c50bb9651b9802b12223f9a5ecc"
+    },
+    {
+      "id": "individual-sf424d-readonly-pdf",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/Individual_SF424D-V1.1.pdf",
+      "nativeVersion": null,
+      "sha256": "137728b836be226e54a7aab51142019f28234fa5619c72aa8137cf1821af9287"
+    },
+    {
+      "id": "global-library-v2-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "universal-codes-v2-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/authoring/assurances-family/forms/Individual_SF424D-V1.1_F522.json",
+    "sourceSetSha256": "550b9078e0ad602ec087778a5048b824cc85d4c03852ee55dfe87bb7eebf73e7",
+    "extractedAt": "2026-08-19T23:24:18Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/signature",
+        "sourceId": "individual-sf424d-xsd",
+        "sourcePath": "Assurances.AuthorizedRepresentative.RepresentativeName",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/signature; Grants.gov supplies this value on submission."
+      },
+      {
+        "canonicalPointer": "#/properties/title",
+        "sourceId": "individual-sf424d-xsd",
+        "sourcePath": "Assurances.AuthorizedRepresentative.RepresentativeTitle",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/title; the Individual profile makes this applicant input."
+      },
+      {
+        "canonicalPointer": "#/properties/applicantOrganization",
+        "sourceId": "individual-sf424d-xsd",
+        "sourcePath": "Assurances.ApplicantOrganizationName",
+        "status": "proposed",
+        "note": "Proposed reuse of primary-org/legal-name; the Individual profile labels this field Applicant Name and makes it applicant input."
+      },
+      {
+        "canonicalPointer": "#/properties/signedDate",
+        "sourceId": "individual-sf424d-xsd",
+        "sourcePath": "Assurances.SubmittedDate",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/date-signed; Grants.gov supplies this value on submission."
+      }
+    ]
+  },
+  "behaviorEvidence": []
+}

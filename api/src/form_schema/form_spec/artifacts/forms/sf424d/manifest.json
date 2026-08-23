@@ -1,0 +1,22 @@
+{
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "id": "sf424d",
+    "legacyFormId": 238,
+    "formName": "Assurances for Construction Programs (SF-424D)",
+    "shortFormName": "SF424D",
+    "formVersion": "1.1",
+    "agencyCode": "SGG",
+    "ombNumber": "4040-0009"
+  },
+  "artifacts": {
+    "schema.json": "generated",
+    "ui.json": "generated",
+    "sgg/ui-schema.json": "generated",
+    "sgg/rule-schema.json": "generated",
+    "policy-content.json": "generated",
+    "policy-binding.json": "generated",
+    "targets/grants-gov-xml.json": "generated",
+    "evidence.json": "passthrough"
+  }
+}

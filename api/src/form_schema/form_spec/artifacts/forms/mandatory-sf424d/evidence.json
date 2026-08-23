@@ -1,0 +1,100 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "mandatory-sf424d",
+    "kind": "form",
+    "formVersion": "1.1"
+  },
+  "sources": [
+    {
+      "id": "mandatory-sf424d-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/Mandatory_SF424D-V1.1.xsd",
+      "nativeVersion": "1.1",
+      "sha256": "6685f2c19329db0ee959e2453cbcaf749e9bb2d7f45cb96892d9a4e71d87f68d"
+    },
+    {
+      "id": "mandatory-sf424d-dat",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/Mandatory_SF424D-V1.1_F329.xls",
+      "nativeVersion": null,
+      "sha256": "36bad462d58c2230ceaa6a777362bda4afcf2018e5a421f3fe25ad5b03425591"
+    },
+    {
+      "id": "mandatory-sf424d-instructions",
+      "type": "instructions",
+      "uri": "https://apply07.grants.gov/apply/forms/instructions/Mandatory_SF424D-V1.1-Instructions.pdf",
+      "nativeVersion": null,
+      "sha256": "1bf340b765736e2868befbe607abbb1765fce8e857e5d3a0c5bc1a25a6f6b82e"
+    },
+    {
+      "id": "mandatory-sf424d-sample-pdf",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/Mandatory_SF424D-V1.1.pdf",
+      "nativeVersion": null,
+      "sha256": "841d74574a4ffbd26cbf3b6dbcb64c975fd0b1c902eccc814dd2520fa38003eb"
+    },
+    {
+      "id": "mandatory-sf424d-readonly-pdf",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/Mandatory_SF424D-V1.1.pdf",
+      "nativeVersion": null,
+      "sha256": "5ca3685442c42ef70babab6833fde2fae4adfbd82aacc244718dc1faf15d4812"
+    },
+    {
+      "id": "global-library-v2-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "universal-codes-v2-xsd",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/authoring/assurances-family/forms/Mandatory_SF424D-V1.1_F329.json",
+    "sourceSetSha256": "b9ec68c89b3b394718127f8e7aa21808d4700fa188f5efb020f97d28e9155d50",
+    "extractedAt": "2026-08-19T23:24:18Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/signature",
+        "sourceId": "mandatory-sf424d-xsd",
+        "sourcePath": "Assurances.AuthorizedRepresentative.RepresentativeName",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/signature; Grants.gov supplies this value on submission."
+      },
+      {
+        "canonicalPointer": "#/properties/title",
+        "sourceId": "mandatory-sf424d-xsd",
+        "sourcePath": "Assurances.AuthorizedRepresentative.RepresentativeTitle",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/title; this profile prepopulates the value from the primary application."
+      },
+      {
+        "canonicalPointer": "#/properties/applicantOrganization",
+        "sourceId": "mandatory-sf424d-xsd",
+        "sourcePath": "Assurances.ApplicantOrganizationName",
+        "status": "proposed",
+        "note": "Proposed reuse of primary-org/legal-name; this profile prepopulates the value from the primary application."
+      },
+      {
+        "canonicalPointer": "#/properties/signedDate",
+        "sourceId": "mandatory-sf424d-xsd",
+        "sourcePath": "Assurances.SubmittedDate",
+        "status": "proposed",
+        "note": "Proposed reuse of aor/date-signed; Grants.gov supplies this value on submission."
+      }
+    ]
+  },
+  "behaviorEvidence": []
+}

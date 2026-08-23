@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "individual-sf424d/schema.json",
+  "type": "object",
+  "properties": {
+    "signature": {
+      "$ref": "../../question-bank/aor/signature/schema.json",
+      "description": "Completed by Grants.gov upon submission.",
+      "title": "Signature of the Authorized Certifying Official",
+      "readOnly": true
+    },
+    "signedDate": {
+      "$ref": "../../question-bank/aor/date-signed/schema.json",
+      "description": "Completed by Grants.gov upon submission.",
+      "title": "Date Submitted",
+      "readOnly": true
+    },
+    "title": {
+      "$ref": "../../question-bank/aor/title/schema.json",
+      "title": "Title"
+    },
+    "applicantOrganization": {
+      "$ref": "../../question-bank/primary-org/legal-name/schema.json",
+      "title": "Applicant Name"
+    }
+  },
+  "required": [
+    "title",
+    "applicantOrganization"
+  ],
+  "description": "Active Individual-family SF-424D, Grants.gov form version 1.1 (FID 522)."
+}

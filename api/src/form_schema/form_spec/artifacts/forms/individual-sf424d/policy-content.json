@@ -1,0 +1,371 @@
+{
+  "contract": "policy-content/v1",
+  "id": "grants-gov/construction-assurances",
+  "version": "1.1",
+  "title": "SF-424D Construction Assurances",
+  "kind": "assurance",
+  "sources": [
+    {
+      "id": "base-dat",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/SF424D-V1.1_F238.xls",
+      "sha256": "1a2f94459b9a98591c7413062bdbede3d5bd12b5063f5ac64694b287ee1065ac",
+      "retrievedAt": "2026-08-23T19:59:51Z"
+    },
+    {
+      "id": "official-policy-pdf",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/SF424D-V1.1.pdf",
+      "sha256": "7f7370e5a9bca317c48c8ab77fd77aa9d3e55d38df5653d460fa878fbb8ac864",
+      "retrievedAt": "2026-08-23T19:59:51Z",
+      "note": "Page-reviewed authoritative policy text; deterministic audits confirm equality across all three active SF-424D profiles."
+    }
+  ],
+  "sections": [
+    {
+      "id": "burden",
+      "role": "informational",
+      "title": "Burden Statement",
+      "text": "Public reporting burden for this collection of information is estimated to average 15 minutes per response, including time for reviewing instructions, searching existing data sources, gathering and maintaining the data needed, and completing and reviewing the collection of information. Send comments regarding the burden estimate or any other aspect of this collection of information, including suggestions for reducing this burden, to the Office of Management and Budget, Paperwork Reduction Project (0348-0042), Washington, DC 20503.",
+      "note": "PLEASE DO NOT RETURN YOUR COMPLETED FORM TO THE OFFICE OF MANAGEMENT AND BUDGET. SEND IT TO THE ADDRESS PROVIDED BY THE SPONSORING AGENCY.",
+      "presentationOrder": [
+        "text",
+        "note"
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "base-dat",
+          "locator": "Form DAT fields 00-3 and 00-4"
+        },
+        {
+          "sourceId": "official-policy-pdf",
+          "locator": "page 1"
+        }
+      ]
+    },
+    {
+      "id": "assurances",
+      "role": "assurance",
+      "title": "Acknowledgement and assurances",
+      "note": "NOTE: Certain of these assurances may not be applicable to your project or program. If you have questions, please contact the Awarding Agency. Further, certain Federal assistance awarding agencies may require applicants to certify to additional assurances. If such is the case, you will be notified.",
+      "preamble": "As the duly authorized representative of the applicant:, I certify that the applicant:",
+      "presentationOrder": [
+        "note",
+        "preamble",
+        "items"
+      ],
+      "items": [
+        {
+          "id": "assurance-01",
+          "text": "Has the legal authority to apply for Federal assistance, and the institutional, managerial and financial capability (including funds sufficient to pay the non-Federal share of project costs) to ensure proper planning, management and completion of project described in this application.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 01-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 1"
+            }
+          ],
+          "ordinal": 1
+        },
+        {
+          "id": "assurance-02",
+          "text": "Will give the awarding agency, the Comptroller General of the United States and, if appropriate, the State, the right to examine all records, books, papers, or documents related to the assistance; and will establish a proper accounting system in accordance with generally accepted accounting standards or agency directives.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 02-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 1"
+            }
+          ],
+          "ordinal": 2
+        },
+        {
+          "id": "assurance-03",
+          "text": "Will not dispose of, modify the use of, or change the terms of the real property title or other interest in the site and facilities without permission and instructions from the awarding agency. Will record the Federal interest in the title of real property in accordance with awarding agency directives and will include a covenant in the title of real property acquired in whole or in part with Federal assistance funds to assure nondiscrimination during the useful life of the project.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 03-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 1"
+            }
+          ],
+          "ordinal": 3
+        },
+        {
+          "id": "assurance-04",
+          "text": "Will comply with the requirements of the assistance awarding agency with regard to the drafting, review and approval of construction plans and specifications.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 04-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 1"
+            }
+          ],
+          "ordinal": 4
+        },
+        {
+          "id": "assurance-05",
+          "text": "Will provide and maintain competent and adequate engineering supervision at the construction site to ensure that the complete work conforms with the approved plans and specifications and will furnish progressive reports and such other information as may be required by the assistance awarding agency or State.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 05-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 1"
+            }
+          ],
+          "ordinal": 5
+        },
+        {
+          "id": "assurance-06",
+          "text": "Will initiate and complete the work within the applicable time frame after receipt of approval of the awarding agency.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 06-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 1"
+            }
+          ],
+          "ordinal": 6
+        },
+        {
+          "id": "assurance-07",
+          "text": "Will establish safeguards to prohibit employees from using their positions for a purpose that constitutes or presents the appearance of personal or organizational conflict of interest, or personal gain.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 07-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 1"
+            }
+          ],
+          "ordinal": 7
+        },
+        {
+          "id": "assurance-08",
+          "text": "Will comply with the Intergovernmental Personnel Act of 1970 (42 U.S.C. §§4728-4763) relating to prescribed standards of merit systems for programs funded under one of the 19 statutes or regulations specified in Appendix A of OPM's Standards for a Merit System of Personnel Administration (5 C.F.R. 900, Subpart F).",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 08-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 1"
+            }
+          ],
+          "ordinal": 8
+        },
+        {
+          "id": "assurance-09",
+          "text": "Will comply with the Lead-Based Paint Poisoning Prevention Act (42 U.S.C. §§4801 et seq.) which prohibits the use of lead-based paint in construction or rehabilitation of residence structures.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 09-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 1"
+            }
+          ],
+          "ordinal": 9
+        },
+        {
+          "id": "assurance-10",
+          "text": "Will comply with all Federal statutes relating to non-discrimination. These include but are not limited to: (a) Title VI of the Civil Rights Act of 1964 (P.L. 88-352) which prohibits discrimination on the basis of race, color or national origin; (b) Title IX of the Education Amendments of 1972, as amended (20 U.S.C. §§1681 1683, and 1685-1686), which prohibits discrimination on the basis of sex; (c) Section 504 of the Rehabilitation Act of 1973, as amended (29) U.S.C. §794), which prohibits discrimination on the basis of handicaps; (d) the Age Discrimination Act of 1975, as amended (42 U.S.C. §§6101-6107), which prohibits discrimination on the basis of age; (e) the Drug Abuse Office and Treatment Act of 1972 (P.L. 92-255), as amended relating to nondiscrimination on the basis of drug abuse; (f) the Comprehensive Alcohol Abuse and Alcoholism Prevention, Treatment and Rehabilitation Act of 1970 (P.L. 91-616), as amended, relating to nondiscrimination on the basis of alcohol abuse or alcoholism; (g) §§523 and 527 of the Public Health Service Act of 1912 (42 U.S.C. §§290 dd-3 and 290 ee 3), as amended, relating to confidentiality of alcohol and drug abuse patient records; (h) Title VIII of the Civil Rights Act of 1968 (42 U.S.C. §§3601 et seq.), as amended, relating to nondiscrimination in the sale, rental or financing of housing; (i) any other nondiscrimination provisions in the specific statute(s) under which application for Federal assistance is being made; and (j) the requirements of any other nondiscrimination statute(s) which may apply to the application.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 10-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 1"
+            }
+          ],
+          "ordinal": 10
+        },
+        {
+          "id": "assurance-11",
+          "text": "Will comply, or has already complied, with the requirements of Titles II and III of the Uniform Relocation Assistance and Real Property Acquisition Policies Act of 1970 (P.L. 91-646) which provide for fair and equitable treatment of persons displaced or whose property is acquired as a result of Federal and federally-assisted programs. These requirements apply to all interests in real property acquired for project purposes regardless of Federal participation in purchases.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 11-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 2"
+            }
+          ],
+          "ordinal": 11
+        },
+        {
+          "id": "assurance-12",
+          "text": "Will comply with the provisions of the Hatch Act (5 U.S.C. §§1501-1508 and 7324-7328) which limit the political activities of employees whose principal employment activities are funded in whole or in part with Federal funds.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 12-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 2"
+            }
+          ],
+          "ordinal": 12
+        },
+        {
+          "id": "assurance-13",
+          "text": "Will comply, as applicable, with the provisions of the Davis- Bacon Act (40 U.S.C. §§276a to 276a-7), the Copeland Act (40 U.S.C. §276c and 18 U.S.C. §874), and the Contract Work Hours and Safety Standards Act (40 U.S.C. §§327- 333) regarding labor standards for federally-assisted construction subagreements.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 13-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 2"
+            }
+          ],
+          "ordinal": 13
+        },
+        {
+          "id": "assurance-14",
+          "text": "Will comply with flood insurance purchase requirements of Section 102(a) of the Flood Disaster Protection Act of 1973 (P.L. 93-234) which requires recipients in a special flood hazard area to participate in the program and to purchase flood insurance if the total cost of insurable construction and acquisition is $10,000 or more.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 14-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 2"
+            }
+          ],
+          "ordinal": 14
+        },
+        {
+          "id": "assurance-15",
+          "text": "Will comply with environmental standards which may be prescribed pursuant to the following: (a) institution of environmental quality control measures under the National Environmental Policy Act of 1969 (P.L. 91- 190) and Executive Order (EO) 11514; (b) notification of violating facilities pursuant to EO 11738; (c) protection of wetlands pursuant to EO 11990; (d) evaluation of flood hazards in floodplains in accordance with EO 11988; (e) assurance of project consistency with the approved State management program developed under the Coastal Zone Management Act of 1972 (16 U.S.C. §§1451 et seq.); (f) conformity of Federal actions to State (Clean Air) implementation Plans under Section 176(c) of the Clean Air Act of 1955, as amended (42 U.S.C. §§7401 et seq.); (g) protection of underground sources of drinking water under the Safe Drinking Water Act of 1974, as amended (P.L. 93-523); and, (h) protection of endangered species under the Endangered Species Act of 1973, as amended (P.L. 93-205).",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 15-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 2"
+            }
+          ],
+          "ordinal": 15
+        },
+        {
+          "id": "assurance-16",
+          "text": "Will comply with the Wild and Scenic Rivers Act of 1968 (16 U.S.C. §§1271 et seq.) related to protecting components or potential components of the national wild and scenic rivers system.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 16-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 2"
+            }
+          ],
+          "ordinal": 16
+        },
+        {
+          "id": "assurance-17",
+          "text": "Will assist the awarding agency in assuring compliance with Section 106 of the National Historic Preservation Act of 1966, as amended (16 U.S.C. §470), EO 11593 (identification and protection of historic properties), and the Archaeological and Historic Preservation Act of 1974 (16 U.S.C. §§469a-1 et seq).",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 17-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 2"
+            }
+          ],
+          "ordinal": 17
+        },
+        {
+          "id": "assurance-18",
+          "text": "Will cause to be performed the required financial and compliance audits in accordance with the Single Audit Act Amendments of 1996 and OMB Circular No. A-133, \"Audits of States, Local Governments, and Non-Profit Organizations.\"",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 18-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 2"
+            }
+          ],
+          "ordinal": 18
+        },
+        {
+          "id": "assurance-19",
+          "text": "Will comply with all applicable requirements of all other Federal laws, executive orders, regulations, and policies governing this program.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 19-0"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 2"
+            }
+          ],
+          "ordinal": 19
+        },
+        {
+          "id": "assurance-20",
+          "text": "Will comply with the requirements of Section 106(g) of the Trafficking Victims Protection Act (TVPA) of 2000, as amended (22 U.S.C. 7104) which prohibits grant award recipients or a sub-recipient from (1) Engaging in severe forms of trafficking in persons during the period of time that the award is in effect (2) Procuring a commercial sex act during the period of time that the award is in effect or (3) Using forced labor in the performance of the award or subawards under the award.",
+          "sourceRefs": [
+            {
+              "sourceId": "base-dat",
+              "locator": "Form DAT field 19-0-1"
+            },
+            {
+              "sourceId": "official-policy-pdf",
+              "locator": "page 2"
+            }
+          ],
+          "ordinal": 20
+        }
+      ],
+      "sourceRefs": [
+        {
+          "sourceId": "base-dat",
+          "locator": "Form DAT fields 00-5 through 19-0-1"
+        },
+        {
+          "sourceId": "official-policy-pdf",
+          "locator": "pages 1-2"
+        }
+      ]
+    }
+  ]
+}

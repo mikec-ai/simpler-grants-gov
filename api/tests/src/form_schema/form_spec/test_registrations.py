@@ -32,9 +32,19 @@ EXPECTED_RUNTIME_IDENTITIES = {
         "formType": "SF424B",
         "sggVersion": "1.0",
     },
+    "individual-sf424d": {
+        "formId": "76522bc7-4f25-5051-820f-e2c1a7eabdd4",
+        "formType": "SF424D",
+        "sggVersion": "1.0",
+    },
     "mandatory-sf424b": {
         "formId": "8842eb9b-5a66-5795-b30a-d0001a4928a4",
         "formType": "SF424B",
+        "sggVersion": "1.0",
+    },
+    "mandatory-sf424d": {
+        "formId": "2e5ef1a0-0706-5e22-9fca-8e7a040affeb",
+        "formType": "SF424D",
         "sggVersion": "1.0",
     },
     "other-narrative-attachments": {
@@ -125,6 +135,11 @@ EXPECTED_RUNTIME_IDENTITIES = {
     "sf424b": {
         "formId": "1d0681f8-26f9-4ff1-a75e-e33477668f73",
         "formType": "SF424B",
+        "sggVersion": "1.0",
+    },
+    "sf424d": {
+        "formId": "fecdf956-0b63-480b-9b44-66541e059646",
+        "formType": "SF424D",
         "sggVersion": "1.0",
     },
     "sflll": {

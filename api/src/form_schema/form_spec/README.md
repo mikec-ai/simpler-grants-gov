@@ -36,7 +36,7 @@ The adapter owns only consumer concerns:
 
 Runtime identity and registration are declarative but intentionally separate. The versioned
 SGG target record `runtime-identities.json` preserves one form UUID, `FormType`, and SGG schema
-version for each of the 25 selected portable forms. Those are generated and interpreted by
+version for each of the 28 selected portable forms. Those are generated and interpreted by
 SGG, so they do not appear in the producer's canonical `FormMeta`. `registrations.json` is the
 smaller SGG release opt-in list: its five current records contain only instruction UUIDs, and
 no absent instruction UUID is inferred. The portable form id joins both files to the producer

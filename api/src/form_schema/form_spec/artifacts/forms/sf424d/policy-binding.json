@@ -1,0 +1,94 @@
+{
+  "contract": "form-policy-binding/v1",
+  "formId": "sf424d",
+  "policy": {
+    "id": "grants-gov/construction-assurances",
+    "version": "1.1"
+  },
+  "presentation": {
+    "sections": [
+      {
+        "sectionId": "burden",
+        "name": "burdenStatement",
+        "label": "1. Burden Statement",
+        "before": "acceptance"
+      },
+      {
+        "sectionId": "assurances",
+        "name": "directions",
+        "label": "2. Acknowledgement and assurances",
+        "before": "acceptance"
+      }
+    ]
+  },
+  "acceptance": {
+    "event": "submission",
+    "actor": "authorizedRepresentative",
+    "attestsTo": [
+      "assurances"
+    ],
+    "fields": [
+      {
+        "role": "signature",
+        "pointer": "/signature",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "Grants.gov submission signature",
+        "editable": false
+      },
+      {
+        "role": "signerTitle",
+        "pointer": "/title",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "SF-424 authorized representative title",
+        "editable": false
+      },
+      {
+        "role": "applicantOrganization",
+        "pointer": "/applicantOrganization",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "SF-424 legal name",
+        "editable": false
+      },
+      {
+        "role": "acceptedAt",
+        "pointer": "/signedDate",
+        "responseRole": "systemValue",
+        "required": true,
+        "source": "Grants.gov submission date",
+        "editable": false
+      }
+    ]
+  },
+  "release": {
+    "status": "draft",
+    "gates": [
+      {
+        "id": "official-source-provenance",
+        "status": "passed"
+      },
+      {
+        "id": "cross-profile-policy-equivalence",
+        "status": "passed"
+      },
+      {
+        "id": "semantic-review",
+        "status": "pending"
+      },
+      {
+        "id": "accessibility-review",
+        "status": "pending"
+      },
+      {
+        "id": "consumer-lifecycle-review",
+        "status": "pending"
+      },
+      {
+        "id": "production-registration",
+        "status": "pending"
+      }
+    ]
+  }
+}
