@@ -93,7 +93,7 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
         "samuei",
         "people",
         "district_wrapper",
-        "details",
+        "answer",
         "files",
     }
     assert set(runtime["people"]["items"]) == {"given_name", "file"}
@@ -120,7 +120,7 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
             }
         },
     }
-    assert runtime["details"]["answer"]["xml_transform"] == {
+    assert runtime["answer"]["xml_transform"] == {
         "target": "Answer",
         "source": "/details/answer",
     }
@@ -128,6 +128,113 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
         "target": "File",
         "type": "attachment",
     }
+
+
+def test_projects_constants_value_maps_and_dynamic_attributes_without_form_logic() -> None:
+    profile = {
+        "contract": "grants-gov-xml-profile/v1",
+        "formId": "example",
+        "xsd": {"uri": "https://example.gov/form.xsd", "sha256": "a" * 64},
+        "namespaces": {"default": "https://example.gov/form"},
+        "root": {
+            "element": "Example",
+            "namespacePrefix": "Example",
+            "attributes": {"FormVersion": "1.0"},
+        },
+        "mapping": {
+            "fields": {
+                "wire": {
+                    "element": "Wire",
+                    "kind": "group",
+                    "attributes": {
+                        "Kind": {
+                            "source": "/entityType",
+                            "valueMap": {"prime": "Prime", "sub": "SubAwardee"},
+                        },
+                        "Version": {"constant": "1.0"},
+                    },
+                    "fields": {
+                        "answer": {
+                            "element": "Answer",
+                            "kind": "value",
+                            "source": "/entityType",
+                            "valueMap": {"prime": "Y: Yes", "sub": "N: No"},
+                        },
+                        "metadata": {
+                            "element": "Metadata",
+                            "kind": "group",
+                            "flatten": True,
+                            "fields": {
+                                "entityType": {
+                                    "element": "EntityType",
+                                    "kind": "value",
+                                    "constant": "Prime",
+                                }
+                            },
+                        },
+                    },
+                }
+            }
+        },
+    }
+    projection = Projection(renames={"entityType": "legacy_entity_type"})
+
+    runtime = project_grants_gov_xml_profile(profile, projection)
+
+    transform = runtime["wire"]["xml_transform"]
+    assert transform["attributes"] == {
+        "Kind": {
+            "source": "/legacy_entity_type",
+            "value_transform": {
+                "type": "map_values",
+                "params": {"mappings": {"prime": "Prime", "sub": "SubAwardee"}},
+            },
+        },
+        "Version": {"static_value": "1.0"},
+    }
+    assert runtime["wire"]["answer"]["xml_transform"] == {
+        "target": "Answer",
+        "source": "/legacy_entity_type",
+        "value_transform": {
+            "type": "map_values",
+            "params": {"mappings": {"prime": "Y: Yes", "sub": "N: No"}},
+        },
+    }
+    assert runtime["wire"]["legacy_entity_type"]["xml_transform"] == {
+        "target": "EntityType",
+        "static_value": "Prime",
+    }
+
+
+@pytest.mark.parametrize(
+    "declaration",
+    [
+        {},
+        {"source": "/answer", "constant": "fixed"},
+        {"constant": "fixed", "valueMap": {"fixed": "mapped"}},
+    ],
+)
+def test_rejects_ambiguous_portable_attribute_values(declaration: dict[str, object]) -> None:
+    profile = {
+        "contract": "grants-gov-xml-profile/v1",
+        "formId": "example",
+        "xsd": {"uri": "https://example.gov/form.xsd", "sha256": "a" * 64},
+        "namespaces": {"default": "https://example.gov/form"},
+        "root": {"element": "Example", "namespacePrefix": "Example", "attributes": {}},
+        "mapping": {
+            "fields": {
+                "answer": {
+                    "element": "Answer",
+                    "kind": "object",
+                    "attributes": {"Kind": declaration},
+                    "fields": {},
+                }
+            }
+        },
+    }
+
+    with pytest.raises(ValueError, match="portable XML value"):
+        project_grants_gov_xml_profile(profile, Projection())
 
 
 def test_budget_profiles_are_loaded_from_portable_artifacts_not_python_form_modules() -> None:

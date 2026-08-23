@@ -1,0 +1,99 @@
+{
+  "block": {
+    "formVersion": "2.0",
+    "id": "sflll",
+    "kind": "form"
+  },
+  "contract": "grants-form-evidence/v1",
+  "extraction": {
+    "artifact": "artifacts/proof/grantsgov-SFLLL.jsonl.manifest.json",
+    "extractedAt": "2026-08-18T17:10:53.925323Z",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "sourceSetSha256": "86c5849f65a3f3d8fcdc7da17cfa6070c185008eae9916184e7d6c32cd098b05"
+  },
+  "semanticReview": {
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/federalAgencyDepartment",
+        "sourceId": "source-1-fff7449d00c7",
+        "sourcePath": "LobbyingActivitiesDisclosure_2_0.FederalAgencyDepartment",
+        "status": "proposed",
+        "note": "Proposed reuse of opportunity/agency-name with the source-specific 40-character occurrence limit."
+      },
+      {
+        "canonicalPointer": "#/$defs/FederalProgramDetails/properties/assistanceListingNumber",
+        "sourceId": "source-1-fff7449d00c7",
+        "sourcePath": "LobbyingActivitiesDisclosure_2_0.FederalProgramName.CFDANumber",
+        "status": "proposed",
+        "note": "Proposed reuse of opportunity/assistance-listing-number; the XSD names the same identifier by its former CFDA label."
+      },
+      {
+        "canonicalPointer": "#/$defs/FederalProgramDetails/properties/name",
+        "sourceId": "source-1-fff7449d00c7",
+        "sourcePath": "LobbyingActivitiesDisclosure_2_0.FederalProgramName.FederalProgramName",
+        "status": "proposed",
+        "note": "Proposed reuse of opportunity/assistance-listing-title."
+      },
+      {
+        "canonicalPointer": "#/$defs/SflllReportingOrganization/properties/congressionalDistrict",
+        "sourceId": "source-1-fff7449d00c7",
+        "sourcePath": "LobbyingActivitiesDisclosure_2_0.ReportEntity.ReportingEntity.CongressionalDistrict",
+        "status": "proposed",
+        "note": "Proposed reuse of project/congressional-district for both role-qualified organization occurrences."
+      },
+      {
+        "canonicalPointer": "#/$defs/LobbyingRegistrant/properties/name",
+        "sourceId": "source-1-fff7449d00c7",
+        "sourcePath": "LobbyingActivitiesDisclosure_2_0.LobbyingRegistrant.IndividualName",
+        "status": "proposed",
+        "note": "Proposed structural reuse of generics/person-name; the registrant role remains explicit in the containing form-local model."
+      },
+      {
+        "canonicalPointer": "#/$defs/LobbyingServiceIndividual/properties/name",
+        "sourceId": "source-1-fff7449d00c7",
+        "sourcePath": "LobbyingActivitiesDisclosure_2_0.IndividualsPerformingServices.Individual.Name",
+        "status": "proposed",
+        "note": "Proposed structural reuse of generics/person-name; the service-provider role remains explicit in the containing form-local model."
+      },
+      {
+        "canonicalPointer": "#/$defs/SflllSignatureBlock/properties/name",
+        "sourceId": "source-1-fff7449d00c7",
+        "sourcePath": "LobbyingActivitiesDisclosure_2_0.SignatureBlock.Name",
+        "status": "proposed",
+        "note": "Proposed structural reuse of generics/person-name without conflating the SF-LLL signatory with an authorized-organization-representative role."
+      }
+    ],
+    "status": "proposed"
+  },
+  "sources": [
+    {
+      "id": "source-1-fff7449d00c7",
+      "nativeVersion": "2.0",
+      "sha256": "fff7449d00c715efb79d83b572bc7b1ef3e8171f6a9ba841436b26242e883664",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/SFLLL_2_0-V2.0.xsd"
+    },
+    {
+      "id": "source-2-4b338db91915",
+      "nativeVersion": "1.0",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd"
+    },
+    {
+      "id": "source-3-ff0214de91b9",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+    },
+    {
+      "id": "source-4-78f33338e931",
+      "nativeVersion": "2.0",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd"
+    }
+  ]
+}

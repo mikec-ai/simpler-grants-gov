@@ -40,8 +40,10 @@ def test_other_project_information_loads_without_form_specific_adapter_code() ->
         == 6
     )
     assert projected.json_to_xml_schema is not None
-    assert "xml_transform" not in projected.json_to_xml_schema["human_subjects"]
-    supplement = projected.json_to_xml_schema["human_subjects"]["human_subjects_supplement"]
+    # Portable ``flatten`` groups are a compile-time organization device. They do not
+    # survive as response-dependent runtime containers.
+    assert "human_subjects" not in projected.json_to_xml_schema
+    supplement = projected.json_to_xml_schema["human_subjects_supplement"]
     assert supplement["xml_transform"] == {
         "target": "HumanSubjectsSupplement",
         "type": "group",

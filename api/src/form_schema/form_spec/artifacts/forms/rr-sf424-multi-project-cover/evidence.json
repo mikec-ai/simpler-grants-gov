@@ -47,6 +47,20 @@
       "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
       "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a",
       "nativeVersion": "2.0"
+    },
+    {
+      "id": "source-7-1a951af1bd52",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/RR_SF424_Multi_Project_Cover_4_0-V4.0.pdf",
+      "sha256": "1a951af1bd52b08769a43b56e333dc57a2d374fc1bf78341b859d5e410d0d8ab",
+      "nativeVersion": null
+    },
+    {
+      "id": "source-8-6aeef5a73890",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/RR_SF424_Multi_Project_Cover_4_0-V4.0.pdf",
+      "sha256": "6aeef5a73890e2b4bfeaa4ece2f1cb2eff3d90c729f9ed1de6fdb5447bb634bb",
+      "nativeVersion": null
     }
   ],
   "extraction": {
@@ -57,7 +71,36 @@
     "extractedAt": "2026-08-22T22:34:16.759448Z"
   },
   "semanticReview": {
-    "status": "unreviewed",
-    "mappings": []
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/stateReceivedDate",
+        "sourceId": "source-2-5d5599068d72",
+        "sourcePath": "RR_SF424_Multi_Project_Cover_4_0.StateReceivedDate",
+        "status": "proposed",
+        "note": "Proposed reuse of the shared State received-date identity. The pinned DAT directs the applicant to enter it, so this occurrence is applicantInput; the cross-family proposal is not accepted for published similarity."
+      },
+      {
+        "canonicalPointer": "#/properties/stateId",
+        "sourceId": "source-2-5d5599068d72",
+        "sourcePath": "RR_SF424_Multi_Project_Cover_4_0.StateID",
+        "status": "proposed",
+        "note": "Proposed reuse of the shared State application-identifier identity. The pinned DAT directs the applicant to enter it, so this occurrence is applicantInput; the cross-family proposal is not accepted for published similarity."
+      },
+      {
+        "canonicalPointer": "#/properties/agencyRoutingNumber",
+        "sourceId": "source-2-5d5599068d72",
+        "sourcePath": "RR_SF424_Multi_Project_Cover_4_0.AgencyRoutingNumber",
+        "status": "proposed",
+        "note": "Proposed reuse of the Federal-agency-routing identity. The pinned DAT directs the applicant to enter it, so this occurrence is applicantInput; this is not accepted for published similarity."
+      },
+      {
+        "canonicalPointer": "#/properties/grantsTrackingNumber",
+        "sourceId": "source-2-5d5599068d72",
+        "sourcePath": "RR_SF424_Multi_Project_Cover_4_0.GrantsTrackingNumber",
+        "status": "proposed",
+        "note": "Proposed reuse of the prior Grants.gov tracking-number identity. The pinned DAT independently directs the applicant to enter it, so this occurrence is applicantInput; the proposal is not accepted for published similarity."
+      }
+    ]
   }
 }

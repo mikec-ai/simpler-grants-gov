@@ -1,0 +1,475 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "sflll",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/SFLLL_2_0-V2.0.xsd",
+    "sha256": "fff7449d00c715efb79d83b572bc7b1ef3e8171f6a9ba841436b26242e883664"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/SFLLL_2_0-V2.0",
+    "SFLLL_2_0": "http://apply.grants.gov/forms/SFLLL_2_0-V2.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0"
+  },
+  "root": {
+    "element": "LobbyingActivitiesDisclosure_2_0",
+    "namespacePrefix": "SFLLL_2_0",
+    "attributes": {
+      "FormVersion": "2.0"
+    }
+  },
+  "mapping": {
+    "fields": {
+      "federalActionType": {
+        "element": "FederalActionType",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "federalActionStatus": {
+        "element": "FederalActionStatus",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "reportType": {
+        "element": "ReportType",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "materialChange": {
+        "element": "MaterialChangeSupplement",
+        "kind": "object",
+        "namespace": "default",
+        "attributes": {
+          "ReportType": {
+            "constant": "MaterialChange"
+          }
+        },
+        "fields": {
+          "year": {
+            "element": "MaterialChangeYear",
+            "kind": "value",
+            "namespace": "default"
+          },
+          "quarter": {
+            "element": "MaterialChangeQuarter",
+            "kind": "value",
+            "namespace": "default"
+          },
+          "lastReportDate": {
+            "element": "LastReportDate",
+            "kind": "value",
+            "namespace": "default"
+          }
+        }
+      },
+      "reportEntity": {
+        "element": "ReportEntity",
+        "kind": "group",
+        "namespace": "default",
+        "attributes": {
+          "ReportEntityType": {
+            "source": "/reportingEntityType"
+          }
+        },
+        "fields": {
+          "reportEntityIsPrime": {
+            "element": "ReportEntityIsPrime",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/reportingEntityType",
+            "valueMap": {
+              "Prime": "Y: Yes",
+              "SubAwardee": "N: No"
+            }
+          },
+          "reportingOrganization": {
+            "element": "ReportingEntity",
+            "kind": "object",
+            "namespace": "default",
+            "source": "/reportingOrganization",
+            "fields": {
+              "wireEntityType": {
+                "element": "wireEntityType",
+                "kind": "group",
+                "flatten": true,
+                "fields": {
+                  "entityType": {
+                    "element": "EntityType",
+                    "kind": "value",
+                    "namespace": "default",
+                    "source": "/reportingEntityType"
+                  }
+                }
+              },
+              "organizationName": {
+                "element": "OrganizationName",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "address": {
+                "element": "Address",
+                "kind": "object",
+                "namespace": "default",
+                "fields": {
+                  "street1": {
+                    "element": "Street1",
+                    "kind": "value",
+                    "namespace": "default"
+                  },
+                  "street2": {
+                    "element": "Street2",
+                    "kind": "value",
+                    "namespace": "default"
+                  },
+                  "city": {
+                    "element": "City",
+                    "kind": "value",
+                    "namespace": "default"
+                  },
+                  "state": {
+                    "element": "State",
+                    "kind": "value",
+                    "namespace": "default"
+                  },
+                  "zipCode": {
+                    "element": "ZipPostalCode",
+                    "kind": "value",
+                    "namespace": "default"
+                  }
+                }
+              },
+              "congressionalDistrict": {
+                "element": "CongressionalDistrict",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "primeOrganization": {
+            "element": "PrimeIfSubawardee",
+            "kind": "object",
+            "namespace": "default",
+            "source": "/primeOrganization",
+            "fields": {
+              "wireEntityType": {
+                "element": "wireEntityType",
+                "kind": "group",
+                "flatten": true,
+                "fields": {
+                  "entityType": {
+                    "element": "EntityType",
+                    "kind": "value",
+                    "namespace": "default",
+                    "constant": "Prime"
+                  }
+                }
+              },
+              "organizationName": {
+                "element": "OrganizationName",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "address": {
+                "element": "Address",
+                "kind": "object",
+                "namespace": "default",
+                "fields": {
+                  "street1": {
+                    "element": "Street1",
+                    "kind": "value",
+                    "namespace": "default"
+                  },
+                  "street2": {
+                    "element": "Street2",
+                    "kind": "value",
+                    "namespace": "default"
+                  },
+                  "city": {
+                    "element": "City",
+                    "kind": "value",
+                    "namespace": "default"
+                  },
+                  "state": {
+                    "element": "State",
+                    "kind": "value",
+                    "namespace": "default"
+                  },
+                  "zipCode": {
+                    "element": "ZipPostalCode",
+                    "kind": "value",
+                    "namespace": "default"
+                  }
+                }
+              },
+              "congressionalDistrict": {
+                "element": "CongressionalDistrict",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          },
+          "tier": {
+            "element": "Tier",
+            "kind": "group",
+            "namespace": "default",
+            "attributes": {
+              "ReportEntityType": {
+                "source": "/reportingEntityType"
+              }
+            },
+            "fields": {
+              "tierValue": {
+                "element": "TierValue",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/tier"
+              }
+            }
+          }
+        }
+      },
+      "federalAgencyDepartment": {
+        "element": "FederalAgencyDepartment",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "federalProgram": {
+        "element": "FederalProgramName",
+        "kind": "object",
+        "namespace": "default",
+        "fields": {
+          "name": {
+            "element": "FederalProgramName",
+            "kind": "value",
+            "namespace": "default"
+          },
+          "assistanceListingNumber": {
+            "element": "CFDANumber",
+            "kind": "value",
+            "namespace": "default"
+          }
+        }
+      },
+      "federalActionNumber": {
+        "element": "FederalActionNumber",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "awardAmount": {
+        "element": "AwardAmount",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "lobbyingRegistrant": {
+        "element": "LobbyingRegistrant",
+        "kind": "object",
+        "namespace": "default",
+        "fields": {
+          "name": {
+            "element": "IndividualName",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "prefix": {
+                "element": "PrefixName",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "firstName": {
+                "element": "FirstName",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "middleName": {
+                "element": "MiddleName",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "lastName": {
+                "element": "LastName",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "suffix": {
+                "element": "SuffixName",
+                "kind": "value",
+                "namespace": "globLib"
+              }
+            }
+          },
+          "address": {
+            "element": "Address",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "street1": {
+                "element": "Street1",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "street2": {
+                "element": "Street2",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "city": {
+                "element": "City",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "state": {
+                "element": "State",
+                "kind": "value",
+                "namespace": "default"
+              },
+              "zipCode": {
+                "element": "ZipPostalCode",
+                "kind": "value",
+                "namespace": "default"
+              }
+            }
+          }
+        }
+      },
+      "individualsPerformingServices": {
+        "element": "IndividualsPerformingServices",
+        "kind": "array",
+        "namespace": "default",
+        "itemElement": "Individual",
+        "itemNamespace": "default",
+        "items": {
+          "fields": {
+            "name": {
+              "element": "Name",
+              "kind": "object",
+              "namespace": "default",
+              "fields": {
+                "prefix": {
+                  "element": "PrefixName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "firstName": {
+                  "element": "FirstName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "middleName": {
+                  "element": "MiddleName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "lastName": {
+                  "element": "LastName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "suffix": {
+                  "element": "SuffixName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                }
+              }
+            },
+            "address": {
+              "element": "Address",
+              "kind": "object",
+              "namespace": "default",
+              "fields": {
+                "street1": {
+                  "element": "Street1",
+                  "kind": "value",
+                  "namespace": "default"
+                },
+                "street2": {
+                  "element": "Street2",
+                  "kind": "value",
+                  "namespace": "default"
+                },
+                "city": {
+                  "element": "City",
+                  "kind": "value",
+                  "namespace": "default"
+                },
+                "state": {
+                  "element": "State",
+                  "kind": "value",
+                  "namespace": "default"
+                },
+                "zipCode": {
+                  "element": "ZipPostalCode",
+                  "kind": "value",
+                  "namespace": "default"
+                }
+              }
+            }
+          }
+        }
+      },
+      "signatureBlock": {
+        "element": "SignatureBlock",
+        "kind": "object",
+        "namespace": "default",
+        "fields": {
+          "name": {
+            "element": "Name",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "prefix": {
+                "element": "PrefixName",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "firstName": {
+                "element": "FirstName",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "middleName": {
+                "element": "MiddleName",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "lastName": {
+                "element": "LastName",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "suffix": {
+                "element": "SuffixName",
+                "kind": "value",
+                "namespace": "globLib"
+              }
+            }
+          },
+          "title": {
+            "element": "Title",
+            "kind": "value",
+            "namespace": "default"
+          },
+          "phone": {
+            "element": "Telephone",
+            "kind": "value",
+            "namespace": "default"
+          },
+          "signedDate": {
+            "element": "SignedDate",
+            "kind": "value",
+            "namespace": "default"
+          },
+          "signature": {
+            "element": "Signature",
+            "kind": "value",
+            "namespace": "default"
+          }
+        }
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-SFLLL.jsonl.manifest.json"
+  }
+}

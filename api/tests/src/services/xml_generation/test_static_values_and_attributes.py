@@ -118,3 +118,45 @@ class TestStaticValuesAndAttributes:
         last_report_date = material_change.find("SFLLL_2_0:LastReportDate", namespaces=ns)
         assert last_report_date is not None
         assert last_report_date.text == "2025-01-01"
+
+    def test_attributes_resolve_root_sources_constants_and_value_maps(self):
+        """Portable attribute declarations stay generic after adapter projection."""
+        service = XMLGenerationService()
+        namespace = "http://example.org/portable"
+        transform_config = {
+            "_xml_config": {
+                "namespaces": {"default": namespace},
+                "xml_structure": {"root_element": "Example", "version": "1.0"},
+                "xsd_url": "https://example.org/Example-V1.0.xsd",
+            },
+            "details": {
+                "xml_transform": {
+                    "target": "Details",
+                    "type": "nested_object",
+                    "attributes": {
+                        "Kind": {
+                            "source": "/entity_type",
+                            "value_transform": {
+                                "type": "map_values",
+                                "params": {"mappings": {"prime": "Prime", "sub": "SubAwardee"}},
+                            },
+                        },
+                        "Version": {"static_value": "1.0"},
+                    },
+                },
+                "name": {"xml_transform": {"target": "Name"}},
+            },
+        }
+        request = XMLGenerationRequest(
+            application_data={"entity_type": "sub", "details": {"name": "Example Org"}},
+            transform_config=transform_config,
+        )
+
+        response = service.generate_xml(request)
+
+        assert response.success
+        root = lxml_etree.fromstring(response.xml_data.encode("utf-8"))
+        details = root.find(f".//{{{namespace}}}Details")
+        assert details is not None
+        assert details.get(f"{{{namespace}}}Kind") == "SubAwardee"
+        assert details.get(f"{{{namespace}}}Version") == "1.0"

@@ -1,0 +1,20 @@
+{
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "id": "sflll",
+    "legacyFormId": 670,
+    "formName": "Disclosure of Lobbying Activities (SF-LLL)",
+    "shortFormName": "SFLLL_2_0",
+    "formVersion": "2.0",
+    "agencyCode": "SGG",
+    "ombNumber": "4040-0013"
+  },
+  "artifacts": {
+    "schema.json": "generated",
+    "ui.json": "generated",
+    "sgg/ui-schema.json": "generated",
+    "sgg/rule-schema.json": "generated",
+    "targets/grants-gov-xml.json": "generated",
+    "evidence.json": "passthrough"
+  }
+}

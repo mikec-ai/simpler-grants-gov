@@ -182,7 +182,15 @@ def test_rr_sf424_evidence_stays_source_bound_and_semantically_unaccepted() -> N
         "sourceSetSha256": "81ad602bf94391d4a7db80558802288452848aef97e68d4ca4ad1fe3d4b7e035",
         "extractedAt": "2026-08-18T16:54:29.252851Z",
     }
-    assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}
+    review = evidence["semanticReview"]
+    assert review["status"] == "proposed"
+    assert {mapping["canonicalPointer"] for mapping in review["mappings"]} == {
+        "#/properties/stateReceivedDate",
+        "#/properties/stateId",
+        "#/properties/agencyRoutingNumber",
+        "#/properties/grantsGovTrackingId",
+    }
+    assert all(mapping["status"] == "proposed" for mapping in review["mappings"])
     assert [(source["type"], source["sha256"]) for source in evidence["sources"]] == [
         ("dat", "532938a75c587bdc8813fd3af625be4338281d0491999fc39aeaaac51b79c9c1"),
         ("xsd", "f140f32afed9d7efbe30fc8f299542bbbc3121dbc87a79aa351fcf096163d3bc"),
@@ -190,6 +198,9 @@ def test_rr_sf424_evidence_stays_source_bound_and_semantically_unaccepted() -> N
         ("xsd", "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb"),
         ("xsd", "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"),
         ("xsd", "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"),
+        ("instructions", "666647fdeb7d9d69f2d36dedc74f09ff6a9540776f87c5a5c5b0593219736bd1"),
+        ("pdf", "06dd92da28b4afb8190fd0edaeb7a0dac3ae2d601adcc1ab9a5e0fc93c09f523"),
+        ("pdf", "592a1faf1cfdac3e350a22c6fbae3b8c6f229b6c7de29ec18273b60c9235dd6b"),
     ]
 
 

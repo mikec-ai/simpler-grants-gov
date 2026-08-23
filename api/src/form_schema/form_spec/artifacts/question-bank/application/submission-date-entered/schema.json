@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "application/submission-date-entered/schema.json",
+  "type": "string",
+  "format": "date",
+  "description": "Enter the date the application is submitted to the Federal agency or State.",
+  "title": "Date Submitted"
+}

@@ -38,7 +38,7 @@
     "label": "4. Federal and State Identifiers",
     "children": [
       {
-        "type": "null",
+        "type": "field",
         "definition": "/properties/stateReceivedDate"
       },
       {

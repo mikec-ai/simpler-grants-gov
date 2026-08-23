@@ -102,6 +102,11 @@ EXPECTED_RUNTIME_IDENTITIES = {
         "formType": "SF424A",
         "sggVersion": "1.0",
     },
+    "sflll": {
+        "formId": "778a1485-082a-463e-a61b-6615ccebe027",
+        "formType": "SFLLL",
+        "sggVersion": "1.0",
+    },
 }
 
 EXPECTED_REGISTRATIONS = {

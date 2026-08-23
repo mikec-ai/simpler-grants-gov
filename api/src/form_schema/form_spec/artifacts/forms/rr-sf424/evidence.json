@@ -47,6 +47,27 @@
       "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
       "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a",
       "nativeVersion": "2.0"
+    },
+    {
+      "id": "source-7-666647fdeb7d",
+      "type": "instructions",
+      "uri": "https://apply07.grants.gov/apply/forms/instructions/RR_SF424_5_0-V5.0-Instructions.pdf",
+      "sha256": "666647fdeb7d9d69f2d36dedc74f09ff6a9540776f87c5a5c5b0593219736bd1",
+      "nativeVersion": "5.0"
+    },
+    {
+      "id": "source-8-06dd92da28b4",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/RR_SF424_5_0-V5.0.pdf",
+      "sha256": "06dd92da28b4afb8190fd0edaeb7a0dac3ae2d601adcc1ab9a5e0fc93c09f523",
+      "nativeVersion": null
+    },
+    {
+      "id": "source-9-592a1faf1cfd",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/RR_SF424_5_0-V5.0.pdf",
+      "sha256": "592a1faf1cfdac3e350a22c6fbae3b8c6f229b6c7de29ec18273b60c9235dd6b",
+      "nativeVersion": null
     }
   ],
   "extraction": {
@@ -57,7 +78,36 @@
     "extractedAt": "2026-08-18T16:54:29.252851Z"
   },
   "semanticReview": {
-    "status": "unreviewed",
-    "mappings": []
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/stateReceivedDate",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.StateReceivedDate",
+        "status": "proposed",
+        "note": "Proposed shared identity for the date the State received the application. The pinned instructions direct the applicant to enter it, so this occurrence is applicantInput; the cross-family proposal is not accepted for published similarity."
+      },
+      {
+        "canonicalPointer": "#/properties/stateId",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.StateID",
+        "status": "proposed",
+        "note": "Proposed shared identity for the application identifier assigned by the State. The pinned instructions direct the applicant to enter it, so this occurrence is applicantInput; the cross-family proposal is not accepted for published similarity."
+      },
+      {
+        "canonicalPointer": "#/properties/agencyRoutingNumber",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.AgencyRoutingNumber",
+        "status": "proposed",
+        "note": "Proposed identity for the Federal-agency-assigned routing number. The pinned instructions direct the applicant to enter it, so this occurrence is applicantInput; this is not accepted for published similarity."
+      },
+      {
+        "canonicalPointer": "#/properties/grantsGovTrackingId",
+        "sourceId": "source-2-f140f32afed9",
+        "sourcePath": "RR_SF424_5_0.GGTrackingID",
+        "status": "proposed",
+        "note": "Proposed reuse of the prior Grants.gov tracking-number identity. The pinned instructions direct the applicant to enter this value for a changed or corrected application; the proposal is not accepted for published similarity."
+      }
+    ]
   }
 }

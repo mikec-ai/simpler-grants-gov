@@ -109,5 +109,13 @@ def test_multi_project_evidence_remains_unreviewed_and_xml_is_an_explicit_gate()
         "sourceSetSha256": "3224ce9eac55ccc27a8cae4f257efe10b69872ef5bb6c3fa22d82c9ed4427fac",
         "extractedAt": "2026-08-22T22:34:16.759448Z",
     }
-    assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}
+    review = evidence["semanticReview"]
+    assert review["status"] == "proposed"
+    assert {mapping["canonicalPointer"] for mapping in review["mappings"]} == {
+        "#/properties/stateReceivedDate",
+        "#/properties/stateId",
+        "#/properties/agencyRoutingNumber",
+        "#/properties/grantsTrackingNumber",
+    }
+    assert all(mapping["status"] == "proposed" for mapping in review["mappings"])
     assert "xml-schema.json" not in manifest["artifacts"]

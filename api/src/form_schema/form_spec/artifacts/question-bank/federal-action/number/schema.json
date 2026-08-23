@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "federal-action/number/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 110,
+  "description": "Enter the identifying number assigned to the covered Federal action."
+}

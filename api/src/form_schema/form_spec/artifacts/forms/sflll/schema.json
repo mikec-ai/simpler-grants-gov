@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sflll/schema.json",
+  "type": "object",
+  "properties": {
+    "reportingOrganization": {
+      "$ref": "#/$defs/SflllReportingOrganization",
+      "title": "Reporting Entity"
+    },
+    "primeOrganization": {
+      "$ref": "#/$defs/SflllReportingOrganization",
+      "title": "Prime Awardee"
+    },
+    "federalAgencyDepartment": {
+      "$ref": "../../question-bank/opportunity/agency-name/schema.json",
+      "description": "Enter the Federal department or agency making the covered award.",
+      "title": "Federal Department / Agency",
+      "maxLength": 40
+    },
+    "federalProgram": {
+      "$ref": "#/$defs/FederalProgramDetails",
+      "title": "Federal Program"
+    },
+    "federalActionNumber": {
+      "$ref": "../../question-bank/federal-action/number/schema.json",
+      "title": "Federal Action Number"
+    },
+    "awardAmount": {
+      "$ref": "../../question-bank/federal-action/award-amount/schema.json",
+      "title": "Award Amount"
+    },
+    "lobbyingRegistrant": {
+      "$ref": "#/$defs/LobbyingRegistrant",
+      "title": "Lobbying Registrant",
+      "properties": {
+        "name": {
+          "required": [
+            "firstName",
+            "lastName"
+          ]
+        }
+      }
+    },
+    "individualsPerformingServices": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/LobbyingServiceIndividual",
+        "properties": {
+          "name": {
+            "required": [
+              "firstName",
+              "lastName"
+            ]
+          }
+        }
+      },
+      "minItems": 1,
+      "maxItems": 10,
+      "title": "Individuals Performing Services"
+    },
+    "signatureBlock": {
+      "$ref": "#/$defs/SflllSignatureBlock",
+      "description": "Information supplied constitutes a material representation of fact upon which reliance was placed when the transaction was made or entered into. This disclosure is required by 31 U.S.C. 1352 and will be reported to Congress semi-annually.",
+      "title": "Certification and Signature",
+      "properties": {
+        "signedDate": {
+          "readOnly": true
+        },
+        "signature": {
+          "readOnly": true
+        },
+        "name": {
+          "required": [
+            "firstName",
+            "lastName"
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "reportingOrganization",
+    "federalAgencyDepartment",
+    "lobbyingRegistrant",
+    "individualsPerformingServices",
+    "signatureBlock"
+  ],
+  "allOf": [
+    {
+      "$ref": "../../question-bank/federal-action/disclosure-filing-details/schema.json"
+    },
+    {
+      "if": {
+        "properties": {
+          "reportType": {
+            "const": "MaterialChange"
+          }
+        },
+        "required": [
+          "reportType"
+        ]
+      },
+      "then": {
+        "required": [
+          "materialChange"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "reportingEntityType": {
+            "const": "SubAwardee"
+          }
+        },
+        "required": [
+          "reportingEntityType"
+        ]
+      },
+      "then": {
+        "required": [
+          "primeOrganization"
+        ]
+      }
+    }
+  ],
+  "description": "Disclosure of Lobbying Activities (SF-LLL), Grants.gov version 2.0.",
+  "$defs": {
+    "SflllReportingOrganization": {
+      "type": "object",
+      "properties": {
+        "organizationName": {
+          "$ref": "../../question-bank/generics/organization-name/schema.json",
+          "title": "Organization Name"
+        },
+        "address": {
+          "$ref": "../../question-bank/generics/domestic-address/schema.json",
+          "title": "Address"
+        },
+        "congressionalDistrict": {
+          "$ref": "../../question-bank/project/congressional-district/schema.json",
+          "title": "Congressional District"
+        }
+      },
+      "required": [
+        "organizationName",
+        "address"
+      ]
+    },
+    "FederalProgramDetails": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "../../question-bank/opportunity/assistance-listing-title/schema.json",
+          "title": "Federal Program Name / Description"
+        },
+        "assistanceListingNumber": {
+          "$ref": "../../question-bank/opportunity/assistance-listing-number/schema.json",
+          "title": "Assistance Listing Number"
+        }
+      }
+    },
+    "LobbyingRegistrant": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "../../question-bank/generics/person-name/schema.json",
+          "title": "Individual Name",
+          "required": [
+            "firstName",
+            "lastName"
+          ]
+        },
+        "address": {
+          "$ref": "../../question-bank/generics/domestic-address/schema.json",
+          "title": "Address"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "LobbyingServiceIndividual": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "../../question-bank/generics/person-name/schema.json",
+          "title": "Name",
+          "required": [
+            "firstName",
+            "lastName"
+          ]
+        },
+        "address": {
+          "$ref": "../../question-bank/generics/domestic-address/schema.json",
+          "title": "Address"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Individual"
+    },
+    "SflllSignatureBlock": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "../../question-bank/generics/person-name/schema.json",
+          "title": "Name",
+          "required": [
+            "firstName",
+            "lastName"
+          ]
+        },
+        "title": {
+          "$ref": "../../question-bank/generics/contact-title/schema.json",
+          "title": "Title"
+        },
+        "phone": {
+          "$ref": "../../question-bank/generics/phone/schema.json",
+          "title": "Telephone Number"
+        },
+        "signedDate": {
+          "$ref": "../../question-bank/generics/submitted-date/schema.json",
+          "description": "Completed by Grants.gov upon submission.",
+          "title": "Date Signed",
+          "readOnly": true
+        },
+        "signature": {
+          "$ref": "../../question-bank/generics/signature/schema.json",
+          "description": "Completed by Grants.gov upon submission.",
+          "title": "Signature",
+          "readOnly": true
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  }
+}

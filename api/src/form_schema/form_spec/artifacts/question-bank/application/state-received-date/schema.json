@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "application/state-received-date/schema.json",
+  "type": "string",
+  "format": "date",
+  "description": "The date on which a State received an application.",
+  "title": "State Received Date"
+}

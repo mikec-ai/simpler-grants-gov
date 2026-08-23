@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "application/federal-agency-routing-number/schema.json",
+  "type": "string",
+  "description": "The routing identifier assigned by the Federal agency for an R&R application.",
+  "title": "Agency Routing Number"
+}

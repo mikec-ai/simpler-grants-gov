@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "poc/project-role/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 45,
+  "description": "Enter the key contact's free-text role on this project.",
+  "title": "Project Role"
+}

@@ -15,6 +15,41 @@ from src.form_schema.form_spec.projection import Projection, project_response_po
 PROFILE_CONTRACT = "grants-gov-xml-profile/v1"
 
 
+def _project_value_declaration(
+    declaration: dict[str, Any], projection: Projection, *, path: str
+) -> dict[str, Any]:
+    """Translate one portable source/constant declaration into runtime vocabulary."""
+
+    has_source = "source" in declaration
+    has_constant = "constant" in declaration
+    if has_source == has_constant:
+        raise ValueError(
+            f"portable XML value at {path} must declare exactly one of source or constant"
+        )
+    projected: dict[str, Any]
+    if has_source:
+        projected = {"source": _project_source_pointer(declaration["source"], projection)}
+    else:
+        projected = {"static_value": declaration["constant"]}
+    if value_map := declaration.get("valueMap"):
+        if not has_source:
+            raise ValueError(f"portable XML value map at {path} requires a source")
+        projected["value_transform"] = {
+            "type": "map_values",
+            "params": {"mappings": dict(value_map)},
+        }
+    return projected
+
+
+def _project_attributes(
+    attributes: dict[str, Any], projection: Projection, *, path: str
+) -> dict[str, Any]:
+    return {
+        name: _project_value_declaration(value, projection, path=f"{path}.@{name}")
+        for name, value in attributes.items()
+    }
+
+
 def _project_source_pointer(source: str, projection: Projection) -> str:
     """Project an absolute canonical response pointer into Simpler field names."""
 
@@ -92,12 +127,22 @@ def _project_fields(
     for canonical_name, node in fields.items():
         canonical_path = f"{path}.{canonical_name}" if path else canonical_name
         source_name = projection.rename(canonical_path, canonical_name)
-        projected[source_name] = _project_node(
+        projected_node = _project_node(
             node,
             projection,
             path=canonical_path,
             attachment_fields=attachment_fields,
         )
+        if node.get("flatten"):
+            collisions = set(projected).intersection(projected_node)
+            if collisions:
+                names = ", ".join(sorted(collisions))
+                raise ValueError(
+                    f"flattened Grants.gov XML fields collide at {canonical_path}: {names}"
+                )
+            projected.update(projected_node)
+        else:
+            projected[source_name] = projected_node
     return projected
 
 
@@ -156,6 +201,19 @@ def _project_node(
         transform["namespace"] = namespace
     if source := node.get("source"):
         transform["source"] = _project_source_pointer(source, projection)
+    if "constant" in node:
+        if "source" in node:
+            raise ValueError(f"portable XML mapping at {path} declares source and constant")
+        transform["static_value"] = node["constant"]
+    if value_map := node.get("valueMap"):
+        if "source" not in node:
+            raise ValueError(f"portable XML value map at {path} requires a source")
+        transform["value_transform"] = {
+            "type": "map_values",
+            "params": {"mappings": dict(value_map)},
+        }
+    if attributes := node.get("attributes"):
+        transform["attributes"] = _project_attributes(attributes, projection, path=path)
     if container is not None:
         transform["container"] = {
             "target": container["element"],

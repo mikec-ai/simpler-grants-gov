@@ -549,7 +549,7 @@ class XMLGenerationService:
                         if field_name in namespace_fields:
                             # Element has explicit namespace - use it for the attribute
                             namespace_prefix = namespace_fields[field_name]
-                            namespace_uri = nsmap.get(namespace_prefix, "")
+                            namespace_uri = _namespace_uri(namespace_prefix, nested_element)
                             if namespace_uri:
                                 attr_qname = f"{{{namespace_uri}}}{attr_name}"
                                 nested_element.set(attr_qname, str(attr_value))

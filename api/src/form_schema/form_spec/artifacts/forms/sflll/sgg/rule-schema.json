@@ -1,0 +1,31 @@
+{
+  "federalAgencyDepartment": {
+    "gg_pre_population": {
+      "rule": "agency_name"
+    }
+  },
+  "federalProgram": {
+    "name": {
+      "gg_pre_population": {
+        "rule": "assistance_listing_program_title"
+      }
+    },
+    "assistanceListingNumber": {
+      "gg_pre_population": {
+        "rule": "assistance_listing_number"
+      }
+    }
+  },
+  "signatureBlock": {
+    "signedDate": {
+      "gg_post_population": {
+        "rule": "current_date"
+      }
+    },
+    "signature": {
+      "gg_post_population": {
+        "rule": "signature"
+      }
+    }
+  }
+}

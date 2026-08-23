@@ -19,13 +19,11 @@
       "title": "Applicant Identifier"
     },
     "stateReceivedDate": {
-      "type": "string",
-      "format": "date",
-      "title": "State Received Date",
-      "readOnly": true
+      "$ref": "../../question-bank/application/state-received-date/schema.json",
+      "title": "State Received Date"
     },
     "stateId": {
-      "type": "string",
+      "$ref": "../../question-bank/application/state-application-identifier/schema.json",
       "minLength": 1,
       "maxLength": 30,
       "title": "State Application Identifier"
@@ -37,13 +35,13 @@
       "title": "Federal Identifier"
     },
     "agencyRoutingNumber": {
-      "type": "string",
+      "$ref": "../../question-bank/application/federal-agency-routing-number/schema.json",
       "minLength": 1,
       "maxLength": 75,
       "title": "Agency Routing Number"
     },
     "grantsGovTrackingId": {
-      "type": "string",
+      "$ref": "../../question-bank/application/previous-grants-gov-tracking-number/schema.json",
       "minLength": 13,
       "maxLength": 15,
       "title": "Previous Grants.gov Tracking ID"
