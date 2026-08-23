@@ -13,6 +13,35 @@ from typing import Any
 from urllib.parse import unquote, urlparse
 
 
+def verify_artifact_selection(*, artifacts: Path, manifest_path: Path) -> dict[str, Any]:
+    """Verify one selected artifact tree against its producer-supplied records."""
+    manifest = json.loads(manifest_path.read_text())
+    if manifest.get("contract") != "grants-form-artifact-selection/v1":
+        raise ValueError("unsupported grants form artifact selection contract")
+
+    expected = {
+        str(Path(record["path"]).relative_to("dist")): record
+        for record in manifest.get("files", [])
+    }
+    present = {
+        str(path.relative_to(artifacts))
+        for path in artifacts.rglob("*.json")
+        if path != manifest_path
+    }
+    if present != set(expected):
+        missing = sorted(set(expected) - present)
+        unexpected = sorted(present - set(expected))
+        raise ValueError(f"artifact selection mismatch; missing={missing}, unexpected={unexpected}")
+
+    for relative, record in expected.items():
+        payload = (artifacts / relative).read_bytes()
+        if len(payload) != record["size"]:
+            raise ValueError(f"artifact size mismatch: {relative}")
+        if hashlib.sha256(payload).hexdigest() != record["sha256"]:
+            raise ValueError(f"artifact digest mismatch: {relative}")
+    return manifest
+
+
 def verify_xml_profile_xsd(
     profile: dict[str, Any], *, xsd_directory: Path, source: str = "XML profile"
 ) -> Path:
