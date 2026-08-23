@@ -328,8 +328,8 @@
     },
     {
       "path": "dist/forms/rr-sf424/sgg/rule-schema.json",
-      "sha256": "b296009098ea4765629dcddc4b76c3fbb5ee27e81122cd2e134ba221d9c96356",
-      "size": 992
+      "sha256": "3ad4f82f618521088d79f3f7b7a1adb4ee7a8a5ae2cebe0468389a8bee7d6031",
+      "size": 1191
     },
     {
       "path": "dist/forms/rr-sf424/sgg/ui-schema.json",
@@ -1018,7 +1018,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "7ccdc78d9176444a22dada339ccfd1a96cfe900d"
+    "revision": "fe72b58e22fcaa6d5b72a68dc148e5aab5cdd7f8"
   },
-  "sourceBundleSha256": "bb11bd770fe35d92513e54c7bd6291bb7db48d9fdd8de71369b8f0122e8a1898"
+  "sourceBundleSha256": "ae67c35810c92a09ca1c0a9cff96c9ded89e07975098af56689f570a946aab12"
 }
