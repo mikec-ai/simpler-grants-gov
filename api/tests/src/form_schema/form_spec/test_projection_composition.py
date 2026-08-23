@@ -161,3 +161,52 @@ def test_ui_condition_projects_only_the_data_pointer() -> None:
         "then": {"visible": True},
         "otherwise": {"visible": False},
     }
+
+
+def test_ui_condition_projects_every_ref_inside_presence_disjunction() -> None:
+    projected = project_ui_schema(
+        {
+            "type": "field",
+            "definition": "/properties/additionalProfiles",
+            "conditional": {
+                "when": {
+                    "op": "any",
+                    "predicates": [
+                        {
+                            "op": "countAtLeast",
+                            "ref": {"scope": "root", "pointer": "/seniorKeyPersons"},
+                            "minimum": 99,
+                        },
+                        {
+                            "op": "present",
+                            "ref": {"scope": "root", "pointer": "/additionalProfiles"},
+                        },
+                    ],
+                },
+                "then": {"interaction": "enabled"},
+                "otherwise": {"interaction": "disabled"},
+            },
+        },
+        Projection(
+            renames={
+                "seniorKeyPersons": "senior_key_persons",
+                "additionalProfiles": "additional_profiles",
+            }
+        ),
+    )
+
+    assert projected["definition"] == "/properties/additional_profiles"
+    assert projected["conditional"]["when"] == {
+        "op": "any",
+        "predicates": [
+            {
+                "op": "countAtLeast",
+                "ref": {"scope": "root", "pointer": "/senior_key_persons"},
+                "minimum": 99,
+            },
+            {
+                "op": "present",
+                "ref": {"scope": "root", "pointer": "/additional_profiles"},
+            },
+        ],
+    }
