@@ -1,3 +1,6 @@
+/* eslint-disable testing-library/no-node-access -- parses vendored JSON artifacts, not DOM nodes */
+import fs from "node:fs";
+import path from "node:path";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -103,7 +106,85 @@ const recursiveGroupDefinition = [
   },
 ];
 
+const keyPersonSchema = JSON.parse(
+  fs.readFileSync(
+    path.resolve(
+      process.cwd(),
+      "../api/src/form_schema/form_spec/artifacts/forms/rr-key-person-expanded/schema.json",
+    ),
+    "utf8",
+  ),
+) as {
+  properties: {
+    seniorKeyPersons: { title: string; maxItems: number };
+  };
+};
+
+const keyPersonUiSchema = JSON.parse(
+  fs.readFileSync(
+    path.resolve(
+      process.cwd(),
+      "../api/src/form_schema/form_spec/artifacts/forms/rr-key-person-expanded/sgg/ui-schema.json",
+    ),
+    "utf8",
+  ),
+) as Array<{ children?: Array<{ type: string; name?: string; label?: string }> }>;
+
+const keyPersonFieldList = keyPersonUiSchema
+  .flatMap((node) => node.children ?? [])
+  .find((node) => node.type === "fieldList" && node.name === "seniorKeyPersons");
+
 describe("FieldListWidget", () => {
+  it("uses the R&R Key Person artifact for add, delete, and maximum interactions", async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    const field = keyPersonSchema.properties.seniorKeyPersons;
+
+    expect(keyPersonFieldList?.label).toBe(field.title);
+    const { rerender } = render(
+      <FieldListWidget
+        key="key-person-interactions"
+        id="seniorKeyPersons"
+        schema={{ type: "array", title: field.title }}
+        label={keyPersonFieldList?.label ?? field.title}
+        maxItems={field.maxItems}
+        value={[{ first_name: "Casey" }]}
+        groupDefinition={baseGroupDefinition}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="seniorKeyPersons"
+        onChange={onChange}
+      />,
+    );
+
+    await user.click(screen.getByRole("button", { name: /addEntry/i }));
+    expect(onChange).toHaveBeenLastCalledWith([
+      { first_name: "Casey" },
+      {},
+    ]);
+    await user.click(
+      screen.getAllByRole("button", { name: /deleteEntry/i })[1],
+    );
+    expect(onChange).toHaveBeenLastCalledWith([{ first_name: "Casey" }]);
+
+    rerender(
+      <FieldListWidget
+        key="key-person-at-maximum"
+        id="seniorKeyPersons"
+        schema={{ type: "array", title: field.title }}
+        label={keyPersonFieldList?.label ?? field.title}
+        maxItems={field.maxItems}
+        value={Array.from({ length: field.maxItems }, () => ({}))}
+        groupDefinition={baseGroupDefinition}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="seniorKeyPersons"
+        onChange={onChange}
+      />,
+    );
+    expect(screen.getByRole("button", { name: /addEntry/i })).toBeDisabled();
+  });
+
   it("requires a valid current row before adding when configured", async () => {
     const user = userEvent.setup();
     render(

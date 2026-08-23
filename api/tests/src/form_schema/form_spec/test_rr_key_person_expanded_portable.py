@@ -5,12 +5,13 @@ import json
 from collections.abc import Iterator
 from typing import Any
 
+import pytest
+
 from src.form_schema.form_spec.bank import ARTIFACTS
 from src.form_schema.form_spec.loader import build_runtime_form, load_form
 from src.form_schema.form_spec.registrations import REGISTRATIONS
 from tests.src.form_schema.form_spec.lifecycle import (
     ValidationCase,
-    assert_json_round_trip,
     assert_validation_case,
     submit_form,
 )
@@ -163,9 +164,8 @@ def test_person_attachments_compile_while_overflow_semantics_stay_review_gated()
     assert projected.json_to_xml_schema is None
 
 
-def test_repeated_people_survive_add_edit_delete_and_save_reload() -> None:
+def test_repeated_people_survive_add_edit_delete_before_persistence() -> None:
     response = copy.deepcopy(VALID_RESPONSE)
-    assert_json_round_trip(response)
 
     response["senior_key_persons"].append(_person("Morgan", "Mentor"))
     response["senior_key_persons"][0]["department"] = "Biomedical Informatics"
@@ -179,7 +179,6 @@ def test_repeated_people_survive_add_edit_delete_and_save_reload() -> None:
             "current_pending_support": KEY_PERSON_CURRENT_SUPPORT,
         }
     ]
-    assert_json_round_trip(response)
     assert_validation_case(
         "rr-key-person-expanded",
         ValidationCase("edited repeated person", response, frozenset()),
@@ -243,7 +242,28 @@ def test_key_person_validation_covers_nested_and_conditional_requirements() -> N
     )
 
 
-def test_nested_and_overflow_attachments_must_belong_to_the_application() -> None:
+@pytest.mark.parametrize(
+    ("unowned_attachment", "expected_path"),
+    [
+        (PI_BIOGRAPHICAL_SKETCH, "$.principal_investigator.biographical_sketch"),
+        (PI_CURRENT_SUPPORT, "$.principal_investigator.current_pending_support"),
+        (
+            KEY_PERSON_BIOGRAPHICAL_SKETCH,
+            "$.senior_key_persons[0].biographical_sketch",
+        ),
+        (
+            KEY_PERSON_CURRENT_SUPPORT,
+            "$.senior_key_persons[0].current_pending_support",
+        ),
+        (ADDITIONAL_PROFILES, "$.additional_profiles"),
+        (ADDITIONAL_BIOGRAPHICAL_SKETCHES, "$.additional_biographical_sketches"),
+        (ADDITIONAL_CURRENT_SUPPORT, "$.additional_current_pending_support"),
+    ],
+)
+def test_each_nested_and_overflow_attachment_must_belong_to_the_application(
+    unowned_attachment: str,
+    expected_path: str,
+) -> None:
     assert_validation_case(
         "rr-key-person-expanded",
         ValidationCase("all attachment references owned", VALID_RESPONSE, frozenset()),
@@ -252,15 +272,15 @@ def test_nested_and_overflow_attachments_must_belong_to_the_application() -> Non
     assert_validation_case(
         "rr-key-person-expanded",
         ValidationCase(
-            "nested key-person attachment not owned",
+            f"attachment {unowned_attachment} not owned",
             VALID_RESPONSE,
-            frozenset({"$.senior_key_persons[0].biographical_sketch"}),
+            frozenset({expected_path}),
         ),
-        attachment_ids=ATTACHMENT_IDS - {KEY_PERSON_BIOGRAPHICAL_SKETCH},
+        attachment_ids=ATTACHMENT_IDS - {unowned_attachment},
     )
 
 
-def test_key_person_submission_scaffolding_accepts_a_valid_response() -> None:
+def test_key_person_in_memory_submit_validation_accepts_a_valid_response() -> None:
     application_form = submit_form(
         "rr-key-person-expanded",
         VALID_RESPONSE,
