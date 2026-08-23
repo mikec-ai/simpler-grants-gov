@@ -91,8 +91,13 @@ jobs:
       - name: Verify consumer integrity and release boundary
         shell: bash
         run: |
-          PYTHONPATH=api python3 -c \
-            'from src.form_schema.form_spec.bank import verify_artifacts; verify_artifacts()'
+          PYTHONPATH=api python3 -c '
+          from pathlib import Path
+          from src.form_schema.form_spec_integrity import verify_artifact_selection, verify_artifact_xsds
+          artifacts = Path("api/src/form_schema/form_spec/artifacts")
+          verify_artifact_selection(artifacts=artifacts, manifest_path=artifacts / "artifact-manifest.json")
+          verify_artifact_xsds(artifacts=artifacts, xsd_directory=Path("api/src/services/xml_generation/xsds"))
+          '
           git diff --exit-code -- api/src/form_schema/form_spec/registrations.json
 
       - name: Prepare promotion branch

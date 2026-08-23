@@ -22,12 +22,14 @@ from __future__ import annotations
 
 import dataclasses
 import functools
-import hashlib
 import json
 from pathlib import Path
 from typing import Any
 
-from src.form_schema.form_spec.integrity import verify_artifact_xsds
+from src.form_schema.form_spec.integrity import (
+    verify_artifact_selection,
+    verify_artifact_xsds,
+)
 from src.form_schema.form_spec.projection import Projection, project_schema
 from src.form_schema.shared.shared_schema import SharedSchema, get_shared_schema_config
 
@@ -37,35 +39,6 @@ ARTIFACT_MANIFEST = ARTIFACTS / "artifact-manifest.json"
 XSD_DIRECTORY = Path(__file__).parents[2] / "services" / "xml_generation" / "xsds"
 
 BANK_SCHEMA_NAME = "question_bank_v1"
-
-
-def verify_artifact_selection(*, artifacts: Path, manifest_path: Path) -> dict[str, Any]:
-    """Verify one selected artifact tree against its producer-supplied records."""
-    manifest = json.loads(manifest_path.read_text())
-    if manifest.get("contract") != "grants-form-artifact-selection/v1":
-        raise ValueError("unsupported grants form artifact selection contract")
-
-    expected = {
-        str(Path(record["path"]).relative_to("dist")): record
-        for record in manifest.get("files", [])
-    }
-    present = {
-        str(path.relative_to(artifacts))
-        for path in artifacts.rglob("*.json")
-        if path != manifest_path
-    }
-    if present != set(expected):
-        missing = sorted(set(expected) - present)
-        unexpected = sorted(present - set(expected))
-        raise ValueError(f"artifact selection mismatch; missing={missing}, unexpected={unexpected}")
-
-    for relative, record in expected.items():
-        payload = (artifacts / relative).read_bytes()
-        if len(payload) != record["size"]:
-            raise ValueError(f"artifact size mismatch: {relative}")
-        if hashlib.sha256(payload).hexdigest() != record["sha256"]:
-            raise ValueError(f"artifact digest mismatch: {relative}")
-    return manifest
 
 
 @functools.cache
