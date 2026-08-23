@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/phs398-modular/period/schema.json",
+  "type": "object",
+  "properties": {
+    "budgetPeriodStartDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Enter the budget period start date.",
+      "title": "Start Date"
+    },
+    "budgetPeriodEndDate": {
+      "type": "string",
+      "format": "date",
+      "description": "The end date cannot be earlier than the start date. Cross-field date comparison remains a runtime review gate.",
+      "title": "End Date"
+    },
+    "directCosts": {
+      "$ref": "#/$defs/PHSModularDirectCosts",
+      "description": "Enter the direct costs requested for this period.",
+      "title": "Direct Costs",
+      "properties": {
+        "totalDirectCosts": {
+          "readOnly": true
+        },
+        "directCostLessConsortiumFandA": {
+          "description": "The source form presents modular values from $0 to $250,000. Exact option-to-wire encoding remains a review gate."
+        }
+      }
+    },
+    "indirectCosts": {
+      "$ref": "#/$defs/PHSModularIndirectCosts",
+      "description": "Enter the indirect costs requested for this period.",
+      "title": "Indirect Costs",
+      "properties": {
+        "totalIndirectCosts": {
+          "readOnly": true
+        }
+      }
+    },
+    "totalDirectAndIndirectCosts": {
+      "$ref": "#/$defs/ResearchBudgetTotalAmount15",
+      "description": "Total direct and indirect costs requested for the period.",
+      "title": "Total Direct and Indirect Costs",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "directCosts",
+    "totalDirectAndIndirectCosts"
+  ],
+  "description": "A dated period in a PHS 398 modular budget.",
+  "title": "Budget Period",
+  "$defs": {
+    "ResearchBudgetAmount14": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 15,
+      "pattern": "^(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    },
+    "ResearchBudgetTotalAmount15": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
+    },
+    "PHSModularDirectCosts": {
+      "type": "object",
+      "properties": {
+        "directCostLessConsortiumFandA": {
+          "$ref": "#/$defs/ResearchBudgetAmount14",
+          "description": "Enter direct costs excluding consortium indirect costs.",
+          "title": "Direct Cost less Consortium Indirect (F&A)"
+        },
+        "consortiumFandA": {
+          "$ref": "#/$defs/ResearchBudgetAmount14",
+          "description": "Enter consortium indirect costs.",
+          "title": "Consortium Indirect (F&A)"
+        },
+        "totalDirectCosts": {
+          "$ref": "#/$defs/ResearchBudgetTotalAmount15",
+          "description": "Total direct costs requested for the period.",
+          "title": "Total Funds Requested for Direct Costs"
+        }
+      },
+      "required": [
+        "directCostLessConsortiumFandA",
+        "totalDirectCosts"
+      ],
+      "description": "Direct costs requested for one modular budget period."
+    },
+    "ResearchBudgetIndirectRate": {
+      "type": "string",
+      "pattern": "^(?:\\d{1,3}|\\d{1,3}[.]\\d|\\d{1,3}[.]\\d{2})$"
+    },
+    "PHSModularIndirectCostItem": {
+      "type": "object",
+      "properties": {
+        "indirectCostType": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "Describe the type of indirect cost.",
+          "title": "Indirect (F&A) Type"
+        },
+        "indirectCostRate": {
+          "$ref": "#/$defs/ResearchBudgetIndirectRate",
+          "description": "Enter the indirect-cost rate as a percentage.",
+          "title": "Indirect (F&A) Rate (%)"
+        },
+        "indirectCostBase": {
+          "$ref": "#/$defs/ResearchBudgetAmount14",
+          "description": "Enter the amount to which the indirect-cost rate applies.",
+          "title": "Indirect (F&A) Base ($)"
+        },
+        "indirectCostFundsRequested": {
+          "$ref": "#/$defs/ResearchBudgetAmount14",
+          "description": "Enter the indirect-cost funds requested for this rate.",
+          "title": "Funds Requested ($)"
+        }
+      },
+      "required": [
+        "indirectCostType",
+        "indirectCostFundsRequested"
+      ],
+      "description": "One indirect-cost rate and base used in a modular budget period."
+    },
+    "PHSModularIndirectCosts": {
+      "type": "object",
+      "properties": {
+        "indirectCostItems": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PHSModularIndirectCostItem"
+          },
+          "maxItems": 4,
+          "description": "List the indirect-cost rates and requested amounts for the period.",
+          "title": "Indirect (F&A) Costs"
+        },
+        "cognizantFederalAgency": {
+          "type": "string",
+          "maxLength": 180,
+          "description": "Enter the cognizant federal agency, point of contact, and telephone number.",
+          "title": "Cognizant Agency (Agency Name, POC Name and Phone Number)"
+        },
+        "indirectCostAgreementDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Enter the indirect-cost rate agreement date.",
+          "title": "Indirect (F&A) Rate Agreement Date"
+        },
+        "totalIndirectCosts": {
+          "$ref": "#/$defs/ResearchBudgetTotalAmount15",
+          "description": "Total indirect costs requested for the period.",
+          "title": "Total Funds Requested for Indirect Costs"
+        }
+      },
+      "description": "Indirect costs requested for one modular budget period."
+    }
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phs398-modular-budget/schema.json",
+  "type": "object",
+  "properties": {
+    "periods": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/budget/phs398-modular/period/schema.json",
+        "properties": {
+          "directCosts": {
+            "properties": {
+              "totalDirectCosts": {
+                "readOnly": true
+              },
+              "directCostLessConsortiumFandA": {
+                "description": "The source form presents modular values from $0 to $250,000. Exact option-to-wire encoding remains a review gate."
+              }
+            }
+          },
+          "indirectCosts": {
+            "properties": {
+              "totalIndirectCosts": {
+                "readOnly": true
+              }
+            }
+          },
+          "totalDirectAndIndirectCosts": {
+            "readOnly": true
+          },
+          "budgetPeriodEndDate": {
+            "description": "The end date cannot be earlier than the start date. Cross-field date comparison remains a runtime review gate."
+          }
+        }
+      },
+      "maxItems": 5,
+      "title": "Budget Period"
+    },
+    "cumulativeBudgetInformation": {
+      "$ref": "../../question-bank/budget/phs398-modular/cumulative-summary/schema.json",
+      "title": "Cumulative Budget Information",
+      "properties": {
+        "cumulativeDirectCostLessConsortiumFandA": {
+          "readOnly": true
+        },
+        "cumulativeConsortiumFandA": {
+          "readOnly": true
+        },
+        "cumulativeTotalDirectCosts": {
+          "readOnly": true
+        },
+        "cumulativeTotalIndirectCosts": {
+          "readOnly": true
+        },
+        "cumulativeTotalDirectAndIndirectCosts": {
+          "readOnly": true
+        }
+      }
+    },
+    "personnelJustification": {
+      "$ref": "../../question-bank/budget/phs398-modular/personnel-justification/schema.json",
+      "title": "Personnel Justification"
+    },
+    "consortiumJustification": {
+      "$ref": "../../question-bank/budget/phs398-modular/consortium-justification/schema.json",
+      "title": "Consortium Justification"
+    },
+    "additionalNarrativeJustification": {
+      "$ref": "../../question-bank/budget/phs398-modular/additional-narrative-justification/schema.json",
+      "title": "Additional Narrative Justification"
+    }
+  },
+  "required": [
+    "cumulativeBudgetInformation"
+  ],
+  "description": "PHS 398 Modular Budget, Grants.gov form version 1.2."
+}

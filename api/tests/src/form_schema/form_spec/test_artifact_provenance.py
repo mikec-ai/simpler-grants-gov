@@ -37,6 +37,7 @@ def test_vendored_artifacts_match_the_pinned_form_spec_build():
         "rr-key-person-expanded",
         "performance-site",
         "rr-other-project-information",
+        "phs398-modular-budget",
     ]
 
 

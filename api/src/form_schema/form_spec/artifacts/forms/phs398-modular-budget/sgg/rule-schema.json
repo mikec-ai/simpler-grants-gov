@@ -1,0 +1,100 @@
+{
+  "periods": {
+    "gg_type": "array",
+    "directCosts": {
+      "totalDirectCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.directCostLessConsortiumFandA",
+            "@THIS.consortiumFandA"
+          ],
+          "order": 3
+        }
+      }
+    },
+    "indirectCosts": {
+      "totalIndirectCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.indirectCostItems[*].indirectCostFundsRequested"
+          ],
+          "order": 4
+        }
+      }
+    },
+    "totalDirectAndIndirectCosts": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "@THIS.directCosts.totalDirectCosts",
+          "@THIS.indirectCosts.totalIndirectCosts"
+        ],
+        "order": 7
+      }
+    }
+  },
+  "personnelJustification": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "consortiumJustification": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "additionalNarrativeJustification": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "cumulativeBudgetInformation": {
+    "cumulativeDirectCostLessConsortiumFandA": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "periods[*].directCosts.directCostLessConsortiumFandA"
+        ],
+        "order": 2
+      }
+    },
+    "cumulativeConsortiumFandA": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "periods[*].directCosts.consortiumFandA"
+        ],
+        "order": 1
+      }
+    },
+    "cumulativeTotalDirectCosts": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "periods[*].directCosts.totalDirectCosts"
+        ],
+        "order": 5
+      }
+    },
+    "cumulativeTotalIndirectCosts": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "periods[*].indirectCosts.totalIndirectCosts"
+        ],
+        "order": 6
+      }
+    },
+    "cumulativeTotalDirectAndIndirectCosts": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "periods[*].totalDirectAndIndirectCosts"
+        ],
+        "order": 8
+      }
+    }
+  }
+}

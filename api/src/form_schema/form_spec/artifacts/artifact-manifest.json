@@ -102,6 +102,31 @@
       "size": 5684
     },
     {
+      "path": "dist/forms/phs398-modular-budget/evidence.json",
+      "sha256": "769127436037687b05687b396255a64937e354f4756a25cc3a8d4b42671fc37e",
+      "size": 1932
+    },
+    {
+      "path": "dist/forms/phs398-modular-budget/manifest.json",
+      "sha256": "9cb9d943a08e90d5a3943a72a24ca8f0a3e33d10c56a778956f0a66bdb4146f0",
+      "size": 629
+    },
+    {
+      "path": "dist/forms/phs398-modular-budget/schema.json",
+      "sha256": "db2756759daa673d1d2844133c9b3550424d86022c727bfc35272ad2e5161446",
+      "size": 2528
+    },
+    {
+      "path": "dist/forms/phs398-modular-budget/sgg/rule-schema.json",
+      "sha256": "42c7ebe654de9d559453f244d6b6beb432c7f99234004452afc69e9cee970737",
+      "size": 2290
+    },
+    {
+      "path": "dist/forms/phs398-modular-budget/sgg/ui-schema.json",
+      "sha256": "6e752262ddc006ffdcb30baa691b2b60fbc0fb0cfeb731bec91b97f31443733c",
+      "size": 4355
+    },
+    {
       "path": "dist/forms/project-abstract-summary/evidence.json",
       "sha256": "6f375ab7f9b8514fb7b8454e6038c8591572c87c5a80a1f2059799d2f1844e20",
       "size": 1423
@@ -572,6 +597,31 @@
       "size": 799
     },
     {
+      "path": "dist/question-bank/budget/phs398-modular/additional-narrative-justification/schema.json",
+      "sha256": "e0c16ebb958f747c6c1f7f1e4cbdc81927ea0ba74ceb80db159786c9ccb43a3d",
+      "size": 275
+    },
+    {
+      "path": "dist/question-bank/budget/phs398-modular/consortium-justification/schema.json",
+      "sha256": "3166fd77c72b82b82dfff64d82e1f490a9c1e9ba9aa3f3029adba0a05a6d48d5",
+      "size": 256
+    },
+    {
+      "path": "dist/question-bank/budget/phs398-modular/cumulative-summary/schema.json",
+      "sha256": "12c00aa9fd8cd88c5f12aae7870929d7a578d267bd04abe64787b3ebad6c8062",
+      "size": 1831
+    },
+    {
+      "path": "dist/question-bank/budget/phs398-modular/period/schema.json",
+      "sha256": "c567f12f37e2cf93302f150165d1e75cb42c16bbbd21c6e52ed349d723a72a89",
+      "size": 5618
+    },
+    {
+      "path": "dist/question-bank/budget/phs398-modular/personnel-justification/schema.json",
+      "sha256": "b8ce0f629b1909199d0cd76377aca0b52f48bccd15e4cb3b94aee8ea3fa87df3",
+      "size": 254
+    },
+    {
       "path": "dist/question-bank/budget/research/additional-equipment/schema.json",
       "sha256": "d1290d3e031dbae8ae894a6743d4e3b606bf119d05da27b442c1ddf6c860ff4f",
       "size": 272
@@ -956,13 +1006,14 @@
       "rr-sf424-multi-project-cover",
       "rr-key-person-expanded",
       "performance-site",
-      "rr-other-project-information"
+      "rr-other-project-information",
+      "phs398-modular-budget"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "07ff64cec2897b0747109d545d1550835481458b"
+    "revision": "e10e78da0db565ebe5333f9e3a387cf142bd5fa4"
   },
-  "sourceBundleSha256": "8bac868352b3db6bb5c93518a26d19b317e0e0cc794ecf224c2eec26a54e3017"
+  "sourceBundleSha256": "57a98238302d6d5673682e086d3309c305fb0c9edc3a0fcfcd55e78619a417a2"
 }

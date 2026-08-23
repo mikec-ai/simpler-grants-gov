@@ -1,0 +1,127 @@
+[
+  {
+    "type": "section",
+    "name": "periods",
+    "label": "Budget Periods",
+    "children": [
+      {
+        "type": "fieldList",
+        "name": "periods",
+        "label": "Budget Period",
+        "definition": "/properties/periods",
+        "children": [
+          {
+            "type": "field",
+            "definition": "/properties/periods/items/properties/budgetPeriodStartDate"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/periods/items/properties/budgetPeriodEndDate"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/periods/items/properties/directCosts/properties/directCostLessConsortiumFandA"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/periods/items/properties/directCosts/properties/consortiumFandA"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/periods/items/properties/directCosts/properties/totalDirectCosts"
+          },
+          {
+            "type": "fieldList",
+            "name": "indirectCostItems",
+            "label": "Indirect (F&A) Costs",
+            "definition": "/properties/periods/items/properties/indirectCosts/properties/indirectCostItems",
+            "children": [
+              {
+                "type": "field",
+                "definition": "/properties/periods/items/properties/indirectCosts/properties/indirectCostItems/items/properties/indirectCostType"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/periods/items/properties/indirectCosts/properties/indirectCostItems/items/properties/indirectCostRate"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/periods/items/properties/indirectCosts/properties/indirectCostItems/items/properties/indirectCostBase"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/periods/items/properties/indirectCosts/properties/indirectCostItems/items/properties/indirectCostFundsRequested"
+              }
+            ],
+            "description": "List the indirect-cost rates and requested amounts for the period."
+          },
+          {
+            "type": "field",
+            "definition": "/properties/periods/items/properties/indirectCosts/properties/cognizantFederalAgency"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/periods/items/properties/indirectCosts/properties/indirectCostAgreementDate"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/periods/items/properties/indirectCosts/properties/totalIndirectCosts"
+          },
+          {
+            "type": "null",
+            "definition": "/properties/periods/items/properties/totalDirectAndIndirectCosts"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "cumulative",
+    "label": "Cumulative Budget Information",
+    "children": [
+      {
+        "type": "null",
+        "definition": "/properties/cumulativeBudgetInformation/properties/cumulativeDirectCostLessConsortiumFandA"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/cumulativeBudgetInformation/properties/cumulativeConsortiumFandA"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/cumulativeBudgetInformation/properties/cumulativeTotalDirectCosts"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/cumulativeBudgetInformation/properties/cumulativeTotalIndirectCosts"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/cumulativeBudgetInformation/properties/cumulativeTotalDirectAndIndirectCosts"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "justifications",
+    "label": "Budget Justifications",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/personnelJustification",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/consortiumJustification",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/additionalNarrativeJustification",
+        "widget": "Attachment"
+      }
+    ]
+  }
+]
