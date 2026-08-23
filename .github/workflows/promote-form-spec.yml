@@ -127,17 +127,17 @@ jobs:
           body="$(python3 -c '
           import json, os
           receipt = json.load(open(os.environ["RECEIPT"]))
-          added = ", ".join(f"`{value}`" for value in receipt["addedForms"]) or "none"
+          added = ", ".join(receipt["addedForms"]) or "none"
           print(f"""## Automated banking promotion
 
-          - Producer: `{receipt["source"]["repository"]}`
-          - Immutable revision: `{receipt["source"]["revision"]}`
-          - Bundle SHA-256: `{receipt["sourceBundleSha256"]}`
+          - Producer: {receipt["source"]["repository"]}
+          - Immutable revision: {receipt["source"]["revision"]}
+          - Bundle SHA-256: {receipt["sourceBundleSha256"]}
           - Added forms: {added}
           - Selected forms: {len(receipt["selection"])}
           - Selected artifacts: {receipt["artifactCount"]}
 
-          The producer preflight, bundle verification, selected-artifact integrity check, and exact-XSD pin checks passed. This PR does not modify `registrations.json`; semantic review, instructions, accessibility, DB/browser gates, and production registration remain separate approvals.
+          The producer preflight, bundle verification, selected-artifact integrity check, and exact-XSD pin checks passed. This PR does not modify registrations.json; semantic review, instructions, accessibility, DB/browser gates, and production registration remain separate approvals.
           """)
           ')"
           existing="$(gh pr list --head "$PROMOTION_BRANCH" --state open --json number --jq '.[0].number // empty')"
