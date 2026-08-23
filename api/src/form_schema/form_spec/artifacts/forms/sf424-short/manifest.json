@@ -2,15 +2,12 @@
   "contract": "resolved-form-package/v1",
   "form": {
     "id": "sf424-short",
-    "formId": "cf355a4d-d840-43fd-a78f-729edf41ab4c",
     "legacyFormId": 711,
     "formName": "Application for Federal Domestic Assistance-Short Organizational (SF-424)",
     "shortFormName": "SF424_Short_3_0",
     "formVersion": "3.0",
     "agencyCode": "SGG",
-    "ombNumber": "4040-0003",
-    "formType": "SF424_SHORT",
-    "sggVersion": "1.0"
+    "ombNumber": "4040-0003"
   },
   "artifacts": {
     "schema.json": "generated",

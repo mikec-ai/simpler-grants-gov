@@ -61,19 +61,16 @@ def test_project_abstract_summary_matches_existing_simpler_behavior() -> None:
     assert parity.behavioral_differences(resolved_projected, resolved_golden, payloads) == []
 
 
-def test_project_abstract_summary_identity_and_evidence_are_exact() -> None:
+def test_project_abstract_summary_portable_metadata_and_evidence_are_exact() -> None:
     projected = load_form("project-abstract-summary")
     assert projected.meta == {
         "id": "project-abstract-summary",
-        "formId": "bf683068-23a4-43fa-ac7a-0f046b83cb14",
         "legacyFormId": 591,
         "formName": "Project Abstract Summary",
         "shortFormName": "Project_AbstractSummary_2_0",
         "formVersion": "2.0",
         "agencyCode": "SGG",
         "ombNumber": "4040-0019",
-        "formType": "ProjectAbstractSummary",
-        "sggVersion": "1.0",
     }
 
     evidence = json.loads(

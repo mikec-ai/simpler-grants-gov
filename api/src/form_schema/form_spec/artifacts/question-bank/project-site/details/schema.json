@@ -17,7 +17,48 @@
     },
     "address": {
       "$ref": "../../../question-bank/generics/address/schema.json",
-      "title": "Address"
+      "title": "Address",
+      "required": [
+        "street1",
+        "city",
+        "country"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "country": {
+                "const": "USA: UNITED STATES"
+              }
+            },
+            "required": [
+              "country"
+            ]
+          },
+          "then": {
+            "required": [
+              "zipCode"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "country": {
+                "const": "USA: UNITED STATES"
+              }
+            },
+            "required": [
+              "country"
+            ]
+          },
+          "then": {
+            "required": [
+              "state"
+            ]
+          }
+        }
+      ]
     },
     "congressionalDistrict": {
       "$ref": "../../../question-bank/project/congressional-district/schema.json",

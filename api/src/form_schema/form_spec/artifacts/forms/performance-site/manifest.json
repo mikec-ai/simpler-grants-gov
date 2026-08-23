@@ -2,15 +2,12 @@
   "contract": "resolved-form-package/v1",
   "form": {
     "id": "performance-site",
-    "formId": "3dac12c6-ef6f-573e-8958-fedd16b3a8d2",
     "legacyFormId": 723,
     "formName": "Project/Performance Site Location(s)",
     "shortFormName": "PerformanceSite_4_0",
     "formVersion": "4.0",
     "agencyCode": "GRANTS_GOV",
-    "ombNumber": "4040-0010",
-    "formType": "PerformanceSite",
-    "sggVersion": "1.0"
+    "ombNumber": "4040-0010"
   },
   "artifacts": {
     "schema.json": "generated",

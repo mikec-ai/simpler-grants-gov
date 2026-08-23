@@ -2,15 +2,12 @@
   "contract": "resolved-form-package/v1",
   "form": {
     "id": "project-narrative-attachments",
-    "formId": "32165da2-354d-42c0-a986-cf4f2f350039",
     "legacyFormId": 539,
     "formName": "Project Narrative Attachment Form",
     "shortFormName": "ProjectNarrativeAttachments_1_2",
     "formVersion": "1.2",
     "agencyCode": "SGG",
-    "ombNumber": "",
-    "formType": "PROJECT_NARRATIVE_ATTACHMENT",
-    "sggVersion": "1.0"
+    "ombNumber": ""
   },
   "artifacts": {
     "schema.json": "generated",

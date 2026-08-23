@@ -309,323 +309,6 @@
       "description": "US State or Territory Code",
       "title": "State"
     },
-    "CountryCode": {
-      "type": "string",
-      "enum": [
-        "AFG: AFGHANISTAN",
-        "XQZ: AKROTIRI",
-        "ALB: ALBANIA",
-        "DZA: ALGERIA",
-        "AND: ANDORRA",
-        "AGO: ANGOLA",
-        "AIA: ANGUILLA",
-        "ATA: ANTARCTICA",
-        "ATG: ANTIGUA AND BARBUDA",
-        "ARG: ARGENTINA",
-        "ARM: ARMENIA",
-        "ABW: ARUBA",
-        "XAC: ASHMORE AND CARTIER ISLANDS",
-        "AUS: AUSTRALIA",
-        "AUT: AUSTRIA",
-        "AZE: AZERBAIJAN",
-        "BHS: BAHAMAS, THE",
-        "BHR: BAHRAIN",
-        "BGD: BANGLADESH",
-        "BRB: BARBADOS",
-        "XBI: BASSAS DA INDIA",
-        "BLR: BELARUS",
-        "BEL: BELGIUM",
-        "BLZ: BELIZE",
-        "BEN: BENIN",
-        "BMU: BERMUDA",
-        "BTN: BHUTAN",
-        "BOL: BOLIVIA",
-        "BES: BONAIRE, SINT EUSTATIUS, AND SABA",
-        "BIH: BOSNIA AND HERZEGOVINA",
-        "BWA: BOTSWANA",
-        "BVT: BOUVET ISLAND",
-        "BRA: BRAZIL",
-        "IOT: BRITISH INDIAN OCEAN TERRITORY",
-        "BRN: BRUNEI",
-        "BGR: BULGARIA",
-        "BFA: BURKINA FASO",
-        "MMR: BURMA",
-        "BDI: BURUNDI",
-        "CPV: CABO VERDE",
-        "KHM: CAMBODIA",
-        "CMR: CAMEROON",
-        "CAN: CANADA",
-        "CYM: CAYMAN ISLANDS",
-        "CAF: CENTRAL AFRICAN REPUBLIC",
-        "TCD: CHAD",
-        "CHL: CHILE",
-        "CHN: CHINA",
-        "CXR: CHRISTMAS ISLAND",
-        "CPT: CLIPPERTON ISLAND",
-        "CCK: COCOS (KEELING) ISLANDS",
-        "COL: COLOMBIA",
-        "COM: COMOROS",
-        "COG: CONGO (BRAZZAVILLE)",
-        "COD: CONGO (KINSHASA)",
-        "COK: COOK ISLANDS",
-        "XCS: CORAL SEA ISLANDS",
-        "CRI: COSTA RICA",
-        "CIV: CÔTE D’IVOIRE",
-        "HRV: CROATIA",
-        "CUB: CUBA",
-        "CUW: CURAÇAO",
-        "CYP: CYPRUS",
-        "CZE: CZECHIA",
-        "DNK: DENMARK",
-        "XXD: DHEKELIA",
-        "DGA: DIEGO GARCIA",
-        "DJI: DJIBOUTI",
-        "DMA: DOMINICA",
-        "DOM: DOMINICAN REPUBLIC",
-        "ECU: ECUADOR",
-        "EGY: EGYPT",
-        "SLV: EL SALVADOR",
-        "XAZ: ENTITY 1",
-        "XCR: ENTITY 2",
-        "XCY: ENTITY 3",
-        "XKM: ENTITY 4",
-        "XKN: ENTITY 5",
-        "AX3: ENTITY 6",
-        "GNQ: EQUATORIAL GUINEA",
-        "ERI: ERITREA",
-        "EST: ESTONIA",
-        "SWZ: ESWATINI",
-        "ETH: ETHIOPIA",
-        "XEU: EUROPA ISLAND",
-        "FLK: FALKLAND ISLANDS (ISLAS MALVINAS)",
-        "FRO: FAROE ISLANDS",
-        "FJI: FIJI",
-        "FIN: FINLAND",
-        "FRA: FRANCE",
-        "GUF: FRENCH GUIANA",
-        "PYF: FRENCH POLYNESIA",
-        "ATF: FRENCH SOUTHERN AND ANTARCTIC LANDS",
-        "GAB: GABON",
-        "GMB: GAMBIA, THE",
-        "XGZ: GAZA STRIP",
-        "GEO: GEORGIA",
-        "DEU: GERMANY",
-        "GHA: GHANA",
-        "GIB: GIBRALTAR",
-        "XGL: GLORIOSO ISLANDS",
-        "GRC: GREECE",
-        "GRL: GREENLAND",
-        "GRD: GRENADA",
-        "GLP: GUADELOUPE",
-        "GTM: GUATEMALA",
-        "GGY: GUERNSEY",
-        "GIN: GUINEA",
-        "GNB: GUINEA-BISSAU",
-        "GUY: GUYANA",
-        "HTI: HAITI",
-        "HMD: HEARD ISLAND AND MCDONALD ISLANDS",
-        "HND: HONDURAS",
-        "HKG: HONG KONG",
-        "HUN: HUNGARY",
-        "ISL: ICELAND",
-        "IND: INDIA",
-        "IDN: INDONESIA",
-        "IRN: IRAN",
-        "IRQ: IRAQ",
-        "IRL: IRELAND",
-        "IMN: ISLE OF MAN",
-        "ISR: ISRAEL",
-        "ITA: ITALY",
-        "JAM: JAMAICA",
-        "XJM: JAN MAYEN",
-        "JPN: JAPAN",
-        "JEY: JERSEY",
-        "JOR: JORDAN",
-        "XJN: JUAN DE NOVA ISLAND",
-        "KAZ: KAZAKHSTAN",
-        "KEN: KENYA",
-        "KIR: KIRIBATI",
-        "PRK: KOREA, NORTH",
-        "KOR: KOREA, SOUTH",
-        "XKS: KOSOVO",
-        "KWT: KUWAIT",
-        "KGZ: KYRGYZSTAN",
-        "LAO: LAOS",
-        "LVA: LATVIA",
-        "LBN: LEBANON",
-        "LSO: LESOTHO",
-        "LBR: LIBERIA",
-        "LBY: LIBYA",
-        "LIE: LIECHTENSTEIN",
-        "LTU: LITHUANIA",
-        "LUX: LUXEMBOURG",
-        "MAC: MACAU",
-        "MDG: MADAGASCAR",
-        "MWI: MALAWI",
-        "MYS: MALAYSIA",
-        "MDV: MALDIVES",
-        "MLI: MALI",
-        "MLT: MALTA",
-        "MTQ: MARTINIQUE",
-        "MRT: MAURITANIA",
-        "MUS: MAURITIUS",
-        "MYT: MAYOTTE",
-        "MEX: MEXICO",
-        "MDA: MOLDOVA",
-        "MCO: MONACO",
-        "MNG: MONGOLIA",
-        "MNE: MONTENEGRO",
-        "MSR: MONTSERRAT",
-        "MAR: MOROCCO",
-        "MOZ: MOZAMBIQUE",
-        "NAM: NAMIBIA",
-        "NRU: NAURU",
-        "NPL: NEPAL",
-        "NLD: NETHERLANDS",
-        "NCL: NEW CALEDONIA",
-        "NZL: NEW ZEALAND",
-        "NIC: NICARAGUA",
-        "NER: NIGER",
-        "NGA: NIGERIA",
-        "NIU: NIUE",
-        "NFK: NORFOLK ISLAND",
-        "MKD: NORTH MACEDONIA",
-        "NOR: NORWAY",
-        "OMN: OMAN",
-        "PAK: PAKISTAN",
-        "PAN: PANAMA",
-        "PNG: PAPUA NEW GUINEA",
-        "XPR: PARACEL ISLANDS",
-        "PRY: PARAGUAY",
-        "PER: PERU",
-        "PHL: PHILIPPINES",
-        "PCN: PITCAIRN ISLANDS",
-        "POL: POLAND",
-        "PRT: PORTUGAL",
-        "QAT: QATAR",
-        "REU: REUNION",
-        "ROU: ROMANIA",
-        "RUS: RUSSIA",
-        "RWA: RWANDA",
-        "BLM: SAINT BARTHELEMY",
-        "SHN: SAINT HELENA, ASCENSION, AND TRISTAN DA CUNHA",
-        "KNA: SAINT KITTS AND NEVIS",
-        "LCA: SAINT LUCIA",
-        "MAF: SAINT MARTIN",
-        "SPM: SAINT PIERRE AND MIQUELON",
-        "VCT: SAINT VINCENT AND THE GRENADINES",
-        "WSM: SAMOA",
-        "SMR: SAN MARINO",
-        "STP: SAO TOME AND PRINCIPE",
-        "SAU: SAUDI ARABIA",
-        "SEN: SENEGAL",
-        "SRB: SERBIA",
-        "SYC: SEYCHELLES",
-        "SLE: SIERRA LEONE",
-        "SGP: SINGAPORE",
-        "SXM: SINT MAARTEN",
-        "SVK: SLOVAKIA",
-        "SVN: SLOVENIA",
-        "SLB: SOLOMON ISLANDS",
-        "SOM: SOMALIA",
-        "ZAF: SOUTH AFRICA",
-        "SGS: SOUTH GEORGIA AND SOUTH SANDWICH ISLANDS",
-        "SSD: SOUTH SUDAN",
-        "ESP: SPAIN",
-        "XSP: SPRATLY ISLANDS",
-        "LKA: SRI LANKA",
-        "SDN: SUDAN",
-        "SUR: SURINAME",
-        "XSV: SVALBARD",
-        "SWE: SWEDEN",
-        "CHE: SWITZERLAND",
-        "SYR: SYRIA",
-        "TWN: TAIWAN",
-        "TJK: TAJIKISTAN",
-        "TZA: TANZANIA",
-        "THA: THAILAND",
-        "TLS: TIMOR-LESTE",
-        "TGO: TOGO",
-        "TKL: TOKELAU",
-        "TON: TONGA",
-        "TTO: TRINIDAD AND TOBAGO",
-        "XTR: TROMELIN ISLAND",
-        "TUN: TUNISIA",
-        "TUR: TURKEY",
-        "TKM: TURKMENISTAN",
-        "TCA: TURKS AND CAICOS ISLANDS",
-        "TUV: TUVALU",
-        "UGA: UGANDA",
-        "UKR: UKRAINE",
-        "ARE: UNITED ARAB EMIRATES",
-        "GBR: UNITED KINGDOM",
-        "USA: UNITED STATES",
-        "URY: URUGUAY",
-        "UZB: UZBEKISTAN",
-        "VUT: VANUATU",
-        "VAT: VATICAN CITY",
-        "VEN: VENEZUELA",
-        "VNM: VIETNAM",
-        "VGB: VIRGIN ISLANDS, BRITISH",
-        "WLF: WALLIS AND FUTUNA",
-        "XWB: WEST BANK",
-        "ESH: WESTERN SAHARA",
-        "YEM: YEMEN",
-        "ZMB: ZAMBIA",
-        "ZWE: ZIMBABWE"
-      ],
-      "description": "Country Code",
-      "title": "Country"
-    },
-    "MultiProjectOptionalAddress": {
-      "type": "object",
-      "properties": {
-        "street1": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 55,
-          "title": "Street 1"
-        },
-        "street2": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 55,
-          "title": "Street 2"
-        },
-        "city": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 35,
-          "title": "City"
-        },
-        "county": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 30,
-          "title": "County/Parish"
-        },
-        "state": {
-          "$ref": "#/$defs/StateCode",
-          "title": "State"
-        },
-        "province": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 30,
-          "title": "Province"
-        },
-        "country": {
-          "$ref": "#/$defs/CountryCode",
-          "title": "Country"
-        },
-        "zipCode": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 30,
-          "title": "Zip / Postal Code"
-        }
-      }
-    },
     "MultiProjectCountryControlledAddress": {
       "type": "object",
       "properties": {
@@ -642,35 +325,40 @@
       },
       "allOf": [
         {
-          "$ref": "#/$defs/MultiProjectOptionalAddress"
+          "$ref": "../../question-bank/generics/address/schema.json"
         }
       ]
     },
-    "MultiProjectApplicantOrganization": {
+    "ResearchApplicantOrganization": {
       "type": "object",
       "properties": {
         "organizationName": {
           "$ref": "../../question-bank/primary-org/legal-name/schema.json",
+          "description": "Enter the applicant organization's legal name.",
           "title": "Organization Name"
         },
         "address": {
-          "$ref": "#/$defs/MultiProjectCountryControlledAddress",
+          "$ref": "../../question-bank/generics/address/schema.json",
+          "description": "Enter the applicant organization's address.",
           "title": "Address"
         },
         "department": {
           "type": "string",
           "minLength": 1,
           "maxLength": 100,
+          "description": "Enter the department.",
           "title": "Department"
         },
         "division": {
           "type": "string",
           "minLength": 1,
           "maxLength": 100,
+          "description": "Enter the division.",
           "title": "Division"
         },
         "samUei": {
           "$ref": "../../question-bank/primary-org/uei/schema.json",
+          "description": "The applicant organization's Unique Entity Identifier.",
           "title": "SAM UEI"
         },
         "employerId": {
@@ -678,84 +366,86 @@
           "minLength": 9,
           "maxLength": 30
         }
-      }
+      },
+      "description": "The applicant organization information required by an R&R cover form."
     },
-    "MultiProjectOptionalPersonName": {
+    "MultiProjectApplicantOrganization": {
       "type": "object",
       "properties": {
-        "prefix": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 10,
-          "title": "Prefix"
-        },
-        "firstName": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 35,
-          "title": "First Name"
-        },
-        "middleName": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 25,
-          "title": "Middle Name"
-        },
-        "lastName": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 60,
-          "title": "Last Name"
-        },
-        "suffix": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 10,
-          "title": "Suffix"
+        "address": {
+          "$ref": "#/$defs/MultiProjectCountryControlledAddress"
         }
-      }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/ResearchApplicantOrganization"
+        }
+      ]
     },
-    "MultiProjectApplicationContact": {
+    "ResearchApplicationContact": {
       "type": "object",
       "properties": {
         "name": {
-          "$ref": "#/$defs/MultiProjectOptionalPersonName",
+          "$ref": "../../question-bank/generics/person-name/schema.json",
+          "description": "Enter the contact person's name.",
           "title": "Name"
         },
         "address": {
-          "$ref": "#/$defs/MultiProjectCountryControlledAddress",
+          "$ref": "../../question-bank/generics/address/schema.json",
+          "description": "Enter the contact person's address.",
           "title": "Address"
         },
         "title": {
           "$ref": "../../question-bank/generics/contact-title/schema.json",
+          "description": "Enter the contact person's title.",
           "title": "Title"
         },
         "phone": {
           "$ref": "../../question-bank/generics/phone/schema.json",
+          "description": "Enter the daytime telephone number.",
           "title": "Telephone Number"
         },
         "fax": {
           "$ref": "../../question-bank/generics/phone/schema.json",
+          "description": "Enter the fax number.",
           "title": "Fax Number"
         },
         "email": {
           "$ref": "../../question-bank/generics/email/schema.json",
+          "description": "Enter a valid email address.",
           "title": "Email"
         }
-      }
+      },
+      "description": "The person to contact about the Research and Related application."
+    },
+    "MultiProjectApplicationContact": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/$defs/MultiProjectCountryControlledAddress"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "#/$defs/ResearchApplicationContact"
+        }
+      ]
     },
     "MultiProjectApplicant": {
       "type": "object",
       "properties": {
         "organizationInfo": {
-          "$ref": "#/$defs/MultiProjectApplicantOrganization",
-          "title": "Organization Information"
+          "$ref": "#/$defs/MultiProjectApplicantOrganization"
         },
         "contactPersonInfo": {
-          "$ref": "#/$defs/MultiProjectApplicationContact",
-          "title": "Contact Person Information"
+          "$ref": "#/$defs/MultiProjectApplicationContact"
         }
-      }
+      },
+      "allOf": [
+        {
+          "$ref": "../../question-bank/research-application/applicant/schema.json"
+        }
+      ]
     },
     "ApplicantTypeCode": {
       "type": "string",
@@ -989,54 +679,22 @@
       },
       "allOf": [
         {
-          "$ref": "#/$defs/MultiProjectOptionalAddress"
+          "$ref": "../../question-bank/generics/address/schema.json"
         }
       ]
     },
     "MultiProjectPrincipalInvestigator": {
       "type": "object",
       "properties": {
-        "name": {
-          "$ref": "#/$defs/MultiProjectOptionalPersonName",
-          "title": "Name"
-        },
-        "title": {
-          "$ref": "../../question-bank/generics/contact-title/schema.json",
-          "title": "Position / Title"
-        },
-        "organizationName": {
-          "$ref": "../../question-bank/generics/organization-name/schema.json",
-          "title": "Organization Name"
-        },
-        "department": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 100,
-          "title": "Department"
-        },
-        "division": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 100,
-          "title": "Division"
-        },
         "address": {
-          "$ref": "#/$defs/MultiProjectProvinceControlledAddress",
-          "title": "Address"
-        },
-        "phone": {
-          "$ref": "../../question-bank/generics/phone/schema.json",
-          "title": "Telephone Number"
-        },
-        "fax": {
-          "$ref": "../../question-bank/generics/phone/schema.json",
-          "title": "Fax Number"
-        },
-        "email": {
-          "$ref": "../../question-bank/generics/email/schema.json",
-          "title": "Email"
+          "$ref": "#/$defs/MultiProjectProvinceControlledAddress"
         }
-      }
+      },
+      "allOf": [
+        {
+          "$ref": "../../question-bank/research-application/principal-investigator/schema.json"
+        }
+      ]
     },
     "MultiProjectEstimatedFunding": {
       "type": "object",
@@ -1098,47 +756,15 @@
     "MultiProjectAuthorizedRepresentative": {
       "type": "object",
       "properties": {
-        "name": {
-          "$ref": "#/$defs/MultiProjectOptionalPersonName",
-          "title": "Name"
-        },
-        "title": {
-          "$ref": "../../question-bank/aor/title/schema.json",
-          "title": "Position / Title"
-        },
-        "organizationName": {
-          "$ref": "../../question-bank/generics/organization-name/schema.json",
-          "title": "Organization Name"
-        },
-        "department": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 100,
-          "title": "Department"
-        },
-        "division": {
-          "type": "string",
-          "minLength": 1,
-          "maxLength": 100,
-          "title": "Division"
-        },
         "address": {
-          "$ref": "#/$defs/MultiProjectCountryControlledAddress",
-          "title": "Address"
-        },
-        "phone": {
-          "$ref": "../../question-bank/aor/phone/schema.json",
-          "title": "Telephone Number"
-        },
-        "fax": {
-          "$ref": "../../question-bank/aor/fax/schema.json",
-          "title": "Fax Number"
-        },
-        "email": {
-          "$ref": "../../question-bank/aor/email/schema.json",
-          "title": "Email"
+          "$ref": "#/$defs/MultiProjectCountryControlledAddress"
         }
-      }
+      },
+      "allOf": [
+        {
+          "$ref": "../../question-bank/research-application/authorized-representative/schema.json"
+        }
+      ]
     },
     "MultiProjectSignature": {
       "type": "string"

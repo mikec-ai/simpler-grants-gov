@@ -18,7 +18,6 @@ from tests.src.form_schema.form_spec.lifecycle import (
     submit_form,
 )
 
-
 VALID_RESPONSE = {
     "submission_type_code": "Application",
     "applicant_info": {
@@ -117,15 +116,12 @@ def test_rr_sf424_loads_as_a_complete_structural_canary() -> None:
 
     assert projected.meta == {
         "id": "rr-sf424",
-        "formId": "98f03cc4-5cd8-455b-a318-ba5abd0cf572",
         "legacyFormId": 768,
         "formName": "[Draft] Research & Related Application for Federal Assistance (SF424 R&R)",
         "shortFormName": "RR_SF424_5_0",
         "formVersion": "5.0",
         "agencyCode": "GRANTS_GOV",
         "ombNumber": "4040-0001",
-        "formType": "RRSF424",
-        "sggVersion": "1.0",
     }
     assert len(projected.form_json_schema["properties"]) == 28
     assert len(projected.form_json_schema["allOf"]) == 4

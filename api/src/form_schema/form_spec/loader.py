@@ -20,6 +20,7 @@ from src.form_schema.form_spec.projection import (
     project_schema,
     project_ui_schema,
 )
+from src.form_schema.form_spec.runtime_identity import runtime_identity
 from src.form_schema.form_spec.xml_profile import project_grants_gov_xml_profile
 
 if TYPE_CHECKING:
@@ -136,10 +137,6 @@ def load_form(form_id: str, *, artifacts: Path | None = None) -> LoadedForm:
     )
 
 
-def form_uuid(loaded: LoadedForm) -> uuid.UUID:
-    return uuid.UUID(loaded.meta["formId"])
-
-
 def build_runtime_form(
     form_id: str,
     *,
@@ -156,8 +153,9 @@ def build_runtime_form(
 
     loaded = load_form(form_id)
     meta = loaded.meta
+    identity = runtime_identity(form_id)
     return Form(
-        form_id=form_uuid(loaded),
+        form_id=identity.form_id,
         legacy_form_id=meta.get("legacyFormId"),
         form_name=meta["formName"],
         short_form_name=meta["shortFormName"],
@@ -172,7 +170,7 @@ def build_runtime_form(
         form_rule_schema=loaded.form_rule_schema,
         json_to_xml_schema=loaded.json_to_xml_schema,
         form_instruction_id=form_instruction_id,
-        form_type=FormType(meta["formType"]),
-        sgg_version=meta.get("sggVersion"),
+        form_type=FormType(identity.form_type),
+        sgg_version=identity.sgg_version,
         is_deprecated=False,
     )

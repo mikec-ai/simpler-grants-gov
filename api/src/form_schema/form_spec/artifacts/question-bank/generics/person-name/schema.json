@@ -39,10 +39,6 @@
       "title": "Suffix"
     }
   },
-  "required": [
-    "firstName",
-    "lastName"
-  ],
   "description": "A person's name, in five parts.",
   "title": "Name"
 }

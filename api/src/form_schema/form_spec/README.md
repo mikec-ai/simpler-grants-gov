@@ -20,10 +20,19 @@ The adapter owns only consumer concerns:
   existing generic XML runtime vocabulary;
 - selection and verification of the exact runtime artifacts shipped with the API.
 
-Portable form registration is also declarative. `registrations.json` is the SGG-owned opt-in
-list and contains only SGG instruction identifiers. Form UUIDs, names, versions, and `FormType`
-come from each producer manifest. The historical per-form Python modules remain compatibility
-import paths; they all return the same cached object built from that registration.
+Runtime identity and registration are declarative but intentionally separate. The versioned
+SGG target record `runtime-identities.json` preserves one form UUID, `FormType`, and SGG schema
+version for each of the 19 selected portable forms. Those are generated and interpreted by
+SGG, so they do not appear in the producer's canonical `FormMeta`. `registrations.json` is the
+smaller SGG release opt-in list: its five current records contain only instruction UUIDs, and
+no absent instruction UUID is inferred. The portable form id joins both files to the producer
+manifest. The historical per-form Python modules remain compatibility import paths; they all
+return the same cached object built through the generic loader.
+
+The legacy Grants.gov FID stays in the producer manifest because it identifies an official
+source form rather than an SGG runtime record. Form names, source version, agency, and OMB
+metadata likewise remain portable. Adding a runtime identity or registration changes data,
+not a form-specific Python branch.
 
 `artifacts/artifact-manifest.json` records the producer repository and commit, the digest of
 the complete producer bundle, the selection policy, and a digest for every vendored file.

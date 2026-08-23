@@ -47,7 +47,48 @@
     "applicant": {
       "$ref": "../../question-bank/primary-org/address/schema.json",
       "description": "Enter the address of the applicant.",
-      "title": "Address"
+      "title": "Address",
+      "required": [
+        "street1",
+        "city",
+        "country"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "country": {
+                "const": "USA: UNITED STATES"
+              }
+            },
+            "required": [
+              "country"
+            ]
+          },
+          "then": {
+            "required": [
+              "zipCode"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "country": {
+                "const": "USA: UNITED STATES"
+              }
+            },
+            "required": [
+              "country"
+            ]
+          },
+          "then": {
+            "required": [
+              "state"
+            ]
+          }
+        }
+      ]
     },
     "applicantWebAddress": {
       "type": "string",
@@ -125,7 +166,11 @@
     "authorizedRepresentative": {
       "$ref": "../../question-bank/aor/name/schema.json",
       "description": "Enter the name of the authorized representative.",
-      "title": "Authorized Representative"
+      "title": "Authorized Representative",
+      "required": [
+        "firstName",
+        "lastName"
+      ]
     },
     "authorizedRepresentativeTitle": {
       "$ref": "../../question-bank/aor/title/schema.json",

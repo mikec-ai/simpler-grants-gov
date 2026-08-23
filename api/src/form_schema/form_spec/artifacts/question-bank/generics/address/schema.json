@@ -56,11 +56,6 @@
       "title": "Zip / Postal Code"
     }
   },
-  "required": [
-    "street1",
-    "city",
-    "country"
-  ],
   "description": "Enter an address.",
   "title": "Address",
   "$defs": {
@@ -410,25 +405,5 @@
       "description": "Country Code",
       "title": "Country"
     }
-  },
-  "allOf": [
-    {
-      "if": {
-        "properties": {
-          "country": {
-            "const": "USA: UNITED STATES"
-          }
-        },
-        "required": [
-          "country"
-        ]
-      },
-      "then": {
-        "required": [
-          "state",
-          "zipCode"
-        ]
-      }
-    }
-  ]
+  }
 }

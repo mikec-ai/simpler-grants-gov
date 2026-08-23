@@ -2,15 +2,12 @@
   "contract": "resolved-form-package/v1",
   "form": {
     "id": "rr-subaward-budget-30",
-    "formId": "33ce5425-e8f1-422e-8fe0-e2337adbd56f",
     "legacyFormId": 782,
     "formName": "[Draft] R&R Subaward Budget Attachment(s) Form 30",
     "shortFormName": "RR_SubawardBudget30_3_0",
     "formVersion": "3.0",
     "agencyCode": "GRANTS_GOV",
-    "ombNumber": "4040-0001",
-    "formType": "RRSubawardBudget30",
-    "sggVersion": "1.0"
+    "ombNumber": "4040-0001"
   },
   "artifacts": {
     "schema.json": "generated",
