@@ -151,9 +151,8 @@ A few important details about our summation logic:
   option is supported by `sum_integer` and `subtract_monetary`; the default remains unchanged.
 
 
-NOTE: Only monetary summation is supported right now. All math done by this summing
-logic assumes the input values are strings of the format "0.00". If we need to support
-summing integers or other numeric types, we'll need to add a separate rule for those.
+Monetary summation expects string inputs in the format `"0.00"`. Integer counts use the separate
+`sum_integer` rule so their JSON values and results remain integers.
 
 ## Multiply by Percentage
 We support multiplying a monetary amount by a whole-number percentage. This is
