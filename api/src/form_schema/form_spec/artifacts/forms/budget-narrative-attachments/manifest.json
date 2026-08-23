@@ -2,15 +2,12 @@
   "contract": "resolved-form-package/v1",
   "form": {
     "id": "budget-narrative-attachments",
-    "formId": "66092260-d3c2-4427-8fd2-bb14e1590aff",
     "legacyFormId": 543,
     "formName": "Budget Narrative Attachment Form",
     "shortFormName": "BudgetNarrativeAttachments_1_2",
     "formVersion": "1.2",
     "agencyCode": "SGG",
-    "ombNumber": "",
-    "formType": "BUDGET_NARRATIVE_ATTACHMENT",
-    "sggVersion": "1.0"
+    "ombNumber": ""
   },
   "artifacts": {
     "schema.json": "generated",

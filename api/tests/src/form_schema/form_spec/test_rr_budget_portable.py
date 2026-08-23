@@ -27,22 +27,21 @@ def _objects(node: Any) -> list[dict[str, Any]]:
     return []
 
 
-def test_runtime_identity_comes_from_the_portable_manifest() -> None:
+def test_portable_metadata_and_sgg_runtime_identity_stay_separate() -> None:
     loaded = load_form("rr-budget")
 
     assert loaded.meta == {
         "id": "rr-budget",
-        "formId": "cfa593f7-e5ef-4ba8-82b2-c732ec65e461",
         "legacyFormId": 770,
         "formName": "[Draft] Research & Related Budget",
         "shortFormName": "RR_Budget_3_0",
         "formVersion": "3.0",
         "agencyCode": "GRANTS_GOV",
         "ombNumber": "4040-0001",
-        "formType": "RRBudget",
-        "sggVersion": "1.0",
     }
+    assert str(RRBudget_v3_0.form_id) == "cfa593f7-e5ef-4ba8-82b2-c732ec65e461"
     assert RRBudget_v3_0.form_type is FormType.RR_BUDGET
+    assert RRBudget_v3_0.sgg_version == "1.0"
     assert resolve_jsonschema(copy.deepcopy(RRBudget_v3_0.form_json_schema)) == resolve_jsonschema(
         copy.deepcopy(loaded.form_json_schema)
     )
@@ -126,12 +125,19 @@ def test_source_resolved_calculations_execute_in_declared_order() -> None:
 
     people = context.json_data["budget_year"][0]["key_persons"]["key_person"]
     assert [person["funds_requested"] for person in people] == ["120.00", "80.00"]
-    assert context.json_data["budget_year"][0]["key_persons"]["total_fund_for_key_persons"] == "200.00"
-    assert context.json_data["budget_year"][0]["other_personnel"]["other_personnel_total_number"] == 5
+    assert (
+        context.json_data["budget_year"][0]["key_persons"]["total_fund_for_key_persons"] == "200.00"
+    )
+    assert (
+        context.json_data["budget_year"][0]["other_personnel"]["other_personnel_total_number"] == 5
+    )
     assert context.json_data["budget_year"][0]["direct_costs"] == "210.00"
     assert context.json_data["budget_year"][0]["total_costs_fee"] == "210.00"
     assert context.json_data["budget_summary"]["cumulative_domestic_travel_costs"] == "25.25"
-    assert context.json_data["budget_summary"]["cumulative_total_funds_requested_direct_costs"] == "225.25"
+    assert (
+        context.json_data["budget_summary"]["cumulative_total_funds_requested_direct_costs"]
+        == "225.25"
+    )
     assert context.json_data["budget_summary"]["cumulative_total_costs_fee"] == "225.25"
 
 

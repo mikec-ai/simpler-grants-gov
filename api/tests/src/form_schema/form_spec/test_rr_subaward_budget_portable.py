@@ -25,22 +25,21 @@ def _objects(node: Any) -> list[dict[str, Any]]:
     return []
 
 
-def test_runtime_identity_comes_from_the_portable_manifest() -> None:
+def test_portable_metadata_and_sgg_runtime_identity_stay_separate() -> None:
     loaded = load_form("rr-subaward-budget")
 
     assert loaded.meta == {
         "id": "rr-subaward-budget",
-        "formId": "67450974-a273-5bb8-86e5-b88d8a68c732",
         "legacyFormId": 776,
         "formName": "[Draft] R&R Subaward Budget Attachment(s) Form",
         "shortFormName": "RR_SubawardBudget_3_0",
         "formVersion": "3.0",
         "agencyCode": "GRANTS_GOV",
         "ombNumber": "4040-0001",
-        "formType": "RRSubawardBudget",
-        "sggVersion": "1.0",
     }
+    assert str(RRSubawardBudget_v3_0.form_id) == "67450974-a273-5bb8-86e5-b88d8a68c732"
     assert RRSubawardBudget_v3_0.form_type is FormType.RR_SUBAWARD_BUDGET
+    assert RRSubawardBudget_v3_0.sgg_version == "1.0"
     assert resolve_jsonschema(
         copy.deepcopy(RRSubawardBudget_v3_0.form_json_schema)
     ) == resolve_jsonschema(copy.deepcopy(loaded.form_json_schema))

@@ -53,13 +53,5 @@
       "title": "Email"
     }
   },
-  "required": [
-    "name",
-    "title",
-    "organizationName",
-    "address",
-    "phone",
-    "email"
-  ],
   "description": "The representative authorized to submit the Research and Related application."
 }

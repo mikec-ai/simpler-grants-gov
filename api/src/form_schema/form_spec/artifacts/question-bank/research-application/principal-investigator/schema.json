@@ -53,12 +53,5 @@
       "title": "Email"
     }
   },
-  "required": [
-    "name",
-    "organizationName",
-    "address",
-    "phone",
-    "email"
-  ],
   "description": "The project director or principal investigator named on the application."
 }

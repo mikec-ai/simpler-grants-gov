@@ -83,7 +83,48 @@
     "applicant": {
       "$ref": "../../question-bank/primary-org/address/schema.json",
       "description": "Enter information about the applicant.",
-      "title": "Applicant"
+      "title": "Applicant",
+      "required": [
+        "street1",
+        "city",
+        "country"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "country": {
+                "const": "USA: UNITED STATES"
+              }
+            },
+            "required": [
+              "country"
+            ]
+          },
+          "then": {
+            "required": [
+              "zipCode"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "country": {
+                "const": "USA: UNITED STATES"
+              }
+            },
+            "required": [
+              "country"
+            ]
+          },
+          "then": {
+            "required": [
+              "state"
+            ]
+          }
+        }
+      ]
     },
     "departmentName": {
       "type": "string",
@@ -102,7 +143,11 @@
     "contactPerson": {
       "$ref": "../../question-bank/generics/person-name/schema.json",
       "description": "Enter information about the contact person.",
-      "title": "Contact Person"
+      "title": "Contact Person",
+      "required": [
+        "firstName",
+        "lastName"
+      ]
     },
     "contactPersonTitle": {
       "$ref": "../../question-bank/generics/contact-title/schema.json",
@@ -284,7 +329,11 @@
     },
     "authorizedRepresentative": {
       "$ref": "../../question-bank/aor/name/schema.json",
-      "title": "Authorized Representative"
+      "title": "Authorized Representative",
+      "required": [
+        "firstName",
+        "lastName"
+      ]
     },
     "authorizedRepresentativeTitle": {
       "$ref": "../../question-bank/aor/title/schema.json",

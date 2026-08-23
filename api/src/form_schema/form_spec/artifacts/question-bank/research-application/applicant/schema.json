@@ -14,10 +14,6 @@
       "title": "Contact Person Information"
     }
   },
-  "required": [
-    "organizationInfo",
-    "contactPersonInfo"
-  ],
   "description": "Applicant organization and application-contact information.",
   "$defs": {
     "ResearchApplicantOrganization": {
@@ -58,11 +54,6 @@
           "maxLength": 30
         }
       },
-      "required": [
-        "organizationName",
-        "address",
-        "samUei"
-      ],
       "description": "The applicant organization information required by an R&R cover form."
     },
     "ResearchApplicationContact": {
@@ -99,12 +90,6 @@
           "title": "Email"
         }
       },
-      "required": [
-        "name",
-        "address",
-        "phone",
-        "email"
-      ],
       "description": "The person to contact about the Research and Related application."
     }
   }

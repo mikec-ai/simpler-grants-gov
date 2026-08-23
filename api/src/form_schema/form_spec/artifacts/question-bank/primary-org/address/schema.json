@@ -6,8 +6,47 @@
   "allOf": [
     {
       "$ref": "../../../question-bank/generics/address/schema.json"
+    },
+    {
+      "if": {
+        "properties": {
+          "country": {
+            "const": "USA: UNITED STATES"
+          }
+        },
+        "required": [
+          "country"
+        ]
+      },
+      "then": {
+        "required": [
+          "zipCode"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "country": {
+            "const": "USA: UNITED STATES"
+          }
+        },
+        "required": [
+          "country"
+        ]
+      },
+      "then": {
+        "required": [
+          "state"
+        ]
+      }
     }
   ],
   "description": "Enter the address of the applicant.",
-  "title": "Address"
+  "title": "Address",
+  "required": [
+    "street1",
+    "city",
+    "country"
+  ]
 }

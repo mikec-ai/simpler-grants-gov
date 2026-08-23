@@ -2,15 +2,12 @@
   "contract": "resolved-form-package/v1",
   "form": {
     "id": "sf424",
-    "formId": "1623b310-85be-496a-b84b-34bdee22a68a",
     "legacyFormId": 713,
     "formName": "Application for Federal Assistance (SF-424)",
     "shortFormName": "SF424_4_0",
     "formVersion": "4.0",
     "agencyCode": "SGG",
-    "ombNumber": "4040-0004",
-    "formType": "SF424",
-    "sggVersion": "1.0"
+    "ombNumber": "4040-0004"
   },
   "artifacts": {
     "schema.json": "generated",

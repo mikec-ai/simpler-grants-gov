@@ -1,8 +1,8 @@
 """Data-driven registration of portable forms in Simpler's legacy registry.
 
-The producer manifest owns portable form identity and type. This adapter file owns only
-Simpler-specific opt-in and instruction identifiers. Per-form Python modules remain as
-compatibility import paths, but adding a portable form to the registry does not require one.
+The SGG runtime-identity target owns form UUID, type, and schema version. This registration
+file owns the smaller release opt-in set and instruction identifiers. Per-form Python modules
+remain as compatibility import paths, but adding a portable form does not require one.
 """
 
 from __future__ import annotations
@@ -15,6 +15,7 @@ from typing import TYPE_CHECKING, Any
 
 from src.form_schema.form_spec.bank import ARTIFACTS
 from src.form_schema.form_spec.loader import build_runtime_form
+from src.form_schema.form_spec.runtime_identity import runtime_identity
 
 if TYPE_CHECKING:
     from src.db.models.competition_models import Form
@@ -43,13 +44,13 @@ def _records() -> dict[str, dict[str, Any]]:
 
 
 def registration_metadata(form_id: str) -> tuple[uuid.UUID, str, uuid.UUID]:
-    """Return legacy config-module identity from the two authoritative declarations."""
+    """Return legacy config identity from the target, manifest, and opt-in records."""
     record = _records()[form_id]
     manifest_path = ARTIFACTS / "forms" / form_id / "manifest.json"
     manifest = json.loads(manifest_path.read_text())
     meta = manifest["form"]
     return (
-        uuid.UUID(meta["formId"]),
+        runtime_identity(form_id).form_id,
         meta["shortFormName"],
         uuid.UUID(record["formInstructionId"]),
     )

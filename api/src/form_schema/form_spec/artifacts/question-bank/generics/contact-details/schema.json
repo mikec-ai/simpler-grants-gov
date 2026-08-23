@@ -6,7 +6,11 @@
     "name": {
       "$ref": "../../../question-bank/generics/person-name/schema.json",
       "description": "Enter the name.",
-      "title": "Name"
+      "title": "Name",
+      "required": [
+        "firstName",
+        "lastName"
+      ]
     },
     "phone": {
       "$ref": "../../../question-bank/generics/phone/schema.json",

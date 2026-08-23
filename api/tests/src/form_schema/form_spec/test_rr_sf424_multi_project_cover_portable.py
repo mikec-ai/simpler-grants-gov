@@ -24,15 +24,12 @@ def test_multi_project_cover_loads_without_form_specific_adapter_code() -> None:
 
     assert projected.meta == {
         "id": "rr-sf424-multi-project-cover",
-        "formId": "6d1fcf04-63e9-5951-841f-8ff06071f40c",
         "legacyFormId": 769,
         "formName": "[Draft] Research & Related Multi-Project Cover",
         "shortFormName": "RR_SF424_Multi_Project_Cover_4_0",
         "formVersion": "4.0",
         "agencyCode": "GRANTS_GOV",
         "ombNumber": "4040-0001",
-        "formType": "RRSF424MPCover",
-        "sggVersion": "1.0",
     }
     assert len(projected.form_json_schema["properties"]) == 28
     assert "required" not in projected.form_json_schema

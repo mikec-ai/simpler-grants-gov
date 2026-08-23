@@ -24,15 +24,12 @@ def test_key_person_loads_without_form_specific_adapter_code() -> None:
 
     assert projected.meta == {
         "id": "rr-key-person-expanded",
-        "formId": "2a638e46-7680-55ba-a11a-4d152f37ca1e",
         "legacyFormId": 774,
         "formName": "Research & Related Senior/Key Person Profile (Expanded)",
         "shortFormName": "RR_KeyPersonExpanded_4_0",
         "formVersion": "4.0",
         "agencyCode": "GRANTS_GOV",
         "ombNumber": "4040-0001",
-        "formType": "RRKeyPersonExpanded",
-        "sggVersion": "1.0",
     }
     assert list(projected.form_json_schema["properties"]) == [
         "principal_investigator",

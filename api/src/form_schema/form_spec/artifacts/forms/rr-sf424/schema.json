@@ -50,7 +50,234 @@
     },
     "applicantInfo": {
       "$ref": "../../question-bank/research-application/applicant/schema.json",
-      "title": "Applicant Information"
+      "title": "Applicant Information",
+      "required": [
+        "organizationInfo",
+        "contactPersonInfo"
+      ],
+      "properties": {
+        "organizationInfo": {
+          "required": [
+            "organizationName",
+            "address",
+            "samUei"
+          ],
+          "properties": {
+            "address": {
+              "required": [
+                "street1",
+                "city",
+                "country"
+              ]
+            }
+          }
+        },
+        "contactPersonInfo": {
+          "required": [
+            "name",
+            "address",
+            "phone",
+            "email"
+          ],
+          "properties": {
+            "name": {
+              "required": [
+                "firstName",
+                "lastName"
+              ]
+            },
+            "address": {
+              "required": [
+                "street1",
+                "city",
+                "country"
+              ]
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "contactPersonInfo": {
+                "properties": {
+                  "address": {
+                    "properties": {
+                      "country": {
+                        "const": "USA: UNITED STATES"
+                      }
+                    },
+                    "required": [
+                      "country"
+                    ]
+                  }
+                },
+                "required": [
+                  "address"
+                ]
+              }
+            },
+            "required": [
+              "contactPersonInfo"
+            ]
+          },
+          "then": {
+            "required": [
+              "contactPersonInfo"
+            ],
+            "properties": {
+              "contactPersonInfo": {
+                "required": [
+                  "address"
+                ],
+                "properties": {
+                  "address": {
+                    "required": [
+                      "zipCode"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "contactPersonInfo": {
+                "properties": {
+                  "address": {
+                    "properties": {
+                      "country": {
+                        "const": "USA: UNITED STATES"
+                      }
+                    },
+                    "required": [
+                      "country"
+                    ]
+                  }
+                },
+                "required": [
+                  "address"
+                ]
+              }
+            },
+            "required": [
+              "contactPersonInfo"
+            ]
+          },
+          "then": {
+            "required": [
+              "contactPersonInfo"
+            ],
+            "properties": {
+              "contactPersonInfo": {
+                "required": [
+                  "address"
+                ],
+                "properties": {
+                  "address": {
+                    "required": [
+                      "state"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "organizationInfo": {
+                "properties": {
+                  "address": {
+                    "properties": {
+                      "country": {
+                        "const": "USA: UNITED STATES"
+                      }
+                    },
+                    "required": [
+                      "country"
+                    ]
+                  }
+                },
+                "required": [
+                  "address"
+                ]
+              }
+            },
+            "required": [
+              "organizationInfo"
+            ]
+          },
+          "then": {
+            "required": [
+              "organizationInfo"
+            ],
+            "properties": {
+              "organizationInfo": {
+                "required": [
+                  "address"
+                ],
+                "properties": {
+                  "address": {
+                    "required": [
+                      "zipCode"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "organizationInfo": {
+                "properties": {
+                  "address": {
+                    "properties": {
+                      "country": {
+                        "const": "USA: UNITED STATES"
+                      }
+                    },
+                    "required": [
+                      "country"
+                    ]
+                  }
+                },
+                "required": [
+                  "address"
+                ]
+              }
+            },
+            "required": [
+              "organizationInfo"
+            ]
+          },
+          "then": {
+            "required": [
+              "organizationInfo"
+            ],
+            "properties": {
+              "organizationInfo": {
+                "required": [
+                  "address"
+                ],
+                "properties": {
+                  "address": {
+                    "required": [
+                      "state"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
     },
     "employerId": {
       "$ref": "../../question-bank/primary-org/ein/schema.json",
@@ -183,7 +410,93 @@
     },
     "principalInvestigator": {
       "$ref": "../../question-bank/research-application/principal-investigator/schema.json",
-      "title": "Project Director / Principal Investigator"
+      "title": "Project Director / Principal Investigator",
+      "required": [
+        "name",
+        "organizationName",
+        "address",
+        "phone",
+        "email"
+      ],
+      "properties": {
+        "name": {
+          "required": [
+            "firstName",
+            "lastName"
+          ]
+        },
+        "address": {
+          "required": [
+            "street1",
+            "city",
+            "country"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "address": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              }
+            },
+            "required": [
+              "address"
+            ]
+          },
+          "then": {
+            "required": [
+              "address"
+            ],
+            "properties": {
+              "address": {
+                "required": [
+                  "zipCode"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "address": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              }
+            },
+            "required": [
+              "address"
+            ]
+          },
+          "then": {
+            "required": [
+              "address"
+            ],
+            "properties": {
+              "address": {
+                "required": [
+                  "state"
+                ]
+              }
+            }
+          }
+        }
+      ]
     },
     "estimatedProjectFunding": {
       "$ref": "#/$defs/ResearchEstimatedFunding",
@@ -203,7 +516,94 @@
     },
     "authorizedRepresentative": {
       "$ref": "../../question-bank/research-application/authorized-representative/schema.json",
-      "title": "Authorized Representative"
+      "title": "Authorized Representative",
+      "required": [
+        "name",
+        "title",
+        "organizationName",
+        "address",
+        "phone",
+        "email"
+      ],
+      "properties": {
+        "name": {
+          "required": [
+            "firstName",
+            "lastName"
+          ]
+        },
+        "address": {
+          "required": [
+            "street1",
+            "city",
+            "country"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "address": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              }
+            },
+            "required": [
+              "address"
+            ]
+          },
+          "then": {
+            "required": [
+              "address"
+            ],
+            "properties": {
+              "address": {
+                "required": [
+                  "zipCode"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "address": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              }
+            },
+            "required": [
+              "address"
+            ]
+          },
+          "then": {
+            "required": [
+              "address"
+            ],
+            "properties": {
+              "address": {
+                "required": [
+                  "state"
+                ]
+              }
+            }
+          }
+        }
+      ]
     },
     "aorSignature": {
       "$ref": "../../question-bank/aor/signature/schema.json",
