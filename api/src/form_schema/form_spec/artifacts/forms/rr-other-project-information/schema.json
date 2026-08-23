@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rr-other-project-information/schema.json",
+  "type": "object",
+  "properties": {
+    "humanSubjects": {
+      "$ref": "../../question-bank/research-project/human-subjects/schema.json",
+      "title": "Human Subjects"
+    },
+    "vertebrateAnimals": {
+      "$ref": "../../question-bank/research-project/vertebrate-animals/schema.json",
+      "title": "Vertebrate Animals"
+    },
+    "proprietaryInformation": {
+      "$ref": "../../question-bank/research-project/proprietary-information/schema.json",
+      "title": "Proprietary or Privileged Information"
+    },
+    "environmentalImpact": {
+      "$ref": "../../question-bank/research-project/environmental-impact/schema.json",
+      "title": "Environmental Impact"
+    },
+    "historicPlaces": {
+      "$ref": "../../question-bank/research-project/historic-designation/schema.json",
+      "title": "Historic Places"
+    },
+    "internationalActivities": {
+      "$ref": "../../question-bank/research-project/international-activities/schema.json",
+      "title": "International Activities"
+    },
+    "projectSummaryAbstract": {
+      "$ref": "../../question-bank/project/summary-abstract-document/schema.json",
+      "title": "Project Summary / Abstract"
+    },
+    "projectNarrative": {
+      "$ref": "../../question-bank/project/narrative/schema.json",
+      "title": "Project Narrative"
+    },
+    "bibliographyReferences": {
+      "$ref": "../../question-bank/project/bibliography-references/schema.json",
+      "title": "Bibliography & References Cited"
+    },
+    "facilitiesResources": {
+      "$ref": "../../question-bank/project/facilities-resources/schema.json",
+      "title": "Facilities & Other Resources"
+    },
+    "equipment": {
+      "$ref": "../../question-bank/project/equipment/schema.json",
+      "title": "Equipment"
+    },
+    "otherAttachments": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/project/other-supporting-document/schema.json"
+      },
+      "title": "Other Attachments"
+    }
+  },
+  "required": [
+    "humanSubjects",
+    "vertebrateAnimals",
+    "proprietaryInformation",
+    "environmentalImpact",
+    "historicPlaces",
+    "internationalActivities"
+  ],
+  "description": "Research & Related Other Project Information, Grants.gov form version 1.4."
+}

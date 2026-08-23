@@ -1,0 +1,32 @@
+{
+  "projectSummaryAbstract": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "projectNarrative": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "bibliographyReferences": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "facilitiesResources": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "equipment": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "otherAttachments": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  }
+}

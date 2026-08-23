@@ -1,0 +1,55 @@
+{
+  "block": {
+    "id": "rr-other-project-information",
+    "kind": "form"
+  },
+  "contract": "grants-form-evidence/v1",
+  "extraction": {
+    "artifact": "artifacts/proof/grantsgov-RROtherProjectInfo.jsonl.manifest.json",
+    "extractedAt": "2026-08-18T17:10:54.867939Z",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "sourceSetSha256": "c3ebbfc4870fb5be7c7afc3ad84bec0717329458745e5d36b3361de04fe79a04"
+  },
+  "semanticReview": {
+    "mappings": [],
+    "status": "unreviewed"
+  },
+  "sources": [
+    {
+      "id": "source-1-54234acd9882",
+      "sha256": "54234acd9882a129120c0a5dd44c5cde2998b66ffdfe91a4bb4a745e0d39c2ff",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/formversions/RR_OtherProjectInfo_1_4-V1.4_F619.xls",
+      "version": "1.4"
+    },
+    {
+      "id": "source-2-b2144c290ed5",
+      "sha256": "b2144c290ed5ad6d942e70815d195d7d6aa4e8e6c82fc3932d8540e3aa303ef5",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_OtherProjectInfo_1_4-V1.4.xsd",
+      "version": "1.4"
+    },
+    {
+      "id": "source-3-ae2ebb3618f7",
+      "sha256": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd",
+      "version": "1.4"
+    },
+    {
+      "id": "source-4-4b338db91915",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+      "version": "1.4"
+    },
+    {
+      "id": "source-5-ff0214de91b9",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "version": "1.4"
+    }
+  ]
+}

@@ -237,6 +237,31 @@
       "size": 11276
     },
     {
+      "path": "dist/forms/rr-other-project-information/evidence.json",
+      "sha256": "f26b5aece956d17959ac6bfb58204b574a841367ec6420c34322e3da378514cb",
+      "size": 1942
+    },
+    {
+      "path": "dist/forms/rr-other-project-information/manifest.json",
+      "sha256": "69d4ec7b4ed09fc1996c7f4bf86dd4a45aa48cf87de0a1cbb63ce867a82ab94c",
+      "size": 642
+    },
+    {
+      "path": "dist/forms/rr-other-project-information/schema.json",
+      "sha256": "e5ab98618f780fa61f4e9cb2982e684a9c7e57ef4c454c6afe0a950887aa1492",
+      "size": 2348
+    },
+    {
+      "path": "dist/forms/rr-other-project-information/sgg/rule-schema.json",
+      "sha256": "d8c543d82bec9768ffc1a4fc09b82b1c3e2d8e99a3dec2ff162d39605877d511",
+      "size": 521
+    },
+    {
+      "path": "dist/forms/rr-other-project-information/sgg/ui-schema.json",
+      "sha256": "da873095a3c88dcd71f6b7093effd4680317743990589f27ad2ca75671b77687",
+      "size": 9357
+    },
+    {
       "path": "dist/forms/rr-sf424-multi-project-cover/evidence.json",
       "sha256": "4cc2b5995187bdbe8bb59670890e41767cd451c109c251670ff0af71a8da7d85",
       "size": 2216
@@ -762,6 +787,11 @@
       "size": 234
     },
     {
+      "path": "dist/question-bank/project/bibliography-references/schema.json",
+      "sha256": "8c745d2ff48a312db94d710641586f146aed8de832df8bd7ac0957e9f50bdcb8",
+      "size": 243
+    },
+    {
       "path": "dist/question-bank/project/congressional-district/schema.json",
       "sha256": "84f3a61f8fdccd7f720e4efdb1b65409cc948c8b5201fc24dc2173c3ae39f1e5",
       "size": 309
@@ -772,14 +802,34 @@
       "size": 237
     },
     {
+      "path": "dist/question-bank/project/equipment/schema.json",
+      "sha256": "46c9971763de804e1191dab993a487f1ffbff36597746d75aa56fef9b245ffd9",
+      "size": 215
+    },
+    {
+      "path": "dist/question-bank/project/facilities-resources/schema.json",
+      "sha256": "a0aa58cf40a4d1fa1c2d0d112de0732a184f18011b68282e2edd769feb0dab69",
+      "size": 247
+    },
+    {
       "path": "dist/question-bank/project/narrative/schema.json",
       "sha256": "fb77bd07cc2e96ccf9ba46833cc65cd84879a0875e6c221277016d3c7851bc51",
       "size": 266
     },
     {
+      "path": "dist/question-bank/project/other-supporting-document/schema.json",
+      "sha256": "336981961975ece161a6f3ea0bcecb541b1688fab0825b02e3580ac8c76962f1",
+      "size": 245
+    },
+    {
       "path": "dist/question-bank/project/start-date/schema.json",
       "sha256": "e440960c8c7613873b0865be41d7daaeac00c0367746c64ea40168395a085a37",
       "size": 241
+    },
+    {
+      "path": "dist/question-bank/project/summary-abstract-document/schema.json",
+      "sha256": "f1ee40c9c382de01bdee1a34abf903b6036be6c2b6d47421a0340d124a77e4bf",
+      "size": 260
     },
     {
       "path": "dist/question-bank/project/title/schema.json",
@@ -855,6 +905,36 @@
       "path": "dist/question-bank/research-person/other-project-role/schema.json",
       "sha256": "a2a2afaf56e11be54e2f2e7372a4f3b58543d5c0c0951f46ba3e2993faf65822",
       "size": 275
+    },
+    {
+      "path": "dist/question-bank/research-project/environmental-impact/schema.json",
+      "sha256": "943efadf35bed68eeff1bc224347def4513b52e8e496aecf50ff509c403beb92",
+      "size": 2431
+    },
+    {
+      "path": "dist/question-bank/research-project/historic-designation/schema.json",
+      "sha256": "2446f76a7920bdda581802e68ec5ab6a8bc342116873006b941978e688d92188",
+      "size": 1360
+    },
+    {
+      "path": "dist/question-bank/research-project/human-subjects/schema.json",
+      "sha256": "f730e31a97d03e7af23def6216d1e8f6f4c7c9a62845950df1dea1aa8b80681d",
+      "size": 3169
+    },
+    {
+      "path": "dist/question-bank/research-project/international-activities/schema.json",
+      "sha256": "8f38ebf7d49790d3b2632973d8b53553feeff58b45dfcf7e9dd93b9611bb8cdc",
+      "size": 1675
+    },
+    {
+      "path": "dist/question-bank/research-project/proprietary-information/schema.json",
+      "sha256": "fca60c8d6de22d825a1c54a0d52748320f62c995b18658ad400f2e4fac69a2d1",
+      "size": 838
+    },
+    {
+      "path": "dist/question-bank/research-project/vertebrate-animals/schema.json",
+      "sha256": "74d387c4c3ead1632cbfac4454ed59c6b4968a3d182b79be8892181775f71ef2",
+      "size": 2101
     }
   ],
   "selection": {
@@ -875,13 +955,14 @@
       "rr-sf424",
       "rr-sf424-multi-project-cover",
       "rr-key-person-expanded",
-      "performance-site"
+      "performance-site",
+      "rr-other-project-information"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "82bf2bf016eff4ea2320298eb29a6039aaa5d55a"
+    "revision": "07ff64cec2897b0747109d545d1550835481458b"
   },
-  "sourceBundleSha256": "b54de1c360f4d74cca628fce4b0b86505787ad014f82b6e9d7727cb64b855880"
+  "sourceBundleSha256": "8bac868352b3db6bb5c93518a26d19b317e0e0cc794ecf224c2eec26a54e3017"
 }

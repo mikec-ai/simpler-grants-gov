@@ -36,6 +36,7 @@ def test_vendored_artifacts_match_the_pinned_form_spec_build():
         "rr-sf424-multi-project-cover",
         "rr-key-person-expanded",
         "performance-site",
+        "rr-other-project-information",
     ]
 
 

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project/other-supporting-document/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Provide another supporting document requested for the project."
+}
