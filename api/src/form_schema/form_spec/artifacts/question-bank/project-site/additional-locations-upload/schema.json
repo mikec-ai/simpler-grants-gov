@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "project-site/additional-locations-upload/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Overflow file for project sites beyond the structured-entry capacity."
+}

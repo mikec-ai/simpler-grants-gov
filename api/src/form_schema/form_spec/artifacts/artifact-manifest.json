@@ -77,6 +77,31 @@
       "size": 263
     },
     {
+      "path": "dist/forms/performance-site/evidence.json",
+      "sha256": "204f669ee38b600dc1e5c3f18bdcd11602a128c53daf4e812fa34099952da655",
+      "size": 2179
+    },
+    {
+      "path": "dist/forms/performance-site/manifest.json",
+      "sha256": "b8c18e3992977533e58f21754e252cf5563da7ac1f9f90ba9f4293dae5e3a1a9",
+      "size": 615
+    },
+    {
+      "path": "dist/forms/performance-site/schema.json",
+      "sha256": "bda1006e62f3d781678428531b8e7b6c4ab78120e36d5e73ddf9a86d82340810",
+      "size": 3669
+    },
+    {
+      "path": "dist/forms/performance-site/sgg/rule-schema.json",
+      "sha256": "74b25641a8807c0f542cb640073be878a2bd28a2eb96d3f80ad9b8194c895e2e",
+      "size": 91
+    },
+    {
+      "path": "dist/forms/performance-site/sgg/ui-schema.json",
+      "sha256": "4f9d961b9de0405af48304c4f6e6e5ca303a836015c7dab0261d4509c2359792",
+      "size": 5684
+    },
+    {
       "path": "dist/forms/project-abstract-summary/evidence.json",
       "sha256": "6f375ab7f9b8514fb7b8454e6038c8591572c87c5a80a1f2059799d2f1844e20",
       "size": 1423
@@ -707,6 +732,16 @@
       "size": 239
     },
     {
+      "path": "dist/question-bank/project-site/additional-locations-upload/schema.json",
+      "sha256": "6db613aeabd21552cd05458331300f97af968bfccf48165832a150e5ef7f9ac9",
+      "size": 259
+    },
+    {
+      "path": "dist/question-bank/project-site/details/schema.json",
+      "sha256": "a70ad4acca07583d18283b9126e64619c3d87892119da282303bbca75d07c65c",
+      "size": 1647
+    },
+    {
       "path": "dist/question-bank/project/abstract/schema.json",
       "sha256": "91be023b8107218fc9ba3050aa836cab470c106c020c6f1947c3957c464cb9b2",
       "size": 373
@@ -839,13 +874,14 @@
       "project-abstract-summary",
       "rr-sf424",
       "rr-sf424-multi-project-cover",
-      "rr-key-person-expanded"
+      "rr-key-person-expanded",
+      "performance-site"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "fe8461f944394d604e5644fe029ccb3474498af0"
+    "revision": "82bf2bf016eff4ea2320298eb29a6039aaa5d55a"
   },
-  "sourceBundleSha256": "f165c51ebe57e8b8fdfc4cd739d71e9f18849c782fd34a560e644813434ab6cc"
+  "sourceBundleSha256": "b54de1c360f4d74cca628fce4b0b86505787ad014f82b6e9d7727cb64b855880"
 }

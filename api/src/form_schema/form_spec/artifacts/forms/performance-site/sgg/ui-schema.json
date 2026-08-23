@@ -1,0 +1,196 @@
+[
+  {
+    "type": "section",
+    "name": "primary",
+    "label": "Primary Project / Performance Site",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/primarySite/properties/individual"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primarySite/properties/organizationName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primarySite/properties/samUei"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primarySite/properties/address/properties/street1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primarySite/properties/address/properties/street2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primarySite/properties/address/properties/city"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primarySite/properties/address/properties/county"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primarySite/properties/address/properties/state",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/primarySite/address/country"
+            },
+            "value": "USA: UNITED STATES"
+          },
+          "then": {
+            "enabled": true
+          },
+          "otherwise": {
+            "enabled": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primarySite/properties/address/properties/province",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/primarySite/address/country"
+            },
+            "value": "USA: UNITED STATES"
+          },
+          "then": {
+            "readOnly": true
+          },
+          "otherwise": {
+            "readOnly": false
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primarySite/properties/address/properties/country"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primarySite/properties/address/properties/zipCode"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/primarySite/properties/congressionalDistrict"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "additional",
+    "label": "Additional Project / Performance Sites",
+    "children": [
+      {
+        "type": "fieldList",
+        "name": "additionalSites",
+        "label": "Additional Project / Performance Site",
+        "definition": "/properties/additionalSites",
+        "children": [
+          {
+            "type": "field",
+            "definition": "/properties/additionalSites/items/properties/individual"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/additionalSites/items/properties/organizationName"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/additionalSites/items/properties/samUei"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/additionalSites/items/properties/address/properties/street1"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/additionalSites/items/properties/address/properties/street2"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/additionalSites/items/properties/address/properties/city"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/additionalSites/items/properties/address/properties/county"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/additionalSites/items/properties/address/properties/state",
+            "conditional": {
+              "when": {
+                "op": "equals",
+                "ref": {
+                  "scope": "item",
+                  "pointer": "/address/country"
+                },
+                "value": "USA: UNITED STATES"
+              },
+              "then": {
+                "enabled": true
+              },
+              "otherwise": {
+                "enabled": false
+              }
+            }
+          },
+          {
+            "type": "field",
+            "definition": "/properties/additionalSites/items/properties/address/properties/province",
+            "conditional": {
+              "when": {
+                "op": "equals",
+                "ref": {
+                  "scope": "item",
+                  "pointer": "/address/country"
+                },
+                "value": "USA: UNITED STATES"
+              },
+              "then": {
+                "readOnly": true
+              },
+              "otherwise": {
+                "readOnly": false
+              }
+            }
+          },
+          {
+            "type": "field",
+            "definition": "/properties/additionalSites/items/properties/address/properties/country"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/additionalSites/items/properties/address/properties/zipCode"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/additionalSites/items/properties/congressionalDistrict"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "overflow",
+    "label": "Additional Locations Attachment",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/additionalLocations",
+        "widget": "Attachment"
+      }
+    ]
+  }
+]
