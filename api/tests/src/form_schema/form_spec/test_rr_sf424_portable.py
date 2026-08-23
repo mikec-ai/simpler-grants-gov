@@ -10,6 +10,7 @@ import json
 
 from src.form_schema.form_spec.bank import ARTIFACTS
 from src.form_schema.form_spec.loader import load_form
+from src.form_schema.form_spec.registrations import REGISTRATIONS
 from tests.src.form_schema.form_spec.lifecycle import (
     ValidationCase,
     assert_json_round_trip,
@@ -249,7 +250,9 @@ def test_rr_sf424_submit_populates_the_aor_signature_and_dates() -> None:
     assert len(response["submitted_date"].split("-")) == 3
 
 
-def test_rr_sf424_remains_unregistered_until_xml_is_declarative() -> None:
+def test_rr_sf424_xml_is_declarative_but_registration_awaits_source_review() -> None:
     manifest = json.loads((ARTIFACTS / "forms" / "rr-sf424" / "manifest.json").read_text())
+    registrations = json.loads(REGISTRATIONS.read_text())
 
-    assert "xml-schema.json" not in manifest["artifacts"]
+    assert manifest["artifacts"]["targets/grants-gov-xml.json"] == "generated"
+    assert "rr-sf424" not in registrations["forms"]

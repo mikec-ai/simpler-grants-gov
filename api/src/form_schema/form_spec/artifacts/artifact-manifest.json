@@ -318,8 +318,8 @@
     },
     {
       "path": "dist/forms/rr-sf424/manifest.json",
-      "sha256": "4c32da8e5826670caa351137dfd31ef1d57873aa018336b0f9621242889a0cbe",
-      "size": 629
+      "sha256": "4fc93f39a5a8f54b6b8739075b9eabb166af24d7fc3942507835c708d7f8bec8",
+      "size": 677
     },
     {
       "path": "dist/forms/rr-sf424/schema.json",
@@ -335,6 +335,11 @@
       "path": "dist/forms/rr-sf424/sgg/ui-schema.json",
       "sha256": "81319c9e9a5c70412ffbca6f331340e505138e7088295888e8fb063ab968083f",
       "size": 19846
+    },
+    {
+      "path": "dist/forms/rr-sf424/targets/grants-gov-xml.json",
+      "sha256": "23015dd8940e677666e335d2533012865439952db03c57eea61056f8764ca9ca",
+      "size": 21200
     },
     {
       "path": "dist/forms/rr-subaward-budget-10yr-30/evidence.json",
@@ -1013,7 +1018,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "e10e78da0db565ebe5333f9e3a387cf142bd5fa4"
+    "revision": "7ccdc78d9176444a22dada339ccfd1a96cfe900d"
   },
-  "sourceBundleSha256": "57a98238302d6d5673682e086d3309c305fb0c9edc3a0fcfcd55e78619a417a2"
+  "sourceBundleSha256": "bb11bd770fe35d92513e54c7bd6291bb7db48d9fdd8de71369b8f0122e8a1898"
 }

@@ -177,8 +177,48 @@ class TestRecursiveXMLTransformer:
 
         result = transformer.transform({"applicant_congressional_district": "MD-008"})
 
+        assert result == {"CongressionalDistrict": {"ApplicantCongressionalDistrict": "MD-008"}}
+
+    def test_transform_preserves_namespace_on_scalar_values(self):
+        transform_config = {
+            "organization": {
+                "xml_transform": {
+                    "target": "OrganizationName",
+                    "namespace": "globLib",
+                }
+            },
+            "project": {
+                "xml_transform": {
+                    "target": "Project",
+                    "type": "nested_object",
+                    "namespace": "default",
+                },
+                "organization": {
+                    "xml_transform": {
+                        "target": "OrganizationName",
+                        "namespace": "default",
+                    }
+                },
+            },
+        }
+
+        result = RecursiveXMLTransformer(transform_config).transform({
+            "organization": "Applicant University",
+            "project": {"organization": "Performing University"},
+        })
+
         assert result == {
-            "CongressionalDistrict": {"ApplicantCongressionalDistrict": "MD-008"}
+            "OrganizationName": {
+                "__value__": "Applicant University",
+                "__namespace__": "globLib",
+            },
+            "Project": {
+                "__namespace__": "default",
+                "OrganizationName": {
+                    "__value__": "Performing University",
+                    "__namespace__": "default",
+                },
+            },
         }
 
     def test_rejects_a_relative_explicit_source_path(self):
@@ -206,9 +246,9 @@ class TestRecursiveXMLTransformer:
         }
         transformer = RecursiveXMLTransformer(transform_config)
 
-        result = transformer.transform(
-            {"sites": [{"name": "Lab A", "city": "Boston"}, {"name": "Lab B", "city": "Austin"}]}
-        )
+        result = transformer.transform({
+            "sites": [{"name": "Lab A", "city": "Boston"}, {"name": "Lab B", "city": "Austin"}]
+        })
 
         assert result["Sites"] == [
             {"Name": "Lab A", "City": "Boston"},
