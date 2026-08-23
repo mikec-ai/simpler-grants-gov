@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-routing/excluded-reviewer-request/schema.json",
+  "type": "string",
+  "maxLength": 1000,
+  "description": "Identify individuals who should not review the application and explain why."
+}

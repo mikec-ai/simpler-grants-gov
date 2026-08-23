@@ -34,14 +34,17 @@ The adapter owns only consumer concerns:
   existing generic XML runtime vocabulary;
 - selection and verification of the exact runtime artifacts shipped with the API.
 
-Runtime identity and registration are declarative but intentionally separate. The versioned
-SGG target record `runtime-identities.json` preserves one form UUID, `FormType`, and SGG schema
-version for each of the 29 selected portable forms. Those are generated and interpreted by
-SGG, so they do not appear in the producer's canonical `FormMeta`. `registrations.json` is the
-smaller SGG release opt-in list: its five current records contain only instruction UUIDs, and
-no absent instruction UUID is inferred. The portable form id joins both files to the producer
-manifest. The historical per-form Python modules remain compatibility import paths; they all
-return the same cached object built through the generic loader.
+Artifact banking, runtime enablement, and registration are declarative but intentionally
+separate. The artifact manifest currently banks 31 digest-verified portable forms for provenance,
+review, and analysis. The versioned SGG target record `runtime-identities.json` explicitly enables
+29 of them by assigning one form UUID, `FormType`, and SGG schema version. Those values are
+generated and interpreted by SGG, so they do not appear in the producer's canonical `FormMeta`.
+The two banked-only forms cannot be loaded or previewed through the runtime adapter until an
+identity record is deliberately added. `registrations.json` is the still smaller release opt-in
+list: its five current records contain only instruction UUIDs, and no absent identity or
+instruction UUID is inferred. The portable form id joins these files to the producer manifest.
+The historical per-form Python modules remain compatibility import paths; they all return the
+same cached object built through the generic loader.
 
 The legacy Grants.gov FID stays in the producer manifest because it identifies an official
 source form rather than an SGG runtime record. Form names, source version, agency, and OMB
@@ -50,10 +53,12 @@ not a form-specific Python branch.
 
 `artifacts/artifact-manifest.json` records the producer repository and commit, the digest of
 the complete producer bundle, the selection policy, and a digest for every vendored file.
-`verify_artifacts()` fails closed before a form can load if any selected file changes. For every
-selected XML profile it also resolves the XSD filename from the declared URI and checks the
-declared SHA-256 against the vendored official XSD. This is generic integrity enforcement: it
-does not download schemas or contain a form-family lookup table.
+`verify_artifacts()` fails closed if any banked file changes. For every selected XML profile it
+also resolves the XSD filename from the declared URI and checks the declared SHA-256 against the
+vendored official XSD. This is generic integrity enforcement: it does not download schemas or
+contain a form-family lookup table. `load_form()` separately requires a complete consumer-owned
+runtime identity before applying the Simpler projection, so banking alone never enables preview,
+runtime loading, or registration.
 
 To refresh a form from a locally downloaded producer bundle:
 

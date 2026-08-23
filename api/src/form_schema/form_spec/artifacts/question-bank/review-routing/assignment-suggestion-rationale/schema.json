@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "review-routing/assignment-suggestion-rationale/schema.json",
+  "type": "string",
+  "maxLength": 1000,
+  "description": "Explain why the awarding-component or study-section suggestions are appropriate."
+}

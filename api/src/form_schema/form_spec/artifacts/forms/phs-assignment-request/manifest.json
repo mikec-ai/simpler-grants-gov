@@ -1,0 +1,20 @@
+{
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "id": "phs-assignment-request",
+    "legacyFormId": 833,
+    "formName": "PHS Assignment Request Form",
+    "shortFormName": "PHS_AssignmentRequestForm_4_0",
+    "formVersion": "4.0",
+    "agencyCode": "GRANTS_GOV",
+    "ombNumber": "0925-0001"
+  },
+  "artifacts": {
+    "schema.json": "generated",
+    "ui.json": "generated",
+    "sgg/ui-schema.json": "generated",
+    "sgg/rule-schema.json": "generated",
+    "targets/grants-gov-xml.json": "generated",
+    "evidence.json": "passthrough"
+  }
+}

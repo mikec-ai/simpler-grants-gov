@@ -110,6 +110,12 @@ def _projection_for(form_id: str) -> Projection:
 
 
 def load_form(form_id: str, *, artifacts: Path | None = None) -> LoadedForm:
+    # Banking a producer package is deliberately broader than enabling it in Simpler.
+    # A portable form may be present for provenance, review, and analysis without a
+    # consumer-owned UUID, FormType, or compatibility projection.  The runtime loader
+    # must fail before projecting such a form; enablement is the explicit identity
+    # record, never the mere presence of vendored artifacts.
+    runtime_identity(form_id)
     if artifacts is None:
         verify_artifacts()
     root = (artifacts or ARTIFACTS) / "forms" / form_id

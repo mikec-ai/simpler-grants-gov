@@ -1,0 +1,142 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "phs-assignment-request",
+    "kind": "form",
+    "formVersion": "4.0"
+  },
+  "sources": [
+    {
+      "id": "phs-assignment-request-xsd-v4-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS_AssignmentRequestForm_4_0-V4.0.xsd",
+      "nativeVersion": "4.0",
+      "sha256": "7e697ee33ea6f72271c0d74fc48c61f4f81faa242a712a4c73e7898f6c4ab976"
+    },
+    {
+      "id": "phs-assignment-request-dat-f833",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/PHS_AssignmentRequestForm_4_0-V4.0_F833.xls",
+      "nativeVersion": null,
+      "sha256": "e08625bf4ebaee23a66e1ef85346c83e86726a58e36a6c5705f66fffaf867255"
+    },
+    {
+      "id": "phs-assignment-request-xfa-pdf-v4-0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/PHS_AssignmentRequestForm_4_0-V4.0.pdf",
+      "nativeVersion": null,
+      "sha256": "0fdcbdd7bc136ae2872b76fc61a6cb719d8d02d9a1967257a7c9c2e957e4680a"
+    },
+    {
+      "id": "nih-forms-i-assignment-request-instructions-capture",
+      "type": "instructions",
+      "uri": "https://raw.githubusercontent.com/mikec-ai/grants-form-spec/main/research/phs-assignment-request/nih-forms-i-g600-instructions.json",
+      "nativeVersion": "Forms I",
+      "sha256": "6aef68689060890e9c3cc650a040ea8b36f893527049e582b9474032368b1120"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-PHSAssignmentRequest.jsonl.manifest.json",
+    "sourceSetSha256": "63ef51469ecffd0b7a39bd58f827ebe88bc60e8d368ed0789e4608a862660b4b",
+    "extractedAt": "2026-08-18T17:32:16.952391Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/suggestedAwardingComponent1",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.SuggestedAwardingComponent1",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/suggestedAwardingComponent2",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.SuggestedAwardingComponent2",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/suggestedAwardingComponent3",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.SuggestedAwardingComponent3",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/suggestedStudySection1",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.SuggestedStudySection1",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/suggestedStudySection2",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.SuggestedStudySection2",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/suggestedStudySection3",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.SuggestedStudySection3",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/rationaleSuggestions",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.RationaleSuggestions",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/expertise1",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.Expertise1",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/expertise2",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.Expertise2",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/expertise3",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.Expertise3",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/expertise4",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.Expertise4",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/expertise5",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.Expertise5",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/notReview",
+        "sourceId": "phs-assignment-request-xsd-v4-0",
+        "sourcePath": "PHS_AssignmentRequestForm_4_0.NotReview",
+        "status": "proposed",
+        "note": "Exact occurrence-to-source correspondence only; no cross-form semantic equivalence is accepted."
+      }
+    ]
+  },
+  "behaviorEvidence": []
+}

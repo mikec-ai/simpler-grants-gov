@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phs-assignment-request/schema.json",
+  "type": "object",
+  "properties": {
+    "suggestedAwardingComponent1": {
+      "$ref": "../../question-bank/review-routing/suggested-awarding-component/schema.json",
+      "description": "Enter a short awarding-component abbreviation. Confirm that the component participates in the funding opportunity or is supported by an appropriate Notice of Special Interest in R&R Cover Form box 4B.",
+      "title": "Suggested Awarding Component 1"
+    },
+    "suggestedAwardingComponent2": {
+      "$ref": "../../question-bank/review-routing/suggested-awarding-component/schema.json",
+      "description": "Enter a second awarding-component abbreviation.",
+      "title": "Suggested Awarding Component 2"
+    },
+    "suggestedAwardingComponent3": {
+      "$ref": "../../question-bank/review-routing/suggested-awarding-component/schema.json",
+      "description": "Enter a third awarding-component abbreviation.",
+      "title": "Suggested Awarding Component 3"
+    },
+    "suggestedStudySection1": {
+      "$ref": "../../question-bank/review-routing/suggested-study-section/schema.json",
+      "description": "Enter the short study-section code without hyphens, parentheses, or spaces. Assignment suggestions are considered but cannot always be honored.",
+      "title": "Suggested Study Section 1"
+    },
+    "suggestedStudySection2": {
+      "$ref": "../../question-bank/review-routing/suggested-study-section/schema.json",
+      "description": "Enter a second study-section code.",
+      "title": "Suggested Study Section 2"
+    },
+    "suggestedStudySection3": {
+      "$ref": "../../question-bank/review-routing/suggested-study-section/schema.json",
+      "description": "Enter a third study-section code.",
+      "title": "Suggested Study Section 3"
+    },
+    "rationaleSuggestions": {
+      "$ref": "../../question-bank/review-routing/assignment-suggestion-rationale/schema.json",
+      "description": "Explain why you think the awarding-component or study-section suggestions are appropriate. If you contacted NIH staff, include their names.",
+      "title": "Rationale for Assignment Suggestions"
+    },
+    "expertise1": {
+      "$ref": "../../question-bank/review-routing/reviewer-expertise/schema.json",
+      "description": "Enter an area of scientific expertise, not the name of an individual.",
+      "title": "Expertise 1"
+    },
+    "expertise2": {
+      "$ref": "../../question-bank/review-routing/reviewer-expertise/schema.json",
+      "description": "Enter a second scientific area of expertise.",
+      "title": "Expertise 2"
+    },
+    "expertise3": {
+      "$ref": "../../question-bank/review-routing/reviewer-expertise/schema.json",
+      "description": "Enter a third scientific area of expertise.",
+      "title": "Expertise 3"
+    },
+    "expertise4": {
+      "$ref": "../../question-bank/review-routing/reviewer-expertise/schema.json",
+      "description": "Enter a fourth scientific area of expertise.",
+      "title": "Expertise 4"
+    },
+    "expertise5": {
+      "$ref": "../../question-bank/review-routing/reviewer-expertise/schema.json",
+      "description": "Enter a fifth scientific area of expertise.",
+      "title": "Expertise 5"
+    },
+    "notReview": {
+      "$ref": "../../question-bank/review-routing/excluded-reviewer-request/schema.json",
+      "description": "Provide enough information, such as name and organizational affiliation, for review staff to identify each individual and explain why the individual should not review the application.",
+      "title": "Individuals Who Should Not Review the Application and Why"
+    }
+  },
+  "description": "PHS Assignment Request Form, Grants.gov form version 4.0."
+}

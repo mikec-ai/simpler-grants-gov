@@ -53,5 +53,70 @@
       "nativeVersion": "2.0"
     }
   ],
-  "behaviorEvidence": []
+  "behaviorEvidence": [
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "periods[*].directCosts.totalDirectCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "periods[*].indirectCosts.totalIndirectCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "periods[*].totalDirectAndIndirectCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "cumulativeBudgetInformation.cumulativeDirectCostLessConsortiumFandA",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "cumulativeBudgetInformation.cumulativeConsortiumFandA",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "cumulativeBudgetInformation.cumulativeTotalDirectCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "cumulativeBudgetInformation.cumulativeTotalIndirectCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    },
+    {
+      "ruleKind": "calculation",
+      "canonicalPath": "cumulativeBudgetInformation.cumulativeTotalDirectAndIndirectCosts",
+      "authority": "unresolved",
+      "owner": "form-semantic-review",
+      "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
+      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
+    }
+  ]
 }

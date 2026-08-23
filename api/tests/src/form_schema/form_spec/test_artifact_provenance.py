@@ -47,6 +47,8 @@ def test_vendored_artifacts_match_the_pinned_form_spec_build():
         "mandatory-sf424d",
         "individual-sf424d",
         "sf424c",
+        "phs-assignment-request",
+        "attachment-form",
     ]
 
 
@@ -77,14 +79,19 @@ def test_budget_family_behavior_evidence_pins_exact_f770_records(
     evidence = json.loads((ARTIFACTS / "forms" / form_id / "evidence.json").read_text())
     records = evidence["behaviorEvidence"]
     root = json.loads((ARTIFACTS / "forms" / "rr-budget" / "evidence.json").read_text())
+    source_records = [record for record in records if record["authority"] == "official_source"]
+    unresolved_records = [record for record in records if record["authority"] == "unresolved"]
 
-    assert len(records) == 20
-    assert {record["sourceId"] for record in records} == {"grantsgov-rr-budget-dat-3.0-f770"}
-    assert len({record["sourceRecord"] for record in records}) == 20
+    assert len(records) == 56
+    assert len(source_records) == 20
+    assert len(unresolved_records) == 36
+    assert {record["sourceId"] for record in source_records} == {"grantsgov-rr-budget-dat-3.0-f770"}
+    assert len({record["sourceRecord"] for record in source_records}) == 20
     assert {record["canonicalPath"] for record in records} == {
         f"{mount_prefix}{record['canonicalPath']}" for record in root["behaviorEvidence"]
     }
-    assert all(record["sourcePath"] for record in records)
+    assert all(record["sourcePath"] for record in source_records)
+    assert all(record["owner"] == "form-semantic-review" for record in unresolved_records)
     if inherited_from is None:
         assert all("inheritedFrom" not in record for record in records)
     else:

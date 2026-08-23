@@ -1,0 +1,91 @@
+[
+  {
+    "type": "section",
+    "name": "awardingComponents",
+    "label": "Awarding Component Assignment Suggestions",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/suggestedAwardingComponent1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/suggestedAwardingComponent2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/suggestedAwardingComponent3"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "studySections",
+    "label": "Study Section Assignment Suggestions",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/suggestedStudySection1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/suggestedStudySection2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/suggestedStudySection3"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "rationale",
+    "label": "Rationale for Assignment Suggestions",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/rationaleSuggestions",
+        "widget": "TextArea"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "expertise",
+    "label": "Scientific Areas of Expertise",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/expertise1"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/expertise2"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/expertise3"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/expertise4"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/expertise5"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "excludedReviewers",
+    "label": "Individuals Who Should Not Review the Application",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/notReview",
+        "widget": "TextArea"
+      }
+    ]
+  }
+]

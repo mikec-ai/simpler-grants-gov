@@ -117,7 +117,7 @@ def test_promotion_receipt_boundary_and_release_gates_remain_explicit() -> None:
     registrations = json.loads(REGISTRATIONS.read_text())["forms"]
 
     assert re.fullmatch(r"[0-9a-f]{40}", manifest["source"]["revision"])
-    assert manifest["selection"]["forms"][-1] == "sf424c"
+    assert "sf424c" in manifest["selection"]["forms"]
     assert evidence["semanticReview"]["status"] == "proposed"
     assert len(evidence["semanticReview"]["mappings"]) == 18
     assert "sf424c" not in registrations

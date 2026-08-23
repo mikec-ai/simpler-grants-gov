@@ -190,8 +190,15 @@ def test_official_xsd_and_dat_provenance_are_pinned() -> None:
         ("dat", "4eab979aa62d4a4e79da6ee536140da7b76545a8fc20a9897c1c13527b3c56fd"),
         ("dat", "c85158ce7ddcc756d6e8a55a050e00b4a95cdfc8d9a2d91b7bd94c7f8bdb1035"),
     ]
-    assert len(evidence["behaviorEvidence"]) == 20
+    assert len(evidence["behaviorEvidence"]) == 56
+    assert (
+        sum(record["authority"] == "official_source" for record in evidence["behaviorEvidence"])
+        == 20
+    )
+    assert sum(record["authority"] == "unresolved" for record in evidence["behaviorEvidence"]) == 36
     assert {
-        (record["sourceId"], record["inheritedFrom"]) for record in evidence["behaviorEvidence"]
+        (record["sourceId"], record["inheritedFrom"])
+        for record in evidence["behaviorEvidence"]
+        if record["authority"] == "official_source"
     } == {("grantsgov-rr-budget-dat-3.0-f770", "rr-budget")}
     assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}

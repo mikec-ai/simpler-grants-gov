@@ -1,0 +1,92 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "attachment-form",
+    "kind": "form",
+    "formVersion": "1.2"
+  },
+  "sources": [
+    {
+      "id": "attachment-form-xsd-1.2",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/AttachmentForm_1_2-V1.2.xsd",
+      "nativeVersion": "1.2",
+      "sha256": "c6b7f40614a2077818f5f3b5df72959f867611b887c5b888005df8adeaa5e8e9"
+    },
+    {
+      "id": "attachments-xsd-1.0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d"
+    },
+    {
+      "id": "global-xsd-1.0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb"
+    },
+    {
+      "id": "global-library-xsd-2.0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "universal-codes-xsd-2.0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"
+    },
+    {
+      "id": "attachment-form-dat-540",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/AttachmentForm_1_2-V1.2_F540.xls",
+      "nativeVersion": null,
+      "sha256": "e5d664667c014948b9cc6f35d3b0b61e26b3b9c247d42fbace3067588d013586"
+    },
+    {
+      "id": "attachment-form-instructions-1.2",
+      "type": "instructions",
+      "uri": "https://apply07.grants.gov/apply/forms/instructions/AttachmentForm_1_2-V1.2-Instructions.pdf",
+      "nativeVersion": "1.2",
+      "sha256": "a4bfa668d21384377d273f7ee17b37a7eadaafd8562450ddb8d25c75e95782b9"
+    },
+    {
+      "id": "attachment-form-readonly-1.2",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/AttachmentForm_1_2-V1.2.pdf",
+      "nativeVersion": "1.2",
+      "sha256": "464bb7ac74ac6f276ae6d1df10772e7620407c6a335664dbaf6bc84a24f639a3"
+    },
+    {
+      "id": "attachment-form-sample-1.2",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/AttachmentForm_1_2-V1.2.pdf",
+      "nativeVersion": "1.2",
+      "sha256": "707c45e0273e6851f62f976677af04017b629e78e3ee3301331ddd29a85a6645"
+    },
+    {
+      "id": "legacy-sgg-oracle-f843134",
+      "type": "implementation",
+      "uri": "https://github.com/HHS/simpler-grants-gov/blob/f84313418e237526adb90c5e57edef0b1bef0490/api/src/form_schema/forms/attachment_form/1/0/form_json.py",
+      "nativeVersion": null,
+      "sha256": "6ad13ad5a6a2b02b17116d5922c623892c6ded7cad08c514290bb5bc758d3e79"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+    "artifact": "artifacts/proof/grantsgov-AttachmentForm.jsonl.manifest.json",
+    "sourceSetSha256": "edacbafcbeca08ee51e3f2e06202b5b5671bef5d447a32e5fe0089cf1346ef0a",
+    "extractedAt": "2026-08-18T17:42:23.905983Z"
+  },
+  "semanticReview": {
+    "status": "unreviewed",
+    "mappings": []
+  },
+  "behaviorEvidence": []
+}

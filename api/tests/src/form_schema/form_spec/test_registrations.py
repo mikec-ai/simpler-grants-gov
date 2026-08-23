@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import json
 
-from src.form_schema.form_spec.bank import ARTIFACTS
+import pytest
+
+from src.form_schema.form_spec import registrations as registration_module
+from src.form_schema.form_spec.bank import ARTIFACTS, verify_artifacts
+from src.form_schema.form_spec.loader import load_form
 from src.form_schema.form_spec.registrations import portable_form, registered_portable_forms
 from src.form_schema.form_spec.runtime_identity import RUNTIME_IDENTITIES, runtime_identity
 
@@ -182,17 +186,61 @@ def test_compatibility_modules_share_the_registered_form_instance():
     assert RRBudget_v3_0 is portable_form("rr-budget")
 
 
-def test_runtime_identity_target_covers_selected_forms_without_leaking_into_manifests():
+def test_runtime_identity_target_enables_a_subset_of_banked_forms_without_leaking():
     identity_document = json.loads(RUNTIME_IDENTITIES.read_text())
     artifact_document = json.loads((ARTIFACTS / "artifact-manifest.json").read_text())
     selected = artifact_document["selection"]["forms"]
 
     assert identity_document["contract"] == "sgg-form-runtime-identities/v1"
     assert identity_document["forms"] == EXPECTED_RUNTIME_IDENTITIES
-    assert set(EXPECTED_RUNTIME_IDENTITIES) == set(selected)
+    assert set(EXPECTED_RUNTIME_IDENTITIES) < set(selected)
+    assert set(selected) - set(EXPECTED_RUNTIME_IDENTITIES) == {
+        "attachment-form",
+        "phs-assignment-request",
+    }
     for portable_id in selected:
         meta = json.loads((ARTIFACTS / "forms" / portable_id / "manifest.json").read_text())["form"]
         assert {"formId", "formType", "sggVersion"}.isdisjoint(meta)
+
+
+@pytest.mark.parametrize("portable_id", ["attachment-form", "phs-assignment-request"])
+def test_banked_only_forms_are_verified_but_fail_closed_at_runtime(portable_id):
+    manifest = verify_artifacts()
+
+    assert portable_id in manifest["selection"]["forms"]
+    with pytest.raises(
+        ValueError, match=f"no SGG runtime identity for portable form {portable_id!r}"
+    ):
+        runtime_identity(portable_id)
+    with pytest.raises(
+        ValueError, match=f"no SGG runtime identity for portable form {portable_id!r}"
+    ):
+        load_form(portable_id)
+
+
+def test_registration_cannot_enable_a_banked_form_without_runtime_identity(tmp_path, monkeypatch):
+    registration_file = tmp_path / "registrations.json"
+    registration_file.write_text(
+        json.dumps(
+            {
+                "contract": "sgg-portable-form-registrations/v1",
+                "forms": {
+                    "attachment-form": {"formInstructionId": "00000000-0000-4000-8000-000000000001"}
+                },
+            }
+        )
+    )
+    monkeypatch.setattr(registration_module, "REGISTRATIONS", registration_file)
+    registration_module._records.cache_clear()
+    registration_module.portable_form.cache_clear()
+    try:
+        with pytest.raises(
+            ValueError, match="no SGG runtime identity for portable form 'attachment-form'"
+        ):
+            registration_module.portable_form("attachment-form")
+    finally:
+        registration_module._records.cache_clear()
+        registration_module.portable_form.cache_clear()
 
 
 def test_registered_forms_preserve_runtime_and_instruction_identity():
@@ -204,6 +252,7 @@ def test_registered_forms_preserve_runtime_and_instruction_identity():
         portable_id: {"formInstructionId": instruction_id}
         for portable_id, instruction_id in EXPECTED_REGISTRATIONS.items()
     }
+    assert set(registrations) <= set(EXPECTED_RUNTIME_IDENTITIES)
     for portable_id, instruction_id in EXPECTED_REGISTRATIONS.items():
         expected_identity = EXPECTED_RUNTIME_IDENTITIES[portable_id]
         identity = runtime_identity(portable_id)
