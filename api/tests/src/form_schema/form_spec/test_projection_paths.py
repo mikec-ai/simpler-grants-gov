@@ -196,6 +196,57 @@ def test_rule_projection_renames_percentage_operands_and_presence_fields() -> No
     }
 
 
+@pytest.mark.parametrize(
+    "rule",
+    [
+        {
+            "rule": "sum_monetary",
+            "presence_fields": ["amount"],
+            "materialize": "when_any_source_present",
+        },
+        {
+            "rule": "sum_integer",
+            "fields": [],
+            "presence_fields": ["count"],
+            "materialize": "when_any_source_present",
+        },
+        {
+            "rule": "subtract_monetary",
+            "fields": [""],
+            "presence_fields": ["amount"],
+            "materialize": "when_any_source_present",
+        },
+    ],
+)
+def test_rule_projection_rejects_materialized_sum_with_malformed_fields(rule) -> None:
+    with pytest.raises(ValueError, match="requires non-empty string fields"):
+        project_rule_schema({"total": {"gg_pre_population": rule}}, Projection())
+
+
+@pytest.mark.parametrize(
+    "operands",
+    [
+        {},
+        {"amount": "amount"},
+        {"percentage": "percentage"},
+        {"amount": "", "percentage": "percentage"},
+        {"amount": "amount", "percentage": ""},
+    ],
+)
+def test_rule_projection_rejects_materialized_percentage_with_malformed_operands(
+    operands,
+) -> None:
+    rule = {
+        "rule": "multiply_by_percentage",
+        "presence_fields": ["amount", "percentage"],
+        "materialize": "when_any_source_present",
+        **operands,
+    }
+
+    with pytest.raises(ValueError, match="requires non-empty amount and percentage paths"):
+        project_rule_schema({"fee": {"gg_pre_population": rule}}, Projection())
+
+
 def test_response_pointer_uses_json_pointer_escaping_and_path_qualified_renames() -> None:
     projection = Projection(
         renames={

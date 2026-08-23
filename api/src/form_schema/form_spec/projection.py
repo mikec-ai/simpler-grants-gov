@@ -392,7 +392,8 @@ def _validate_rule_schema(node: Any) -> None:
         return
     pre_population = node.get("gg_pre_population")
     if isinstance(pre_population, dict) and "materialize" in pre_population:
-        if pre_population.get("rule") not in _MATERIALIZABLE_CALCULATION_RULES:
+        rule = pre_population.get("rule")
+        if rule not in _MATERIALIZABLE_CALCULATION_RULES:
             raise ValueError(
                 "calculation materialization policy requires a supported calculation rule"
             )
@@ -407,6 +408,22 @@ def _validate_rule_schema(node: Any) -> None:
             or not all(isinstance(field, str) and field for field in presence_fields)
         ):
             raise ValueError("when_any_source_present requires non-empty string presence_fields")
+        if rule == "multiply_by_percentage":
+            if not all(
+                isinstance(pre_population.get(key), str) and pre_population[key]
+                for key in ("amount", "percentage")
+            ):
+                raise ValueError(
+                    "materialized multiply_by_percentage requires non-empty amount and percentage paths"
+                )
+        else:
+            fields = pre_population.get("fields")
+            if (
+                not isinstance(fields, list)
+                or not fields
+                or not all(isinstance(field, str) and field for field in fields)
+            ):
+                raise ValueError(f"materialized {rule} requires non-empty string fields")
     for value in node.values():
         _validate_rule_schema(value)
 
