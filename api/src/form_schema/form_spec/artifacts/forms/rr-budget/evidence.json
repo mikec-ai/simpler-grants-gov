@@ -28,6 +28,128 @@
     "sourceSetSha256": "b318951e0686bd7978ab791bd63ad36d6fa6e93b6368747b272526360e99fedb",
     "extractedAt": "2026-08-18T14:47:33.068887Z"
   },
+  "behaviorEvidence": [
+    {
+      "canonicalPath": "budgetYear[*].otherPersonnel.postDocAssociates.fundsRequested",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetYear.OtherPersonnel.PostDocAssociates.FundsRequested",
+      "sourceRecord": "B-1-8"
+    },
+    {
+      "canonicalPath": "budgetYear[*].otherPersonnel.graduateStudents.fundsRequested",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetYear.OtherPersonnel.GraduateStudents.FundsRequested",
+      "sourceRecord": "B-2-8"
+    },
+    {
+      "canonicalPath": "budgetYear[*].otherPersonnel.undergraduateStudents.fundsRequested",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetYear.OtherPersonnel.UndergraduateStudents.FundsRequested",
+      "sourceRecord": "B-3-8"
+    },
+    {
+      "canonicalPath": "budgetYear[*].otherPersonnel.secretarialClerical.fundsRequested",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetYear.OtherPersonnel.SecretarialClerical.FundsRequested",
+      "sourceRecord": "B-4-8"
+    },
+    {
+      "canonicalPath": "budgetYear[*].otherPersonnel.other[*].fundsRequested",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetYear.OtherPersonnel.Other.FundsRequested",
+      "sourceRecord": "B-5-8"
+    },
+    {
+      "canonicalPath": "budgetYear[*].equipment.totalFund",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetYear.Equipment.TotalFund",
+      "sourceRecord": "C-3-1"
+    },
+    {
+      "canonicalPath": "budgetYear[*].travel.totalTravelCost",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetYear.Travel.TotalTravelCost",
+      "sourceRecord": "D-3-1"
+    },
+    {
+      "canonicalPath": "budgetYear[*].participantTraineeSupportCosts.totalCost",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetYear.ParticipantTraineeSupportCosts.TotalCost",
+      "sourceRecord": "E-6-2"
+    },
+    {
+      "canonicalPath": "budgetYear[*].indirectCosts.totalIndirectCosts",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetYear.IndirectCosts.TotalIndirectCosts",
+      "sourceRecord": "H-2-1"
+    },
+    {
+      "canonicalPath": "budgetYear[*].totalCosts",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetYear.TotalCosts",
+      "sourceRecord": "I-1-1"
+    },
+    {
+      "canonicalPath": "budgetYear[*].totalCostsFee",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetYear.TotalCostsFee",
+      "sourceRecord": "K-1-1"
+    },
+    {
+      "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedSeniorKeyPerson",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedSeniorKeyPerson",
+      "sourceRecord": "L-CB-A"
+    },
+    {
+      "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedOtherPersonnel",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedOtherPersonnel",
+      "sourceRecord": "L-CB-B-1"
+    },
+    {
+      "canonicalPath": "budgetSummary.cumulativeTotalNoOtherPersonnel",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalNoOtherPersonnel",
+      "sourceRecord": "L-CB-B-2"
+    },
+    {
+      "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedPersonnel",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedPersonnel",
+      "sourceRecord": "L-CB-B-3"
+    },
+    {
+      "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedEquipment",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedEquipment",
+      "sourceRecord": "L-CB-C-1"
+    },
+    {
+      "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedDirectCosts",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedDirectCosts",
+      "sourceRecord": "L-CB-G-1"
+    },
+    {
+      "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedIndirectCost",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedIndirectCost",
+      "sourceRecord": "L-CB-H-1"
+    },
+    {
+      "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedDirectIndirectCosts",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalFundsRequestedDirectIndirectCosts",
+      "sourceRecord": "L-CB-I-1"
+    },
+    {
+      "canonicalPath": "budgetSummary.cumulativeTotalCostsFee",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "RR_Budget_3_0.BudgetSummary.CumulativeTotalCostsFee",
+      "sourceRecord": "L-CB-K-1"
+    }
+  ],
   "semanticReview": {
     "status": "unreviewed",
     "mappings": []

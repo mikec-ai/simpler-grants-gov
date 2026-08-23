@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cd511/schema.json",
+  "type": "object",
+  "properties": {
+    "applicantName": {
+      "$ref": "../../question-bank/generics/organization-name/schema.json",
+      "description": "Enter the legal name of the applicant that will undertake the assistance activity.",
+      "title": "Name of Applicant"
+    },
+    "awardNumber": {
+      "$ref": "../../question-bank/federal-action/number/schema.json",
+      "description": "Required if Project Name is blank.",
+      "title": "Award Number",
+      "maxLength": 25
+    },
+    "projectName": {
+      "$ref": "../../question-bank/project/title/schema.json",
+      "description": "Required if Award Number is blank.",
+      "title": "Project Name",
+      "maxLength": 60
+    },
+    "contactPerson": {
+      "$ref": "../../question-bank/aor/name/schema.json",
+      "description": "The duly authorized representative who certifies for the applicant.",
+      "title": "Contact Person",
+      "required": [
+        "firstName",
+        "lastName"
+      ]
+    },
+    "contactPersonTitle": {
+      "$ref": "../../question-bank/aor/title/schema.json",
+      "title": "Title"
+    },
+    "signature": {
+      "$ref": "../../question-bank/aor/signature/schema.json",
+      "description": "Completed by Grants.gov upon submission.",
+      "title": "Signature",
+      "readOnly": true
+    },
+    "submittedDate": {
+      "$ref": "../../question-bank/aor/date-signed/schema.json",
+      "description": "Completed by Grants.gov upon submission.",
+      "title": "Date",
+      "readOnly": true
+    }
+  },
+  "required": [
+    "applicantName",
+    "contactPerson",
+    "contactPersonTitle"
+  ],
+  "description": "Department of Commerce Certification Regarding Lobbying (CD-511).",
+  "allOf": [
+    {
+      "anyOf": [
+        {
+          "required": [
+            "awardNumber"
+          ]
+        },
+        {
+          "required": [
+            "projectName"
+          ]
+        }
+      ]
+    }
+  ]
+}

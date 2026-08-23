@@ -33,12 +33,14 @@ def _bundle(path, files):
 
 def test_selects_only_runtime_files_and_transitive_questions(tmp_path):
     files = {
-        "dist/forms/example/manifest.json": b'{"artifacts":{"targets/grants-gov-xml.json":"generated"}}',
+        "dist/forms/example/manifest.json": b'{"artifacts":{"policy-binding.json":"generated","policy-content.json":"generated","targets/grants-gov-xml.json":"generated"}}',
         "dist/forms/example/evidence.json": b"{}",
         "dist/forms/example/schema.json": b'{"$ref":"../../question-bank/a/schema.json"}',
         "dist/forms/example/sgg/rule-schema.json": b"{}",
         "dist/forms/example/sgg/ui-schema.json": b"[]",
         "dist/forms/example/ui.json": b"[]",
+        "dist/forms/example/policy-binding.json": b"{}",
+        "dist/forms/example/policy-content.json": b"{}",
         "dist/forms/example/targets/grants-gov-xml.json": b"{}",
         "dist/question-bank/a/schema.json": b'{"$ref":"../b/schema.json"}',
         "dist/question-bank/b/schema.json": b'{"type":"string"}',
@@ -55,6 +57,8 @@ def test_selects_only_runtime_files_and_transitive_questions(tmp_path):
         "forms/example/schema.json",
         "forms/example/sgg/rule-schema.json",
         "forms/example/sgg/ui-schema.json",
+        "forms/example/policy-binding.json",
+        "forms/example/policy-content.json",
         "forms/example/targets/grants-gov-xml.json",
         "question-bank/a/schema.json",
         "question-bank/b/schema.json",

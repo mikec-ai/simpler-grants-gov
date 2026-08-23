@@ -104,5 +104,6 @@ def test_wrapper_and_dependency_provenance_are_pinned_and_unreviewed() -> None:
         "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d",
         "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb",
         "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8",
+        "c85158ce7ddcc756d6e8a55a050e00b4a95cdfc8d9a2d91b7bd94c7f8bdb1035",
     }
     assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}

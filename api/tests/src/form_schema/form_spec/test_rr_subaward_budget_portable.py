@@ -117,5 +117,6 @@ def test_official_xsd_and_dat_provenance_are_pinned() -> None:
     assert [(source["type"], source["sha256"]) for source in evidence["sources"]] == [
         ("xsd", "e1ea95403a58ef1ade290952de3531c73e015308ca7aee6b426d4a9bcb794510"),
         ("dat", "4eab979aa62d4a4e79da6ee536140da7b76545a8fc20a9897c1c13527b3c56fd"),
+        ("dat", "c85158ce7ddcc756d6e8a55a050e00b4a95cdfc8d9a2d91b7bd94c7f8bdb1035"),
     ]
     assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}

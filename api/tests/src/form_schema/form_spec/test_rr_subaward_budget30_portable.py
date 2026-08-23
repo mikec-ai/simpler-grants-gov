@@ -104,5 +104,6 @@ def test_wrapper_and_embedded_budget_provenance_are_pinned() -> None:
     assert [(source["type"], source["sha256"]) for source in evidence["sources"]] == [
         ("xsd", "d5d534326e8f7e4416baf98c95c1f9234c0a23628259ee2d7e3199181a24e08a"),
         ("xsd", "d474010f85819549990de65fc51292bed08ba98ac0895d0dde9513fbe855cdbc"),
+        ("dat", "c85158ce7ddcc756d6e8a55a050e00b4a95cdfc8d9a2d91b7bd94c7f8bdb1035"),
     ]
     assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}

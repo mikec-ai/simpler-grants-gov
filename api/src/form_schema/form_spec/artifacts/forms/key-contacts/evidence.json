@@ -32,5 +32,6 @@
         "note": "The pinned XSD defines a required free-text string with length 1-45. This proposal intentionally does not equate it with the controlled R&R research-person role vocabulary."
       }
     ]
-  }
+  },
+  "behaviorEvidence": []
 }
