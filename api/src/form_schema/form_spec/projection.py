@@ -40,10 +40,11 @@ import re
 from typing import Any
 
 _CAMEL_BOUNDARY = re.compile(r"(?<=[a-z0-9])(?=[A-Z])")
+_ARRAY_MARKER = re.compile(r"^(?P<name>.*?)(?P<marker>\[(?:\*|\d+)\])?$")
 
 # JSON Schema keywords whose value is a map of property name to subschema. Their keys are
 # form field names and must be projected; every other mapping's keys must not be.
-_PROPERTY_MAPS = ("properties", "patternProperties")
+_PROPERTY_MAPS = ("properties",)
 # Keywords whose value is a single subschema.
 _SUBSCHEMA = ("items", "additionalProperties", "contains", "not", "if", "then", "else")
 # Keywords whose value is a list of subschemas.
@@ -131,6 +132,16 @@ _JSON_TYPE = {bool: "boolean", str: "string", int: "integer", float: "number"}
 
 
 def project_ui_schema(ui_schema: Any, projection: Projection) -> Any:
+    """Rename what a UI schema addresses, leaving its structure alone."""
+    return _project_ui_schema(ui_schema, projection, item_parent=None)
+
+
+def _project_ui_schema(
+    ui_schema: Any,
+    projection: Projection,
+    *,
+    item_parent: list[str] | None = None,
+) -> Any:
     """Rename what a UI schema addresses, leaving its structure alone.
 
     Three things carry a name here and each is a different kind of name. A `definition`
@@ -142,17 +153,22 @@ def project_ui_schema(ui_schema: Any, projection: Projection) -> Any:
     for a component that does not exist.
     """
     if isinstance(ui_schema, list):
-        return [project_ui_schema(node, projection) for node in ui_schema]
+        return [_project_ui_schema(node, projection, item_parent=item_parent) for node in ui_schema]
     if not isinstance(ui_schema, dict):
         return ui_schema
+
+    child_item_parent = item_parent
+    definition = ui_schema.get("definition")
+    if ui_schema.get("type") == "fieldList" and isinstance(definition, str):
+        child_item_parent = _schema_pointer_field_segments(definition)
 
     out: dict[str, Any] = {}
     for key, value in ui_schema.items():
         if key == "definition":
             out[key] = (
-                [_project_pointer(p, projection) for p in value]
+                [_project_schema_pointer(p, projection) for p in value]
                 if isinstance(value, list)
-                else _project_pointer(value, projection)
+                else _project_schema_pointer(value, projection)
             )
         elif key == "name":
             kind = ui_schema.get("type")
@@ -160,18 +176,30 @@ def project_ui_schema(ui_schema: Any, projection: Projection) -> Any:
                 out[key] = value
             elif kind == "section":
                 out[key] = _project_identifier(str(value), projection)
+            elif kind == "fieldList" and isinstance(definition, str):
+                fields = _schema_pointer_field_segments(definition)
+                path = ".".join(fields)
+                out[key] = projection.rename(path, str(value))
             else:
                 out[key] = projection.rename(str(value), str(value))
         elif key == "children":
-            out[key] = [project_ui_schema(child, projection) for child in value]
+            out[key] = [
+                _project_ui_schema(child, projection, item_parent=child_item_parent)
+                for child in value
+            ]
         elif key == "conditional":
-            out[key] = _project_ui_conditional(value, projection)
+            out[key] = _project_ui_conditional(value, projection, item_parent=item_parent)
         else:
             out[key] = value
     return out
 
 
-def _project_ui_conditional(conditional: Any, projection: Projection) -> Any:
+def _project_ui_conditional(
+    conditional: Any,
+    projection: Projection,
+    *,
+    item_parent: list[str] | None,
+) -> Any:
     """Project data pointers inside the portable conditional-UI contract.
 
     Conditional expressions are UI behavior, but their ``ref.pointer`` values address
@@ -179,16 +207,20 @@ def _project_ui_conditional(conditional: Any, projection: Projection) -> Any:
     definitions. All operators and outcomes remain consumer-neutral data.
     """
     if isinstance(conditional, list):
-        return [_project_ui_conditional(value, projection) for value in conditional]
+        return [
+            _project_ui_conditional(value, projection, item_parent=item_parent)
+            for value in conditional
+        ]
     if not isinstance(conditional, dict):
         return conditional
 
     out: dict[str, Any] = {}
     for key, value in conditional.items():
         if key == "pointer" and isinstance(value, str):
-            out[key] = _project_pointer(value, projection)
+            parent = item_parent if conditional.get("scope") == "item" else None
+            out[key] = project_response_pointer(value, projection, parent=parent)
         else:
-            out[key] = _project_ui_conditional(value, projection)
+            out[key] = _project_ui_conditional(value, projection, item_parent=item_parent)
     return out
 
 
@@ -199,25 +231,114 @@ def _project_identifier(name: str, projection: Projection) -> str:
     return snake_case(name) if name[:1].islower() else name
 
 
-def _project_pointer(pointer: str, projection: Projection) -> str:
+def _split_array_marker(segment: str) -> tuple[str, str]:
+    """Separate a field name from rule-path array selectors without losing either."""
+    match = _ARRAY_MARKER.fullmatch(segment)
+    if match is None or "[" in match.group("name") or "]" in match.group("name"):
+        raise ValueError(
+            "rule path segments support at most one trailing [*] or numeric array selector: "
+            f"{segment!r}"
+        )
+    return match.group("name"), match.group("marker") or ""
+
+
+def _canonical_segments(path: str) -> list[str]:
+    """Return the field ancestry used by path-qualified rename declarations."""
+    return [_split_array_marker(segment)[0] for segment in path.split(".") if segment]
+
+
+def _project_field_segments(
+    segments: list[str],
+    projection: Projection,
+    *,
+    parent: list[str] | None = None,
+    preserve_indices: bool = False,
+    rule_selectors: bool = False,
+) -> list[str]:
+    """Project field segments against one canonical, segment-aware ancestry.
+
+    UI pointers, rule references, and XML source pointers use different separators and
+    structural tokens, but their field segments have the same meaning. Their syntax-specific
+    adapters decode into this primitive and encode its result back into their own vocabulary.
+    Array selectors are preserved on output and excluded from rename lookup paths.
+    """
+    walked = list(parent or [])
+    projected: list[str] = []
+    for raw_segment in segments:
+        if preserve_indices and raw_segment.isdecimal():
+            projected.append(raw_segment)
+            continue
+        name, marker = _split_array_marker(raw_segment) if rule_selectors else (raw_segment, "")
+        walked.append(name)
+        projected.append(projection.rename(".".join(walked), name) + marker)
+    return projected
+
+
+def _decode_pointer_segment(segment: str) -> str:
+    return segment.replace("~1", "/").replace("~0", "~")
+
+
+def _encode_pointer_segment(segment: str) -> str:
+    return segment.replace("~", "~0").replace("/", "~1")
+
+
+def project_response_pointer(
+    pointer: str,
+    projection: Projection,
+    *,
+    parent: list[str] | None = None,
+) -> str:
+    """Project an absolute JSON Pointer whose every segment is a response field."""
+    if not pointer.startswith("/"):
+        return pointer
+    decoded = [_decode_pointer_segment(segment) for segment in pointer[1:].split("/")]
+    projected = _project_field_segments(
+        decoded,
+        projection,
+        parent=parent,
+        preserve_indices=True,
+    )
+    return "/" + "/".join(_encode_pointer_segment(segment) for segment in projected)
+
+
+def _project_schema_pointer(pointer: str, projection: Projection) -> str:
     """`/properties/keyContacts/items/properties/projectRole` -> the projected spelling.
 
-    The data path is the pointer with its `properties` and `items` steps dropped, which is
-    what the rename table is keyed by -- so a pointer and the property it addresses are
-    always renamed by the same entry.
+    Only segments following ``properties`` are field names. Schema vocabulary such as
+    ``properties`` and ``items`` is preserved, as are any other non-field identifiers.
     """
     if not pointer.startswith("/"):
         return pointer
-    steps = pointer.strip("/").split("/")
-    out: list[str] = []
-    path: list[str] = []
-    for step in steps:
-        if step in ("properties", "items"):
-            out.append(step)
-            continue
-        path.append(step)
-        out.append(projection.rename(".".join(path), step))
-    return "/" + "/".join(out)
+    steps = [_decode_pointer_segment(segment) for segment in pointer[1:].split("/")]
+    field_positions = _schema_pointer_field_positions(steps)
+    projected_fields = iter(
+        _project_field_segments([steps[index] for index in field_positions], projection)
+    )
+    out = list(steps)
+    for index in field_positions:
+        out[index] = next(projected_fields)
+    return "/" + "/".join(_encode_pointer_segment(segment) for segment in out)
+
+
+def _schema_pointer_field_segments(pointer: str) -> list[str]:
+    """Extract canonical field ancestry from an absolute JSON Schema pointer."""
+    if not pointer.startswith("/"):
+        return []
+    steps = [_decode_pointer_segment(segment) for segment in pointer[1:].split("/")]
+    return [steps[index] for index in _schema_pointer_field_positions(steps)]
+
+
+def _schema_pointer_field_positions(steps: list[str]) -> list[int]:
+    """Locate fields without mistaking schema keywords or regex keys for field names."""
+    field_positions: list[int] = []
+    expects_field = False
+    for index, step in enumerate(steps):
+        if expects_field:
+            field_positions.append(index)
+            expects_field = False
+        elif step == "properties":
+            expects_field = True
+    return field_positions
 
 
 def project_rule_schema(rules: Any, projection: Projection, path: str = "") -> Any:
@@ -258,22 +379,23 @@ def _project_reference(reference: str, projection: Projection, path: str) -> str
     prefix = ""
     body = reference
     base: list[str] = []
-    for relative_prefix, levels_up in (("@THIS.", 0), ("@PARENT.", 1)):
+    # ``path`` names the target field. @THIS starts at the object holding that target;
+    # @PARENT starts one object above it, matching the runtime rule-path vocabulary.
+    for relative_prefix, levels_up in (("@THIS.", 1), ("@PARENT.", 2)):
         if body.startswith(relative_prefix):
             prefix, body = relative_prefix, body[len(relative_prefix) :]
-            path_segments = path.split(".")
-            base = path_segments[:-levels_up] if levels_up else path_segments
+            path_segments = _canonical_segments(path)
+            base = path_segments[:-levels_up] if levels_up <= len(path_segments) else []
             break
 
-    renamed: list[str] = []
-    walked = list(base)
-    for segment in body.split("."):
-        marker = ""
-        if segment.endswith("[*]"):
-            segment, marker = segment[:-3], "[*]"
-        walked.append(segment)
-        renamed.append(projection.rename(".".join(walked), segment) + marker)
-    return prefix + ".".join(renamed)
+    return prefix + ".".join(
+        _project_field_segments(
+            body.split("."),
+            projection,
+            parent=base,
+            rule_selectors=True,
+        )
+    )
 
 
 def project_schema(
@@ -347,6 +469,11 @@ def _project_node(
                     projected.update(annotation)
                 projected_properties[projection.rename(here, name)] = projected
             out[key] = projected_properties
+        elif key == "patternProperties":
+            out[key] = {
+                pattern: _project_node(sub, projection, path, local_prefix, in_condition)
+                for pattern, sub in value.items()
+            }
         elif key == "required":
             out[key] = [projection.rename(_join(path, name), name) for name in value]
         elif key == "$defs":
@@ -568,6 +695,16 @@ def _flatten_introduced_compositions(
                     local_prefix,
                 )
                 for name, child in value.items()
+            }
+        elif key == "patternProperties":
+            out[key] = {
+                pattern: _flatten_introduced_compositions(
+                    child,
+                    projection,
+                    path,
+                    local_prefix,
+                )
+                for pattern, child in value.items()
             }
         elif key in _SUBSCHEMA:
             out[key] = _flatten_introduced_compositions(value, projection, path, local_prefix)

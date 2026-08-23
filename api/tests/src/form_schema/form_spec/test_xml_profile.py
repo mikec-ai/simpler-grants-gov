@@ -52,7 +52,7 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
                         "applicantDistrict": {
                             "element": "ApplicantCongressionalDistrict",
                             "kind": "value",
-                            "source": "/applicantDistrict",
+                            "source": "/districtWrapper/applicant~1District",
                         }
                     },
                 },
@@ -80,6 +80,7 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
         renames={
             "samUei": "samuei",
             "people.firstName": "given_name",
+            "districtWrapper.applicant/District": "legacy/district",
         }
     )
 
@@ -107,7 +108,7 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
         "applicant_district": {
             "xml_transform": {
                 "target": "ApplicantCongressionalDistrict",
-                "source": "/applicant_district",
+                "source": "/district_wrapper/legacy~1district",
             }
         },
     }
