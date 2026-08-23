@@ -46,6 +46,7 @@ def test_vendored_artifacts_match_the_pinned_form_spec_build():
         "sf424d",
         "mandatory-sf424d",
         "individual-sf424d",
+        "sf424c",
     ]
 
 

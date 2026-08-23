@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/construction/federal-share-percentage/schema.json",
+  "type": "integer",
+  "minimum": 0,
+  "maximum": 100,
+  "description": "A whole-number federal share percentage between zero and one hundred.",
+  "title": "Federal percentage share"
+}

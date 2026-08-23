@@ -1,0 +1,149 @@
+name: Promote portable form artifacts
+
+on:
+  workflow_dispatch:
+    inputs:
+      producer_repository:
+        description: Owner/repository that publishes the portable form specification
+        required: true
+        default: mikec-ai/grants-form-spec
+        type: string
+      producer_revision:
+        description: Full immutable producer commit to promote
+        required: true
+        type: string
+      forms:
+        description: Comma-separated portable form ids to add to the current selection
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: portable-form-spec-promotion
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    name: Build unregistered promotion PR
+    runs-on: ubuntu-latest
+    env:
+      PRODUCER_REPOSITORY: ${{ inputs.producer_repository }}
+      PRODUCER_REVISION: ${{ inputs.producer_revision }}
+      PROMOTION_FORMS: ${{ inputs.forms }}
+      RECEIPT: build/form-spec-promotion.json
+    steps:
+      - name: Check out consumer
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate immutable inputs
+        shell: bash
+        run: |
+          python3 -c '
+          import os, re
+          repository = os.environ["PRODUCER_REPOSITORY"]
+          revision = os.environ["PRODUCER_REVISION"]
+          if re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repository) is None:
+              raise SystemExit(f"invalid producer repository: {repository!r}")
+          if re.fullmatch(r"[0-9a-f]{40}", revision) is None:
+              raise SystemExit("producer revision must be a full lowercase commit SHA")
+          '
+
+      - name: Check out immutable producer
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ inputs.producer_repository }}
+          ref: ${{ inputs.producer_revision }}
+          path: .promotion/producer
+          persist-credentials: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: .promotion/producer/package-lock.json
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Build, verify, and ingest producer bundle
+        shell: bash
+        run: |
+          python3 api/bin/update_form_spec_artifacts.py \
+            --producer .promotion/producer \
+            --revision "$PRODUCER_REVISION" \
+            --add-forms "$PROMOTION_FORMS" \
+            --receipt "$RECEIPT"
+
+      - name: Verify consumer integrity and release boundary
+        shell: bash
+        run: |
+          PYTHONPATH=api python3 -c \
+            'from src.form_schema.form_spec.bank import verify_artifacts; verify_artifacts()'
+          git diff --exit-code -- api/src/form_schema/form_spec/registrations.json
+
+      - name: Prepare promotion branch
+        id: prepare
+        shell: bash
+        run: |
+          if git diff --quiet -- api/src/form_schema/form_spec/artifacts; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "The requested promotion is already present." >> "$GITHUB_STEP_SUMMARY"
+            cat "$RECEIPT" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          forms_digest="$(python3 -c 'import hashlib, os; print(hashlib.sha256(os.environ["PROMOTION_FORMS"].encode()).hexdigest()[:8])')"
+          branch="automation/form-spec-${PRODUCER_REVISION:0:12}-${forms_digest}"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push promotion
+        if: steps.prepare.outputs.changed == 'true'
+        shell: bash
+        run: |
+          branch="${{ steps.prepare.outputs.branch }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$branch"
+          git add api/src/form_schema/form_spec/artifacts
+          git commit -m "Promote portable forms from ${PRODUCER_REVISION:0:12}"
+          git push --force-with-lease origin "$branch"
+
+      - name: Open or update supervised banking PR
+        if: steps.prepare.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROMOTION_BRANCH: ${{ steps.prepare.outputs.branch }}
+        shell: bash
+        run: |
+          title="Promote portable forms from ${PRODUCER_REVISION:0:12}"
+          body="$(python3 -c '
+          import json, os
+          receipt = json.load(open(os.environ["RECEIPT"]))
+          added = ", ".join(f"`{value}`" for value in receipt["addedForms"]) or "none"
+          print(f"""## Automated banking promotion
+
+          - Producer: `{receipt["source"]["repository"]}`
+          - Immutable revision: `{receipt["source"]["revision"]}`
+          - Bundle SHA-256: `{receipt["sourceBundleSha256"]}`
+          - Added forms: {added}
+          - Selected forms: {len(receipt["selection"])}
+          - Selected artifacts: {receipt["artifactCount"]}
+
+          The producer preflight, bundle verification, selected-artifact integrity check, and exact-XSD pin checks passed. This PR does not modify `registrations.json`; semantic review, instructions, accessibility, DB/browser gates, and production registration remain separate approvals.
+          """)
+          ')"
+          existing="$(gh pr list --head "$PROMOTION_BRANCH" --state open --json number --jq '.[0].number // empty')"
+          if [[ -n "$existing" ]]; then
+            gh pr edit "$existing" --title "$title" --body "$body"
+          else
+            gh pr create --base "$GITHUB_REF_NAME" --head "$PROMOTION_BRANCH" --title "$title" --body "$body"
+          fi
+          cat "$RECEIPT" >> "$GITHUB_STEP_SUMMARY"

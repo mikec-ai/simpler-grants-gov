@@ -170,7 +170,7 @@ def test_individual_editability_is_the_only_response_ownership_delta() -> None:
 
 def test_print_shape_artifact_lock_and_absent_registration_are_generic() -> None:
     manifest = verify_artifacts()
-    assert manifest["source"]["revision"] == "e0b0fb24c421a7c70e395afedf5be3f37f366606"
+    assert set(RELEASABLE_PROFILES) <= set(manifest["selection"]["forms"])
     registrations = json.loads(REGISTRATIONS.read_text())["forms"]
     for form_id in RELEASABLE_PROFILES:
         runtime_identity(form_id)

@@ -1,0 +1,308 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sf424c/schema.json",
+  "type": "object",
+  "properties": {
+    "budgetInformation": {
+      "$ref": "#/$defs/ConstructionBudgetInformation",
+      "properties": {
+        "administrativeAndLegalExpenses": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "landStructuresRightsOfWay": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "relocationExpenses": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "architecturalEngineeringFees": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "otherArchitecturalEngineeringFees": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "projectInspectionFees": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "siteWork": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "demolitionAndRemoval": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "construction": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "equipment": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "miscellaneous": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "subtotalBeforeContingencies": {
+          "properties": {
+            "totalCost": {
+              "readOnly": true
+            },
+            "nonAllowableCost": {
+              "readOnly": true
+            },
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "contingencies": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "subtotalAfterContingencies": {
+          "properties": {
+            "totalCost": {
+              "readOnly": true
+            },
+            "nonAllowableCost": {
+              "readOnly": true
+            },
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "programIncome": {
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "totalProjectCosts": {
+          "properties": {
+            "totalCost": {
+              "readOnly": true
+            },
+            "nonAllowableCost": {
+              "readOnly": true
+            },
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        }
+      }
+    },
+    "federalFunding": {
+      "$ref": "../../question-bank/budget/construction/federal-funding/schema.json",
+      "properties": {
+        "totalProjectCosts": {
+          "readOnly": true
+        },
+        "federalFundingShare": {
+          "readOnly": true
+        }
+      }
+    }
+  },
+  "description": "Budget Information for Construction Programs (SF-424C), Grants.gov version 2.0.",
+  "$defs": {
+    "ConstructionBudgetInformation": {
+      "type": "object",
+      "properties": {
+        "administrativeAndLegalExpenses": {
+          "$ref": "../../question-bank/budget/construction/administration-and-legal-expenses/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "landStructuresRightsOfWay": {
+          "$ref": "../../question-bank/budget/construction/land-structures-rights-of-way/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "relocationExpenses": {
+          "$ref": "../../question-bank/budget/construction/relocation-expenses/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "architecturalEngineeringFees": {
+          "$ref": "../../question-bank/budget/construction/architectural-engineering-fees/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "otherArchitecturalEngineeringFees": {
+          "$ref": "../../question-bank/budget/construction/other-architectural-engineering-fees/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "projectInspectionFees": {
+          "$ref": "../../question-bank/budget/construction/project-inspection-fees/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "siteWork": {
+          "$ref": "../../question-bank/budget/construction/site-work/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "demolitionAndRemoval": {
+          "$ref": "../../question-bank/budget/construction/demolition-and-removal/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "construction": {
+          "$ref": "../../question-bank/budget/construction/construction/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "equipment": {
+          "$ref": "../../question-bank/budget/construction/equipment/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "miscellaneous": {
+          "$ref": "../../question-bank/budget/construction/miscellaneous/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "subtotalBeforeContingencies": {
+          "$ref": "../../question-bank/budget/construction/subtotal-before-contingencies/schema.json",
+          "properties": {
+            "totalCost": {
+              "readOnly": true
+            },
+            "nonAllowableCost": {
+              "readOnly": true
+            },
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "contingencies": {
+          "$ref": "../../question-bank/budget/construction/contingencies/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "subtotalAfterContingencies": {
+          "$ref": "../../question-bank/budget/construction/subtotal-after-contingencies/schema.json",
+          "properties": {
+            "totalCost": {
+              "readOnly": true
+            },
+            "nonAllowableCost": {
+              "readOnly": true
+            },
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "programIncome": {
+          "$ref": "../../question-bank/budget/construction/program-income/schema.json",
+          "properties": {
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        },
+        "totalProjectCosts": {
+          "$ref": "../../question-bank/budget/construction/total-project-costs/schema.json",
+          "properties": {
+            "totalCost": {
+              "readOnly": true
+            },
+            "nonAllowableCost": {
+              "readOnly": true
+            },
+            "totalAllowableCost": {
+              "readOnly": true
+            }
+          }
+        }
+      },
+      "description": "The sixteen cost-classification rows on SF-424C."
+    }
+  }
+}

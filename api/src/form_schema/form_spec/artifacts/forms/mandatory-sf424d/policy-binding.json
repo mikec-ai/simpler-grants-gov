@@ -74,6 +74,11 @@
         "status": "passed"
       },
       {
+        "id": "burden-statement-policy-review",
+        "status": "pending",
+        "note": "Resolve the active DAT 00-00 30-minute interaction against the printed 15-minute statement before presentation or registration."
+      },
+      {
         "id": "semantic-review",
         "status": "pending"
       },

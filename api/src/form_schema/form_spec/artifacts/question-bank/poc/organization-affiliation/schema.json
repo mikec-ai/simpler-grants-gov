@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "poc/organization-affiliation/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 60,
+  "description": "Enter the contact person's organization when it differs from the applicant organization.",
+  "title": "Organizational Affiliation"
+}

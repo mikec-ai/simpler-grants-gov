@@ -36,7 +36,7 @@ The adapter owns only consumer concerns:
 
 Runtime identity and registration are declarative but intentionally separate. The versioned
 SGG target record `runtime-identities.json` preserves one form UUID, `FormType`, and SGG schema
-version for each of the 28 selected portable forms. Those are generated and interpreted by
+version for each of the 29 selected portable forms. Those are generated and interpreted by
 SGG, so they do not appear in the producer's canonical `FormMeta`. `registrations.json` is the
 smaller SGG release opt-in list: its five current records contain only instruction UUIDs, and
 no absent instruction UUID is inferred. The portable form id joins both files to the producer
@@ -81,6 +81,26 @@ uv run python bin/update_form_spec_artifacts.py \
   --producer /path/to/grants-form-spec \
   --revision <full-producer-commit>
 ```
+
+To bank additional forms without replacing the current allowlist, pass repeated `--add-form`
+arguments or one comma-separated `--add-forms` value. An optional receipt records the immutable
+source, selected forms, bundle digest, and artifact count for automation and review:
+
+```shell
+cd api
+uv run python bin/update_form_spec_artifacts.py \
+  --producer /path/to/grants-form-spec \
+  --revision <full-producer-commit> \
+  --add-forms sf424c,another-form \
+  --receipt ../build/form-spec-promotion.json
+```
+
+The manually triggered `Promote portable form artifacts` workflow wraps this command. It accepts
+the producer repository, an immutable commit, and comma-separated form ids; serializes promotions;
+and opens an unregistered banking PR. Repository coordinates are workflow inputs so the same
+mechanism can move from a fork to an upstream repository without changing the artifact contract.
+The workflow never edits `registrations.json`; instruction provisioning and production release
+remain separate, explicitly approved work.
 
 Portable forms cannot inject an alternate Python XML mapping into `build_runtime_form`; the
 optional XML profile in the producer package is their only mapping source. Legacy forms continue

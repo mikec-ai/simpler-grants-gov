@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-application/applicant-control-identifier/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 30,
+  "description": "Enter the applicant's control number for an R&R application, if applicable."
+}

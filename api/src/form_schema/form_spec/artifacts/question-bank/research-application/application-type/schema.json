@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-application/application-type/schema.json",
+  "type": "object",
+  "properties": {
+    "applicationTypeCode": {
+      "$ref": "#/$defs/ResearchApplicationTypeCode",
+      "title": "Application Type"
+    },
+    "isOtherAgencySubmission": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Is this application being submitted to another agency?"
+    },
+    "otherAgencySubmissionExplanation": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 20,
+      "title": "Other Agency Submission Explanation"
+    },
+    "revisionCode": {
+      "$ref": "#/$defs/ResearchRevisionCode",
+      "title": "Revision Code",
+      "x-encoded-checkbox-group": {
+        "choices": [
+          {
+            "code": "A",
+            "label": "A. Increase Award"
+          },
+          {
+            "code": "B",
+            "label": "B. Decrease Award"
+          },
+          {
+            "code": "C",
+            "label": "C. Increase Duration"
+          },
+          {
+            "code": "D",
+            "label": "D. Decrease Duration"
+          },
+          {
+            "code": "E",
+            "label": "E. Other"
+          }
+        ],
+        "combinations": [
+          {
+            "value": "A",
+            "members": [
+              "A"
+            ]
+          },
+          {
+            "value": "B",
+            "members": [
+              "B"
+            ]
+          },
+          {
+            "value": "C",
+            "members": [
+              "C"
+            ]
+          },
+          {
+            "value": "D",
+            "members": [
+              "D"
+            ]
+          },
+          {
+            "value": "E",
+            "members": [
+              "E"
+            ]
+          },
+          {
+            "value": "AC",
+            "members": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "value": "AD",
+            "members": [
+              "A",
+              "D"
+            ]
+          },
+          {
+            "value": "BC",
+            "members": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "value": "BD",
+            "members": [
+              "B",
+              "D"
+            ]
+          }
+        ]
+      }
+    },
+    "revisionCodeOtherExplanation": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 45,
+      "title": "Other Revision Explanation"
+    }
+  },
+  "description": "Describe the R&R application lifecycle, revision, and other-agency submission.",
+  "$defs": {
+    "ResearchApplicationTypeCode": {
+      "type": "string",
+      "enum": [
+        "New",
+        "Resubmission",
+        "Renewal",
+        "Continuation",
+        "Revision"
+      ],
+      "description": "R&R application lifecycle vocabulary."
+    },
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    },
+    "ResearchRevisionCode": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "AC",
+        "AD",
+        "BC",
+        "BD"
+      ],
+      "description": "R&R's encoded revision choices."
+    }
+  }
+}

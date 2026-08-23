@@ -4,17 +4,17 @@
   "type": "object",
   "properties": {
     "submissionType": {
-      "$ref": "#/$defs/SubmissionType",
+      "$ref": "#/$defs/Sf424SubmissionType",
       "description": "Select one type of submission in accordance with agency instructions.",
       "title": "Submission Type"
     },
     "applicationType": {
-      "$ref": "#/$defs/ApplicationType",
+      "$ref": "#/$defs/Sf424ApplicationType",
       "description": "Select one type of application in accordance with agency instructions.",
       "title": "Application Type"
     },
     "revisionType": {
-      "$ref": "#/$defs/RevisionType",
+      "$ref": "#/$defs/Sf424RevisionType",
       "description": "Select a revision type from the list provided. A selection is required if Type of Application is Revision.",
       "title": "Revision Type"
     },
@@ -30,23 +30,17 @@
       "readOnly": true
     },
     "applicantId": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 30,
+      "$ref": "../../question-bank/application/standard-applicant-control-identifier/schema.json",
       "description": "Enter the applicant's control number, if applicable.",
       "title": "Applicant Identifier"
     },
     "federalEntityIdentifier": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 30,
+      "$ref": "../../question-bank/application/federal-entity-identifier/schema.json",
       "description": "Enter the number assigned to your organization by the Federal agency.",
       "title": "Federal Entity Identifier"
     },
     "federalAwardIdentifier": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 25,
+      "$ref": "../../question-bank/application/federal-award-identifier/schema.json",
       "description": "For new applications leave blank. For a continuation or revision to an existing award, enter the previously assigned Federal award identifier number. If a changed/corrected application, enter the Federal Identifier in accordance with agency instructions.",
       "title": "Federal Award Identifier"
     },
@@ -154,9 +148,7 @@
       "title": "Title"
     },
     "organizationAffiliation": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 60,
+      "$ref": "../../question-bank/poc/organization-affiliation/schema.json",
       "description": "Enter the organization if different from the applicant organization.",
       "title": "Organizational Affiliation"
     },
@@ -302,7 +294,7 @@
       "readOnly": true
     },
     "stateReview": {
-      "$ref": "#/$defs/StateReview",
+      "$ref": "#/$defs/Sf424StateReviewCode",
       "description": "One selection is required.",
       "title": "Is Application Subject to Review By State Under Executive Order 12372 Process?"
     },
@@ -401,25 +393,25 @@
   ],
   "description": "APPLICATION FOR FEDERAL ASSISTANCE (SF-424)",
   "$defs": {
-    "SubmissionType": {
+    "Sf424SubmissionType": {
       "type": "string",
       "enum": [
         "Preapplication",
         "Application",
         "Changed/Corrected Application"
       ],
-      "description": "Select one type of submission in accordance with agency instructions."
+      "description": "SF-424's exact submission vocabulary."
     },
-    "ApplicationType": {
+    "Sf424ApplicationType": {
       "type": "string",
       "enum": [
         "New",
         "Continuation",
         "Revision"
       ],
-      "description": "Select one type of application in accordance with agency instructions."
+      "description": "SF-424's application lifecycle vocabulary."
     },
-    "RevisionType": {
+    "Sf424RevisionType": {
       "type": "string",
       "enum": [
         "A: Increase Award",
@@ -432,16 +424,16 @@
         "BC: Decrease Award, Increase Duration",
         "BD: Decrease Award, Decrease Duration"
       ],
-      "description": "The kind of change a revision makes to an existing award."
+      "description": "SF-424's encoded revision choices."
     },
-    "StateReview": {
+    "Sf424StateReviewCode": {
       "type": "string",
       "enum": [
         "a. This application was made available to the state under the Executive Order 12372 Process for review on",
         "b. Program is subject to E.O. 12372 but has not been selected by the state for review.",
         "c. Program is not covered by E.O. 12372."
       ],
-      "description": "Whether Executive Order 12372 review applies, and if so what happened."
+      "description": "SF-424's exact Executive Order 12372 response vocabulary."
     }
   },
   "allOf": [

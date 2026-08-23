@@ -1,0 +1,329 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "sf424c",
+    "kind": "form",
+    "formVersion": "2.0"
+  },
+  "sources": [
+    {
+      "id": "grantsgov-sf424c-xsd-2.0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/SF424C_2_0-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "a3ec5d6bae8173fce080709a8071787293dbe6271415d905d230c584c200982a"
+    },
+    {
+      "id": "grantsgov-sf424c-dat-2.0-f408",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/SF424C_2_0-V2.0_F408.xls",
+      "nativeVersion": "2.0",
+      "sha256": "ea1b09223ab556110579bbdbf285195459824f765b6c928822fe6c1cd8f445e1"
+    },
+    {
+      "id": "grantsgov-sf424c-pdf-2.0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/SF424C_2_0-V2.0.pdf",
+      "nativeVersion": "2.0",
+      "sha256": "71d1bdf5343e64ea0608834d51449e199dc2039bbd098ba3efd3a2b5aa825a33"
+    },
+    {
+      "id": "grantsgov-sf424c-instructions-2.0",
+      "type": "instructions",
+      "uri": "https://apply07.grants.gov/apply/forms/instructions/SF424C_2_0-V2.0-Instructions.pdf",
+      "nativeVersion": "2.0",
+      "sha256": "32d220299a42d8250c04828f5275389b26903eceba40c5877c80195d527d9b8a"
+    },
+    {
+      "id": "sgg-sf424c-oracle-f6affacd",
+      "type": "implementation",
+      "uri": "https://github.com/mikec-ai/simpler-grants-gov/blob/f6affacded160c1585a9e148091b27d45eb7689c/api/src/form_schema/forms/sf424c/1/0/form_json.py",
+      "nativeVersion": "2.0",
+      "sha256": "4cbb1ba9b2241e81bf8d6bb2f90d7772d1d1de42703dae611385aa7dcba54c2e"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "b092a3f045abaf90e468611132af1931367a36bf",
+    "artifact": "artifacts/proof/grantsgov-SF424C.jsonl.manifest.json",
+    "sourceSetSha256": "ff07ffd9837a74b936400c929a0678fa792ab8f07b6015f755191c295c1a8a68",
+    "extractedAt": "2026-08-18T17:20:30.175884Z"
+  },
+  "behaviorEvidence": [
+    {
+      "canonicalPath": "budgetInformation.administrativeAndLegalExpenses.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.AdministrationCost.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "01-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.landStructuresRightsOfWay.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.LandCost.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "02-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.relocationExpenses.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.RelocationCost.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "03-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.architecturalEngineeringFees.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.ArchitecturalCost.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "04-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.otherArchitecturalEngineeringFees.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.OtherArchitecturalCost.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "05-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.projectInspectionFees.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.InspectionFeesCost.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "06-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.siteWork.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.SiteWorkCost.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "07-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.demolitionAndRemoval.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.DemolitionCost.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "08-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.construction.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.ConstructionCost.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "09-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.equipment.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.EquipmentCost.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "10-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.miscellaneous.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.Miscellaneous.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "11-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.subtotalBeforeContingencies.totalCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalBeforeContingencies.BudgetEstimatedCostAmount",
+      "sourceRecord": "12-a"
+    },
+    {
+      "canonicalPath": "budgetInformation.subtotalBeforeContingencies.nonAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalBeforeContingencies.BudgetNonAllowableCostAmount",
+      "sourceRecord": "12-b"
+    },
+    {
+      "canonicalPath": "budgetInformation.subtotalBeforeContingencies.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalBeforeContingencies.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "12-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.contingencies.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.Contingencies.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "13-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.subtotalAfterContingencies.totalCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalAfterContingencies.BudgetEstimatedCostAmount",
+      "sourceRecord": "14-a"
+    },
+    {
+      "canonicalPath": "budgetInformation.subtotalAfterContingencies.nonAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalAfterContingencies.BudgetNonAllowableCostAmount",
+      "sourceRecord": "14-b"
+    },
+    {
+      "canonicalPath": "budgetInformation.subtotalAfterContingencies.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalAfterContingencies.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "14-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.programIncome.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.ProgramIncome.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "15-c"
+    },
+    {
+      "canonicalPath": "budgetInformation.totalProjectCosts.totalCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.TotalProjectCosts.BudgetEstimatedCostAmount",
+      "sourceRecord": "16-a"
+    },
+    {
+      "canonicalPath": "budgetInformation.totalProjectCosts.nonAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.TotalProjectCosts.BudgetNonAllowableCostAmount",
+      "sourceRecord": "16-b"
+    },
+    {
+      "canonicalPath": "budgetInformation.totalProjectCosts.totalAllowableCost",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.ProjectCosts.TotalProjectCosts.BudgetTotalAllowableCostAmount",
+      "sourceRecord": "16-c"
+    },
+    {
+      "canonicalPath": "federalFunding.totalProjectCosts",
+      "sourceId": "grantsgov-sf424c-pdf-2.0",
+      "sourcePath": "PDF page 1, line 17: Total Project Costs (from line 16c)",
+      "sourceRecord": "17-1"
+    },
+    {
+      "canonicalPath": "federalFunding.federalFundingShare",
+      "sourceId": "grantsgov-sf424c-dat-2.0-f408",
+      "sourcePath": "SF424C_2_0.FederalFundingShareValue",
+      "sourceRecord": "17-4"
+    }
+  ],
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/administrativeAndLegalExpenses",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.AdministrationCost",
+        "status": "proposed",
+        "note": "Proposed construction-budget identity; similar monetary shape does not make it equivalent to another cost classification."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/landStructuresRightsOfWay",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.LandCost",
+        "status": "proposed",
+        "note": "Proposed construction-budget identity preserving the land and rights-of-way meaning."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/relocationExpenses",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.RelocationCost",
+        "status": "proposed",
+        "note": "Proposed construction-budget identity preserving relocation meaning."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/architecturalEngineeringFees",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.ArchitecturalCost",
+        "status": "proposed",
+        "note": "Proposed construction-budget identity preserving architectural and engineering fees."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/otherArchitecturalEngineeringFees",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.OtherArchitecturalCost",
+        "status": "proposed",
+        "note": "Proposed distinct identity for the source's separate other architectural and engineering line."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/projectInspectionFees",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.InspectionFeesCost",
+        "status": "proposed",
+        "note": "Proposed construction-budget identity preserving project inspection fees."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/siteWork",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.SiteWorkCost",
+        "status": "proposed",
+        "note": "Proposed construction-budget identity preserving site-work meaning."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/demolitionAndRemoval",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.DemolitionCost",
+        "status": "proposed",
+        "note": "Proposed construction-budget identity preserving demolition and removal meaning."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/construction",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.ConstructionCost",
+        "status": "proposed",
+        "note": "Proposed construction-budget identity preserving construction costs."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/equipment",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.EquipmentCost",
+        "status": "proposed",
+        "note": "Proposed construction-budget identity preserving equipment costs."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/miscellaneous",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.Miscellaneous",
+        "status": "proposed",
+        "note": "Proposed construction-budget identity preserving miscellaneous costs."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/contingencies",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.Contingencies",
+        "status": "proposed",
+        "note": "Proposed construction-budget identity preserving contingencies."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/programIncome",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.ProgramIncome",
+        "status": "proposed",
+        "note": "Proposed reuse of the program-income concept within a construction-budget context."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/subtotalBeforeContingencies",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalBeforeContingencies",
+        "status": "proposed",
+        "note": "Proposed identity for the source-defined subtotal of construction-cost lines 1 through 11."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/subtotalAfterContingencies",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.CostSubtotalAfterContingencies",
+        "status": "proposed",
+        "note": "Proposed identity for the source-defined subtotal after contingencies."
+      },
+      {
+        "canonicalPointer": "#/properties/budgetInformation/properties/totalProjectCosts",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.ProjectCosts.TotalProjectCosts",
+        "status": "proposed",
+        "note": "Proposed identity for total construction-project costs after program income."
+      },
+      {
+        "canonicalPointer": "#/properties/federalFunding",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.FederalFundingPercentageShareValue + FederalFundingShareValue",
+        "status": "proposed",
+        "note": "Proposed federal-funding composition; percentage input and calculated share remain distinct fields."
+      },
+      {
+        "canonicalPointer": "#/properties/federalFunding/properties/federalPercentageShare",
+        "sourceId": "grantsgov-sf424c-xsd-2.0",
+        "sourcePath": "SF424C_2_0.FederalFundingPercentageShareValue",
+        "status": "proposed",
+        "note": "Proposed identity for the whole-number federal share percentage input."
+      }
+    ]
+  }
+}

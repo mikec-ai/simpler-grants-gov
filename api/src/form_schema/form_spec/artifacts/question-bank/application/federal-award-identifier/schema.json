@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "application/federal-award-identifier/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 25,
+  "description": "Enter the previously assigned Federal award identifier on the SF-424."
+}

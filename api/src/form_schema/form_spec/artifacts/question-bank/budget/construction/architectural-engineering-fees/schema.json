@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/construction/architectural-engineering-fees/schema.json",
+  "type": "object",
+  "properties": {
+    "totalCost": {
+      "$ref": "#/$defs/ConstructionEnteredAmount",
+      "title": "Total Cost"
+    },
+    "nonAllowableCost": {
+      "$ref": "#/$defs/ConstructionEnteredAmount",
+      "title": "Costs Not Allowable for Participation"
+    },
+    "totalAllowableCost": {
+      "$ref": "#/$defs/ConstructionEnteredAmount",
+      "title": "Total Allowable Costs (Columns a - b)",
+      "readOnly": true
+    }
+  },
+  "description": "Enter architectural and engineering fees.",
+  "title": "Architectural and engineering fees",
+  "$defs": {
+    "ConstructionEnteredAmount": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 13,
+      "pattern": "^\\d{1,10}(?:[.]\\d{2})?$",
+      "description": "A non-negative construction-budget amount entered by an applicant."
+    }
+  }
+}

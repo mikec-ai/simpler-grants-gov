@@ -1,0 +1,37 @@
+[
+  {
+    "type": "section",
+    "name": "budget",
+    "label": "Budget Information for Construction Programs",
+    "children": [
+      {
+        "type": "multiField",
+        "name": "Table",
+        "widget": "Table",
+        "definition": [
+          "/properties/budgetInformation"
+        ]
+      }
+    ],
+    "description": "Certain programs require additional computations to establish the eligible Federal share. Follow the awarding agency's instructions."
+  },
+  {
+    "type": "section",
+    "name": "federalFunding",
+    "label": "Federal Funding",
+    "children": [
+      {
+        "type": "null",
+        "definition": "/properties/federalFunding/properties/totalProjectCosts"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/federalFunding/properties/federalPercentageShare"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/federalFunding/properties/federalFundingShare"
+      }
+    ]
+  }
+]
