@@ -1,4 +1,18 @@
+import json
+
+from src.form_schema.form_spec.bank import ARTIFACTS
 from src.form_schema.form_spec.projection import Projection, project_schema, project_ui_schema
+
+
+def test_project_schema_preserves_source_enum_while_adapting_runtime_spelling() -> None:
+    source = ARTIFACTS / "question-bank" / "generics" / "address" / "schema.json"
+    canonical = json.loads(source.read_text())
+
+    projected = project_schema(canonical, Projection())
+
+    assert "CIV: CÔTE D’IVOIRE" in canonical["$defs"]["CountryCode"]["enum"]
+    assert "CIV: CÔTE D'IVOIRE" in projected["$defs"]["CountryCode"]["enum"]
+    assert "CIV: CÔTE D’IVOIRE" not in projected["$defs"]["CountryCode"]["enum"]
 
 
 def test_object_composition_rebases_local_definitions_to_the_shared_bank() -> None:

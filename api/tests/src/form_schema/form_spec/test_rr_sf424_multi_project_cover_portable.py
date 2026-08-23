@@ -45,8 +45,32 @@ def test_multi_project_conditions_cross_the_naming_boundary_with_typed_effects()
     conditional = [node for node in _walk(projected.form_ui_schema) if "conditional" in node]
 
     assert len(conditional) == 14
-    assert sum(node["conditional"]["then"].get("enabled") is True for node in conditional) == 10
-    assert sum(node["conditional"]["then"].get("readOnly") is True for node in conditional) == 4
+    assert (
+        sum(node["conditional"]["then"].get("interaction") == "enabled" for node in conditional)
+        == 10
+    )
+    assert (
+        sum(node["conditional"]["then"].get("interaction") == "readOnly" for node in conditional)
+        == 4
+    )
+    assert (
+        sum(
+            node["conditional"]["otherwise"].get("interaction") == "disabled"
+            for node in conditional
+        )
+        == 10
+    )
+    assert (
+        sum(
+            node["conditional"]["otherwise"].get("interaction") == "enabled" for node in conditional
+        )
+        == 4
+    )
+    assert all(
+        "enabled" not in outcome and "readOnly" not in outcome
+        for node in conditional
+        for outcome in (node["conditional"]["then"], node["conditional"]["otherwise"])
+    )
     assert {node["conditional"]["when"]["ref"]["pointer"] for node in conditional} >= {
         "/applicant_info/organization_info/address/country",
         "/applicant_type/applicant_type_code",
