@@ -9,6 +9,7 @@ import {
   observedBoundary,
   PLAN_CONTRACT,
   RECEIPT_CONTRACT,
+  recoverBrowserPlanCandidates,
   summarizeReceipts,
   writeReceipt,
   type FormReceipt,
@@ -53,11 +54,31 @@ describe("portable catalog matrix contract", () => {
     const directory = fs.mkdtempSync(path.join(os.tmpdir(), "portable-plan-"));
     const planPath = `${directory}/plan.json`;
 
+    fs.writeFileSync(planPath, "{not-json");
+    expect(() => loadBrowserPlan(planPath)).toThrow();
+    expect(recoverBrowserPlanCandidates(planPath)).toEqual([]);
+
     fs.writeFileSync(
       planPath,
-      JSON.stringify({ contract: "unknown", forms: [] }),
+      JSON.stringify({
+        contract: "unknown",
+        forms: [
+          {
+            portableFormId: "recoverable",
+            previewFormId: "123e4567-e89b-12d3-a456-426614174000",
+            artifactDigests: { "schema.json": "digest" },
+          },
+        ],
+      }),
     );
     expect(() => loadBrowserPlan(planPath)).toThrow("unsupported");
+    expect(recoverBrowserPlanCandidates(planPath)).toEqual([
+      {
+        portableFormId: "recoverable",
+        previewFormId: "123e4567-e89b-12d3-a456-426614174000",
+        artifactDigests: { "schema.json": "digest" },
+      },
+    ]);
 
     fs.writeFileSync(
       planPath,
@@ -102,6 +123,7 @@ describe("portable catalog matrix contract", () => {
     expect(fs.existsSync(writeReceipt(directory, receipt))).toBe(true);
     completeBlockedProbes(receipt, ["render", "save", "print"]);
     expect(receipt.firstFailedBoundary).toBe("missing_vector");
+    expect(receipt.firstFailureOwnership).toBe("harness_inconclusive");
     expect(receipt.probes.slice(2)).toEqual([
       {
         probe: "save",
@@ -125,6 +147,26 @@ describe("portable catalog matrix contract", () => {
       forms: 1,
       statuses: { failed: 0, inconclusive: 3, not_applicable: 0, passed: 1 },
       firstFailedBoundary: "missing_vector",
+      firstFailureOwnership: "harness_inconclusive",
+      releaseGate: false,
+    });
+  });
+
+  it("summarizes an unrecoverable plan failure without form receipts", () => {
+    expect(
+      summarizeReceipts([], {
+        probe: "catalog_setup",
+        status: "failed",
+        boundary: "plan",
+        ownership: "producer_content",
+        durationMs: 0,
+      }),
+    ).toEqual({
+      contract: "sgg-portable-browser-summary/v1",
+      forms: 0,
+      statuses: { failed: 1, inconclusive: 0, not_applicable: 0, passed: 0 },
+      firstFailedBoundary: "plan",
+      firstFailureOwnership: "producer_content",
       releaseGate: false,
     });
   });

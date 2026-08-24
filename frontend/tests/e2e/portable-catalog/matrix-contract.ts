@@ -66,7 +66,13 @@ export type FormReceipt = {
   artifactDigests: Record<string, string>;
   probes: ProbeReceipt[];
   firstFailedBoundary?: Boundary;
+  firstFailureOwnership?: Ownership;
 };
+
+export type RecoveredPlanCandidate = Pick<
+  BrowserPlanForm,
+  "portableFormId" | "previewFormId" | "artifactDigests"
+>;
 
 const ownershipByBoundary: Record<Boundary, Ownership> = {
   artifact_integrity: "producer_content",
@@ -128,6 +134,41 @@ export function loadBrowserPlan(planPath: string): BrowserPlan {
   return plan;
 }
 
+export function recoverBrowserPlanCandidates(
+  planPath: string,
+): RecoveredPlanCandidate[] {
+  if (!fs.existsSync(planPath)) return [];
+  let document: unknown;
+  try {
+    document = JSON.parse(fs.readFileSync(planPath, "utf8"));
+  } catch {
+    return [];
+  }
+  if (!document || typeof document !== "object") return [];
+  const forms = (document as { forms?: unknown }).forms;
+  if (!Array.isArray(forms)) return [];
+  const candidates = forms.filter((form): form is RecoveredPlanCandidate => {
+    if (!form || typeof form !== "object") return false;
+    const candidate = form as RecoveredPlanCandidate;
+    return (
+      /^[a-z0-9][a-z0-9-]*$/.test(candidate.portableFormId) &&
+      /^[a-f0-9-]{36}$/.test(candidate.previewFormId) &&
+      !!candidate.artifactDigests &&
+      typeof candidate.artifactDigests === "object" &&
+      !Array.isArray(candidate.artifactDigests) &&
+      Object.values(candidate.artifactDigests).every(
+        (digest) => typeof digest === "string",
+      )
+    );
+  });
+  return candidates.filter(
+    (candidate, index) =>
+      candidates.findIndex(
+        ({ portableFormId }) => portableFormId === candidate.portableFormId,
+      ) === index,
+  );
+}
+
 export function writeReceipt(directory: string, receipt: FormReceipt): string {
   fs.mkdirSync(directory, { recursive: true });
   const receiptPath = path.join(
@@ -147,6 +188,7 @@ export function completeBlockedProbes(
   );
   if (!firstFailure) return;
   receipt.firstFailedBoundary = firstFailure.boundary;
+  receipt.firstFailureOwnership = firstFailure.ownership;
   for (const probeName of plannedProbes) {
     if (receipt.probes.some(({ probe }) => probe === probeName)) continue;
     receipt.probes.push({
@@ -160,7 +202,10 @@ export function completeBlockedProbes(
   }
 }
 
-export function summarizeReceipts(receipts: FormReceipt[]) {
+export function summarizeReceipts(
+  receipts: FormReceipt[],
+  catalogFailure?: ProbeReceipt,
+) {
   const statuses: Record<ProbeStatus, number> = {
     passed: 0,
     failed: 0,
@@ -172,16 +217,20 @@ export function summarizeReceipts(receipts: FormReceipt[]) {
       statuses[probe.status] += 1;
     }
   }
-  const firstFailedBoundary = receipts
-    .flatMap(({ probes }) => probes)
-    .find(
-      ({ status }) => status === "failed" || status === "inconclusive",
-    )?.boundary;
+  if (catalogFailure && receipts.length === 0) {
+    statuses[catalogFailure.status] += 1;
+  }
+  const firstFailure =
+    receipts
+      .flatMap(({ probes }) => probes)
+      .find(({ status }) => status === "failed" || status === "inconclusive") ??
+    catalogFailure;
   return {
     contract: "sgg-portable-browser-summary/v1",
     forms: receipts.length,
     statuses,
-    firstFailedBoundary: firstFailedBoundary ?? null,
+    firstFailedBoundary: firstFailure?.boundary ?? null,
+    firstFailureOwnership: firstFailure?.ownership ?? null,
     releaseGate: statuses.failed === 0 && statuses.inconclusive === 0,
   };
 }

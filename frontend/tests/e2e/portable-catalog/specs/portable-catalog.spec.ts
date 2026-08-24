@@ -10,6 +10,7 @@ import {
   loadBrowserPlan,
   observedBoundary,
   RECEIPT_CONTRACT,
+  recoverBrowserPlanCandidates,
   summarizeReceipts,
   writeReceipt,
   type Boundary,
@@ -17,6 +18,7 @@ import {
   type BrowserPlanForm,
   type FormReceipt,
   type ProbeReceipt,
+  type RecoveredPlanCandidate,
 } from "tests/e2e/portable-catalog/matrix-contract";
 import { createApplication } from "tests/e2e/utils/application/create-application-utils";
 import { authenticateE2eUser } from "tests/e2e/utils/auth/authenticate-e2e-user-utils";
@@ -82,14 +84,14 @@ async function probe(
 }
 
 function receiptFor(
-  plan: BrowserPlan,
-  form: BrowserPlanForm,
+  form: RecoveredPlanCandidate,
   browser: string,
+  manifestSha256 = "unavailable",
 ): FormReceipt {
   return {
     contract: RECEIPT_CONTRACT,
     consumerCommit: process.env.GITHUB_SHA ?? "local",
-    manifestSha256: plan.manifestSha256,
+    manifestSha256,
     browser,
     portableFormId: form.portableFormId,
     previewFormId: form.previewFormId,
@@ -213,13 +215,9 @@ test.describe("portable catalog browser conformance", () => {
     { tag: "@portable-catalog" },
     async ({ page, context }, testInfo) => {
       test.setTimeout(30 * 60_000);
-      const plan = loadBrowserPlan(planPath);
-      const receipts = plan.forms.map((form) =>
-        receiptFor(plan, form, testInfo.project.name),
-      );
-      const receiptByForm = new Map(
-        receipts.map((receipt) => [receipt.portableFormId, receipt]),
-      );
+      let plan: BrowserPlan | undefined;
+      const receipts: FormReceipt[] = [];
+      let receiptByForm = new Map<string, FormReceipt>();
       const browserSlug = testInfo.project.name
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-");
@@ -231,6 +229,7 @@ test.describe("portable catalog browser conformance", () => {
       let tracingStarted = false;
       let setupBoundary: Boundary = "environment";
       let fatalError: Error | undefined;
+      let catalogFailure: ProbeReceipt | undefined;
       let summary: ReturnType<typeof summarizeReceipts> | undefined;
 
       try {
@@ -241,6 +240,18 @@ test.describe("portable catalog browser conformance", () => {
         });
         tracingStarted = true;
         assertPortableMatrixEnvironment();
+
+        setupBoundary = "plan";
+        const loadedPlan = loadBrowserPlan(planPath);
+        plan = loadedPlan;
+        receipts.push(
+          ...loadedPlan.forms.map((form) =>
+            receiptFor(form, testInfo.project.name, loadedPlan.manifestSha256),
+          ),
+        );
+        receiptByForm = new Map(
+          receipts.map((receipt) => [receipt.portableFormId, receipt]),
+        );
 
         setupBoundary = "authentication";
         const token = await authenticateE2eUser(
@@ -463,15 +474,21 @@ test.describe("portable catalog browser conformance", () => {
           error instanceof Error
             ? error
             : new Error("catalog setup failed with a non-Error value");
+        catalogFailure = failureProbe("catalog_setup", error, setupBoundary);
+        if (!plan && receipts.length === 0) {
+          receipts.push(
+            ...recoverBrowserPlanCandidates(planPath).map((candidate) =>
+              receiptFor(candidate, testInfo.project.name),
+            ),
+          );
+        }
         for (const receipt of receipts) {
           if (
             !receipt.probes.some(
               ({ status }) => status === "failed" || status === "inconclusive",
             )
           ) {
-            receipt.probes.push(
-              failureProbe("catalog_setup", error, setupBoundary),
-            );
+            receipt.probes.push(catalogFailure);
           }
           completeBlockedProbes(receipt, plannedFormProbes);
         }
@@ -518,7 +535,7 @@ test.describe("portable catalog browser conformance", () => {
           }
         }
 
-        summary = summarizeReceipts(receipts);
+        summary = summarizeReceipts(receipts, catalogFailure);
         const summaryPath = path.join(
           receiptsDirectory,
           `catalog-summary-${browserSlug}.json`,
@@ -533,21 +550,31 @@ test.describe("portable catalog browser conformance", () => {
             path: tracePath,
             contentType: "application/zip",
           });
-        } else {
+        }
+        if (catalogFailure?.boundary === "plan" || traceError) {
           const traceStatusPath = path.join(
             receiptsDirectory,
-            `catalog-${browserSlug}-trace-unavailable.json`,
+            `catalog-${browserSlug}-trace-status.json`,
           );
           fs.writeFileSync(
             traceStatusPath,
             `${JSON.stringify(
               {
-                status: "inconclusive",
-                boundary: observedBoundary(traceError, "environment"),
+                status:
+                  tracingStarted && !traceError && fs.existsSync(tracePath)
+                    ? "captured"
+                    : "inconclusive",
+                boundary:
+                  catalogFailure?.boundary ??
+                  observedBoundary(traceError, "environment"),
+                ownership:
+                  catalogFailure?.ownership ??
+                  classifyBoundary(observedBoundary(traceError, "environment")),
                 message:
-                  traceError instanceof Error
+                  catalogFailure?.evidence?.message ??
+                  (traceError instanceof Error
                     ? traceError.message
-                    : "browser trace unavailable",
+                    : "browser trace unavailable"),
               },
               null,
               2,
@@ -561,7 +588,7 @@ test.describe("portable catalog browser conformance", () => {
       }
 
       if (fatalError) throw fatalError;
-      expect(summary?.forms).toBe(plan.forms.length);
+      expect(summary?.forms).toBe(plan?.forms.length);
       expect(summary?.releaseGate).toBe(true);
     },
   );
