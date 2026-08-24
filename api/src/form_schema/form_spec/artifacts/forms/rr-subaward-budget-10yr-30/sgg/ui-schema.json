@@ -316,7 +316,7 @@
                 "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/graduateStudents/properties/numberOfPersonnel"
               },
               {
-                "type": "field",
+                "type": "null",
                 "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/graduateStudents/properties/projectRole"
               },
               {
@@ -392,7 +392,7 @@
                 "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/postDocAssociates/properties/numberOfPersonnel"
               },
               {
-                "type": "field",
+                "type": "null",
                 "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/postDocAssociates/properties/projectRole"
               },
               {
@@ -424,7 +424,7 @@
                 "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/secretarialClerical/properties/numberOfPersonnel"
               },
               {
-                "type": "field",
+                "type": "null",
                 "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/secretarialClerical/properties/projectRole"
               },
               {
@@ -460,7 +460,7 @@
                 "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/undergraduateStudents/properties/numberOfPersonnel"
               },
               {
-                "type": "field",
+                "type": "null",
                 "definition": "/properties/budgetAttachments/items/properties/budgetYear/items/properties/otherPersonnel/properties/undergraduateStudents/properties/projectRole"
               },
               {

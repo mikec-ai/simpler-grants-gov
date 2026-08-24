@@ -9,6 +9,9 @@
       "properties": {
         "fundsRequested": {
           "readOnly": true
+        },
+        "projectRole": {
+          "readOnly": true
         }
       }
     },
@@ -36,6 +39,9 @@
       "properties": {
         "fundsRequested": {
           "readOnly": true
+        },
+        "projectRole": {
+          "readOnly": true
         }
       }
     },
@@ -44,6 +50,9 @@
       "title": "Secretarial Clerical",
       "properties": {
         "fundsRequested": {
+          "readOnly": true
+        },
+        "projectRole": {
           "readOnly": true
         }
       }
@@ -58,6 +67,9 @@
       "title": "Undergraduate Students",
       "properties": {
         "fundsRequested": {
+          "readOnly": true
+        },
+        "projectRole": {
           "readOnly": true
         }
       }
@@ -115,9 +127,10 @@
         },
         "projectRole": {
           "type": "string",
-          "minLength": 1,
-          "maxLength": 100,
-          "title": "Project Role Graduate Students"
+          "const": "Graduate Students",
+          "default": "Graduate Students",
+          "title": "Project Role Graduate Students",
+          "readOnly": true
         },
         "requestedSalary": {
           "$ref": "#/$defs/ResearchBudgetDecimal14",
@@ -215,9 +228,10 @@
         },
         "projectRole": {
           "type": "string",
-          "minLength": 1,
-          "maxLength": 100,
-          "title": "Project Role Post Doctoral Associates"
+          "const": "Post Doctoral Associates",
+          "default": "Post Doctoral Associates",
+          "title": "Project Role Post Doctoral Associates",
+          "readOnly": true
         },
         "requestedSalary": {
           "$ref": "#/$defs/ResearchBudgetDecimal14",
@@ -262,9 +276,10 @@
         },
         "projectRole": {
           "type": "string",
-          "minLength": 1,
-          "maxLength": 100,
-          "title": "Project Role Secretarial/Clerical"
+          "const": "Secretarial/Clerical",
+          "default": "Secretarial/Clerical",
+          "title": "Project Role Secretarial/Clerical",
+          "readOnly": true
         },
         "requestedSalary": {
           "$ref": "#/$defs/ResearchBudgetDecimal14",
@@ -309,9 +324,10 @@
         },
         "projectRole": {
           "type": "string",
-          "minLength": 1,
-          "maxLength": 100,
-          "title": "Project Role Undergraduate Students"
+          "const": "Undergraduate Students",
+          "default": "Undergraduate Students",
+          "title": "Project Role Undergraduate Students",
+          "readOnly": true
         },
         "requestedSalary": {
           "$ref": "#/$defs/ResearchBudgetDecimal14",

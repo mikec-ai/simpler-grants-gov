@@ -15,6 +15,10 @@ from typing import TYPE_CHECKING, Any, cast
 
 from src.constants.lookup_constants import FormType
 from src.form_schema.form_spec.bank import ARTIFACTS, _bank_projection, verify_artifacts
+from src.form_schema.form_spec.operational_behavior import (
+    ProjectedOperationalBehavior,
+    project_operational_behavior,
+)
 from src.form_schema.form_spec.projection import (
     Projection,
     project_rule_schema,
@@ -45,6 +49,9 @@ class LoadedForm:
         self.json_to_xml_schema: dict[str, Any] | None = artifacts.get("json_to_xml_schema")
         self.response_normalization: ResponseNormalizationPolicy | None = artifacts.get(
             "response_normalization"
+        )
+        self.operational_behavior: tuple[ProjectedOperationalBehavior, ...] = artifacts.get(
+            "operational_behavior", ()
         )
 
     @property
@@ -160,6 +167,18 @@ def _load_banked_form(
         projection=projection,
     )
     reject_rule_target_overlap(response_normalization, projected_rule_schema)
+    evidence_path = root / "evidence.json"
+    operational_behavior = (
+        project_operational_behavior(
+            json.loads(evidence_path.read_text()),
+            form_id=form_id,
+            target_projection=projection,
+            projection_for=_projection_for,
+            runtime_form_id_for=lambda source_form_id: runtime_identity(source_form_id).form_id,
+        )
+        if evidence_path.is_file()
+        else ()
+    )
     # All artifacts use the same projection, so a pointer and the property it addresses cannot
     # be spelled differently.
     return LoadedForm(
@@ -170,6 +189,7 @@ def _load_banked_form(
         rule_schema=projected_rule_schema,
         json_to_xml_schema=json_to_xml_schema,
         response_normalization=response_normalization,
+        operational_behavior=operational_behavior,
     )
 
 
