@@ -62,5 +62,41 @@
       "maxLength": 17,
       "pattern": "^-?(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "totalFundForAttachedEquipment"
+        ],
+        "properties": {
+          "totalFundForAttachedEquipment": {
+            "pattern": "^(?=.*[1-9])\\d+(?:\\.\\d+)?$"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "additionalEquipmentsAttachment"
+        ]
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "additionalEquipmentsAttachment"
+        ]
+      },
+      "then": {
+        "required": [
+          "totalFundForAttachedEquipment"
+        ],
+        "properties": {
+          "totalFundForAttachedEquipment": {
+            "pattern": "^(?=.*[1-9])\\d+(?:\\.\\d+)?$"
+          }
+        }
+      }
+    }
+  ]
 }

@@ -113,6 +113,34 @@ def test_nested_cross_section_condition_projects_without_an_adapter_branch() -> 
     )
 
 
+def test_nested_positive_attachment_totals_validate_without_an_adapter_branch() -> None:
+    schema = resolve_jsonschema(copy.deepcopy(RRSubawardBudget_v3_0.form_json_schema))
+    period_properties = schema["properties"]["budget_attachments"]["items"]["properties"][
+        "budget_year"
+    ]["items"]["properties"]
+    pairs = (
+        (
+            period_properties["equipment"],
+            "additional_equipments_attachment",
+            "total_fund_for_attached_equipment",
+        ),
+        (
+            period_properties["key_persons"],
+            "attached_key_persons",
+            "total_fund_for_attached_key_persons",
+        ),
+    )
+
+    for group, attachment, total in pairs:
+        validator = Draft202012Validator({"allOf": group["allOf"]})
+        assert list(validator.iter_errors({})) == []
+        assert list(validator.iter_errors({total: "0.00"})) == []
+        assert list(validator.iter_errors({total: "1.00"}))
+        assert list(validator.iter_errors({attachment: "file-id"}))
+        assert list(validator.iter_errors({attachment: "file-id", total: "0.00"}))
+        assert list(validator.iter_errors({attachment: "file-id", total: "0.01"})) == []
+
+
 def test_nested_cumulative_calculations_resolve_within_each_subaward() -> None:
     application_form = SimpleNamespace(
         application_response={
@@ -230,10 +258,10 @@ def test_official_xsd_and_dat_provenance_are_pinned() -> None:
         ("dat", "4eab979aa62d4a4e79da6ee536140da7b76545a8fc20a9897c1c13527b3c56fd"),
         ("dat", "c85158ce7ddcc756d6e8a55a050e00b4a95cdfc8d9a2d91b7bd94c7f8bdb1035"),
     ]
-    assert len(evidence["behaviorEvidence"]) == 66
+    assert len(evidence["behaviorEvidence"]) == 70
     assert (
         sum(record["authority"] == "official_source" for record in evidence["behaviorEvidence"])
-        == 30
+        == 34
     )
     assert sum(record["authority"] == "unresolved" for record in evidence["behaviorEvidence"]) == 36
     assert {
@@ -245,6 +273,12 @@ def test_official_xsd_and_dat_provenance_are_pinned() -> None:
     conditions = [
         record for record in evidence["behaviorEvidence"] if record["ruleKind"] == "condition"
     ]
-    assert len(conditions) == 10
-    assert {record["sourcePath"] for record in conditions} == {"F-8-1"}
+    assert len(conditions) == 14
+    assert {record["sourcePath"] for record in conditions} == {
+        "F-8-1",
+        "A-2-1",
+        "A-3-1",
+        "C-2-0",
+        "C-2-1",
+    }
     assert {record["executionStatus"] for record in conditions} == {"compiled"}

@@ -143,5 +143,41 @@
       ],
       "title": "Key Person"
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "totalFundForAttachedKeyPersons"
+        ],
+        "properties": {
+          "totalFundForAttachedKeyPersons": {
+            "pattern": "^(?=.*[1-9])\\d+(?:\\.\\d+)?$"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "attachedKeyPersons"
+        ]
+      }
+    },
+    {
+      "if": {
+        "required": [
+          "attachedKeyPersons"
+        ]
+      },
+      "then": {
+        "required": [
+          "totalFundForAttachedKeyPersons"
+        ],
+        "properties": {
+          "totalFundForAttachedKeyPersons": {
+            "pattern": "^(?=.*[1-9])\\d+(?:\\.\\d+)?$"
+          }
+        }
+      }
+    }
+  ]
 }

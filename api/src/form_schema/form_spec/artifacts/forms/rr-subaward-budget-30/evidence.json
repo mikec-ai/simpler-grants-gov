@@ -321,6 +321,46 @@
       "inheritedFrom": "rr-budget"
     },
     {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].keyPersons.attachedKeyPersons",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "A-2-1",
+      "sourceRecord": "One possible attachment per budget period. Required if TotalFundForAttachedKeyPersons is entered and greater than zero.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].keyPersons.totalFundForAttachedKeyPersons",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "A-3-1",
+      "sourceRecord": "Required and must be greater than zero if an AttachedKeyPersons attachment exists.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].equipment.additionalEquipmentsAttachment",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "C-2-0",
+      "sourceRecord": "One possible attachment per budget period. Required if TotalFundForAttachedEquipment is entered and greater than zero.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].equipment.totalFundForAttachedEquipment",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "C-2-1",
+      "sourceRecord": "Required and must be greater than zero if an AdditionalEquipmentsAttachment exists.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
       "ruleKind": "calculation",
       "canonicalPath": "budgetAttachments[*].budgetYear[*].keyPersons.keyPerson[*].fundsRequested",
       "authority": "unresolved",
