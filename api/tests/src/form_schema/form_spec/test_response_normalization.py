@@ -406,6 +406,21 @@ def test_validation_only_rule_can_share_normalization_target() -> None:
     reject_rule_target_overlap(policy, rule_schema)
 
 
+def test_rule_overlap_walker_traverses_data_fields_with_gg_prefix() -> None:
+    policy = ResponseNormalizationPolicy(
+        CONTRACT,
+        (ResponseNormalizationOperation("/gg_custom/blank", OPERATION, "a"),),
+    )
+    rule_schema = {
+        "gg_custom": {
+            "blank": {"gg_pre_population": {"rule": "arbitrary"}},
+        }
+    }
+
+    with pytest.raises(ValueError, match="overlaps a rule mutation target"):
+        reject_rule_target_overlap(policy, rule_schema)
+
+
 def test_application_rules_and_schema_see_normalized_copy_while_capture_stays_raw(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

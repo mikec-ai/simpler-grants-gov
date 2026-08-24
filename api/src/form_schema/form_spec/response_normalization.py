@@ -21,6 +21,12 @@ CONTRACT = "grants-form-response-normalization/v1"
 OPERATION = "empty-string-to-absent"
 _POINTER_ESCAPE = re.compile(r"~(?:0|1)")
 _AMBIGUOUS_COMPOSITION_KEYS = {"anyOf", "oneOf", "not", "if", "then", "else"}
+_RULE_SCHEMA_CONTROL_KEYS = {
+    "gg_pre_population",
+    "gg_post_population",
+    "gg_validation",
+    "gg_type",
+}
 
 
 @dataclass(frozen=True)
@@ -253,7 +259,7 @@ def reject_rule_target_overlap(
             if encoded:
                 mutation_targets.add(f"/{encoded}")
         for key, value in node.items():
-            if not key.startswith("gg_") and isinstance(value, dict):
+            if key not in _RULE_SCHEMA_CONTROL_KEYS and isinstance(value, dict):
                 walk(value, (*path, key))
 
     walk(rule_schema, ())
