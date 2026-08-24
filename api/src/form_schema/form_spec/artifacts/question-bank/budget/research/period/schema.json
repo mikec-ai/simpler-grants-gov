@@ -6,7 +6,8 @@
     "budgetPeriodEndDate": {
       "type": "string",
       "format": "date",
-      "title": "End Date:"
+      "title": "End Date:",
+      "description": "End Date cannot be before Start Date."
     },
     "budgetPeriodStartDate": {
       "type": "string",
@@ -30,6 +31,12 @@
       "properties": {
         "totalFund": {
           "readOnly": true
+        },
+        "additionalEquipmentsAttachment": {
+          "description": "One possible attachment per budget period. Required if TotalFundForAttachedEquipment is entered and greater than zero."
+        },
+        "totalFundForAttachedEquipment": {
+          "description": "Required and must be greater than zero if an AdditionalEquipmentsAttachment exists."
         }
       }
     },
@@ -61,6 +68,12 @@
         },
         "totalFundForKeyPersons": {
           "readOnly": true
+        },
+        "attachedKeyPersons": {
+          "description": "One possible attachment per budget period. Required if TotalFundForAttachedKeyPersons is entered and greater than zero."
+        },
+        "totalFundForAttachedKeyPersons": {
+          "description": "Required and must be greater than zero if an AttachedKeyPersons attachment exists."
         }
       }
     },

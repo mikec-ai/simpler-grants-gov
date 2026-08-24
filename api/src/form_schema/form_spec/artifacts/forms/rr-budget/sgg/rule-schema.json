@@ -6,6 +6,14 @@
   },
   "budgetYear": {
     "gg_type": "array",
+    "budgetPeriodEndDate": {
+      "gg_validation": {
+        "rule": "date_not_before",
+        "fields": [
+          "@THIS.budgetPeriodStartDate"
+        ]
+      }
+    },
     "equipment": {
       "additionalEquipmentsAttachment": {
         "gg_validation": {

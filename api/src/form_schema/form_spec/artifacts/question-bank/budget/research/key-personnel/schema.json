@@ -5,7 +5,8 @@
   "properties": {
     "attachedKeyPersons": {
       "$ref": "../../../../question-bank/budget/research/additional-key-personnel/schema.json",
-      "title": "Additional Senior Key Persons:"
+      "title": "Additional Senior Key Persons:",
+      "description": "One possible attachment per budget period. Required if TotalFundForAttachedKeyPersons is entered and greater than zero."
     },
     "keyPerson": {
       "type": "array",
@@ -22,7 +23,8 @@
     },
     "totalFundForAttachedKeyPersons": {
       "$ref": "#/$defs/ResearchBudgetDecimal15",
-      "title": "Total Funds requested for all Senior Key Persons in the attached file"
+      "title": "Total Funds requested for all Senior Key Persons in the attached file",
+      "description": "Required and must be greater than zero if an AttachedKeyPersons attachment exists."
     },
     "totalFundForKeyPersons": {
       "$ref": "#/$defs/ResearchBudgetDecimal15",
