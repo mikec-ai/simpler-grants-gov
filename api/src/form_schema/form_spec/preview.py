@@ -80,6 +80,7 @@ def build_preview_form(portable_id: str) -> Form:
         form_ui_schema=cast(Any, loaded.form_ui_schema),
         form_rule_schema=loaded.form_rule_schema,
         json_to_xml_schema=None,
+        response_normalization=loaded.response_normalization,
         form_instruction_id=None,
         form_type=None,
         sgg_version=None,

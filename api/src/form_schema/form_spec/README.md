@@ -25,6 +25,14 @@ response ownership, an acceptance event, and release gates. Simpler vendors both
 inspection, while rendering their producer-generated UI projection. The adapter contains no
 policy text, assurance-item list, or form-specific attestation branch.
 
+Forms may publish a hashed `response-normalization.json` sibling for reviewed capture
+compatibility. The adapter validates its exact evidence-backed response pointers, projects them
+through the ordinary legacy-name projection, and applies the closed operation to a copied response
+before rules, canonical validation, and XML generation. The initial operation removes only an
+exact empty string at a declared optional non-null string path. Whitespace and every other value
+are preserved. Rule writes still persist, while normalization alone never rewrites the stored
+capture representation. The loader and executor contain no form ids or inferred path lists.
+
 The adapter owns only consumer concerns:
 
 - canonical `camelCase` to Simpler's legacy field names;

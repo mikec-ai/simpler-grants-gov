@@ -36,14 +36,21 @@ class JsonRule:
 
 
 class JsonRuleContext:
-
-    def __init__(self, application_form: ApplicationForm, config: JsonRuleConfig):
+    def __init__(
+        self,
+        application_form: ApplicationForm,
+        config: JsonRuleConfig,
+        *,
+        json_data: dict | None = None,
+    ):
         self.application_form = application_form
         self.config = config
 
         # We create a copy of the json answers, just in case there
         # is any problem we won't immediately change the answer in the DB
-        self.json_data = copy.deepcopy(self.application_form.application_response)
+        self.json_data = copy.deepcopy(
+            self.application_form.application_response if json_data is None else json_data
+        )
 
         self.validation_issues: list[ValidationErrorDetail] = []
 

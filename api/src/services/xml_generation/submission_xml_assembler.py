@@ -6,6 +6,7 @@ from typing import Any
 from lxml import etree as lxml_etree
 
 from src.db.models.competition_models import Application, ApplicationForm, ApplicationSubmission
+from src.form_schema.form_spec.response_normalization import normalize_response
 from src.form_schema.forms import init_form_registry
 from src.services.applications.application_validation import is_form_required
 from src.services.xml_generation.config import load_xml_transform_config
@@ -153,7 +154,9 @@ class SubmissionXMLAssembler:
         attachment_mapping = self.attachment_mapping
 
         request = XMLGenerationRequest(
-            application_data=app_form.application_response,
+            application_data=normalize_response(
+                app_form.application_response, app_form.form.response_normalization
+            ),
             transform_config=load_xml_transform_config(form_name),
             pretty_print=pretty_print,
             attachment_mapping=attachment_mapping,

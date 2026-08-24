@@ -20,6 +20,10 @@ from src.form_schema.form_spec.projection import (
     project_schema,
     project_ui_schema,
 )
+from src.form_schema.form_spec.response_normalization import (
+    ResponseNormalizationPolicy,
+    load_response_normalization,
+)
 from src.form_schema.form_spec.runtime_identity import runtime_identity
 from src.form_schema.form_spec.xml_profile import project_grants_gov_xml_profile
 
@@ -37,6 +41,9 @@ class LoadedForm:
         self.form_ui_schema: list[Any] = artifacts["ui_schema"]
         self.form_rule_schema: dict[str, Any] | None = artifacts["rule_schema"]
         self.json_to_xml_schema: dict[str, Any] | None = artifacts.get("json_to_xml_schema")
+        self.response_normalization: ResponseNormalizationPolicy | None = artifacts.get(
+            "response_normalization"
+        )
 
     @property
     def meta(self) -> dict[str, Any]:
@@ -140,15 +147,23 @@ def _load_banked_form(
         if project_xml and xml_profile_path.is_file()
         else None
     )
-    # All three from the same projection, so a pointer and the property it addresses cannot
+    projected_schema = project_schema(canonical, projection)
+    response_normalization = load_response_normalization(
+        root,
+        manifest=manifest,
+        projected_schema=projected_schema,
+        projection=projection,
+    )
+    # All artifacts use the same projection, so a pointer and the property it addresses cannot
     # be spelled differently.
     return LoadedForm(
         form_id=form_id,
         manifest=manifest,
-        json_schema=project_schema(canonical, projection),
+        json_schema=projected_schema,
         ui_schema=project_ui_schema(ui_schema, projection),
         rule_schema=project_rule_schema(rule_schema, projection) if rule_schema else rule_schema,
         json_to_xml_schema=json_to_xml_schema,
+        response_normalization=response_normalization,
     )
 
 
@@ -194,6 +209,7 @@ def build_runtime_form(
         form_ui_schema=cast(Any, loaded.form_ui_schema),
         form_rule_schema=loaded.form_rule_schema,
         json_to_xml_schema=loaded.json_to_xml_schema,
+        response_normalization=loaded.response_normalization,
         form_instruction_id=form_instruction_id,
         form_type=FormType(identity.form_type),
         sgg_version=identity.sgg_version,
