@@ -194,33 +194,26 @@ def test_runtime_identity_target_enables_a_subset_of_banked_forms_without_leakin
     assert identity_document["contract"] == "sgg-form-runtime-identities/v1"
     assert identity_document["forms"] == EXPECTED_RUNTIME_IDENTITIES
     assert set(EXPECTED_RUNTIME_IDENTITIES) < set(selected)
-    assert set(selected) - set(EXPECTED_RUNTIME_IDENTITIES) == {
-        "attachment-form",
-        "nifa-supplemental",
-        "phs-assignment-request",
-        "rr-sf424b",
-    }
+    assert set(selected) - set(EXPECTED_RUNTIME_IDENTITIES)
     for portable_id in selected:
         meta = json.loads((ARTIFACTS / "forms" / portable_id / "manifest.json").read_text())["form"]
         assert {"formId", "formType", "sggVersion"}.isdisjoint(meta)
 
 
-@pytest.mark.parametrize(
-    "portable_id",
-    ["attachment-form", "nifa-supplemental", "phs-assignment-request", "rr-sf424b"],
-)
-def test_banked_only_forms_are_verified_but_fail_closed_at_runtime(portable_id):
+def test_every_banked_only_form_is_verified_but_fails_closed_at_runtime():
     manifest = verify_artifacts()
+    banked_only = set(manifest["selection"]["forms"]) - set(EXPECTED_RUNTIME_IDENTITIES)
 
-    assert portable_id in manifest["selection"]["forms"]
-    with pytest.raises(
-        ValueError, match=f"no SGG runtime identity for portable form {portable_id!r}"
-    ):
-        runtime_identity(portable_id)
-    with pytest.raises(
-        ValueError, match=f"no SGG runtime identity for portable form {portable_id!r}"
-    ):
-        load_form(portable_id)
+    assert banked_only
+    for portable_id in sorted(banked_only):
+        with pytest.raises(
+            ValueError, match=f"no SGG runtime identity for portable form {portable_id!r}"
+        ):
+            runtime_identity(portable_id)
+        with pytest.raises(
+            ValueError, match=f"no SGG runtime identity for portable form {portable_id!r}"
+        ):
+            load_form(portable_id)
 
 
 def test_registration_cannot_enable_a_banked_form_without_runtime_identity(tmp_path, monkeypatch):

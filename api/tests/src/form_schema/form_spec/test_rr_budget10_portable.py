@@ -106,7 +106,7 @@ def test_official_xsd_and_extraction_provenance_are_pinned() -> None:
             "type": "xsd",
             "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_Budget10_3_0-V3.0.xsd",
             "nativeVersion": "3.0",
-            "sha256": "cccce03554424d59b5958e4443a54db12a5a10780fbdc5df2ec25955d443fc9d",
+            "sha256": "e9d004c15ffcbae04b65087cb0eff7e87b8eb8ba0ffd6bfb6aba5542e04708cc",
         },
         {
             "id": "grantsgov-rr-budget-dat-3.0-f770",
@@ -117,4 +117,7 @@ def test_official_xsd_and_extraction_provenance_are_pinned() -> None:
         },
     ]
     assert evidence["extraction"]["revision"] == ("dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef")
+    assert evidence["extraction"]["sourceSetSha256"] == (
+        "cccce03554424d59b5958e4443a54db12a5a10780fbdc5df2ec25955d443fc9d"
+    )
     assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}
