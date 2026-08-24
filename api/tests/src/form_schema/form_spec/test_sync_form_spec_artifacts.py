@@ -130,12 +130,14 @@ def test_selects_multiple_forms_and_deduplicates_their_shared_questions(tmp_path
 def test_selected_xml_profiles_must_match_a_vendored_xsd(tmp_path):
     payload = b"<schema/>"
     digest = hashlib.sha256(payload).hexdigest()
-    profile = json.dumps({
-        "xsd": {
-            "uri": "https://apply.grants.gov/forms/Example-V1.0.xsd",
-            "sha256": digest,
+    profile = json.dumps(
+        {
+            "xsd": {
+                "uri": "https://apply.grants.gov/forms/Example-V1.0.xsd",
+                "sha256": digest,
+            }
         }
-    }).encode()
+    ).encode()
     xsd_directory = tmp_path / "xsds"
     xsd_directory.mkdir()
     (xsd_directory / "Example-V1.0.xsd").write_bytes(payload)
