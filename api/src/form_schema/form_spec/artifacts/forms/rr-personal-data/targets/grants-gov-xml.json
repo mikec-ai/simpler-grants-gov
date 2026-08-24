@@ -1,0 +1,186 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "rr-personal-data",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_PersonalData_1_2-V1.2.xsd",
+    "sha256": "5f766d46d573da1f6bb326bcbc13338439ba75399ad09dee2380f65e892402cb"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/RR_PersonalData_1_2-V1.2",
+    "RR_PersonalData_1_2": "http://apply.grants.gov/forms/RR_PersonalData_1_2-V1.2",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0"
+  },
+  "root": {
+    "element": "RR_PersonalData_1_2",
+    "namespacePrefix": "RR_PersonalData_1_2",
+    "attributes": {
+      "FormVersion": "1.2"
+    }
+  },
+  "mapping": {
+    "fields": {
+      "projectDirector": {
+        "element": "ProjectDirector",
+        "kind": "object",
+        "namespace": "default",
+        "fields": {
+          "name": {
+            "element": "Name",
+            "kind": "object",
+            "namespace": "default",
+            "fields": {
+              "prefix": {
+                "element": "PrefixName",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "firstName": {
+                "element": "FirstName",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "middleName": {
+                "element": "MiddleName",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "lastName": {
+                "element": "LastName",
+                "kind": "value",
+                "namespace": "globLib"
+              },
+              "suffix": {
+                "element": "SuffixName",
+                "kind": "value",
+                "namespace": "globLib"
+              }
+            }
+          },
+          "sex": {
+            "element": "Gender",
+            "kind": "value",
+            "namespace": "default"
+          },
+          "race": {
+            "element": "Race",
+            "kind": "array",
+            "namespace": "default",
+            "items": {
+              "node": {
+                "kind": "value",
+                "flatten": true
+              }
+            }
+          },
+          "ethnicity": {
+            "element": "Ethnicity",
+            "kind": "value",
+            "namespace": "default"
+          },
+          "disabilityStatus": {
+            "element": "DisabilityStatus",
+            "kind": "array",
+            "namespace": "default",
+            "items": {
+              "node": {
+                "kind": "value",
+                "flatten": true
+              }
+            }
+          },
+          "citizenship": {
+            "element": "Citizenship",
+            "kind": "value",
+            "namespace": "default"
+          }
+        }
+      },
+      "coProjectDirectors": {
+        "element": "Co-ProjectDirector",
+        "kind": "array",
+        "namespace": "default",
+        "items": {
+          "fields": {
+            "name": {
+              "element": "Name",
+              "kind": "object",
+              "namespace": "default",
+              "fields": {
+                "prefix": {
+                  "element": "PrefixName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "firstName": {
+                  "element": "FirstName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "middleName": {
+                  "element": "MiddleName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "lastName": {
+                  "element": "LastName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                },
+                "suffix": {
+                  "element": "SuffixName",
+                  "kind": "value",
+                  "namespace": "globLib"
+                }
+              }
+            },
+            "sex": {
+              "element": "Gender",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "race": {
+              "element": "Race",
+              "kind": "array",
+              "namespace": "default",
+              "items": {
+                "node": {
+                  "kind": "value",
+                  "flatten": true
+                }
+              }
+            },
+            "ethnicity": {
+              "element": "Ethnicity",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "disabilityStatus": {
+              "element": "DisabilityStatus",
+              "kind": "array",
+              "namespace": "default",
+              "items": {
+                "node": {
+                  "kind": "value",
+                  "flatten": true
+                }
+              }
+            },
+            "citizenship": {
+              "element": "Citizenship",
+              "kind": "value",
+              "namespace": "default"
+            }
+          }
+        }
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-RRPersonalData.jsonl.manifest.json"
+  }
+}

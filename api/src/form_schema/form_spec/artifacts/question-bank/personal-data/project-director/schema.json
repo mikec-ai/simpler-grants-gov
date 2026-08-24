@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "personal-data/project-director/schema.json",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "../../../question-bank/research-person/name/schema.json",
+      "description": "Enter the person's name. First and last name are required.",
+      "title": "Name"
+    },
+    "sex": {
+      "$ref": "#/$defs/PersonalDataSex",
+      "description": "Select the person's sex, or decline to provide it.",
+      "title": "Sex"
+    },
+    "race": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PersonalDataRace"
+      },
+      "maxItems": 5,
+      "description": "Select every race category that applies, or decline to provide race.",
+      "title": "Race (check all that apply)"
+    },
+    "ethnicity": {
+      "$ref": "#/$defs/PersonalDataEthnicity",
+      "description": "Select the person's ethnicity, or decline to provide it.",
+      "title": "Ethnicity"
+    },
+    "disabilityStatus": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PersonalDataDisabilityStatus"
+      },
+      "maxItems": 4,
+      "description": "Select every disability status that applies, select None, or decline to provide it.",
+      "title": "Disability Status (check all that apply)"
+    },
+    "citizenship": {
+      "$ref": "#/$defs/PersonalDataCitizenship",
+      "description": "Select the person's citizenship status, or decline to provide it.",
+      "title": "Citizenship"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "description": "Voluntary personal data for the application's Project Director/Principal Investigator.",
+  "title": "Project Director / Principal Investigator",
+  "$defs": {
+    "PersonalDataSex": {
+      "type": "string",
+      "enum": [
+        "Male",
+        "Female",
+        "Do Not Wish to Provide"
+      ],
+      "description": "Sex vocabulary carried by the active R&R Personal Data 1.2 wire contract."
+    },
+    "PersonalDataRace": {
+      "type": "string",
+      "enum": [
+        "American Indian or Alaska Native",
+        "Asian",
+        "Black or African American",
+        "Native Hawaiian or Other Pacific Islander",
+        "White",
+        "Do Not Wish to Provide"
+      ],
+      "description": "Race vocabulary carried by the active R&R Personal Data 1.2 wire contract."
+    },
+    "PersonalDataEthnicity": {
+      "type": "string",
+      "enum": [
+        "Hispanic or Latino",
+        "Not Hispanic or Latino",
+        "Do Not Wish To Provide"
+      ],
+      "description": "Ethnicity vocabulary carried by the active R&R Personal Data 1.2 wire contract."
+    },
+    "PersonalDataDisabilityStatus": {
+      "type": "string",
+      "enum": [
+        "Hearing",
+        "Visual",
+        "Mobility/Orthopedic Impairment",
+        "Other",
+        "None",
+        "Do Not Wish to Provide"
+      ],
+      "description": "Disability vocabulary carried by the active R&R Personal Data 1.2 wire contract."
+    },
+    "PersonalDataCitizenship": {
+      "type": "string",
+      "enum": [
+        "US Citizen",
+        "Permanent Resident",
+        "Other non-US Citizen",
+        "Do Not Wish to Provide"
+      ],
+      "description": "Citizenship vocabulary carried by the active R&R Personal Data 1.2 wire contract."
+    }
+  }
+}

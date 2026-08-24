@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rr-personal-data/schema.json",
+  "type": "object",
+  "properties": {
+    "projectDirector": {
+      "$ref": "../../question-bank/personal-data/project-director/schema.json",
+      "description": "Provide the required name and any voluntary demographic information for the PD/PI.",
+      "title": "Project Director / Principal Investigator"
+    },
+    "coProjectDirectors": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/personal-data/co-project-director/schema.json"
+      },
+      "maxItems": 4,
+      "description": "Optionally add personal data for up to four co-PDs/co-PIs.",
+      "title": "Co-Project Directors / Co-Principal Investigators"
+    }
+  },
+  "required": [
+    "projectDirector"
+  ],
+  "description": "Research & Related Personal Data, Grants.gov FID 357, version 1.2."
+}
