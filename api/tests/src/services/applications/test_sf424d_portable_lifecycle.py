@@ -37,7 +37,7 @@ def _register_runtime_form(form_id: str) -> tuple[Any, FormTemplateKey]:
 
 
 def _link_user(application: Any, privileges: list[Privilege]) -> Any:
-    user = UserFactory.create()
+    user = UserFactory.create(email="portable-reviewer@example.com")
     ApplicationUserRoleFactory.create(
         application_user=ApplicationUserFactory.create(user=user, application=application),
         role=RoleFactory.create(privileges=privileges, is_application_role=True),
