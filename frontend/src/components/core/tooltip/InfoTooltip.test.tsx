@@ -14,8 +14,10 @@ jest.mock("src/components/core/tooltip/TooltipWrapper", () => ({
 
 describe("InfoTooltip", () => {
   it("renders with default props", () => {
-    render(<InfoTooltip text="Test tooltip" />);
-    expect(screen.getByTestId("triggerElement")).toBeInTheDocument();
+    render(<InfoTooltip text="Test tooltip" title="More information" />);
+    expect(
+      screen.getByRole("img", { name: "More information" }),
+    ).toBeInTheDocument();
   });
 
   it("renders with custom position", () => {

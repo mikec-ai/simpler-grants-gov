@@ -124,7 +124,8 @@ async function openSelectedForm(
 async function captureFormState(page: Page) {
   return page
     .locator(
-      "main input:not([type=file]):not([type=hidden]):not([type=submit]):not([type=button]), main select, main textarea",
+      "main input:not([type=file]):not([type=hidden]):not([type=submit]):not([type=button]):not([disabled]):not([readonly]), " +
+        "main select:not([disabled]), main textarea:not([disabled]):not([readonly])",
     )
     .evaluateAll((nodes) =>
       nodes.map((node) => {
@@ -148,11 +149,15 @@ async function makeDeterministicEdit(
   page: Page,
   definition?: string,
 ): Promise<string> {
-  const control = definition
+  const declaredControl = definition
     ? page.locator(
         `main [id=${JSON.stringify(schemaDefinitionToControlId(definition))}]`,
       )
-    : page.locator(editableControlSelector).first();
+    : null;
+  const control =
+    declaredControl && (await declaredControl.count()) > 0
+      ? declaredControl
+      : page.locator(editableControlSelector).first();
   await expect(control).toBeVisible();
   const identity =
     (await control.getAttribute("id")) ??

@@ -160,6 +160,7 @@ function Budget424aSectionE<
     return (
       <TextWidget
         schema={activityTitleSchema}
+        aria-label={`Grant program, row ${rowIndex + 16}`}
         id={`activity_line_items[${rowIndex}]--federal_fund_estimates--grant_program`}
         rawErrors={getErrorMessagesForField(
           `activity_line_items[${rowIndex}]--federal_fund_estimates--grant_program`,
