@@ -209,18 +209,24 @@ def build_browser_plan() -> dict[str, Any]:
             for node in ui_fields
             if node.get("interaction") in {"readOnly", "disabled"}
         )
+        rule_attachments, calculations = _rule_capabilities(loaded.form_rule_schema or {})
+        calculated_response_paths = {calculation["rulePath"] for calculation in calculations}
+        response_path_by_schema_path = {
+            schema_path: response_path for schema_path, response_path, _, _ in schema_fields
+        }
         editable = [
             {"definition": node["definition"]}
             for node in ui_fields
             if node.get("type") == "field"
             and node.get("interaction") not in {"readOnly", "disabled"}
+            and response_path_by_schema_path.get(node["definition"])
+            not in calculated_response_paths
         ]
         required = [
             {"schemaPath": schema_path, "responsePath": response_path}
             for schema_path, response_path, _, is_required in schema_fields
             if is_required
         ]
-        rule_attachments, calculations = _rule_capabilities(loaded.form_rule_schema or {})
         attachment_declarations = sorted(
             [*ui_attachments, *rule_attachments],
             key=lambda item: json.dumps(item, sort_keys=True),

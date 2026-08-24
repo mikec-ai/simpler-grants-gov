@@ -58,8 +58,8 @@ const isConditionalElement = (schemaNode: object) => {
     - avoid crashing on conditional schemas
     - keep conditionals available for validation-related workflows
 
-  Any allOf made entirely of conditional entries is extracted. Non-conditional
-  allOf entries continue through the normal recursive path.
+  Conditional entries are extracted even when an allOf also contains structural
+  entries. Non-conditional entries continue through the normal recursive path.
 */
 export const extricateConditionalValidationRules = (
   properties: RJSFSchema,
@@ -72,8 +72,32 @@ export const extricateConditionalValidationRules = (
     ) => {
       if (key === "allOf") {
         if (Array.isArray(value) && value.length) {
-          if (value.every(isConditionalElement)) {
-            conditionalValidationRules[parentPath] = value;
+          const conditionalElements = value.filter(
+            (element) =>
+              isBasicallyAnObject(element) && isConditionalElement(element),
+          );
+          if (conditionalElements.length) {
+            conditionalValidationRules[parentPath] = conditionalElements;
+            const renderableElements = value.filter(
+              (element) =>
+                !isBasicallyAnObject(element) || !isConditionalElement(element),
+            );
+            if (renderableElements.length) {
+              const nestedUpdate = extricateConditionalValidationRules(
+                { allOf: renderableElements },
+                parentPath,
+              );
+              return {
+                conditionalValidationRules: {
+                  ...conditionalValidationRules,
+                  ...nestedUpdate.conditionalValidationRules,
+                },
+                propertiesWithoutComplexConditionals: {
+                  ...propertiesWithoutComplexConditionals,
+                  ...nestedUpdate.propertiesWithoutComplexConditionals,
+                },
+              };
+            }
             return {
               conditionalValidationRules,
               propertiesWithoutComplexConditionals,

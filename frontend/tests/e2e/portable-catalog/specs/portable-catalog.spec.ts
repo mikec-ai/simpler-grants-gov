@@ -11,6 +11,7 @@ import {
   observedBoundary,
   RECEIPT_CONTRACT,
   recoverBrowserPlanCandidates,
+  schemaDefinitionToControlId,
   summarizeReceipts,
   writeReceipt,
   type Boundary,
@@ -143,8 +144,15 @@ const editableControlSelector =
   "main textarea:visible:not([disabled]):not([readonly]), " +
   "main select:visible:not([disabled])";
 
-async function makeDeterministicEdit(page: Page): Promise<string> {
-  const control = page.locator(editableControlSelector).first();
+async function makeDeterministicEdit(
+  page: Page,
+  definition?: string,
+): Promise<string> {
+  const control = definition
+    ? page.locator(
+        `main [id=${JSON.stringify(schemaDefinitionToControlId(definition))}]`,
+      )
+    : page.locator(editableControlSelector).first();
   await expect(control).toBeVisible();
   const identity =
     (await control.getAttribute("id")) ??
@@ -403,7 +411,14 @@ test.describe("portable catalog browser conformance", () => {
             let applyUrl = page.url();
             receipt.probes.push(
               await probe("initial_save_reload", "api_round_trip", async () => {
-                const editedControl = await makeDeterministicEdit(page);
+                const editableDefinition =
+                  form.capabilities.editableScalar?.declarations[0]?.definition;
+                const editedControl = await makeDeterministicEdit(
+                  page,
+                  typeof editableDefinition === "string"
+                    ? editableDefinition
+                    : undefined,
+                );
                 const beforeSave = await captureFormState(page);
                 // Saving is a Next server action, so its API PUT is server-side and
                 // invisible to Playwright's browser response stream. Assert the user

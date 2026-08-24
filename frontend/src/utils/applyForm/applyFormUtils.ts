@@ -747,17 +747,43 @@ export const processFormSchema = (
   conditionalValidationRules: RJSFSchema;
 } => {
   try {
-    const { propertiesWithoutComplexConditionals, conditionalValidationRules } =
-      extricateConditionalValidationRules(formSchema.properties ?? {});
+    const {
+      propertiesWithoutComplexConditionals,
+      conditionalValidationRules: propertyConditionalValidationRules,
+    } = extricateConditionalValidationRules(formSchema.properties ?? {});
+    // The backend has already resolved every $ref. Keeping the now-unused $defs
+    // makes the renderer parse declaration-only conditionals a second time.
+    const { $defs: _resolvedDefinitions, ...formSchemaWithoutDefinitions } =
+      formSchema;
+    let renderableFormSchema = formSchemaWithoutDefinitions;
+    let rootConditionalValidationRules: RJSFSchema = {};
+
+    if (Object.hasOwn(formSchema, "allOf")) {
+      const {
+        propertiesWithoutComplexConditionals: rootWithoutComplexConditionals,
+        conditionalValidationRules,
+      } = extricateConditionalValidationRules({ allOf: formSchema.allOf });
+
+      rootConditionalValidationRules = conditionalValidationRules;
+      if (!Object.hasOwn(rootWithoutComplexConditionals, "allOf")) {
+        const { allOf: _allOf, ...schemaWithoutConditionalAllOf } =
+          renderableFormSchema;
+        renderableFormSchema = schemaWithoutConditionalAllOf;
+      }
+    }
+
     const condensedProperties = mergeAllOf({
       properties: propertiesWithoutComplexConditionals,
     } as JSONSchema7);
     return {
       formSchema: {
-        ...formSchema,
+        ...renderableFormSchema,
         ...condensedProperties,
       },
-      conditionalValidationRules,
+      conditionalValidationRules: {
+        ...rootConditionalValidationRules,
+        ...propertyConditionalValidationRules,
+      },
     };
   } catch (e) {
     console.error("Error processing schema");

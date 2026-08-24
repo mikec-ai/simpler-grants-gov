@@ -50,19 +50,35 @@ def test_browser_plan_follows_live_manifest_and_discovers_capabilities() -> None
     }
 
 
-def test_browser_plan_can_target_one_form_without_a_second_harness(
-    monkeypatch: pytest.MonkeyPatch,
+@pytest.mark.parametrize("form_id", ["sf424", "sf424-short"])
+def test_browser_plan_can_target_a_family_member_without_a_second_harness(
+    monkeypatch: pytest.MonkeyPatch, form_id: str
 ) -> None:
-    monkeypatch.setenv(BROWSER_FORM_IDS, "sf424")
+    monkeypatch.setenv(BROWSER_FORM_IDS, form_id)
 
     plan = build_browser_plan()
 
-    assert [form["portableFormId"] for form in plan["forms"]] == ["sf424"]
-    assert plan["forms"][0]["previewFormId"] == str(preview_form_id("sf424"))
+    assert [form["portableFormId"] for form in plan["forms"]] == [form_id]
+    assert plan["forms"][0]["previewFormId"] == str(preview_form_id(form_id))
     assert plan["consumerSeed"] == {
-        "opportunityId": browser_seed_ids(("sf424",))[0],
-        "competitionId": browser_seed_ids(("sf424",))[1],
+        "opportunityId": browser_seed_ids((form_id,))[0],
+        "competitionId": browser_seed_ids((form_id,))[1],
     }
+
+
+def test_browser_plan_does_not_treat_prepopulated_fields_as_editable(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "sf424-short")
+
+    capabilities = build_browser_plan()["forms"][0]["capabilities"]
+    editable_definitions = {
+        declaration["definition"] for declaration in capabilities["editableScalar"]["declarations"]
+    }
+
+    assert "/properties/agency_name" not in editable_definitions
+    assert "/properties/assistance_listing_number" not in editable_definitions
+    assert "/properties/organization_name" in editable_definitions
 
 
 def test_browser_seed_ids_preserve_full_catalog_and_isolate_canaries() -> None:
@@ -96,7 +112,8 @@ def test_browser_plan_cli_writes_json_and_structured_stdout(tmp_path) -> None:
     assert json.loads(output.read_text())["contract"] == PLAN_CONTRACT
 
 
-def test_browser_plan_cli_honors_one_form_selection(tmp_path) -> None:
+@pytest.mark.parametrize("form_id", ["sf424", "sf424-short"])
+def test_browser_plan_cli_honors_one_form_selection(tmp_path, form_id: str) -> None:
     output = tmp_path / "plan.json"
     result = subprocess.run(
         [sys.executable, "bin/build_portable_browser_plan.py", "--out", str(output)],
@@ -107,13 +124,13 @@ def test_browser_plan_cli_honors_one_form_selection(tmp_path) -> None:
             **os.environ,
             "ENVIRONMENT": "test",
             "ENABLE_PORTABLE_FORM_PREVIEW": "true",
-            BROWSER_FORM_IDS: "sf424",
+            BROWSER_FORM_IDS: form_id,
         },
     )
 
     assert result.returncode == 0
     assert "forms: 1" in result.stdout
-    assert [form["portableFormId"] for form in json.loads(output.read_text())["forms"]] == ["sf424"]
+    assert [form["portableFormId"] for form in json.loads(output.read_text())["forms"]] == [form_id]
 
 
 def test_browser_plan_cli_rejects_unknown_flags() -> None:

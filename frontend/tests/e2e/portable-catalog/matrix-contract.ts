@@ -74,6 +74,25 @@ export type RecoveredPlanCandidate = Pick<
   "portableFormId" | "previewFormId" | "artifactDigests"
 >;
 
+export function schemaDefinitionToControlId(definition: string): string {
+  if (!definition.startsWith("/")) {
+    throw new Error(
+      `schema definition is not an absolute pointer: ${definition}`,
+    );
+  }
+  const path = definition
+    .slice(1)
+    .split("/")
+    .map((segment) => segment.replaceAll("~1", "/").replaceAll("~0", "~"))
+    .filter((segment) => segment !== "properties" && segment !== "items");
+  if (!path.length) {
+    throw new Error(
+      `schema definition does not identify a control: ${definition}`,
+    );
+  }
+  return path.join("--");
+}
+
 const ownershipByBoundary: Record<Boundary, Ownership> = {
   artifact_integrity: "producer_content",
   plan: "harness_inconclusive",
