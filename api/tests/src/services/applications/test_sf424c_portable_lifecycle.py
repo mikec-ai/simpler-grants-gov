@@ -27,10 +27,7 @@ from tests.src.form_schema.form_spec.lifecycle import (
     register_runtime_form_for_test,
     restore_runtime_form_after_test,
 )
-from tests.src.form_schema.form_spec.test_sf424c_portable import (
-    calculated_response,
-    input_response,
-)
+from tests.src.form_schema.form_spec.test_sf424c_portable import calculated_response, input_response
 
 
 def _link_user(application: Any, privileges: list[Privilege]) -> Any:
