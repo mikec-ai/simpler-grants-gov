@@ -308,7 +308,7 @@ describe("ApplyForm", () => {
               properties: { includeDetails: { const: true } },
               required: ["includeDetails"],
             },
-            thenRequired: ["details"],
+            thenRequired: [["details"]],
             elseRequired: [],
             order: 0,
           },
