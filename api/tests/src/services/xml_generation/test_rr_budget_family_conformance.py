@@ -338,6 +338,28 @@ def test_maximum_budget_period_boundary_completes_lifecycle_and_xsd_validation(
     )
 
 
+@pytest.mark.parametrize("profile", PROFILES, ids=lambda profile: profile.form_id)
+def test_one_over_maximum_budget_period_boundary_is_rejected(profile: BudgetProfile) -> None:
+    response = _calculate(
+        profile,
+        _wrap(profile, [_adapt_budget(profile, _minimal_budget())]),
+    )
+    budget = response["budget_attachments"][0] if profile.subaward else response
+    first_period = budget["budget_year"][0]
+    budget["budget_year"] = [copy.deepcopy(first_period) for _ in range(profile.max_periods + 1)]
+    prefix = "$.budget_attachments[0]" if profile.subaward else "$"
+
+    assert_validation_case(
+        profile.form_id,
+        ValidationCase(
+            "one over maximum budget periods",
+            response,
+            frozenset({f"{prefix}.budget_year"}),
+        ),
+        attachment_ids=ATTACHMENT_IDS,
+    )
+
+
 @pytest.mark.parametrize(
     "profile",
     [profile for profile in PROFILES if profile.subaward],
@@ -362,4 +384,30 @@ def test_maximum_subaward_boundary_completes_lifecycle_and_xsd_validation(
     budget_name = "RR_Budget10_3_0" if "10_30" in profile.root_name else "RR_Budget_3_0"
     assert (
         len(root.findall(f".//{{{profile.budget_namespace}}}{budget_name}")) == profile.max_budgets
+    )
+
+
+@pytest.mark.parametrize(
+    "profile",
+    [profile for profile in PROFILES if profile.subaward],
+    ids=lambda profile: profile.form_id,
+)
+def test_one_over_maximum_subaward_boundary_is_rejected(profile: BudgetProfile) -> None:
+    response = _calculate(
+        profile,
+        _wrap(profile, [_adapt_budget(profile, _minimal_budget())]),
+    )
+    first_budget = response["budget_attachments"][0]
+    response["budget_attachments"] = [
+        copy.deepcopy(first_budget) for _ in range(profile.max_budgets + 1)
+    ]
+
+    assert_validation_case(
+        profile.form_id,
+        ValidationCase(
+            "one over maximum subawards",
+            response,
+            frozenset({"$.budget_attachments"}),
+        ),
+        attachment_ids=ATTACHMENT_IDS,
     )
