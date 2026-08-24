@@ -10,7 +10,397 @@
         "widget": "Table",
         "definition": [
           "/properties/budgetInformation"
-        ]
+        ],
+        "children": {
+          "columns": [
+            {
+              "columnHeader": "Cost Classification",
+              "width": 40
+            },
+            {
+              "columnHeader": "Total Cost",
+              "width": 20
+            },
+            {
+              "columnHeader": "Costs Not Allowable for Participation",
+              "width": 20
+            },
+            {
+              "columnHeader": "Total Allowable Costs (Columns a - b)",
+              "width": 20
+            }
+          ],
+          "rows": [
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Administrative and legal expenses"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/administrativeAndLegalExpenses/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/administrativeAndLegalExpenses/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/administrativeAndLegalExpenses/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Land, structures, rights-of-way, appraisals, etc."
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/landStructuresRightsOfWay/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/landStructuresRightsOfWay/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/landStructuresRightsOfWay/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Relocation expenses and payments"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/relocationExpenses/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/relocationExpenses/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/relocationExpenses/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Architectural and engineering fees"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/architecturalEngineeringFees/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/architecturalEngineeringFees/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/architecturalEngineeringFees/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Other architectural and engineering fees"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/otherArchitecturalEngineeringFees/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/otherArchitecturalEngineeringFees/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/otherArchitecturalEngineeringFees/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Project inspection fees"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/projectInspectionFees/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/projectInspectionFees/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/projectInspectionFees/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Site work"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/siteWork/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/siteWork/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/siteWork/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Demolition and removal"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/demolitionAndRemoval/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/demolitionAndRemoval/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/demolitionAndRemoval/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Construction"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/construction/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/construction/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/construction/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Equipment"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/equipment/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/equipment/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/equipment/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Miscellaneous"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/miscellaneous/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/miscellaneous/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/miscellaneous/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Subtotal (sum of lines 1-11)"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/subtotalBeforeContingencies/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/subtotalBeforeContingencies/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/subtotalBeforeContingencies/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Contingencies"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/contingencies/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/contingencies/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/contingencies/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Subtotal"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/subtotalAfterContingencies/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/subtotalAfterContingencies/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/subtotalAfterContingencies/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Project (program) income"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/programIncome/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "input",
+                  "definition": "/properties/programIncome/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/programIncome/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            },
+            {
+              "cells": [
+                {
+                  "type": "plainText",
+                  "staticContent": "Total project costs"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/totalProjectCosts/properties/totalCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/totalProjectCosts/properties/nonAllowableCost",
+                  "format": "dollar"
+                },
+                {
+                  "type": "readOnly",
+                  "definition": "/properties/totalProjectCosts/properties/totalAllowableCost",
+                  "format": "dollar"
+                }
+              ]
+            }
+          ]
+        }
       }
     ],
     "description": "Certain programs require additional computations to establish the eligible Federal share. Follow the awarding agency's instructions."

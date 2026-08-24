@@ -39,12 +39,10 @@ def calculated_response() -> dict:
         "budget_information": {name: dict(row) for name in INPUT_ROWS},
         "federal_funding": {"federal_percentage_share": 80},
     }
-    data["budget_information"].update(
-        {
-            "contingencies": {"total_cost": "55000.00", "non_allowable_cost": "5000.00"},
-            "project_income": {"total_cost": "10000.00", "non_allowable_cost": "0.00"},
-        }
-    )
+    data["budget_information"].update({
+        "contingencies": {"total_cost": "55000.00", "non_allowable_cost": "5000.00"},
+        "project_income": {"total_cost": "10000.00", "non_allowable_cost": "0.00"},
+    })
     projected = load_form("sf424c")
     application_form = SimpleNamespace(
         application_response=data,
@@ -109,6 +107,44 @@ def test_all_calculations_execute_with_source_aware_materialization() -> None:
         "total_project_costs": "1030000.00",
         "federal_funding_share": "824000.00",
     }
+
+
+def test_table_layout_projects_all_rows_and_cell_paths_generically() -> None:
+    table = load_form("sf424c").form_ui_schema[0]["children"][0]
+
+    assert table["widget"] == "Table"
+    assert table["definition"] == ["/properties/budget_information"]
+    assert [column["columnHeader"] for column in table["children"]["columns"]] == [
+        "Cost Classification",
+        "Total Cost",
+        "Costs Not Allowable for Participation",
+        "Total Allowable Costs (Columns a - b)",
+    ]
+    rows = table["children"]["rows"]
+    assert len(rows) == 16
+    assert all(len(row["cells"]) == 4 for row in rows)
+    assert rows[0]["cells"][1:] == [
+        {
+            "type": "input",
+            "definition": "/properties/administrative_and_legal_expenses/properties/total_cost",
+            "format": "dollar",
+        },
+        {
+            "type": "input",
+            "definition": (
+                "/properties/administrative_and_legal_expenses/properties/non_allowable_cost"
+            ),
+            "format": "dollar",
+        },
+        {
+            "type": "readOnly",
+            "definition": (
+                "/properties/administrative_and_legal_expenses/properties/total_allowable_cost"
+            ),
+            "format": "dollar",
+        },
+    ]
+    assert all(cell["type"] == "readOnly" for cell in rows[-1]["cells"][1:])
 
 
 def test_promotion_receipt_boundary_and_release_gates_remain_explicit() -> None:
