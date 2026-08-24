@@ -727,6 +727,36 @@
       "size": 8506
     },
     {
+      "path": "dist/forms/rr-personal-data/evidence.json",
+      "sha256": "0939227c710a091a8d8a9375f346faacefd66e7112d5fc25b98c554fc8981091",
+      "size": 5609
+    },
+    {
+      "path": "dist/forms/rr-personal-data/manifest.json",
+      "sha256": "ef02d83c571d127c8578bfcfdca36532336548360a7a37f2b087f14af9128aca",
+      "size": 545
+    },
+    {
+      "path": "dist/forms/rr-personal-data/schema.json",
+      "sha256": "4584aa6cd22691f6049cc5723da8c0266f739adad9e82130fe1e04f33e1dac77",
+      "size": 894
+    },
+    {
+      "path": "dist/forms/rr-personal-data/sgg/rule-schema.json",
+      "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed",
+      "size": 5
+    },
+    {
+      "path": "dist/forms/rr-personal-data/sgg/ui-schema.json",
+      "sha256": "0dc4339149562301d86d483b05d4b9c05051c230ce9171a3b914a0a3e92da698",
+      "size": 3947
+    },
+    {
+      "path": "dist/forms/rr-personal-data/targets/grants-gov-xml.json",
+      "sha256": "a6c3fdc9d0d707914de7bb0b9fbaae439a76709e652d30927f46fa50e9ee202c",
+      "size": 5458
+    },
+    {
       "path": "dist/forms/rr-sf424-multi-project-cover/evidence.json",
       "sha256": "0f522038c78da72a0da2eb12acdc2181cee7ddfcbe86add5c2c0ad6c85e9d52e",
       "size": 17062
@@ -1732,6 +1762,16 @@
       "size": 247
     },
     {
+      "path": "dist/question-bank/personal-data/co-project-director/schema.json",
+      "sha256": "86d087f2178c63283059cb644bef5b8f9a135d2dd2468825ec03e209818e835c",
+      "size": 3270
+    },
+    {
+      "path": "dist/question-bank/personal-data/project-director/schema.json",
+      "sha256": "ebdd8a1612b2b9334835d91cb2c5bd2da82687ba6d664854069cff51c1c0ccdf",
+      "size": 3269
+    },
+    {
       "path": "dist/question-bank/poc/details/schema.json",
       "sha256": "d491546f32cd1e3cc6a07673879f34cc4c55187f97bfca0f293f18b2d63d1b0e",
       "size": 1641
@@ -2129,13 +2169,14 @@
       "nifa-supplemental",
       "phs-inclusion-enrollment-report",
       "phs398-research-plan",
-      "phs-human-subjects"
+      "phs-human-subjects",
+      "rr-personal-data"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "70fa65f82f66901f8a6a330aa8ef70479ded9b5e"
+    "revision": "6b5717763d5769efd8b92a3cdbb61bc6935909fb"
   },
-  "sourceBundleSha256": "4b147e74598d4abd8fe9e00926ec66c7eb35809119e5c0579b737e73ea376289"
+  "sourceBundleSha256": "0f2e62ee303de460e2110a6cb13c9001924afddbf8cf15858d7bc7ac52c340d3"
 }

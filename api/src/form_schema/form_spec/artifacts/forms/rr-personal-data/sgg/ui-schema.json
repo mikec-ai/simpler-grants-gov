@@ -1,0 +1,118 @@
+[
+  {
+    "type": "section",
+    "name": "projectDirector",
+    "label": "Project Director / Principal Investigator",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/name/properties/prefix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/name/properties/firstName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/name/properties/middleName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/name/properties/lastName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/name/properties/suffix"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/sex",
+        "widget": "Select"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/race",
+        "widget": "MultiSelect"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/ethnicity",
+        "widget": "Select"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/disabilityStatus",
+        "widget": "MultiSelect"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/projectDirector/properties/citizenship",
+        "widget": "Select"
+      }
+    ],
+    "description": "Requested demographic information is voluntary, kept confidential, separated from the application after receipt, and excluded from review."
+  },
+  {
+    "type": "section",
+    "name": "coProjectDirectors",
+    "label": "Co-Project Directors / Co-Principal Investigators",
+    "children": [
+      {
+        "type": "fieldList",
+        "name": "coProjectDirectors",
+        "label": "Co-Project Director / Co-Principal Investigator",
+        "definition": "/properties/coProjectDirectors",
+        "children": [
+          {
+            "type": "field",
+            "definition": "/properties/coProjectDirectors/items/properties/name/properties/prefix"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/coProjectDirectors/items/properties/name/properties/firstName"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/coProjectDirectors/items/properties/name/properties/middleName"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/coProjectDirectors/items/properties/name/properties/lastName"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/coProjectDirectors/items/properties/name/properties/suffix"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/coProjectDirectors/items/properties/sex",
+            "widget": "Select"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/coProjectDirectors/items/properties/race",
+            "widget": "MultiSelect"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/coProjectDirectors/items/properties/ethnicity",
+            "widget": "Select"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/coProjectDirectors/items/properties/disabilityStatus",
+            "widget": "MultiSelect"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/coProjectDirectors/items/properties/citizenship",
+            "widget": "Select"
+          }
+        ],
+        "description": "Optionally add personal data for up to four co-PDs/co-PIs.",
+        "validateBeforeAdd": true
+      }
+    ],
+    "description": "Add personal data for no more than four Co-Project Directors/Co-Principal Investigators."
+  }
+]

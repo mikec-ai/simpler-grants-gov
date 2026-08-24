@@ -1,0 +1,135 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "rr-personal-data",
+    "kind": "form",
+    "formVersion": "1.2"
+  },
+  "sources": [
+    {
+      "id": "rr-personal-data-xsd-v1-2",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_PersonalData_1_2-V1.2.xsd",
+      "nativeVersion": "1.2",
+      "sha256": "5f766d46d573da1f6bb326bcbc13338439ba75399ad09dee2380f65e892402cb"
+    },
+    {
+      "id": "attachments-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d"
+    },
+    {
+      "id": "global-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb"
+    },
+    {
+      "id": "global-library-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "rr-personal-data-dat-f357",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/RR_PersonalData_1_2-V1.2_F357.xls",
+      "nativeVersion": "1.2",
+      "sha256": "2c0eaf828c93162854bf1488e4687f0b1d85ab4d5b5ca7c922acdf87229ceaf7"
+    },
+    {
+      "id": "rr-personal-data-readonly-pdf-v1-2",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/RR_PersonalData_1_2-V1.2.pdf",
+      "nativeVersion": "1.2",
+      "sha256": "51a52f3f8ee2528e26bbed64819d7992e4ff96645fe970676d12138aa7205417"
+    },
+    {
+      "id": "rr-personal-data-xfa-pdf-v1-2",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/RR_PersonalData_1_2-V1.2.pdf",
+      "nativeVersion": "1.2",
+      "sha256": "2b95182ff1078f3f27c44025e9210755c6613aefa016811b69141fc04992f227"
+    },
+    {
+      "id": "rr-personal-data-instructions-v1-2",
+      "type": "instructions",
+      "uri": "https://apply07.grants.gov/apply/forms/instructions/RR_PersonalData_1_2-V1.2-Instructions.pdf",
+      "nativeVersion": "1.2",
+      "sha256": "ccdda8fd35b28a069ce1b7908097380562b4bed5cc7802ccc6e6d92c71e12fad"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-RRPersonalData.jsonl.manifest.json",
+    "sourceSetSha256": "fdd095e73979c74d7457b5c032b5a0ef54a50812ab31c15f5d973314d5e25136",
+    "extractedAt": "2026-08-18T19:43:19.250775Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/projectDirector",
+        "sourceId": "rr-personal-data-xsd-v1-2",
+        "sourcePath": "RR_PersonalData_1_2.ProjectDirector",
+        "status": "proposed",
+        "note": "Role-qualified PD/PI identity; shape reuse does not equate it with a co-PD/PI."
+      },
+      {
+        "canonicalPointer": "#/properties/coProjectDirectors",
+        "sourceId": "rr-personal-data-xsd-v1-2",
+        "sourcePath": "RR_PersonalData_1_2.Co-ProjectDirector[*]",
+        "status": "proposed",
+        "note": "Role-qualified repeatable co-PD/PI identity, bounded to four occurrences."
+      },
+      {
+        "canonicalPointer": "#/properties/projectDirector/properties/name",
+        "sourceId": "global-library-xsd-v2-0",
+        "sourcePath": "globLib:HumanNameDataType",
+        "status": "proposed",
+        "note": "Reuses the generic research-person name capture while retaining PD/PI role in its enclosing question."
+      },
+      {
+        "canonicalPointer": "#/properties/projectDirector/properties/sex",
+        "sourceId": "rr-personal-data-xsd-v1-2",
+        "sourcePath": "RR_PersonalData_1_2.ProjectDirector.Gender",
+        "status": "proposed",
+        "note": "Canonical label follows the current PDF and instructions ('Sex'); the legacy XML element remains Gender."
+      },
+      {
+        "canonicalPointer": "#/properties/projectDirector/properties/race",
+        "sourceId": "rr-personal-data-xsd-v1-2",
+        "sourcePath": "RR_PersonalData_1_2.ProjectDirector.Race[*]",
+        "status": "proposed",
+        "note": "Voluntary PD/PI race response; not merged with a co-PD/PI response."
+      },
+      {
+        "canonicalPointer": "#/properties/projectDirector/properties/ethnicity",
+        "sourceId": "rr-personal-data-xsd-v1-2",
+        "sourcePath": "RR_PersonalData_1_2.ProjectDirector.Ethnicity",
+        "status": "proposed",
+        "note": "Voluntary PD/PI ethnicity response; exact wire spelling is retained."
+      },
+      {
+        "canonicalPointer": "#/properties/projectDirector/properties/disabilityStatus",
+        "sourceId": "rr-personal-data-xsd-v1-2",
+        "sourcePath": "RR_PersonalData_1_2.ProjectDirector.DisabilityStatus[*]",
+        "status": "proposed",
+        "note": "Voluntary PD/PI disability response; privacy and access-control review remains required."
+      },
+      {
+        "canonicalPointer": "#/properties/projectDirector/properties/citizenship",
+        "sourceId": "rr-personal-data-xsd-v1-2",
+        "sourcePath": "RR_PersonalData_1_2.ProjectDirector.Citizenship",
+        "status": "proposed",
+        "note": "Voluntary PD/PI citizenship response; privacy and policy review remains required."
+      }
+    ]
+  },
+  "behaviorEvidence": []
+}
