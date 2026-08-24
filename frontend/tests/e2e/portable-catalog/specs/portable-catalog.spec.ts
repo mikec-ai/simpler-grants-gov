@@ -496,17 +496,16 @@ test.describe("portable catalog browser conformance", () => {
                 await expect(
                   page.getByText("Error rendering form"),
                 ).toHaveCount(0);
-                await expect(
-                  preview.locator(
-                    "input:visible:not([type=hidden]):not([disabled]):not([readonly]), " +
-                      "textarea:visible:not([disabled]):not([readonly]), " +
-                      "select:visible:not([disabled]), button:visible:not([disabled]), " +
-                      "[contenteditable='true']:visible",
-                  ),
-                ).toHaveCount(0);
+                const interactiveControls = preview.locator(
+                  "input:visible:not([type=hidden]):not([disabled]):not([readonly]), " +
+                    "textarea:visible:not([disabled]):not([readonly]), " +
+                    "select:visible:not([disabled]), button:visible:not([disabled]), " +
+                    "[contenteditable='true']:visible",
+                );
+                await expect(interactiveControls).toHaveCount(0);
                 expect(pageErrors).toEqual([]);
                 expect(failedFormRequests).toEqual([]);
-                return { route: printUrl };
+                return { route: printUrl, interactiveControls: 0 };
               }),
             );
           } finally {

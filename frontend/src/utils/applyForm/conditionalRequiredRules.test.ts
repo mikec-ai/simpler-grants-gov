@@ -102,6 +102,72 @@ describe("conditional required rules", () => {
     expect(rules[0]?.schemaPointer).toBe("#");
   });
 
+  it("evaluates nested required effects declared through properties", () => {
+    const rules = extractConditionalRequiredRules({
+      type: "object",
+      properties: {
+        domestic: { type: "boolean" },
+        contact: {
+          type: "object",
+          properties: {
+            address: {
+              type: "object",
+              properties: { state: { type: "string" } },
+            },
+          },
+        },
+      },
+      if: {
+        properties: { domestic: { const: true } },
+        required: ["domestic"],
+      },
+      then: {
+        required: ["contact"],
+        properties: {
+          contact: {
+            required: ["address"],
+            properties: { address: { required: ["state"] } },
+          },
+        },
+      },
+    });
+
+    const result = evaluateConditionalRequiredRules(rules, {
+      domestic: true,
+      contact: { address: {} },
+    });
+    expect(result.activeRequiredPaths).toEqual([
+      "$.contact",
+      "$.contact.address",
+      "$.contact.address.state",
+    ]);
+    expect(result.warnings.map((warning) => warning.field)).toEqual([
+      "$.contact.address.state",
+    ]);
+  });
+
+  it("does not apply nested required effects below an absent optional parent", () => {
+    const rules = extractConditionalRequiredRules({
+      type: "object",
+      if: true,
+      then: {
+        properties: {
+          contact: {
+            properties: { address: { required: ["state"] } },
+          },
+        },
+      },
+    });
+
+    expect(evaluateConditionalRequiredRules(rules, {}).warnings).toEqual([]);
+    expect(evaluateConditionalRequiredRules(rules, {}).managedPaths).toEqual(
+      [],
+    );
+    expect(
+      evaluateConditionalRequiredRules(rules, { contact: "invalid" }).warnings,
+    ).toEqual([]);
+  });
+
   it("retains instance scopes while resolving reusable local definitions", () => {
     const rules = extractConditionalRequiredRules({
       type: "object",

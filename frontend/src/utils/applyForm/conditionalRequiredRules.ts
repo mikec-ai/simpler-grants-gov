@@ -10,8 +10,8 @@ export type ConditionalRequiredRule = {
   scope: ConditionalScopeSegment[];
   schemaPointer: string;
   condition: RJSFSchema | boolean;
-  thenRequired: string[];
-  elseRequired: string[];
+  thenRequired: string[][];
+  elseRequired: string[][];
   order: number;
 };
 
@@ -50,33 +50,67 @@ const branchRequired = (
   branch: unknown,
   pointer: string,
   branchName: "then" | "else",
-): string[] => {
+  parentPath: string[] = [],
+): string[][] => {
   if (branch === undefined || branch === true) return [];
   if (!branch || typeof branch !== "object" || Array.isArray(branch)) {
     throw new Error(`${pointer}/${branchName} must be a JSON Schema`);
   }
   const branchSchema = branch as Record<string, unknown>;
   const unsupportedKeys = Object.keys(branchSchema).filter(
-    (key) => !["required", "title", "description", "$comment"].includes(key),
+    (key) =>
+      !["required", "properties", "title", "description", "$comment"].includes(
+        key,
+      ),
   );
   if (unsupportedKeys.length > 0) {
     throw new Error(
       `${pointer}/${branchName} contains unsupported effects: ${unsupportedKeys.join(", ")}`,
     );
   }
-  if (!Object.hasOwn(branchSchema, "required")) return [];
-  const required = branchSchema.required;
-  if (
-    !Array.isArray(required) ||
-    !required.every(
-      (item) => typeof item === "string" && SUPPORTED_PROPERTY_NAME.test(item),
-    )
-  ) {
-    throw new Error(
-      `${pointer}/${branchName}/required must contain supported property names`,
-    );
+  const paths: string[][] = [];
+  if (Object.hasOwn(branchSchema, "required")) {
+    const required = branchSchema.required;
+    if (
+      !Array.isArray(required) ||
+      !required.every(
+        (item) =>
+          typeof item === "string" && SUPPORTED_PROPERTY_NAME.test(item),
+      )
+    ) {
+      throw new Error(
+        `${pointer}/${branchName}/required must contain supported property names`,
+      );
+    }
+    required.forEach((item) => paths.push([...parentPath, String(item)]));
   }
-  return required.map((item: unknown) => String(item));
+
+  const properties = branchSchema.properties;
+  if (properties !== undefined) {
+    if (
+      !properties ||
+      typeof properties !== "object" ||
+      Array.isArray(properties)
+    ) {
+      throw new Error(`${pointer}/${branchName}/properties must be an object`);
+    }
+    Object.entries(properties).forEach(([name, child]) => {
+      if (!SUPPORTED_PROPERTY_NAME.test(name)) {
+        throw new Error(
+          `${pointer}/${branchName}/properties contains an unsupported property name: ${name}`,
+        );
+      }
+      paths.push(
+        ...branchRequired(
+          child,
+          `${pointer}/${branchName}/properties/${escapePointer(name)}`,
+          branchName,
+          [...parentPath, name],
+        ),
+      );
+    });
+  }
+  return paths;
 };
 
 const containsConditional = (value: unknown): boolean => {
@@ -314,6 +348,39 @@ const expandScope = (
   return instances;
 };
 
+const requiredTarget = (
+  scopeValue: unknown,
+  scopePath: string,
+  relativePath: string[],
+): { field: string; name: string; missing: boolean } | null => {
+  let parent = scopeValue;
+  for (const segment of relativePath.slice(0, -1)) {
+    if (
+      !parent ||
+      typeof parent !== "object" ||
+      Array.isArray(parent) ||
+      !Object.hasOwn(parent, segment)
+    ) {
+      // JSON Schema's properties keyword does not require an absent ancestor.
+      // A separate required target for that ancestor, when declared, reports it.
+      return null;
+    }
+    parent = (parent as Record<string, unknown>)[segment];
+  }
+  const name = relativePath.at(-1);
+  if (!name) return null;
+  if (!parent || typeof parent !== "object" || Array.isArray(parent)) {
+    // The required keyword has no effect unless its immediate schema instance
+    // is an object. Ordinary type validation owns an invalid scalar ancestor.
+    return null;
+  }
+  return {
+    field: `${scopePath}.${relativePath.join(".")}`,
+    name,
+    missing: !Object.hasOwn(parent, name),
+  };
+};
+
 export const evaluateConditionalRequiredRules = (
   rules: ConditionalRequiredRule[],
   formData: object,
@@ -328,22 +395,19 @@ export const evaluateConditionalRequiredRules = (
       expandScope(formData, rule.scope).forEach(({ value, path }) => {
         const matches = getValidator(rule.condition)(value);
         const active = matches ? rule.thenRequired : rule.elseRequired;
-        [...rule.thenRequired, ...rule.elseRequired].forEach((name) =>
-          managedPaths.add(`${path}.${name}`),
-        );
-        active.forEach((name) => {
-          const field = `${path}.${name}`;
-          activeRequiredPaths.add(field);
-          const isMissing =
-            !value ||
-            typeof value !== "object" ||
-            Array.isArray(value) ||
-            !Object.hasOwn(value, name);
-          if (isMissing) {
+        [...rule.thenRequired, ...rule.elseRequired].forEach((relativePath) => {
+          const target = requiredTarget(value, path, relativePath);
+          if (target) managedPaths.add(target.field);
+        });
+        active.forEach((relativePath) => {
+          const target = requiredTarget(value, path, relativePath);
+          if (!target) return;
+          activeRequiredPaths.add(target.field);
+          if (target.missing) {
             warnings.push({
               type: "required",
-              field,
-              message: `'${name}' is a required property`,
+              field: target.field,
+              message: `'${target.name}' is a required property`,
               value: null,
             });
           }
