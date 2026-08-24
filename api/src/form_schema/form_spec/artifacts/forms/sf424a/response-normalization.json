@@ -1,0 +1,24 @@
+{
+  "contract": "grants-form-response-normalization/v1",
+  "form": {
+    "id": "sf424a",
+    "formVersion": "1.0"
+  },
+  "operations": [
+    {
+      "path": "/directChargesExplanation",
+      "operation": "empty-string-to-absent",
+      "evidenceRef": "sf424a-direct-charges-empty-string-omission"
+    },
+    {
+      "path": "/indirectChargesExplanation",
+      "operation": "empty-string-to-absent",
+      "evidenceRef": "sf424a-indirect-charges-empty-string-omission"
+    },
+    {
+      "path": "/remarks",
+      "operation": "empty-string-to-absent",
+      "evidenceRef": "sf424a-remarks-empty-string-omission"
+    }
+  ]
+}

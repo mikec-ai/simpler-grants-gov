@@ -226,5 +226,7 @@
       "reason": "One unresolved disposition covers all 28 total-like enrollment coordinates. The pinned parent XSD and F705 DAT contain zero calculation records, so no arithmetic is inferred.",
       "removalCondition": "Pin exact version-matched embedded-study calculation evidence and review every one of the 28 coordinate bindings."
     }
-  ]
+  ],
+  "operationalBehaviorEvidence": [],
+  "responseNormalizationEvidence": []
 }

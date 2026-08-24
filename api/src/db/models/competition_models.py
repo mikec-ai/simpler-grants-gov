@@ -35,6 +35,7 @@ from src.db.models.opportunity_models import Opportunity, OpportunityAssistanceL
 if TYPE_CHECKING:
     from src.db.models.user_models import ApplicationUser, User
     from src.db.models.workflow_models import Workflow
+    from src.form_schema.form_spec.response_normalization import ResponseNormalizationPolicy
 
 
 class Competition(ApiSchemaTable, TimestampMixin):
@@ -118,7 +119,6 @@ class Competition(ApiSchemaTable, TimestampMixin):
 
         # If closing_date is not null, check if current date is after closing date + grace period
         if self.closing_date is not None:
-
             # If grace period is null/negative, make it 0
             grace_period = self.grace_period
             if grace_period is None or grace_period < 0:
@@ -206,6 +206,7 @@ class Form:
     form_instruction: FormInstruction | None = None  # populated at runtime by get_form service
     form_rule_schema: dict | None = None
     json_to_xml_schema: dict | None = None
+    response_normalization: ResponseNormalizationPolicy | None = None
     form_type: FormType | None = None
     sgg_version: str | None = None
     is_deprecated: bool | None = None

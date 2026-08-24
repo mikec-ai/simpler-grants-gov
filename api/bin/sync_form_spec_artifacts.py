@@ -34,6 +34,7 @@ RUNTIME_FORM_FILES = (
 OPTIONAL_RUNTIME_FORM_FILES = (
     "policy-binding.json",
     "policy-content.json",
+    "response-normalization.json",
     "targets/grants-gov-xml.json",
 )
 XSD_DIRECTORY = API_ROOT / "src" / "services" / "xml_generation" / "xsds"

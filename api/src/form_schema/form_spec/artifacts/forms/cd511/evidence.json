@@ -96,5 +96,7 @@
       }
     ]
   },
-  "behaviorEvidence": []
+  "behaviorEvidence": [],
+  "operationalBehaviorEvidence": [],
+  "responseNormalizationEvidence": []
 }

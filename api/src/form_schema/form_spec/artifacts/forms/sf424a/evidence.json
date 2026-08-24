@@ -12,6 +12,34 @@
       "uri": "https://apply07.grants.gov/apply/forms/schemas/SF424A-V1.0.xsd",
       "sha256": "d5a636733d72c1e4cc9087ffc59b3d10000ee51f80da0dde3150ff91bcad0b5c",
       "nativeVersion": "1.0"
+    },
+    {
+      "id": "grantsgov-global-xsd-1.0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb",
+      "nativeVersion": "1.0"
+    },
+    {
+      "id": "grantsgov-sf424a-dat-1.0",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/SF424A-V1.0_F241.xls",
+      "sha256": "5228e637f00b1946f10df473376d9f6dd50956b929cbf823b5dd8313e0bbd7a4",
+      "nativeVersion": "1.0"
+    },
+    {
+      "id": "grantsgov-sf424a-xfa-pdf-1.0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/SF424A-V1.0.pdf",
+      "sha256": "74f89e6c250d900ada5f7e6f7bc5546c24a88885c9c07f458cb408b91bc95095",
+      "nativeVersion": "1.0"
+    },
+    {
+      "id": "grantsgov-sf424a-instructions-1.0",
+      "type": "instructions",
+      "uri": "https://apply07.grants.gov/apply/forms/instructions/SF424A-V1.0-Instructions.pdf",
+      "sha256": "6176bbf30c6288876dff8b95e7f150ca8c9f0ce474a2286be6410d2c28fd255b",
+      "nativeVersion": "1.0"
     }
   ],
   "extraction": {
@@ -61,6 +89,113 @@
       }
     ]
   },
+  "responseNormalizationEvidence": [
+    {
+      "id": "sf424a-direct-charges-empty-string-omission",
+      "canonicalPath": "/directChargesExplanation",
+      "operation": "empty-string-to-absent",
+      "authority": "official_source",
+      "reviewStatus": "reviewed",
+      "sourceEvidence": [
+        {
+          "sourceId": "grantsgov-sf424a-xsd-1.0",
+          "sourcePath": "BudgetInformation.OtherInformation.OtherDirectChargesExplanation",
+          "sourceRecord": "The element reference has minOccurs=0 and type glob:StringMin1Max50Type."
+        },
+        {
+          "sourceId": "grantsgov-global-xsd-1.0",
+          "sourcePath": "StringMin1Max50Type",
+          "sourceRecord": "A present value has minLength 1 and maxLength 50."
+        },
+        {
+          "sourceId": "grantsgov-sf424a-dat-1.0",
+          "sourcePath": "Form DAT F-0-1",
+          "sourceRecord": "The applicant-entered alphanumeric field is optional and the UI records minimum length zero."
+        },
+        {
+          "sourceId": "grantsgov-sf424a-xfa-pdf-1.0",
+          "sourcePath": "XFA OtherInformation.OtherDirectChargesExplanation and preSubmit",
+          "sourceRecord": "The node uses dd:minOccur=0 and dd:nullType=exclude; the empty three-field wrapper is removed before submission."
+        },
+        {
+          "sourceId": "grantsgov-sf424a-instructions-1.0",
+          "sourcePath": "Section F, item 21",
+          "sourceRecord": "The applicant instruction identifies the field as optional."
+        }
+      ],
+      "disposition": "Normalize only the exact legacy empty string to omission before canonical validation; a present canonical value remains length 1-50."
+    },
+    {
+      "id": "sf424a-indirect-charges-empty-string-omission",
+      "canonicalPath": "/indirectChargesExplanation",
+      "operation": "empty-string-to-absent",
+      "authority": "official_source",
+      "reviewStatus": "reviewed",
+      "sourceEvidence": [
+        {
+          "sourceId": "grantsgov-sf424a-xsd-1.0",
+          "sourcePath": "BudgetInformation.OtherInformation.OtherIndirectChargesExplanation",
+          "sourceRecord": "The element reference has minOccurs=0 and type glob:StringMin1Max50Type."
+        },
+        {
+          "sourceId": "grantsgov-global-xsd-1.0",
+          "sourcePath": "StringMin1Max50Type",
+          "sourceRecord": "A present value has minLength 1 and maxLength 50."
+        },
+        {
+          "sourceId": "grantsgov-sf424a-dat-1.0",
+          "sourcePath": "Form DAT F-0-2",
+          "sourceRecord": "The applicant-entered alphanumeric field is optional and the UI records minimum length zero."
+        },
+        {
+          "sourceId": "grantsgov-sf424a-xfa-pdf-1.0",
+          "sourcePath": "XFA OtherInformation.OtherIndirectChargesExplanation and preSubmit",
+          "sourceRecord": "The node uses dd:minOccur=0 and dd:nullType=exclude; the empty three-field wrapper is removed before submission."
+        },
+        {
+          "sourceId": "grantsgov-sf424a-instructions-1.0",
+          "sourcePath": "Section F, item 22",
+          "sourceRecord": "The applicant instruction identifies the field as optional."
+        }
+      ],
+      "disposition": "Normalize only the exact legacy empty string to omission before canonical validation; a present canonical value remains length 1-50."
+    },
+    {
+      "id": "sf424a-remarks-empty-string-omission",
+      "canonicalPath": "/remarks",
+      "operation": "empty-string-to-absent",
+      "authority": "official_source",
+      "reviewStatus": "reviewed",
+      "sourceEvidence": [
+        {
+          "sourceId": "grantsgov-sf424a-xsd-1.0",
+          "sourcePath": "BudgetInformation.OtherInformation.Remarks",
+          "sourceRecord": "The element reference has minOccurs=0 and type glob:StringMin1Max250Type."
+        },
+        {
+          "sourceId": "grantsgov-global-xsd-1.0",
+          "sourcePath": "StringMin1Max250Type",
+          "sourceRecord": "A present value has minLength 1 and maxLength 250."
+        },
+        {
+          "sourceId": "grantsgov-sf424a-dat-1.0",
+          "sourcePath": "Form DAT F-0-3",
+          "sourceRecord": "The applicant-entered alphanumeric field is optional and the UI records minimum length zero."
+        },
+        {
+          "sourceId": "grantsgov-sf424a-xfa-pdf-1.0",
+          "sourcePath": "XFA OtherInformation.Remarks and preSubmit",
+          "sourceRecord": "The node uses dd:minOccur=0 and dd:nullType=exclude; the empty three-field wrapper is removed before submission."
+        },
+        {
+          "sourceId": "grantsgov-sf424a-instructions-1.0",
+          "sourcePath": "Section F, item 23",
+          "sourceRecord": "The applicant instruction identifies the field as optional."
+        }
+      ],
+      "disposition": "Normalize only the exact legacy empty string to omission before canonical validation; a present canonical value remains length 1-250."
+    }
+  ],
   "behaviorEvidence": [
     {
       "ruleKind": "calculation",
@@ -342,5 +477,6 @@
       "reason": "Exact official calculation evidence has not yet been reconciled for this emitted target.",
       "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
     }
-  ]
+  ],
+  "operationalBehaviorEvidence": []
 }

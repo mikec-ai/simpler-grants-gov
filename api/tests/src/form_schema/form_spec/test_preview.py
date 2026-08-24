@@ -52,6 +52,19 @@ def test_every_banked_package_builds_as_a_preview_form() -> None:
     assert all(form.form_instruction_id is None for form in previews)
     assert all(form.form_type is None for form in previews)
     assert all(form.json_to_xml_schema is None for form in previews)
+    normalization_policies = {
+        form.short_form_name: form.response_normalization
+        for form in previews
+        if form.response_normalization is not None
+    }
+    assert set(normalization_policies) == {"portable-preview-sf424a"}
+    assert {
+        operation.path for operation in normalization_policies["portable-preview-sf424a"].operations
+    } == {
+        "/direct_charges_explanation",
+        "/indirect_charges_explanation",
+        "/remarks",
+    }
 
 
 def test_banking_still_does_not_enable_the_production_loader() -> None:

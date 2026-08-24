@@ -16,13 +16,16 @@ from tests.src.form_schema.forms import test_sf424_short as golden_fixtures
 FORM_DIR = "sf424_short"
 
 RENDERED: dict[str, str] = {
-    "/properties/agency_name#readOnly": "canonical declaration preserves opportunity-supplied behavior",
-    "/properties/assistance_listing_number#readOnly": "canonical declaration preserves opportunity-supplied behavior",
-    "/properties/assistance_listing_program_title#readOnly": "canonical declaration preserves opportunity-supplied behavior",
-    "/properties/funding_opportunity_number#readOnly": "canonical declaration preserves opportunity-supplied behavior",
-    "/properties/funding_opportunity_title#readOnly": "canonical declaration preserves opportunity-supplied behavior",
-    "/properties/sam_uei#readOnly": "canonical declaration preserves organization-supplied behavior",
     "/properties/applicant_web_address#format": "canonical website question preserves URI-reference validation",
+}
+
+SOURCE_BOUND_OPERATIONAL_FIELDS = {
+    "/properties/agency_name",
+    "/properties/assistance_listing_number",
+    "/properties/assistance_listing_program_title",
+    "/properties/funding_opportunity_number",
+    "/properties/funding_opportunity_title",
+    "/properties/sam_uei",
 }
 
 
@@ -55,8 +58,19 @@ def seeds() -> list[dict[str, Any]]:
     return [minimal, full]
 
 
-def test_ui_and_rule_schemas_are_identical(projected: Any, golden: Any) -> None:
-    assert projected.form_ui_schema == golden.FORM_UI_SCHEMA
+def test_ui_diff_is_limited_to_visible_source_bound_operational_fields(
+    projected: Any, golden: Any
+) -> None:
+    expected_ui = copy.deepcopy(golden.FORM_UI_SCHEMA)
+    changed: set[str] = set()
+    for section in expected_ui:
+        for child in section["children"]:
+            if child.get("definition") in SOURCE_BOUND_OPERATIONAL_FIELDS:
+                assert child["type"] == "null"
+                child["type"] = "field"
+                changed.add(child["definition"])
+    assert changed == SOURCE_BOUND_OPERATIONAL_FIELDS
+    assert projected.form_ui_schema == expected_ui
     assert projected.form_rule_schema == golden.FORM_RULE_SCHEMA
 
 

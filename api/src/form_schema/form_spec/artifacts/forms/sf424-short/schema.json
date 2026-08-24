@@ -6,20 +6,17 @@
     "agencyName": {
       "$ref": "../../question-bank/opportunity/agency-name/schema.json",
       "description": "Pre-populated from the Application cover sheet.",
-      "title": "Name of Federal Agency",
-      "readOnly": true
+      "title": "Name of Federal Agency"
     },
     "assistanceListingNumber": {
       "$ref": "../../question-bank/opportunity/assistance-listing-number/schema.json",
       "description": "Pre-populated from the Application cover sheet.",
-      "title": "Assistance Listing Number",
-      "readOnly": true
+      "title": "Assistance Listing Number"
     },
     "assistanceListingProgramTitle": {
       "$ref": "../../question-bank/opportunity/assistance-listing-title/schema.json",
       "description": "Pre-populated from the Application cover sheet.",
-      "title": "Assistance Listing Title",
-      "readOnly": true
+      "title": "Assistance Listing Title"
     },
     "dateReceived": {
       "$ref": "../../question-bank/application/date-received/schema.json",
@@ -30,14 +27,12 @@
     "fundingOpportunityNumber": {
       "$ref": "../../question-bank/opportunity/number/schema.json",
       "description": "Pre-populated from the Application cover sheet.",
-      "title": "Funding Opportunity Number",
-      "readOnly": true
+      "title": "Funding Opportunity Number"
     },
     "fundingOpportunityTitle": {
       "$ref": "../../question-bank/opportunity/title/schema.json",
       "description": "Pre-populated from the Application cover sheet.",
-      "title": "Funding Opportunity Title",
-      "readOnly": true
+      "title": "Funding Opportunity Title"
     },
     "organizationName": {
       "$ref": "../../question-bank/primary-org/legal-name/schema.json",
@@ -47,48 +42,7 @@
     "applicant": {
       "$ref": "../../question-bank/primary-org/address/schema.json",
       "description": "Enter the address of the applicant.",
-      "title": "Address",
-      "required": [
-        "street1",
-        "city",
-        "country"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "country": {
-                "const": "USA: UNITED STATES"
-              }
-            },
-            "required": [
-              "country"
-            ]
-          },
-          "then": {
-            "required": [
-              "zipCode"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "country": {
-                "const": "USA: UNITED STATES"
-              }
-            },
-            "required": [
-              "country"
-            ]
-          },
-          "then": {
-            "required": [
-              "state"
-            ]
-          }
-        }
-      ]
+      "title": "Address"
     },
     "applicantWebAddress": {
       "$ref": "../../question-bank/primary-org/website/schema.json",
@@ -114,8 +68,7 @@
     "samUei": {
       "$ref": "../../question-bank/primary-org/uei/schema.json",
       "description": "UEI of the applicant organization. This field is pre-populated from the Application cover sheet.",
-      "title": "SAM UEI",
-      "readOnly": true
+      "title": "SAM UEI"
     },
     "congressionalDistrictApplicant": {
       "$ref": "../../question-bank/project/congressional-district/schema.json",

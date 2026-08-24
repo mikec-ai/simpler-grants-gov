@@ -13,6 +13,7 @@ from src.constants.lookup_constants import (
 )
 from src.db.models.competition_models import Application, ApplicationForm, Competition
 from src.db.models.entity_models import Organization
+from src.form_schema.form_spec.response_normalization import merge_rule_response, normalize_response
 from src.form_schema.jsonschema_validator import validate_json_schema_for_form
 from src.form_schema.rule_processing.json_rule_context import JsonRuleConfig, JsonRuleContext
 from src.form_schema.rule_processing.json_rule_processor import process_rule_schema_for_context
@@ -264,12 +265,24 @@ def validate_application_form(
     """
     form_validation_errors: list[ValidationErrorDetail] = []
 
-    context = JsonRuleContext(application_form, config=_get_json_rule_config_for_action(action))
+    raw_response = application_form.application_response
+    normalized_response = normalize_response(
+        raw_response, application_form.form.response_normalization
+    )
+    context = JsonRuleContext(
+        application_form,
+        config=_get_json_rule_config_for_action(action),
+        json_data=normalized_response,
+    )
     process_rule_schema_for_context(context)
     form_validation_errors.extend(context.validation_issues)
 
     # Apply pre/post-populated changes back to the application form
-    application_form.application_response = context.json_data
+    application_form.application_response = merge_rule_response(
+        raw_response,
+        context.json_data,
+        application_form.form.response_normalization,
+    )
 
     # Check if the form is required
     is_required = is_form_required(application_form)
@@ -305,7 +318,7 @@ def validate_application_form(
     # Run JSON schema validation only if required
     if should_run_json_schema_validation:
         json_validation_errors = validate_json_schema_for_form(
-            application_form.application_response, application_form.form
+            context.json_data, application_form.form
         )
         form_validation_errors.extend(json_validation_errors)
 
