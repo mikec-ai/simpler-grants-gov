@@ -1,0 +1,266 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "phs398-cover-page-supplement",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS398_CoverPageSupplement_5_0-V5.0.xsd",
+    "sha256": "ec538c9bb5fd233c36ac73ca567d31e60779ee3df2f3c7b456d9395b3ec2dc26"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/PHS398_CoverPageSupplement_5_0-V5.0",
+    "PHS398_CoverPageSupplement_5_0": "http://apply.grants.gov/forms/PHS398_CoverPageSupplement_5_0-V5.0",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0"
+  },
+  "root": {
+    "element": "PHS398_CoverPageSupplement_5_0",
+    "namespacePrefix": "PHS398_CoverPageSupplement_5_0",
+    "attributes": {
+      "FormVersion": "5.0"
+    }
+  },
+  "attachment": {
+    "fields": {
+      "fileName": {
+        "element": "FileName",
+        "namespace": "att"
+      },
+      "mimeType": {
+        "element": "MimeType",
+        "namespace": "att"
+      },
+      "fileLocation": {
+        "element": "FileLocation",
+        "namespace": "att"
+      },
+      "hashValue": {
+        "element": "HashValue",
+        "namespace": "glob"
+      }
+    }
+  },
+  "mapping": {
+    "fields": {
+      "vertebrateAnimals": {
+        "element": "VertebrateAnimals",
+        "kind": "group",
+        "namespace": "default",
+        "source": "/vertebrateAnimals",
+        "fields": {
+          "animalEuthanized": {
+            "element": "AnimalEuthanasiaIndicator",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/vertebrateAnimals/animalEuthanized"
+          },
+          "avmaConsistent": {
+            "element": "AVMAConsistentIndicator",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/vertebrateAnimals/avmaConsistent"
+          },
+          "methodDescription": {
+            "element": "EuthanasiaMethodDescription",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/vertebrateAnimals/methodDescription"
+          }
+        }
+      },
+      "programIncome": {
+        "element": "ProgramIncome",
+        "kind": "group",
+        "namespace": "default",
+        "flatten": true,
+        "fields": {
+          "anticipated": {
+            "element": "ProgramIncome",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/programIncome/anticipated"
+          },
+          "periods": {
+            "element": "IncomeBudgetPeriod",
+            "kind": "array",
+            "namespace": "default",
+            "source": "/programIncome/periods",
+            "items": {
+              "fields": {
+                "budgetPeriod": {
+                  "element": "BudgetPeriod",
+                  "kind": "value",
+                  "namespace": "default"
+                },
+                "anticipatedAmount": {
+                  "element": "AnticipatedAmount",
+                  "kind": "value",
+                  "namespace": "default"
+                },
+                "source": {
+                  "element": "Source",
+                  "kind": "value",
+                  "namespace": "default"
+                }
+              }
+            }
+          }
+        }
+      },
+      "stemCells": {
+        "element": "StemCells",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "involved": {
+            "element": "isHumanStemCellsInvolved",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/humanEmbryonicStemCells/involved"
+          },
+          "specificLineUnavailable": {
+            "element": "StemCellsIndicator",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/humanEmbryonicStemCells/specificLineUnavailable"
+          },
+          "cellLines": {
+            "element": "CellLines",
+            "kind": "array",
+            "namespace": "default",
+            "source": "/humanEmbryonicStemCells/cellLines",
+            "items": {
+              "node": {
+                "kind": "value",
+                "flatten": true
+              }
+            }
+          }
+        }
+      },
+      "humanFetalTissue": {
+        "element": "isHumanFetalTissueInvolved",
+        "kind": "group",
+        "namespace": "default",
+        "flatten": true,
+        "fields": {
+          "involved": {
+            "element": "isHumanFetalTissueInvolved",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/humanFetalTissue/involved"
+          },
+          "complianceAssurance": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/humanFetalTissue/complianceAssurance",
+            "container": {
+              "element": "ComplianceAssurance",
+              "namespace": "default"
+            }
+          },
+          "irbConsentForm": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/humanFetalTissue/irbConsentForm",
+            "container": {
+              "element": "HFTIRBConsentForm",
+              "namespace": "default"
+            }
+          }
+        }
+      },
+      "inventionsAndPatents": {
+        "element": "IsInventionsAndPatents",
+        "kind": "group",
+        "namespace": "default",
+        "flatten": true,
+        "fields": {
+          "inventions": {
+            "element": "IsInventionsAndPatents",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/inventionsAndPatents/inventions"
+          },
+          "previouslyReported": {
+            "element": "IsPreviouslyReported",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/inventionsAndPatents/previouslyReported"
+          }
+        }
+      },
+      "changes": {
+        "element": "IsChangeOfPDPI",
+        "kind": "group",
+        "namespace": "default",
+        "flatten": true,
+        "fields": {
+          "changeOfProjectDirector": {
+            "element": "IsChangeOfPDPI",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/changes/changeOfProjectDirector"
+          },
+          "formerProjectDirector": {
+            "element": "FormerPD_Name",
+            "kind": "group",
+            "namespace": "default",
+            "source": "/formerProjectDirector",
+            "fields": {
+              "prefix": {
+                "element": "PrefixName",
+                "kind": "value",
+                "namespace": "globLib",
+                "source": "/formerProjectDirector/prefix"
+              },
+              "firstName": {
+                "element": "FirstName",
+                "kind": "value",
+                "namespace": "globLib",
+                "source": "/formerProjectDirector/firstName"
+              },
+              "middleName": {
+                "element": "MiddleName",
+                "kind": "value",
+                "namespace": "globLib",
+                "source": "/formerProjectDirector/middleName"
+              },
+              "lastName": {
+                "element": "LastName",
+                "kind": "value",
+                "namespace": "globLib",
+                "source": "/formerProjectDirector/lastName"
+              },
+              "suffix": {
+                "element": "SuffixName",
+                "kind": "value",
+                "namespace": "globLib",
+                "source": "/formerProjectDirector/suffix"
+              }
+            }
+          },
+          "changeOfRecipientOrganization": {
+            "element": "IsChangeOfInstitution",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/changes/changeOfRecipientOrganization"
+          },
+          "formerOrganizationName": {
+            "element": "FormerInstitutionName",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/formerOrganizationName"
+          }
+        }
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-PHS398CoverPageSupplement.jsonl.manifest.json"
+  }
+}

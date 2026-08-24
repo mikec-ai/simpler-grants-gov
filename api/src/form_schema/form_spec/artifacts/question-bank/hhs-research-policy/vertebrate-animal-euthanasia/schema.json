@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hhs-research-policy/vertebrate-animal-euthanasia/schema.json",
+  "type": "object",
+  "properties": {
+    "animalEuthanized": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Are vertebrate animals euthanized?"
+    },
+    "avmaConsistent": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Is the method consistent with AVMA guidelines?"
+    },
+    "methodDescription": {
+      "type": "string",
+      "maxLength": 1000,
+      "title": "Describe the euthanasia method and provide scientific justification"
+    }
+  },
+  "description": "Describe vertebrate-animal euthanasia and any departure from AVMA guidance.",
+  "title": "Vertebrate animal euthanasia",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "animalEuthanized": {
+            "const": "Y: Yes"
+          }
+        },
+        "required": [
+          "animalEuthanized"
+        ]
+      },
+      "then": {
+        "required": [
+          "avmaConsistent"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "avmaConsistent": {
+            "const": "N: No"
+          }
+        },
+        "required": [
+          "avmaConsistent"
+        ]
+      },
+      "then": {
+        "required": [
+          "methodDescription"
+        ]
+      }
+    }
+  ]
+}

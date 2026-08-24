@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hhs-research-policy/inventions-and-patents/schema.json",
+  "type": "object",
+  "properties": {
+    "inventions": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Were inventions conceived or first reduced to practice?"
+    },
+    "previouslyReported": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Previously Reported"
+    }
+  },
+  "description": "Report inventions from the prior support period and whether they were reported.",
+  "title": "Inventions and patents",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "inventions": {
+            "const": "Y: Yes"
+          }
+        },
+        "required": [
+          "inventions"
+        ]
+      },
+      "then": {
+        "required": [
+          "previouslyReported"
+        ]
+      }
+    }
+  ]
+}
