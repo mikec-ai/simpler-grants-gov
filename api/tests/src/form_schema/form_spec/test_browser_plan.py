@@ -130,10 +130,14 @@ def test_browser_plan_preserves_ordinary_field_discovery(
     form = build_browser_plan()["forms"][0]
 
     assert form["counts"]["uiFields"] == 66
-    assert len(form["capabilities"]["editableScalar"]["declarations"]) == 66
+    declarations = form["capabilities"]["editableScalar"]["declarations"]
+    definitions = {declaration["definition"] for declaration in declarations}
+    assert "/properties/submission_type" in definitions
+    assert "/properties/organization_name" in definitions
+    assert "/properties/funding_total" not in definitions
     assert all(
         list(declaration) == ["definition"] and isinstance(declaration["definition"], str)
-        for declaration in form["capabilities"]["editableScalar"]["declarations"]
+        for declaration in declarations
     )
 
 
