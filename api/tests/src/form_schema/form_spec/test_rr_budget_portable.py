@@ -88,6 +88,42 @@ def test_decimal_wire_constraints_are_preserved() -> None:
         assert list(validator.iter_errors(value))
 
 
+def test_cross_section_condition_projects_and_validates_without_adapter_code() -> None:
+    schema = resolve_jsonschema(copy.deepcopy(RRBudget_v3_0.form_json_schema))
+    budget_period = schema["properties"]["budget_year"]["items"]
+    [condition] = budget_period["allOf"]
+    validator = Draft202012Validator(condition)
+
+    assert list(validator.iter_errors({})) == []
+    triggered = {
+        "participant_trainee_support_costs": {
+            "other": {"cost": "1.00", "description": "Participant support"}
+        }
+    }
+    assert list(validator.iter_errors(triggered))
+    assert list(
+        validator.iter_errors(
+            {
+                **triggered,
+                "other_direct_costs": {"other_direct_cost_1": {}},
+            }
+        )
+    )
+    assert (
+        list(
+            validator.iter_errors(
+                {
+                    **triggered,
+                    "other_direct_costs": {
+                        "other_direct_cost_10": {"description": "Non-sequential row"}
+                    },
+                }
+            )
+        )
+        == []
+    )
+
+
 def test_source_resolved_calculations_execute_in_declared_order() -> None:
     application_form = SimpleNamespace(
         application_response={
@@ -224,3 +260,9 @@ def test_official_source_and_extraction_provenance_are_pinned() -> None:
         == "b318951e0686bd7978ab791bd63ad36d6fa6e93b6368747b272526360e99fedb"
     )
     assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}
+    conditions = [
+        record for record in evidence["behaviorEvidence"] if record["ruleKind"] == "condition"
+    ]
+    assert len(conditions) == 10
+    assert {record["sourcePath"] for record in conditions} == {"F-8-1"}
+    assert {record["executionStatus"] for record in conditions} == {"compiled"}

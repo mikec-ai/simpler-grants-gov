@@ -6,6 +6,8 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Any, cast
 
+from jsonschema import Draft202012Validator
+
 from src.constants.lookup_constants import FormType
 from src.form_schema.form_spec.loader import load_form
 from src.form_schema.forms.rr_subaward_budget import RRSubawardBudget_v3_0
@@ -71,6 +73,44 @@ def test_nested_repeating_groups_and_rules_are_projected_generically() -> None:
     assert "@PARENT." in json.dumps(RRSubawardBudget_v3_0.form_rule_schema)
     assert sorted(rule["order"] for rule in calculations) == list(range(1, 57))
     assert sum(rule["rule"] == "sum_integer" for rule in calculations) == 3
+
+
+def test_nested_cross_section_condition_projects_without_an_adapter_branch() -> None:
+    schema = resolve_jsonschema(copy.deepcopy(RRSubawardBudget_v3_0.form_json_schema))
+    budget_period = schema["properties"]["budget_attachments"]["items"]["properties"][
+        "budget_year"
+    ]["items"]
+    [condition] = budget_period["allOf"]
+    validator = Draft202012Validator(condition)
+
+    assert list(validator.iter_errors({})) == []
+    triggered = {
+        "participant_trainee_support_costs": {
+            "other": {"cost": "1.00", "description": "Participant support"}
+        }
+    }
+    assert list(validator.iter_errors(triggered))
+    assert list(
+        validator.iter_errors(
+            {
+                **triggered,
+                "other_direct_costs": {"other_direct_cost10": {}},
+            }
+        )
+    )
+    assert (
+        list(
+            validator.iter_errors(
+                {
+                    **triggered,
+                    "other_direct_costs": {
+                        "other_direct_cost10": {"description": "Non-sequential row"}
+                    },
+                }
+            )
+        )
+        == []
+    )
 
 
 def test_nested_cumulative_calculations_resolve_within_each_subaward() -> None:
@@ -190,10 +230,10 @@ def test_official_xsd_and_dat_provenance_are_pinned() -> None:
         ("dat", "4eab979aa62d4a4e79da6ee536140da7b76545a8fc20a9897c1c13527b3c56fd"),
         ("dat", "c85158ce7ddcc756d6e8a55a050e00b4a95cdfc8d9a2d91b7bd94c7f8bdb1035"),
     ]
-    assert len(evidence["behaviorEvidence"]) == 56
+    assert len(evidence["behaviorEvidence"]) == 66
     assert (
         sum(record["authority"] == "official_source" for record in evidence["behaviorEvidence"])
-        == 20
+        == 30
     )
     assert sum(record["authority"] == "unresolved" for record in evidence["behaviorEvidence"]) == 36
     assert {
@@ -202,3 +242,9 @@ def test_official_xsd_and_dat_provenance_are_pinned() -> None:
         if record["authority"] == "official_source"
     } == {("grantsgov-rr-budget-dat-3.0-f770", "rr-budget")}
     assert evidence["semanticReview"] == {"status": "unreviewed", "mappings": []}
+    conditions = [
+        record for record in evidence["behaviorEvidence"] if record["ruleKind"] == "condition"
+    ]
+    assert len(conditions) == 10
+    assert {record["sourcePath"] for record in conditions} == {"F-8-1"}
+    assert {record["executionStatus"] for record in conditions} == {"compiled"}

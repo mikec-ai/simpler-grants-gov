@@ -186,5 +186,215 @@
       "maxLength": 16,
       "pattern": "^(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "participantTraineeSupportCosts"
+        ],
+        "properties": {
+          "participantTraineeSupportCosts": {
+            "required": [
+              "other"
+            ]
+          }
+        }
+      },
+      "then": {
+        "anyOf": [
+          {
+            "required": [
+              "otherDirectCosts"
+            ],
+            "properties": {
+              "otherDirectCosts": {
+                "required": [
+                  "otherDirectCost1"
+                ],
+                "properties": {
+                  "otherDirectCost1": {
+                    "required": [
+                      "description"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "required": [
+              "otherDirectCosts"
+            ],
+            "properties": {
+              "otherDirectCosts": {
+                "required": [
+                  "otherDirectCost2"
+                ],
+                "properties": {
+                  "otherDirectCost2": {
+                    "required": [
+                      "description"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "required": [
+              "otherDirectCosts"
+            ],
+            "properties": {
+              "otherDirectCosts": {
+                "required": [
+                  "otherDirectCost3"
+                ],
+                "properties": {
+                  "otherDirectCost3": {
+                    "required": [
+                      "description"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "required": [
+              "otherDirectCosts"
+            ],
+            "properties": {
+              "otherDirectCosts": {
+                "required": [
+                  "otherDirectCost4"
+                ],
+                "properties": {
+                  "otherDirectCost4": {
+                    "required": [
+                      "description"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "required": [
+              "otherDirectCosts"
+            ],
+            "properties": {
+              "otherDirectCosts": {
+                "required": [
+                  "otherDirectCost5"
+                ],
+                "properties": {
+                  "otherDirectCost5": {
+                    "required": [
+                      "description"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "required": [
+              "otherDirectCosts"
+            ],
+            "properties": {
+              "otherDirectCosts": {
+                "required": [
+                  "otherDirectCost6"
+                ],
+                "properties": {
+                  "otherDirectCost6": {
+                    "required": [
+                      "description"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "required": [
+              "otherDirectCosts"
+            ],
+            "properties": {
+              "otherDirectCosts": {
+                "required": [
+                  "otherDirectCost7"
+                ],
+                "properties": {
+                  "otherDirectCost7": {
+                    "required": [
+                      "description"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "required": [
+              "otherDirectCosts"
+            ],
+            "properties": {
+              "otherDirectCosts": {
+                "required": [
+                  "otherDirectCost8"
+                ],
+                "properties": {
+                  "otherDirectCost8": {
+                    "required": [
+                      "description"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "required": [
+              "otherDirectCosts"
+            ],
+            "properties": {
+              "otherDirectCosts": {
+                "required": [
+                  "otherDirectCost9"
+                ],
+                "properties": {
+                  "otherDirectCost9": {
+                    "required": [
+                      "description"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "required": [
+              "otherDirectCosts"
+            ],
+            "properties": {
+              "otherDirectCosts": {
+                "required": [
+                  "otherDirectCost10"
+                ],
+                "properties": {
+                  "otherDirectCost10": {
+                    "required": [
+                      "description"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
 }
