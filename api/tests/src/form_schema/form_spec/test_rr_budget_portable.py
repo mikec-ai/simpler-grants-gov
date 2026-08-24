@@ -77,7 +77,8 @@ def test_repeating_groups_and_rules_are_projected_without_form_code() -> None:
 def test_decimal_wire_constraints_are_preserved() -> None:
     schema = resolve_jsonschema(copy.deepcopy(RRBudget_v3_0.form_json_schema))
     schema_objects = _objects(schema)
-    assert sum("pattern" in node for node in schema_objects) == 115
+    # 115 source-wire scalar constraints plus four conditional > 0 intersections.
+    assert sum("pattern" in node for node in schema_objects) == 119
 
     fee = schema["properties"]["budget_year"]["items"]["properties"]["fee"]
     validator = Draft202012Validator(fee)
@@ -122,6 +123,32 @@ def test_cross_section_condition_projects_and_validates_without_adapter_code() -
         )
         == []
     )
+
+
+def test_positive_attachment_totals_validate_without_adapter_code() -> None:
+    schema = resolve_jsonschema(copy.deepcopy(RRBudget_v3_0.form_json_schema))
+    period_properties = schema["properties"]["budget_year"]["items"]["properties"]
+    pairs = (
+        (
+            period_properties["equipment"],
+            "additional_equipments_attachment",
+            "total_fund_for_attached_equipment",
+        ),
+        (
+            period_properties["key_persons"],
+            "attached_key_persons",
+            "total_fund_for_attached_key_persons",
+        ),
+    )
+
+    for group, attachment, total in pairs:
+        validator = Draft202012Validator({"allOf": group["allOf"]})
+        assert list(validator.iter_errors({})) == []
+        assert list(validator.iter_errors({total: "0.00"})) == []
+        assert list(validator.iter_errors({total: "1.00"}))
+        assert list(validator.iter_errors({attachment: "file-id"}))
+        assert list(validator.iter_errors({attachment: "file-id", total: "0.00"}))
+        assert list(validator.iter_errors({attachment: "file-id", total: "0.01"})) == []
 
 
 def test_source_resolved_calculations_execute_in_declared_order() -> None:
@@ -263,6 +290,12 @@ def test_official_source_and_extraction_provenance_are_pinned() -> None:
     conditions = [
         record for record in evidence["behaviorEvidence"] if record["ruleKind"] == "condition"
     ]
-    assert len(conditions) == 10
-    assert {record["sourcePath"] for record in conditions} == {"F-8-1"}
+    assert len(conditions) == 14
+    assert {record["sourcePath"] for record in conditions} == {
+        "F-8-1",
+        "A-2-1",
+        "A-3-1",
+        "C-2-0",
+        "C-2-1",
+    }
     assert {record["executionStatus"] for record in conditions} == {"compiled"}

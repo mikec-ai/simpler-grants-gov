@@ -60,19 +60,25 @@ def test_budget_family_behavior_evidence_pins_exact_f770_records(
     source_records = [record for record in records if record["authority"] == "official_source"]
     unresolved_records = [record for record in records if record["authority"] == "unresolved"]
 
-    assert len(records) == 66
-    assert len(source_records) == 30
+    assert len(records) == 70
+    assert len(source_records) == 34
     assert len(unresolved_records) == 36
     assert {record["sourceId"] for record in source_records} == {"grantsgov-rr-budget-dat-3.0-f770"}
-    assert len({record["sourceRecord"] for record in source_records}) == 21
+    assert len({record["sourceRecord"] for record in source_records}) == 25
     assert {record["canonicalPath"] for record in records} == {
         f"{mount_prefix}{record['canonicalPath']}" for record in root["behaviorEvidence"]
     }
     assert all(record["sourcePath"] for record in source_records)
     assert all(record["owner"] == "form-semantic-review" for record in unresolved_records)
     condition_records = [record for record in source_records if record["ruleKind"] == "condition"]
-    assert len(condition_records) == 10
-    assert {record["sourcePath"] for record in condition_records} == {"F-8-1"}
+    assert len(condition_records) == 14
+    assert {record["sourcePath"] for record in condition_records} == {
+        "F-8-1",
+        "A-2-1",
+        "A-3-1",
+        "C-2-0",
+        "C-2-1",
+    }
     assert {record["executionStatus"] for record in condition_records} == {"compiled"}
     if inherited_from is None:
         assert all("inheritedFrom" not in record for record in records)
