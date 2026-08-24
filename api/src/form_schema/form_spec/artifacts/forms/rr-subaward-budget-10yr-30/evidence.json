@@ -242,6 +242,106 @@
       "inheritedFrom": "rr-budget"
     },
     {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].otherDirectCosts.otherDirectCost1.description",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "F-8-1",
+      "sourceRecord": "All instances (lines 8-17) descriptions are always active. Data entry is not sequential and users can fill data as needed. If data is entered in E-5-1 \"Other\" for Section E - Participant/Trainee Costs, a minimum of one row is required to be filled out from line item 8-17.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].otherDirectCosts.otherDirectCost2.description",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "F-8-1",
+      "sourceRecord": "All instances (lines 8-17) descriptions are always active. Data entry is not sequential and users can fill data as needed. If data is entered in E-5-1 \"Other\" for Section E - Participant/Trainee Costs, a minimum of one row is required to be filled out from line item 8-17.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].otherDirectCosts.otherDirectCost3.description",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "F-8-1",
+      "sourceRecord": "All instances (lines 8-17) descriptions are always active. Data entry is not sequential and users can fill data as needed. If data is entered in E-5-1 \"Other\" for Section E - Participant/Trainee Costs, a minimum of one row is required to be filled out from line item 8-17.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].otherDirectCosts.otherDirectCost4.description",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "F-8-1",
+      "sourceRecord": "All instances (lines 8-17) descriptions are always active. Data entry is not sequential and users can fill data as needed. If data is entered in E-5-1 \"Other\" for Section E - Participant/Trainee Costs, a minimum of one row is required to be filled out from line item 8-17.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].otherDirectCosts.otherDirectCost5.description",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "F-8-1",
+      "sourceRecord": "All instances (lines 8-17) descriptions are always active. Data entry is not sequential and users can fill data as needed. If data is entered in E-5-1 \"Other\" for Section E - Participant/Trainee Costs, a minimum of one row is required to be filled out from line item 8-17.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].otherDirectCosts.otherDirectCost6.description",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "F-8-1",
+      "sourceRecord": "All instances (lines 8-17) descriptions are always active. Data entry is not sequential and users can fill data as needed. If data is entered in E-5-1 \"Other\" for Section E - Participant/Trainee Costs, a minimum of one row is required to be filled out from line item 8-17.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].otherDirectCosts.otherDirectCost7.description",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "F-8-1",
+      "sourceRecord": "All instances (lines 8-17) descriptions are always active. Data entry is not sequential and users can fill data as needed. If data is entered in E-5-1 \"Other\" for Section E - Participant/Trainee Costs, a minimum of one row is required to be filled out from line item 8-17.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].otherDirectCosts.otherDirectCost8.description",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "F-8-1",
+      "sourceRecord": "All instances (lines 8-17) descriptions are always active. Data entry is not sequential and users can fill data as needed. If data is entered in E-5-1 \"Other\" for Section E - Participant/Trainee Costs, a minimum of one row is required to be filled out from line item 8-17.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].otherDirectCosts.otherDirectCost9.description",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "F-8-1",
+      "sourceRecord": "All instances (lines 8-17) descriptions are always active. Data entry is not sequential and users can fill data as needed. If data is entered in E-5-1 \"Other\" for Section E - Participant/Trainee Costs, a minimum of one row is required to be filled out from line item 8-17.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
+      "canonicalPath": "budgetAttachments[*].budgetYear[*].otherDirectCosts.otherDirectCost10.description",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "F-8-1",
+      "sourceRecord": "All instances (lines 8-17) descriptions are always active. Data entry is not sequential and users can fill data as needed. If data is entered in E-5-1 \"Other\" for Section E - Participant/Trainee Costs, a minimum of one row is required to be filled out from line item 8-17.",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "inheritedFrom": "rr-budget"
+    },
+    {
       "ruleKind": "calculation",
       "canonicalPath": "budgetAttachments[*].budgetYear[*].keyPersons.keyPerson[*].fundsRequested",
       "authority": "unresolved",
