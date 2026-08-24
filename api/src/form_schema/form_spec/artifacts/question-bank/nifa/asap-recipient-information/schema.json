@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nifa/asap-recipient-information/schema.json",
+  "type": "object",
+  "properties": {
+    "hasActiveAsapRecipientId": {
+      "type": "boolean",
+      "description": "Report whether the legal applicant has an active ASAP recipient identifier for NIFA awards.",
+      "title": "Does the legal applicant have an active Automated Standard Application for Payments (ASAP) Recipient Identification Number for NIFA awards?"
+    },
+    "recipientId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8,
+      "description": "Enter the ASAP recipient identifier corresponding to this application's organization identifiers.",
+      "title": "ASAP Recipient ID"
+    }
+  },
+  "required": [
+    "hasActiveAsapRecipientId"
+  ],
+  "description": "Identify the applicant's Automated Standard Application for Payments status.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "hasActiveAsapRecipientId": {
+            "const": true
+          }
+        },
+        "required": [
+          "hasActiveAsapRecipientId"
+        ]
+      },
+      "then": {
+        "required": [
+          "recipientId"
+        ]
+      }
+    }
+  ]
+}

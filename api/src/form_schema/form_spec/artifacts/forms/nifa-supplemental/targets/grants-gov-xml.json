@@ -1,0 +1,261 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "nifa-supplemental",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/NIFA_Supplemental_Info_1_2-V1.2.xsd",
+    "sha256": "9fd2d43797ec5fe17a9c29f073295e1c459b13d39346b3422de036d51c1d69e2"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/NIFA_Supplemental_Info_1_2-V1.2",
+    "NIFA_Supplemental_Info_1_2": "http://apply.grants.gov/forms/NIFA_Supplemental_Info_1_2-V1.2",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0"
+  },
+  "root": {
+    "element": "NIFA_Supplemental_Info_1_2",
+    "namespacePrefix": "NIFA_Supplemental_Info_1_2",
+    "attributes": {
+      "FormVersion": "1.2"
+    }
+  },
+  "attachment": {
+    "fields": {
+      "fileName": {
+        "element": "FileName",
+        "namespace": "att"
+      },
+      "mimeType": {
+        "element": "MimeType",
+        "namespace": "att"
+      },
+      "fileLocation": {
+        "element": "FileLocation",
+        "namespace": "att"
+      },
+      "hashValue": {
+        "element": "HashValue",
+        "namespace": "glob"
+      }
+    }
+  },
+  "mapping": {
+    "fields": {
+      "fundingOpportunity": {
+        "element": "FundingOpportunity",
+        "kind": "object",
+        "namespace": "default",
+        "fields": {
+          "title": {
+            "element": "FundingOpportunityTitle",
+            "kind": "value",
+            "namespace": "default"
+          },
+          "number": {
+            "element": "FundingOpportunityNumber",
+            "kind": "value",
+            "namespace": "default"
+          }
+        }
+      },
+      "program": {
+        "element": "ProgramGroup",
+        "kind": "object",
+        "namespace": "default",
+        "fields": {
+          "programCodeName": {
+            "element": "ProgramCodeName",
+            "kind": "value",
+            "namespace": "default"
+          },
+          "programCode": {
+            "element": "ProgramCode",
+            "kind": "value",
+            "namespace": "default"
+          }
+        }
+      },
+      "applicantType": {
+        "element": "ApplicantTypeCode",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/applicantType/applicantTypeCode"
+      },
+      "additionalApplicantType": {
+        "element": "AdditionalApplicantTypes",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/additionalApplicantType/additionalApplicantType"
+      },
+      "supplementalApplicantTypes": {
+        "element": "SupplementalApplicantType",
+        "kind": "object",
+        "namespace": "default",
+        "fields": {
+          "alaskaNativeServingInstitution": {
+            "element": "AlaskaNativeServingInstitution",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/supplementalApplicantTypes/alaskaNativeServingInstitution",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          },
+          "cooperativeExtensionService": {
+            "element": "CooperativeExtensionService",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/supplementalApplicantTypes/cooperativeExtensionService",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          },
+          "hispanicServingInstitution": {
+            "element": "HispanicServingInstitution",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/supplementalApplicantTypes/hispanicServingInstitution",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          },
+          "historicallyBlackCollegeOrUniversity": {
+            "element": "HistoricallyBlackCollegeorUniversity",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/supplementalApplicantTypes/historicallyBlackCollegeOrUniversity",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          },
+          "minorityServingInstitution": {
+            "element": "MinorityServingInstitution",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/supplementalApplicantTypes/minorityServingInstitution",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          },
+          "nativeHawaiianServingInstitution": {
+            "element": "NativeHawaiianServingInstitution",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/supplementalApplicantTypes/nativeHawaiianServingInstitution",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          },
+          "publicNonprofitJuniorOrCommunityCollege": {
+            "element": "PublicNonprofitJuniororCommunityCollege",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/supplementalApplicantTypes/publicNonprofitJuniorOrCommunityCollege",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          },
+          "publicSecondarySchool": {
+            "element": "PublicSecondarySchool",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/supplementalApplicantTypes/publicSecondarySchool",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          },
+          "schoolOfForestry": {
+            "element": "SchoolofForestry",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/supplementalApplicantTypes/schoolOfForestry",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          },
+          "stateAgriculturalExperimentStation": {
+            "element": "StateAgriculturalExperimentStation",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/supplementalApplicantTypes/stateAgriculturalExperimentStation",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          },
+          "tribalCollege": {
+            "element": "TribalCollege",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/supplementalApplicantTypes/tribalCollege",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          },
+          "veterinarySchoolOrCollege": {
+            "element": "VeterinarySchoolorCollege",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/supplementalApplicantTypes/veterinarySchoolOrCollege",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          }
+        }
+      },
+      "asapRecipientInformation": {
+        "element": "ASAP_Recipient_Info",
+        "kind": "object",
+        "namespace": "default",
+        "fields": {
+          "hasActiveAsapRecipientId": {
+            "element": "ASAPID",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/asapRecipientInformation/hasActiveAsapRecipientId",
+            "valueMap": {
+              "true": "Y: Yes",
+              "false": "N: No"
+            }
+          },
+          "recipientId": {
+            "element": "RecipientID",
+            "kind": "value",
+            "namespace": "default"
+          }
+        }
+      },
+      "keywords": {
+        "element": "KeyWords",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "conflictOfInterestList": {
+        "element": "AttachedFile",
+        "kind": "attachment",
+        "namespace": "default",
+        "container": {
+          "element": "ConflictofInterestList",
+          "namespace": "default"
+        }
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-NIFASupplemental.jsonl.manifest.json"
+  }
+}

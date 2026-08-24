@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nifa/program/schema.json",
+  "type": "object",
+  "properties": {
+    "programCodeName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "description": "Enter the NIFA program name.",
+      "title": "Program Code Name"
+    },
+    "programCode": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 5,
+      "description": "Enter the NIFA program code.",
+      "title": "Program Code"
+    }
+  },
+  "required": [
+    "programCodeName",
+    "programCode"
+  ],
+  "description": "Identify the NIFA program to which the applicant is applying."
+}

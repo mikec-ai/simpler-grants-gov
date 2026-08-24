@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nifa/supplemental-applicant-classifications/schema.json",
+  "type": "object",
+  "properties": {
+    "alaskaNativeServingInstitution": {
+      "type": "boolean",
+      "title": "Alaska Native-Serving Institution"
+    },
+    "cooperativeExtensionService": {
+      "type": "boolean",
+      "title": "Cooperative Extension Service"
+    },
+    "hispanicServingInstitution": {
+      "type": "boolean",
+      "title": "Hispanic-Serving Institution"
+    },
+    "historicallyBlackCollegeOrUniversity": {
+      "type": "boolean",
+      "title": "Historically Black College or University (other than 1890)"
+    },
+    "minorityServingInstitution": {
+      "type": "boolean",
+      "title": "Minority-Serving Institution"
+    },
+    "nativeHawaiianServingInstitution": {
+      "type": "boolean",
+      "title": "Native Hawaiian-Serving Institution"
+    },
+    "publicNonprofitJuniorOrCommunityCollege": {
+      "type": "boolean",
+      "title": "Public Nonprofit Junior or Community College"
+    },
+    "publicSecondarySchool": {
+      "type": "boolean",
+      "title": "Public Secondary School"
+    },
+    "schoolOfForestry": {
+      "type": "boolean",
+      "title": "School of Forestry"
+    },
+    "stateAgriculturalExperimentStation": {
+      "type": "boolean",
+      "title": "State Agricultural Experiment Station"
+    },
+    "tribalCollege": {
+      "type": "boolean",
+      "title": "Tribal College (other than 1994)"
+    },
+    "veterinarySchoolOrCollege": {
+      "type": "boolean",
+      "title": "Veterinary School or College"
+    }
+  },
+  "description": "Report the NIFA-specific institutional classifications that apply to the applicant."
+}
