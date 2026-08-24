@@ -292,6 +292,9 @@ export const UiJsonSchema: RJSFSchema = {
                   },
                 ],
               },
+              {
+                $ref: "#/$defs/fieldList",
+              },
             ],
           },
         },

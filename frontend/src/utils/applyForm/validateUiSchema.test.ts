@@ -111,6 +111,20 @@ describe("validateFormData", () => {
       expect(validateUiSchema(artifact)).toBe(false);
     });
 
+    it("accepts the vendored R&R Budget recursive field-list contract", () => {
+      const artifact = JSON.parse(
+        readFileSync(
+          resolve(
+            __dirname,
+            "../../../../api/src/form_schema/form_spec/artifacts/forms/rr-budget/sgg/ui-schema.json",
+          ),
+          "utf8",
+        ),
+      ) as UiSchema;
+
+      expect(validateUiSchema(artifact)).toBe(false);
+    });
+
     it("should validate a correct UI schema", () => {
       const validUiSchema: UiSchema = [
         {
