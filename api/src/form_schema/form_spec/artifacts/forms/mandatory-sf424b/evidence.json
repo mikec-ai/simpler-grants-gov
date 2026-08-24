@@ -46,5 +46,7 @@
     "status": "proposed",
     "mappings": []
   },
-  "behaviorEvidence": []
+  "behaviorEvidence": [],
+  "operationalBehaviorEvidence": [],
+  "responseNormalizationEvidence": []
 }

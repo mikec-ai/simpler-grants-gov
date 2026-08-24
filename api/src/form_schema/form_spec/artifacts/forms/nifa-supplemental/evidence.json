@@ -211,5 +211,7 @@
         "note": "NIFA conflict-of-interest information requirement reuses the generic attachment capture mechanism."
       }
     ]
-  }
+  },
+  "operationalBehaviorEvidence": [],
+  "responseNormalizationEvidence": []
 }

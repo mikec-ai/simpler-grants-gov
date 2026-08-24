@@ -6,28 +6,12 @@
     "projectDirector": {
       "$ref": "../../question-bank/personal-data/project-director/schema.json",
       "description": "Provide the required name and any voluntary demographic information for the PD/PI.",
-      "title": "Project Director / Principal Investigator",
-      "properties": {
-        "name": {
-          "required": [
-            "firstName",
-            "lastName"
-          ]
-        }
-      }
+      "title": "Project Director / Principal Investigator"
     },
     "coProjectDirectors": {
       "type": "array",
       "items": {
-        "$ref": "../../question-bank/personal-data/co-project-director/schema.json",
-        "properties": {
-          "name": {
-            "required": [
-              "firstName",
-              "lastName"
-            ]
-          }
-        }
+        "$ref": "../../question-bank/personal-data/co-project-director/schema.json"
       },
       "maxItems": 4,
       "description": "Optionally add personal data for up to four co-PDs/co-PIs.",

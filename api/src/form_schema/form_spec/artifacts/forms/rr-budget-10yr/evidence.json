@@ -537,5 +537,7 @@
       "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target.",
       "inheritedFrom": "rr-budget"
     }
-  ]
+  ],
+  "operationalBehaviorEvidence": [],
+  "responseNormalizationEvidence": []
 }

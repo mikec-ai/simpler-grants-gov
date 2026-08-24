@@ -210,5 +210,83 @@
       "sourcePath": "12-01 through 12-06",
       "sourceRecord": "Applicant can select one or more types of disabilities. If 'None' is selected, then all others are unselected. If 'Do Not Wish to Provide' is selected, then all others are unselected. Allow entry for up to 4 Co-PD/Co-PIs."
     }
-  ]
+  ],
+  "operationalBehaviorEvidence": [
+    {
+      "canonicalPath": "/projectDirector/name/prefix",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/principalInvestigator/name/prefix"
+      },
+      "editability": "protected",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "rr-personal-data-xfa-pdf-v1-2",
+      "sourcePath": "template: RR_PersonalData_1_2_P1.ProjectDirector.PDPrefixName initialize",
+      "sourceRecord": "Initialize from the R&R SF-424 PD/PI prefix value, then set field access to protected."
+    },
+    {
+      "canonicalPath": "/projectDirector/name/firstName",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/principalInvestigator/name/firstName"
+      },
+      "editability": "protected",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "rr-personal-data-xfa-pdf-v1-2",
+      "sourcePath": "template: RR_PersonalData_1_2_P1.ProjectDirector.PDFirstName initialize",
+      "sourceRecord": "Initialize from the R&R SF-424 PD/PI first-name value, then set field access to protected."
+    },
+    {
+      "canonicalPath": "/projectDirector/name/middleName",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/principalInvestigator/name/middleName"
+      },
+      "editability": "protected",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "rr-personal-data-xfa-pdf-v1-2",
+      "sourcePath": "template: RR_PersonalData_1_2_P1.ProjectDirector.PDMiddleName initialize",
+      "sourceRecord": "Initialize from the R&R SF-424 PD/PI middle-name value, then set field access to protected."
+    },
+    {
+      "canonicalPath": "/projectDirector/name/lastName",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/principalInvestigator/name/lastName"
+      },
+      "editability": "protected",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "rr-personal-data-xfa-pdf-v1-2",
+      "sourcePath": "template: RR_PersonalData_1_2_P1.ProjectDirector.PDLastName initialize",
+      "sourceRecord": "Initialize from the R&R SF-424 PD/PI last-name value, then set field access to protected."
+    },
+    {
+      "canonicalPath": "/projectDirector/name/suffix",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/principalInvestigator/name/suffix"
+      },
+      "editability": "protected",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "rr-personal-data-xfa-pdf-v1-2",
+      "sourcePath": "template: RR_PersonalData_1_2_P1.ProjectDirector.PDSuffixName initialize",
+      "sourceRecord": "Initialize from the R&R SF-424 PD/PI suffix value, then set field access to protected."
+    }
+  ],
+  "responseNormalizationEvidence": []
 }

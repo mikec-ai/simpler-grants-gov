@@ -76,48 +76,7 @@
     "applicant": {
       "$ref": "../../question-bank/primary-org/address/schema.json",
       "description": "Enter information about the applicant.",
-      "title": "Applicant",
-      "required": [
-        "street1",
-        "city",
-        "country"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "country": {
-                "const": "USA: UNITED STATES"
-              }
-            },
-            "required": [
-              "country"
-            ]
-          },
-          "then": {
-            "required": [
-              "zipCode"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "country": {
-                "const": "USA: UNITED STATES"
-              }
-            },
-            "required": [
-              "country"
-            ]
-          },
-          "then": {
-            "required": [
-              "state"
-            ]
-          }
-        }
-      ]
+      "title": "Applicant"
     },
     "departmentName": {
       "type": "string",

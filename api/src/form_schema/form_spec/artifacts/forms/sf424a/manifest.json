@@ -14,6 +14,10 @@
     "ui.json": "generated",
     "sgg/ui-schema.json": "generated",
     "sgg/rule-schema.json": "generated",
-    "evidence.json": "passthrough"
+    "evidence.json": "passthrough",
+    "response-normalization.json": {
+      "origin": "passthrough",
+      "sha256": "ce23649f973c1fbd8767083538f5409d8ec1454199c9a01638a344035e3d1fa1"
+    }
   }
 }

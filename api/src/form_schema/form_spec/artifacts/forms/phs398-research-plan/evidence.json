@@ -173,5 +173,7 @@
       }
     ]
   },
-  "behaviorEvidence": []
+  "behaviorEvidence": [],
+  "operationalBehaviorEvidence": [],
+  "responseNormalizationEvidence": []
 }

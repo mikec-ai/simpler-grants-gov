@@ -5,7 +5,7 @@
     "label": "1. Name of Federal Agency",
     "children": [
       {
-        "type": "null",
+        "type": "field",
         "definition": "/properties/agencyName"
       }
     ]
@@ -16,11 +16,11 @@
     "label": "2. Assistance Listing Number and Title",
     "children": [
       {
-        "type": "null",
+        "type": "field",
         "definition": "/properties/assistanceListingNumber"
       },
       {
-        "type": "null",
+        "type": "field",
         "definition": "/properties/assistanceListingProgramTitle"
       }
     ]
@@ -42,11 +42,11 @@
     "label": "4. Funding Opportunity Number and Title",
     "children": [
       {
-        "type": "null",
+        "type": "field",
         "definition": "/properties/fundingOpportunityNumber"
       },
       {
-        "type": "null",
+        "type": "field",
         "definition": "/properties/fundingOpportunityTitle"
       }
     ]
@@ -110,7 +110,7 @@
         "definition": "/properties/employerTaxpayerIdentificationNumber"
       },
       {
-        "type": "null",
+        "type": "field",
         "definition": "/properties/samUei"
       },
       {

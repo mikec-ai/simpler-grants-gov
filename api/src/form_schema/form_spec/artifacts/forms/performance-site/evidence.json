@@ -101,5 +101,7 @@
       "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
       "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
     }
-  ]
+  ],
+  "operationalBehaviorEvidence": [],
+  "responseNormalizationEvidence": []
 }

@@ -8,6 +8,7 @@ import pytest
 
 import src.form_schema.forms as forms_package
 from src.form_schema.form_spec.loader import load_form
+from src.form_schema.form_spec.response_normalization import OPERATION
 from src.form_schema.forms._loader import load_versioned_form
 from src.form_schema.jsonschema_resolver import resolve_jsonschema
 from tests.src.form_schema.form_spec import parity
@@ -83,6 +84,20 @@ def test_ui_guidance_is_the_only_declared_presentation_extension(
 def test_rule_schema_remains_identical(projected: Any, golden: Any) -> None:
     assert projected.form_rule_schema == golden.FORM_RULE_SCHEMA
     assert _calculation_count(projected.form_rule_schema) == 35
+
+
+def test_exact_empty_compatibility_paths_are_projected_from_the_portable_package(
+    projected: Any,
+) -> None:
+    assert projected.response_normalization is not None
+    assert {
+        (operation.path, operation.operation)
+        for operation in projected.response_normalization.operations
+    } == {
+        ("/direct_charges_explanation", OPERATION),
+        ("/indirect_charges_explanation", OPERATION),
+        ("/remarks", OPERATION),
+    }
 
 
 def test_portable_schema_carries_sf424a_field_guidance(projected: Any) -> None:

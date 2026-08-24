@@ -88,5 +88,7 @@
     "status": "unreviewed",
     "mappings": []
   },
-  "behaviorEvidence": []
+  "behaviorEvidence": [],
+  "operationalBehaviorEvidence": [],
+  "responseNormalizationEvidence": []
 }

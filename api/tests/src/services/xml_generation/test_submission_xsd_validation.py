@@ -4,6 +4,7 @@ These tests create real applications with form data, generate complete submissio
 using SubmissionXMLAssembler, and validate the output against XSD schemas.
 """
 
+import copy
 from datetime import date
 
 import pytest
@@ -24,6 +25,10 @@ from tests.src.db.models.factories import (
     CompetitionFormFactory,
     OpportunityAssistanceListingFactory,
     OpportunityFactory,
+)
+from tests.src.form_schema.form_spec.lifecycle import (
+    register_runtime_form_for_test,
+    restore_runtime_form_after_test,
 )
 
 
@@ -308,6 +313,73 @@ class TestSubmissionXSDValidation:
             f"Error: {validation_result['error_message']}\n"
             f"Generated XML:\n{sf424a_xml[:1000]}"
         )
+
+    def test_sf424a_exact_blanks_are_omitted_from_xsd_valid_xml_without_mutating_response(
+        self,
+        sf424a_application,
+        xsd_validator,
+    ):
+        portable, key, previous = register_runtime_form_for_test("sf424a")
+        try:
+            # SF-424A's portable XML target remains a separate cutover gate. Pair the
+            # normalized portable response contract with the existing source-validated
+            # runtime mapping so this canary exercises the real assembler and XSD now.
+            portable.json_to_xml_schema = SF424a_v1_0.json_to_xml_schema
+            application_form = sf424a_application.application_forms[0]
+            application_form.application_response.update(
+                {
+                    "direct_charges_explanation": "",
+                    "indirect_charges_explanation": "",
+                    "remarks": "",
+                }
+            )
+            captured = copy.deepcopy(application_form.application_response)
+            submission = ApplicationSubmissionFactory.create(
+                application=sf424a_application,
+                legacy_tracking_number=22222223,
+            )
+            assembler = SubmissionXMLAssembler(sf424a_application, submission)
+
+            xml_string = assembler._generate_form_xml(application_form, pretty_print=True)
+
+            assert application_form.form is portable
+            assert application_form.application_response == captured
+            root = lxml_etree.fromstring(xml_string.encode("utf-8"))
+            namespace = {"sf424a": "http://apply.grants.gov/forms/SF424A-V1.0"}
+            assert root.find("sf424a:OtherInformation", namespaces=namespace) is None
+            assert (
+                root.find(".//sf424a:OtherDirectChargesExplanation", namespaces=namespace) is None
+            )
+            assert (
+                root.find(".//sf424a:OtherIndirectChargesExplanation", namespaces=namespace) is None
+            )
+            assert root.find(".//sf424a:Remarks", namespaces=namespace) is None
+
+            xsd_path = self._get_xsd_file_path(
+                xsd_validator,
+                "https://apply07.grants.gov/apply/forms/schemas/SF424A-V1.0.xsd",
+            )
+            validation_result = xsd_validator.validate_xml(xml_string, xsd_path)
+            assert validation_result["valid"], validation_result["error_message"]
+
+            application_form.application_response["remarks"] = "Preserved remarks"
+            mixed_capture = copy.deepcopy(application_form.application_response)
+            mixed_xml = assembler._generate_form_xml(application_form, pretty_print=True)
+            mixed_root = lxml_etree.fromstring(mixed_xml.encode("utf-8"))
+            wrapper = mixed_root.find("sf424a:OtherInformation", namespaces=namespace)
+            assert wrapper is not None
+            assert wrapper.find("sf424a:Remarks", namespaces=namespace).text == "Preserved remarks"
+            assert (
+                wrapper.find("sf424a:OtherDirectChargesExplanation", namespaces=namespace) is None
+            )
+            assert (
+                wrapper.find("sf424a:OtherIndirectChargesExplanation", namespaces=namespace) is None
+            )
+            assert application_form.application_response == mixed_capture
+            mixed_validation = xsd_validator.validate_xml(mixed_xml, xsd_path)
+            assert mixed_validation["valid"], mixed_validation["error_message"]
+        finally:
+            restore_runtime_form_after_test(key, previous)
 
     def test_multi_form_submission_xml_validates_against_xsd(
         self, enable_factory_create, xsd_validator, seed_form_registry
