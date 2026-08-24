@@ -15,9 +15,13 @@ from types import SimpleNamespace
 from typing import Any, cast
 
 from src.constants.lookup_constants import ApplicationFormStatus
-from src.db.models.competition_models import ApplicationForm
+from src.db.models.competition_models import ApplicationForm, Form
 from src.form_schema.form_spec.loader import build_runtime_form
-from src.form_schema.registry.form_template_registry import FormTemplateRegistry
+from src.form_schema.registry.form_template_registry import (
+    FormTemplateKey,
+    FormTemplateRegistry,
+    form_template_registry,
+)
 from src.services.applications.application_validation import (
     ApplicationAction,
     validate_application_form,
@@ -31,6 +35,39 @@ class ValidationCase:
     name: str
     response: dict[str, Any]
     expected_fields: frozenset[str]
+
+
+def register_runtime_form_for_test(
+    form_id: str,
+) -> tuple[Form, FormTemplateKey, Form | None]:
+    """Temporarily replace a same-identity production form with a portable form.
+
+    The caller must pass the returned key and prior form to
+    ``restore_runtime_form_after_test`` in a ``finally`` block. If registration fails,
+    this helper restores the displaced form before propagating the error.
+    """
+
+    form = build_runtime_form(form_id)
+    key = FormTemplateKey(form.form_id, 1)
+    previous = form_template_registry._registry.pop(key, None)
+    try:
+        form_template_registry.register(form, major_version=1)
+    except Exception:
+        if previous is not None:
+            form_template_registry._registry[key] = previous
+        raise
+    return form, key, previous
+
+
+def restore_runtime_form_after_test(
+    key: FormTemplateKey,
+    previous: Form | None,
+) -> None:
+    """Remove a temporary portable form and restore any displaced form."""
+
+    form_template_registry._registry.pop(key, None)
+    if previous is not None:
+        form_template_registry._registry[key] = previous
 
 
 def application_form_for(

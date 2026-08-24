@@ -12,8 +12,6 @@ from sqlalchemy import select
 
 from src.constants.lookup_constants import ApplicationStatus, Privilege
 from src.db.models.competition_models import ApplicationForm
-from src.form_schema.form_spec.loader import build_runtime_form
-from src.form_schema.registry.form_template_registry import FormTemplateKey, form_template_registry
 from src.services.applications.submit_application import submit_application
 from src.services.applications.update_application_form import update_application_form
 from tests.src.db.models.factories import (
@@ -23,21 +21,20 @@ from tests.src.db.models.factories import (
     ApplicationUserRoleFactory,
     CompetitionFactory,
     CompetitionFormFactory,
+    LinkExternalUserFactory,
     RoleFactory,
     UserFactory,
+)
+from tests.src.form_schema.form_spec.lifecycle import (
+    register_runtime_form_for_test,
+    restore_runtime_form_after_test,
 )
 from tests.src.form_schema.form_spec.test_sf424d_portable import RELEASABLE_PROFILES, VALID_RESPONSE
 
 
-def _register_runtime_form(form_id: str) -> tuple[Any, FormTemplateKey]:
-    form = build_runtime_form(form_id)
-    key = FormTemplateKey(form.form_id, 1)
-    form_template_registry.register(form, major_version=1)
-    return form, key
-
-
 def _link_user(application: Any, privileges: list[Privilege]) -> Any:
     user = UserFactory.create()
+    LinkExternalUserFactory.create(user=user, email="portable-reviewer@example.com")
     ApplicationUserRoleFactory.create(
         application_user=ApplicationUserFactory.create(user=user, application=application),
         role=RoleFactory.create(privileges=privileges, is_application_role=True),
@@ -51,7 +48,7 @@ def test_sf424d_profile_save_and_reload(
     db_session: Any,
     form_id: str,
 ) -> None:
-    form, registry_key = _register_runtime_form(form_id)
+    form, registry_key, previous = register_runtime_form_for_test(form_id)
     try:
         competition = CompetitionFactory.create(competition_forms=[])
         competition_form = CompetitionFormFactory.create(competition=competition, form=form)
@@ -81,7 +78,7 @@ def test_sf424d_profile_save_and_reload(
         ).scalar_one()
         assert reloaded.application_response == VALID_RESPONSE
     finally:
-        form_template_registry._registry.pop(registry_key, None)
+        restore_runtime_form_after_test(registry_key, previous)
 
 
 @pytest.mark.parametrize("form_id", RELEASABLE_PROFILES)
@@ -90,7 +87,7 @@ def test_sf424d_profile_submission_records_acceptance_event(
     db_session: Any,
     form_id: str,
 ) -> None:
-    form, registry_key = _register_runtime_form(form_id)
+    form, registry_key, previous = register_runtime_form_for_test(form_id)
     try:
         competition = CompetitionFactory.create(
             closing_date=get_now_us_eastern_date() + timedelta(days=1),
@@ -117,4 +114,4 @@ def test_sf424d_profile_submission_records_acceptance_event(
         assert application_form.application_response["signature"] == user.email
         assert len(application_form.application_response["date_signed"].split("-")) == 3
     finally:
-        form_template_registry._registry.pop(registry_key, None)
+        restore_runtime_form_after_test(registry_key, previous)

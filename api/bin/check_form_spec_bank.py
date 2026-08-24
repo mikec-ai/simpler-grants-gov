@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Classify and verify additive portable-form banking changes.
+"""Classify and verify strictly additive portable-form banking changes.
 
 The lightweight CI lane is intentionally narrow: it applies only when a pull
-request adds or updates vendored artifacts and their exact XSD fixtures. Any
-consumer code, test, registration, projection, or deletion requires full CI.
+request adds new vendored artifacts and exact XSD fixtures. Updating an existing
+artifact may change a runtime-enabled form, so modifications, consumer code,
+tests, registration, projection, and deletions all require full CI.
 """
 
 from __future__ import annotations
@@ -64,7 +65,27 @@ def classify(changes: list[Change]) -> tuple[bool, str]:
     if outside_bank:
         return False, f"consumer or workflow changes require full CI: {', '.join(outside_bank)}"
 
-    return True, "only additive or modified portable artifacts and exact XSD fixtures changed"
+    modified_existing = [
+        change.path
+        for change in changes
+        if change.status != "A" and change.path != MANIFEST.as_posix()
+    ]
+    if modified_existing:
+        return (
+            False,
+            "existing portable artifacts or XSD fixtures require full CI: "
+            + ", ".join(modified_existing),
+        )
+
+    added_artifacts = [
+        change.path
+        for change in changes
+        if change.status == "A" and change.path.startswith(f"{ARTIFACTS.as_posix()}/")
+    ]
+    if not added_artifacts:
+        return False, "lightweight CI requires at least one new portable artifact"
+
+    return True, "only new portable artifacts and exact XSD fixtures were added"
 
 
 def manifest_at(revision: str) -> dict:
@@ -93,9 +114,13 @@ def verify_additive_bank(base: str) -> dict[str, object]:
     removed_files = sorted(previous_files - current_files)
     if removed_files:
         raise ValueError(f"banking removed selected artifact closure: {removed_files}")
+    added_files = sorted(current_files - previous_files)
+    if not added_files:
+        raise ValueError("lightweight CI requires a newly selected artifact")
 
     return {
         "addedForms": sorted(current_forms - previous_forms),
+        "addedArtifacts": added_files,
         "selectedForms": len(current_forms),
         "selectedArtifacts": len(current_files),
     }

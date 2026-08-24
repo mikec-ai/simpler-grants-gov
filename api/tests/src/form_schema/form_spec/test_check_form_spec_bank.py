@@ -11,7 +11,38 @@ def test_artifact_and_xsd_additions_use_bank_only_ci():
     )
 
     assert bank_only is True
-    assert "portable artifacts" in reason
+    assert "new portable artifacts" in reason
+
+
+def test_existing_artifact_or_xsd_modification_requires_full_ci():
+    for path in (
+        "api/src/form_schema/form_spec/artifacts/forms/sf424/schema.json",
+        "api/src/form_schema/form_spec/artifacts/question-bank/generics/email/schema.json",
+        "api/src/services/xml_generation/xsds/SF424-V4.0.xsd",
+    ):
+        bank_only, reason = classify(
+            [
+                Change("M", "api/src/form_schema/form_spec/artifacts/artifact-manifest.json"),
+                Change("M", path),
+            ]
+        )
+
+        assert bank_only is False
+        assert "require full CI" in reason
+
+
+def test_manifest_only_or_xsd_only_change_requires_full_ci():
+    for changes in (
+        [Change("M", "api/src/form_schema/form_spec/artifacts/artifact-manifest.json")],
+        [
+            Change("M", "api/src/form_schema/form_spec/artifacts/artifact-manifest.json"),
+            Change("A", "api/src/services/xml_generation/xsds/Unselected-V1.0.xsd"),
+        ],
+    ):
+        bank_only, reason = classify(changes)
+
+        assert bank_only is False
+        assert "new portable artifact" in reason
 
 
 def test_consumer_code_requires_full_ci():
