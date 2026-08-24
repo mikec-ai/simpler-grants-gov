@@ -57,9 +57,9 @@ def test_sflll_save_and_reload_preserves_repeated_service_individuals(
         )
         user = _link_user(application, [Privilege.MODIFY_APPLICATION])
         response: dict[str, Any] = copy.deepcopy(VALID_RESPONSE)
-        response["individuals_performing_services"].append({
-            "name": {"first_name": "Katherine", "last_name": "Johnson"}
-        })
+        response["individuals_performing_services"].append(
+            {"name": {"first_name": "Katherine", "last_name": "Johnson"}}
+        )
 
         with db_session.begin():
             saved, warnings = update_application_form(
