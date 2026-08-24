@@ -33,7 +33,12 @@ def _register_runtime_form() -> tuple[Any, FormTemplateKey, Any | None]:
     form = build_runtime_form("sflll")
     key = FormTemplateKey(form.form_id, 1)
     previous = form_template_registry._registry.pop(key, None)
-    form_template_registry.register(form, major_version=1)
+    try:
+        form_template_registry.register(form, major_version=1)
+    except Exception:
+        if previous is not None:
+            form_template_registry._registry[key] = previous
+        raise
     return form, key, previous
 
 
