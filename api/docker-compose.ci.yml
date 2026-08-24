@@ -1,0 +1,16 @@
+services:
+  grants-api:
+    # Hosted browser checks run an immutable checkout. Avoid the development
+    # reloader's extra process and second full application import in that path.
+    command:
+      [
+        "flask",
+        "--app",
+        "src.app",
+        "run",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8080",
+        "--no-reload",
+      ]

@@ -54,6 +54,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Test API readiness helper
+        run: bash tests/bin/test_wait_for_api.sh
+
       - name: Initialize the docker containers
         run: make init
 

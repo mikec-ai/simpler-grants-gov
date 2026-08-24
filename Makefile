@@ -249,7 +249,7 @@ infra-lint-markdown: ## Lint Markdown docs for broken links
 	./bin/lint-markdown.sh
 
 infra-lint-scripts: ## Lint shell scripts
-	shellcheck bin/**
+	shellcheck bin/** api/bin/wait-for-api.sh api/tests/bin/test_wait_for_api.sh
 
 infra-lint-terraform: ## Lint Terraform code
 	terraform fmt -recursive -check infra
