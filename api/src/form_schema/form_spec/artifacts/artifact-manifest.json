@@ -437,6 +437,36 @@
       "size": 2808
     },
     {
+      "path": "dist/forms/phs-inclusion-enrollment-report/evidence.json",
+      "sha256": "b5391f73b10419fd3aacdeb398cf5c444a89b0cd74157576e169b40a6d37505e",
+      "size": 15757
+    },
+    {
+      "path": "dist/forms/phs-inclusion-enrollment-report/manifest.json",
+      "sha256": "a072b156d6cb701f9a65ee03d79ab36dac5580328005cf38ee599d9728616664",
+      "size": 568
+    },
+    {
+      "path": "dist/forms/phs-inclusion-enrollment-report/schema.json",
+      "sha256": "2d3c7962d3518c3dcee7b5a86d87e82ca4c034ca37133507d6bdb2862c7e7495",
+      "size": 491
+    },
+    {
+      "path": "dist/forms/phs-inclusion-enrollment-report/sgg/rule-schema.json",
+      "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed",
+      "size": 5
+    },
+    {
+      "path": "dist/forms/phs-inclusion-enrollment-report/sgg/ui-schema.json",
+      "sha256": "29089df3b4f26fbcf94c55e8f7f3a722934a55409a721a4d1fb0f2bd954ceda7",
+      "size": 24939
+    },
+    {
+      "path": "dist/forms/phs-inclusion-enrollment-report/targets/grants-gov-xml.json",
+      "sha256": "ef9074c756a08bb3c7304828a6658b5dd576dd3d95bb562c78c533e7d1d031c3",
+      "size": 31303
+    },
+    {
       "path": "dist/forms/phs398-modular-budget/evidence.json",
       "sha256": "0231721723a655d5ec2baabbe78349f973c38c75fde8efb0d149fab48ac8a714",
       "size": 5486
@@ -518,7 +548,7 @@
     },
     {
       "path": "dist/forms/rr-budget-10yr/evidence.json",
-      "sha256": "bf72d493624fe0e4da7260a4173bab94839e15c6e0533d92180fb48e8f3d9ddf",
+      "sha256": "00890a4c12c517f76c46adf09be63909dd368dc1082b7516039a5d90bd00e19d",
       "size": 25165
     },
     {
@@ -963,8 +993,8 @@
     },
     {
       "path": "dist/forms/sf424c/targets/grants-gov-xml.json",
-      "sha256": "cc3c4d9c4457f1bd7322956f86fe12ff758ace7546a600b8fcbba1ca80afed7e",
-      "size": 13720
+      "sha256": "4d58480fbf5faecde3cc6127d4811f77c7cbdcbc162c17dbb007c1c701c495a2",
+      "size": 13803
     },
     {
       "path": "dist/forms/sf424d/evidence.json",
@@ -1380,6 +1410,11 @@
       "path": "dist/question-bank/budget/summary/schema.json",
       "sha256": "398b280d513b0d41f70197b66792f224d3bd0a44d9fd36667f84e4553b8d0bd8",
       "size": 1938
+    },
+    {
+      "path": "dist/question-bank/clinical-study/inclusion-enrollment-report/schema.json",
+      "sha256": "99509418abea5be2079d09daaa4679f744ffbb45e650fbea9bcd9ad53d04d9bb",
+      "size": 12284
     },
     {
       "path": "dist/question-bank/federal-action/award-amount/schema.json",
@@ -1851,13 +1886,14 @@
       "phs-assignment-request",
       "attachment-form",
       "rr-sf424b",
-      "nifa-supplemental"
+      "nifa-supplemental",
+      "phs-inclusion-enrollment-report"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "3a6e51127e66d5555f3ef677cb21c4b9f7751e9a"
+    "revision": "70fa65f82f66901f8a6a330aa8ef70479ded9b5e"
   },
-  "sourceBundleSha256": "6980745d308dbad2cdcc80ba0303a086dfc57072193fbd7a2356b2ca9bf58e14"
+  "sourceBundleSha256": "4b147e74598d4abd8fe9e00926ec66c7eb35809119e5c0579b737e73ea376289"
 }

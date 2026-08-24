@@ -1,0 +1,800 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "phs-inclusion-enrollment-report",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/PHSInclusionEnrollmentReport-V1.0.xsd",
+    "sha256": "3263bbfa8881c7d428958cf91de470cd19f0f6cbc11818c4752d5266bb0f53a4"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/PHSInclusionEnrollmentReport-V1.0",
+    "ier": "http://apply.grants.gov/forms/PHSInclusionEnrollmentReport-V1.0",
+    "study": "http://apply.grants.gov/forms/PHSInclusionEnrollmentReport-V1.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "codes": "http://apply.grants.gov/system/UniversalCodes-V2.0"
+  },
+  "root": {
+    "element": "PHSInclusionEnrollmentReport",
+    "namespacePrefix": "ier",
+    "attributes": {
+      "FormVersion": "1.0"
+    }
+  },
+  "mapping": {
+    "fields": {
+      "reports": {
+        "element": "InclusionEnrollmentReport",
+        "kind": "array",
+        "namespace": "default",
+        "items": {
+          "fields": {
+            "title": {
+              "element": "InclusionEnrollmentReportTitle",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "usesExistingDatasetOrResource": {
+              "element": "ExistingDatasetOrResource",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "locationType": {
+              "element": "EnrollmentLocationType",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "enrollmentCountries": {
+              "element": "EnrollmentCountry",
+              "kind": "array",
+              "namespace": "default",
+              "items": {
+                "node": {
+                  "kind": "value",
+                  "flatten": true
+                }
+              }
+            },
+            "enrollmentLocations": {
+              "element": "EnrollmentLocations",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "comments": {
+              "element": "Comments",
+              "kind": "value",
+              "namespace": "default"
+            },
+            "planned": {
+              "element": "Planned",
+              "kind": "object",
+              "namespace": "study",
+              "fields": {
+                "notHispanicLatino": {
+                  "element": "NotHispanic",
+                  "kind": "object",
+                  "namespace": "study",
+                  "fields": {
+                    "female": {
+                      "element": "Female",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    },
+                    "male": {
+                      "element": "Male",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    }
+                  }
+                },
+                "hispanicLatino": {
+                  "element": "Hispanic",
+                  "kind": "object",
+                  "namespace": "study",
+                  "fields": {
+                    "female": {
+                      "element": "Female",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    },
+                    "male": {
+                      "element": "Male",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    }
+                  }
+                },
+                "total": {
+                  "element": "Total",
+                  "kind": "object",
+                  "namespace": "study",
+                  "fields": {
+                    "americanIndianAlaskaNative": {
+                      "element": "AmericanIndian",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "asian": {
+                      "element": "Asian",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "nativeHawaiianPacificIslander": {
+                      "element": "Hawaiian",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "blackAfricanAmerican": {
+                      "element": "Black",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "white": {
+                      "element": "White",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "moreThanOneRace": {
+                      "element": "MultipleRace",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "total": {
+                      "element": "Total",
+                      "kind": "value",
+                      "namespace": "study"
+                    }
+                  }
+                }
+              }
+            },
+            "cumulativeActual": {
+              "element": "Cumulative",
+              "kind": "object",
+              "namespace": "study",
+              "fields": {
+                "notHispanicLatino": {
+                  "element": "NotHispanic",
+                  "kind": "object",
+                  "namespace": "study",
+                  "fields": {
+                    "female": {
+                      "element": "Female",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "unknownNotReported": {
+                          "element": "UnknownRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    },
+                    "male": {
+                      "element": "Male",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "unknownNotReported": {
+                          "element": "UnknownRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    },
+                    "unknownNotReportedSex": {
+                      "element": "UnknownGender",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "unknownNotReported": {
+                          "element": "UnknownRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    }
+                  }
+                },
+                "hispanicLatino": {
+                  "element": "Hispanic",
+                  "kind": "object",
+                  "namespace": "study",
+                  "fields": {
+                    "female": {
+                      "element": "Female",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "unknownNotReported": {
+                          "element": "UnknownRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    },
+                    "male": {
+                      "element": "Male",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "unknownNotReported": {
+                          "element": "UnknownRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    },
+                    "unknownNotReportedSex": {
+                      "element": "UnknownGender",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "unknownNotReported": {
+                          "element": "UnknownRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    }
+                  }
+                },
+                "unknownNotReportedEthnicity": {
+                  "element": "UnknownEthnicity",
+                  "kind": "object",
+                  "namespace": "study",
+                  "fields": {
+                    "female": {
+                      "element": "Female",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "unknownNotReported": {
+                          "element": "UnknownRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    },
+                    "male": {
+                      "element": "Male",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "unknownNotReported": {
+                          "element": "UnknownRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    },
+                    "unknownNotReportedSex": {
+                      "element": "UnknownGender",
+                      "kind": "object",
+                      "namespace": "study",
+                      "fields": {
+                        "americanIndianAlaskaNative": {
+                          "element": "AmericanIndian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "asian": {
+                          "element": "Asian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "nativeHawaiianPacificIslander": {
+                          "element": "Hawaiian",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "blackAfricanAmerican": {
+                          "element": "Black",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "white": {
+                          "element": "White",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "moreThanOneRace": {
+                          "element": "MultipleRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "unknownNotReported": {
+                          "element": "UnknownRace",
+                          "kind": "value",
+                          "namespace": "study"
+                        },
+                        "total": {
+                          "element": "Total",
+                          "kind": "value",
+                          "namespace": "study"
+                        }
+                      }
+                    }
+                  }
+                },
+                "total": {
+                  "element": "Total",
+                  "kind": "object",
+                  "namespace": "study",
+                  "fields": {
+                    "americanIndianAlaskaNative": {
+                      "element": "AmericanIndian",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "asian": {
+                      "element": "Asian",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "nativeHawaiianPacificIslander": {
+                      "element": "Hawaiian",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "blackAfricanAmerican": {
+                      "element": "Black",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "white": {
+                      "element": "White",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "moreThanOneRace": {
+                      "element": "MultipleRace",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "unknownNotReported": {
+                      "element": "UnknownRace",
+                      "kind": "value",
+                      "namespace": "study"
+                    },
+                    "total": {
+                      "element": "Total",
+                      "kind": "value",
+                      "namespace": "study"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

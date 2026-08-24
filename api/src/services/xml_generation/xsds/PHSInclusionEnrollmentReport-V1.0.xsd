@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:codes="http://apply.grants.gov/system/UniversalCodes-V2.0" xmlns:globLib="http://apply.grants.gov/system/GlobalLibrary-V2.0" xmlns:PHSInclusionEnrollmentReport="http://apply.grants.gov/forms/PHSInclusionEnrollmentReport-V1.0" targetNamespace="http://apply.grants.gov/forms/PHSInclusionEnrollmentReport-V1.0" elementFormDefault="qualified" attributeFormDefault="qualified" version="1.0">
+	<xs:import namespace="http://apply.grants.gov/system/UniversalCodes-V2.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd"/>
+	<xs:import namespace="http://apply.grants.gov/system/GlobalLibrary-V2.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"/>
+	<xs:element name="PHSInclusionEnrollmentReport">
+		<xs:complexType>
+			<xs:sequence>
+					<xs:element name="InclusionEnrollmentReport" minOccurs="1" maxOccurs="20">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="InclusionEnrollmentReportTitle" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_1_600_DataType"/>
+										<xs:element name="ExistingDatasetOrResource" type="globLib:YesNoDataType"/>
+										<xs:element name="EnrollmentLocationType">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Domestic"/>
+													<xs:enumeration value="Foreign"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="EnrollmentCountry" type="codes:CountryCodeDataTypeV3" minOccurs="0" maxOccurs="200"/>
+										<xs:element name="EnrollmentLocations" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_1_255_DataType" minOccurs="0"/>
+										<xs:element name="Comments" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_1_500_DataType" minOccurs="0"/>
+										<xs:element name="Planned" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="NotHispanic" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_EthnicCategoryDataType" minOccurs="0"/>
+													<xs:element name="Hispanic" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_EthnicCategoryDataType" minOccurs="0"/>
+													<xs:element name="Total" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_TotalsDataType" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Cumulative" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="NotHispanic" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_CEthnicCategoryDataType" minOccurs="0"/>
+													<xs:element name="Hispanic" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_CEthnicCategoryDataType" minOccurs="0"/>
+													<xs:element name="UnknownEthnicity" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_CEthnicCategoryDataType" minOccurs="0"/>
+													<xs:element name="Total" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_CTotalsDataType" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="FormVersion" type="globLib:FormVersionDataType" use="required" fixed="1.0"/>
+				</xs:complexType>
+			</xs:element>					
+	<xs:complexType name="PHSInclusionEnrollmentReport_EthnicCategoryDataType">
+		<xs:sequence>
+			<xs:element name="Female" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_RacialCategoryDataType" minOccurs="0"/>
+			<xs:element name="Male" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_RacialCategoryDataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PHSInclusionEnrollmentReport_RacialCategoryDataType">
+		<xs:sequence>
+			<xs:element name="AmericanIndian" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Asian" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Hawaiian" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Black" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="White" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="MultipleRace" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Total" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PHSInclusionEnrollmentReport_TotalsDataType">
+		<xs:sequence>
+			<xs:element name="AmericanIndian" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Asian" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Hawaiian" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Black" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="White" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="MultipleRace" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Total" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_99999999999_DataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PHSInclusionEnrollmentReport_CEthnicCategoryDataType">
+		<xs:sequence>
+			<xs:element name="Female" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_CRacialCategoryDataType" minOccurs="0"/>
+			<xs:element name="Male" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_CRacialCategoryDataType" minOccurs="0"/>
+			<xs:element name="UnknownGender" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_CRacialCategoryDataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PHSInclusionEnrollmentReport_CRacialCategoryDataType">
+		<xs:sequence>
+			<xs:element name="AmericanIndian" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Asian" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Hawaiian" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Black" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="White" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="MultipleRace" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="UnknownRace" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Total" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PHSInclusionEnrollmentReport_CTotalsDataType">
+		<xs:sequence>
+			<xs:element name="AmericanIndian" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Asian" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Hawaiian" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Black" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="White" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="MultipleRace" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="UnknownRace" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Total" type="PHSInclusionEnrollmentReport:PHSInclusionEnrollmentReport_0_to_99999999999_DataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PHSInclusionEnrollmentReport_1_600_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="600"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PHSInclusionEnrollmentReport_1_255_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PHSInclusionEnrollmentReport_1_500_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PHSInclusionEnrollmentReport_0_to_999999999_DataType">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999999999"/>
+		</xs:restriction>
+	</xs:simpleType>	
+	<xs:simpleType name="PHSInclusionEnrollmentReport_0_to_9999999999_DataType">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999999999"/>
+		</xs:restriction>
+	</xs:simpleType>	
+	<xs:simpleType name="PHSInclusionEnrollmentReport_0_to_99999999999_DataType">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="99999999999"/>
+		</xs:restriction>
+	</xs:simpleType>	
+</xs:schema>

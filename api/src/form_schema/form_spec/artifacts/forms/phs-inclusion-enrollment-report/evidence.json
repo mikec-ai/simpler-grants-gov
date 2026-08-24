@@ -1,0 +1,411 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "phs-inclusion-enrollment-report",
+    "kind": "form",
+    "formVersion": "1.0"
+  },
+  "sources": [
+    {
+      "id": "phs-ier-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/PHSInclusionEnrollmentReport-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "3263bbfa8881c7d428958cf91de470cd19f0f6cbc11818c4752d5266bb0f53a4"
+    },
+    {
+      "id": "global-library-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "universal-codes-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"
+    },
+    {
+      "id": "phs-ier-dat-f791",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/PHSInclusionEnrollmentReport-V1.0_F791.xls",
+      "nativeVersion": "1.0",
+      "sha256": "31927e7673d726a76a527a4cd3ea460f7b6510c41b4010c1fb15a4a2d62995f0"
+    },
+    {
+      "id": "phs-ier-readonly-pdf-f791",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/PHSInclusionEnrollmentReport-V1.0_F791.pdf",
+      "nativeVersion": "1.0",
+      "sha256": "933c94b039e93ff6e16aae2c29a8c3fe779e1cce9334988b6fb2f5410ce6399f"
+    },
+    {
+      "id": "phs-ier-xfa-pdf-f791",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/PHSInclusionEnrollmentReport-V1.0_F791.pdf",
+      "nativeVersion": "1.0",
+      "sha256": "e1ff215a5e8f030e7724df4c5655e1c159a651b64204e15fb9abcd060e9dda12"
+    },
+    {
+      "id": "nih-forms-i-general-application-guide",
+      "type": "instructions",
+      "uri": "https://grants.nih.gov/grants/how-to-apply-application-guide/forms-i/general-forms-i.pdf",
+      "nativeVersion": "Forms I",
+      "sha256": "97b323be4e8ca90a0a5f69fe46b7762e45188088dc220efd846e008df3c13588"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "924f37b288dea3ae005986a1ba1ee182e1ddb1f6",
+    "artifact": "artifacts/portfolio/behavior-bindings/PHSInclusionEnrollmentReport-V1-0-F791.json",
+    "sourceSetSha256": "3b13a57e6407c53f1124f4a5400bed6b065d013e09cda0eaf02b6ea4bdda138a",
+    "extractedAt": "2026-08-19T17:38:44Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#",
+        "sourceId": "phs-ier-xsd-v1-0",
+        "sourcePath": "PHSInclusionEnrollmentReport",
+        "status": "proposed",
+        "note": "Standalone form shell with one to twenty direct report occurrences."
+      },
+      {
+        "canonicalPointer": "#/properties/reports/items",
+        "sourceId": "phs-ier-xsd-v1-0",
+        "sourcePath": "PHSInclusionEnrollmentReport.InclusionEnrollmentReport[*]",
+        "status": "proposed",
+        "note": "Composes the same clinical-study/inclusion-enrollment-report semantic composite used by Human Subjects. The 115 coordinate-qualified leaves remain one composite question; the embedded-only technical report identifier is excluded by the shared-core boundary."
+      }
+    ]
+  },
+  "behaviorEvidence": [
+    {
+      "canonicalPath": "/reports/[]",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-25-5",
+      "sourceRecord": "Delete the current entry. Only enabled if more than one entry has been added."
+    },
+    {
+      "canonicalPath": "/reports/[]/enrollmentCountries",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-04-3",
+      "sourceRecord": "Adds another row. Disabled on 200th row."
+    },
+    {
+      "canonicalPath": "/reports/[]/enrollmentCountries",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-04-1",
+      "sourceRecord": "Delete the row. Disabled if only one row exists."
+    },
+    {
+      "canonicalPath": "/reports",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-25-4",
+      "sourceRecord": "Moves to the first entry. Current entry must be valid before moving to another entry. Disabled on 1st entry."
+    },
+    {
+      "canonicalPath": "/reports",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-25-1",
+      "sourceRecord": "Moves to the previous entry. Current entry must be valid before moving to another entry. Disabled on 1st entry."
+    },
+    {
+      "canonicalPath": "/reports/[]/enrollmentCountries",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-04",
+      "sourceRecord": "Set to US if domestic, otherwise select one or more countries."
+    },
+    {
+      "canonicalPath": "/reports",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-25-3",
+      "sourceRecord": "Moves to the next entry, adds another entry if on the last entry. Current entry must be valid before adding or moving to another entry. Disabled on 20th entry."
+    },
+    {
+      "canonicalPath": "/reports",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-25-6",
+      "sourceRecord": "Moves to the last entry. Current entry must be valid before moving to another entry. Disabled on last entry."
+    },
+    {
+      "canonicalPath": "/reports/[]/planned/hispanicLatino/female/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-10-7",
+      "sourceRecord": "Calculated, sum of the column."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/total/blackAfricanAmerican",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-24-4",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/total/americanIndianAlaskaNative",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-24-1",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/hispanicLatino/unknownNotReportedSex/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-20-8",
+      "sourceRecord": "Calculated, sum of the column."
+    },
+    {
+      "canonicalPath": "/reports/[]/planned/total/white",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-12-5",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/planned/notHispanicLatino/male/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-09-7",
+      "sourceRecord": "Calculated, sum of the column."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/notHispanicLatino/male/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-16-8",
+      "sourceRecord": "Calculated, sum of the column."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/total/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-24-8",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/planned/total/americanIndianAlaskaNative",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-12-1",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/notHispanicLatino/female/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-15-8",
+      "sourceRecord": "Calculated, sum of the column."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/total/white",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-24-5",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/planned/total/blackAfricanAmerican",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-12-4",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/planned/total/asian",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-12-2",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/total/unknownNotReported",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-24-7",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/planned/notHispanicLatino/female/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-08-7",
+      "sourceRecord": "Calculated, sum of the column."
+    },
+    {
+      "canonicalPath": "/reports/[]/planned/total/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-12-7",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/total/asian",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-24-2",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/planned/hispanicLatino/male/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-11-7",
+      "sourceRecord": "Calculated, sum of the column."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/total/moreThanOneRace",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-24-6",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/total/nativeHawaiianPacificIslander",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-24-3",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/hispanicLatino/male/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-19-8",
+      "sourceRecord": "Calculated, sum of the column."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/unknownNotReportedEthnicity/female/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-21-8",
+      "sourceRecord": "Calculated, sum of the column."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/notHispanicLatino/unknownNotReportedSex/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-17-8",
+      "sourceRecord": "Calculated, sum of the column."
+    },
+    {
+      "canonicalPath": "/reports/[]/planned/total/nativeHawaiianPacificIslander",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-12-3",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/hispanicLatino/female/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-18-8",
+      "sourceRecord": "Calculated, sum of the column."
+    },
+    {
+      "canonicalPath": "/reports/[]/planned/total/moreThanOneRace",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-12-6",
+      "sourceRecord": "Calculated, sum of the row."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/unknownNotReportedEthnicity/unknownNotReportedSex/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-23-8",
+      "sourceRecord": "Calculated, sum of the column."
+    },
+    {
+      "canonicalPath": "/reports/[]/cumulativeActual/unknownNotReportedEthnicity/male/total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-ier-dat-f791",
+      "sourcePath": "2-22-8",
+      "sourceRecord": "Calculated, sum of the column."
+    }
+  ]
+}
