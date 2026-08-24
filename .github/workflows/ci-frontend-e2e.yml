@@ -70,6 +70,10 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
+          if [[ -n "$PORTABLE_BROWSER_FORM_IDS" && ! "$PORTABLE_BROWSER_FORM_IDS" =~ ^[a-z0-9-]+(,[a-z0-9-]+)*$ ]]; then
+            echo "portable_browser_form_ids must be a comma-separated list of portable form ids with no whitespace" >&2
+            exit 2
+          fi
           if [[ "$GITHUB_EVENT_NAME" != "pull_request" ]]; then
             echo "bank_only=false" >> "$GITHUB_OUTPUT"
             echo "reason=non-PR invocation requires full CI" >> "$GITHUB_OUTPUT"
@@ -489,6 +493,8 @@ jobs:
             echo "test_group_tags=$test_group_tags" >> "$GITHUB_ENV"
           elif [[ $GITHUB_EVENT_NAME = "push" ]]; then
             echo "test_group_tags=@smoke|@core-regression" >> "$GITHUB_ENV"
+          elif [[ -n "$PORTABLE_BROWSER_FORM_IDS" ]]; then
+            echo "test_group_tags=@portable-catalog" >> "$GITHUB_ENV"
           else
             echo "test_group_tags=${{ inputs.playwright_tags }}" >> "$GITHUB_ENV"
           fi
@@ -529,9 +535,9 @@ jobs:
           # so the frontend must send that same literal value.
           test_user_manager_api_key: "local-manager-key"
           # shard 2 is the firefox shard
-          do-firefox-install: ${{ matrix.shard == 2 && 'true' || 'false' }}
+          do-firefox-install: ${{ (inputs.portable_browser_form_ids != '' || matrix.shard == 2) && 'true' || 'false' }}
           # shard 3 is the webkit shard
-          do-webkit-install: ${{ matrix.shard == 3 && 'true' || 'false' }}
+          do-webkit-install: ${{ (inputs.portable_browser_form_ids != '' || matrix.shard == 3) && 'true' || 'false' }}
 
       - name: Run E2E tests
         uses: ./.github/actions/e2e
@@ -551,9 +557,9 @@ jobs:
           # so the frontend must send that same literal value.
           test_user_manager_api_key: "local-manager-key"
           # shard 2 is the firefox shard
-          do-firefox-install: ${{ matrix.shard == 2 && 'true' || 'false' }}
+          do-firefox-install: ${{ (inputs.portable_browser_form_ids != '' || matrix.shard == 2) && 'true' || 'false' }}
           # shard 3 is the webkit shard
-          do-webkit-install: ${{ matrix.shard == 3 && 'true' || 'false' }}
+          do-webkit-install: ${{ (inputs.portable_browser_form_ids != '' || matrix.shard == 3) && 'true' || 'false' }}
 
       - name: Run E2E tests for changed spec files
         uses: ./.github/actions/e2e
@@ -575,9 +581,9 @@ jobs:
           # so the frontend must send that same literal value.
           test_user_manager_api_key: "local-manager-key"
           # shard 2 is the firefox shard
-          do-firefox-install: ${{ matrix.shard == 2 && 'true' || 'false' }}
+          do-firefox-install: ${{ (inputs.portable_browser_form_ids != '' || matrix.shard == 2) && 'true' || 'false' }}
           # shard 3 is the webkit shard
-          do-webkit-install: ${{ matrix.shard == 3 && 'true' || 'false' }}
+          do-webkit-install: ${{ (inputs.portable_browser_form_ids != '' || matrix.shard == 3) && 'true' || 'false' }}
 
   create-report:
     name: Create Merged Test Report

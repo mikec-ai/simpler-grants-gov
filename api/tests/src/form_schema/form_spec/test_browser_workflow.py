@@ -11,6 +11,8 @@ def test_hosted_browser_workflow_propagates_bounded_form_selection() -> None:
     assert workflow.count("portable_browser_form_ids:") == 2
     assert "PORTABLE_BROWSER_FORM_IDS: ${{ inputs.portable_browser_form_ids || '' }}" in workflow
     assert "-e PORTABLE_BROWSER_FORM_IDS" in workflow
+    assert "portable_browser_form_ids must be a comma-separated list" in workflow
+    assert "test_group_tags=@portable-catalog" in workflow
     assert (
         "shard: ${{ fromJSON(inputs.portable_browser_form_ids != '' "
         "&& '[1]' || '[1,2,3,4]') }}" in workflow
@@ -18,4 +20,18 @@ def test_hosted_browser_workflow_propagates_bounded_form_selection() -> None:
     assert (
         "total_shards: ${{ fromJSON(inputs.portable_browser_form_ids != '' "
         "&& '[1]' || '[4]') }}" in workflow
+    )
+    assert (
+        workflow.count(
+            "do-firefox-install: ${{ (inputs.portable_browser_form_ids != '' "
+            "|| matrix.shard == 2) && 'true' || 'false' }}"
+        )
+        == 3
+    )
+    assert (
+        workflow.count(
+            "do-webkit-install: ${{ (inputs.portable_browser_form_ids != '' "
+            "|| matrix.shard == 3) && 'true' || 'false' }}"
+        )
+        == 3
     )
