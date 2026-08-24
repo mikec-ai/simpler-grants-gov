@@ -4,9 +4,13 @@
   "type": "object",
   "properties": {
     "name": {
-      "$ref": "../../../question-bank/research-person/name/schema.json",
+      "$ref": "../../../question-bank/generics/person-name/schema.json",
       "description": "Enter the person's name. First and last name are required.",
-      "title": "Name"
+      "title": "Name",
+      "required": [
+        "firstName",
+        "lastName"
+      ]
     },
     "sex": {
       "$ref": "#/$defs/PersonalDataSex",
@@ -73,8 +77,8 @@
       "type": "string",
       "enum": [
         "Hispanic or Latino",
-        "Not Hispanic or Latino",
-        "Do Not Wish To Provide"
+        "Non-Hispanic or Latino",
+        "Do Not Wish to Provide"
       ],
       "description": "Ethnicity vocabulary carried by the active R&R Personal Data 1.2 wire contract."
     },
