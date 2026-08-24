@@ -288,7 +288,9 @@ def _generate_profile_xml(
     application_data: dict[str, Any] | None = None,
     subaward_count: int = 1,
 ) -> str:
-    budget_data = _application_data() if application_data is None else application_data
+    budget_data = copy.deepcopy(
+        _application_data() if application_data is None else application_data
+    )
     budget_fields = (
         transform_config["budget_attachments"]["items"] if subaward else transform_config
     )
@@ -296,8 +298,8 @@ def _generate_profile_xml(
         budget_data["sam_uei"] = budget_data.pop("samuei")
     direct_cost_fields = budget_fields["budget_year"]["items"]["other_direct_costs"]
     if "other_direct_cost1" in direct_cost_fields:
-        direct_costs = budget_data["budget_year"][0]["other_direct_costs"]
-        summary = budget_data["budget_summary"]
+        direct_costs = budget_data["budget_year"][0].get("other_direct_costs", {})
+        summary = budget_data.get("budget_summary", {})
         for index in range(1, 11):
             underscored = f"other_direct_cost_{index}"
             if underscored in direct_costs:
