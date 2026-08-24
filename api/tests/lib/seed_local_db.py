@@ -114,8 +114,9 @@ def _build_opportunities(
     if cover_all_agencies:
         agencies = factories.CustomProvider.AGENCIES
         agencies_with_opp = (
-            db_session
-            .execute(select(Opportunity.agency_code).where(Opportunity.agency_code.in_(agencies)))
+            db_session.execute(
+                select(Opportunity.agency_code).where(Opportunity.agency_code.in_(agencies))
+            )
             .scalars()
             .all()
         )

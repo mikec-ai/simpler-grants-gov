@@ -97,10 +97,12 @@ def _rule_capabilities(rule_schema: dict[str, Any]) -> tuple[list[dict], list[di
             attachments.append({"rulePath": "/" + "/".join(path)})
         calculation = node.get("gg_pre_population")
         if isinstance(calculation, dict):
-            calculations.append({
-                "rulePath": "/" + "/".join(path),
-                "declaration": calculation,
-            })
+            calculations.append(
+                {
+                    "rulePath": "/" + "/".join(path),
+                    "declaration": calculation,
+                }
+            )
     return attachments, calculations
 
 
@@ -224,50 +226,54 @@ def build_browser_plan() -> dict[str, Any]:
             key=lambda item: json.dumps(item, sort_keys=True),
         )
 
-        forms.append({
-            "portableFormId": form_id,
-            "previewFormId": str(preview_form_id(form_id)),
-            "displayName": f"[Portable preview] {loaded.meta['formName']}",
-            "form": loaded.meta,
-            "artifactDigests": _artifact_digests(manifest, form_id),
-            "counts": {
-                "uiNodes": len(ui_nodes),
-                "uiFields": len(ui_fields),
-                "schemaFields": len(schema_fields),
-            },
-            "stablePaths": {
-                "uiDefinitions": sorted({
-                    node["definition"] for node in ui_fields if "definition" in node
-                }),
-                "schema": sorted(schema_path for schema_path, _, _, _ in schema_fields),
-            },
-            "stageA": [
-                "apply_render",
-                "initial_save_reload",
-                "print_render",
-                "accessibility",
-            ],
-            "capabilities": {
-                "editableScalar": _capability(
-                    editable, missing_reason="no editable scalar is declared"
-                ),
-                "requiredField": _capability(
-                    required, missing_reason="no required field is declared"
-                ),
-                "repeater": _capability(repeaters, missing_reason="no fieldList is declared"),
-                "attachment": _capability(
-                    attachment_declarations,
-                    missing_reason="no attachment widget or rule is declared",
-                ),
-                "conditional": _capability(
-                    conditionals, missing_reason="no UI conditional is declared"
-                ),
-                "calculation": _capability(
-                    calculations, missing_reason="no executable calculation is declared"
-                ),
-                "readOnly": _capability(readonly, missing_reason="no protected field is declared"),
-            },
-        })
+        forms.append(
+            {
+                "portableFormId": form_id,
+                "previewFormId": str(preview_form_id(form_id)),
+                "displayName": f"[Portable preview] {loaded.meta['formName']}",
+                "form": loaded.meta,
+                "artifactDigests": _artifact_digests(manifest, form_id),
+                "counts": {
+                    "uiNodes": len(ui_nodes),
+                    "uiFields": len(ui_fields),
+                    "schemaFields": len(schema_fields),
+                },
+                "stablePaths": {
+                    "uiDefinitions": sorted(
+                        {node["definition"] for node in ui_fields if "definition" in node}
+                    ),
+                    "schema": sorted(schema_path for schema_path, _, _, _ in schema_fields),
+                },
+                "stageA": [
+                    "apply_render",
+                    "initial_save_reload",
+                    "print_render",
+                    "accessibility",
+                ],
+                "capabilities": {
+                    "editableScalar": _capability(
+                        editable, missing_reason="no editable scalar is declared"
+                    ),
+                    "requiredField": _capability(
+                        required, missing_reason="no required field is declared"
+                    ),
+                    "repeater": _capability(repeaters, missing_reason="no fieldList is declared"),
+                    "attachment": _capability(
+                        attachment_declarations,
+                        missing_reason="no attachment widget or rule is declared",
+                    ),
+                    "conditional": _capability(
+                        conditionals, missing_reason="no UI conditional is declared"
+                    ),
+                    "calculation": _capability(
+                        calculations, missing_reason="no executable calculation is declared"
+                    ),
+                    "readOnly": _capability(
+                        readonly, missing_reason="no protected field is declared"
+                    ),
+                },
+            }
+        )
 
     if tuple(form["portableFormId"] for form in forms) != form_ids:
         raise ValueError("browser plan form set diverged from the manifest selection")
