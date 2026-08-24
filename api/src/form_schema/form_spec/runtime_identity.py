@@ -83,3 +83,16 @@ def runtime_identity(portable_id: str) -> RuntimeIdentity:
         return _records()[portable_id]
     except KeyError as exc:
         raise ValueError(f"no SGG runtime identity for portable form {portable_id!r}") from exc
+
+
+def portable_id_for_runtime_form_id(form_id: uuid.UUID) -> str | None:
+    """Return the portable id for a Simpler form UUID, or ``None`` for legacy-only forms."""
+
+    return next(
+        (
+            portable_id
+            for portable_id, identity in _records().items()
+            if identity.form_id == form_id
+        ),
+        None,
+    )

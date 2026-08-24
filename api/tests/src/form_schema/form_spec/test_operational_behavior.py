@@ -6,6 +6,7 @@ import pytest
 from src.form_schema.form_spec.loader import load_form
 from src.form_schema.form_spec.operational_behavior import (
     ProjectedCanonicalValueSource,
+    ProjectedExecutionPolicy,
     project_operational_behavior,
 )
 from src.form_schema.form_spec.projection import Projection
@@ -22,7 +23,11 @@ def test_rr_budget_projects_exact_cross_form_prefill_coordinates() -> None:
     assert sam_uei.path == "/samuei"
     assert sam_uei.operation_kind == "prefill"
     assert sam_uei.editability == "editable"
-    assert sam_uei.execution_status == "source-bound-uncompiled"
+    assert sam_uei.execution_policy == ProjectedExecutionPolicy(
+        trigger="source-response-updated",
+        write_policy="until-target-user-modified",
+        missing_source_policy="skip",
+    )
     assert sam_uei.value_source == ProjectedCanonicalValueSource(
         form_id="rr-sf424",
         runtime_form_id=RR_SF424_RUNTIME_ID,
@@ -47,23 +52,31 @@ def test_rr_budget_projects_exact_cross_form_prefill_coordinates() -> None:
     assert start_date.value_source.path == "/proposed_project_period/proposed_start_date"
 
 
-def test_projection_rejects_a_stronger_execution_claim() -> None:
+def test_projection_rejects_an_unsupported_execution_policy() -> None:
     loaded = load_form("rr-budget")
     document = {
-        "contract": "grants-form-evidence/v1",
-        "block": {"id": "rr-budget", "kind": "form"},
-        "operationalBehaviorEvidence": [
+        "contract": "grants-form-operational-behavior/v1",
+        "formId": "rr-budget",
+        "behaviors": [
             {
                 "canonicalPath": loaded.operational_behavior[0].canonical_path,
                 "operationKind": "prefill",
+                "valueSource": {
+                    "kind": "canonical",
+                    "blockId": "rr-sf424",
+                    "path": "/answer",
+                },
                 "editability": "editable",
-                "authority": "official_source",
-                "executionStatus": "runtime-verified",
+                "executionPolicy": {
+                    "trigger": "form-opened",
+                    "writePolicy": "until-target-user-modified",
+                    "missingSourcePolicy": "skip",
+                },
             }
         ],
     }
 
-    with pytest.raises(ValueError, match="unsupported execution status"):
+    with pytest.raises(ValueError, match="unsupported execution trigger"):
         project_operational_behavior(
             copy.deepcopy(document),
             form_id="rr-budget",
@@ -75,16 +88,19 @@ def test_projection_rejects_a_stronger_execution_claim() -> None:
 
 def test_projection_fails_closed_when_source_form_has_no_runtime_identity() -> None:
     document = {
-        "contract": "grants-form-evidence/v1",
-        "block": {"id": "target", "kind": "form"},
-        "operationalBehaviorEvidence": [
+        "contract": "grants-form-operational-behavior/v1",
+        "formId": "target",
+        "behaviors": [
             {
                 "canonicalPath": "/answer",
                 "operationKind": "prefill",
                 "valueSource": {"kind": "canonical", "blockId": "source", "path": "/answer"},
                 "editability": "editable",
-                "authority": "official_source",
-                "executionStatus": "source-bound-uncompiled",
+                "executionPolicy": {
+                    "trigger": "source-response-updated",
+                    "writePolicy": "until-target-user-modified",
+                    "missingSourcePolicy": "skip",
+                },
             }
         ],
     }
