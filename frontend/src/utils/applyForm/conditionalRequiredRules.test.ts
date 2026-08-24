@@ -1,4 +1,7 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import type { RJSFSchema } from "@rjsf/utils";
+import Ajv2020 from "ajv/dist/2020";
 
 import {
   evaluateConditionalRequiredRules,
@@ -225,19 +228,69 @@ describe("conditional required rules", () => {
     expect(result.activeRequiredPaths).toEqual(["$.detail"]);
   });
 
-  it.each([
-    [
-      "combined effects",
-      {
+  it("skips disjunctive R&R Budget effects without weakening them", () => {
+    const periodArtifact = JSON.parse(
+      readFileSync(
+        resolve(
+          __dirname,
+          "../../../../api/src/form_schema/form_spec/artifacts/question-bank/budget/research/period/schema.json",
+        ),
+        "utf8",
+      ),
+    ) as RJSFSchema;
+    const conditional = periodArtifact.allOf?.[0] as RJSFSchema;
+    const thenSchema = conditional.then as RJSFSchema;
+
+    expect(thenSchema.anyOf).toHaveLength(10);
+    expect(
+      extractConditionalRequiredRules({
         type: "object",
-        if: true,
-        then: {
-          required: ["detail"],
-          properties: { detail: { minLength: 1 } },
-        },
+        allOf: [conditional],
+      }),
+    ).toEqual([]);
+
+    const validate = new Ajv2020({ strict: false }).compile({
+      type: "object",
+      allOf: [conditional],
+    });
+    expect(validate({ participantTraineeSupportCosts: { other: "10" } })).toBe(
+      false,
+    );
+    expect(validate.errors?.some((error) => error.keyword === "anyOf")).toBe(
+      true,
+    );
+  });
+
+  it.each([
+    {
+      type: "object",
+      if: true,
+      then: {
+        required: ["detail"],
+        properties: { detail: { minLength: 1 } },
       },
-      /contains unsupported effects/,
-    ],
+    },
+    {
+      type: "object",
+      if: false,
+      then: { required: ["detail"] },
+      else: { properties: { detail: { minLength: 1 } } },
+    },
+    {
+      type: "object",
+      if: true,
+      then: false,
+    },
+  ])(
+    "skips conditional effects the required-style projection cannot represent",
+    (nonProjectableSchema) => {
+      expect(
+        extractConditionalRequiredRules(nonProjectableSchema as RJSFSchema),
+      ).toEqual([]);
+    },
+  );
+
+  it.each([
     [
       "unsupported applicator",
       {
@@ -252,14 +305,13 @@ describe("conditional required rules", () => {
       /contains an unresolved \$ref/,
     ],
     [
-      "unsupported branch without required",
+      "malformed required effect",
       {
         type: "object",
-        if: false,
-        then: { required: ["detail"] },
-        else: { properties: { detail: { minLength: 1 } } },
+        if: true,
+        then: { required: "detail" },
       },
-      /contains unsupported effects/,
+      /required must contain supported property names/,
     ],
     [
       "nested condition under an unhandled keyword",
