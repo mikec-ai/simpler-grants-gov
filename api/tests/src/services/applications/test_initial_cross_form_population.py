@@ -2,6 +2,7 @@
 
 from typing import Any
 
+import pytest
 from sqlalchemy import select
 
 from src.constants.lookup_constants import Privilege
@@ -52,12 +53,15 @@ def _source_response(
     }
 
 
+@pytest.mark.parametrize("budget_form_id", ["rr-budget", "rr-budget-10yr"])
 def test_source_save_populates_budget_and_never_overwrites_applicant_edits(
     enable_factory_create: Any,
     db_session: Any,
+    budget_form_id: str,
 ) -> None:
     source_form, source_key, previous_source = register_runtime_form_for_test("rr-sf424")
-    budget_form, budget_key, previous_budget = register_runtime_form_for_test("rr-budget")
+    budget_form, budget_key, previous_budget = register_runtime_form_for_test(budget_form_id)
+    sam_uei = "ABCDEFGHIJKL" if budget_form_id == "rr-budget" else "ABCDEFGHIJ10"
     try:
         competition = CompetitionFactory.create(competition_forms=[])
         source_competition_form = CompetitionFormFactory.create(
@@ -68,7 +72,7 @@ def test_source_save_populates_budget_and_never_overwrites_applicant_edits(
         )
         application = ApplicationFactory.create(
             competition=competition,
-            organization=OrganizationFactory.create(sam_gov_entity__uei="ABCDEFGHIJKL"),
+            organization=OrganizationFactory.create(sam_gov_entity__uei=sam_uei),
         )
         ApplicationFormFactory.create(
             application=application,
@@ -87,7 +91,7 @@ def test_source_save_populates_budget_and_never_overwrites_applicant_edits(
             application.application_id,
             source_form.form_id,
             user,
-            application_response=_source_response(),
+            application_response=_source_response(sam_uei=sam_uei),
         )
         db_session.commit()
 
@@ -98,7 +102,7 @@ def test_source_save_populates_budget_and_never_overwrites_applicant_edits(
             )
         ).scalar_one()
         assert populated.application_response == {
-            "samuei": "ABCDEFGHIJKL",
+            "samuei": sam_uei,
             "organization_name": "Example Research University",
             "budget_year": [{"budget_period_start_date": "2027-07-01"}],
         }
@@ -147,12 +151,15 @@ def test_source_save_populates_budget_and_never_overwrites_applicant_edits(
         restore_runtime_form_after_test(budget_key, previous_budget)
 
 
+@pytest.mark.parametrize("budget_form_id", ["rr-budget", "rr-budget-10yr"])
 def test_missing_source_values_are_skipped_without_constructing_empty_targets(
     enable_factory_create: Any,
     db_session: Any,
+    budget_form_id: str,
 ) -> None:
     source_form, source_key, previous_source = register_runtime_form_for_test("rr-sf424")
-    budget_form, budget_key, previous_budget = register_runtime_form_for_test("rr-budget")
+    budget_form, budget_key, previous_budget = register_runtime_form_for_test(budget_form_id)
+    sam_uei = "MNOPQRSTUVWX" if budget_form_id == "rr-budget" else "MNOPQRSTUV10"
     try:
         competition = CompetitionFactory.create(competition_forms=[])
         source_competition_form = CompetitionFormFactory.create(
@@ -163,7 +170,7 @@ def test_missing_source_values_are_skipped_without_constructing_empty_targets(
         )
         application = ApplicationFactory.create(
             competition=competition,
-            organization=OrganizationFactory.create(sam_gov_entity__uei="MNOPQRSTUVWX"),
+            organization=OrganizationFactory.create(sam_gov_entity__uei=sam_uei),
         )
         ApplicationFormFactory.create(
             application=application,
@@ -182,9 +189,7 @@ def test_missing_source_values_are_skipped_without_constructing_empty_targets(
             application.application_id,
             source_form.form_id,
             user,
-            application_response={
-                "applicant_info": {"organization_info": {"sam_uei": "MNOPQRSTUVWX"}}
-            },
+            application_response={"applicant_info": {"organization_info": {"sam_uei": sam_uei}}},
         )
         db_session.commit()
 
@@ -194,7 +199,7 @@ def test_missing_source_values_are_skipped_without_constructing_empty_targets(
                 ApplicationForm.application_form_id == budget_application_form.application_form_id
             )
         ).scalar_one()
-        assert populated.application_response == {"samuei": "MNOPQRSTUVWX"}
+        assert populated.application_response == {"samuei": sam_uei}
     finally:
         restore_runtime_form_after_test(source_key, previous_source)
         restore_runtime_form_after_test(budget_key, previous_budget)

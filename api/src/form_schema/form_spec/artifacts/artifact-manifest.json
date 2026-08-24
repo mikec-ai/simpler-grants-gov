@@ -643,13 +643,18 @@
     },
     {
       "path": "dist/forms/rr-budget-10yr/evidence.json",
-      "sha256": "1c1f45625c73d36618f086970d83ae56c11961c47e78f7008483c4ea312281d9",
-      "size": 33239
+      "sha256": "b4be198fc89e06ea7e8ec9d6ed09179ef1892fb09705174390b9e1e447741a8a",
+      "size": 35658
     },
     {
       "path": "dist/forms/rr-budget-10yr/manifest.json",
-      "sha256": "c34bcbdcc249b461adce0a880a47a8d3ee7217b7a6b840254bbd4d92e89490c2",
-      "size": 520
+      "sha256": "fdcf0c4a44505a96533ab95ff3eb7fa4a8410e82f627300d364e676a22d61360",
+      "size": 566
+    },
+    {
+      "path": "dist/forms/rr-budget-10yr/operational-behavior.json",
+      "sha256": "af51f64bf347b72a8c683a8fed5d8831bd08cac5fd154464a68305e00b915777",
+      "size": 1560
     },
     {
       "path": "dist/forms/rr-budget-10yr/schema.json",
@@ -2448,7 +2453,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "9f0107e01265a7cb7a8263e0619b76ac434911ca"
+    "revision": "fbb2554f19de604db3a3a7ea330e323327a0532c"
   },
-  "sourceBundleSha256": "ff679940135b5213257a71649e45dd50afb952d95cfef347a295b7ddd6deb4b1"
+  "sourceBundleSha256": "c20a524d8878bffe506ff02241450f54787b90beefd7f1cd537c7e67992c163e"
 }

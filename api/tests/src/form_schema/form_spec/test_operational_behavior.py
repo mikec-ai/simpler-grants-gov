@@ -14,8 +14,9 @@ from src.form_schema.form_spec.projection import Projection
 RR_SF424_RUNTIME_ID = uuid.UUID("98f03cc4-5cd8-455b-a318-ba5abd0cf572")
 
 
-def test_rr_budget_projects_exact_cross_form_prefill_coordinates() -> None:
-    loaded = load_form("rr-budget")
+@pytest.mark.parametrize("form_id", ["rr-budget", "rr-budget-10yr"])
+def test_rr_budget_projects_exact_cross_form_prefill_coordinates(form_id: str) -> None:
+    loaded = load_form(form_id)
     assert len(loaded.operational_behavior) == 3
     by_path = {record.canonical_path: record for record in loaded.operational_behavior}
 
