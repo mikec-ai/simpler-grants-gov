@@ -5,7 +5,8 @@
   "properties": {
     "additionalEquipmentsAttachment": {
       "$ref": "../../../../question-bank/budget/research/additional-equipment/schema.json",
-      "title": "Additional Equipment:"
+      "title": "Additional Equipment:",
+      "description": "One possible attachment per budget period. Required if TotalFundForAttachedEquipment is entered and greater than zero."
     },
     "equipmentList": {
       "type": "array",
@@ -22,7 +23,8 @@
     },
     "totalFundForAttachedEquipment": {
       "$ref": "#/$defs/ResearchBudgetDecimal14",
-      "title": "Total funds requested for all equipment listed in the attached file"
+      "title": "Total funds requested for all equipment listed in the attached file",
+      "description": "Required and must be greater than zero if an AdditionalEquipmentsAttachment exists."
     }
   },
   "required": [

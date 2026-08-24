@@ -71,7 +71,8 @@ def test_repeating_groups_and_rules_are_projected_without_form_code() -> None:
     assert sum(rule.get("materialize") == "when_any_source_present" for rule in calculations) == 20
     assert sorted(rule["order"] for rule in calculations) == list(range(1, 57))
     assert sum(rule["rule"] == "sum_integer" for rule in calculations) == 3
-    assert len(attachments) == 3
+    assert len(attachments) == 4
+    assert sum(rule["rule"] == "date_not_before" for rule in attachments) == 1
 
 
 def test_decimal_wire_constraints_are_preserved() -> None:
