@@ -279,6 +279,43 @@ def test_loader_accepts_numeric_object_property_names_and_required_parents(
     assert policy.operations[0].path == "/required_parent/2026"
 
 
+def test_loader_rejects_empty_pointer_token_even_if_schema_property_exists(
+    tmp_path: Path,
+) -> None:
+    manifest, evidence, evidence_path, normalization_path = _write_package(tmp_path)
+    document = json.loads(normalization_path.read_text())
+    document["operations"][0]["path"] = "/parent//leaf"
+    evidence["responseNormalizationEvidence"][0]["canonicalPath"] = "/parent//leaf"
+    evidence_path.write_text(json.dumps(evidence))
+    payload = (json.dumps(document, indent=2) + "\n").encode()
+    normalization_path.write_bytes(payload)
+    manifest["artifacts"]["response-normalization.json"]["sha256"] = hashlib.sha256(
+        payload
+    ).hexdigest()
+    schema = {
+        "type": "object",
+        "properties": {
+            "parent": {
+                "type": "object",
+                "properties": {
+                    "": {
+                        "type": "object",
+                        "properties": {"leaf": {"type": "string", "minLength": 1}},
+                    }
+                },
+            }
+        },
+    }
+
+    with pytest.raises(ValueError, match="invalid empty JSON Pointer token"):
+        load_response_normalization(
+            tmp_path,
+            manifest=manifest,
+            projected_schema=schema,
+            projection=Projection(),
+        )
+
+
 def test_exact_empty_normalization_is_immutable_idempotent_and_narrow() -> None:
     policy = ResponseNormalizationPolicy(
         CONTRACT,

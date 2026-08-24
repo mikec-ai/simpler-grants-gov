@@ -47,6 +47,8 @@ def _decode_pointer(path: str) -> list[str]:
         raise ValueError(f"invalid response normalization path {path!r}")
     tokens = path[1:].split("/")
     for token in tokens:
+        if token == "":
+            raise ValueError(f"invalid empty JSON Pointer token in {path!r}")
         if re.search(r"~(?![01])", token):
             raise ValueError(f"invalid JSON Pointer escape in {path!r}")
     return [
