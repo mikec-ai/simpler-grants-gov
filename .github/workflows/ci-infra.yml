@@ -1,16 +1,7 @@
 name: CI Infra Checks
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - bin/**
-      - api/bin/**
-      - api/docker-compose.ci.yml
-      - api/tests/bin/**
-      - infra/**
-      - .github/workflows/**
+  workflow_dispatch:
   pull_request:
     paths:
       - bin/**
