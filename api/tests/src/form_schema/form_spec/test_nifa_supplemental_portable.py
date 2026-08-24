@@ -3,7 +3,6 @@ from pathlib import Path
 
 from src.form_schema.form_spec.bank import ARTIFACTS
 
-
 FORM = ARTIFACTS / "forms" / "nifa-supplemental"
 
 
