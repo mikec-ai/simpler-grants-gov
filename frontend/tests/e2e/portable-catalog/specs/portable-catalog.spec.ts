@@ -116,7 +116,9 @@ async function openSelectedForm(
   await page.goto(applicationUrl, { waitUntil: "domcontentloaded" });
   const rows = page.locator(".simpler-application-forms-table tbody tr");
   await expect(rows.first()).toBeVisible({ timeout: 30_000 });
-  const row = rows.filter({ hasText: displayName });
+  const row = rows.filter({
+    has: page.getByText(displayName, { exact: true }),
+  });
   await expect(row).toHaveCount(1);
   await row.getByTestId("application-form-link").click();
   await page.waitForURL(
