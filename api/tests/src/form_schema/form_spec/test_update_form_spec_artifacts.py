@@ -18,10 +18,12 @@ def test_preserves_the_existing_selection_allowlist(tmp_path):
     target = tmp_path / "artifacts"
     target.mkdir()
     (target / "artifact-manifest.json").write_text(
-        json.dumps({
-            "contract": "grants-form-artifact-selection/v1",
-            "selection": {"forms": ["first", "second", "first"]},
-        })
+        json.dumps(
+            {
+                "contract": "grants-form-artifact-selection/v1",
+                "selection": {"forms": ["first", "second", "first"]},
+            }
+        )
     )
 
     assert selected_forms(target) == ["first", "second"]
@@ -40,10 +42,12 @@ def test_additive_promotion_preserves_order_and_reports_only_new_forms(tmp_path)
     target = tmp_path / "artifacts"
     target.mkdir()
     (target / "artifact-manifest.json").write_text(
-        json.dumps({
-            "contract": "grants-form-artifact-selection/v1",
-            "selection": {"forms": ["first", "second"]},
-        })
+        json.dumps(
+            {
+                "contract": "grants-form-artifact-selection/v1",
+                "selection": {"forms": ["first", "second"]},
+            }
+        )
     )
 
     forms, added = promotion_forms(
@@ -60,10 +64,12 @@ def test_exact_and_additive_selection_are_mutually_exclusive(tmp_path):
     target = tmp_path / "artifacts"
     target.mkdir()
     (target / "artifact-manifest.json").write_text(
-        json.dumps({
-            "contract": "grants-form-artifact-selection/v1",
-            "selection": {"forms": ["first"]},
-        })
+        json.dumps(
+            {
+                "contract": "grants-form-artifact-selection/v1",
+                "selection": {"forms": ["first"]},
+            }
+        )
     )
 
     with pytest.raises(ValueError, match="cannot be combined"):
@@ -75,10 +81,12 @@ def test_rejects_invalid_additive_form_ids(tmp_path, invalid):
     target = tmp_path / "artifacts"
     target.mkdir()
     (target / "artifact-manifest.json").write_text(
-        json.dumps({
-            "contract": "grants-form-artifact-selection/v1",
-            "selection": {"forms": ["first"]},
-        })
+        json.dumps(
+            {
+                "contract": "grants-form-artifact-selection/v1",
+                "selection": {"forms": ["first"]},
+            }
+        )
     )
 
     with pytest.raises(ValueError, match="invalid form ids"):
@@ -108,12 +116,14 @@ def test_resolves_a_producer_ref_to_a_full_commit(tmp_path, monkeypatch):
 def test_provisions_a_missing_xsd_from_the_pinned_producer_checkout(tmp_path):
     payload = b"<schema version='1.0'/>"
     digest = hashlib.sha256(payload).hexdigest()
-    profile = json.dumps({
-        "xsd": {
-            "uri": "https://apply.grants.gov/forms/Example-V1.0.xsd",
-            "sha256": digest,
+    profile = json.dumps(
+        {
+            "xsd": {
+                "uri": "https://apply.grants.gov/forms/Example-V1.0.xsd",
+                "sha256": digest,
+            }
         }
-    }).encode()
+    ).encode()
     producer = tmp_path / "producer"
     fixture = producer / "tests/fixtures/grants-gov-xsd/example/Example-V1.0.xsd"
     fixture.parent.mkdir(parents=True)
@@ -132,12 +142,14 @@ def test_provisions_a_missing_xsd_from_the_pinned_producer_checkout(tmp_path):
 
 
 def test_refuses_a_producer_fixture_that_does_not_match_the_declared_digest(tmp_path):
-    profile = json.dumps({
-        "xsd": {
-            "uri": "https://apply.grants.gov/forms/Example-V1.0.xsd",
-            "sha256": hashlib.sha256(b"official").hexdigest(),
+    profile = json.dumps(
+        {
+            "xsd": {
+                "uri": "https://apply.grants.gov/forms/Example-V1.0.xsd",
+                "sha256": hashlib.sha256(b"official").hexdigest(),
+            }
         }
-    }).encode()
+    ).encode()
     producer = tmp_path / "producer"
     fixture = producer / "tests/fixtures/grants-gov-xsd/example/Example-V1.0.xsd"
     fixture.parent.mkdir(parents=True)

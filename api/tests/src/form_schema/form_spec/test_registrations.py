@@ -226,12 +226,14 @@ def test_banked_only_forms_are_verified_but_fail_closed_at_runtime(portable_id):
 def test_registration_cannot_enable_a_banked_form_without_runtime_identity(tmp_path, monkeypatch):
     registration_file = tmp_path / "registrations.json"
     registration_file.write_text(
-        json.dumps({
-            "contract": "sgg-portable-form-registrations/v1",
-            "forms": {
-                "attachment-form": {"formInstructionId": "00000000-0000-4000-8000-000000000001"}
-            },
-        })
+        json.dumps(
+            {
+                "contract": "sgg-portable-form-registrations/v1",
+                "forms": {
+                    "attachment-form": {"formInstructionId": "00000000-0000-4000-8000-000000000001"}
+                },
+            }
+        )
     )
     monkeypatch.setattr(registration_module, "REGISTRATIONS", registration_file)
     registration_module._records.cache_clear()
