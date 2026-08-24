@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/domestic-performance/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Will all research and development on the project be performed in its entirety in the United States?"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Report whether all project research and development will occur in the United States.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/equivalent-federal-work/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Has the applicant and/or Program Director/Principal Investigator submitted proposals for essentially equivalent work under other Federal program solicitations or received other Federal awards for essentially equivalent work?"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Report essentially equivalent proposals or awards under other Federal programs.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

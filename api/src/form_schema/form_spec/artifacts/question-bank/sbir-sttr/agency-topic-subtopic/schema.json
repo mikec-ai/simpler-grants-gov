@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/agency-topic-subtopic/schema.json",
+  "type": "string",
+  "maxLength": 10,
+  "description": "Enter the agency topic or subtopic for this application."
+}

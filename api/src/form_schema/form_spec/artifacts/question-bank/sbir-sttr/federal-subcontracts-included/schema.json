@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/federal-subcontracts-included/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Does this application include subcontracts with Federal laboratories or any other Federal Government agencies?"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Report whether the application includes subcontracts with Federal laboratories or agencies.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

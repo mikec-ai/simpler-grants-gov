@@ -972,6 +972,36 @@
       "size": 35072
     },
     {
+      "path": "dist/forms/sbir-sttr-information/evidence.json",
+      "sha256": "69edaa8067dd05b0b108e6d6303456d0a6bf8c3d126ecabb5596ac01d41aa363",
+      "size": 17939
+    },
+    {
+      "path": "dist/forms/sbir-sttr-information/manifest.json",
+      "sha256": "20b92f727db31e09ae5a101ac789e34bcce6d45b063103f17479d315f3b70b34",
+      "size": 545
+    },
+    {
+      "path": "dist/forms/sbir-sttr-information/schema.json",
+      "sha256": "360f0b2f50bb7dfc8c8d980940a3402744a99424030b5dd029c22347cebc6813",
+      "size": 9490
+    },
+    {
+      "path": "dist/forms/sbir-sttr-information/sgg/rule-schema.json",
+      "sha256": "87efbacd630849031fcd5f6c8a69b18f871be3dc3b44beed688528bc66fe4957",
+      "size": 288
+    },
+    {
+      "path": "dist/forms/sbir-sttr-information/sgg/ui-schema.json",
+      "sha256": "d6dfa43cfe5d13ddcb755f112ee9346b55151751b9274b8ca0c3d3627a3592b1",
+      "size": 7951
+    },
+    {
+      "path": "dist/forms/sbir-sttr-information/targets/grants-gov-xml.json",
+      "sha256": "e4f411a453859f47128fcf3a36e840090c9434613f8c21d3d8e21148ce116305",
+      "size": 6596
+    },
+    {
       "path": "dist/forms/sf424-short/evidence.json",
       "sha256": "10a9e84caa2570449f8e795ff211eafab8e3d7fcdcaa07691606df3409e3da6c",
       "size": 1988
@@ -2210,6 +2240,141 @@
       "path": "dist/question-bank/review-routing/suggested-study-section/schema.json",
       "sha256": "4173b215e64ab90cfed13405030bd897c05c89c5da26f6c6fe6080f52d515702",
       "size": 254
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/agency-topic-subtopic/schema.json",
+      "sha256": "424a0d6eeec674638173d9cf2d13b48aac7edc5b047697ee424a004e74cfa133",
+      "size": 236
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/agency/schema.json",
+      "sha256": "f59575364fb5c6179e4871f13b15665edb343a652132cf14d761b0af2348aaa8",
+      "size": 572
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/anticipated-employee-count/schema.json",
+      "sha256": "057a5aaa0cabbbbc3c75b5908c986d12b766e14414391649198af6a46b1a4890",
+      "size": 277
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/application-type/schema.json",
+      "sha256": "5fa71a5d559815c31b3ccbb23780c58c03db9944b8259125d0496a3f108c795c",
+      "size": 712
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/commercialization-history/schema.json",
+      "sha256": "38b84fea5dad2d254342b574e65a24736cb7eda816d743b0f5d89550589cf428",
+      "size": 273
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/commercialization-plan/schema.json",
+      "sha256": "8881ef606d7c395c56d75582938ead9f5dd748588e4041288b2a4bf0d614a6a0",
+      "size": 257
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/disclosure-permission/schema.json",
+      "sha256": "d81ba1ede8986b03db32379a9448685230b3885a26737b886f803515d54f857c",
+      "size": 924
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/domestic-performance/schema.json",
+      "sha256": "6df5d6a7364223f1718bb81d428217c7bfb95d8cfd289a90b6364ad422504943",
+      "size": 598
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/equivalent-federal-work/schema.json",
+      "sha256": "18140fcba3e03a76b9480af3aa69f662d9bb7e3ff4ffd314cec74a3b2b0bbaab",
+      "size": 721
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/equivalent-work-federal-agencies/schema.json",
+      "sha256": "23e5b8e04c3e8933a503396c0839a6e77ca1f845294977fc7ce2fa70aefad135",
+      "size": 270
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/faculty-student-ownership/schema.json",
+      "sha256": "93d960681170890202f8980fa4eeeba184d47f4b266403ce9aa7ad677c80500b",
+      "size": 540
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/federal-subcontractor-names/schema.json",
+      "sha256": "fe769803dfe10d52a544e3ac13322843c846c2e98b024ada3a1cd53b2da2d21e",
+      "size": 256
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/federal-subcontracts-included/schema.json",
+      "sha256": "3e50768bd2df25d3596d825c667f1e1044b396948739e6427a67e63830e54858",
+      "size": 625
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/hubzone-location/schema.json",
+      "sha256": "5009a4a687441c14857a573cfbc4c885e68525a59801320f1552ca9d78ef22e7",
+      "size": 650
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/joint-performance-percentage/schema.json",
+      "sha256": "76e96d9ad334dc9e089692dcabc296e7094a7a0e996d7b821d94bef3be6a5e71",
+      "size": 714
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/non-domestic-performance-explanation/schema.json",
+      "sha256": "72400f95e168d8c40737df9c559d01528179b97182ff6e877967c3e94001ca11",
+      "size": 273
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/nonprofit-research-partner-uei/schema.json",
+      "sha256": "6049bb67279b783f8d70fe3aad74404aec2838efc6b04f2138bfa4b723ad8f77",
+      "size": 281
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/other-agency/schema.json",
+      "sha256": "c90819f0b1dfc8983ffce51a6298049cbb96fb4bff8f259a426c329ebe64063a",
+      "size": 230
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/pdpi-appointment-and-effort/schema.json",
+      "sha256": "6007c8e68e07f7b33f77cfbaaf7f5f50636377d9de35f1b74e976a0f8133af3b",
+      "size": 993
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/pdpi-primary-employment/schema.json",
+      "sha256": "258506e7211383481cc353d0d4f2a83c52db6ea121d9358c486c619f6c7b5516",
+      "size": 627
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/phase-i-letter-of-intent-number/schema.json",
+      "sha256": "63cd1991f2f75a2f863f926ed3da48692dfbb3ebc27e6bd16b63c3cb470d2059",
+      "size": 249
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/phase-ii-awards-received/schema.json",
+      "sha256": "a683cc0d6068132070943b6d481ae35122b5c62bdb11ddd3371dce4a595f5152",
+      "size": 577
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/program-type/schema.json",
+      "sha256": "cecae10eb2d3653dd8a26589a2ffc3cbbc628111caba2f8b3a8429dc5b9911e9",
+      "size": 546
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/sbc-control-id/schema.json",
+      "sha256": "0aa8d0fefa0a567babc2256efeacc579fdefd578c6809d3a93a3fe2763af18c8",
+      "size": 280
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/small-business-eligibility-certification/schema.json",
+      "sha256": "dddbf80ea3de6c0199affeb89ab98d46d88f528f0cf98e2b8fcf6aa62174c737",
+      "size": 669
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/taba-funding-request/schema.json",
+      "sha256": "3a1ccac7fe9746bea13fe7ad2ff3847229067317f149eeca91acae5f5ab3ac86",
+      "size": 839
+    },
+    {
+      "path": "dist/question-bank/sbir-sttr/vcoc-majority-ownership/schema.json",
+      "sha256": "a798f52c3b9de4b7ac171f0cb6f217cc563a1a7d2243f011f1c16440633fdaf5",
+      "size": 618
     }
   ],
   "selection": {
@@ -2251,13 +2416,14 @@
       "phs398-research-plan",
       "phs-human-subjects",
       "rr-personal-data",
-      "phs398-cover-page-supplement"
+      "phs398-cover-page-supplement",
+      "sbir-sttr-information"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "14b08b8cbd6016778a8f0688ed924a7ede4c8d2d"
+    "revision": "88aee1a3406c3f860bc50c9bcc92c6022b9dda3b"
   },
-  "sourceBundleSha256": "055e85435d25c6301d4026a5230542e9723dfd5ee01a0b00fe49edb2e23cbf6d"
+  "sourceBundleSha256": "2e29d798de882da67a027fa375314c32ff45215e1f7c274d0b693d75305d7470"
 }

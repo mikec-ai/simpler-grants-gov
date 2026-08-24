@@ -1,0 +1,214 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "sbir-sttr-information",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/SBIR_STTR_Information_3_0-V3.0.xsd",
+    "sha256": "32ed46a450c1b77d9ef64ebf2a4086ab90b076aa2d3cdfedfab8c00324adcebf"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/SBIR_STTR_Information_3_0-V3.0",
+    "SBIR_STTR_Information_3_0": "http://apply.grants.gov/forms/SBIR_STTR_Information_3_0-V3.0",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0"
+  },
+  "root": {
+    "element": "SBIR_STTR_Information_3_0",
+    "namespacePrefix": "SBIR_STTR_Information_3_0",
+    "attributes": {
+      "FormVersion": "3.0"
+    }
+  },
+  "attachment": {
+    "fields": {
+      "fileName": {
+        "element": "FileName",
+        "namespace": "att"
+      },
+      "mimeType": {
+        "element": "MimeType",
+        "namespace": "att"
+      },
+      "fileLocation": {
+        "element": "FileLocation",
+        "namespace": "att"
+      },
+      "hashValue": {
+        "element": "HashValue",
+        "namespace": "glob"
+      }
+    }
+  },
+  "mapping": {
+    "fields": {
+      "agency": {
+        "element": "Agency",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/agency/value"
+      },
+      "otherAgency": {
+        "element": "OtherAgency",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/otherAgency"
+      },
+      "sbcControlId": {
+        "element": "SBCControlID",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/sbcControlId"
+      },
+      "programType": {
+        "element": "ProgramType",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/programType/value"
+      },
+      "applicationType": {
+        "element": "ApplicationType",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/applicationType/value"
+      },
+      "phaseILetterOfIntentNumber": {
+        "element": "PhaseILetterofIntentNumber",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/phaseILetterOfIntentNumber"
+      },
+      "agencyTopicSubtopic": {
+        "element": "AgencyTopicSubtopic",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/agencyTopicSubtopic"
+      },
+      "smallBusinessEligibility": {
+        "element": "SmallBusinessEligibility",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/smallBusinessEligibility/value"
+      },
+      "numberOfEmployees": {
+        "element": "NumberOfEmployees",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/numberOfEmployees"
+      },
+      "vcocOwnership": {
+        "element": "VCOC",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/vcocOwnership/value"
+      },
+      "facultyStudentOwnership": {
+        "element": "FacultyStudentOwned",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/facultyStudentOwnership/value"
+      },
+      "federalSubcontractsIncluded": {
+        "element": "SubcontractsIncluded",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/federalSubcontractsIncluded/value"
+      },
+      "federalSubcontractorNames": {
+        "element": "SubcontractorNames",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/federalSubcontractorNames"
+      },
+      "hubzoneLocation": {
+        "element": "LocatedInHUBZone",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/hubzoneLocation/value"
+      },
+      "domesticPerformance": {
+        "element": "DomesticPerformance",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/domesticPerformance/value"
+      },
+      "nonDomesticPerformanceExplanation": {
+        "element": "NonDomesticPerformanceExplanation",
+        "kind": "attachment",
+        "namespace": "default",
+        "source": "/nonDomesticPerformanceExplanation"
+      },
+      "equivalentFederalWork": {
+        "element": "EquivalentProposalsSubmitted",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/equivalentFederalWork/value"
+      },
+      "equivalentWorkFederalAgencies": {
+        "element": "EquivalentProposalRecipients",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/equivalentWorkFederalAgencies"
+      },
+      "disclosurePermission": {
+        "element": "DisclosurePermission",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/disclosurePermission/value"
+      },
+      "tabaFundingRequest": {
+        "element": "TABARequest",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/tabaFundingRequest/value"
+      },
+      "commercializationPlan": {
+        "element": "CommercializationPlan",
+        "kind": "attachment",
+        "namespace": "default",
+        "source": "/commercializationPlan"
+      },
+      "phaseIIAwardsReceived": {
+        "element": "SBIR_PhaseIIAwardsReceived",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/phaseIIAwardsReceived/value"
+      },
+      "commercializationHistory": {
+        "element": "SBIR_CommercializationHistory",
+        "kind": "attachment",
+        "namespace": "default",
+        "source": "/commercializationHistory"
+      },
+      "pdpiPrimaryEmployment": {
+        "element": "SBIR_PDPIPrimarilyEmployed",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/pdpiPrimaryEmployment/value"
+      },
+      "pdpiAppointmentAndEffort": {
+        "element": "STTR_PDPICommitment",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/pdpiAppointmentAndEffort/value"
+      },
+      "jointPerformancePercentage": {
+        "element": "STTR_JointPerformancePercentage",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/jointPerformancePercentage/value"
+      },
+      "nonprofitResearchPartnerUei": {
+        "element": "SAMUEI",
+        "kind": "value",
+        "namespace": "default",
+        "source": "/nonprofitResearchPartnerUei"
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "7a51742091f2997307bab621f4fe4e5b36a2b821",
+    "artifact": "artifacts/proof/grantsgov-SBIRSTTRInformation.jsonl.manifest.json"
+  }
+}

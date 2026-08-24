@@ -1,0 +1,17 @@
+{
+  "nonDomesticPerformanceExplanation": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "commercializationPlan": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "commercializationHistory": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  }
+}

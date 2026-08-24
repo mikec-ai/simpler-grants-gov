@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/phase-i-letter-of-intent-number/schema.json",
+  "type": "string",
+  "maxLength": 20,
+  "description": "Enter the Phase I letter-of-intent number, when applicable."
+}

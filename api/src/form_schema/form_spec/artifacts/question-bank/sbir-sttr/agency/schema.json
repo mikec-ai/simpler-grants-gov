@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/agency/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/SbirSttrAgencyCode",
+      "title": "Agency to which you are applying (select only one)"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Select the Federal agency to which this SBIR/STTR application is submitted.",
+  "$defs": {
+    "SbirSttrAgencyCode": {
+      "type": "string",
+      "enum": [
+        "DOE",
+        "HHS",
+        "USDA",
+        "Other"
+      ]
+    }
+  }
+}

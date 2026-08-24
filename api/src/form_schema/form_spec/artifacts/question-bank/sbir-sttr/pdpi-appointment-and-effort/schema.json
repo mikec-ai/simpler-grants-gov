@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/pdpi-appointment-and-effort/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Please indicate whether the answer to BOTH of the following questions is TRUE: (1) Does the Project Director/Principal Investigator have a formal appointment or commitment either with the small business directly (as an employee or a contractor) OR as an employee of the Research Institution, which in turn has made a commitment to the small business through the STTR application process; AND (2) Will the Project Director/Principal Investigator devote at least 10% effort to the proposed project?"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Report the STTR PD/PI appointment or commitment and minimum project effort.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

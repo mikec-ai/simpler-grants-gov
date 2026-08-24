@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/program-type/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/SbirSttrProgramTypeCode",
+      "title": "Program Type (select only one)"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Select whether this application is for SBIR, STTR, or both programs.",
+  "$defs": {
+    "SbirSttrProgramTypeCode": {
+      "type": "string",
+      "enum": [
+        "SBIR",
+        "STTR",
+        "Both"
+      ]
+    }
+  }
+}

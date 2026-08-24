@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/equivalent-work-federal-agencies/schema.json",
+  "type": "string",
+  "maxLength": 250,
+  "description": "Name other Federal agencies receiving or awarding essentially equivalent work."
+}
