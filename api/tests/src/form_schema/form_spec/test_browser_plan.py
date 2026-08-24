@@ -82,6 +82,26 @@ def test_browser_plan_does_not_treat_prepopulated_fields_as_editable(
     assert "/properties/organization_name" in editable_definitions
 
 
+def test_browser_plan_classifies_attachment_controls_separately_from_editable_scalars(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "attachment-form")
+
+    capabilities = build_browser_plan()["forms"][0]["capabilities"]
+
+    assert capabilities["editableScalar"] == {
+        "applicability": "not_applicable",
+        "declarations": [],
+        "reason": "no editable scalar is declared",
+    }
+    assert capabilities["attachment"]["applicability"] == "applicable"
+    assert {
+        declaration["definition"]
+        for declaration in capabilities["attachment"]["declarations"]
+        if "definition" in declaration
+    } == {f"/properties/att{index}" for index in range(1, 16)}
+
+
 def test_browser_plan_discovers_multifield_editable_surface(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
