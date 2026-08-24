@@ -560,8 +560,8 @@ jobs:
 
   create-report:
     name: Create Merged Test Report
-    if: ${{ !cancelled() }}
-    needs: run-e2e-tests-local
+    if: ${{ !cancelled() && needs.classify-form-spec-change.outputs.bank_only != 'true' }}
+    needs: [classify-form-spec-change, run-e2e-tests-local]
     uses: ./.github/workflows/e2e-create-report.yml
     secrets: inherit
     with:
