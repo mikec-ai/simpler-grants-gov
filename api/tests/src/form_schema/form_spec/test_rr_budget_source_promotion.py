@@ -1,7 +1,6 @@
 """Consumer conformance for source-exact R&R Budget guidance and date ordering."""
 
 import json
-
 from types import SimpleNamespace
 from typing import Any, cast
 
@@ -10,7 +9,6 @@ import pytest
 from src.form_schema.form_spec.loader import LoadedForm, load_form
 from src.form_schema.rule_processing.json_rule_context import JsonRuleConfig, JsonRuleContext
 from src.form_schema.rule_processing.json_rule_processor import process_rule_schema_for_context
-
 
 DIRECT_PROFILES = ("rr-budget", "rr-budget-10yr")
 NESTED_PROFILES = (
