@@ -31,20 +31,25 @@ INPUT_ROWS = (
 )
 
 
-def calculated_response() -> dict:
-    """Run all 24 portable calculations against the legacy-compatible response shape."""
+def input_response() -> dict:
+    """Return representative applicant-entered values before calculations run."""
 
     row = {"total_cost": "100000.00", "non_allowable_cost": "10000.00"}
     data = {
         "budget_information": {name: dict(row) for name in INPUT_ROWS},
         "federal_funding": {"federal_percentage_share": 80},
     }
-    data["budget_information"].update(
-        {
-            "contingencies": {"total_cost": "55000.00", "non_allowable_cost": "5000.00"},
-            "project_income": {"total_cost": "10000.00", "non_allowable_cost": "0.00"},
-        }
-    )
+    data["budget_information"].update({
+        "contingencies": {"total_cost": "55000.00", "non_allowable_cost": "5000.00"},
+        "project_income": {"total_cost": "10000.00", "non_allowable_cost": "0.00"},
+    })
+    return data
+
+
+def calculated_response() -> dict:
+    """Run all 24 portable calculations against the legacy-compatible response shape."""
+
+    data = input_response()
     projected = load_form("sf424c")
     application_form = SimpleNamespace(
         application_response=data,
