@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phs398-cover-page-supplement/schema.json",
+  "type": "object",
+  "properties": {
+    "vertebrateAnimals": {
+      "$ref": "../../question-bank/hhs-research-policy/vertebrate-animal-euthanasia/schema.json"
+    },
+    "programIncome": {
+      "$ref": "../../question-bank/hhs-research-policy/program-income/schema.json"
+    },
+    "humanEmbryonicStemCells": {
+      "$ref": "../../question-bank/hhs-research-policy/human-embryonic-stem-cells/schema.json"
+    },
+    "humanFetalTissue": {
+      "$ref": "../../question-bank/hhs-research-policy/human-fetal-tissue/schema.json"
+    },
+    "inventionsAndPatents": {
+      "$ref": "../../question-bank/hhs-research-policy/inventions-and-patents/schema.json"
+    },
+    "changes": {
+      "$ref": "../../question-bank/hhs-research-policy/investigator-organization-change/schema.json"
+    },
+    "formerProjectDirector": {
+      "$ref": "../../question-bank/hhs-research-policy/former-project-director-principal-investigator/schema.json",
+      "title": "Name of former Project Director/Principal Investigator",
+      "required": [
+        "firstName",
+        "lastName"
+      ]
+    },
+    "formerOrganizationName": {
+      "$ref": "../../question-bank/hhs-research-policy/former-recipient-organization-name/schema.json",
+      "title": "Name of former organization"
+    }
+  },
+  "required": [
+    "programIncome",
+    "humanEmbryonicStemCells",
+    "humanFetalTissue"
+  ],
+  "description": "PHS 398 Cover Page Supplement, Grants.gov FID 698, version 5.0.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "changes": {
+            "properties": {
+              "changeOfProjectDirector": {
+                "const": "Y: Yes"
+              }
+            },
+            "required": [
+              "changeOfProjectDirector"
+            ]
+          }
+        },
+        "required": [
+          "changes"
+        ]
+      },
+      "then": {
+        "required": [
+          "formerProjectDirector"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "changes": {
+            "properties": {
+              "changeOfRecipientOrganization": {
+                "const": "Y: Yes"
+              }
+            },
+            "required": [
+              "changeOfRecipientOrganization"
+            ]
+          }
+        },
+        "required": [
+          "changes"
+        ]
+      },
+      "then": {
+        "required": [
+          "formerOrganizationName"
+        ]
+      }
+    }
+  ]
+}

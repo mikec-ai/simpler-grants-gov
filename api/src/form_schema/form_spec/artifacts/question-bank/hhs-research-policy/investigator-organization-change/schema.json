@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hhs-research-policy/investigator-organization-change/schema.json",
+  "type": "object",
+  "properties": {
+    "changeOfProjectDirector": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Change of Project Director/Principal Investigator"
+    },
+    "changeOfRecipientOrganization": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Change of Recipient Organization"
+    }
+  },
+  "description": "Report whether the application changes its PD/PI or recipient organization.",
+  "title": "Change of investigator or recipient organization",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

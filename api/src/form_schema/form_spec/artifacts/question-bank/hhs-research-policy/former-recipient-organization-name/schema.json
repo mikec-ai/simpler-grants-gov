@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hhs-research-policy/former-recipient-organization-name/schema.json",
+  "type": "string",
+  "minLength": 1,
+  "maxLength": 60,
+  "description": "Identify the former recipient organization named by a change-of-organization application.",
+  "title": "Name of former organization"
+}

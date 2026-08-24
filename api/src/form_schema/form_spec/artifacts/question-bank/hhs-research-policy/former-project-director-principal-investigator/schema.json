@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hhs-research-policy/former-project-director-principal-investigator/schema.json",
+  "type": "object",
+  "properties": {
+    "prefix": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10,
+      "description": "Enter the Prefix.",
+      "title": "Prefix"
+    },
+    "firstName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 35,
+      "description": "Enter the First Name.",
+      "title": "First Name"
+    },
+    "middleName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 25,
+      "description": "Enter the Middle Name.",
+      "title": "Middle Name"
+    },
+    "lastName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 60,
+      "description": "Enter the Last Name.",
+      "title": "Last Name"
+    },
+    "suffix": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10,
+      "description": "Enter the Suffix.",
+      "title": "Suffix"
+    }
+  },
+  "description": "Identify the former PD/PI named by a change-of-investigator application.",
+  "title": "Name of former Project Director/Principal Investigator"
+}

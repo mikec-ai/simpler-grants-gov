@@ -1,0 +1,14 @@
+{
+  "humanFetalTissue": {
+    "complianceAssurance": {
+      "gg_validation": {
+        "rule": "attachment"
+      }
+    },
+    "irbConsentForm": {
+      "gg_validation": {
+        "rule": "attachment"
+      }
+    }
+  }
+}

@@ -497,6 +497,36 @@
       "size": 31303
     },
     {
+      "path": "dist/forms/phs398-cover-page-supplement/evidence.json",
+      "sha256": "052085ec57ea5135c780c1c72c019e94a1213dd63997dc20c4e1f5100a35427c",
+      "size": 18751
+    },
+    {
+      "path": "dist/forms/phs398-cover-page-supplement/manifest.json",
+      "sha256": "9cfbe817254b9987c9d4f68941c769c8415439828bfb736019bc9f34434a2c82",
+      "size": 565
+    },
+    {
+      "path": "dist/forms/phs398-cover-page-supplement/schema.json",
+      "sha256": "7a9ed095525615174ddf05012a535de0b317801baafd332426a5ed9d509b452a",
+      "size": 2532
+    },
+    {
+      "path": "dist/forms/phs398-cover-page-supplement/sgg/rule-schema.json",
+      "sha256": "31e4573696417719cc01d5abf720b4520ffca29f72693a9e48053d9b94b93b88",
+      "size": 222
+    },
+    {
+      "path": "dist/forms/phs398-cover-page-supplement/sgg/ui-schema.json",
+      "sha256": "9b36b0c06f765a09153da875f502fac81fc88b17630cb2c7b265706d37a68eb8",
+      "size": 9175
+    },
+    {
+      "path": "dist/forms/phs398-cover-page-supplement/targets/grants-gov-xml.json",
+      "sha256": "517e2ed0902f5fd30edd02fbe01049fa18bace5aed8ab5e4d72ba32e3fd48056",
+      "size": 8439
+    },
+    {
       "path": "dist/forms/phs398-modular-budget/evidence.json",
       "sha256": "0231721723a655d5ec2baabbe78349f973c38c75fde8efb0d149fab48ac8a714",
       "size": 5486
@@ -1697,6 +1727,56 @@
       "size": 242
     },
     {
+      "path": "dist/question-bank/hhs-research-policy/former-project-director-principal-investigator/schema.json",
+      "sha256": "9b6c8cf3d73ef1b43953f81f1a9cd21c795ef849bc9125973e841a26750d641b",
+      "size": 1182
+    },
+    {
+      "path": "dist/question-bank/hhs-research-policy/former-recipient-organization-name/schema.json",
+      "sha256": "f9e29a350d5583087503c10b548a328cd2dd2ae53fba903a95e1f636687b5e21",
+      "size": 352
+    },
+    {
+      "path": "dist/question-bank/hhs-research-policy/human-embryonic-stem-cells/schema.json",
+      "sha256": "7afba777eaa6323bf0c683b4af65ae5bdd477f75e8746ff0f3ed96a503a64343",
+      "size": 1189
+    },
+    {
+      "path": "dist/question-bank/hhs-research-policy/human-fetal-tissue-compliance-assurance/schema.json",
+      "sha256": "78c3a7f5ec041b4ef4a377a29f49f1f74c8979c37f4c909ccc05053038bb4707",
+      "size": 299
+    },
+    {
+      "path": "dist/question-bank/hhs-research-policy/human-fetal-tissue-irb-consent/schema.json",
+      "sha256": "e29ccf177f959c12a5f39fea0091bd713735b0d9f93123fa83dcddb38b694eee",
+      "size": 293
+    },
+    {
+      "path": "dist/question-bank/hhs-research-policy/human-fetal-tissue/schema.json",
+      "sha256": "50729d1ff25ed83971d6930399220ef6fb1b65fea4345f4817865ee236a41271",
+      "size": 1303
+    },
+    {
+      "path": "dist/question-bank/hhs-research-policy/inventions-and-patents/schema.json",
+      "sha256": "cc109041a5a57153bf7bc701ad3ca0e48fa6cbea515366fe393ef87582cd0a0a",
+      "size": 975
+    },
+    {
+      "path": "dist/question-bank/hhs-research-policy/investigator-organization-change/schema.json",
+      "sha256": "52baa5cf5a52a5663fe28159c2861efb0ba7b001e14a4c89935080ef4b381400",
+      "size": 740
+    },
+    {
+      "path": "dist/question-bank/hhs-research-policy/program-income/schema.json",
+      "sha256": "7222a484d5ff93cdba1fc41fbef216dd7a443d43b667f25d8c64180cfdef4d21",
+      "size": 1688
+    },
+    {
+      "path": "dist/question-bank/hhs-research-policy/vertebrate-animal-euthanasia/schema.json",
+      "sha256": "c0edad379c5b3cd625fdf93c640e86907b4376befaea2b577674da1d6d01776d",
+      "size": 1454
+    },
+    {
       "path": "dist/question-bank/nifa/additional-applicant-type/schema.json",
       "sha256": "3a1bbb45832f75df2ee9aa8ca026853a6d77a8f29cd09390309191085d2e8942",
       "size": 904
@@ -2170,7 +2250,8 @@
       "phs-inclusion-enrollment-report",
       "phs398-research-plan",
       "phs-human-subjects",
-      "rr-personal-data"
+      "rr-personal-data",
+      "phs398-cover-page-supplement"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },

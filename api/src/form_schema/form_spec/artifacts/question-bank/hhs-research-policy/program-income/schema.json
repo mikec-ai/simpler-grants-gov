@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hhs-research-policy/program-income/schema.json",
+  "type": "object",
+  "properties": {
+    "anticipated": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Is program income anticipated during the requested support periods?"
+    },
+    "periods": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ProgramIncomePeriod"
+      },
+      "minItems": 1,
+      "maxItems": 10,
+      "title": "Program income by budget period"
+    }
+  },
+  "required": [
+    "anticipated"
+  ],
+  "description": "Report whether program income is anticipated and provide its period detail.",
+  "title": "Program income",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    },
+    "ResearchBudgetAmount14": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 15,
+      "pattern": "^(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    },
+    "ProgramIncomePeriod": {
+      "type": "object",
+      "properties": {
+        "budgetPeriod": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10,
+          "title": "Budget Period"
+        },
+        "anticipatedAmount": {
+          "$ref": "#/$defs/ResearchBudgetAmount14",
+          "title": "Anticipated Amount ($)"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 150,
+          "title": "Source(s)"
+        }
+      },
+      "required": [
+        "budgetPeriod",
+        "anticipatedAmount",
+        "source"
+      ],
+      "description": "One period and source of anticipated program income."
+    }
+  }
+}

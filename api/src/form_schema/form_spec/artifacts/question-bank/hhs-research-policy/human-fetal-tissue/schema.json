@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hhs-research-policy/human-fetal-tissue/schema.json",
+  "type": "object",
+  "properties": {
+    "involved": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Does the proposed project involve human fetal tissue from elective abortions?"
+    },
+    "complianceAssurance": {
+      "$ref": "../../../question-bank/hhs-research-policy/human-fetal-tissue-compliance-assurance/schema.json",
+      "title": "HFT Compliance Assurance"
+    },
+    "irbConsentForm": {
+      "$ref": "../../../question-bank/hhs-research-policy/human-fetal-tissue-irb-consent/schema.json",
+      "title": "HFT Sample IRB Consent Form"
+    }
+  },
+  "required": [
+    "involved"
+  ],
+  "description": "Report human fetal tissue use and provide each distinct policy document.",
+  "title": "Human fetal tissue",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "involved": {
+            "const": "Y: Yes"
+          }
+        },
+        "required": [
+          "involved"
+        ]
+      },
+      "then": {
+        "required": [
+          "complianceAssurance",
+          "irbConsentForm"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "id": "phs398-cover-page-supplement",
+    "legacyFormId": 698,
+    "formName": "PHS 398 Cover Page Supplement",
+    "shortFormName": "PHS398_CoverPageSupplement_5_0",
+    "formVersion": "5.0",
+    "agencyCode": "GRANTS_GOV",
+    "ombNumber": "0925-0001"
+  },
+  "artifacts": {
+    "schema.json": "generated",
+    "ui.json": "generated",
+    "sgg/ui-schema.json": "generated",
+    "sgg/rule-schema.json": "generated",
+    "targets/grants-gov-xml.json": "generated",
+    "evidence.json": "passthrough"
+  }
+}
