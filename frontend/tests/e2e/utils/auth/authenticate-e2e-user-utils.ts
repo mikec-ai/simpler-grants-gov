@@ -51,7 +51,7 @@ export async function authenticateE2eUser(
   context: BrowserContext,
   isMobile: boolean,
   testUserKey: TestUserKey = "primaryOrgAdmin",
-): Promise<void> {
+): Promise<string> {
   const userId = getTestUserId(testUserKey);
   const token = await fetchE2eSessionToken(userId);
   await createSpoofedSessionCookie(context, token);
@@ -67,4 +67,5 @@ export async function authenticateE2eUser(
   if (isMobile) {
     await openMobileNav(page);
   }
+  return token;
 }

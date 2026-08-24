@@ -60,6 +60,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@chromatic-com/storybook": "^5.0.0",
     "@ianvs/prettier-plugin-sort-imports": "^4.0.2",
     "@playwright/test": "^1.60.0",

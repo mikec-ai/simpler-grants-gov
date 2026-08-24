@@ -358,7 +358,18 @@ jobs:
           echo "/tmp/cores/core.%e.%p.%t" | sudo tee /proc/sys/kernel/core_pattern
 
           # Now run the seeding and populate commands
-          echo "LOGIN_FINAL_DESTINATION=http://localhost:3000/api/auth/callback" >> override.env
+          {
+            echo "LOGIN_FINAL_DESTINATION=http://localhost:3000/api/auth/callback"
+            echo "ENVIRONMENT=local"
+            echo "ENABLE_PORTABLE_FORM_PREVIEW=true"
+          } >> override.env
+          mkdir -p test-results
+          docker compose run -T --rm \
+            -e ENVIRONMENT=local \
+            -e ENABLE_PORTABLE_FORM_PREVIEW=true \
+            grants-api \
+            python bin/build_portable_browser_plan.py \
+            --out /api/test-results/portable-browser-plan.json
           make db-seed-local-with-agencies populate-search-opportunities populate-search-agencies start
           make run-workflow-service-async
           cd ../frontend
