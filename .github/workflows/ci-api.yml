@@ -75,6 +75,20 @@ jobs:
       - name: Start tests
         run: make test-coverage
 
+      - name: Build portable-versus-existing differential receipts
+        run: |
+          docker compose run -T --rm grants-api \
+            python bin/build_portable_legacy_differential.py \
+            --consumer-revision "${{ github.sha }}" \
+            --output-dir /api/test-results/legacy-differential
+
+      - name: Publish portable-versus-existing differential receipts
+        uses: actions/upload-artifact@v7
+        with:
+          name: portable-legacy-differential-${{ github.sha }}
+          path: api/test-results/legacy-differential/
+          if-no-files-found: error
+
   portable-form-bank:
     needs: [classify-form-spec-change]
     if: ${{ needs.classify-form-spec-change.outputs.bank_only == 'true' }}

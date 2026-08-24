@@ -129,6 +129,31 @@ The combined video is written to
 recording is compatibility evidence, not semantic acceptance, accessibility approval, policy
 approval, or production registration.
 
+The portable-versus-existing differential uses one static mechanism across the declarative cohort
+in `differential-cohort.json`. It compares applicant-visible schema constraints and requiredness,
+the complete UI declaration, validation verdicts over a mechanically generated mutation corpus,
+and rule-schema declarations. Every intentional difference names exact keys, a reason, and an
+existing evidence file. Unexpected differences and stale allowances fail the receipt gate.
+The resulting `comparisonGate` covers only these supported comparison dimensions; it is not a
+release-readiness claim.
+Dimensions the mechanism does not exercise, including rule outcomes and serialized XML, are
+reported as `unavailable`; forms with no rule declarations report `not_applicable`.
+
+```shell
+cd api
+uv run python bin/build_portable_legacy_differential.py \
+  --output-dir test-results/legacy-differential
+```
+
+CI passes `--consumer-revision` explicitly because the runtime image does not contain Git. Local
+runs may omit it to record the current repository HEAD. Both paths require a full lowercase
+40-character Git SHA.
+
+The command emits one comparable JSON receipt per form and a cohort summary. The directory is
+ignored locally and published by full API CI as a build artifact. Existing Simpler behavior is a
+compatibility oracle, not source or semantic authority; an intentional delta still requires the
+separate evidence identified by its cohort declaration.
+
 To refresh a form from a locally downloaded producer bundle:
 
 ```shell
