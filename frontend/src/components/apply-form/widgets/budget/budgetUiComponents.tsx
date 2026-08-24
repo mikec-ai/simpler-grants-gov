@@ -86,7 +86,7 @@ export const CurrencyInput: React.FC<{
     disabled={disabled}
     readOnly={readOnly}
     schema={schema}
-    aria-label={ariaLabel}
+    aria-label={ariaLabel ?? "Budget amount"}
     hideLabel={hideLabel}
     id={id}
     rawErrors={rawErrors}

@@ -27,6 +27,7 @@ const InfoTooltip = ({
     <span
       {...props}
       ref={ref}
+      role="img"
       style={{ cursor: "help" }}
       className={clsx("text-secondary", props.className)}
     >

@@ -41,6 +41,13 @@ describe("Budget424aSectionC", () => {
     render(<Budget424aSectionC {...buildWidgetProps(value)} />);
 
     expect(
+      screen.getByRole("textbox", { name: "Grant program, row 8" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getAllByRole("textbox", { name: "Budget amount" }).length,
+    ).toBeGreaterThan(0);
+
+    expect(
       screen.getByTestId(
         "activity_line_items[0]--non_federal_resources--applicant_amount",
       ),

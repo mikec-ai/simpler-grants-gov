@@ -133,6 +133,28 @@ def _schema_keyword_values(schema: dict[str, Any], keyword: str) -> Iterator[Any
             yield from _schema_keyword_values(branch, keyword)
 
 
+def _ui_definition_paths(node: dict[str, Any]) -> tuple[str, ...]:
+    """Return schema pointers exposed by one definition-backed UI node.
+
+    Ordinary fields and repeaters address one schema pointer. Specialized
+    ``multiField`` widgets address several pointers as one interaction surface.
+    Normalize both declaration shapes here so capability discovery stays generic
+    and downstream planning does not need to know a form or widget name.
+    """
+
+    definition = node.get("definition")
+    if node.get("type") in {"field", "fieldList"} and isinstance(definition, str):
+        return (definition,)
+    if (
+        node.get("type") == "multiField"
+        and isinstance(definition, list)
+        and definition
+        and all(isinstance(path, str) for path in definition)
+    ):
+        return tuple(definition)
+    return ()
+
+
 def _artifact_digests(manifest: dict[str, Any], form_id: str) -> dict[str, str]:
     prefix = f"dist/forms/{form_id}/"
     selected = {
@@ -175,14 +197,10 @@ def build_browser_plan() -> dict[str, Any]:
         resolved_schema = resolve_jsonschema(loaded.form_json_schema)
         schema_fields = list(_schema_fields(resolved_schema))
         ui_nodes = list(_walk(loaded.form_ui_schema))
-        ui_fields = [
-            node
-            for _, node in ui_nodes
-            if node.get("type") in {"field", "fieldList"}
-            and isinstance(node.get("definition"), str)
-        ]
+        ui_fields = [node for _, node in ui_nodes if _ui_definition_paths(node)]
         for node in ui_fields:
-            _resolve_schema_pointer(resolved_schema, node["definition"])
+            for definition in _ui_definition_paths(node):
+                _resolve_schema_pointer(resolved_schema, definition)
 
         repeaters = [
             {"definition": node["definition"], "name": node.get("name")}
@@ -215,12 +233,12 @@ def build_browser_plan() -> dict[str, Any]:
             schema_path: response_path for schema_path, response_path, _, _ in schema_fields
         }
         editable = [
-            {"definition": node["definition"]}
+            {"definition": definition}
             for node in ui_fields
-            if node.get("type") == "field"
+            if node.get("type") in {"field", "multiField"}
             and node.get("interaction") not in {"readOnly", "disabled"}
-            and response_path_by_schema_path.get(node["definition"])
-            not in calculated_response_paths
+            for definition in _ui_definition_paths(node)
+            if response_path_by_schema_path.get(definition) not in calculated_response_paths
         ]
         required = [
             {"schemaPath": schema_path, "responsePath": response_path}
@@ -246,7 +264,11 @@ def build_browser_plan() -> dict[str, Any]:
                 },
                 "stablePaths": {
                     "uiDefinitions": sorted(
-                        {node["definition"] for node in ui_fields if "definition" in node}
+                        {
+                            definition
+                            for node in ui_fields
+                            for definition in _ui_definition_paths(node)
+                        }
                     ),
                     "schema": sorted(schema_path for schema_path, _, _, _ in schema_fields),
                 },
