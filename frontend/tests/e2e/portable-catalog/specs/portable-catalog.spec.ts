@@ -521,12 +521,14 @@ test.describe("portable catalog browser conformance", () => {
                     ? editableDefinition
                     : undefined,
                 );
-                const beforeSave = await captureFormState(page);
                 // Saving is a Next server action, so its API PUT is server-side and
                 // invisible to Playwright's browser response stream. Assert the user
                 // confirmation instead; this incomplete canary payload should report
                 // validation issues while still persisting the deterministic edit.
+                // Capture after the save so generic calculated fields have reached
+                // their canonical values before we compare them with the reload.
                 await saveForm(page, true);
+                const beforeReload = await captureFormState(page);
                 applyUrl = page.url();
                 await page.reload({ waitUntil: "domcontentloaded" });
                 await expect(
@@ -539,7 +541,7 @@ test.describe("portable catalog browser conformance", () => {
                   page.getByText("Error rendering form"),
                 ).toHaveCount(0);
                 const afterReload = await captureFormState(page);
-                expect(afterReload).toEqual(beforeSave);
+                expect(afterReload).toEqual(beforeReload);
                 expect(pageErrors).toEqual([]);
                 expect(failedFormRequests).toEqual([]);
                 const validationWarningCount = await page

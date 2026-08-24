@@ -119,6 +119,20 @@ describe("ApplyFormMessage", () => {
     expect(visibleAttachment).toHaveFocus();
   });
 
+  it("resolves a visible attachment control when its model input is absent", () => {
+    render(
+      <input
+        aria-label="Attachment upload"
+        id="attachment-visible"
+        type="file"
+      />,
+    );
+
+    expect(getValidationFocusTarget("attachment")).toBe(
+      screen.getByLabelText("Attachment upload"),
+    );
+  });
+
   it("renders nothing when saved is false", () => {
     const { container } = render(
       <ApplyFormMessage

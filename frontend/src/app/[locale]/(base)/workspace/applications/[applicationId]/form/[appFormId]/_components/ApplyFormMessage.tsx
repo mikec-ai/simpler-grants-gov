@@ -11,9 +11,9 @@ export const getValidationFocusTarget = (
   targetId: string,
 ): HTMLElement | null => {
   const target = document.getElementById(targetId);
-  if (!(target instanceof HTMLInputElement) || target.type !== "hidden") {
-    return target;
-  }
+  // Attachment widgets expose an interactive file input with a `-visible`
+  // suffix. Some schema-driven states do not render the hidden model input,
+  // so resolve the interactive control independently of the base element.
   return document.getElementById(`${targetId}-visible`) ?? target;
 };
 
@@ -135,7 +135,6 @@ export const ApplyFormMessage = ({
                   if (targetElement) {
                     event.preventDefault();
                     targetElement.focus();
-                    window.location.hash = `#${targetId}`;
                   }
                 }}
               >
