@@ -43,7 +43,7 @@ export type BrowserPlan = {
   contract: string;
   manifestSha256: string;
   source: { repository: string; revision: string };
-  consumerSeed: { opportunityId: string };
+  consumerSeed: { opportunityId: string; competitionId: string };
   forms: BrowserPlanForm[];
 };
 

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import uuid
 from collections.abc import Iterator
 from pathlib import Path
 from typing import Any
@@ -19,11 +20,32 @@ from src.form_schema.form_spec.preview import (
     banked_form_ids,
     portable_preview_enabled,
     preview_form_id,
+    selected_browser_form_ids,
 )
 from src.form_schema.jsonschema_resolver import resolve_jsonschema
 
 PLAN_CONTRACT = "sgg-portable-browser-plan/v1"
 SEED_OPPORTUNITY_ID = "6e3e3f80-f69c-5c5d-a5aa-5d4a117680d8"
+SEED_COMPETITION_ID = "d3a39d43-7b96-54bf-b4c3-fde9849e13a2"
+SEED_NAMESPACE = uuid.UUID("78315e9f-2aa5-4f9c-a130-b1f7fb44a19a")
+
+
+def browser_seed_ids(form_ids: tuple[str, ...]) -> tuple[str, str]:
+    """Return stable opportunity and competition IDs for one browser selection.
+
+    The complete bank keeps its historical IDs. Bounded canaries receive identities
+    derived solely from their ordered form selection, so they can coexist with full-bank
+    and other canary seeds in the same local database.
+    """
+
+    if form_ids == banked_form_ids():
+        return SEED_OPPORTUNITY_ID, SEED_COMPETITION_ID
+
+    selection = ",".join(form_ids)
+    return (
+        str(uuid.uuid5(SEED_NAMESPACE, f"opportunity:{selection}")),
+        str(uuid.uuid5(SEED_NAMESPACE, f"competition:{selection}")),
+    )
 
 
 def _sha256(path: Path) -> str:
@@ -144,7 +166,8 @@ def build_browser_plan() -> dict[str, Any]:
         )
 
     manifest = json.loads(ARTIFACT_MANIFEST.read_text())
-    form_ids = banked_form_ids()
+    form_ids = selected_browser_form_ids()
+    seed_opportunity_id, seed_competition_id = browser_seed_ids(form_ids)
     forms: list[dict[str, Any]] = []
 
     for form_id in form_ids:
@@ -259,7 +282,10 @@ def build_browser_plan() -> dict[str, Any]:
         "contract": PLAN_CONTRACT,
         "manifestSha256": _sha256(ARTIFACT_MANIFEST),
         "source": manifest["source"],
-        "consumerSeed": {"opportunityId": SEED_OPPORTUNITY_ID},
+        "consumerSeed": {
+            "opportunityId": seed_opportunity_id,
+            "competitionId": seed_competition_id,
+        },
         "forms": forms,
     }
 

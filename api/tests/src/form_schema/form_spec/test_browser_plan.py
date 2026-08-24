@@ -7,10 +7,13 @@ import pytest
 
 from src.form_schema.form_spec.browser_plan import (
     PLAN_CONTRACT,
+    SEED_COMPETITION_ID,
+    SEED_OPPORTUNITY_ID,
     _resolve_schema_pointer,
+    browser_seed_ids,
     build_browser_plan,
 )
-from src.form_schema.form_spec.preview import banked_form_ids, preview_form_id
+from src.form_schema.form_spec.preview import BROWSER_FORM_IDS, banked_form_ids, preview_form_id
 
 
 @pytest.fixture(autouse=True)
@@ -47,6 +50,27 @@ def test_browser_plan_follows_live_manifest_and_discovers_capabilities() -> None
     }
 
 
+def test_browser_plan_can_target_one_form_without_a_second_harness(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "sf424")
+
+    plan = build_browser_plan()
+
+    assert [form["portableFormId"] for form in plan["forms"]] == ["sf424"]
+    assert plan["forms"][0]["previewFormId"] == str(preview_form_id("sf424"))
+    assert plan["consumerSeed"] == {
+        "opportunityId": browser_seed_ids(("sf424",))[0],
+        "competitionId": browser_seed_ids(("sf424",))[1],
+    }
+
+
+def test_browser_seed_ids_preserve_full_catalog_and_isolate_canaries() -> None:
+    assert browser_seed_ids(banked_form_ids()) == (SEED_OPPORTUNITY_ID, SEED_COMPETITION_ID)
+    assert browser_seed_ids(("sf424",)) == browser_seed_ids(("sf424",))
+    assert browser_seed_ids(("sf424",)) != browser_seed_ids(("sf424a",))
+
+
 def test_browser_plan_cli_writes_json_and_structured_stdout(tmp_path) -> None:
     output = tmp_path / "plan.json"
     result = subprocess.run(
@@ -70,6 +94,26 @@ def test_browser_plan_cli_writes_json_and_structured_stdout(tmp_path) -> None:
     assert result.stdout.startswith("browser_plan:\n  contract:")
     assert result.stderr == ""
     assert json.loads(output.read_text())["contract"] == PLAN_CONTRACT
+
+
+def test_browser_plan_cli_honors_one_form_selection(tmp_path) -> None:
+    output = tmp_path / "plan.json"
+    result = subprocess.run(
+        [sys.executable, "bin/build_portable_browser_plan.py", "--out", str(output)],
+        check=False,
+        capture_output=True,
+        text=True,
+        env={
+            **os.environ,
+            "ENVIRONMENT": "test",
+            "ENABLE_PORTABLE_FORM_PREVIEW": "true",
+            BROWSER_FORM_IDS: "sf424",
+        },
+    )
+
+    assert result.returncode == 0
+    assert "forms: 1" in result.stdout
+    assert [form["portableFormId"] for form in json.loads(output.read_text())["forms"]] == ["sf424"]
 
 
 def test_browser_plan_cli_rejects_unknown_flags() -> None:

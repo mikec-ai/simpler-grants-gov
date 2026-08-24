@@ -7,6 +7,7 @@ touch it.
 
 from __future__ import annotations
 
+import copy
 import json
 import uuid
 from pathlib import Path
@@ -195,6 +196,7 @@ def build_runtime_form(
 
     # Local import avoids the existing registry -> question-bank -> adapter import cycle.
     from src.db.models.competition_models import Form
+    from src.form_schema.jsonschema_resolver import resolve_jsonschema
 
     loaded = load_form(form_id)
     meta = loaded.meta
@@ -207,7 +209,10 @@ def build_runtime_form(
         form_version=meta["formVersion"],
         agency_code=meta.get("agencyCode", "SGG"),
         omb_number=meta.get("ombNumber"),
-        form_json_schema=loaded.form_json_schema,
+        # Portable declarations retain $ref composition as their reviewable source of
+        # truth. Simpler's current renderer expects an expanded schema, so resolving is
+        # a generic consumer-adapter concern rather than a form-specific declaration.
+        form_json_schema=resolve_jsonschema(copy.deepcopy(loaded.form_json_schema)),
         # The persisted model annotation predates the list-shaped UI contract used by
         # every registered form; keep the adapter's accurate type and cross that legacy
         # boundary explicitly.

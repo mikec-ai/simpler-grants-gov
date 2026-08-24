@@ -8,11 +8,14 @@ import pytest
 from src.form_schema.form_spec.bank import ARTIFACT_MANIFEST
 from src.form_schema.form_spec.loader import load_form
 from src.form_schema.form_spec.preview import (
+    BROWSER_FORM_IDS,
     PREVIEW_FLAG,
     banked_form_ids,
+    build_preview_form,
     portable_preview_enabled,
     preview_form_id,
     preview_portable_forms,
+    selected_browser_form_ids,
 )
 from src.form_schema.form_spec.runtime_identity import _records as runtime_identity_records
 from src.form_schema.forms import _ALL_FORMS, _forms_for_registry
@@ -32,6 +35,23 @@ def test_preview_is_fail_closed() -> None:
 def test_preview_discovers_manifest_selection_without_an_allowlist() -> None:
     manifest = json.loads(ARTIFACT_MANIFEST.read_text())
     assert banked_form_ids() == tuple(manifest["selection"]["forms"])
+
+
+def test_browser_selection_defaults_to_the_complete_bank() -> None:
+    assert selected_browser_form_ids({}) == banked_form_ids()
+
+
+def test_browser_selection_accepts_a_bounded_ordered_subset() -> None:
+    assert selected_browser_form_ids({BROWSER_FORM_IDS: "sf424,sf424-short"}) == (
+        "sf424",
+        "sf424-short",
+    )
+
+
+@pytest.mark.parametrize("value", ["sf424,", "sf424,sf424", "not-a-form"])
+def test_browser_selection_rejects_invalid_values(value: str) -> None:
+    with pytest.raises(ValueError, match=BROWSER_FORM_IDS):
+        selected_browser_form_ids({BROWSER_FORM_IDS: value})
 
 
 def test_preview_identity_is_stable_and_separate_from_runtime_identity() -> None:
@@ -65,6 +85,14 @@ def test_every_banked_package_builds_as_a_preview_form() -> None:
         "/indirect_charges_explanation",
         "/remarks",
     }
+
+
+def test_preview_adapter_expands_portable_references_for_the_simpler_renderer() -> None:
+    preview = build_preview_form("sf424")
+    serialized = json.dumps(preview.form_json_schema)
+
+    assert '"$ref"' not in serialized
+    assert preview.form_json_schema["properties"]["submission_type"]["allOf"][0]["type"] == "string"
 
 
 def test_banking_still_does_not_enable_the_production_loader() -> None:

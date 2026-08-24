@@ -103,6 +103,32 @@ npm run test:e2e -- --grep @portable-catalog
 The matrix uses Simpler's ordinary application and print routes. It has no form-name allowlist;
 changing the producer selection changes the generated cases without editing the browser suite.
 
+To create the short, side-by-side SF-424 demonstration, first generate the bounded browser plan,
+then run the explicitly gated Playwright recording. The test creates isolated existing and portable
+applications, exercises the same representative selections, saves and reloads both forms, opens
+their ordinary print views, and uses `ffmpeg` to assemble the two recordings. All media and the
+pinned machine-readable receipt stay under the ignored `frontend/test-results` directory.
+
+```shell
+cd api
+ENVIRONMENT=local ENABLE_PORTABLE_FORM_PREVIEW=true \
+PORTABLE_BROWSER_FORM_IDS=sf424 \
+uv run python bin/build_portable_browser_plan.py \
+  --out test-results/portable-browser-plan.json
+cd ../frontend
+ENVIRONMENT=local \
+ENABLE_PORTABLE_FORM_PREVIEW=true \
+PORTABLE_BROWSER_FORM_IDS=sf424 \
+RUN_PORTABLE_COMPARISON_DEMO=true \
+PORTABLE_BROWSER_PLAN=../api/test-results/portable-browser-plan.json \
+npm run test:e2e -- --project=Chrome --grep @portable-comparison-demo
+```
+
+The combined video is written to
+`frontend/test-results/portable-comparison/sf424-side-by-side.mp4`; its receipt is adjacent. The
+recording is compatibility evidence, not semantic acceptance, accessibility approval, policy
+approval, or production registration.
+
 To refresh a form from a locally downloaded producer bundle:
 
 ```shell
