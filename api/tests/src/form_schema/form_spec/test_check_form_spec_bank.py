@@ -31,6 +31,20 @@ def test_existing_artifact_or_xsd_modification_requires_full_ci():
         assert "require full CI" in reason
 
 
+def test_manifest_only_or_xsd_only_change_requires_full_ci():
+    for changes in (
+        [Change("M", "api/src/form_schema/form_spec/artifacts/artifact-manifest.json")],
+        [
+            Change("M", "api/src/form_schema/form_spec/artifacts/artifact-manifest.json"),
+            Change("A", "api/src/services/xml_generation/xsds/Unselected-V1.0.xsd"),
+        ],
+    ):
+        bank_only, reason = classify(changes)
+
+        assert bank_only is False
+        assert "new portable artifact" in reason
+
+
 def test_consumer_code_requires_full_ci():
     bank_only, reason = classify(
         [

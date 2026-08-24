@@ -77,6 +77,14 @@ def classify(changes: list[Change]) -> tuple[bool, str]:
             + ", ".join(modified_existing),
         )
 
+    added_artifacts = [
+        change.path
+        for change in changes
+        if change.status == "A" and change.path.startswith(f"{ARTIFACTS.as_posix()}/")
+    ]
+    if not added_artifacts:
+        return False, "lightweight CI requires at least one new portable artifact"
+
     return True, "only new portable artifacts and exact XSD fixtures were added"
 
 
@@ -106,9 +114,13 @@ def verify_additive_bank(base: str) -> dict[str, object]:
     removed_files = sorted(previous_files - current_files)
     if removed_files:
         raise ValueError(f"banking removed selected artifact closure: {removed_files}")
+    added_files = sorted(current_files - previous_files)
+    if not added_files:
+        raise ValueError("lightweight CI requires a newly selected artifact")
 
     return {
         "addedForms": sorted(current_forms - previous_forms),
+        "addedArtifacts": added_files,
         "selectedForms": len(current_forms),
         "selectedArtifacts": len(current_files),
     }
