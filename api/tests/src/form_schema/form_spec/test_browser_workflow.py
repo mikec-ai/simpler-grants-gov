@@ -2,7 +2,6 @@
 
 from pathlib import Path
 
-
 WORKFLOW = Path(__file__).parents[5] / ".github/workflows/ci-frontend-e2e.yml"
 
 
