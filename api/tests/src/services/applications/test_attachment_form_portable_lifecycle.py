@@ -15,17 +15,10 @@ from apiflask.exceptions import HTTPError
 from grants_shared.util.datetime_util import get_now_us_eastern_date
 from sqlalchemy import select
 
-from src.constants.lookup_constants import (
-    ApplicationAuditEvent,
-    ApplicationStatus,
-    Privilege,
-)
+from src.constants.lookup_constants import ApplicationAuditEvent, ApplicationStatus, Privilege
 from src.db.models.competition_models import ApplicationAudit, ApplicationForm
 from src.form_schema.form_spec.preview import build_preview_form
-from src.form_schema.registry.form_template_registry import (
-    FormTemplateKey,
-    form_template_registry,
-)
+from src.form_schema.registry.form_template_registry import FormTemplateKey, form_template_registry
 from src.services.applications.submit_application import submit_application
 from src.services.applications.update_application_form import update_application_form
 from src.validation.validation_constants import ValidationErrorType
