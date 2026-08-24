@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "clinical-study/non-human-subjects-specimens-explanation/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Explain use of human specimens or data that is not human-subjects research."
+}

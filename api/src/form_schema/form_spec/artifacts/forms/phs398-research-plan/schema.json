@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phs398-research-plan/schema.json",
+  "type": "object",
+  "properties": {
+    "introduction": {
+      "$ref": "../../question-bank/research-plan/introduction/schema.json",
+      "title": "1. Introduction to Application (for Resubmission and Revision applications)"
+    },
+    "specificAims": {
+      "$ref": "../../question-bank/research-plan/specific-aims/schema.json",
+      "title": "2. Specific Aims"
+    },
+    "researchStrategy": {
+      "$ref": "../../question-bank/research-plan/research-strategy/schema.json",
+      "title": "3. Research Strategy"
+    },
+    "progressReportPublicationList": {
+      "$ref": "../../question-bank/research-plan/progress-report-publication-list/schema.json",
+      "title": "4. Progress Report Publication List"
+    },
+    "vertebrateAnimals": {
+      "$ref": "../../question-bank/research-plan/vertebrate-animals-document/schema.json",
+      "title": "5. Vertebrate Animals"
+    },
+    "selectAgentResearch": {
+      "$ref": "../../question-bank/research-plan/select-agent-research/schema.json",
+      "title": "6. Select Agent Research"
+    },
+    "multiplePdPiLeadershipPlan": {
+      "$ref": "../../question-bank/research-plan/multiple-pdpi-leadership-plan/schema.json",
+      "title": "7. Multiple PD/PI Leadership Plan"
+    },
+    "consortiumContractualArrangements": {
+      "$ref": "../../question-bank/research-plan/consortium-contractual-arrangements/schema.json",
+      "title": "8. Consortium/Contractual Arrangements"
+    },
+    "lettersOfSupport": {
+      "$ref": "../../question-bank/research-plan/letters-of-support/schema.json",
+      "title": "9. Letters of Support"
+    },
+    "resourceSharingPlans": {
+      "$ref": "../../question-bank/research-plan/resource-sharing-plans/schema.json",
+      "title": "10. Resource Sharing Plan(s)"
+    },
+    "otherPlans": {
+      "$ref": "../../question-bank/research-plan/other-plans/schema.json",
+      "title": "11. Other Plan(s)"
+    },
+    "keyResourceAuthentication": {
+      "$ref": "../../question-bank/research-plan/key-resource-authentication/schema.json",
+      "title": "12. Authentication of Key Biological and/or Chemical Resources"
+    },
+    "appendix": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/research-plan/appendix-document/schema.json"
+      },
+      "maxItems": 10,
+      "title": "13. Appendix"
+    }
+  },
+  "required": [
+    "researchStrategy"
+  ],
+  "description": "PHS 398 Research Plan, Grants.gov FID 797, version 5.0."
+}

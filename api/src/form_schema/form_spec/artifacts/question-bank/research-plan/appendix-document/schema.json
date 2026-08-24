@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-plan/appendix-document/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Provide one policy-allowed appendix document for the research application."
+}

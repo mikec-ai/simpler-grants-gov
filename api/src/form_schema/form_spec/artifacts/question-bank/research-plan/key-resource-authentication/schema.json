@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-plan/key-resource-authentication/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Describe authentication of key biological or chemical resources used by the research."
+}

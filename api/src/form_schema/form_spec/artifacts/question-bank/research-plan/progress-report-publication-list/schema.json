@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-plan/progress-report-publication-list/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Provide the publication list required for an eligible renewal application."
+}

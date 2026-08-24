@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-plan/letters-of-support/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Provide the letters of support requested for the proposed research."
+}

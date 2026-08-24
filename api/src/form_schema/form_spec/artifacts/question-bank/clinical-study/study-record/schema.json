@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "clinical-study/study-record/schema.json",
+  "type": "object",
+  "properties": {
+    "studyId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "readOnly": true
+    },
+    "studyTitle": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 600
+    },
+    "exemptFromFederalRegulations": {
+      "$ref": "#/$defs/ClinicalYesNo"
+    },
+    "exemptionNumbers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/HumanSubjectExemptionCode"
+      },
+      "minItems": 1,
+      "maxItems": 8
+    },
+    "clinicalTrialQuestionnaire": {
+      "$ref": "../../../question-bank/clinical-study/clinical-trial-questionnaire/schema.json"
+    },
+    "clinicalTrialsGovIdentifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 11
+    },
+    "populationCharacteristics": {
+      "$ref": "../../../question-bank/clinical-study/population-characteristics/schema.json",
+      "properties": {
+        "inclusionEnrollmentReports": {
+          "items": {
+            "properties": {
+              "reportId": {
+                "readOnly": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "protectionMonitoringPlans": {
+      "$ref": "../../../question-bank/clinical-study/protection-monitoring/schema.json"
+    },
+    "protocolSynopsis": {
+      "$ref": "../../../question-bank/clinical-study/protocol-synopsis/schema.json"
+    },
+    "otherClinicalTrialAttachments": {
+      "type": "array",
+      "items": {
+        "$ref": "../../../question-bank/clinical-study/other-clinical-trial-document/schema.json"
+      },
+      "maxItems": 100
+    }
+  },
+  "required": [
+    "studyTitle",
+    "exemptFromFederalRegulations",
+    "clinicalTrialQuestionnaire"
+  ],
+  "description": "One complete PHS human-subject study record.",
+  "$defs": {
+    "ClinicalYesNo": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    },
+    "HumanSubjectExemptionCode": {
+      "type": "string",
+      "enum": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "description": "Federal human-subject exemption identifiers supported by the source form."
+    }
+  }
+}

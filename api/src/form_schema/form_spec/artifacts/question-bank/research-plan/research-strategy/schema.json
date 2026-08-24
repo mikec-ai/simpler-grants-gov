@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-plan/research-strategy/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Describe the significance, innovation, and approach of the proposed research."
+}

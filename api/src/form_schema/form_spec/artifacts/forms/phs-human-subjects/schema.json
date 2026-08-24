@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phs-human-subjects/schema.json",
+  "type": "object",
+  "properties": {
+    "involvesHumanSpecimensOrData": {
+      "$ref": "../../question-bank/clinical-study/involves-human-specimens-or-data/schema.json"
+    },
+    "specimensExplanation": {
+      "$ref": "../../question-bank/clinical-study/non-human-subjects-specimens-explanation/schema.json"
+    },
+    "otherRequestedInformation": {
+      "$ref": "../../question-bank/clinical-study/other-requested-information/schema.json"
+    },
+    "studies": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/clinical-study/study-record/schema.json",
+        "properties": {
+          "studyId": {
+            "readOnly": true
+          },
+          "populationCharacteristics": {
+            "properties": {
+              "inclusionEnrollmentReports": {
+                "items": {
+                  "properties": {
+                    "reportId": {
+                      "readOnly": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "maxItems": 150
+    },
+    "delayedOnsetStudies": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/clinical-study/delayed-onset-study/schema.json"
+      },
+      "maxItems": 150
+    },
+    "applicationId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40,
+      "readOnly": true
+    },
+    "involvesHumanSubjects": {
+      "allOf": [
+        {
+          "readOnly": true
+        }
+      ]
+    },
+    "exemptFromFederalRegulations": {
+      "allOf": [
+        {
+          "readOnly": true
+        }
+      ]
+    },
+    "exemptions": {
+      "allOf": [
+        {
+          "readOnly": true
+        }
+      ]
+    }
+  },
+  "required": [
+    "involvesHumanSpecimensOrData"
+  ],
+  "allOf": [
+    {
+      "$ref": "#/$defs/HumanSubjectDeterminations"
+    }
+  ],
+  "description": "PHS Human Subjects and Clinical Trials Information, Grants.gov FID 705, version 3.0.",
+  "$defs": {
+    "ResearchProjectYesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ],
+      "description": "The exact yes/no wire values used by the R&R Other Project Information source."
+    },
+    "HumanSubjectExemptionCode": {
+      "type": "string",
+      "enum": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5",
+        "E6",
+        "E7",
+        "E8"
+      ],
+      "description": "Federal human-subject exemption identifiers supported by the source form."
+    },
+    "HumanSubjectDeterminations": {
+      "type": "object",
+      "properties": {
+        "involvesHumanSubjects": {
+          "$ref": "#/$defs/ResearchProjectYesNoCode",
+          "title": "Does the proposed project involve human subjects?"
+        },
+        "exemptFromFederalRegulations": {
+          "$ref": "#/$defs/ResearchProjectYesNoCode"
+        },
+        "exemptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HumanSubjectExemptionCode"
+          },
+          "minItems": 1,
+          "maxItems": 8
+        }
+      },
+      "required": [
+        "involvesHumanSubjects"
+      ]
+    }
+  }
+}
