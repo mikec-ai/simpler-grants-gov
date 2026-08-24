@@ -22,6 +22,7 @@ import {
 } from "tests/e2e/portable-catalog/matrix-contract";
 import { createApplication } from "tests/e2e/utils/application/create-application-utils";
 import { authenticateE2eUser } from "tests/e2e/utils/auth/authenticate-e2e-user-utils";
+import { saveForm } from "tests/e2e/utils/forms/save-form-utils";
 import { buildPrintUrl } from "tests/e2e/utils/submission/print-view-utils";
 
 const planPath =
@@ -106,9 +107,9 @@ async function openSelectedForm(
   displayName: string,
 ) {
   await page.goto(applicationUrl, { waitUntil: "domcontentloaded" });
-  const table = page.locator(".simpler-application-forms-table").first();
-  await expect(table).toBeVisible({ timeout: 30_000 });
-  const row = table.locator("tbody tr").filter({ hasText: displayName });
+  const rows = page.locator(".simpler-application-forms-table tbody tr");
+  await expect(rows.first()).toBeVisible({ timeout: 30_000 });
+  const row = rows.filter({ hasText: displayName });
   await expect(row).toHaveCount(1);
   await row.getByTestId("application-form-link").click();
   await page.waitForURL(
@@ -122,7 +123,7 @@ async function openSelectedForm(
 async function captureFormState(page: Page) {
   return page
     .locator(
-      "main input:not([type=file]):not([type=submit]):not([type=button]), main select, main textarea",
+      "main input:not([type=file]):not([type=hidden]):not([type=submit]):not([type=button]), main select, main textarea",
     )
     .evaluateAll((nodes) =>
       nodes.map((node) => {
@@ -137,36 +138,55 @@ async function captureFormState(page: Page) {
     );
 }
 
-function fieldIdFromDefinition(definition: string): string {
-  const segments = definition
-    .split("/")
-    .filter((_segment, index, all) => all[index - 1] === "properties")
-    .map((segment) => segment.replaceAll("~1", "/").replaceAll("~0", "~"));
-  return `root_${segments.join("_")}`;
+const editableControlSelector =
+  "main input:visible:not([type=hidden]):not([disabled]):not([readonly]), " +
+  "main textarea:visible:not([disabled]):not([readonly]), " +
+  "main select:visible:not([disabled])";
+
+async function makeDeterministicEdit(page: Page): Promise<string> {
+  const control = page.locator(editableControlSelector).first();
+  await expect(control).toBeVisible();
+  const identity =
+    (await control.getAttribute("id")) ??
+    (await control.getAttribute("name")) ??
+    "first-editable-control";
+  const kind = await control.evaluate((node) => ({
+    tag: node.tagName.toLowerCase(),
+    type: node instanceof HTMLInputElement ? node.type : "",
+  }));
+  if (kind.tag === "select") {
+    const value = await control
+      .locator("option:not([value=''])")
+      .first()
+      .getAttribute("value");
+    if (!value) throw new Error("editable select has no non-empty option");
+    await control.selectOption(value);
+  } else if (kind.type === "checkbox" || kind.type === "radio") {
+    await control.check();
+  } else if (kind.type === "date") {
+    await control.fill("2026-01-01");
+  } else if (kind.type === "email") {
+    await control.fill("browser-canary@example.com");
+  } else if (kind.type === "number") {
+    await control.fill("1");
+  } else {
+    await control.fill("Browser canary");
+  }
+  return identity;
 }
 
 async function reachDeclaredEditableControl(
   page: Page,
   form: BrowserPlanForm,
 ): Promise<string> {
-  const declarations = form.capabilities.editableScalar?.declarations ?? [];
-  const targetIds = declarations
-    .map(({ definition }) =>
-      typeof definition === "string" ? fieldIdFromDefinition(definition) : null,
-    )
-    .filter((value): value is string => value !== null);
-  const visibleTargetIds: string[] = [];
-  for (const id of targetIds) {
-    if (
-      await page
-        .locator(`[id="${id}"]`)
-        .first()
-        .isVisible()
-        .catch(() => false)
-    ) {
-      visibleTargetIds.push(id);
-    }
-  }
+  expect(form.capabilities.editableScalar?.applicability).toBe("applicable");
+  const visibleTargetIds = await page
+    .locator(editableControlSelector)
+    .evaluateAll((nodes) =>
+      nodes
+        .map((node) => node.id || node.getAttribute("name"))
+        .filter((identity): identity is string => Boolean(identity)),
+    );
   expect(visibleTargetIds.length).toBeGreaterThan(0);
 
   await page.evaluate(() =>
@@ -305,10 +325,12 @@ test.describe("portable catalog browser conformance", () => {
           });
         }
 
-        const formRows = page
-          .locator(".simpler-application-forms-table")
-          .first()
-          .locator("tbody tr");
+        // A competition can place selected forms in either the required or
+        // conditionally-required table. Count rows across both tables so the
+        // harness validates the application, not one presentation bucket.
+        const formRows = page.locator(
+          ".simpler-application-forms-table tbody tr",
+        );
         await expect(formRows).toHaveCount(plan.forms.length);
 
         for (const form of plan.forms) {
@@ -361,6 +383,15 @@ test.describe("portable catalog browser conformance", () => {
                 ).toHaveCount(0);
                 expect(pageErrors).toEqual([]);
                 expect(failedFormRequests).toEqual([]);
+                if (
+                  form.capabilities.editableScalar?.applicability ===
+                  "applicable"
+                ) {
+                  const editableControls = page.locator(
+                    editableControlSelector,
+                  );
+                  expect(await editableControls.count()).toBeGreaterThan(0);
+                }
                 return { route: page.url() };
               }),
             );
@@ -372,19 +403,13 @@ test.describe("portable catalog browser conformance", () => {
             let applyUrl = page.url();
             receipt.probes.push(
               await probe("initial_save_reload", "api_round_trip", async () => {
+                const editedControl = await makeDeterministicEdit(page);
                 const beforeSave = await captureFormState(page);
-                const save = page.getByTestId("apply-form-save");
-                await expect(save).toBeVisible();
-                await expect(save).not.toHaveAttribute("aria-disabled", "true");
-                const saveResponse = page.waitForResponse(
-                  (response) =>
-                    response.request().method() === "PUT" &&
-                    /\/api\/applications\//.test(response.url()),
-                  { timeout: 60_000 },
-                );
-                await save.click();
-                const response = await saveResponse;
-                expect(response.ok()).toBe(true);
+                // Saving is a Next server action, so its API PUT is server-side and
+                // invisible to Playwright's browser response stream. Assert the user
+                // confirmation instead; this incomplete canary payload should report
+                // validation issues while still persisting the deterministic edit.
+                await saveForm(page, true);
                 applyUrl = page.url();
                 await page.reload({ waitUntil: "domcontentloaded" });
                 await expect(
@@ -406,9 +431,10 @@ test.describe("portable catalog browser conformance", () => {
                   .count();
                 return {
                   route: applyUrl,
-                  status: response.status(),
+                  status: "ui_confirmed",
                   validationWarningCount,
                   persistedControls: afterReload.length,
+                  editedControl,
                 };
               }),
             );

@@ -16,11 +16,11 @@ from src.constants.lookup_constants import CompetitionOpenToApplicant
 from src.db.models.agency_models import Agency
 from src.db.models.competition_models import Competition, CompetitionForm, Form, FormInstruction
 from src.db.models.opportunity_models import Opportunity
-from src.form_schema.form_spec.browser_plan import SEED_OPPORTUNITY_ID
+from src.form_schema.form_spec.browser_plan import browser_seed_ids
 from src.form_schema.form_spec.preview import (
-    banked_form_ids,
     portable_preview_enabled,
     preview_form_id,
+    selected_browser_form_ids,
 )
 from src.form_schema.forms import get_active_forms, init_form_registry
 from tests.lib.seed_agencies import _build_agencies
@@ -114,9 +114,8 @@ def _build_opportunities(
     if cover_all_agencies:
         agencies = factories.CustomProvider.AGENCIES
         agencies_with_opp = (
-            db_session.execute(
-                select(Opportunity.agency_code).where(Opportunity.agency_code.in_(agencies))
-            )
+            db_session
+            .execute(select(Opportunity.agency_code).where(Opportunity.agency_code.in_(agencies)))
             .scalars()
             .all()
         )
@@ -384,7 +383,7 @@ def _portable_preview_seed_forms(forms_map: dict[str, Form]) -> list[Form]:
     """Resolve exactly the manifest-selected preview forms from the active registry."""
 
     forms_by_id = {form.form_id: form for form in forms_map.values()}
-    expected = [preview_form_id(form_id) for form_id in banked_form_ids()]
+    expected = [preview_form_id(form_id) for form_id in selected_browser_form_ids()]
     missing = [form_id for form_id in expected if form_id not in forms_by_id]
     if missing:
         raise ValueError(f"portable preview registry is missing selected forms: {missing}")
@@ -392,7 +391,7 @@ def _portable_preview_seed_forms(forms_map: dict[str, Form]) -> list[Form]:
     selected = [forms_by_id[form_id] for form_id in expected]
     actual = [form.form_id for form in selected]
     if actual != expected or len(actual) != len(set(actual)):
-        raise ValueError("portable preview seed selection diverged from the artifact manifest")
+        raise ValueError("portable preview seed selection diverged from the browser selection")
     return selected
 
 
@@ -404,13 +403,15 @@ def _build_portable_preview_competition(
     if not portable_preview_enabled():
         return None
 
+    selected_form_ids = selected_browser_form_ids()
     forms = _portable_preview_seed_forms(forms_map)
-    competition_id = uuid.UUID("d3a39d43-7b96-54bf-b4c3-fde9849e13a2")
+    opportunity_id_value, competition_id_value = browser_seed_ids(selected_form_ids)
+    competition_id = uuid.UUID(competition_id_value)
     competition = fetch_competition(db_session, competition_id)
     if competition is None:
         competition = factories.CompetitionFactory.create(
             competition_id=competition_id,
-            opportunity__opportunity_id=uuid.UUID(SEED_OPPORTUNITY_ID),
+            opportunity__opportunity_id=uuid.UUID(opportunity_id_value),
             opportunity__opportunity_number="E2E-PORTABLE-CATALOG",
             opportunity__opportunity_title="Portable form catalog conformance",
             competition_title="Portable form catalog conformance",
@@ -438,7 +439,7 @@ def _build_portable_preview_competition(
     db_session.refresh(competition)
     seeded_ids = {entry.form_id for entry in competition.competition_forms}
     if seeded_ids != expected_ids:
-        raise ValueError("portable preview competition does not match the manifest selection")
+        raise ValueError("portable preview competition does not match the browser selection")
     return competition
 
 
@@ -487,8 +488,7 @@ def _build_seeded_competition_for_form(
         )
 
     logger.info(
-        f"Created seeded competition '{competition_title}' "
-        f"for opportunity '{opportunity_number}'"
+        f"Created seeded competition '{competition_title}' for opportunity '{opportunity_number}'"
     )
 
     return competition

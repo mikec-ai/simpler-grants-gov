@@ -1,12 +1,13 @@
 """The existing SF-424 declaration must survive the generic Simpler adapter unchanged."""
 
 import copy
+import json
 from pathlib import Path
 
 import pytest
 
 import src.form_schema.forms as forms_package
-from src.form_schema.form_spec.loader import load_form
+from src.form_schema.form_spec.loader import build_runtime_form, load_form
 from src.form_schema.forms._loader import load_versioned_form
 from src.form_schema.jsonschema_resolver import resolve_jsonschema
 from tests.src.form_schema.form_spec import parity
@@ -123,6 +124,13 @@ def seeds():
 def test_ui_and_rule_schemas_are_identical(projected, golden):
     assert projected.form_ui_schema == golden.FORM_UI_SCHEMA
     assert projected.form_rule_schema == golden.FORM_RULE_SCHEMA
+
+
+def test_runtime_adapter_expands_portable_references_for_simpler():
+    runtime = build_runtime_form("sf424")
+
+    assert '"$ref"' not in json.dumps(runtime.form_json_schema)
+    assert runtime.form_json_schema["properties"]["submission_type"]["allOf"][0]["type"] == "string"
 
 
 def test_every_rendered_difference_is_bounded(resolved_projected, resolved_golden, golden):
