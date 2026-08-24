@@ -20,7 +20,11 @@ def verify_artifact_selection(*, artifacts: Path, manifest_path: Path) -> dict[s
         raise ValueError("unsupported grants form artifact selection contract")
 
     expected = {
-        str(Path(record["path"]).relative_to("dist")): record
+        (
+            str(Path(record["path"]).relative_to("dist"))
+            if record["path"].startswith("dist/")
+            else str(Path("governance") / record["path"])
+        ): record
         for record in manifest.get("files", [])
     }
     present = {

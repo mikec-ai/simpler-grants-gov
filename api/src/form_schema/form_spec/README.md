@@ -151,8 +151,13 @@ runs may omit it to record the current repository HEAD. Both paths require a ful
 
 The command emits one comparable JSON receipt per form and a cohort summary. The directory is
 ignored locally and published by full API CI as a build artifact. Existing Simpler behavior is a
-compatibility oracle, not source or semantic authority; an intentional delta still requires the
-separate evidence identified by its cohort declaration.
+compatibility oracle, not source or semantic authority. Exact differences join to the producer's
+digest-pinned parity ledger. A mechanically bounded proposal reports `proposed_delta` and blocks
+the comparison gate. `reviewed_delta` is reserved for accepted, evidence-backed review decisions,
+but the current v1 loader deliberately cannot produce it: every accepted record fails closed until
+an independent, offline-verifiable decision-artifact receipt is defined. Comparator tests and source
+evidence cannot stand in for that decision. Unresolved, stale, unexpected, rejected, or unused
+records also fail closed.
 
 To refresh a form from a locally downloaded producer bundle:
 
@@ -166,9 +171,9 @@ uv run python bin/sync_form_spec_artifacts.py \
 ```
 
 The synchronization command accepts repeated `--form` flags, includes optional target artifacts
-declared by each form manifest, and follows `$ref` links to select the combined transitive question
-closure. Adding another form therefore does not require copying the whole question bank or editing
-a form-specific Python generator.
+declared by each form manifest, follows `$ref` links to select the combined transitive question
+closure, and vendors the portable governance contracts. Adding another form therefore does not
+require copying the whole question bank or editing a form-specific Python generator.
 
 For a routine pin update, use the higher-level command. It makes an isolated local clone at the
 explicit revision, runs the producer's complete preflight, preserves the current form allowlist,

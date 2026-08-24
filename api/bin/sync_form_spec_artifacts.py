@@ -37,6 +37,11 @@ OPTIONAL_RUNTIME_FORM_FILES = (
     "response-normalization.json",
     "targets/grants-gov-xml.json",
 )
+PORTABLE_GOVERNANCE_FILES = (
+    "contract/v1/parity-delta-ledger.schema.json",
+    "parity/consumer-evidence-verification.v1.json",
+    "parity/legacy-deltas.v1.json",
+)
 XSD_DIRECTORY = API_ROOT / "src" / "services" / "xml_generation" / "xsds"
 
 
@@ -86,7 +91,10 @@ def select_artifacts(
                 raise ValueError(f"source artifact digest mismatch: {name}")
             payloads[name] = payload
 
-    selected = {f"dist/forms/{form}/{name}" for form in requested for name in RUNTIME_FORM_FILES}
+    selected = {
+        *(f"dist/forms/{form}/{name}" for form in requested for name in RUNTIME_FORM_FILES),
+        *PORTABLE_GOVERNANCE_FILES,
+    }
     missing = sorted(selected - set(payloads))
     if missing:
         raise ValueError(f"requested forms are missing runtime artifacts: {missing}")
@@ -129,11 +137,16 @@ def select_artifacts(
         "sourceBundleSha256": _sha256(bundle_bytes),
         "selection": {
             "forms": requested,
-            "policy": "form runtime and evidence artifacts plus transitive question-schema closure",
+            "policy": "form runtime and evidence artifacts, transitive question-schema closure, and portable governance contracts",
         },
         "files": [records[path] for path in ordered],
     }
-    return selection_manifest, {path.removeprefix("dist/"): payloads[path] for path in ordered}
+    return selection_manifest, {
+        path.removeprefix("dist/") if path.startswith("dist/") else f"governance/{path}": payloads[
+            path
+        ]
+        for path in ordered
+    }
 
 
 def write_selection(*, target: Path, manifest: dict[str, Any], files: dict[str, bytes]) -> None:

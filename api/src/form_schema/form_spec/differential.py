@@ -12,15 +12,23 @@ from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
 
+import jsonschema
+
 import src.form_schema.forms as forms_package
 from src.form_schema.form_spec.loader import load_form
+from src.form_schema.form_spec.bank import ARTIFACTS, ARTIFACT_MANIFEST
 from src.form_schema.forms._loader import load_versioned_form
 from src.form_schema.jsonschema_resolver import resolve_jsonschema
 from src.form_schema.jsonschema_validator import _get_validator
 
-CONTRACT = "sgg-portable-legacy-differential/v2"
+CONTRACT = "sgg-portable-legacy-differential/v3"
 COHORT_CONTRACT = "sgg-portable-legacy-cohort/v1"
 COHORT_PATH = Path(__file__).with_name("differential-cohort.json")
+LEDGER_CONTRACT = "grants-form-parity-delta-ledger/v1"
+LEDGER_SOURCE_PATH = "parity/legacy-deltas.v1.json"
+LEDGER_PATH = ARTIFACTS / "governance" / LEDGER_SOURCE_PATH
+LEDGER_SCHEMA_SOURCE_PATH = "contract/v1/parity-delta-ledger.schema.json"
+LEDGER_SCHEMA_PATH = ARTIFACTS / "governance" / LEDGER_SCHEMA_SOURCE_PATH
 FIELD_KEYWORDS = (
     "type",
     "format",
@@ -284,22 +292,32 @@ def _validation_differences(
 
 
 def _dimension(
-    differences: list[Difference], allowed: dict[str, dict[str, str]], **evidence: Any
+    differences: list[Difference], declared: dict[str, dict[str, Any]], **evidence: Any
 ) -> dict[str, Any]:
     grouped: dict[str, list[Difference]] = {}
     for difference in differences:
         grouped.setdefault(difference.key, []).append(difference)
     observed = set(grouped)
-    expected = set(allowed)
+    expected = set(declared)
     unexpected = sorted(observed - expected)
     stale = sorted(expected - observed)
-    status = "failed" if unexpected or stale else "intentional_delta" if differences else "parity"
+    matched = [declared[key] for key in sorted(observed & expected)]
+    if unexpected or stale or any(row["review"]["status"] == "rejected" for row in matched):
+        status = "failed"
+    elif any(row["classification"] == "unresolved_mismatch" for row in matched):
+        status = "unresolved"
+    elif any(row["review"]["status"] == "proposed" for row in matched):
+        status = "proposed_delta"
+    elif differences:
+        status = "reviewed_delta"
+    else:
+        status = "parity"
     return {
         "status": status,
         "differenceKeyCount": len(grouped),
         "observationCount": len(differences),
-        "intentionalDeltas": [
-            {"key": key, "observations": len(grouped[key]), **allowed[key]}
+        "deltas": [
+            {"key": key, "observations": len(grouped[key]), **declared[key]}
             for key in sorted(observed & expected)
         ],
         "unexpected": [
@@ -314,20 +332,6 @@ def _dimension(
     }
 
 
-def _allowed_deltas(record: dict[str, Any], dimension: str) -> dict[str, dict[str, str]]:
-    groups = record.get("intentionalDeltas", {}).get(dimension, [])
-    allowed: dict[str, dict[str, str]] = {}
-    for group in groups:
-        declaration = {"reason": group["reason"], "evidence": group["evidence"]}
-        for key in group["keys"]:
-            if key in allowed:
-                raise ValueError(
-                    f"{record.get('portableFormId')}.{dimension} repeats delta key {key!r}"
-                )
-            allowed[key] = declaration
-    return allowed
-
-
 def _load_cohort(path: Path) -> dict[str, Any]:
     cohort = json.loads(path.read_text())
     if cohort.get("contract") != COHORT_CONTRACT:
@@ -340,33 +344,153 @@ def _load_cohort(path: Path) -> dict[str, Any]:
         raise ValueError("every differential cohort form must have a portableFormId")
     if len(form_ids) != len(set(form_ids)):
         raise ValueError("differential cohort contains duplicate portable form ids")
-    api_root = Path(__file__).resolve().parents[3]
-    for form in forms:
-        for dimension in ("schema", "ui", "validation", "rules"):
-            groups = form.get("intentionalDeltas", {}).get(dimension, [])
-            if not isinstance(groups, list):
-                raise ValueError(
-                    f"{form.get('portableFormId')}.{dimension} deltas must be an array"
-                )
-            for group in groups:
-                keys = group.get("keys") if isinstance(group, dict) else None
-                if (
-                    not isinstance(keys, list)
-                    or not keys
-                    or any(not isinstance(key, str) or not key for key in keys)
-                    or not group.get("reason")
-                    or not group.get("evidence")
-                ):
-                    raise ValueError(
-                        f"{form.get('portableFormId')}.{dimension} delta lacks keys, reason, or evidence"
-                    )
-                if not (api_root / group["evidence"]).is_file():
-                    raise ValueError(
-                        f"{form.get('portableFormId')}.{dimension} evidence does not exist: "
-                        f"{group['evidence']}"
-                    )
-            _allowed_deltas(form, dimension)
     return cohort
+
+
+def _load_delta_ledger(
+    path: Path = LEDGER_PATH,
+    *,
+    manifest_path: Path = ARTIFACT_MANIFEST,
+    schema_path: Path = LEDGER_SCHEMA_PATH,
+    receipt_path: Path | None = None,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    selection = json.loads(manifest_path.read_text())
+    pinned = {row.get("path"): row for row in selection.get("files", [])}
+
+    def verified_payload(source_path: str, local_path: Path) -> tuple[bytes, dict[str, Any]]:
+        source_record = pinned.get(source_path)
+        if source_record is None:
+            raise ValueError(f"portable artifact selection does not pin {source_path}")
+        payload = local_path.read_bytes()
+        if len(payload) != source_record.get("size") or hashlib.sha256(
+            payload
+        ).hexdigest() != source_record.get("sha256"):
+            raise ValueError(f"{source_path} does not match its pinned producer artifact")
+        return payload, source_record
+
+    payload, source_record = verified_payload(LEDGER_SOURCE_PATH, path)
+    schema_payload, schema_record = verified_payload(LEDGER_SCHEMA_SOURCE_PATH, schema_path)
+    ledger = json.loads(payload)
+    schema = json.loads(schema_payload)
+    errors = sorted(
+        jsonschema.Draft202012Validator(
+            schema, format_checker=jsonschema.Draft202012Validator.FORMAT_CHECKER
+        ).iter_errors(ledger),
+        key=lambda error: list(error.absolute_path),
+    )
+    if errors:
+        first = errors[0]
+        location = "/" + "/".join(str(step) for step in first.absolute_path)
+        raise ValueError(f"parity delta ledger contract failed at {location}: {first.message}")
+    if ledger.get("contract") != LEDGER_CONTRACT:
+        raise ValueError(f"unsupported parity delta ledger: {ledger.get('contract')!r}")
+    verification = ledger["evidenceVerification"]
+    receipt_source_path = verification["receipt"]
+    resolved_receipt_path = receipt_path or ARTIFACTS / "governance" / receipt_source_path
+    receipt_payload, receipt_record = verified_payload(receipt_source_path, resolved_receipt_path)
+    receipt = json.loads(receipt_payload)
+    if receipt.get("contract") != "grants-form-parity-evidence-verification/v1":
+        raise ValueError("unsupported parity delta evidence verification receipt")
+    if any(receipt.get(field) != verification.get(field) for field in ("repository", "revision")):
+        raise ValueError("parity delta evidence verification receipt does not match the ledger pin")
+    receipt_files = receipt.get("files")
+    if not isinstance(receipt_files, list):
+        raise ValueError("parity delta evidence verification receipt has no files")
+    verified_paths: dict[str, str] = {}
+    for entry in receipt_files:
+        evidence_path = entry.get("path") if isinstance(entry, dict) else None
+        digest = entry.get("sha256") if isinstance(entry, dict) else None
+        if (
+            not isinstance(evidence_path, str)
+            or not evidence_path
+            or evidence_path in verified_paths
+            or not isinstance(digest, str)
+            or not re.fullmatch(r"[0-9a-f]{64}", digest)
+        ):
+            raise ValueError("parity delta evidence verification receipt has invalid files")
+        verified_paths[evidence_path] = digest
+    records = ledger.get("records")
+    if not isinstance(records, list):
+        raise ValueError("parity delta ledger records must be an array")
+    exact_targets: set[tuple[str, str, str]] = set()
+    ids: set[str] = set()
+    used_verified_paths: set[str] = set()
+    for record in records:
+        target = record.get("target", {}) if isinstance(record, dict) else {}
+        form_id = record.get("formId")
+        dimension = target.get("dimension")
+        difference_key = target.get("differenceKey")
+        candidate = (form_id, dimension, difference_key)
+        if any(not isinstance(value, str) or not value for value in candidate):
+            raise ValueError(f"duplicate or incomplete parity delta target: {candidate!r}")
+        assert isinstance(form_id, str)
+        assert isinstance(dimension, str)
+        assert isinstance(difference_key, str)
+        exact = (form_id, dimension, difference_key)
+        if exact in exact_targets:
+            raise ValueError(f"duplicate or incomplete parity delta target: {exact!r}")
+        exact_targets.add(exact)
+        record_id = record.get("id")
+        if not isinstance(record_id, str) or not record_id or record_id in ids:
+            raise ValueError(f"duplicate or missing parity delta id: {record_id!r}")
+        ids.add(record_id)
+        semantic = target.get("semanticTarget")
+        if not isinstance(semantic, dict) or not semantic.get("kind") or not semantic.get("value"):
+            raise ValueError(f"{record_id} lacks a stable semantic target")
+        references = record.get("evidenceReferences")
+        assertion = record.get("differentialAssertion")
+        if not references or not assertion:
+            raise ValueError(f"{record_id} lacks differential evidence")
+        reference_ids: set[str] = set()
+        for reference in references:
+            reference_id = reference.get("id")
+            if (
+                not isinstance(reference_id, str)
+                or not reference_id
+                or reference_id in reference_ids
+            ):
+                raise ValueError(f"{record_id} has duplicate or missing evidence reference ids")
+            reference_ids.add(reference_id)
+            if (
+                reference.get("repository") != verification["repository"]
+                or reference.get("revision") != verification["revision"]
+            ):
+                raise ValueError(f"{record_id} evidence does not match the offline receipt pin")
+            evidence_path = reference.get("path")
+            if evidence_path not in verified_paths:
+                raise ValueError(f"{record_id} evidence path is absent from the offline receipt")
+            used_verified_paths.add(evidence_path)
+        if assertion.get("evidenceReferenceId") not in reference_ids:
+            raise ValueError(f"{record_id} differential assertion does not join its evidence")
+        review = record.get("review", {})
+        if review.get("status") == "accepted" and (
+            not review.get("reviewer")
+            or not review.get("reviewedAt")
+            or not review.get("decisionEvidence")
+        ):
+            raise ValueError(f"{record_id} accepted review lacks durable decision evidence")
+        if review.get("status") == "accepted":
+            raise ValueError(
+                f"{record_id} accepted review requires an independent decision-artifact receipt"
+            )
+        if review.get("status") not in {"proposed", "accepted", "rejected"}:
+            raise ValueError(f"{record_id} has unsupported review status")
+        if (
+            record.get("classification") == "unresolved_mismatch"
+            and review.get("status") == "accepted"
+        ):
+            raise ValueError(f"{record_id} accepts an unresolved mismatch")
+    unused_receipt_paths = sorted(set(verified_paths) - used_verified_paths)
+    if unused_receipt_paths:
+        raise ValueError(f"parity delta evidence receipt has unused paths: {unused_receipt_paths}")
+    source = {
+        "repository": selection["source"]["repository"],
+        "revision": selection["source"]["revision"],
+        "sha256": source_record["sha256"],
+        "schemaSha256": schema_record["sha256"],
+        "evidenceReceiptSha256": receipt_record["sha256"],
+    }
+    return ledger, source
 
 
 def _consumer_revision() -> str:
@@ -392,6 +516,7 @@ def compare_cohort(
 ) -> list[dict[str, Any]]:
     """Compare every declaratively selected form through the same mechanism."""
     cohort = _load_cohort(cohort_path)
+    ledger, ledger_source = _load_delta_ledger()
     revision = _validated_revision(
         consumer_revision if consumer_revision is not None else _consumer_revision()
     )
@@ -399,9 +524,17 @@ def compare_cohort(
         "repository": "https://github.com/mikec-ai/simpler-grants-gov",
         "revision": revision,
         "cohortSha256": hashlib.sha256(cohort_path.read_bytes()).hexdigest(),
+        "deltaLedger": ledger_source,
     }
     receipts: list[dict[str, Any]] = []
     forms_root = Path(forms_package.__file__).parent
+    cohort_form_ids = {record["portableFormId"] for record in cohort["forms"]}
+    ledger_form_ids = {record["formId"] for record in ledger["records"]}
+    extra_ledger_forms = sorted(ledger_form_ids - cohort_form_ids)
+    if extra_ledger_forms:
+        raise ValueError(
+            f"parity delta ledger contains forms outside the cohort: {extra_ledger_forms}"
+        )
     for record in cohort["forms"]:
         portable_id = record["portableFormId"]
         existing = load_versioned_form(
@@ -410,8 +543,12 @@ def compare_cohort(
         portable = load_form(portable_id)
         portable_schema = resolve_jsonschema(copy.deepcopy(portable.form_json_schema))
         existing_schema = resolve_jsonschema(copy.deepcopy(existing.FORM_JSON_SCHEMA))
-        allowed = {
-            dimension: _allowed_deltas(record, dimension)
+        declared = {
+            dimension: {
+                delta["target"]["differenceKey"]: delta
+                for delta in ledger["records"]
+                if delta["formId"] == portable_id and delta["target"]["dimension"] == dimension
+            }
             for dimension in ("schema", "ui", "validation", "rules")
         }
         schema = _dimension(
@@ -421,58 +558,62 @@ def compare_cohort(
                 portable.form_ui_schema,
                 existing.FORM_UI_SCHEMA,
             ),
-            allowed["schema"],
+            declared["schema"],
         )
         ui = _dimension(
             _deep_differences(portable.form_ui_schema, existing.FORM_UI_SCHEMA),
-            allowed["ui"],
+            declared["ui"],
         )
         case_count, validation_differences = _validation_differences(
             portable_schema, existing_schema
         )
-        validation = _dimension(validation_differences, allowed["validation"], caseCount=case_count)
+        validation = _dimension(
+            validation_differences, declared["validation"], caseCount=case_count
+        )
         portable_rules = portable.form_rule_schema
         existing_rules = getattr(existing, "FORM_RULE_SCHEMA", None)
         if portable_rules is None and existing_rules is None:
-            rules = {
-                "status": "not_applicable",
-                "reason": "neither implementation declares a rule schema",
-            }
+            rules = (
+                _dimension([], declared["rules"], comparison="declaration")
+                if declared["rules"]
+                else {
+                    "status": "not_applicable",
+                    "reason": "neither implementation declares a rule schema",
+                }
+            )
         else:
             rules = _dimension(
                 _deep_differences(portable_rules, existing_rules),
-                allowed["rules"],
+                declared["rules"],
                 comparison="declaration",
             )
         dimensions = {"schema": schema, "ui": ui, "validation": validation, "rules": rules}
-        receipts.append(
-            {
-                "contract": CONTRACT,
-                "source": source,
-                "portableFormId": portable_id,
-                "existingOracle": {
-                    "directory": record["existingDirectory"],
-                    "version": record["existingVersion"],
+        receipts.append({
+            "contract": CONTRACT,
+            "source": source,
+            "portableFormId": portable_id,
+            "existingOracle": {
+                "directory": record["existingDirectory"],
+                "version": record["existingVersion"],
+            },
+            "dimensions": dimensions,
+            "unsupportedDimensions": {
+                "xml": {
+                    "status": "unavailable",
+                    "reason": "the initial static differential does not compare serialized XML",
                 },
-                "dimensions": dimensions,
-                "unsupportedDimensions": {
-                    "xml": {
-                        "status": "unavailable",
-                        "reason": "the initial static differential does not compare serialized XML",
-                    },
-                    "ruleOutcomes": {
-                        "status": "unavailable",
-                        "reason": "rules are compared as declarations; a generic outcome corpus is not yet available",
-                    },
-                    "runtimeLifecycle": {
-                        "status": "unavailable",
-                        "reason": "runtime behavior is reported by the separate generic browser receipt",
-                    },
+                "ruleOutcomes": {
+                    "status": "unavailable",
+                    "reason": "rules are compared as declarations; a generic outcome corpus is not yet available",
                 },
-                "comparisonGate": all(
-                    dimension["status"] in {"parity", "intentional_delta", "not_applicable"}
-                    for dimension in dimensions.values()
-                ),
-            }
-        )
+                "runtimeLifecycle": {
+                    "status": "unavailable",
+                    "reason": "runtime behavior is reported by the separate generic browser receipt",
+                },
+            },
+            "comparisonGate": all(
+                dimension["status"] in {"parity", "reviewed_delta", "not_applicable"}
+                for dimension in dimensions.values()
+            ),
+        })
     return receipts

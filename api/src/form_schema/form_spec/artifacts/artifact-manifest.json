@@ -2,6 +2,11 @@
   "contract": "grants-form-artifact-selection/v1",
   "files": [
     {
+      "path": "contract/v1/parity-delta-ledger.schema.json",
+      "sha256": "96cb4b4fa00c4505a78865f6273dcf2885f25c080f13a15d1b809fcc1c49f14a",
+      "size": 5539
+    },
+    {
       "path": "dist/forms/attachment-form/evidence.json",
       "sha256": "3bbb75809a3ff1ec1b11165355ec8cb73b2be018b0c40e4c41163ca72c4b4032",
       "size": 3572
@@ -2380,6 +2385,16 @@
       "path": "dist/question-bank/sbir-sttr/vcoc-majority-ownership/schema.json",
       "sha256": "a798f52c3b9de4b7ac171f0cb6f217cc563a1a7d2243f011f1c16440633fdaf5",
       "size": 618
+    },
+    {
+      "path": "parity/consumer-evidence-verification.v1.json",
+      "sha256": "9132ed4fc4fb9a786a2a9d43b97d9c032cf151217dfdb47245fc31143648e2bf",
+      "size": 1519
+    },
+    {
+      "path": "parity/legacy-deltas.v1.json",
+      "sha256": "b643d3d37400ff86bd5c46dd50e30d011468d2444c3cca8a6ea7d7aaa9c83957",
+      "size": 82050
     }
   ],
   "selection": {
@@ -2424,11 +2439,11 @@
       "phs398-cover-page-supplement",
       "sbir-sttr-information"
     ],
-    "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
+    "policy": "form runtime and evidence artifacts, transitive question-schema closure, and portable governance contracts"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "563e7d8b5a38c7b5d66723bfbc1607caeeff4aad"
+    "revision": "2a316a832a343f3830c4b6a8948fd746c3dd8c56"
   },
-  "sourceBundleSha256": "35797f569fbeaafefd0c6131f6a4c54bc0eabd9fde5c0e955c8ea976f9059d96"
+  "sourceBundleSha256": "886d830eb0b758087b2cd58fa122a8112fb4d00abadd4e47c67c6334684cc518"
 }
