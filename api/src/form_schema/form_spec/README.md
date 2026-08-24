@@ -82,6 +82,24 @@ same canonical schema, UI schema, and rules used by the runtime. It deliberately
 banking does not imply that the current SGG serializer can execute every portable XML shape; XML
 remains behind its exact-source and lifecycle gates.
 
+The portable catalog matrix derives its form set and capability probes from that verified preview
+selection. It writes its generated plan, per-form receipts, failure screenshots, and browser traces
+under ignored test-result directories; CI publishes those files as build artifacts rather than
+committing generated evidence to this repository. Run it only with the same two-part preview gate:
+
+```shell
+cd api
+uv run python bin/build_portable_browser_plan.py \
+  --out test-results/portable-browser-plan.json
+cd ../frontend
+RUN_PORTABLE_BROWSER_MATRIX=true \
+PORTABLE_BROWSER_PLAN=../api/test-results/portable-browser-plan.json \
+npm run test:e2e -- --grep @portable-catalog
+```
+
+The matrix uses Simpler's ordinary application and print routes. It has no form-name allowlist;
+changing the producer selection changes the generated cases without editing the browser suite.
+
 To refresh a form from a locally downloaded producer bundle:
 
 ```shell
