@@ -2,10 +2,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import { render, screen } from "@testing-library/react";
-import FieldListWidget from "src/components/apply-form/widgets/FieldListWidget";
 import { FieldListGroupItem, UiSchema } from "src/types/applyForm/types";
 import { Attachment } from "src/types/attachmentTypes";
 import { addPrintWidgetToFields } from "src/utils/applyForm/applyFormUtils";
+
+import FieldListWidget from "src/components/apply-form/widgets/FieldListWidget";
 
 const mockAttachments: Attachment[] = [
   {
