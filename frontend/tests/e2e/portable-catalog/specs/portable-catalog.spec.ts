@@ -11,6 +11,7 @@ import {
   observedBoundary,
   RECEIPT_CONTRACT,
   recoverBrowserPlanCandidates,
+  responsePathToControlId,
   schemaDefinitionToControlId,
   summarizeReceipts,
   writeReceipt,
@@ -20,10 +21,14 @@ import {
   type FormReceipt,
   type ProbeReceipt,
   type RecoveredPlanCandidate,
+  type SchemaImplicationDeclaration,
 } from "tests/e2e/portable-catalog/matrix-contract";
 import { createApplication } from "tests/e2e/utils/application/create-application-utils";
 import { authenticateE2eUser } from "tests/e2e/utils/auth/authenticate-e2e-user-utils";
-import { saveForm } from "tests/e2e/utils/forms/save-form-utils";
+import {
+  clickSaveButton,
+  saveForm,
+} from "tests/e2e/utils/forms/save-form-utils";
 import { buildPrintUrl } from "tests/e2e/utils/submission/print-view-utils";
 
 const planPath =
@@ -39,6 +44,7 @@ const plannedFormProbes = [
   "adapter_api_preflight",
   "apply_render",
   "initial_save_reload",
+  "schema_implication",
   "accessibility",
   "print_render",
 ] as const;
@@ -110,7 +116,9 @@ async function openSelectedForm(
   await page.goto(applicationUrl, { waitUntil: "domcontentloaded" });
   const rows = page.locator(".simpler-application-forms-table tbody tr");
   await expect(rows.first()).toBeVisible({ timeout: 30_000 });
-  const row = rows.filter({ hasText: displayName });
+  const row = rows.filter({
+    has: page.getByText(displayName, { exact: true }),
+  });
   await expect(row).toHaveCount(1);
   await row.getByTestId("application-form-link").click();
   await page.waitForURL(
@@ -223,6 +231,95 @@ async function reachDeclaredEditableControl(
   throw new Error(
     "keyboard traversal did not reach a declared editable form control",
   );
+}
+
+function implicationWitnesses(pattern: string): {
+  triggering: string;
+  nonTriggering: string;
+} {
+  const expression = new RegExp(pattern);
+  const candidates = ["0", "0.00", "0.01", "1", "1.00", "test"];
+  const triggering = candidates.find((candidate) => expression.test(candidate));
+  const nonTriggering = candidates.find(
+    (candidate) => !expression.test(candidate),
+  );
+  if (triggering === undefined || nonTriggering === undefined) {
+    throw new Error(`pattern has no bounded browser witnesses: ${pattern}`);
+  }
+  return { triggering, nonTriggering };
+}
+
+function firstBrowserSchemaImplication(
+  form: BrowserPlanForm,
+): SchemaImplicationDeclaration | undefined {
+  const capability = form.capabilities.schemaImplication;
+  if (capability?.applicability !== "applicable") return undefined;
+  return (capability.declarations as SchemaImplicationDeclaration[]).find(
+    ({ trigger, consequence }) =>
+      typeof trigger.constraint?.pattern === "string" &&
+      consequence.required &&
+      consequence.constraint === null &&
+      trigger.responsePath.split("/").filter((part) => part === "*").length ===
+        1,
+  );
+}
+
+async function exerciseSchemaImplication(
+  page: Page,
+  form: BrowserPlanForm,
+): Promise<Record<string, unknown>> {
+  const declaration = firstBrowserSchemaImplication(form);
+  if (!declaration) {
+    throw new Error(
+      "no single-repeater patterned schema implication is declared",
+    );
+  }
+  const pattern = declaration.trigger.constraint?.pattern;
+  if (typeof pattern !== "string") {
+    throw new Error("schema implication trigger does not declare a pattern");
+  }
+  const triggerId = responsePathToControlId(declaration.trigger.responsePath);
+  const consequenceId = responsePathToControlId(
+    declaration.consequence.responsePath,
+  );
+  const triggerControl = page.locator(`main [id=${JSON.stringify(triggerId)}]`);
+  await expect(triggerControl).toBeVisible();
+  const { triggering, nonTriggering } = implicationWitnesses(pattern);
+
+  await triggerControl.fill(triggering);
+  await saveForm(page, true);
+  const consequenceLink = page
+    .getByTestId("alert")
+    .locator(`a[href=${JSON.stringify(`#${consequenceId}`)}]`);
+  await expect(consequenceLink).toHaveCount(1);
+  await consequenceLink.click();
+  const visibleConsequence = page.locator(
+    `[id=${JSON.stringify(`${consequenceId}-visible`)}]`,
+  );
+  const consequenceControl =
+    (await visibleConsequence.count()) > 0
+      ? visibleConsequence
+      : page.locator(`[id=${JSON.stringify(consequenceId)}]`);
+  await expect(consequenceControl).toBeFocused();
+
+  await triggerControl.fill(nonTriggering);
+  await clickSaveButton(page);
+  await expect(consequenceLink).toHaveCount(0, { timeout: 30_000 });
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(
+    page.locator(`main [id=${JSON.stringify(triggerId)}]`),
+  ).toHaveValue(nonTriggering);
+
+  return {
+    triggerResponsePath: declaration.trigger.responsePath,
+    consequenceResponsePath: declaration.consequence.responsePath,
+    pattern,
+    triggering,
+    nonTriggering,
+    errorFocus:
+      consequenceControl === visibleConsequence ? "visible_upload" : "control",
+    persistedNonTriggeringValue: true,
+  };
 }
 
 type ApplicationFormApiRecord = {
@@ -424,12 +521,14 @@ test.describe("portable catalog browser conformance", () => {
                     ? editableDefinition
                     : undefined,
                 );
-                const beforeSave = await captureFormState(page);
                 // Saving is a Next server action, so its API PUT is server-side and
                 // invisible to Playwright's browser response stream. Assert the user
                 // confirmation instead; this incomplete canary payload should report
                 // validation issues while still persisting the deterministic edit.
+                // Capture after the save so generic calculated fields have reached
+                // their canonical values before we compare them with the reload.
                 await saveForm(page, true);
+                const beforeReload = await captureFormState(page);
                 applyUrl = page.url();
                 await page.reload({ waitUntil: "domcontentloaded" });
                 await expect(
@@ -442,7 +541,7 @@ test.describe("portable catalog browser conformance", () => {
                   page.getByText("Error rendering form"),
                 ).toHaveCount(0);
                 const afterReload = await captureFormState(page);
-                expect(afterReload).toEqual(beforeSave);
+                expect(afterReload).toEqual(beforeReload);
                 expect(pageErrors).toEqual([]);
                 expect(failedFormRequests).toEqual([]);
                 const validationWarningCount = await page
@@ -458,6 +557,27 @@ test.describe("portable catalog browser conformance", () => {
                 };
               }),
             );
+
+            if (firstBrowserSchemaImplication(form)) {
+              receipt.probes.push(
+                await probe("schema_implication", "apply_render", async () =>
+                  exerciseSchemaImplication(page, form),
+                ),
+              );
+            } else {
+              receipt.probes.push({
+                probe: "schema_implication",
+                status: "not_applicable",
+                durationMs: 0,
+                evidence: {
+                  reason:
+                    form.capabilities.schemaImplication?.applicability ===
+                    "applicable"
+                      ? "no single-repeater patterned implication is declared"
+                      : "no simple schema implication is declared",
+                },
+              });
+            }
 
             receipt.probes.push(
               await probe("accessibility", "apply_render", async () => {

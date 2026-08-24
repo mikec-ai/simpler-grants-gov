@@ -7,7 +7,11 @@ import {
 import { useTranslationsMock } from "src/utils/testing/intlMocks";
 
 import TableWidget from "src/components/apply-form/widgets/TableWidget/TableWidget";
-import { ApplyFormMessage, getWarningLinkText } from "./ApplyFormMessage";
+import {
+  ApplyFormMessage,
+  getValidationFocusTarget,
+  getWarningLinkText,
+} from "./ApplyFormMessage";
 
 jest.mock("next-intl", () => ({
   useTranslations: () => useTranslationsMock(),
@@ -79,6 +83,56 @@ describe("getWarningLinkText", () => {
 });
 
 describe("ApplyFormMessage", () => {
+  it("resolves a hidden attachment value to its visible file control", async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <ApplyFormMessage
+          error={false}
+          validationWarnings={[
+            {
+              field: "$.attachment",
+              message: "'attachment' is a required property",
+              formatted: "Attachment is required",
+              type: "required",
+              value: null,
+              htmlField: "attachment",
+              definition: "/properties/attachment",
+            },
+          ]}
+          saved={true}
+        />
+        <input id="attachment" type="hidden" />
+        <input
+          aria-label="Attachment upload"
+          id="attachment-visible"
+          type="file"
+        />
+      </>,
+    );
+
+    const visibleAttachment = screen.getByLabelText("Attachment upload");
+    expect(getValidationFocusTarget("attachment")).toBe(visibleAttachment);
+    await user.click(
+      screen.getByRole("link", { name: "Attachment is required" }),
+    );
+    expect(visibleAttachment).toHaveFocus();
+  });
+
+  it("resolves a visible attachment control when its model input is absent", () => {
+    render(
+      <input
+        aria-label="Attachment upload"
+        id="attachment-visible"
+        type="file"
+      />,
+    );
+
+    expect(getValidationFocusTarget("attachment")).toBe(
+      screen.getByLabelText("Attachment upload"),
+    );
+  });
+
   it("renders nothing when saved is false", () => {
     const { container } = render(
       <ApplyFormMessage

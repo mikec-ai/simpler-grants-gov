@@ -47,6 +47,7 @@ def test_browser_plan_follows_live_manifest_and_discovers_capabilities() -> None
         "readOnly",
         "repeater",
         "requiredField",
+        "schemaImplication",
     }
 
 
@@ -138,6 +139,60 @@ def test_browser_plan_preserves_ordinary_field_discovery(
     assert all(
         list(declaration) == ["definition"] and isinstance(declaration["definition"], str)
         for declaration in declarations
+    )
+
+
+@pytest.mark.parametrize(
+    ("form_id", "prefix"),
+    [
+        ("rr-budget", "/budget_year/*"),
+        ("rr-subaward-budget", "/budget_attachments/*/budget_year/*"),
+    ],
+)
+def test_browser_plan_projects_budget_attachment_implications_without_form_logic(
+    monkeypatch: pytest.MonkeyPatch,
+    form_id: str,
+    prefix: str,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, form_id)
+
+    capability = build_browser_plan()["forms"][0]["capabilities"]["schemaImplication"]
+
+    assert capability["applicability"] == "applicable"
+    assert len(capability["declarations"]) == 4
+    assert {
+        (
+            declaration["trigger"]["responsePath"],
+            declaration["consequence"]["responsePath"],
+        )
+        for declaration in capability["declarations"]
+    } == {
+        (
+            f"{prefix}/equipment/total_fund_for_attached_equipment",
+            f"{prefix}/equipment/additional_equipments_attachment",
+        ),
+        (
+            f"{prefix}/equipment/additional_equipments_attachment",
+            f"{prefix}/equipment/total_fund_for_attached_equipment",
+        ),
+        (
+            f"{prefix}/key_persons/total_fund_for_attached_key_persons",
+            f"{prefix}/key_persons/attached_key_persons",
+        ),
+        (
+            f"{prefix}/key_persons/attached_key_persons",
+            f"{prefix}/key_persons/total_fund_for_attached_key_persons",
+        ),
+    }
+    patterned_triggers = [
+        declaration
+        for declaration in capability["declarations"]
+        if declaration["trigger"]["constraint"] is not None
+    ]
+    assert len(patterned_triggers) == 2
+    assert all(
+        declaration["trigger"]["constraint"] == {"pattern": "^(?=.*[1-9])\\d+(?:\\.\\d+)?$"}
+        for declaration in patterned_triggers
     )
 
 

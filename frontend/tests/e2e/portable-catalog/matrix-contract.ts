@@ -39,6 +39,20 @@ export type BrowserPlanForm = {
   >;
 };
 
+export type SchemaImplicationField = {
+  schemaPath: string;
+  responsePath: string;
+  title: string | null;
+  constraint: Record<string, unknown> | null;
+};
+
+export type SchemaImplicationDeclaration = {
+  objectSchemaPath: string;
+  objectResponsePath: string;
+  trigger: SchemaImplicationField;
+  consequence: SchemaImplicationField & { required: true };
+};
+
 export type BrowserPlan = {
   contract: string;
   manifestSha256: string;
@@ -91,6 +105,32 @@ export function schemaDefinitionToControlId(definition: string): string {
     );
   }
   return path.join("--");
+}
+
+export function responsePathToControlId(responsePath: string): string {
+  if (!responsePath.startsWith("/")) {
+    throw new Error(
+      `response path is not an absolute pointer: ${responsePath}`,
+    );
+  }
+  const parts: string[] = [];
+  for (const encoded of responsePath.slice(1).split("/")) {
+    const segment = encoded.replaceAll("~1", "/").replaceAll("~0", "~");
+    if (segment === "*") {
+      if (!parts.length) {
+        throw new Error(`response wildcard has no parent: ${responsePath}`);
+      }
+      parts[parts.length - 1] = `${parts.at(-1)}[0]`;
+    } else if (segment) {
+      parts.push(segment);
+    }
+  }
+  if (!parts.length) {
+    throw new Error(
+      `response path does not identify a control: ${responsePath}`,
+    );
+  }
+  return parts.join("--");
 }
 
 const ownershipByBoundary: Record<Boundary, Ownership> = {

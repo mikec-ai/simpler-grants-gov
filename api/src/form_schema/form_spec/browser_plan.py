@@ -88,6 +88,108 @@ def _schema_fields(
             )
 
 
+def _object_schemas(
+    schema: dict[str, Any],
+    schema_path: str = "",
+    response_path: str = "",
+) -> Iterator[tuple[str, str, dict[str, Any]]]:
+    """Yield object schemas reachable through the form's property tree.
+
+    Definitions that are not referenced by the form are deliberately excluded. Array
+    items use ``*`` in response paths so downstream browser probes can select a stable
+    representative row without baking a form name into the harness.
+    """
+
+    yield schema_path, response_path, schema
+    properties = schema.get("properties")
+    if not isinstance(properties, dict):
+        return
+    for name, child in properties.items():
+        if not isinstance(child, dict):
+            continue
+        child_schema_path = f"{schema_path}/properties/{name}"
+        child_response_path = f"{response_path}/{name}"
+        yield from _object_schemas(child, child_schema_path, child_response_path)
+        items = child.get("items")
+        if isinstance(items, dict):
+            yield from _object_schemas(
+                items,
+                f"{child_schema_path}/items",
+                f"{child_response_path}/*",
+            )
+
+
+def _simple_schema_implications(schema: dict[str, Any]) -> list[dict[str, Any]]:
+    """Project mechanically testable single-field ``if``/``then`` implications.
+
+    This is capability discovery, not semantic inference: every path, pattern, title,
+    and required relationship is copied from the resolved portable JSON Schema.
+    """
+
+    declarations: list[dict[str, Any]] = []
+    for schema_path, response_path, node in _object_schemas(schema):
+        properties = node.get("properties")
+        branches = node.get("allOf")
+        if not isinstance(properties, dict) or not isinstance(branches, list):
+            continue
+        for branch in branches:
+            if not isinstance(branch, dict):
+                continue
+            condition = branch.get("if")
+            consequence = branch.get("then")
+            if not isinstance(condition, dict) or not isinstance(consequence, dict):
+                continue
+            condition_required = condition.get("required")
+            consequence_required = consequence.get("required")
+            if (
+                not isinstance(condition_required, list)
+                or len(condition_required) != 1
+                or not isinstance(condition_required[0], str)
+                or not isinstance(consequence_required, list)
+                or len(consequence_required) != 1
+                or not isinstance(consequence_required[0], str)
+            ):
+                continue
+            trigger_name = condition_required[0]
+            consequence_name = consequence_required[0]
+            trigger_schema = properties.get(trigger_name)
+            consequence_schema = properties.get(consequence_name)
+            if not isinstance(trigger_schema, dict) or not isinstance(consequence_schema, dict):
+                continue
+            condition_properties = condition.get("properties", {})
+            consequence_properties = consequence.get("properties", {})
+            trigger_constraint = (
+                condition_properties.get(trigger_name)
+                if isinstance(condition_properties, dict)
+                else None
+            )
+            consequence_constraint = (
+                consequence_properties.get(consequence_name)
+                if isinstance(consequence_properties, dict)
+                else None
+            )
+            declarations.append(
+                {
+                    "objectSchemaPath": schema_path or "/",
+                    "objectResponsePath": response_path or "/",
+                    "trigger": {
+                        "schemaPath": f"{schema_path}/properties/{trigger_name}",
+                        "responsePath": f"{response_path}/{trigger_name}",
+                        "title": trigger_schema.get("title"),
+                        "constraint": trigger_constraint,
+                    },
+                    "consequence": {
+                        "schemaPath": f"{schema_path}/properties/{consequence_name}",
+                        "responsePath": f"{response_path}/{consequence_name}",
+                        "title": consequence_schema.get("title"),
+                        "required": True,
+                        "constraint": consequence_constraint,
+                    },
+                }
+            )
+    return declarations
+
+
 def _rule_capabilities(rule_schema: dict[str, Any]) -> tuple[list[dict], list[dict]]:
     attachments: list[dict] = []
     calculations: list[dict] = []
@@ -196,6 +298,7 @@ def build_browser_plan() -> dict[str, Any]:
         loaded = _load_banked_form(form_id, project_xml=False)
         resolved_schema = resolve_jsonschema(loaded.form_json_schema)
         schema_fields = list(_schema_fields(resolved_schema))
+        schema_implications = _simple_schema_implications(resolved_schema)
         ui_nodes = list(_walk(loaded.form_ui_schema))
         ui_fields = [node for _, node in ui_nodes if _ui_definition_paths(node)]
         for node in ui_fields:
@@ -292,6 +395,10 @@ def build_browser_plan() -> dict[str, Any]:
                     ),
                     "conditional": _capability(
                         conditionals, missing_reason="no UI conditional is declared"
+                    ),
+                    "schemaImplication": _capability(
+                        schema_implications,
+                        missing_reason="no simple schema implication is declared",
                     ),
                     "calculation": _capability(
                         calculations, missing_reason="no executable calculation is declared"

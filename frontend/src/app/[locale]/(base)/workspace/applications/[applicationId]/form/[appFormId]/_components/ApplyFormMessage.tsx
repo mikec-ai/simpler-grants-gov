@@ -7,6 +7,16 @@ const getWarningKey = (warning: FormattedFormValidationWarning): string => {
   return `${warning.htmlField ?? warning.field ?? warning.definition}-${warning.message}`;
 };
 
+export const getValidationFocusTarget = (
+  targetId: string,
+): HTMLElement | null => {
+  const target = document.getElementById(targetId);
+  // Attachment widgets expose an interactive file input with a `-visible`
+  // suffix. Some schema-driven states do not render the hidden model input,
+  // so resolve the interactive control independently of the base element.
+  return document.getElementById(`${targetId}-visible`) ?? target;
+};
+
 /**
  * Builds summary link text for validation warnings.
  *
@@ -121,11 +131,10 @@ export const ApplyFormMessage = ({
                 href={`#${targetId}`}
                 onClick={(event) => {
                   if (!targetId) return;
-                  const targetElement = document.getElementById(targetId);
+                  const targetElement = getValidationFocusTarget(targetId);
                   if (targetElement) {
                     event.preventDefault();
                     targetElement.focus();
-                    window.location.hash = `#${targetId}`;
                   }
                 }}
               >
