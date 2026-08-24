@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:HumanSubjectStudy_3_0="http://apply.grants.gov/forms/HumanSubjectStudy_3_0-V3.0" xmlns:att="http://apply.grants.gov/system/Attachments-V1.0" xmlns:globLib="http://apply.grants.gov/system/GlobalLibrary-V2.0" xmlns:glob="http://apply.grants.gov/system/Global-V1.0" xmlns:codes="http://apply.grants.gov/system/UniversalCodes-V2.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://apply.grants.gov/forms/HumanSubjectStudy_3_0-V3.0" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xs:import namespace="http://apply.grants.gov/system/Attachments-V1.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd"/>
+	<xs:import namespace="http://apply.grants.gov/system/Global-V1.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd"/>
+	<xs:import namespace="http://apply.grants.gov/system/GlobalLibrary-V2.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"/>
+	<xs:import namespace="http://apply.grants.gov/system/UniversalCodes-V2.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd"/>
+	<xs:element name="HumanSubjectStudy_3_0">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Study_id" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_40_DataType" minOccurs="0"/>
+				<xs:element name="StudyTitle" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_600_DataType"/>
+				<xs:element name="ExemptFedReg" type="globLib:YesNoDataType"/>
+				<xs:element name="ExemptionNumbers" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ExemptionNumber" maxOccurs="8">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="E1" /> 
+										<xs:enumeration value="E2" /> 
+										<xs:enumeration value="E3" /> 
+										<xs:enumeration value="E4" /> 
+										<xs:enumeration value="E5" /> 
+										<xs:enumeration value="E6" /> 
+										<xs:enumeration value="E7" /> 
+										<xs:enumeration value="E8" /> 
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>	
+				<xs:element name="ClinicalTrialQuestionnaire">
+					<xs:complexType>
+						<xs:sequence>							
+							<xs:element name="HumanSubjectsIndicator" type="globLib:YesNoDataType"/>
+							<xs:element name="InterventionAssigned" type="globLib:YesNoDataType"/>
+							<xs:element name="EvaluateIntervention" type="globLib:YesNoDataType"/>
+							<xs:element name="HealthRelatedOutcome" type="globLib:YesNoDataType"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ClinicalTrialsIdentifier" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_11_DataType" minOccurs="0"/>
+				<xs:element name="StudyPopulationCharacteristics" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="StudyConditions" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_255_DataType" minOccurs="0" maxOccurs="20"/>
+							<xs:element name="EligibilityCriteria" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_15000_DataType" minOccurs="0"/>
+							<xs:element name="AgeLimits" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>	
+										<xs:element name="MinimumAge" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_Age_DataType" minOccurs="0"/>
+										<xs:element name="MaximumAge" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_Age_DataType" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="InclusionOfIndividualsAcrossLifespan" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attFile" type="att:AttachedFileDataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="InclusionOfWomenAndMinorities" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attFile" type="att:AttachedFileDataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RecruitmentAndRetentionPlan" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attFile" type="att:AttachedFileDataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RecruitmentStatus" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_RecruitmentStatus_DataType" minOccurs="0"/>
+							<xs:element name="StudyTimeline" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attFile" type="att:AttachedFileDataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="FirstSubjectEnrollment" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="EnrollmentDate" type="xs:date"/>
+										<xs:element name="AnticipatedActual" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_AnticipatedActual_DataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="InclusionEnrollmentReport" minOccurs="0" maxOccurs="20">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="IER_id" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_40_DataType" minOccurs="0"/>
+										<xs:element name="InclusionEnrollmentReportTitle" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_600_DataType"/>
+										<xs:element name="ExistingDatasetOrResource" type="globLib:YesNoDataType"/>
+										<xs:element name="EnrollmentLocationType">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Domestic"/>
+													<xs:enumeration value="Foreign"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="EnrollmentCountry" type="codes:CountryCodeDataTypeV3" minOccurs="0" maxOccurs="200"/>
+										<xs:element name="EnrollmentLocations" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_255_DataType" minOccurs="0"/>
+										<xs:element name="Comments" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_500_DataType" minOccurs="0"/>
+										<xs:element name="Planned" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="NotHispanic" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_EthnicCategoryDataType" minOccurs="0"/>
+													<xs:element name="Hispanic" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_EthnicCategoryDataType" minOccurs="0"/>
+													<xs:element name="Total" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_TotalsDataType" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Cumulative" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="NotHispanic" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_CEthnicCategoryDataType" minOccurs="0"/>
+													<xs:element name="Hispanic" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_CEthnicCategoryDataType" minOccurs="0"/>
+													<xs:element name="UnknownEthnicity" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_CEthnicCategoryDataType" minOccurs="0"/>
+													<xs:element name="Total" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_CTotalsDataType" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>			
+				<xs:element name="ProtectionMonitoringPlans" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ProtectionOfHumanSubjects" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attFile" type="att:AttachedFileDataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="MultiSiteStudy" type="globLib:YesNoNotApplicableDataType" minOccurs="0"/>
+							<xs:element name="IRBPlan" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attFile" type="att:AttachedFileDataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DataSafetyMonitoringPlan" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attFile" type="att:AttachedFileDataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="BoardAppointed" type="globLib:YesNoDataType" minOccurs="0"/>
+							<xs:element name="StudyTeamStructure" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attFile" type="att:AttachedFileDataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ProtocolSynopsis" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="StudyDesign" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="DetailedDescription" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_32000_DataType" minOccurs="0"/>
+										<xs:element name="PrimaryPurpose" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_PrimaryPurpose_DataType" minOccurs="0"/>
+										<xs:element name="OtherPrimaryPurpose" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_255_DataType" minOccurs="0"/>
+										<xs:element name="Interventions" minOccurs="0" maxOccurs="20">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="InterventionType" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_InterventionType_DataType"/>
+													<xs:element name="InterventionName" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_200_DataType"/>
+													<xs:element name="InterventionDescription" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_1000_DataType"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="StudyPhase" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_StudyPhase_DataType" minOccurs="0"/>
+										<xs:element name="NIHPhase3ClinicalTrial" type="globLib:YesNoDataType" minOccurs="0"/>
+										<xs:element name="InterventionModel" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_InterventionModel_DataType" minOccurs="0"/>
+										<xs:element name="OtherInterventionModel" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_255_DataType" minOccurs="0"/>
+										<xs:element name="Masking" type="globLib:YesNoDataType" minOccurs="0"/>
+										<xs:element name="MaskingType" minOccurs="0">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Participant" type="globLib:YesNoDataType" minOccurs="0"/>
+													<xs:element name="CareProvider" type="globLib:YesNoDataType" minOccurs="0"/>
+													<xs:element name="Investigator" type="globLib:YesNoDataType" minOccurs="0"/>
+													<xs:element name="OutcomesAssessor" type="globLib:YesNoDataType" minOccurs="0"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Allocation" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_Allocation_DataType" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>	
+							<xs:element name="OutcomesMeasures" minOccurs="0" maxOccurs="50">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="OutcomeName" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_255_DataType"/>
+										<xs:element name="OutcomeType" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_OutcomeType_DataType"/>
+										<xs:element name="TimeFrame" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_255_DataType"/>
+										<xs:element name="OutcomeDescription" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_999_DataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>	
+							<xs:element name="StatisticalDesignPower" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attFile" type="att:AttachedFileDataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SubjectParticipationDuration" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_1_255_DataType" minOccurs="0"/>
+							<xs:element name="FDARegulatedIntervention" type="globLib:YesNoDataType" minOccurs="0"/>
+							<xs:element name="InvestigationalAvailability" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attFile" type="att:AttachedFileDataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ApplicableClinicalTrial" type="globLib:YesNoDataType" minOccurs="0"/>
+							<xs:element name="DisseminationPlan" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attFile" type="att:AttachedFileDataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>		
+				<xs:element name="OtherClinicalTrialAttachment" type="att:AttachmentGroupMin0Max100DataType" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="FormVersion" type="globLib:FormVersionDataType" use="required" fixed="3.0"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="HumanSubjectStudy_3_0_EthnicCategoryDataType">
+		<xs:sequence>
+			<xs:element name="Female" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_RacialCategoryDataType" minOccurs="0"/>
+			<xs:element name="Male" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_RacialCategoryDataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HumanSubjectStudy_3_0_RacialCategoryDataType">
+		<xs:sequence>
+			<xs:element name="AmericanIndian" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Asian" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Hawaiian" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Black" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="White" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="MultipleRace" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Total" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HumanSubjectStudy_3_0_TotalsDataType">
+		<xs:sequence>
+			<xs:element name="AmericanIndian" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Asian" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Hawaiian" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Black" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="White" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="MultipleRace" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Total" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_99999999999_DataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HumanSubjectStudy_3_0_CEthnicCategoryDataType">
+		<xs:sequence>
+			<xs:element name="Female" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_CRacialCategoryDataType" minOccurs="0"/>
+			<xs:element name="Male" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_CRacialCategoryDataType" minOccurs="0"/>
+			<xs:element name="UnknownGender" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_CRacialCategoryDataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HumanSubjectStudy_3_0_CRacialCategoryDataType">
+		<xs:sequence>
+			<xs:element name="AmericanIndian" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Asian" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Hawaiian" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Black" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="White" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="MultipleRace" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="UnknownRace" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_999999999_DataType" minOccurs="0"/>
+			<xs:element name="Total" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HumanSubjectStudy_3_0_CTotalsDataType">
+		<xs:sequence>
+			<xs:element name="AmericanIndian" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Asian" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Hawaiian" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Black" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="White" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="MultipleRace" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="UnknownRace" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_9999999999_DataType" minOccurs="0"/>
+			<xs:element name="Total" type="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0_0_to_99999999999_DataType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_0_to_999999999_DataType">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="999999999"/>
+		</xs:restriction>
+	</xs:simpleType>	
+	<xs:simpleType name="HumanSubjectStudy_3_0_0_to_9999999999_DataType">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="9999999999"/>
+		</xs:restriction>
+	</xs:simpleType>	
+	<xs:simpleType name="HumanSubjectStudy_3_0_0_to_99999999999_DataType">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="99999999999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_1_11_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="11"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_1_40_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_1_200_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_1_500_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_1_600_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="600"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_1_255_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_1_999_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_1_1000_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_1_15000_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="15000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_1_32000_DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="32000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_OutcomeType_DataType">
+		<xs:restriction base="xs:string">
+            <xs:enumeration value="Primary"/>
+            <xs:enumeration value="Secondary"/>
+            <xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_Allocation_DataType">
+		<xs:restriction base="xs:string">
+            <xs:enumeration value="N/A"/>
+            <xs:enumeration value="Randomized"/>
+            <xs:enumeration value="Non-randomized"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_InterventionModel_DataType">
+		<xs:restriction base="xs:string">
+            <xs:enumeration value="Single Group"/>
+            <xs:enumeration value="Parallel"/>
+            <xs:enumeration value="Cross-Over"/>
+            <xs:enumeration value="Factorial"/>
+            <xs:enumeration value="Sequential"/>
+            <xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_PrimaryPurpose_DataType">
+		<xs:restriction base="xs:string">
+            <xs:enumeration value="Treatment"/>
+            <xs:enumeration value="Prevention"/>
+            <xs:enumeration value="Diagnostics"/>
+            <xs:enumeration value="Supportive Care"/>
+            <xs:enumeration value="Screening"/>
+            <xs:enumeration value="Health Services Research"/>
+            <xs:enumeration value="Basic Science"/>
+            <xs:enumeration value="Device Feasibility"/>
+            <xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_StudyPhase_DataType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Early Phase 1 (or Phase 0)"/>
+			<xs:enumeration value="Phase 1"/>
+			<xs:enumeration value="Phase 1/2"/>
+			<xs:enumeration value="Phase 2"/>
+			<xs:enumeration value="Phase 2/3"/>
+			<xs:enumeration value="Phase 3"/>
+			<xs:enumeration value="Phase 4"/>
+			<xs:enumeration value="N/A"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_InterventionType_DataType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Drug (including placebo)"/>
+			<xs:enumeration value="Device (including sham)"/>
+			<xs:enumeration value="Biological/Vaccine"/>
+			<xs:enumeration value="Procedure/Surgery"/>
+			<xs:enumeration value="Radiation"/>
+			<xs:enumeration value="Behavioral (e.g., Psychotherapy, Lifestyle Counseling)"/>
+			<xs:enumeration value="Genetic (including gene transfer, stem cell and recombinant DNA)"/>
+			<xs:enumeration value="Dietary Supplement (e.g., vitamins, minerals)"/>
+			<xs:enumeration value="Combination Product"/>
+			<xs:enumeration value="Diagnostic Test"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="HumanSubjectStudy_3_0_Age_DataType">
+		<xs:sequence>			
+			<xs:element name="Age" type="glob:IntegerMin1Max3Type" minOccurs="0"/>
+			<xs:element name="AgeType">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="Years"/> 
+						<xs:enumeration value="Months"/> 
+						<xs:enumeration value="Weeks"/> 
+						<xs:enumeration value="Days"/> 
+						<xs:enumeration value="Hours"/> 
+						<xs:enumeration value="Minutes"/> 
+						<xs:enumeration value="N/A (No limit)"/> 
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>			
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_RecruitmentStatus_DataType">
+		<xs:restriction base="xs:string">
+            <xs:enumeration value="Not yet recruiting"/>
+			<xs:enumeration value="Recruiting"/>
+			<xs:enumeration value="Enrolling by invitation"/>
+			<xs:enumeration value="Active, not recruiting"/>
+			<xs:enumeration value="Completed"/>
+			<xs:enumeration value="Suspended"/>
+			<xs:enumeration value="Terminated (Halted Prematurely)"/>
+			<xs:enumeration value="Withdrawn (No Participants Enrolled)"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HumanSubjectStudy_3_0_AnticipatedActual_DataType">
+		<xs:restriction base="xs:string">
+            <xs:enumeration value="Anticipated"/>
+			<xs:enumeration value="Actual"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
