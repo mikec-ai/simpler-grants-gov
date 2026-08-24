@@ -87,12 +87,18 @@ def test_every_banked_package_builds_as_a_preview_form() -> None:
     }
 
 
-def test_preview_adapter_expands_portable_references_for_the_simpler_renderer() -> None:
-    preview = build_preview_form("sf424")
+@pytest.mark.parametrize(
+    ("form_id", "referenced_field"),
+    [("sf424", "submission_type"), ("sf424-short", "agency_name")],
+)
+def test_preview_adapter_expands_family_references_for_the_simpler_renderer(
+    form_id: str, referenced_field: str
+) -> None:
+    preview = build_preview_form(form_id)
     serialized = json.dumps(preview.form_json_schema)
 
     assert '"$ref"' not in serialized
-    assert preview.form_json_schema["properties"]["submission_type"]["allOf"][0]["type"] == "string"
+    assert preview.form_json_schema["properties"][referenced_field]["allOf"][0]["type"] == "string"
 
 
 def test_banking_still_does_not_enable_the_production_loader() -> None:
