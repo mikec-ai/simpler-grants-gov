@@ -22,6 +22,7 @@ from tests.src.db.models.factories import (
     ApplicationUserRoleFactory,
     CompetitionFactory,
     CompetitionFormFactory,
+    LinkExternalUserFactory,
     RoleFactory,
     UserFactory,
 )
@@ -44,6 +45,7 @@ def _restore_runtime_form(key: FormTemplateKey, previous: Any | None) -> None:
 
 def _link_user(application: Any, privileges: list[Privilege]) -> Any:
     user = UserFactory.create()
+    LinkExternalUserFactory.create(user=user, email="portable-reviewer@example.com")
     ApplicationUserRoleFactory.create(
         application_user=ApplicationUserFactory.create(user=user, application=application),
         role=RoleFactory.create(privileges=privileges, is_application_role=True),
