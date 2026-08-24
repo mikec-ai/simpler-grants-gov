@@ -1,0 +1,55 @@
+{
+  "contract": "grants-form-operational-behavior/v1",
+  "formId": "rr-budget-10yr",
+  "behaviors": [
+    {
+      "canonicalPath": "/samUei",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/applicantInfo/organizationInfo/samUei"
+      },
+      "editability": "editable",
+      "executionPolicy": {
+        "trigger": "source-response-updated",
+        "writePolicy": "until-target-user-modified",
+        "missingSourcePolicy": "skip"
+      }
+    },
+    {
+      "canonicalPath": "/organizationName",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/applicantInfo/organizationInfo/organizationName"
+      },
+      "editability": "unspecified",
+      "executionPolicy": {
+        "trigger": "source-response-updated",
+        "writePolicy": "until-target-user-modified",
+        "missingSourcePolicy": "skip"
+      }
+    },
+    {
+      "canonicalPath": "/budgetYear/[]/budgetPeriodStartDate",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/proposedProjectPeriod/proposedStartDate"
+      },
+      "targetSelection": {
+        "arrayPath": "/budgetYear",
+        "index": 0
+      },
+      "editability": "unspecified",
+      "executionPolicy": {
+        "trigger": "source-response-updated",
+        "writePolicy": "until-target-user-modified",
+        "missingSourcePolicy": "skip"
+      }
+    }
+  ]
+}
