@@ -4,6 +4,13 @@
 
 APP_NAME := grants-api
 
+# Keep the historical project names by default while allowing isolated test
+# runners to provide distinct API and database project identities.
+API_COMPOSE_PROJECT ?= api
+DB_COMPOSE_PROJECT ?= backend
+API_COMPOSE := docker compose --project-name $(API_COMPOSE_PROJECT)
+DB_COMPOSE := docker compose --project-name $(DB_COMPOSE_PROJECT) -f ../backend/docker-compose.db.yml
+
 # Colors for output, can be used as:
 # 	echo -e "this text is the default color $(RED) this text is red $(NO_COLOR) everything here is the default color again"
 RED := \033[0;31m
@@ -32,7 +39,7 @@ endif
 ifeq "$(PY_RUN_APPROACH)" "local"
 PY_RUN_CMD := uv run
 else
-PY_RUN_CMD := docker compose run $(DOCKER_EXEC_ARGS) --rm $(APP_NAME)
+PY_RUN_CMD := $(API_COMPOSE) run $(DOCKER_EXEC_ARGS) --rm $(APP_NAME)
 endif
 
 FLASK_CMD := $(PY_RUN_CMD) flask
@@ -83,22 +90,22 @@ setup-env-override-file:
 ##################################################
 
 build:
-	docker compose build
+	$(API_COMPOSE) build
 
 start: ## Start the API for CI/CD or local Dev work where we don't need OpenSearch Dashboard
-	docker compose up grants-api --detach
+	$(API_COMPOSE) up grants-api --detach
 
 start-ci: ## Start the API without the development reloader for hosted browser checks
-	docker compose -f docker-compose.yml -f docker-compose.ci.yml up grants-api --detach
+	$(API_COMPOSE) -f docker-compose.yml -f docker-compose.ci.yml up grants-api --detach
 
 start-full: ## Start the API including OpenSearch Dashboard
-	docker compose up --detach
+	$(API_COMPOSE) up --detach
 
 start-debug:
-	docker compose -f docker-compose.yml -f docker-compose.debug.yml up --detach
+	$(API_COMPOSE) -f docker-compose.yml -f docker-compose.debug.yml up --detach
 
 run-logs: start ## Start the API and follow the logs
-	docker compose logs --follow --no-color $(APP_NAME)
+	$(API_COMPOSE) logs --follow --no-color $(APP_NAME)
 
 init-components: init-db init-opensearch init-s3mock init-sqsmock init-dynamodb init-mock-soap-services init-mailpit
 
@@ -107,14 +114,14 @@ init: setup-env-override-file build init-components ## Run all of the init tasks
 init-ci-cd: setup-env-override-file init-components ## Do not build, but do run all of the init tasks to set up DB, Search, s3/sqs mocks, and Mock services. To do this "from scratch" use remake-backend instead
 
 clean-volumes: ## Remove project docker volumes - which includes the DB, and OpenSearch state
-	docker compose down --volumes
-	docker compose -f ../backend/docker-compose.db.yml down --volumes
+	$(API_COMPOSE) down --volumes
+	$(DB_COMPOSE) down --volumes
 
 volume-recreate: clean-volumes init ## Destroy current volumes, setup new ones - will remove all existing data
 
 stop: ## Stop the docker containers
-	docker compose down
-	docker compose -f ../backend/docker-compose.db.yml down
+	$(API_COMPOSE) down
+	$(DB_COMPOSE) down
 
 check: format-check lint db-check-migrations test
 
@@ -133,7 +140,7 @@ remake-backend: volume-recreate setup-api-data ## Completely recreate API servic
 init-db: start-db setup-postgres-db db-migrate
 
 start-db:
-	docker compose -f ../backend/docker-compose.db.yml up --detach grants-db
+	$(DB_COMPOSE) up --detach grants-db
 	../backend/scripts/wait-for-local-db.sh
 
 #########################
@@ -183,7 +190,7 @@ db-check-migrations: ## Verify the DB schema matches the DB migrations generated
 	$(alembic_cmd) check || (echo -e "\n$(RED)Migrations are not up-to-date, make sure you generate migrations by running 'make db-migrate-create <msg>'$(NO_COLOR)"; exit 1)
 
 create-erds: # Create ERD diagrams for our DB schema
-	docker compose run --rm openapi-tools create-erds
+	$(API_COMPOSE) run --rm openapi-tools create-erds
 	mv bin/*.png ../documentation/api/database/erds
 
 setup-postgres-db: ## Does any initial setup necessary for our local database to work
@@ -196,13 +203,13 @@ setup-postgres-db: ## Does any initial setup necessary for our local database to
 init-opensearch: start-opensearch ## Start the opensearch service locally
 
 start-opensearch:
-	docker compose up --detach opensearch-node
+	$(API_COMPOSE) up --detach opensearch-node
 	./bin/wait-for-local-opensearch.sh
 
 init-opensearch-dashboards: start-opensearch-dashboards
 
 start-opensearch-dashboards:
-	docker compose up --detach opensearch-dashboards
+	$(API_COMPOSE) up --detach opensearch-dashboards
 
 ##################################################
 # S3 Mock
@@ -211,7 +218,7 @@ start-opensearch-dashboards:
 init-s3mock: start-s3mock
 
 start-s3mock:
-	docker compose up --detach s3mock
+	$(API_COMPOSE) up --detach s3mock
 
 
 ##################################################
@@ -221,7 +228,7 @@ start-s3mock:
 init-sqsmock: start-sqsmock
 
 start-sqsmock:
-	docker compose up --detach sqsmock
+	$(API_COMPOSE) up --detach sqsmock
 
 
 ##################################################
@@ -231,7 +238,7 @@ start-sqsmock:
 init-dynamodb: start-dynamodb setup-dynamodb
 
 start-dynamodb:
-	docker compose up --detach dynamodb-local
+	$(API_COMPOSE) up --detach dynamodb-local
 	./bin/wait-for-local-dynamodb.sh
 
 setup-dynamodb: ## Create local DynamoDB tables
@@ -254,7 +261,7 @@ dat-to-jsonschema:
 init-mock-oauth2: start-mock-oauth2
 
 start-mock-oauth2:
-	docker compose up --detach mock-oauth2-server
+	$(API_COMPOSE) up --detach mock-oauth2-server
 
 ##################################################
 # Mailpit (local email capture)
@@ -263,7 +270,7 @@ start-mock-oauth2:
 init-mailpit: start-mailpit
 
 start-mailpit:
-	docker compose up --detach mailpit
+	$(API_COMPOSE) up --detach mailpit
 
 ##################################################
 # Testing
@@ -318,7 +325,7 @@ cmd: ## Run Flask app CLI command (Run `make cli args="--help"` to see list of C
 	$(FLASK_CMD) $(args)
 
 openapi-spec: ## Generate OpenAPI spec
-	docker compose run --rm -e DB_CHECK_CONNECTION_ON_INIT=false openapi-tools flask --app src.app spec --format yaml --output openapi.generated.yml
+	$(API_COMPOSE) run --rm -e DB_CHECK_CONNECTION_ON_INIT=false openapi-tools flask --app src.app spec --format yaml --output openapi.generated.yml
 
 openapi-spec-common-grants:
 	$(FLASK_CMD) common_grants spec --output ./openapi-cg.generated.yml
@@ -360,7 +367,7 @@ run-workflow-service: ## Run the workflow service
 # when run with docker as we use it to run the code async. Outside docker that
 # isn't something we have a simple way to support that.
 run-workflow-service-async: ## Run the workflow service without blocking
-	docker compose run --detach --rm grants-api flask workflow workflow-main
+	$(API_COMPOSE) run --detach --rm grants-api flask workflow workflow-main
 
 run-email-notifications: ## Send email notifications
 	$(FLASK_CMD) task email-notifications $(args)
@@ -373,7 +380,7 @@ setup-api-data: db-seed-local populate-search-opportunities populate-search-agen
 ##################################################
 
 login: start ## Start shell in running container
-	docker exec -it $(APP_NAME) bash
+	$(API_COMPOSE) exec $(APP_NAME) bash
 
 DB_URI := postgresql://$(DB_USER)@$(DB_HOST):$(DB_PORT)/$(DB_NAME)?options=-csearch_path%3dapi,legacy,staging
 login-db: ## Start psql with project environment variables
@@ -419,7 +426,7 @@ load-test-prod: # Load test the production environment in aws. Please test respo
 init-mock-soap-services: start-mock-soap-services ## Initialize the applicants soap api
 
 start-mock-soap-services: ## start applicants soap api
-	docker compose up --detach mock-applicants-soap-api
+	$(API_COMPOSE) up --detach mock-applicants-soap-api
 
 validate-simpler-endpoints:
 	$(PY_RUN_CMD) validate-simpler-endpoints

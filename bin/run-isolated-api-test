@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+set -eu
+
+SCRIPT_DIR=$(dirname -- "$0")
+SCRIPT_DIR=$(CDPATH='' cd -- "$SCRIPT_DIR" && pwd)
+exec python3 "$SCRIPT_DIR/../api/bin/run_isolated_api_test.py" "$@"

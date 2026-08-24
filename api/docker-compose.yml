@@ -1,7 +1,6 @@
 services:
   opensearch-node:
     image: opensearchproject/opensearch:2
-    container_name: opensearch-node
     environment:
       - cluster.name=opensearch-cluster # Name the cluster
       - node.name=opensearch-node # Name the node that will run in this container
@@ -22,15 +21,14 @@ services:
     volumes:
       - opensearch-data:/usr/share/opensearch/data # Creates volume called opensearch-data and mounts it to the container
     ports:
-      - 9200:9200 # REST API
-      - 9600:9600 # Performance Analyzer
+      - "${OPENSEARCH_HOST_PORT:-9200}:9200" # REST API
+      - "${OPENSEARCH_ANALYZER_HOST_PORT:-9600}:9600" # Performance Analyzer
     networks:
       - default
   opensearch-dashboards:
     image: opensearchproject/opensearch-dashboards:2
-    container_name: opensearch-dashboards
     ports:
-     - 5601:5601 # Map host port 5601 to container port 5601
+     - "${OPENSEARCH_DASHBOARDS_HOST_PORT:-5601}:5601" # Map host port to container port 5601
     expose:
      - "5601" # Expose port 5601 for web access to OpenSearch Dashboards
     environment:
@@ -40,24 +38,22 @@ services:
      - default
 
   s3mock:
-    container_name: s3mock
     image: adobe/s3mock:latest
     environment:
       - COM_ADOBE_TESTING_S3MOCK_STORE_ROOT=containers3root
       - COM_ADOBE_TESTING_S3MOCK_STORE_RETAIN_FILES_ON_EXIT=true
       - COM_ADOBE_TESTING_S3MOCK_STORE_INITIAL_BUCKETS=local-mock-public-bucket,local-mock-draft-bucket,local-mock-file-scan-bucket
     ports:
-      - 9090:9090
+      - "${S3MOCK_HOST_PORT:-9090}:9090"
     volumes:
-      - ./locals3root:/containers3root
+      - s3mock-data:/containers3root
     networks:
       - default
 
   sqsmock:
-    container_name: sqsmock
     image: softwaremill/elasticmq-native
     ports:
-      - 9324:9324
+      - "${SQSMOCK_HOST_PORT:-9324}:9324"
     volumes:
       - ./mock-sqs/custom.conf:/opt/elasticmq.conf
     networks:
@@ -66,9 +62,8 @@ services:
   dynamodb-local:
     command: "-jar DynamoDBLocal.jar -sharedDb -inMemory"
     image: "amazon/dynamodb-local:latest"
-    container_name: dynamodb-local
     ports:
-      - "8000:8000"
+      - "${DYNAMODB_HOST_PORT:-8000}:8000"
     networks:
       - default
 
@@ -91,7 +86,6 @@ services:
         "8080",
         "--reload",
       ]
-    container_name: grants-api
     env_file:
       - path: ./local.env
         required: true
@@ -100,7 +94,7 @@ services:
       - path: ./soap-api.env
         required: false
     ports:
-      - 8080:8080
+      - "${API_HOST_PORT:-8080}:8080"
     volumes:
       - .:/api
     depends_on:
@@ -119,7 +113,7 @@ services:
   mock-oauth2-server:
     image: ghcr.io/navikt/mock-oauth2-server:2.3.0
     ports:
-      - "5001:5001"
+      - "${OAUTH_HOST_PORT:-5001}:5001"
     environment:
       LOG_LEVEL: "debug"
       SERVER_PORT: 5001
@@ -133,9 +127,8 @@ services:
 
   mock-applicants-soap-api:
     image: outofcoffee/imposter
-    container_name: mock-applicants-soap-api
     ports:
-      - "8082:8080"
+      - "${SOAP_MOCK_HOST_PORT:-8082}:8080"
     volumes:
       - ./mock-soap-services/applicants:/opt/imposter/config:ro
     networks:
@@ -143,14 +136,13 @@ services:
 
   mailpit:
     image: axllent/mailpit:v1.30.4
-    container_name: mailpit
     environment:
       # Keep the local inbox self-contained and avoid background version-check traffic.
       MP_DISABLE_VERSION_CHECK: "true"
       MP_MAX_MESSAGES: "500"
     ports:
-      - "127.0.0.1:8025:8025"
-      - "127.0.0.1:1025:1025"
+      - "127.0.0.1:${MAILPIT_UI_HOST_PORT:-8025}:8025"
+      - "127.0.0.1:${MAILPIT_SMTP_HOST_PORT:-1025}:1025"
     healthcheck:
       test: ["CMD", "/mailpit", "readyz"]
       interval: 5s
@@ -182,12 +174,14 @@ services:
 volumes:
   grantsdbdata:
   opensearch-data:
+  s3mock-data:
 
 networks:
   grants_backend:
     driver: bridge
+    name: ${API_BACKEND_NETWORK_NAME:-api_grants_backend}
   local_db:
     # NOTE: This network is created by starting the shared DB
     # defined in /backend/docker-compose.db.yml
     external: true
-    name: local_db
+    name: ${LOCAL_DB_NETWORK_NAME:-local_db}

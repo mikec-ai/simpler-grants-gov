@@ -231,10 +231,10 @@ runs:
       run: |
         cd ../api
         echo "=== API Container Logs ==="
-        docker logs grants-api || echo "Could not retrieve API logs"
+        docker compose --project-name "${API_COMPOSE_PROJECT:-api}" logs grants-api || echo "Could not retrieve API logs"
         echo ""
         echo "=== OpenSearch Container Logs ==="
-        docker logs opensearch-node || echo "Could not retrieve OpenSearch logs"
+        docker compose --project-name "${API_COMPOSE_PROJECT:-api}" logs opensearch-node || echo "Could not retrieve OpenSearch logs"
         echo ""
         echo "=== Container Status ==="
         docker ps -a

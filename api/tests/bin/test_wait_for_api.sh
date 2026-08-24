@@ -38,6 +38,11 @@ make_fake_commands() {
 set -eu
 printf '%s\n' "$*" >>"$FAKE_DOCKER_CALLS"
 
+if [[ "$1" == "compose" && "$2" == "--project-name" ]]; then
+  shift 3
+  set -- compose "$@"
+fi
+
 if [[ "$*" == "compose ps --status running --services grants-api" ]]; then
   if [[ "$DOCKER_SCENARIO" != "stopped" ]]; then
     echo grants-api
@@ -120,6 +125,7 @@ run_case ready running ready 5 1
 [[ "$CASE_STATUS" -eq 0 ]] || fail "ready case exited $CASE_STATUS"
 assert_contains "$CASE_DIR/stdout" "status: ready"
 assert_contains "$CASE_DIR/stdout" "http_status: 200"
+assert_contains "$CASE_DIR/docker-calls" "compose --project-name api ps --status running --services grants-api"
 pass_count=$((pass_count + 1))
 
 run_case stopped stopped unavailable 5 1
@@ -153,7 +159,7 @@ run_case late_success running slow_ready 1 1
 assert_contains "$CASE_DIR/stdout" 'reason: "timeout"'
 assert_contains "$CASE_DIR/stdout" "http_status: 200"
 assert_contains "$CASE_DIR/curl-args" "--connect-timeout 1 --max-time 1"
-assert_contains "$CASE_DIR/docker-calls" "compose ps -a"
+assert_contains "$CASE_DIR/docker-calls" "compose --project-name api ps -a"
 pass_count=$((pass_count + 1))
 
 unknown_dir="$TEST_ROOT/unknown_argument"
