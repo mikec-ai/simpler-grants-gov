@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Classify and verify additive portable-form banking changes.
+"""Classify and verify strictly additive portable-form banking changes.
 
 The lightweight CI lane is intentionally narrow: it applies only when a pull
-request adds or updates vendored artifacts and their exact XSD fixtures. Any
-consumer code, test, registration, projection, or deletion requires full CI.
+request adds new vendored artifacts and exact XSD fixtures. Updating an existing
+artifact may change a runtime-enabled form, so modifications, consumer code,
+tests, registration, projection, and deletions all require full CI.
 """
 
 from __future__ import annotations
@@ -64,7 +65,19 @@ def classify(changes: list[Change]) -> tuple[bool, str]:
     if outside_bank:
         return False, f"consumer or workflow changes require full CI: {', '.join(outside_bank)}"
 
-    return True, "only additive or modified portable artifacts and exact XSD fixtures changed"
+    modified_existing = [
+        change.path
+        for change in changes
+        if change.status != "A" and change.path != MANIFEST.as_posix()
+    ]
+    if modified_existing:
+        return (
+            False,
+            "existing portable artifacts or XSD fixtures require full CI: "
+            + ", ".join(modified_existing),
+        )
+
+    return True, "only new portable artifacts and exact XSD fixtures were added"
 
 
 def manifest_at(revision: str) -> dict:
