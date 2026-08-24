@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/faculty-student-ownership/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Is your small business a Faculty or Student-Owned entity?"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Report whether the small business is faculty- or student-owned.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

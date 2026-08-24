@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/commercialization-plan/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Attach the commercialization plan required by the applicable agency policy."
+}

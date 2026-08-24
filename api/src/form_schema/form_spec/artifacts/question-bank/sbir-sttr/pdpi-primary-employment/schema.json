@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/pdpi-primary-employment/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Will the Project Director/Principal Investigator have his/her primary employment with the small business at the time of award?"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Report whether the PD/PI will be primarily employed by the small business at award.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/other-agency/schema.json",
+  "type": "string",
+  "maxLength": 20,
+  "description": "Name the agency when the Federal agency selection is Other."
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/sbc-control-id/schema.json",
+  "type": "string",
+  "minLength": 9,
+  "maxLength": 9,
+  "pattern": "^[0-9]{9}$",
+  "description": "Enter the nine-digit Small Business Concern control identifier."
+}

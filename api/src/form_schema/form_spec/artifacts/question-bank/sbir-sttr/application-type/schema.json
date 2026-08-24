@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/application-type/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/SbirSttrApplicationTypeCode",
+      "title": "Application Type (select only one)"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Select the SBIR/STTR application phase or commercialization program.",
+  "$defs": {
+    "SbirSttrApplicationTypeCode": {
+      "type": "string",
+      "enum": [
+        "Phase I",
+        "Phase II",
+        "Fast-Track",
+        "Direct Phase II",
+        "Phase IIA",
+        "Phase IIB",
+        "Phase IIC",
+        "Commercialization Readiness Program"
+      ]
+    }
+  }
+}

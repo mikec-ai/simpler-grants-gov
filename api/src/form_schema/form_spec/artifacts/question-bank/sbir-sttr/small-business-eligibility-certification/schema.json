@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/small-business-eligibility-certification/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Do you certify that at the time of award your organization will meet the eligibility criteria for a small business as defined in the funding opportunity announcement?"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Certify anticipated small-business eligibility at the time of award.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

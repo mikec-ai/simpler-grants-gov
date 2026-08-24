@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/hubzone-location/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Are you located in a HUBZone? To find out if your business is in a HUBZone, use the mapping utility provided by the Small Business Administration at its web site: http://www.sba.gov"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Report whether the small business is located in a HUBZone.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

@@ -1,0 +1,325 @@
+[
+  {
+    "type": "section",
+    "name": "allApplicants",
+    "label": "All Applicants",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/agency/properties/value",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/otherAgency",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/agency/value"
+            },
+            "value": "Other"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/sbcControlId"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/programType/properties/value",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/applicationType/properties/value",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/phaseILetterOfIntentNumber"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/agencyTopicSubtopic"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/smallBusinessEligibility/properties/value",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/numberOfEmployees"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/vcocOwnership/properties/value",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/facultyStudentOwnership/properties/value",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/federalSubcontractsIncluded/properties/value",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/federalSubcontractorNames",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/federalSubcontractsIncluded/value"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/hubzoneLocation/properties/value",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/domesticPerformance/properties/value",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/nonDomesticPerformanceExplanation",
+        "widget": "Attachment",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/domesticPerformance/value"
+            },
+            "value": "N: No"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/equivalentFederalWork/properties/value",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/equivalentWorkFederalAgencies",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/equivalentFederalWork/value"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/disclosurePermission/properties/value",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/tabaFundingRequest/properties/value",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/commercializationPlan",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "sbir",
+    "label": "SBIR-Specific Questions",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/phaseIIAwardsReceived/properties/value",
+        "widget": "Radio",
+        "conditional": {
+          "when": {
+            "op": "in",
+            "ref": {
+              "scope": "root",
+              "pointer": "/programType/value"
+            },
+            "values": [
+              "SBIR",
+              "Both"
+            ]
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/commercializationHistory",
+        "widget": "Attachment",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/phaseIIAwardsReceived/value"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/pdpiPrimaryEmployment/properties/value",
+        "widget": "Radio",
+        "conditional": {
+          "when": {
+            "op": "in",
+            "ref": {
+              "scope": "root",
+              "pointer": "/programType/value"
+            },
+            "values": [
+              "SBIR",
+              "Both"
+            ]
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "sttr",
+    "label": "STTR-Specific Questions",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/pdpiAppointmentAndEffort/properties/value",
+        "widget": "Radio",
+        "conditional": {
+          "when": {
+            "op": "in",
+            "ref": {
+              "scope": "root",
+              "pointer": "/programType/value"
+            },
+            "values": [
+              "STTR",
+              "Both"
+            ]
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/jointPerformancePercentage/properties/value",
+        "widget": "Radio",
+        "conditional": {
+          "when": {
+            "op": "in",
+            "ref": {
+              "scope": "root",
+              "pointer": "/programType/value"
+            },
+            "values": [
+              "STTR",
+              "Both"
+            ]
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/nonprofitResearchPartnerUei",
+        "conditional": {
+          "when": {
+            "op": "in",
+            "ref": {
+              "scope": "root",
+              "pointer": "/programType/value"
+            },
+            "values": [
+              "STTR",
+              "Both"
+            ]
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      }
+    ]
+  }
+]

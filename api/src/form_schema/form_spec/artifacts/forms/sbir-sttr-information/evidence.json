@@ -1,0 +1,427 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "sbir-sttr-information",
+    "kind": "form",
+    "formVersion": "3.0"
+  },
+  "sources": [
+    {
+      "id": "sbir-sttr-xsd-v3-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/SBIR_STTR_Information_3_0-V3.0.xsd",
+      "nativeVersion": "3.0",
+      "sha256": "32ed46a450c1b77d9ef64ebf2a4086ab90b076aa2d3cdfedfab8c00324adcebf"
+    },
+    {
+      "id": "attachments-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d"
+    },
+    {
+      "id": "global-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb"
+    },
+    {
+      "id": "global-library-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "universal-codes-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"
+    },
+    {
+      "id": "sbir-sttr-dat-f787",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/SBIR_STTR_Information_3_0-V3.0_F787.xls",
+      "nativeVersion": "3.0",
+      "sha256": "c0e8d91e583b9f7e6339cc6239f1e4d51e9d93299b893b34efd1bbbc435c6e9b"
+    },
+    {
+      "id": "sbir-sttr-grants-gov-xfa-pdf-v3-0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/SBIR_STTR_Information_3_0-V3.0.pdf",
+      "nativeVersion": "3.0",
+      "sha256": "bd36dbc83d8fcfcd309cd45236d496a5f34f1401b4cf51d5aaeac2f22e45ce1e"
+    },
+    {
+      "id": "sbir-sttr-nih-historical-pdf-v3-0",
+      "type": "pdf",
+      "uri": "https://www.grants.nih.gov/sites/default/files/uploaded/SBIR_STTR_Information_3_0-V3.0.pdf",
+      "nativeVersion": "3.0 (expired 2025 copy)",
+      "sha256": "87529b99eba4ea08b10035f60c5d4fdd4629b4c6e9324c00559205a2e776754a"
+    },
+    {
+      "id": "nih-forms-i-g440-html",
+      "type": "instructions",
+      "uri": "https://grants.nih.gov/grants/how-to-apply-application-guide/forms-i/general/g.440-sbir-sttr-information-form.htm",
+      "nativeVersion": "Forms I (observed 2026-08-23)",
+      "sha256": "b7a3db230317e52c34be840fef12fcc845b004388755d2400a9f5961c2918929"
+    },
+    {
+      "id": "nih-forms-i-sbir-sttr-guide",
+      "type": "instructions",
+      "uri": "https://www.grants.nih.gov/grants/how-to-apply-application-guide/forms-i/sbir-sttr-forms-i.pdf",
+      "nativeVersion": "Forms I",
+      "sha256": "e5525ea946e4ed84c5037351a6b7c574430d37ce26cfd8913a656ec8c2491c84"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "7a51742091f2997307bab621f4fe4e5b36a2b821",
+    "artifact": "artifacts/proof/grantsgov-SBIRSTTRInformation.jsonl.manifest.json",
+    "sourceSetSha256": "c9d17fdcf7e28d4f9de2c1741e2e6ac7b5b629806b7760301e61f1f7adbd480b",
+    "extractedAt": "2026-08-18T20:59:37.998192Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/agency",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.Agency",
+        "status": "proposed",
+        "note": "Source-specific submission-agency question; no opportunity or agency identity equivalence is asserted."
+      },
+      {
+        "canonicalPointer": "#/properties/otherAgency",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.OtherAgency",
+        "status": "proposed",
+        "note": "Source-specific agency-name response controlled by Agency; no reusable agency identity is asserted."
+      },
+      {
+        "canonicalPointer": "#/properties/sbcControlId",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.SBCControlID",
+        "status": "proposed",
+        "note": "Source-specific Small Business Concern control identifier with exact nine-digit XSD/DAT constraint."
+      },
+      {
+        "canonicalPointer": "#/properties/programType",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.ProgramType",
+        "status": "proposed",
+        "note": "Source-specific SBIR/STTR program classification; HHS restrictions remain policy overlays."
+      },
+      {
+        "canonicalPointer": "#/properties/applicationType",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.ApplicationType",
+        "status": "proposed",
+        "note": "Source-specific application phase/program choice; agency and NOFO restrictions remain overlays."
+      },
+      {
+        "canonicalPointer": "#/properties/phaseILetterOfIntentNumber",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.PhaseILetterofIntentNumber",
+        "status": "proposed",
+        "note": "Source-specific optional Phase I letter-of-intent identifier."
+      },
+      {
+        "canonicalPointer": "#/properties/agencyTopicSubtopic",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.AgencyTopicSubtopic",
+        "status": "proposed",
+        "note": "Source-specific agency topic/subtopic identifier with a DOE conditional requirement."
+      },
+      {
+        "canonicalPointer": "#/properties/smallBusinessEligibility",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.SmallBusinessEligibility",
+        "status": "proposed",
+        "note": "Applicant certification, not an automated eligibility determination."
+      },
+      {
+        "canonicalPointer": "#/properties/numberOfEmployees",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.NumberOfEmployees",
+        "status": "proposed",
+        "note": "Source-specific anticipated employee count at award."
+      },
+      {
+        "canonicalPointer": "#/properties/vcocOwnership",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.VCOC",
+        "status": "proposed",
+        "note": "Source-specific VCOC, hedge-fund, or private-equity majority-ownership response."
+      },
+      {
+        "canonicalPointer": "#/properties/facultyStudentOwnership",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.FacultyStudentOwned",
+        "status": "proposed",
+        "note": "Source-specific faculty- or student-owned response."
+      },
+      {
+        "canonicalPointer": "#/properties/federalSubcontractsIncluded",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.SubcontractsIncluded",
+        "status": "proposed",
+        "note": "Source-specific Federal laboratory or agency subcontract response."
+      },
+      {
+        "canonicalPointer": "#/properties/federalSubcontractorNames",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.SubcontractorNames",
+        "status": "proposed",
+        "note": "Free-text Federal laboratory or agency names; not a subaward-recipient organization collection."
+      },
+      {
+        "canonicalPointer": "#/properties/hubzoneLocation",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.LocatedInHUBZone",
+        "status": "proposed",
+        "note": "Source-specific HUBZone response; no automated eligibility decision is inferred."
+      },
+      {
+        "canonicalPointer": "#/properties/domesticPerformance",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.DomesticPerformance",
+        "status": "proposed",
+        "note": "Source-specific domestic research-and-development performance response."
+      },
+      {
+        "canonicalPointer": "#/properties/nonDomesticPerformanceExplanation",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.NonDomesticPerformanceExplanation",
+        "status": "proposed",
+        "note": "Distinct semantic attachment question composing generic attachment capture."
+      },
+      {
+        "canonicalPointer": "#/properties/equivalentFederalWork",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.EquivalentProposalsSubmitted",
+        "status": "proposed",
+        "note": "Source-specific essentially-equivalent Federal proposal or award response."
+      },
+      {
+        "canonicalPointer": "#/properties/equivalentWorkFederalAgencies",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.EquivalentProposalRecipients",
+        "status": "proposed",
+        "note": "Source-specific names of Federal agencies associated with equivalent work."
+      },
+      {
+        "canonicalPointer": "#/properties/disclosurePermission",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.DisclosurePermission",
+        "status": "proposed",
+        "note": "Source-specific applicant authorization for the stated downstream disclosure."
+      },
+      {
+        "canonicalPointer": "#/properties/tabaFundingRequest",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.TABARequest",
+        "status": "proposed",
+        "note": "Source-specific indication of an SBIR/STTR TABA funding request."
+      },
+      {
+        "canonicalPointer": "#/properties/commercializationPlan",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.CommercializationPlan",
+        "status": "proposed",
+        "note": "Distinct semantic attachment question; its disputed policy condition remains uncompiled."
+      },
+      {
+        "canonicalPointer": "#/properties/phaseIIAwardsReceived",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.SBIR_PhaseIIAwardsReceived",
+        "status": "proposed",
+        "note": "Source-specific prior SBIR Phase II award response."
+      },
+      {
+        "canonicalPointer": "#/properties/commercializationHistory",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.SBIR_CommercializationHistory",
+        "status": "proposed",
+        "note": "Distinct SBIR history attachment question composing the same generic capture mechanism."
+      },
+      {
+        "canonicalPointer": "#/properties/pdpiPrimaryEmployment",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.SBIR_PDPIPrimarilyEmployed",
+        "status": "proposed",
+        "note": "Source-specific PD/PI employment response, not a reusable person identity."
+      },
+      {
+        "canonicalPointer": "#/properties/pdpiAppointmentAndEffort",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.STTR_PDPICommitment",
+        "status": "proposed",
+        "note": "Source-specific STTR appointment/commitment and effort response, not a person identity."
+      },
+      {
+        "canonicalPointer": "#/properties/jointPerformancePercentage",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.STTR_JointPerformancePercentage",
+        "status": "proposed",
+        "note": "Source-specific STTR 40/30 work-share response."
+      },
+      {
+        "canonicalPointer": "#/properties/nonprofitResearchPartnerUei",
+        "sourceId": "sbir-sttr-xsd-v3-0",
+        "sourcePath": "SBIR_STTR_Information_3_0.SAMUEI",
+        "status": "proposed",
+        "note": "Role-qualified non-profit research-partner UEI; deliberately not mapped to primary-org/uei."
+      }
+    ]
+  },
+  "behaviorEvidence": [
+    {
+      "canonicalPath": "otherAgency",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "A-6",
+      "sourceRecord": "Required if Other is checked, otherwise cleared and disabled."
+    },
+    {
+      "canonicalPath": "/otherAgency",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "A-6",
+      "sourceRecord": "Clear Other Agency when Agency is not Other."
+    },
+    {
+      "canonicalPath": "agencyTopicSubtopic",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "E-1",
+      "sourceRecord": "Required if DOE is checked for Agency, otherwise optional. Portable JSON Schema compiles this exact condition; the current consumer condition projection gap remains separately recorded in the source audit."
+    },
+    {
+      "canonicalPath": "/federalSubcontractorNames",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-02-1",
+      "sourceRecord": "Clear the names of Federal laboratories/agencies when Subcontracts Included is No."
+    },
+    {
+      "canonicalPath": "federalSubcontractorNames",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-02-4",
+      "sourceRecord": "Enabled and required only when Subcontracts Included is Yes; otherwise disabled."
+    },
+    {
+      "canonicalPath": "/nonDomesticPerformanceExplanation",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-04-1",
+      "sourceRecord": "Remove the Question 4 explanation attachment when Domestic Performance is Yes."
+    },
+    {
+      "canonicalPath": "nonDomesticPerformanceExplanation",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-04-4",
+      "sourceRecord": "Enabled and required only when Domestic Performance is No; otherwise disabled."
+    },
+    {
+      "canonicalPath": "/equivalentWorkFederalAgencies",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-05-1",
+      "sourceRecord": "Clear the names of other Federal agencies when Equivalent Work is No."
+    },
+    {
+      "canonicalPath": "equivalentWorkFederalAgencies",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-05-4",
+      "sourceRecord": "Enabled and required only when Equivalent Work is Yes; otherwise disabled."
+    },
+    {
+      "canonicalPath": "/commercializationPlan",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-08-1",
+      "sourceRecord": "Required for Phase I plus DOE, or Phase II, or Fast-Track; current NIH instructions define a different HHS set."
+    },
+    {
+      "canonicalPath": "phaseIIAwardsReceived.value",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-09-1",
+      "sourceRecord": "Enabled and required only for Program Type SBIR or Both; otherwise disabled."
+    },
+    {
+      "canonicalPath": "commercializationHistory",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-09-4",
+      "sourceRecord": "Enabled and required only when Phase II Awards Received is Yes; otherwise disabled."
+    },
+    {
+      "canonicalPath": "pdpiPrimaryEmployment.value",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-10-1",
+      "sourceRecord": "Enabled and required only for Program Type SBIR or Both; otherwise disabled."
+    },
+    {
+      "canonicalPath": "pdpiAppointmentAndEffort.value",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-11-1",
+      "sourceRecord": "Enabled and required only for Program Type STTR or Both; otherwise disabled."
+    },
+    {
+      "canonicalPath": "jointPerformancePercentage.value",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-12-1",
+      "sourceRecord": "Enabled and required only for Program Type STTR or Both; otherwise disabled."
+    },
+    {
+      "canonicalPath": "nonprofitResearchPartnerUei",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "sbir-sttr-dat-f787",
+      "sourcePath": "F-13",
+      "sourceRecord": "Enabled and required only for Program Type STTR or Both; otherwise disabled; must be 12 characters."
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/non-domestic-performance-explanation/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Explain project research and development performed outside the United States."
+}

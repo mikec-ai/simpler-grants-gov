@@ -1,0 +1,347 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr-information/schema.json",
+  "type": "object",
+  "properties": {
+    "agency": {
+      "$ref": "../../question-bank/sbir-sttr/agency/schema.json"
+    },
+    "otherAgency": {
+      "$ref": "../../question-bank/sbir-sttr/other-agency/schema.json",
+      "title": "Other Agency"
+    },
+    "sbcControlId": {
+      "$ref": "../../question-bank/sbir-sttr/sbc-control-id/schema.json",
+      "title": "SBC Control ID",
+      "description": "Enter the 9 digit SBC Control ID obtained from the Small Business Administration."
+    },
+    "programType": {
+      "$ref": "../../question-bank/sbir-sttr/program-type/schema.json"
+    },
+    "applicationType": {
+      "$ref": "../../question-bank/sbir-sttr/application-type/schema.json"
+    },
+    "phaseILetterOfIntentNumber": {
+      "$ref": "../../question-bank/sbir-sttr/phase-i-letter-of-intent-number/schema.json",
+      "title": "Phase I Letter of Intent Number"
+    },
+    "agencyTopicSubtopic": {
+      "$ref": "../../question-bank/sbir-sttr/agency-topic-subtopic/schema.json",
+      "title": "Agency Topic/Subtopic",
+      "description": "Enter Agency Topic/Subtopic. This field is required for DOE and otherwise optional."
+    },
+    "smallBusinessEligibility": {
+      "$ref": "../../question-bank/sbir-sttr/small-business-eligibility-certification/schema.json"
+    },
+    "numberOfEmployees": {
+      "$ref": "../../question-bank/sbir-sttr/anticipated-employee-count/schema.json",
+      "title": "Anticipated Number of personnel to be employed at your organization at the time of award"
+    },
+    "vcocOwnership": {
+      "$ref": "../../question-bank/sbir-sttr/vcoc-majority-ownership/schema.json"
+    },
+    "facultyStudentOwnership": {
+      "$ref": "../../question-bank/sbir-sttr/faculty-student-ownership/schema.json"
+    },
+    "federalSubcontractsIncluded": {
+      "$ref": "../../question-bank/sbir-sttr/federal-subcontracts-included/schema.json"
+    },
+    "federalSubcontractorNames": {
+      "$ref": "../../question-bank/sbir-sttr/federal-subcontractor-names/schema.json",
+      "title": "Names of Federal Laboratories/Agencies"
+    },
+    "hubzoneLocation": {
+      "$ref": "../../question-bank/sbir-sttr/hubzone-location/schema.json"
+    },
+    "domesticPerformance": {
+      "$ref": "../../question-bank/sbir-sttr/domestic-performance/schema.json"
+    },
+    "nonDomesticPerformanceExplanation": {
+      "$ref": "../../question-bank/sbir-sttr/non-domestic-performance-explanation/schema.json",
+      "title": "Explanation",
+      "description": "If you answered No, attach an explanation of the research and development performed outside the United States."
+    },
+    "equivalentFederalWork": {
+      "$ref": "../../question-bank/sbir-sttr/equivalent-federal-work/schema.json"
+    },
+    "equivalentWorkFederalAgencies": {
+      "$ref": "../../question-bank/sbir-sttr/equivalent-work-federal-agencies/schema.json",
+      "title": "Names of other Federal agencies"
+    },
+    "disclosurePermission": {
+      "$ref": "../../question-bank/sbir-sttr/disclosure-permission/schema.json"
+    },
+    "tabaFundingRequest": {
+      "$ref": "../../question-bank/sbir-sttr/taba-funding-request/schema.json"
+    },
+    "commercializationPlan": {
+      "$ref": "../../question-bank/sbir-sttr/commercialization-plan/schema.json",
+      "title": "Commercialization Plan",
+      "description": "Include a Commercialization Plan in accordance with the agency announcement and agency-specific instructions. The source-specific requirement is preserved as unresolved policy evidence."
+    },
+    "phaseIIAwardsReceived": {
+      "$ref": "../../question-bank/sbir-sttr/phase-ii-awards-received/schema.json"
+    },
+    "commercializationHistory": {
+      "$ref": "../../question-bank/sbir-sttr/commercialization-history/schema.json",
+      "title": "Commercialization History",
+      "description": "If you answered Yes to the SBIR Phase II awards question, attach a company commercialization history in accordance with agency-specific instructions."
+    },
+    "pdpiPrimaryEmployment": {
+      "$ref": "../../question-bank/sbir-sttr/pdpi-primary-employment/schema.json"
+    },
+    "pdpiAppointmentAndEffort": {
+      "$ref": "../../question-bank/sbir-sttr/pdpi-appointment-and-effort/schema.json"
+    },
+    "jointPerformancePercentage": {
+      "$ref": "../../question-bank/sbir-sttr/joint-performance-percentage/schema.json"
+    },
+    "nonprofitResearchPartnerUei": {
+      "$ref": "../../question-bank/sbir-sttr/nonprofit-research-partner-uei/schema.json",
+      "title": "UEI of non-profit research partner for STTR",
+      "description": "Enter the 12-character UEI of the non-profit research partner for STTR."
+    }
+  },
+  "required": [
+    "agency",
+    "sbcControlId",
+    "programType",
+    "applicationType",
+    "smallBusinessEligibility",
+    "numberOfEmployees",
+    "vcocOwnership",
+    "facultyStudentOwnership",
+    "federalSubcontractsIncluded",
+    "hubzoneLocation",
+    "domesticPerformance",
+    "equivalentFederalWork",
+    "disclosurePermission",
+    "tabaFundingRequest"
+  ],
+  "description": "SBIR/STTR Information, Grants.gov FID 787, version 3.0.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "agency": {
+            "properties": {
+              "value": {
+                "const": "Other"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "agency"
+        ]
+      },
+      "then": {
+        "required": [
+          "otherAgency"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "agency": {
+            "properties": {
+              "value": {
+                "const": "DOE"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "agency"
+        ]
+      },
+      "then": {
+        "required": [
+          "agencyTopicSubtopic"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "federalSubcontractsIncluded": {
+            "properties": {
+              "value": {
+                "const": "Y: Yes"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "federalSubcontractsIncluded"
+        ]
+      },
+      "then": {
+        "required": [
+          "federalSubcontractorNames"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "domesticPerformance": {
+            "properties": {
+              "value": {
+                "const": "N: No"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "domesticPerformance"
+        ]
+      },
+      "then": {
+        "required": [
+          "nonDomesticPerformanceExplanation"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "equivalentFederalWork": {
+            "properties": {
+              "value": {
+                "const": "Y: Yes"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "equivalentFederalWork"
+        ]
+      },
+      "then": {
+        "required": [
+          "equivalentWorkFederalAgencies"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "programType": {
+            "properties": {
+              "value": {
+                "const": "Both"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "programType"
+        ]
+      },
+      "then": {
+        "required": [
+          "phaseIIAwardsReceived",
+          "pdpiPrimaryEmployment",
+          "pdpiAppointmentAndEffort",
+          "jointPerformancePercentage",
+          "nonprofitResearchPartnerUei"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "programType": {
+            "properties": {
+              "value": {
+                "const": "SBIR"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "programType"
+        ]
+      },
+      "then": {
+        "required": [
+          "phaseIIAwardsReceived",
+          "pdpiPrimaryEmployment"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "phaseIIAwardsReceived": {
+            "properties": {
+              "value": {
+                "const": "Y: Yes"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "phaseIIAwardsReceived"
+        ]
+      },
+      "then": {
+        "required": [
+          "commercializationHistory"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "programType": {
+            "properties": {
+              "value": {
+                "const": "STTR"
+              }
+            },
+            "required": [
+              "value"
+            ]
+          }
+        },
+        "required": [
+          "programType"
+        ]
+      },
+      "then": {
+        "required": [
+          "pdpiAppointmentAndEffort",
+          "jointPerformancePercentage",
+          "nonprofitResearchPartnerUei"
+        ]
+      }
+    }
+  ]
+}

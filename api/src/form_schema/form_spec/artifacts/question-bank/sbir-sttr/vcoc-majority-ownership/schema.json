@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/vcoc-majority-ownership/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Is your small business majority owned by venture capital operating companies, hedge funds, or private equity firms?"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Report whether the small business is majority owned by specified investment entities.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

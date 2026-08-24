@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/phase-ii-awards-received/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Have you received SBIR Phase II awards from the Federal Government?"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Report whether the applicant has received SBIR Phase II awards from the Federal Government.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

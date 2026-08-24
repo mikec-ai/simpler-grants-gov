@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sbir-sttr/disclosure-permission/schema.json",
+  "type": "object",
+  "properties": {
+    "value": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Disclosure Permission Statement: If this application does not result in an award, is the Government permitted to disclose the title of your proposed project, and the name, address, telephone number and email address of the official signing for the applicant organization to state-level economic development organizations that may be interested in contacting you for further information (e.g., possible collaborations, investment)?"
+    }
+  },
+  "required": [
+    "value"
+  ],
+  "description": "Authorize the Government disclosure described by the form if no award results.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}
