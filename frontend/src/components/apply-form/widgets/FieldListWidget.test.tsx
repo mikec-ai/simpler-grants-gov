@@ -128,11 +128,15 @@ const keyPersonUiSchema = JSON.parse(
     ),
     "utf8",
   ),
-) as Array<{ children?: Array<{ type: string; name?: string; label?: string }> }>;
+) as Array<{
+  children?: Array<{ type: string; name?: string; label?: string }>;
+}>;
 
 const keyPersonFieldList = keyPersonUiSchema
   .flatMap((node) => node.children ?? [])
-  .find((node) => node.type === "fieldList" && node.name === "seniorKeyPersons");
+  .find(
+    (node) => node.type === "fieldList" && node.name === "seniorKeyPersons",
+  );
 
 describe("FieldListWidget", () => {
   it("uses the R&R Key Person artifact for add, delete, and maximum interactions", async () => {
@@ -158,10 +162,7 @@ describe("FieldListWidget", () => {
     );
 
     await user.click(screen.getByRole("button", { name: /addEntry/i }));
-    expect(onChange).toHaveBeenLastCalledWith([
-      { first_name: "Casey" },
-      {},
-    ]);
+    expect(onChange).toHaveBeenLastCalledWith([{ first_name: "Casey" }, {}]);
     await user.click(
       screen.getAllByRole("button", { name: /deleteEntry/i })[1],
     );
