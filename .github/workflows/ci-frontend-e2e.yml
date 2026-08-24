@@ -10,6 +10,10 @@ on:
         description: "pipe separated list of @tags denoting groups of tests to run (e.g. @smoke|@core-regression). Leave blank to run all tests"
         required: false
         type: string
+      portable_browser_form_ids:
+        description: "optional comma-separated portable form ids for a bounded catalog receipt"
+        required: false
+        type: string
   workflow_call:
     inputs:
       api_logs:
@@ -18,6 +22,10 @@ on:
         type: boolean
       playwright_tags:
         description: "pipe separated list of @tags denoting groups of tests to run (e.g. @smoke|@core-regression). Leave blank to run all tests"
+        required: false
+        type: string
+      portable_browser_form_ids:
+        description: "optional comma-separated portable form ids for a bounded catalog receipt"
         required: false
         type: string
   pull_request:
@@ -37,6 +45,7 @@ env:
   LOCKFILE_PATH: ./frontend/package-lock.json
   PACKAGE_MANAGER: npm
   NODE_OPTIONS: --dns-result-order=ipv4first
+  PORTABLE_BROWSER_FORM_IDS: ${{ inputs.portable_browser_form_ids || '' }}
 
 concurrency:
   group: ${{ github.workflow }}-local-${{ github.ref }}
@@ -243,8 +252,8 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        shard: [1, 2, 3, 4]
-        total_shards: [4]
+        shard: ${{ fromJSON(inputs.portable_browser_form_ids != '' && '[1]' || '[1,2,3,4]') }}
+        total_shards: ${{ fromJSON(inputs.portable_browser_form_ids != '' && '[1]' || '[4]') }}
 
     steps:
       - name: Checkout repository
@@ -359,11 +368,15 @@ jobs:
             echo "LOGIN_FINAL_DESTINATION=http://localhost:3000/api/auth/callback"
             echo "ENVIRONMENT=local"
             echo "ENABLE_PORTABLE_FORM_PREVIEW=true"
+            if [[ -n "$PORTABLE_BROWSER_FORM_IDS" ]]; then
+              echo "PORTABLE_BROWSER_FORM_IDS=$PORTABLE_BROWSER_FORM_IDS"
+            fi
           } >> override.env
           mkdir -p test-results
           docker compose run -T --rm \
             -e ENVIRONMENT=local \
             -e ENABLE_PORTABLE_FORM_PREVIEW=true \
+            -e PORTABLE_BROWSER_FORM_IDS \
             grants-api \
             python bin/build_portable_browser_plan.py \
             --out /api/test-results/portable-browser-plan.json
