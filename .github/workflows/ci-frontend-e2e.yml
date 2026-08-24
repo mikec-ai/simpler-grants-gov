@@ -482,7 +482,9 @@ jobs:
           echo "Any e2e spec files changed? $E2E_SPECS_CHANGED"
           echo "Any e2e util files changed? $E2E_UTILS_CHANGED"
 
-          if [[ $GITHUB_EVENT_NAME = "pull_request" ]]; then
+          if [[ -n "$PORTABLE_BROWSER_FORM_IDS" ]]; then
+            echo "test_group_tags=@portable-catalog" >> "$GITHUB_ENV"
+          elif [[ $GITHUB_EVENT_NAME = "pull_request" ]]; then
             test_group_tags="@smoke"
             if [[ $APPLY_FORMS_CHANGED = "true" ]]; then
               test_group_tags="$test_group_tags|@apply-forms"
@@ -493,8 +495,6 @@ jobs:
             echo "test_group_tags=$test_group_tags" >> "$GITHUB_ENV"
           elif [[ $GITHUB_EVENT_NAME = "push" ]]; then
             echo "test_group_tags=@smoke|@core-regression" >> "$GITHUB_ENV"
-          elif [[ -n "$PORTABLE_BROWSER_FORM_IDS" ]]; then
-            echo "test_group_tags=@portable-catalog" >> "$GITHUB_ENV"
           else
             echo "test_group_tags=${{ inputs.playwright_tags }}" >> "$GITHUB_ENV"
           fi
@@ -521,7 +521,7 @@ jobs:
         uses: ./.github/actions/e2e
         env:
           E2E_UTILS_CHANGED: ${{ steps.changed-e2e-utils.outputs.any_changed }}
-        if: ${{ env.E2E_UTILS_CHANGED == 'true' }}
+        if: ${{ env.PORTABLE_BROWSER_FORM_IDS == '' && env.E2E_UTILS_CHANGED == 'true' }}
         with:
           version: ${{ github.ref }}
           target: "local"
@@ -543,7 +543,7 @@ jobs:
         uses: ./.github/actions/e2e
         env:
           E2E_UTILS_CHANGED: ${{ steps.changed-e2e-utils.outputs.any_changed }}
-        if: ${{ env.E2E_UTILS_CHANGED != 'true' }}
+        if: ${{ env.PORTABLE_BROWSER_FORM_IDS != '' || env.E2E_UTILS_CHANGED != 'true' }}
         with:
           version: ${{ github.ref }}
           target: "local"
@@ -566,7 +566,7 @@ jobs:
         env:
           E2E_UTILS_CHANGED: ${{ steps.changed-e2e-utils.outputs.any_changed }}
           E2E_SPECS_CHANGED: ${{ steps.changed-e2e-spec-files.outputs.all_changed_files }}
-        if: ${{ env.E2E_SPECS_CHANGED != '' && env.E2E_UTILS_CHANGED != 'true' }}
+        if: ${{ env.PORTABLE_BROWSER_FORM_IDS == '' && env.E2E_SPECS_CHANGED != '' && env.E2E_UTILS_CHANGED != 'true' }}
         with:
           version: ${{ github.ref }}
           target: "local"
