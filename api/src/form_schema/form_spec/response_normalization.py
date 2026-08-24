@@ -20,6 +20,7 @@ from src.form_schema.form_spec.projection import Projection, project_response_po
 CONTRACT = "grants-form-response-normalization/v1"
 OPERATION = "empty-string-to-absent"
 _POINTER_ESCAPE = re.compile(r"~(?:0|1)")
+_AMBIGUOUS_COMPOSITION_KEYS = {"anyOf", "oneOf", "not", "if", "then", "else"}
 
 
 @dataclass(frozen=True)
@@ -63,15 +64,22 @@ def _schema_layers(schema: dict[str, Any]) -> list[dict[str, Any]]:
     return layers
 
 
+def _reject_ambiguous_composition(states: list[dict[str, Any]], path: str) -> None:
+    if any(_AMBIGUOUS_COMPOSITION_KEYS.intersection(layer) for layer in states):
+        raise ValueError(
+            f"response normalization path {path} uses unsupported conditional or "
+            "alternative schema composition"
+        )
+
+
 def _validate_target(schema: dict[str, Any], path: str) -> None:
     states = _schema_layers(schema)
     tokens = _decode_pointer(path)
-    for token in tokens:
-        if token.isdecimal():
-            raise ValueError(f"response normalization path {path} traverses an array")
+    for index, token in enumerate(tokens):
+        _reject_ambiguous_composition(states, path)
         if any(layer.get("type") == "array" or "items" in layer for layer in states):
             raise ValueError(f"response normalization path {path} traverses an array")
-        if any(token in layer.get("required", []) for layer in states):
+        if index == len(tokens) - 1 and any(token in layer.get("required", []) for layer in states):
             raise ValueError(f"response normalization path {path} targets a required property")
         properties = [
             layer["properties"][token]
@@ -82,6 +90,7 @@ def _validate_target(schema: dict[str, Any], path: str) -> None:
             raise ValueError(f"response normalization path {path} does not resolve exactly")
         states = [child for value in properties for child in _schema_layers(value)]
 
+    _reject_ambiguous_composition(states, path)
     if any(layer.get("type") == "array" or "items" in layer for layer in states):
         raise ValueError(f"response normalization path {path} targets an array")
     types = [

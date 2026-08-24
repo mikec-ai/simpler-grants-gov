@@ -225,6 +225,60 @@ def test_loader_rejects_ineligible_projected_targets(
         )
 
 
+@pytest.mark.parametrize("keyword", ["anyOf", "oneOf", "not", "if", "then", "else"])
+@pytest.mark.parametrize("location", ["parent", "leaf"])
+def test_loader_rejects_ambiguous_schema_composition(
+    tmp_path: Path, keyword: str, location: str
+) -> None:
+    manifest, _, _, _ = _write_package(tmp_path)
+    schema = _schema()
+    target = schema if location == "parent" else schema["properties"]["optional_narrative"]
+    target[keyword] = {}
+
+    with pytest.raises(ValueError, match="unsupported conditional or alternative"):
+        load_response_normalization(
+            tmp_path,
+            manifest=manifest,
+            projected_schema=schema,
+            projection=Projection(),
+        )
+
+
+def test_loader_accepts_numeric_object_property_names_and_required_parents(
+    tmp_path: Path,
+) -> None:
+    manifest, evidence, evidence_path, normalization_path = _write_package(tmp_path)
+    document = json.loads(normalization_path.read_text())
+    document["operations"][0]["path"] = "/required_parent/2026"
+    evidence["responseNormalizationEvidence"][0]["canonicalPath"] = "/required_parent/2026"
+    evidence_path.write_text(json.dumps(evidence))
+    payload = (json.dumps(document, indent=2) + "\n").encode()
+    normalization_path.write_bytes(payload)
+    manifest["artifacts"]["response-normalization.json"]["sha256"] = hashlib.sha256(
+        payload
+    ).hexdigest()
+    schema = {
+        "type": "object",
+        "required": ["required_parent"],
+        "properties": {
+            "required_parent": {
+                "type": "object",
+                "properties": {"2026": {"type": "string", "minLength": 1}},
+            }
+        },
+    }
+
+    policy = load_response_normalization(
+        tmp_path,
+        manifest=manifest,
+        projected_schema=schema,
+        projection=Projection(),
+    )
+
+    assert policy is not None
+    assert policy.operations[0].path == "/required_parent/2026"
+
+
 def test_exact_empty_normalization_is_immutable_idempotent_and_narrow() -> None:
     policy = ResponseNormalizationPolicy(
         CONTRACT,
