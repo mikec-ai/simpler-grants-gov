@@ -668,11 +668,13 @@ def _flatten_composition(
         if base is None:
             kept.append(branch)
             continue
-        merged_keywords.update({
-            key: value
-            for key, value in base.items()
-            if key not in {"properties", "required", "$defs", "allOf"}
-        })
+        merged_keywords.update(
+            {
+                key: value
+                for key, value in base.items()
+                if key not in {"properties", "required", "$defs", "allOf"}
+            }
+        )
         merged_properties.update(base.get("properties", {}))
         merged_required.extend(base.get("required", []))
         if base.get("$defs"):

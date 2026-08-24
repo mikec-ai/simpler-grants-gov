@@ -39,10 +39,12 @@ def calculated_response() -> dict:
         "budget_information": {name: dict(row) for name in INPUT_ROWS},
         "federal_funding": {"federal_percentage_share": 80},
     }
-    data["budget_information"].update({
-        "contingencies": {"total_cost": "55000.00", "non_allowable_cost": "5000.00"},
-        "project_income": {"total_cost": "10000.00", "non_allowable_cost": "0.00"},
-    })
+    data["budget_information"].update(
+        {
+            "contingencies": {"total_cost": "55000.00", "non_allowable_cost": "5000.00"},
+            "project_income": {"total_cost": "10000.00", "non_allowable_cost": "0.00"},
+        }
+    )
     projected = load_form("sf424c")
     application_form = SimpleNamespace(
         application_response=data,
