@@ -11,8 +11,6 @@ from sqlalchemy import select
 
 from src.constants.lookup_constants import ApplicationStatus, Privilege
 from src.db.models.competition_models import ApplicationForm
-from src.form_schema.form_spec.loader import build_runtime_form
-from src.form_schema.registry.form_template_registry import FormTemplateKey, form_template_registry
 from src.services.applications.submit_application import submit_application
 from src.services.applications.update_application_form import update_application_form
 from tests.src.db.models.factories import (
@@ -26,26 +24,11 @@ from tests.src.db.models.factories import (
     RoleFactory,
     UserFactory,
 )
+from tests.src.form_schema.form_spec.lifecycle import (
+    register_runtime_form_for_test,
+    restore_runtime_form_after_test,
+)
 from tests.src.form_schema.form_spec.test_sflll_portable import VALID_RESPONSE
-
-
-def _register_runtime_form() -> tuple[Any, FormTemplateKey, Any | None]:
-    form = build_runtime_form("sflll")
-    key = FormTemplateKey(form.form_id, 1)
-    previous = form_template_registry._registry.pop(key, None)
-    try:
-        form_template_registry.register(form, major_version=1)
-    except Exception:
-        if previous is not None:
-            form_template_registry._registry[key] = previous
-        raise
-    return form, key, previous
-
-
-def _restore_runtime_form(key: FormTemplateKey, previous: Any | None) -> None:
-    form_template_registry._registry.pop(key, None)
-    if previous is not None:
-        form_template_registry._registry[key] = previous
 
 
 def _link_user(application: Any, privileges: list[Privilege]) -> Any:
@@ -62,7 +45,7 @@ def test_sflll_save_and_reload_preserves_repeated_service_individuals(
     enable_factory_create: Any,
     db_session: Any,
 ) -> None:
-    form, registry_key, previous = _register_runtime_form()
+    form, registry_key, previous = register_runtime_form_for_test("sflll")
     try:
         competition = CompetitionFactory.create(competition_forms=[])
         competition_form = CompetitionFormFactory.create(competition=competition, form=form)
@@ -73,7 +56,7 @@ def test_sflll_save_and_reload_preserves_repeated_service_individuals(
             application_response={},
         )
         user = _link_user(application, [Privilege.MODIFY_APPLICATION])
-        response = copy.deepcopy(VALID_RESPONSE)
+        response: dict[str, Any] = copy.deepcopy(VALID_RESPONSE)
         response["individuals_performing_services"].append({
             "name": {"first_name": "Katherine", "last_name": "Johnson"}
         })
@@ -96,14 +79,14 @@ def test_sflll_save_and_reload_preserves_repeated_service_individuals(
         ).scalar_one()
         assert reloaded.application_response == response
     finally:
-        _restore_runtime_form(registry_key, previous)
+        restore_runtime_form_after_test(registry_key, previous)
 
 
 def test_sflll_submission_populates_signature_and_completes_application(
     enable_factory_create: Any,
     db_session: Any,
 ) -> None:
-    form, registry_key, previous = _register_runtime_form()
+    form, registry_key, previous = register_runtime_form_for_test("sflll")
     try:
         competition = CompetitionFactory.create(
             closing_date=get_now_us_eastern_date() + timedelta(days=1),
@@ -131,4 +114,4 @@ def test_sflll_submission_populates_signature_and_completes_application(
         assert signature["signature"] == user.email
         assert len(signature["signed_date"].split("-")) == 3
     finally:
-        _restore_runtime_form(registry_key, previous)
+        restore_runtime_form_after_test(registry_key, previous)
