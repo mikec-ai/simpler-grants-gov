@@ -15,8 +15,8 @@ from typing import Any
 import jsonschema
 
 import src.form_schema.forms as forms_package
+from src.form_schema.form_spec.bank import ARTIFACT_MANIFEST, ARTIFACTS
 from src.form_schema.form_spec.loader import load_form
-from src.form_schema.form_spec.bank import ARTIFACTS, ARTIFACT_MANIFEST
 from src.form_schema.forms._loader import load_versioned_form
 from src.form_schema.jsonschema_resolver import resolve_jsonschema
 from src.form_schema.jsonschema_validator import _get_validator
@@ -588,32 +588,34 @@ def compare_cohort(
                 comparison="declaration",
             )
         dimensions = {"schema": schema, "ui": ui, "validation": validation, "rules": rules}
-        receipts.append({
-            "contract": CONTRACT,
-            "source": source,
-            "portableFormId": portable_id,
-            "existingOracle": {
-                "directory": record["existingDirectory"],
-                "version": record["existingVersion"],
-            },
-            "dimensions": dimensions,
-            "unsupportedDimensions": {
-                "xml": {
-                    "status": "unavailable",
-                    "reason": "the initial static differential does not compare serialized XML",
+        receipts.append(
+            {
+                "contract": CONTRACT,
+                "source": source,
+                "portableFormId": portable_id,
+                "existingOracle": {
+                    "directory": record["existingDirectory"],
+                    "version": record["existingVersion"],
                 },
-                "ruleOutcomes": {
-                    "status": "unavailable",
-                    "reason": "rules are compared as declarations; a generic outcome corpus is not yet available",
+                "dimensions": dimensions,
+                "unsupportedDimensions": {
+                    "xml": {
+                        "status": "unavailable",
+                        "reason": "the initial static differential does not compare serialized XML",
+                    },
+                    "ruleOutcomes": {
+                        "status": "unavailable",
+                        "reason": "rules are compared as declarations; a generic outcome corpus is not yet available",
+                    },
+                    "runtimeLifecycle": {
+                        "status": "unavailable",
+                        "reason": "runtime behavior is reported by the separate generic browser receipt",
+                    },
                 },
-                "runtimeLifecycle": {
-                    "status": "unavailable",
-                    "reason": "runtime behavior is reported by the separate generic browser receipt",
-                },
-            },
-            "comparisonGate": all(
-                dimension["status"] in {"parity", "reviewed_delta", "not_applicable"}
-                for dimension in dimensions.values()
-            ),
-        })
+                "comparisonGate": all(
+                    dimension["status"] in {"parity", "reviewed_delta", "not_applicable"}
+                    for dimension in dimensions.values()
+                ),
+            }
+        )
     return receipts
