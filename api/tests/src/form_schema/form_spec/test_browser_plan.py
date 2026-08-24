@@ -81,6 +81,62 @@ def test_browser_plan_does_not_treat_prepopulated_fields_as_editable(
     assert "/properties/organization_name" in editable_definitions
 
 
+def test_browser_plan_discovers_multifield_editable_surface(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "sf424a")
+
+    form = build_browser_plan()["forms"][0]
+
+    assert form["counts"]["uiFields"] == 6
+    assert form["stablePaths"]["uiDefinitions"] == [
+        "/properties/activity_line_items",
+        "/properties/confirmation",
+        "/properties/direct_charges_explanation",
+        "/properties/forecasted_cash_needs",
+        "/properties/indirect_charges_explanation",
+        "/properties/remarks",
+        "/properties/total_budget_categories",
+        "/properties/total_budget_summary",
+        "/properties/total_federal_fund_estimates",
+        "/properties/total_non_federal_resources",
+    ]
+    assert form["capabilities"]["editableScalar"] == {
+        "applicability": "applicable",
+        "declarations": [
+            {"definition": "/properties/activity_line_items"},
+            {"definition": "/properties/total_budget_summary"},
+            {"definition": "/properties/activity_line_items"},
+            {"definition": "/properties/total_budget_categories"},
+            {"definition": "/properties/activity_line_items"},
+            {"definition": "/properties/total_non_federal_resources"},
+            {"definition": "/properties/forecasted_cash_needs"},
+            {"definition": "/properties/activity_line_items"},
+            {"definition": "/properties/total_federal_fund_estimates"},
+            {"definition": "/properties/direct_charges_explanation"},
+            {"definition": "/properties/indirect_charges_explanation"},
+            {"definition": "/properties/remarks"},
+            {"definition": "/properties/confirmation"},
+        ],
+        "reason": None,
+    }
+
+
+def test_browser_plan_preserves_ordinary_field_discovery(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "sf424")
+
+    form = build_browser_plan()["forms"][0]
+
+    assert form["counts"]["uiFields"] == 66
+    assert len(form["capabilities"]["editableScalar"]["declarations"]) == 66
+    assert all(
+        list(declaration) == ["definition"] and isinstance(declaration["definition"], str)
+        for declaration in form["capabilities"]["editableScalar"]["declarations"]
+    )
+
+
 def test_browser_seed_ids_preserve_full_catalog_and_isolate_canaries() -> None:
     assert browser_seed_ids(banked_form_ids()) == (SEED_OPPORTUNITY_ID, SEED_COMPETITION_ID)
     assert browser_seed_ids(("sf424",)) == browser_seed_ids(("sf424",))
