@@ -35,13 +35,13 @@ The adapter owns only consumer concerns:
 - selection and verification of the exact runtime artifacts shipped with the API.
 
 Artifact banking, runtime enablement, and registration are declarative but intentionally
-separate. The artifact manifest currently banks 32 digest-verified portable forms for provenance,
+separate. The artifact manifest banks digest-verified portable forms for provenance,
 review, and analysis. The versioned SGG target record `runtime-identities.json` explicitly enables
-29 of them by assigning one form UUID, `FormType`, and SGG schema version. Those values are
+a reviewed subset by assigning one form UUID, `FormType`, and SGG schema version. Those values are
 generated and interpreted by SGG, so they do not appear in the producer's canonical `FormMeta`.
-The three banked-only forms cannot be loaded or previewed through the runtime adapter until an
+Banked-only forms cannot be loaded through the production runtime adapter until an
 identity record is deliberately added. `registrations.json` is the still smaller release opt-in
-list: its five current records contain only instruction UUIDs, and no absent identity or
+list: its records contain only instruction UUIDs, and no absent identity or
 instruction UUID is inferred. The portable form id joins these files to the producer manifest.
 The historical per-form Python modules remain compatibility import paths; they all return the
 same cached object built through the generic loader.
@@ -57,8 +57,22 @@ the complete producer bundle, the selection policy, and a digest for every vendo
 also resolves the XSD filename from the declared URI and checks the declared SHA-256 against the
 vendored official XSD. This is generic integrity enforcement: it does not download schemas or
 contain a form-family lookup table. `load_form()` separately requires a complete consumer-owned
-runtime identity before applying the Simpler projection, so banking alone never enables preview,
-runtime loading, or registration.
+runtime identity before applying the Simpler projection, so banking alone never enables production
+runtime loading or registration. Preview remains a separate explicit lower-environment opt-in.
+
+For renderer and browser conformance, local and test environments may explicitly add every banked
+package to the ordinary in-memory registry under a deterministic UUID reserved for previews:
+
+```shell
+ENVIRONMENT=local ENABLE_PORTABLE_FORM_PREVIEW=true make run
+```
+
+Both values are required, and production-like environments remain fail-closed even when the flag
+is accidentally set. Preview identities never appear in `runtime-identities.json` or
+`registrations.json`, and the production form list is unchanged. The preview path projects the
+same canonical schema, UI schema, and rules used by the runtime. It deliberately omits XML because
+banking does not imply that the current SGG serializer can execute every portable XML shape; XML
+remains behind its exact-source and lifecycle gates.
 
 To refresh a form from a locally downloaded producer bundle:
 
