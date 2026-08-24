@@ -358,9 +358,11 @@ jobs:
           echo "/tmp/cores/core.%e.%p.%t" | sudo tee /proc/sys/kernel/core_pattern
 
           # Now run the seeding and populate commands
-          echo "LOGIN_FINAL_DESTINATION=http://localhost:3000/api/auth/callback" >> override.env
-          echo "ENVIRONMENT=local" >> override.env
-          echo "ENABLE_PORTABLE_FORM_PREVIEW=true" >> override.env
+          {
+            echo "LOGIN_FINAL_DESTINATION=http://localhost:3000/api/auth/callback"
+            echo "ENVIRONMENT=local"
+            echo "ENABLE_PORTABLE_FORM_PREVIEW=true"
+          } >> override.env
           mkdir -p test-results
           docker compose run -T --rm grants-api \
             python bin/build_portable_browser_plan.py \
