@@ -322,6 +322,36 @@
       "size": 1861
     },
     {
+      "path": "dist/forms/nifa-supplemental/evidence.json",
+      "sha256": "c414f467e73110067b802e770c0ed310ac07d0800e220bd998151e02062e7af6",
+      "size": 10632
+    },
+    {
+      "path": "dist/forms/nifa-supplemental/manifest.json",
+      "sha256": "aeafe7ab1b553c82c80ba8938ccbaa3c2b124a3a670e500818c0d86489b48c4f",
+      "size": 550
+    },
+    {
+      "path": "dist/forms/nifa-supplemental/schema.json",
+      "sha256": "6553113909abbe2b1b075c2e2f03c219ea109d55b0f3fe970efc1010c146c8a6",
+      "size": 2960
+    },
+    {
+      "path": "dist/forms/nifa-supplemental/sgg/rule-schema.json",
+      "sha256": "3a1b77fec90e2224bce69c24c97c33d883325aedaedf1db3b946108018922d6c",
+      "size": 316
+    },
+    {
+      "path": "dist/forms/nifa-supplemental/sgg/ui-schema.json",
+      "sha256": "fafb9bb834bd2f566fc49f48eedd2e5d11cd499ccaaefcb99d418da73a2bff96",
+      "size": 5437
+    },
+    {
+      "path": "dist/forms/nifa-supplemental/targets/grants-gov-xml.json",
+      "sha256": "fb1608da868058a38296533a13e6051a5a74f7b4372a419cceb7d90bacad33d0",
+      "size": 8368
+    },
+    {
       "path": "dist/forms/other-narrative-attachments/evidence.json",
       "sha256": "f499eb823dd888fd5c57dda368f067bc1322c287d85fca9d336acb41864d0dd4",
       "size": 966
@@ -1427,6 +1457,36 @@
       "size": 242
     },
     {
+      "path": "dist/question-bank/nifa/additional-applicant-type/schema.json",
+      "sha256": "3a1bbb45832f75df2ee9aa8ca026853a6d77a8f29cd09390309191085d2e8942",
+      "size": 904
+    },
+    {
+      "path": "dist/question-bank/nifa/application-keywords/schema.json",
+      "sha256": "6924e7655f539791ad7d537ce9dd59800d36d24d28d9b1c61a0a476e702ba914",
+      "size": 244
+    },
+    {
+      "path": "dist/question-bank/nifa/asap-recipient-information/schema.json",
+      "sha256": "a591d32d2c8f008d076d483d028c547163b814e1b1e99ed1bdeff47b3e747894",
+      "size": 1218
+    },
+    {
+      "path": "dist/question-bank/nifa/conflict-of-interest-list/schema.json",
+      "sha256": "4046473f1cd0fabed8ba79adb5d4cf47b3967783a68749ca8d7dc8c322b34f3d",
+      "size": 235
+    },
+    {
+      "path": "dist/question-bank/nifa/program/schema.json",
+      "sha256": "7b4abb856db9871e5c3c364218b39a420b63833b75bf2b95bd50f157a48db244",
+      "size": 655
+    },
+    {
+      "path": "dist/question-bank/nifa/supplemental-applicant-classifications/schema.json",
+      "sha256": "b1266586bbc9fbe34894f5eb6dd585c1baebcf801cabbb1e157c164abf1b50ad",
+      "size": 1716
+    },
+    {
       "path": "dist/question-bank/opportunity/agency-name/schema.json",
       "sha256": "b658b0db84606fd8569b067bc1fa33c975a3ba10ff104e538d795f50eee2bbc2",
       "size": 244
@@ -1480,6 +1540,11 @@
       "path": "dist/question-bank/primary-org/address/schema.json",
       "sha256": "cd495ecea390790e3df2137e4cadc12e6f7448250e6874150d4dc01dc7f56e59",
       "size": 936
+    },
+    {
+      "path": "dist/question-bank/primary-org/applicant-type-code/schema.json",
+      "sha256": "55b9f25ed96fa84eedcb74772a07c104ea35161deec0dcc1651c9a8244818358",
+      "size": 1908
     },
     {
       "path": "dist/question-bank/primary-org/applicant-type-other/schema.json",
@@ -1708,8 +1773,8 @@
     },
     {
       "path": "dist/question-bank/research-project/human-subjects/schema.json",
-      "sha256": "f730e31a97d03e7af23def6216d1e8f6f4c7c9a62845950df1dea1aa8b80681d",
-      "size": 3169
+      "sha256": "df1d1c9a0b31a43b9442a51980ea867af9cff43a313f9f72216424b25376e292",
+      "size": 3590
     },
     {
       "path": "dist/question-bank/research-project/international-activities/schema.json",
@@ -1785,13 +1850,14 @@
       "sf424c",
       "phs-assignment-request",
       "attachment-form",
-      "rr-sf424b"
+      "rr-sf424b",
+      "nifa-supplemental"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "7089fa6b0cca70e63e805a971c192a1849394d20"
+    "revision": "3a6e51127e66d5555f3ef677cb21c4b9f7751e9a"
   },
-  "sourceBundleSha256": "7fe91aab00b3a2403efabd81f1a242a636cc544530beb9043ae0b00add17fa9c"
+  "sourceBundleSha256": "6980745d308dbad2cdcc80ba0303a086dfc57072193fbd7a2356b2ca9bf58e14"
 }

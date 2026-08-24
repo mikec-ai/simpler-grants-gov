@@ -50,6 +50,7 @@ def test_vendored_artifacts_match_the_pinned_form_spec_build():
         "phs-assignment-request",
         "attachment-form",
         "rr-sf424b",
+        "nifa-supplemental",
     ]
 
 

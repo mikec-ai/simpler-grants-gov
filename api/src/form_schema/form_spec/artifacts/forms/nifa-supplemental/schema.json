@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nifa-supplemental/schema.json",
+  "type": "object",
+  "properties": {
+    "fundingOpportunity": {
+      "$ref": "#/$defs/NifaFundingOpportunity",
+      "readOnly": true
+    },
+    "program": {
+      "$ref": "../../question-bank/nifa/program/schema.json"
+    },
+    "applicantType": {
+      "$ref": "../../question-bank/primary-org/applicant-type-code/schema.json"
+    },
+    "additionalApplicantType": {
+      "$ref": "../../question-bank/nifa/additional-applicant-type/schema.json",
+      "title": "Additional Applicant Types"
+    },
+    "supplementalApplicantTypes": {
+      "$ref": "../../question-bank/nifa/supplemental-applicant-classifications/schema.json"
+    },
+    "asapRecipientInformation": {
+      "$ref": "../../question-bank/nifa/asap-recipient-information/schema.json"
+    },
+    "keywords": {
+      "$ref": "../../question-bank/nifa/application-keywords/schema.json",
+      "title": "Key Words"
+    },
+    "conflictOfInterestList": {
+      "$ref": "../../question-bank/nifa/conflict-of-interest-list/schema.json",
+      "title": "Conflict of Interest List"
+    }
+  },
+  "required": [
+    "fundingOpportunity",
+    "program",
+    "applicantType",
+    "asapRecipientInformation",
+    "keywords"
+  ],
+  "description": "NIFA Supplemental Information, Grants.gov FID 483, version 1.2.",
+  "$defs": {
+    "NifaFundingOpportunity": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "$ref": "../../question-bank/opportunity/title/schema.json",
+          "title": "Funding Opportunity Name"
+        },
+        "number": {
+          "$ref": "../../question-bank/opportunity/number/schema.json",
+          "title": "Funding Opportunity Number"
+        }
+      },
+      "required": [
+        "title",
+        "number"
+      ],
+      "description": "Funding-opportunity identity reused from the portable opportunity question bank."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "applicantType": {
+            "properties": {
+              "applicantTypeCode": {
+                "const": "X: Other (specify)"
+              }
+            },
+            "required": [
+              "applicantTypeCode"
+            ]
+          }
+        },
+        "required": [
+          "applicantType"
+        ]
+      },
+      "then": {
+        "required": [
+          "additionalApplicantType"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "applicantType": {
+            "properties": {
+              "applicantTypeCode": {
+                "const": "H: Public/state Controlled Institution of Higher Education"
+              }
+            },
+            "required": [
+              "applicantTypeCode"
+            ]
+          }
+        },
+        "required": [
+          "applicantType"
+        ]
+      },
+      "then": {
+        "required": [
+          "additionalApplicantType"
+        ]
+      }
+    }
+  ]
+}

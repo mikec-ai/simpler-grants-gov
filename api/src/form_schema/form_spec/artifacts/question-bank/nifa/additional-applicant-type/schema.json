@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "nifa/additional-applicant-type/schema.json",
+  "type": "object",
+  "properties": {
+    "additionalApplicantType": {
+      "$ref": "#/$defs/NifaAdditionalApplicantType",
+      "title": "Additional Applicant Type"
+    }
+  },
+  "required": [
+    "additionalApplicantType"
+  ],
+  "description": "Select an additional applicant category when the primary applicant type permits it.",
+  "$defs": {
+    "NifaAdditionalApplicantType": {
+      "type": "string",
+      "enum": [
+        "USDA Agency",
+        "Other Federal Agency",
+        "1862 Land-Grant University",
+        "1890 Land-Grant University (including Tuskegee University & West Virginia State University)",
+        "1994 Land-Grant University",
+        "Other"
+      ],
+      "description": "Additional applicant category used by NIFA Supplemental Information."
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "id": "nifa-supplemental",
+    "legacyFormId": 483,
+    "formName": "NIFA Supplemental Information",
+    "shortFormName": "NIFA_Supplemental_Info_1_2",
+    "formVersion": "1.2",
+    "agencyCode": "GRANTS_GOV",
+    "ombNumber": "0524-0039"
+  },
+  "artifacts": {
+    "schema.json": "generated",
+    "ui.json": "generated",
+    "sgg/ui-schema.json": "generated",
+    "sgg/rule-schema.json": "generated",
+    "targets/grants-gov-xml.json": "generated",
+    "evidence.json": "passthrough"
+  }
+}

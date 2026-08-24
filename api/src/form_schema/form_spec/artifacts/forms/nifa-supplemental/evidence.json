@@ -1,0 +1,215 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "nifa-supplemental",
+    "kind": "form",
+    "formVersion": "1.2"
+  },
+  "sources": [
+    {
+      "id": "grantsgov-nifa-supplemental-xsd-1.2",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/NIFA_Supplemental_Info_1_2-V1.2.xsd",
+      "nativeVersion": "1.2",
+      "sha256": "9fd2d43797ec5fe17a9c29f073295e1c459b13d39346b3422de036d51c1d69e2"
+    },
+    {
+      "id": "grantsgov-nifa-supplemental-dat-1.2-f483",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/NIFA_Supplemental_Info_1_2-V1.2_F483.xls",
+      "nativeVersion": "1.2",
+      "sha256": "354c743d2de7187d946440065bf0df02c45b83028163e0fb020667cd367fd4d3"
+    },
+    {
+      "id": "grantsgov-nifa-supplemental-pdf-1.2",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/NIFA_Supplemental_Info_1_2-V1.2.pdf",
+      "nativeVersion": "1.2",
+      "sha256": "01aef063990fad9eda40beb8b2dc4680afba014e6e3e6a829cf72c28be0db881"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-NIFASupplemental.jsonl.manifest.json",
+    "sourceSetSha256": "138619ea82f8e994f30be78bf8be646abc459442c24cbbb1cbfab25a69e8733f",
+    "extractedAt": "2026-08-18T20:59:38.088606Z"
+  },
+  "behaviorEvidence": [
+    {
+      "canonicalPath": "additionalApplicantType.additionalApplicantType",
+      "sourceId": "grantsgov-nifa-supplemental-dat-1.2-f483",
+      "sourcePath": "NIFA_Supplemental_Info_1_2.AdditionalApplicantTypes",
+      "sourceRecord": "4-1",
+      "ruleKind": "condition",
+      "authority": "official_source"
+    },
+    {
+      "canonicalPath": "asapRecipientInformation.recipientId",
+      "sourceId": "grantsgov-nifa-supplemental-dat-1.2-f483",
+      "sourcePath": "NIFA_Supplemental_Info_1_2.ASAP_Recipient_Info.RecipientID",
+      "sourceRecord": "6-1a1",
+      "ruleKind": "condition",
+      "authority": "official_source"
+    }
+  ],
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/fundingOpportunity/properties/title",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.FundingOpportunity.FundingOpportunityTitle",
+        "status": "proposed",
+        "note": "Proposed reuse of the portable opportunity title; occurrence-to-source correspondence is exact."
+      },
+      {
+        "canonicalPointer": "#/properties/fundingOpportunity/properties/number",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.FundingOpportunity.FundingOpportunityNumber",
+        "status": "proposed",
+        "note": "Proposed reuse of the portable opportunity number; occurrence-to-source correspondence is exact."
+      },
+      {
+        "canonicalPointer": "#/properties/program/properties/programCodeName",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.ProgramGroup.ProgramCodeName",
+        "status": "proposed",
+        "note": "NIFA-specific program identity; no cross-form equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/program/properties/programCode",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.ProgramGroup.ProgramCode",
+        "status": "proposed",
+        "note": "NIFA-specific program identity; no cross-form equivalence is accepted."
+      },
+      {
+        "canonicalPointer": "#/properties/applicantType/properties/applicantTypeCode",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.ApplicantTypeCode",
+        "status": "proposed",
+        "note": "Proposed reuse of the shared single-applicant-type question and vocabulary; the form occurrence remains independently reviewable."
+      },
+      {
+        "canonicalPointer": "#/properties/additionalApplicantType/properties/additionalApplicantType",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.AdditionalApplicantTypes",
+        "status": "proposed",
+        "note": "NIFA-specific classification. The portable schema preserves the complete XSD vocabulary; the DAT's narrower H-specific presentation subset remains an open review gate and is not claimed as release-ready."
+      },
+      {
+        "canonicalPointer": "#/properties/supplementalApplicantTypes/properties/alaskaNativeServingInstitution",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.SupplementalApplicantType.AlaskaNativeServingInstitution",
+        "status": "proposed",
+        "note": "NIFA-specific institutional classification."
+      },
+      {
+        "canonicalPointer": "#/properties/supplementalApplicantTypes/properties/cooperativeExtensionService",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.SupplementalApplicantType.CooperativeExtensionService",
+        "status": "proposed",
+        "note": "NIFA-specific institutional classification."
+      },
+      {
+        "canonicalPointer": "#/properties/supplementalApplicantTypes/properties/hispanicServingInstitution",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.SupplementalApplicantType.HispanicServingInstitution",
+        "status": "proposed",
+        "note": "NIFA-specific institutional classification."
+      },
+      {
+        "canonicalPointer": "#/properties/supplementalApplicantTypes/properties/historicallyBlackCollegeOrUniversity",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.SupplementalApplicantType.HistoricallyBlackCollegeorUniversity",
+        "status": "proposed",
+        "note": "NIFA-specific institutional classification."
+      },
+      {
+        "canonicalPointer": "#/properties/supplementalApplicantTypes/properties/minorityServingInstitution",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.SupplementalApplicantType.MinorityServingInstitution",
+        "status": "proposed",
+        "note": "NIFA-specific institutional classification."
+      },
+      {
+        "canonicalPointer": "#/properties/supplementalApplicantTypes/properties/nativeHawaiianServingInstitution",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.SupplementalApplicantType.NativeHawaiianServingInstitution",
+        "status": "proposed",
+        "note": "NIFA-specific institutional classification."
+      },
+      {
+        "canonicalPointer": "#/properties/supplementalApplicantTypes/properties/publicNonprofitJuniorOrCommunityCollege",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.SupplementalApplicantType.PublicNonprofitJuniororCommunityCollege",
+        "status": "proposed",
+        "note": "NIFA-specific institutional classification."
+      },
+      {
+        "canonicalPointer": "#/properties/supplementalApplicantTypes/properties/publicSecondarySchool",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.SupplementalApplicantType.PublicSecondarySchool",
+        "status": "proposed",
+        "note": "NIFA-specific institutional classification."
+      },
+      {
+        "canonicalPointer": "#/properties/supplementalApplicantTypes/properties/schoolOfForestry",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.SupplementalApplicantType.SchoolofForestry",
+        "status": "proposed",
+        "note": "NIFA-specific institutional classification."
+      },
+      {
+        "canonicalPointer": "#/properties/supplementalApplicantTypes/properties/stateAgriculturalExperimentStation",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.SupplementalApplicantType.StateAgriculturalExperimentStation",
+        "status": "proposed",
+        "note": "NIFA-specific institutional classification."
+      },
+      {
+        "canonicalPointer": "#/properties/supplementalApplicantTypes/properties/tribalCollege",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.SupplementalApplicantType.TribalCollege",
+        "status": "proposed",
+        "note": "NIFA-specific institutional classification."
+      },
+      {
+        "canonicalPointer": "#/properties/supplementalApplicantTypes/properties/veterinarySchoolOrCollege",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.SupplementalApplicantType.VeterinarySchoolorCollege",
+        "status": "proposed",
+        "note": "NIFA-specific institutional classification."
+      },
+      {
+        "canonicalPointer": "#/properties/asapRecipientInformation/properties/hasActiveAsapRecipientId",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.ASAP_Recipient_Info.ASAPID",
+        "status": "proposed",
+        "note": "NIFA-specific ASAP status question projected to the source Yes/No wire vocabulary."
+      },
+      {
+        "canonicalPointer": "#/properties/asapRecipientInformation/properties/recipientId",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.ASAP_Recipient_Info.RecipientID",
+        "status": "proposed",
+        "note": "NIFA-specific ASAP recipient identifier."
+      },
+      {
+        "canonicalPointer": "#/properties/keywords",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.KeyWords",
+        "status": "proposed",
+        "note": "NIFA application keywords remain independently reviewable before wider reuse."
+      },
+      {
+        "canonicalPointer": "#/properties/conflictOfInterestList",
+        "sourceId": "grantsgov-nifa-supplemental-xsd-1.2",
+        "sourcePath": "NIFA_Supplemental_Info_1_2.ConflictofInterestList.AttachedFile",
+        "status": "proposed",
+        "note": "NIFA conflict-of-interest information requirement reuses the generic attachment capture mechanism."
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "fundingOpportunity": {
+    "title": {
+      "gg_pre_population": {
+        "rule": "opportunity_title"
+      }
+    },
+    "number": {
+      "gg_pre_population": {
+        "rule": "opportunity_number"
+      }
+    }
+  },
+  "conflictOfInterestList": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  }
+}

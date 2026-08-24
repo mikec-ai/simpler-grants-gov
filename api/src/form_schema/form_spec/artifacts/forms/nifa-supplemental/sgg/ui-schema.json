@@ -1,0 +1,197 @@
+[
+  {
+    "type": "section",
+    "name": "fundingOpportunity",
+    "label": "1. Funding Opportunity",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/fundingOpportunity/properties/title"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/fundingOpportunity/properties/number"
+      }
+    ],
+    "description": "Complete this form together with the SF-424 Application for Federal Financial Assistance."
+  },
+  {
+    "type": "section",
+    "name": "program",
+    "label": "2. Program to Which You Are Applying",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/program/properties/programCodeName"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/program/properties/programCode"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "applicantType",
+    "label": "3. Type of Applicant",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/applicantType/properties/applicantTypeCode"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "additionalApplicantType",
+    "label": "4. Additional Applicant Types",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/additionalApplicantType/properties/additionalApplicantType",
+        "widget": "Select",
+        "conditional": {
+          "when": {
+            "op": "in",
+            "ref": {
+              "scope": "root",
+              "pointer": "/applicantType/applicantTypeCode"
+            },
+            "values": [
+              "H: Public/state Controlled Institution of Higher Education",
+              "X: Other (specify)"
+            ]
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "supplementalApplicantTypes",
+    "label": "5. Supplemental Applicant Types (Check all that apply)",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/supplementalApplicantTypes/properties/alaskaNativeServingInstitution",
+        "widget": "Checkbox"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/supplementalApplicantTypes/properties/cooperativeExtensionService",
+        "widget": "Checkbox"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/supplementalApplicantTypes/properties/hispanicServingInstitution",
+        "widget": "Checkbox"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/supplementalApplicantTypes/properties/historicallyBlackCollegeOrUniversity",
+        "widget": "Checkbox"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/supplementalApplicantTypes/properties/minorityServingInstitution",
+        "widget": "Checkbox"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/supplementalApplicantTypes/properties/nativeHawaiianServingInstitution",
+        "widget": "Checkbox"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/supplementalApplicantTypes/properties/publicNonprofitJuniorOrCommunityCollege",
+        "widget": "Checkbox"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/supplementalApplicantTypes/properties/publicSecondarySchool",
+        "widget": "Checkbox"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/supplementalApplicantTypes/properties/schoolOfForestry",
+        "widget": "Checkbox"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/supplementalApplicantTypes/properties/stateAgriculturalExperimentStation",
+        "widget": "Checkbox"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/supplementalApplicantTypes/properties/tribalCollege",
+        "widget": "Checkbox"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/supplementalApplicantTypes/properties/veterinarySchoolOrCollege",
+        "widget": "Checkbox"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "asapRecipientInformation",
+    "label": "6. ASAP Recipient Information",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/asapRecipientInformation/properties/hasActiveAsapRecipientId",
+        "widget": "Radio"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/asapRecipientInformation/properties/recipientId",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/asapRecipientInformation/hasActiveAsapRecipientId"
+            },
+            "value": true
+          },
+          "then": {
+            "visible": true
+          },
+          "otherwise": {
+            "visible": false
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "keywords",
+    "label": "7. Key Words",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/keywords"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "conflictOfInterestList",
+    "label": "8. Conflict of Interest List",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/conflictOfInterestList",
+        "widget": "Attachment"
+      }
+    ]
+  }
+]
