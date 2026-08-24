@@ -51,8 +51,9 @@ const branchRequired = (
   pointer: string,
   branchName: "then" | "else",
   parentPath: string[] = [],
-): string[][] => {
+): string[][] | null => {
   if (branch === undefined || branch === true) return [];
+  if (branch === false) return null;
   if (!branch || typeof branch !== "object" || Array.isArray(branch)) {
     throw new Error(`${pointer}/${branchName} must be a JSON Schema`);
   }
@@ -64,9 +65,11 @@ const branchRequired = (
       ),
   );
   if (unsupportedKeys.length > 0) {
-    throw new Error(
-      `${pointer}/${branchName} contains unsupported effects: ${unsupportedKeys.join(", ")}`,
-    );
+    // This projection only decorates fields for simple, conjunctive `required`
+    // effects. The original JSON Schema remains authoritative for validation,
+    // so skipping a valid effect we cannot represent is safer than flattening
+    // it into stronger or weaker requiredness.
+    return null;
   }
   const paths: string[][] = [];
   if (Object.hasOwn(branchSchema, "required")) {
@@ -94,21 +97,21 @@ const branchRequired = (
     ) {
       throw new Error(`${pointer}/${branchName}/properties must be an object`);
     }
-    Object.entries(properties).forEach(([name, child]) => {
+    for (const [name, child] of Object.entries(properties)) {
       if (!SUPPORTED_PROPERTY_NAME.test(name)) {
         throw new Error(
           `${pointer}/${branchName}/properties contains an unsupported property name: ${name}`,
         );
       }
-      paths.push(
-        ...branchRequired(
-          child,
-          `${pointer}/${branchName}/properties/${escapePointer(name)}`,
-          branchName,
-          [...parentPath, name],
-        ),
+      const childPaths = branchRequired(
+        child,
+        `${pointer}/${branchName}/properties/${escapePointer(name)}`,
+        branchName,
+        [...parentPath, name],
       );
-    });
+      if (childPaths === null) return null;
+      paths.push(...childPaths);
+    }
   }
   return paths;
 };
@@ -231,7 +234,11 @@ export const extractConditionalRequiredRules = (
       validateConditionRefs(schemaNode.if, schema, pointer);
       const thenRequired = branchRequired(schemaNode.then, pointer, "then");
       const elseRequired = branchRequired(schemaNode.else, pointer, "else");
-      if (thenRequired.length > 0 || elseRequired.length > 0) {
+      if (
+        thenRequired !== null &&
+        elseRequired !== null &&
+        (thenRequired.length > 0 || elseRequired.length > 0)
+      ) {
         rules.push({
           scope,
           schemaPointer: pointer,
