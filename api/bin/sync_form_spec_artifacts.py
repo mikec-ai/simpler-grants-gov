@@ -32,6 +32,7 @@ RUNTIME_FORM_FILES = (
     "sgg/ui-schema.json",
 )
 OPTIONAL_RUNTIME_FORM_FILES = (
+    "operational-behavior.json",
     "policy-binding.json",
     "policy-content.json",
     "response-normalization.json",

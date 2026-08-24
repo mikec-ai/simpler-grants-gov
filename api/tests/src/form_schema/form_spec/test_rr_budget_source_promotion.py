@@ -148,6 +148,6 @@ def test_promotion_preserves_integrity_and_immutable_source_revision() -> None:
     assert manifest == json.loads(ARTIFACT_MANIFEST.read_text())
     assert manifest["source"] == {
         "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-        "revision": "bac08000460ef457b5970647d0c9019559398e42",
+        "revision": "9f0107e01265a7cb7a8263e0619b76ac434911ca",
     }
     assert len(manifest["selection"]["forms"]) == 39

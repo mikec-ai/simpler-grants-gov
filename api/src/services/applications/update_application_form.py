@@ -16,6 +16,9 @@ from src.services.applications.application_validation import (
     validate_application_form,
     validate_application_in_progress,
 )
+from src.services.applications.apply_initial_population import (
+    apply_initial_population_from_source_update,
+)
 from src.services.applications.get_application import get_application
 from src.services.applications.process_application_attachment_changes import (
     process_application_attachment_changes,
@@ -168,6 +171,11 @@ def update_application_form(
             user=user,
             old_application_response=old_application_response,
             new_application_response=application_response,
+        )
+        apply_initial_population_from_source_update(
+            db_session=db_session,
+            application=application,
+            source_form=application_form,
         )
 
     return application_form, warnings

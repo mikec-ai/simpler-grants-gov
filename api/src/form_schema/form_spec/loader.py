@@ -167,16 +167,16 @@ def _load_banked_form(
         projection=projection,
     )
     reject_rule_target_overlap(response_normalization, projected_rule_schema)
-    evidence_path = root / "evidence.json"
+    operational_behavior_path = root / "operational-behavior.json"
     operational_behavior = (
         project_operational_behavior(
-            json.loads(evidence_path.read_text()),
+            json.loads(operational_behavior_path.read_text()),
             form_id=form_id,
             target_projection=projection,
             projection_for=_projection_for,
             runtime_form_id_for=lambda source_form_id: runtime_identity(source_form_id).form_id,
         )
-        if evidence_path.is_file()
+        if operational_behavior_path.is_file()
         else ()
     )
     # All artifacts use the same projection, so a pointer and the property it addresses cannot
