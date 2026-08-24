@@ -6,11 +6,17 @@ on:
       - main
     paths:
       - bin/**
+      - api/bin/**
+      - api/docker-compose.ci.yml
+      - api/tests/bin/**
       - infra/**
       - .github/workflows/**
   pull_request:
     paths:
       - bin/**
+      - api/bin/**
+      - api/docker-compose.ci.yml
+      - api/tests/bin/**
       - infra/**
       - .github/workflows/**
 
@@ -36,6 +42,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Shellcheck
         run: make infra-lint-scripts
+      - name: Validate hosted browser compose override
+        run: |
+          touch api/local.env
+          docker compose -f api/docker-compose.yml -f api/docker-compose.ci.yml config --quiet
   check-terraform-format:
     name: Check Terraform format
     runs-on: ubuntu-22.04

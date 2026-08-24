@@ -88,6 +88,9 @@ build:
 start: ## Start the API for CI/CD or local Dev work where we don't need OpenSearch Dashboard
 	docker compose up grants-api --detach
 
+start-ci: ## Start the API without the development reloader for hosted browser checks
+	docker compose -f docker-compose.yml -f docker-compose.ci.yml up grants-api --detach
+
 start-full: ## Start the API including OpenSearch Dashboard
 	docker compose up --detach
 

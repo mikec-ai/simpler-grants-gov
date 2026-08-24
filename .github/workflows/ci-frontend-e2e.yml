@@ -370,7 +370,7 @@ jobs:
             grants-api \
             python bin/build_portable_browser_plan.py \
             --out /api/test-results/portable-browser-plan.json
-          make db-seed-local-with-agencies populate-search-opportunities populate-search-agencies start
+          make db-seed-local-with-agencies populate-search-opportunities populate-search-agencies start-ci
           make run-workflow-service-async
           cd ../frontend
           # Ensure the API wait script is executable
