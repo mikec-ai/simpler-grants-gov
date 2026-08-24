@@ -2,13 +2,19 @@ import fs from "fs";
 import path from "path";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page, type Response } from "@playwright/test";
+import playwrightEnv from "tests/e2e/playwright-env";
 import {
+  assertPortableMatrixEnvironment,
   classifyBoundary,
+  completeBlockedProbes,
   loadBrowserPlan,
+  observedBoundary,
   RECEIPT_CONTRACT,
   summarizeReceipts,
   writeReceipt,
   type Boundary,
+  type BrowserPlan,
+  type BrowserPlanForm,
   type FormReceipt,
   type ProbeReceipt,
 } from "tests/e2e/portable-catalog/matrix-contract";
@@ -24,8 +30,35 @@ const receiptsDirectory = path.resolve(
   "test-results/portable-catalog",
 );
 const matrixEnabled = process.env.RUN_PORTABLE_BROWSER_MATRIX === "true";
+const plannedFormProbes = [
+  "preview_registration",
+  "adapter_api_preflight",
+  "apply_render",
+  "initial_save_reload",
+  "accessibility",
+  "print_render",
+] as const;
 
 test.use({ trace: "off" });
+
+function failureProbe(
+  name: string,
+  error: unknown,
+  fallbackBoundary: Boundary,
+): ProbeReceipt {
+  const boundary = observedBoundary(error, fallbackBoundary);
+  const ownership = classifyBoundary(boundary);
+  return {
+    probe: name,
+    status: ownership === "harness_inconclusive" ? "inconclusive" : "failed",
+    boundary,
+    ownership,
+    durationMs: 0,
+    evidence: {
+      message: error instanceof Error ? error.message : String(error),
+    },
+  };
+}
 
 async function probe(
   name: string,
@@ -42,19 +75,27 @@ async function probe(
     };
   } catch (error) {
     return {
-      probe: name,
-      status:
-        classifyBoundary(boundary) === "harness_inconclusive"
-          ? "inconclusive"
-          : "failed",
-      boundary,
-      ownership: classifyBoundary(boundary),
+      ...failureProbe(name, error, boundary),
       durationMs: Date.now() - started,
-      evidence: {
-        message: error instanceof Error ? error.message : String(error),
-      },
     };
   }
+}
+
+function receiptFor(
+  plan: BrowserPlan,
+  form: BrowserPlanForm,
+  browser: string,
+): FormReceipt {
+  return {
+    contract: RECEIPT_CONTRACT,
+    consumerCommit: process.env.GITHUB_SHA ?? "local",
+    manifestSha256: plan.manifestSha256,
+    browser,
+    portableFormId: form.portableFormId,
+    previewFormId: form.previewFormId,
+    artifactDigests: form.artifactDigests,
+    probes: [],
+  };
 }
 
 async function openSelectedForm(
@@ -94,6 +135,74 @@ async function captureFormState(page: Page) {
     );
 }
 
+function fieldIdFromDefinition(definition: string): string {
+  const segments = definition
+    .split("/")
+    .filter((_segment, index, all) => all[index - 1] === "properties")
+    .map((segment) => segment.replaceAll("~1", "/").replaceAll("~0", "~"));
+  return `root_${segments.join("_")}`;
+}
+
+async function reachDeclaredEditableControl(
+  page: Page,
+  form: BrowserPlanForm,
+): Promise<string> {
+  const declarations = form.capabilities.editableScalar?.declarations ?? [];
+  const targetIds = declarations
+    .map(({ definition }) =>
+      typeof definition === "string" ? fieldIdFromDefinition(definition) : null,
+    )
+    .filter((value): value is string => value !== null);
+  const visibleTargetIds: string[] = [];
+  for (const id of targetIds) {
+    if (
+      await page
+        .locator(`[id="${id}"]`)
+        .first()
+        .isVisible()
+        .catch(() => false)
+    ) {
+      visibleTargetIds.push(id);
+    }
+  }
+  expect(visibleTargetIds.length).toBeGreaterThan(0);
+
+  await page.evaluate(() =>
+    (document.activeElement as HTMLElement | null)?.blur(),
+  );
+  const interactiveCount = await page
+    .locator(
+      "a[href]:visible, button:visible:not([disabled]), input:visible:not([disabled]), select:visible:not([disabled]), textarea:visible:not([disabled]), [tabindex]:visible:not([tabindex='-1'])",
+    )
+    .count();
+  for (let index = 0; index < interactiveCount + 5; index += 1) {
+    await page.keyboard.press("Tab");
+    const focusedTarget = await page.evaluate((ids) => {
+      const active = document.activeElement as HTMLElement | null;
+      if (!active?.closest("main")) return null;
+      const identity = active.id || active.getAttribute("name");
+      return identity && ids.includes(identity) ? identity : null;
+    }, visibleTargetIds);
+    if (focusedTarget) return focusedTarget;
+  }
+  throw new Error(
+    "keyboard traversal did not reach a declared editable form control",
+  );
+}
+
+type ApplicationFormApiRecord = {
+  application_form_id: string;
+  form_id: string;
+  form?: { form_json_schema?: unknown; form_ui_schema?: unknown };
+};
+
+async function fetchApiJson<T>(url: string, token: string): Promise<T> {
+  const response = await fetch(url, { headers: { "X-SGG-Token": token } });
+  if (!response.ok)
+    throw new Error(`API preflight failed with ${response.status}: ${url}`);
+  return (await response.json()) as T;
+}
+
 test.describe("portable catalog browser conformance", () => {
   test.skip(
     !matrixEnabled,
@@ -105,215 +214,355 @@ test.describe("portable catalog browser conformance", () => {
     async ({ page, context }, testInfo) => {
       test.setTimeout(30 * 60_000);
       const plan = loadBrowserPlan(planPath);
-      const receipts: FormReceipt[] = [];
-      fs.mkdirSync(receiptsDirectory, { recursive: true });
-      await context.tracing.start({
-        screenshots: true,
-        snapshots: true,
-        sources: true,
-      });
-
-      await authenticateE2eUser(
-        page,
-        context,
-        testInfo.project.name.match(/[Mm]obile/) !== null,
+      const receipts = plan.forms.map((form) =>
+        receiptFor(plan, form, testInfo.project.name),
       );
-      await createApplication(
-        page,
-        `/opportunity/${plan.consumerSeed.opportunityId}`,
-        undefined,
+      const receiptByForm = new Map(
+        receipts.map((receipt) => [receipt.portableFormId, receipt]),
       );
-      const applicationUrl = page.url();
-
-      const formRows = page
-        .locator(".simpler-application-forms-table")
-        .first()
-        .locator("tbody tr");
-      await expect(formRows).toHaveCount(plan.forms.length);
-
-      for (const form of plan.forms) {
-        const receipt: FormReceipt = {
-          contract: RECEIPT_CONTRACT,
-          consumerCommit: process.env.GITHUB_SHA ?? "local",
-          manifestSha256: plan.manifestSha256,
-          browser: testInfo.project.name,
-          portableFormId: form.portableFormId,
-          previewFormId: form.previewFormId,
-          artifactDigests: form.artifactDigests,
-          probes: [],
-        };
-        const pageErrors: string[] = [];
-        const failedFormRequests: string[] = [];
-        const onPageError = (error: Error) => pageErrors.push(error.message);
-        const onResponse = (response: Response) => {
-          if (!response.ok() && /\/api\/applications\//.test(response.url())) {
-            failedFormRequests.push(response.url());
-          }
-        };
-        page.on("pageerror", onPageError);
-        page.on("response", onResponse);
-
-        receipt.probes.push(
-          await probe("apply_render", "apply_render", async () => {
-            await openSelectedForm(page, applicationUrl, form.displayName);
-            await expect(page.getByText("Error rendering form")).toHaveCount(0);
-            expect(pageErrors).toEqual([]);
-            expect(failedFormRequests).toEqual([]);
-            return { route: page.url() };
-          }),
-        );
-
-        let applyUrl = page.url();
-        if (receipt.probes.at(-1)?.status === "passed") {
-          receipt.probes.push(
-            await probe("initial_save_reload", "api_round_trip", async () => {
-              const beforeSave = await captureFormState(page);
-              const save = page.getByTestId("apply-form-save");
-              await expect(save).toBeVisible();
-              await expect(save).not.toHaveAttribute("aria-disabled", "true");
-              const saveResponse = page.waitForResponse(
-                (response) =>
-                  response.request().method() === "PUT" &&
-                  /\/api\/applications\//.test(response.url()),
-                { timeout: 60_000 },
-              );
-              await save.click();
-              const response = await saveResponse;
-              expect(response.ok()).toBe(true);
-              applyUrl = page.url();
-              await page.reload({ waitUntil: "domcontentloaded" });
-              await expect(
-                page.getByRole("heading", { level: 1, name: form.displayName }),
-              ).toBeVisible();
-              await expect(page.getByText("Error rendering form")).toHaveCount(
-                0,
-              );
-              const afterReload = await captureFormState(page);
-              expect(afterReload).toEqual(beforeSave);
-              expect(pageErrors).toEqual([]);
-              expect(failedFormRequests).toEqual([]);
-              const validationWarningCount = await page
-                .getByTestId("alert")
-                .locator("li")
-                .count();
-              return {
-                route: applyUrl,
-                status: response.status(),
-                validationWarningCount,
-                persistedControls: afterReload.length,
-              };
-            }),
-          );
-
-          receipt.probes.push(
-            await probe("accessibility", "apply_render", async () => {
-              const results = await new AxeBuilder({ page })
-                .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
-                .analyze();
-              expect(results.violations).toEqual([]);
-              if (
-                form.capabilities.editableScalar?.applicability === "applicable"
-              ) {
-                await page.locator("body").press("Tab");
-                const focusedTag = await page.evaluate(
-                  () => document.activeElement?.tagName ?? null,
-                );
-                expect(focusedTag).not.toBe("BODY");
-                return { violations: 0, focusedTag };
-              }
-              return { violations: 0, focus: "not_applicable" };
-            }),
-          );
-
-          receipt.probes.push(
-            await probe("print_render", "print_render", async () => {
-              const printUrl = buildPrintUrl(applyUrl);
-              await page.goto(printUrl, { waitUntil: "domcontentloaded" });
-              await expect(
-                page.getByRole("heading", { level: 1, name: form.displayName }),
-              ).toBeVisible();
-              await expect(
-                page.locator(".apply-form-print-preview"),
-              ).toBeVisible();
-              await expect(page.getByText("Error rendering form")).toHaveCount(
-                0,
-              );
-              await expect(
-                page.locator(
-                  ".apply-form-print-preview input:visible:not([disabled]):not([readonly]), " +
-                    ".apply-form-print-preview textarea:visible:not([disabled]):not([readonly])",
-                ),
-              ).toHaveCount(0);
-              expect(pageErrors).toEqual([]);
-              expect(failedFormRequests).toEqual([]);
-              return { route: printUrl };
-            }),
-          );
-        } else {
-          for (const blockedProbe of [
-            "initial_save_reload",
-            "accessibility",
-            "print_render",
-          ]) {
-            receipt.probes.push({
-              probe: blockedProbe,
-              status: "inconclusive",
-              boundary: "apply_render",
-              ownership: "shared_runtime",
-              durationMs: 0,
-              evidence: { blockedBy: "apply_render" },
-            });
-          }
-        }
-
-        page.off("pageerror", onPageError);
-        page.off("response", onResponse);
-        receipts.push(receipt);
-        const receiptPath = writeReceipt(receiptsDirectory, receipt);
-        await testInfo.attach(`${form.portableFormId}-receipt`, {
-          path: receiptPath,
-          contentType: "application/json",
-        });
-        if (receipt.probes.some(({ status }) => status === "failed")) {
-          const screenshotPath = path.join(
-            receiptsDirectory,
-            `${form.portableFormId}-${testInfo.project.name}-failure.png`,
-          );
-          await page.screenshot({
-            path: screenshotPath,
-            fullPage: true,
-          });
-          await testInfo.attach(`${form.portableFormId}-failure`, {
-            path: screenshotPath,
-            contentType: "image/png",
-          });
-        }
-      }
-
-      const summary = summarizeReceipts(receipts);
       const browserSlug = testInfo.project.name
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-");
-      const summaryPath = path.join(
-        receiptsDirectory,
-        `catalog-summary-${browserSlug}.json`,
-      );
-      fs.writeFileSync(summaryPath, `${JSON.stringify(summary, null, 2)}\n`);
-      await testInfo.attach("portable-catalog-summary", {
-        path: summaryPath,
-        contentType: "application/json",
-      });
       const tracePath = path.join(
         receiptsDirectory,
         `catalog-${browserSlug}-trace.zip`,
       );
-      await context.tracing.stop({ path: tracePath });
-      await testInfo.attach("portable-catalog-trace", {
-        path: tracePath,
-        contentType: "application/zip",
-      });
-      expect(summary.forms).toBe(plan.forms.length);
-      expect(summary.releaseGate).toBe(true);
+      fs.mkdirSync(receiptsDirectory, { recursive: true });
+      let tracingStarted = false;
+      let setupBoundary: Boundary = "environment";
+      let fatalError: Error | undefined;
+      let summary: ReturnType<typeof summarizeReceipts> | undefined;
+
+      try {
+        await context.tracing.start({
+          screenshots: true,
+          snapshots: true,
+          sources: true,
+        });
+        tracingStarted = true;
+        assertPortableMatrixEnvironment();
+
+        setupBoundary = "authentication";
+        const token = await authenticateE2eUser(
+          page,
+          context,
+          testInfo.project.name.match(/[Mm]obile/) !== null,
+        );
+        setupBoundary = "seed";
+        await createApplication(
+          page,
+          `/opportunity/${plan.consumerSeed.opportunityId}`,
+          undefined,
+        );
+        const applicationUrl = page.url();
+        const applicationId = applicationUrl.match(
+          /\/applications\/([a-f0-9-]+)/,
+        )?.[1];
+        if (!applicationId)
+          throw new Error(
+            `seed did not produce an application URL: ${applicationUrl}`,
+          );
+
+        setupBoundary = "preview_registration";
+        const application = await fetchApiJson<{
+          data: { application_forms: ApplicationFormApiRecord[] };
+        }>(
+          `${playwrightEnv.apiUrl}/alpha/applications/${applicationId}`,
+          token,
+        );
+        const applicationForms = application.data.application_forms;
+        const selectedFormIds = new Set(
+          plan.forms.map(({ previewFormId }) => previewFormId),
+        );
+        expect(new Set(applicationForms.map(({ form_id }) => form_id))).toEqual(
+          selectedFormIds,
+        );
+        const applicationFormByFormId = new Map(
+          applicationForms.map((record) => [record.form_id, record]),
+        );
+        for (const receipt of receipts) {
+          receipt.probes.push({
+            probe: "preview_registration",
+            status: "passed",
+            durationMs: 0,
+            evidence: {
+              applicationId,
+              applicationFormId: applicationFormByFormId.get(
+                receipt.previewFormId,
+              )?.application_form_id,
+            },
+          });
+        }
+
+        const formRows = page
+          .locator(".simpler-application-forms-table")
+          .first()
+          .locator("tbody tr");
+        await expect(formRows).toHaveCount(plan.forms.length);
+
+        for (const form of plan.forms) {
+          const receipt = receiptByForm.get(form.portableFormId);
+          if (!receipt)
+            throw new Error(`missing receipt for ${form.portableFormId}`);
+          const applicationForm = applicationFormByFormId.get(
+            form.previewFormId,
+          );
+          receipt.probes.push(
+            await probe("adapter_api_preflight", "api_round_trip", async () => {
+              if (!applicationForm)
+                throw new Error("preview form missing from application API");
+              const detail = await fetchApiJson<{
+                data: ApplicationFormApiRecord;
+              }>(
+                `${playwrightEnv.apiUrl}/alpha/applications/${applicationId}/application_form/${applicationForm.application_form_id}`,
+                token,
+              );
+              expect(detail.data.form_id).toBe(form.previewFormId);
+              expect(detail.data.form?.form_json_schema).toBeDefined();
+              expect(detail.data.form?.form_ui_schema).toBeDefined();
+              return { applicationFormId: applicationForm.application_form_id };
+            }),
+          );
+          if (receipt.probes.at(-1)?.status !== "passed") {
+            completeBlockedProbes(receipt, plannedFormProbes);
+            continue;
+          }
+
+          const pageErrors: string[] = [];
+          const failedFormRequests: string[] = [];
+          const onPageError = (error: Error) => pageErrors.push(error.message);
+          const onResponse = (response: Response) => {
+            if (
+              !response.ok() &&
+              /\/api\/applications\//.test(response.url())
+            ) {
+              failedFormRequests.push(response.url());
+            }
+          };
+          page.on("pageerror", onPageError);
+          page.on("response", onResponse);
+          try {
+            receipt.probes.push(
+              await probe("apply_render", "apply_render", async () => {
+                await openSelectedForm(page, applicationUrl, form.displayName);
+                await expect(
+                  page.getByText("Error rendering form"),
+                ).toHaveCount(0);
+                expect(pageErrors).toEqual([]);
+                expect(failedFormRequests).toEqual([]);
+                return { route: page.url() };
+              }),
+            );
+            if (receipt.probes.at(-1)?.status !== "passed") {
+              completeBlockedProbes(receipt, plannedFormProbes);
+              continue;
+            }
+
+            let applyUrl = page.url();
+            receipt.probes.push(
+              await probe("initial_save_reload", "api_round_trip", async () => {
+                const beforeSave = await captureFormState(page);
+                const save = page.getByTestId("apply-form-save");
+                await expect(save).toBeVisible();
+                await expect(save).not.toHaveAttribute("aria-disabled", "true");
+                const saveResponse = page.waitForResponse(
+                  (response) =>
+                    response.request().method() === "PUT" &&
+                    /\/api\/applications\//.test(response.url()),
+                  { timeout: 60_000 },
+                );
+                await save.click();
+                const response = await saveResponse;
+                expect(response.ok()).toBe(true);
+                applyUrl = page.url();
+                await page.reload({ waitUntil: "domcontentloaded" });
+                await expect(
+                  page.getByRole("heading", {
+                    level: 1,
+                    name: form.displayName,
+                  }),
+                ).toBeVisible();
+                await expect(
+                  page.getByText("Error rendering form"),
+                ).toHaveCount(0);
+                const afterReload = await captureFormState(page);
+                expect(afterReload).toEqual(beforeSave);
+                expect(pageErrors).toEqual([]);
+                expect(failedFormRequests).toEqual([]);
+                const validationWarningCount = await page
+                  .getByTestId("alert")
+                  .locator("li")
+                  .count();
+                return {
+                  route: applyUrl,
+                  status: response.status(),
+                  validationWarningCount,
+                  persistedControls: afterReload.length,
+                };
+              }),
+            );
+
+            receipt.probes.push(
+              await probe("accessibility", "apply_render", async () => {
+                const results = await new AxeBuilder({ page })
+                  .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+                  .analyze();
+                expect(results.violations).toEqual([]);
+                if (
+                  form.capabilities.editableScalar?.applicability ===
+                  "applicable"
+                ) {
+                  return {
+                    violations: 0,
+                    focusedControl: await reachDeclaredEditableControl(
+                      page,
+                      form,
+                    ),
+                  };
+                }
+                return { violations: 0, focus: "not_applicable" };
+              }),
+            );
+
+            receipt.probes.push(
+              await probe("print_render", "print_render", async () => {
+                const printUrl = buildPrintUrl(applyUrl);
+                await page.goto(printUrl, { waitUntil: "domcontentloaded" });
+                await expect(
+                  page.getByRole("heading", {
+                    level: 1,
+                    name: form.displayName,
+                  }),
+                ).toBeVisible();
+                const preview = page.locator(".apply-form-print-preview");
+                await expect(preview).toBeVisible();
+                await expect(
+                  page.getByText("Error rendering form"),
+                ).toHaveCount(0);
+                await expect(
+                  preview.locator(
+                    "input:visible:not([type=hidden]):not([disabled]):not([readonly]), " +
+                      "textarea:visible:not([disabled]):not([readonly]), " +
+                      "select:visible:not([disabled]), button:visible:not([disabled]), " +
+                      "[contenteditable='true']:visible",
+                  ),
+                ).toHaveCount(0);
+                expect(pageErrors).toEqual([]);
+                expect(failedFormRequests).toEqual([]);
+                return { route: printUrl };
+              }),
+            );
+          } finally {
+            page.off("pageerror", onPageError);
+            page.off("response", onResponse);
+            completeBlockedProbes(receipt, plannedFormProbes);
+          }
+        }
+      } catch (error) {
+        fatalError =
+          error instanceof Error
+            ? error
+            : new Error("catalog setup failed with a non-Error value");
+        for (const receipt of receipts) {
+          if (
+            !receipt.probes.some(
+              ({ status }) => status === "failed" || status === "inconclusive",
+            )
+          ) {
+            receipt.probes.push(
+              failureProbe("catalog_setup", error, setupBoundary),
+            );
+          }
+          completeBlockedProbes(receipt, plannedFormProbes);
+        }
+      } finally {
+        let traceError: unknown;
+        if (tracingStarted) {
+          try {
+            await context.tracing.stop({ path: tracePath });
+          } catch (error) {
+            traceError = error;
+          }
+        } else {
+          traceError = new Error("browser tracing did not start");
+        }
+        if (traceError) {
+          for (const receipt of receipts) {
+            receipt.probes.push(
+              failureProbe("trace_capture", traceError, "environment"),
+            );
+          }
+        }
+
+        for (const receipt of receipts) {
+          completeBlockedProbes(receipt, plannedFormProbes);
+          const receiptPath = writeReceipt(receiptsDirectory, receipt);
+          await testInfo.attach(`${receipt.portableFormId}-receipt`, {
+            path: receiptPath,
+            contentType: "application/json",
+          });
+          if (receipt.probes.some(({ status }) => status === "failed")) {
+            const screenshotPath = path.join(
+              receiptsDirectory,
+              `${receipt.portableFormId}-${browserSlug}-failure.png`,
+            );
+            await page
+              .screenshot({ path: screenshotPath, fullPage: true })
+              .catch(() => undefined);
+            if (fs.existsSync(screenshotPath)) {
+              await testInfo.attach(`${receipt.portableFormId}-failure`, {
+                path: screenshotPath,
+                contentType: "image/png",
+              });
+            }
+          }
+        }
+
+        summary = summarizeReceipts(receipts);
+        const summaryPath = path.join(
+          receiptsDirectory,
+          `catalog-summary-${browserSlug}.json`,
+        );
+        fs.writeFileSync(summaryPath, `${JSON.stringify(summary, null, 2)}\n`);
+        await testInfo.attach("portable-catalog-summary", {
+          path: summaryPath,
+          contentType: "application/json",
+        });
+        if (tracingStarted && !traceError && fs.existsSync(tracePath)) {
+          await testInfo.attach("portable-catalog-trace", {
+            path: tracePath,
+            contentType: "application/zip",
+          });
+        } else {
+          const traceStatusPath = path.join(
+            receiptsDirectory,
+            `catalog-${browserSlug}-trace-unavailable.json`,
+          );
+          fs.writeFileSync(
+            traceStatusPath,
+            `${JSON.stringify(
+              {
+                status: "inconclusive",
+                boundary: observedBoundary(traceError, "environment"),
+                message:
+                  traceError instanceof Error
+                    ? traceError.message
+                    : "browser trace unavailable",
+              },
+              null,
+              2,
+            )}\n`,
+          );
+          await testInfo.attach("portable-catalog-trace-status", {
+            path: traceStatusPath,
+            contentType: "application/json",
+          });
+        }
+      }
+
+      if (fatalError) throw fatalError;
+      expect(summary?.forms).toBe(plan.forms.length);
+      expect(summary?.releaseGate).toBe(true);
     },
   );
 });

@@ -89,9 +89,12 @@ committing generated evidence to this repository. Run it only with the same two-
 
 ```shell
 cd api
+ENVIRONMENT=local ENABLE_PORTABLE_FORM_PREVIEW=true \
 uv run python bin/build_portable_browser_plan.py \
   --out test-results/portable-browser-plan.json
 cd ../frontend
+ENVIRONMENT=local \
+ENABLE_PORTABLE_FORM_PREVIEW=true \
 RUN_PORTABLE_BROWSER_MATRIX=true \
 PORTABLE_BROWSER_PLAN=../api/test-results/portable-browser-plan.json \
 npm run test:e2e -- --grep @portable-catalog

@@ -168,6 +168,8 @@ runs:
         TEST_USER_MANAGER_API_KEY: ${{ inputs.test_user_manager_api_key }}
         RUN_PORTABLE_BROWSER_MATRIX: ${{ inputs.target == 'local' && 'true' || 'false' }}
         PORTABLE_BROWSER_PLAN: ../api/test-results/portable-browser-plan.json
+        ENVIRONMENT: ${{ inputs.target == 'local' && 'local' || inputs.target }}
+        ENABLE_PORTABLE_FORM_PREVIEW: ${{ inputs.target == 'local' && 'true' || 'false' }}
 
       run: |
         npm run test:e2e -- ${{ inputs.spec_files }}
@@ -191,6 +193,8 @@ runs:
         TEST_USER_MANAGER_API_KEY: ${{ inputs.test_user_manager_api_key }}
         RUN_PORTABLE_BROWSER_MATRIX: ${{ inputs.target == 'local' && 'true' || 'false' }}
         PORTABLE_BROWSER_PLAN: ../api/test-results/portable-browser-plan.json
+        ENVIRONMENT: ${{ inputs.target == 'local' && 'local' || inputs.target }}
+        ENABLE_PORTABLE_FORM_PREVIEW: ${{ inputs.target == 'local' && 'true' || 'false' }}
 
       run: |
         npm run test:e2e
@@ -214,6 +218,8 @@ runs:
         TEST_USER_MANAGER_API_KEY: ${{ inputs.test_user_manager_api_key }}
         RUN_PORTABLE_BROWSER_MATRIX: ${{ inputs.target == 'local' && 'true' || 'false' }}
         PORTABLE_BROWSER_PLAN: ../api/test-results/portable-browser-plan.json
+        ENVIRONMENT: ${{ inputs.target == 'local' && 'local' || inputs.target }}
+        ENABLE_PORTABLE_FORM_PREVIEW: ${{ inputs.target == 'local' && 'true' || 'false' }}
 
       run: |
         npm run test:e2e -- --grep "${{ inputs.playwright_tags }}"

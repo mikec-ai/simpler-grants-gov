@@ -65,6 +65,7 @@ export type FormReceipt = {
   previewFormId: string;
   artifactDigests: Record<string, string>;
   probes: ProbeReceipt[];
+  firstFailedBoundary?: Boundary;
 };
 
 const ownershipByBoundary: Record<Boundary, Ownership> = {
@@ -83,6 +84,28 @@ const ownershipByBoundary: Record<Boundary, Ownership> = {
 
 export function classifyBoundary(boundary: Boundary): Ownership {
   return ownershipByBoundary[boundary];
+}
+
+export function observedBoundary(error: unknown, fallback: Boundary): Boundary {
+  const message = error instanceof Error ? error.message : String(error);
+  return error instanceof Error &&
+    (error.name === "TimeoutError" || /timeout|timed out/i.test(message))
+    ? "timeout"
+    : fallback;
+}
+
+export function assertPortableMatrixEnvironment(
+  environment: Record<string, string | undefined> = process.env,
+): void {
+  const runtime = environment.ENVIRONMENT?.trim().toLowerCase();
+  const enabled = ["1", "true", "yes"].includes(
+    environment.ENABLE_PORTABLE_FORM_PREVIEW?.trim().toLowerCase() ?? "",
+  );
+  if (!runtime || !["local", "test", "dev"].includes(runtime) || !enabled) {
+    throw new Error(
+      "portable browser matrix requires ENVIRONMENT=local|test|dev and ENABLE_PORTABLE_FORM_PREVIEW=true",
+    );
+  }
 }
 
 export function loadBrowserPlan(planPath: string): BrowserPlan {
@@ -115,6 +138,28 @@ export function writeReceipt(directory: string, receipt: FormReceipt): string {
   return receiptPath;
 }
 
+export function completeBlockedProbes(
+  receipt: FormReceipt,
+  plannedProbes: readonly string[],
+): void {
+  const firstFailure = receipt.probes.find(
+    ({ status }) => status === "failed" || status === "inconclusive",
+  );
+  if (!firstFailure) return;
+  receipt.firstFailedBoundary = firstFailure.boundary;
+  for (const probeName of plannedProbes) {
+    if (receipt.probes.some(({ probe }) => probe === probeName)) continue;
+    receipt.probes.push({
+      probe: probeName,
+      status: "inconclusive",
+      boundary: firstFailure.boundary,
+      ownership: firstFailure.ownership,
+      durationMs: 0,
+      evidence: { blockedBy: firstFailure.probe },
+    });
+  }
+}
+
 export function summarizeReceipts(receipts: FormReceipt[]) {
   const statuses: Record<ProbeStatus, number> = {
     passed: 0,
@@ -127,10 +172,16 @@ export function summarizeReceipts(receipts: FormReceipt[]) {
       statuses[probe.status] += 1;
     }
   }
+  const firstFailedBoundary = receipts
+    .flatMap(({ probes }) => probes)
+    .find(
+      ({ status }) => status === "failed" || status === "inconclusive",
+    )?.boundary;
   return {
     contract: "sgg-portable-browser-summary/v1",
     forms: receipts.length,
     statuses,
+    firstFailedBoundary: firstFailedBoundary ?? null,
     releaseGate: statuses.failed === 0 && statuses.inconclusive === 0,
   };
 }

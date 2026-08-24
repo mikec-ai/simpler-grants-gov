@@ -364,7 +364,10 @@ jobs:
             echo "ENABLE_PORTABLE_FORM_PREVIEW=true"
           } >> override.env
           mkdir -p test-results
-          docker compose run -T --rm grants-api \
+          docker compose run -T --rm \
+            -e ENVIRONMENT=local \
+            -e ENABLE_PORTABLE_FORM_PREVIEW=true \
+            grants-api \
             python bin/build_portable_browser_plan.py \
             --out /api/test-results/portable-browser-plan.json
           make db-seed-local-with-agencies populate-search-opportunities populate-search-agencies start

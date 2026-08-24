@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 import sys
 
@@ -10,6 +11,12 @@ from src.form_schema.form_spec.browser_plan import (
     build_browser_plan,
 )
 from src.form_schema.form_spec.preview import banked_form_ids, preview_form_id
+
+
+@pytest.fixture(autouse=True)
+def _enable_portable_preview(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("ENVIRONMENT", "test")
+    monkeypatch.setenv("ENABLE_PORTABLE_FORM_PREVIEW", "true")
 
 
 def test_browser_plan_follows_live_manifest_and_discovers_capabilities() -> None:
@@ -52,6 +59,11 @@ def test_browser_plan_cli_writes_json_and_structured_stdout(tmp_path) -> None:
         check=False,
         capture_output=True,
         text=True,
+        env={
+            **os.environ,
+            "ENVIRONMENT": "test",
+            "ENABLE_PORTABLE_FORM_PREVIEW": "true",
+        },
     )
 
     assert result.returncode == 0
@@ -76,6 +88,37 @@ def test_browser_plan_cli_rejects_unknown_flags() -> None:
 
     assert result.returncode == 2
     assert "unrecognized arguments: --unknown" in result.stderr
+
+
+def test_browser_plan_cli_requires_preview_gate(tmp_path) -> None:
+    environment = dict(os.environ)
+    environment.pop("ENVIRONMENT", None)
+    environment.pop("ENABLE_PORTABLE_FORM_PREVIEW", None)
+    result = subprocess.run(
+        [
+            sys.executable,
+            "bin/build_portable_browser_plan.py",
+            "--out",
+            str(tmp_path / "plan.json"),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        env=environment,
+    )
+
+    assert result.returncode == 1
+    assert result.stdout == ""
+    assert "ENVIRONMENT=local|test|dev" in result.stderr
+
+
+def test_browser_plan_fails_closed_without_preview_gate(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.delenv("ENABLE_PORTABLE_FORM_PREVIEW")
+
+    with pytest.raises(ValueError, match="ENVIRONMENT=local\\|test\\|dev"):
+        build_browser_plan()
 
 
 def test_schema_pointer_resolution_fails_closed() -> None:

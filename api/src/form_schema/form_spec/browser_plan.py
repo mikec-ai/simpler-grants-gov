@@ -14,7 +14,12 @@ from typing import Any
 
 from src.form_schema.form_spec.bank import ARTIFACT_MANIFEST
 from src.form_schema.form_spec.loader import _load_banked_form
-from src.form_schema.form_spec.preview import banked_form_ids, preview_form_id
+from src.form_schema.form_spec.preview import (
+    PREVIEW_FLAG,
+    banked_form_ids,
+    portable_preview_enabled,
+    preview_form_id,
+)
 from src.form_schema.jsonschema_resolver import resolve_jsonschema
 
 PLAN_CONTRACT = "sgg-portable-browser-plan/v1"
@@ -132,6 +137,11 @@ def _capability(paths: list[dict], *, missing_reason: str) -> dict[str, Any]:
 
 def build_browser_plan() -> dict[str, Any]:
     """Return a deterministic plan whose form set is exactly the manifest selection."""
+
+    if not portable_preview_enabled():
+        raise ValueError(
+            f"portable browser plans require ENVIRONMENT=local|test|dev and {PREVIEW_FLAG}=true"
+        )
 
     manifest = json.loads(ARTIFACT_MANIFEST.read_text())
     form_ids = banked_form_ids()
