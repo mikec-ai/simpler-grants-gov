@@ -20,6 +20,9 @@
     }
   },
   "mapping": {
+    "nonEmittingResponsePaths": [
+      "/federalFunding/totalProjectCosts"
+    ],
     "fields": {
       "budgetInformation": {
         "element": "ProjectCosts",

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phs-inclusion-enrollment-report/schema.json",
+  "type": "object",
+  "properties": {
+    "reports": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/clinical-study/inclusion-enrollment-report/schema.json"
+      },
+      "minItems": 1,
+      "maxItems": 20
+    }
+  },
+  "required": [
+    "reports"
+  ],
+  "description": "PHS Inclusion Enrollment Report, Grants.gov FID 791, version 1.0."
+}

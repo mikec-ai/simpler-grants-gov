@@ -1,0 +1,501 @@
+[
+  {
+    "type": "section",
+    "name": "report",
+    "label": "Inclusion Enrollment Reports",
+    "children": [
+      {
+        "type": "fieldList",
+        "name": "reports",
+        "label": "reports",
+        "definition": "/properties/reports",
+        "children": [
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/title"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/usesExistingDatasetOrResource"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/locationType"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/enrollmentCountries"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/enrollmentLocations"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/comments"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/female/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/female/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/female/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/female/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/female/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/female/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/female/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/male/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/male/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/male/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/male/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/male/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/male/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/hispanicLatino/properties/male/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/total/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/total/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/total/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/total/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/total/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/total/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/planned/properties/total/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/unknownNotReported"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/unknownNotReported"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/unknownNotReported"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/unknownNotReported"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/unknownNotReported"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/unknownNotReported"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/unknownNotReported"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/unknownNotReported"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/unknownNotReported"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/total/properties/americanIndianAlaskaNative"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/total/properties/asian"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/total/properties/nativeHawaiianPacificIslander"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/total/properties/blackAfricanAmerican"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/total/properties/white"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/total/properties/moreThanOneRace"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/total/properties/total"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/reports/items/properties/cumulativeActual/properties/total/properties/unknownNotReported"
+          }
+        ]
+      }
+    ]
+  }
+]
