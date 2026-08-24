@@ -2,13 +2,6 @@ name: Deploy API
 run-name: Deploy ${{ inputs.version || 'main' }} to API ${{ inputs.environment || 'nonprod' }}
 
 on:
-  push:
-    branches:
-      - "main"
-    paths:
-      - "api/**"
-      - "infra/api/**"
-      - "infra/modules/**"
   # Release deployments are handled by cd-release.yml to enforce deployment order
   # (API -> Frontend -> NOFOs -> Analytics)
   workflow_dispatch:

@@ -1,11 +1,6 @@
 name: Build Python Base Image
 
 on:
-  push:
-    branches:
-      - "main"
-    paths:
-      - "api/**"
   workflow_dispatch:
     inputs:
       version:
