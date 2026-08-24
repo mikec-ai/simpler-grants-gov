@@ -76,7 +76,7 @@ export type RecoveredPlanCandidate = Pick<
 
 const ownershipByBoundary: Record<Boundary, Ownership> = {
   artifact_integrity: "producer_content",
-  plan: "producer_content",
+  plan: "harness_inconclusive",
   preview_registration: "adapter",
   api_round_trip: "adapter",
   apply_render: "shared_runtime",

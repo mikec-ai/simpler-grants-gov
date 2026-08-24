@@ -18,6 +18,7 @@ import {
 describe("portable catalog matrix contract", () => {
   it("classifies failures by their first failed boundary", () => {
     expect(classifyBoundary("artifact_integrity")).toBe("producer_content");
+    expect(classifyBoundary("plan")).toBe("harness_inconclusive");
     expect(classifyBoundary("api_round_trip")).toBe("adapter");
     expect(classifyBoundary("apply_render")).toBe("shared_runtime");
     expect(classifyBoundary("missing_vector")).toBe("harness_inconclusive");
@@ -79,6 +80,51 @@ describe("portable catalog matrix contract", () => {
         artifactDigests: { "schema.json": "digest" },
       },
     ]);
+
+    fs.writeFileSync(
+      planPath,
+      JSON.stringify({
+        contract: PLAN_CONTRACT,
+        forms: [
+          {
+            portableFormId: "duplicate",
+            previewFormId: "123e4567-e89b-12d3-a456-426614174000",
+            artifactDigests: { "schema.json": "digest-a" },
+          },
+          {
+            portableFormId: "duplicate",
+            previewFormId: "223e4567-e89b-12d3-a456-426614174000",
+            artifactDigests: { "schema.json": "digest-b" },
+          },
+        ],
+      }),
+    );
+    expect(() => loadBrowserPlan(planPath)).toThrow("duplicate forms");
+    const recoveredDuplicates = recoverBrowserPlanCandidates(planPath);
+    expect(recoveredDuplicates).toHaveLength(1);
+    const recoveredReceipt: FormReceipt = {
+      contract: RECEIPT_CONTRACT,
+      consumerCommit: "abc",
+      manifestSha256: "unavailable",
+      browser: "Chrome",
+      ...recoveredDuplicates[0],
+      probes: [
+        {
+          probe: "catalog_setup",
+          status: "inconclusive",
+          boundary: "plan",
+          ownership: "harness_inconclusive",
+          durationMs: 0,
+        },
+      ],
+    };
+    completeBlockedProbes(recoveredReceipt, ["apply_render"]);
+    expect(recoveredReceipt.probes).toHaveLength(2);
+    expect(recoveredReceipt.probes[1]).toMatchObject({
+      probe: "apply_render",
+      status: "inconclusive",
+      evidence: { blockedBy: "catalog_setup" },
+    });
 
     fs.writeFileSync(
       planPath,
@@ -156,17 +202,17 @@ describe("portable catalog matrix contract", () => {
     expect(
       summarizeReceipts([], {
         probe: "catalog_setup",
-        status: "failed",
+        status: "inconclusive",
         boundary: "plan",
-        ownership: "producer_content",
+        ownership: "harness_inconclusive",
         durationMs: 0,
       }),
     ).toEqual({
       contract: "sgg-portable-browser-summary/v1",
       forms: 0,
-      statuses: { failed: 1, inconclusive: 0, not_applicable: 0, passed: 0 },
+      statuses: { failed: 0, inconclusive: 1, not_applicable: 0, passed: 0 },
       firstFailedBoundary: "plan",
-      firstFailureOwnership: "producer_content",
+      firstFailureOwnership: "harness_inconclusive",
       releaseGate: false,
     });
   });
