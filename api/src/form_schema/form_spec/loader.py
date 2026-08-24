@@ -109,16 +109,25 @@ def _projection_for(form_id: str) -> Projection:
     )
 
 
-def load_form(form_id: str, *, artifacts: Path | None = None) -> LoadedForm:
-    # Banking a producer package is deliberately broader than enabling it in Simpler.
-    # A portable form may be present for provenance, review, and analysis without a
-    # consumer-owned UUID, FormType, or compatibility projection.  The runtime loader
-    # must fail before projecting such a form; enablement is the explicit identity
-    # record, never the mere presence of vendored artifacts.
-    runtime_identity(form_id)
+def _load_banked_form(
+    form_id: str,
+    *,
+    artifacts: Path | None = None,
+    project_xml: bool = True,
+) -> LoadedForm:
+    """Project one selected bank package without granting runtime eligibility.
+
+    This is deliberately private. Production callers must use :func:`load_form`, whose
+    runtime-identity check is the consumer-owned enablement boundary. The local/test
+    preview registry uses this lower-level projector so banked packages can exercise the
+    real renderer before receiving production identity or release approval.
+    """
+
     if artifacts is None:
         verify_artifacts()
     root = (artifacts or ARTIFACTS) / "forms" / form_id
+    if not root.is_dir():
+        raise ValueError(f"portable form {form_id!r} is not selected in the artifact bank")
     manifest = json.loads((root / "manifest.json").read_text())
     canonical = json.loads((root / "schema.json").read_text())
     projection = _projection_for(form_id)
@@ -128,7 +137,7 @@ def load_form(form_id: str, *, artifacts: Path | None = None) -> LoadedForm:
     xml_profile_path = root / "targets" / "grants-gov-xml.json"
     json_to_xml_schema = (
         project_grants_gov_xml_profile(json.loads(xml_profile_path.read_text()), projection)
-        if xml_profile_path.is_file()
+        if project_xml and xml_profile_path.is_file()
         else None
     )
     # All three from the same projection, so a pointer and the property it addresses cannot
@@ -141,6 +150,16 @@ def load_form(form_id: str, *, artifacts: Path | None = None) -> LoadedForm:
         rule_schema=project_rule_schema(rule_schema, projection) if rule_schema else rule_schema,
         json_to_xml_schema=json_to_xml_schema,
     )
+
+
+def load_form(form_id: str, *, artifacts: Path | None = None) -> LoadedForm:
+    # Banking a producer package is deliberately broader than enabling it in Simpler.
+    # A portable form may be present for provenance, review, and analysis without a
+    # consumer-owned UUID, FormType, or compatibility projection.  The runtime loader
+    # must fail before projecting such a form; enablement is the explicit identity
+    # record, never the mere presence of vendored artifacts.
+    runtime_identity(form_id)
+    return _load_banked_form(form_id, artifacts=artifacts)
 
 
 def build_runtime_form(

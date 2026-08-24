@@ -1,6 +1,7 @@
 import logging
 
 from src.db.models.competition_models import Form
+from src.form_schema.form_spec.preview import portable_preview_enabled, preview_portable_forms
 from src.form_schema.form_spec.registrations import registered_portable_forms
 
 from ..registry.form_template_registry import form_template_registry
@@ -52,10 +53,19 @@ _ALL_FORMS: list[Form] = [
 ]
 
 
+def _forms_for_registry() -> list[Form]:
+    """Return production forms plus explicitly enabled portable previews."""
+
+    forms = [*_ALL_FORMS]
+    if portable_preview_enabled():
+        forms.extend(preview_portable_forms())
+    return forms
+
+
 def init_form_registry() -> None:
     logger.info("Registering forms")
     if len(form_template_registry.get_all()) == 0:
-        for _form in _ALL_FORMS:
+        for _form in _forms_for_registry():
             form_template_registry.register(_form, major_version=1)
 
         logger.info("Finished registering forms")
