@@ -550,11 +550,12 @@ const getFieldListConfig = ({
     (childNode) => {
       if (
         childNode.type !== "field" &&
+        childNode.type !== "null" &&
         childNode.type !== "multiField" &&
         childNode.type !== "fieldList"
       ) {
         throw new Error(
-          "fieldList children must be field, multiField, or fieldList nodes",
+          "fieldList children must be field, null, multiField, or fieldList nodes",
         );
       }
 

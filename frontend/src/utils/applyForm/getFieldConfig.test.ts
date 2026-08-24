@@ -339,6 +339,7 @@ describe("getFieldConfig", () => {
             required: ["firstName"],
             properties: {
               firstName: { type: "string", title: "First Name" },
+              calculatedTotal: { type: "string", title: "Calculated Total" },
               address: {
                 type: "object",
                 properties: {
@@ -423,6 +424,37 @@ describe("getFieldConfig", () => {
       expect(result.props.groupDefinition[0].conditional).toEqual(conditional);
     });
 
+    it("returns disabled config for a calculated null FieldList child", () => {
+      const uiFieldObject: UiSchemaFieldList = {
+        type: "fieldList",
+        name: "contacts",
+        label: "Contacts",
+        children: [
+          {
+            type: "null",
+            definition: "/properties/contacts/items/properties/calculatedTotal",
+          },
+        ],
+      };
+
+      const result = getFieldConfig({
+        errors: null,
+        formSchema,
+        formData: {},
+        uiFieldObject,
+        requiredField: false,
+      });
+
+      if (result.type !== "FieldList") throw new Error("Expected FieldList");
+      expect(result.props.groupDefinition).toHaveLength(1);
+      expect(result.props.groupDefinition[0]).toMatchObject({
+        widget: "Text",
+        baseId: "contacts[~~index~~]--calculatedTotal",
+        storagePath: ["calculatedTotal"],
+        generalProps: { disabled: true },
+      });
+    });
+
     it("returns nested storagePath and baseId for nested FieldList child fields", () => {
       const uiFieldObject: UiSchemaFieldList = {
         type: "fieldList",
@@ -486,7 +518,7 @@ describe("getFieldConfig", () => {
           requiredField: false,
         }),
       ).toThrow(
-        "fieldList children must be field, multiField, or fieldList nodes",
+        "fieldList children must be field, null, multiField, or fieldList nodes",
       );
     });
 
