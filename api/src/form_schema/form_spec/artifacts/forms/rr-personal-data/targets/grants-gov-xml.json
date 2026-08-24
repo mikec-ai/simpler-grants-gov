@@ -77,7 +77,12 @@
           "ethnicity": {
             "element": "Ethnicity",
             "kind": "value",
-            "namespace": "default"
+            "namespace": "default",
+            "valueMap": {
+              "Hispanic or Latino": "Hispanic or Latino",
+              "Non-Hispanic or Latino": "Not Hispanic or Latino",
+              "Do Not Wish to Provide": "Do Not Wish To Provide"
+            }
           },
           "disabilityStatus": {
             "element": "DisabilityStatus",
@@ -154,7 +159,12 @@
             "ethnicity": {
               "element": "Ethnicity",
               "kind": "value",
-              "namespace": "default"
+              "namespace": "default",
+              "valueMap": {
+                "Hispanic or Latino": "Hispanic or Latino",
+                "Non-Hispanic or Latino": "Not Hispanic or Latino",
+                "Do Not Wish to Provide": "Do Not Wish To Provide"
+              }
             },
             "disabilityStatus": {
               "element": "DisabilityStatus",

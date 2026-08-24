@@ -35,6 +35,13 @@
       "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
     },
     {
+      "id": "universal-codes-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"
+    },
+    {
       "id": "rr-personal-data-dat-f357",
       "type": "dat",
       "uri": "https://apply07.grants.gov/apply/forms/sample/RR_PersonalData_1_2-V1.2_F357.xls",
@@ -92,44 +99,116 @@
         "sourceId": "global-library-xsd-v2-0",
         "sourcePath": "globLib:HumanNameDataType",
         "status": "proposed",
-        "note": "Reuses the generic research-person name capture while retaining PD/PI role in its enclosing question."
+        "note": "Reuses generics/person-name, whose string constraints match HumanNameDataType, while retaining PD/PI role in its enclosing question."
       },
       {
         "canonicalPointer": "#/properties/projectDirector/properties/sex",
         "sourceId": "rr-personal-data-xsd-v1-2",
         "sourcePath": "RR_PersonalData_1_2.ProjectDirector.Gender",
         "status": "proposed",
-        "note": "Canonical label follows the current PDF and instructions ('Sex'); the legacy XML element remains Gender."
+        "note": "Reuses personal-data/sex within the PD/PI role wrapper. Canonical label follows current applicant-facing sources; XML retains Gender."
+      },
+      {
+        "canonicalPointer": "#/properties/coProjectDirectors/items/properties/sex",
+        "sourceId": "rr-personal-data-xsd-v1-2",
+        "sourcePath": "RR_PersonalData_1_2.Co-ProjectDirector[*].Gender",
+        "status": "proposed",
+        "note": "Reuses personal-data/sex within each distinct co-PD/PI role occurrence."
       },
       {
         "canonicalPointer": "#/properties/projectDirector/properties/race",
         "sourceId": "rr-personal-data-xsd-v1-2",
         "sourcePath": "RR_PersonalData_1_2.ProjectDirector.Race[*]",
         "status": "proposed",
-        "note": "Voluntary PD/PI race response; not merged with a co-PD/PI response."
+        "note": "Reuses personal-data/race within the PD/PI role wrapper; privacy and exclusivity review remains required."
+      },
+      {
+        "canonicalPointer": "#/properties/coProjectDirectors/items/properties/race",
+        "sourceId": "rr-personal-data-xsd-v1-2",
+        "sourcePath": "RR_PersonalData_1_2.Co-ProjectDirector[*].Race[*]",
+        "status": "proposed",
+        "note": "Reuses personal-data/race within each distinct co-PD/PI role occurrence; privacy and exclusivity review remains required."
       },
       {
         "canonicalPointer": "#/properties/projectDirector/properties/ethnicity",
-        "sourceId": "rr-personal-data-xsd-v1-2",
-        "sourcePath": "RR_PersonalData_1_2.ProjectDirector.Ethnicity",
+        "sourceId": "rr-personal-data-xfa-pdf-v1-2",
+        "sourcePath": "ProjectDirector.Ethnicity display and wire binding",
         "status": "proposed",
-        "note": "Voluntary PD/PI ethnicity response; exact wire spelling is retained."
+        "note": "Reuses personal-data/ethnicity within the PD/PI role wrapper; XML maps the current display label to exact legacy wire spelling."
+      },
+      {
+        "canonicalPointer": "#/properties/coProjectDirectors/items/properties/ethnicity",
+        "sourceId": "rr-personal-data-xfa-pdf-v1-2",
+        "sourcePath": "CoProjectDirector[*].Ethnicity display and wire binding",
+        "status": "proposed",
+        "note": "Reuses personal-data/ethnicity within each distinct co-PD/PI role occurrence; XML maps the current display label to exact legacy wire spelling."
       },
       {
         "canonicalPointer": "#/properties/projectDirector/properties/disabilityStatus",
         "sourceId": "rr-personal-data-xsd-v1-2",
         "sourcePath": "RR_PersonalData_1_2.ProjectDirector.DisabilityStatus[*]",
         "status": "proposed",
-        "note": "Voluntary PD/PI disability response; privacy and access-control review remains required."
+        "note": "Reuses personal-data/disability-status within the PD/PI role wrapper; privacy and exclusivity review remains required."
+      },
+      {
+        "canonicalPointer": "#/properties/coProjectDirectors/items/properties/disabilityStatus",
+        "sourceId": "rr-personal-data-xsd-v1-2",
+        "sourcePath": "RR_PersonalData_1_2.Co-ProjectDirector[*].DisabilityStatus[*]",
+        "status": "proposed",
+        "note": "Reuses personal-data/disability-status within each distinct co-PD/PI role occurrence; privacy and exclusivity review remains required."
       },
       {
         "canonicalPointer": "#/properties/projectDirector/properties/citizenship",
         "sourceId": "rr-personal-data-xsd-v1-2",
         "sourcePath": "RR_PersonalData_1_2.ProjectDirector.Citizenship",
         "status": "proposed",
-        "note": "Voluntary PD/PI citizenship response; privacy and policy review remains required."
+        "note": "Reuses personal-data/citizenship within the PD/PI role wrapper; privacy and policy review remains required."
+      },
+      {
+        "canonicalPointer": "#/properties/coProjectDirectors/items/properties/citizenship",
+        "sourceId": "rr-personal-data-xsd-v1-2",
+        "sourcePath": "RR_PersonalData_1_2.Co-ProjectDirector[*].Citizenship",
+        "status": "proposed",
+        "note": "Reuses personal-data/citizenship within each distinct co-PD/PI role occurrence; privacy and policy review remains required."
       }
     ]
   },
-  "behaviorEvidence": []
+  "behaviorEvidence": [
+    {
+      "canonicalPath": "/projectDirector/race",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "rr-personal-data-dat-f357",
+      "sourcePath": "03-01 through 03-06",
+      "sourceRecord": "Applicant selects one or more race categories. If 'Do Not Wish to Provide' is selected, then all other categories are unselected."
+    },
+    {
+      "canonicalPath": "/projectDirector/disabilityStatus",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "rr-personal-data-dat-f357",
+      "sourcePath": "05-01 through 05-06",
+      "sourceRecord": "Applicant can select one or more types of disabilities. If 'None' is selected, then all others are unselected. If 'Do Not Wish to Provide' is selected, then all others are unselected."
+    },
+    {
+      "canonicalPath": "/coProjectDirectors/[]/race",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "rr-personal-data-dat-f357",
+      "sourcePath": "10-01 through 10-06",
+      "sourceRecord": "Applicant selects one or more race categories. If 'Do Not Wish to Provide' is selected, then all other categories are unselected. Allow entry for up to 4 Co-PD/Co-PIs."
+    },
+    {
+      "canonicalPath": "/coProjectDirectors/[]/disabilityStatus",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "rr-personal-data-dat-f357",
+      "sourcePath": "12-01 through 12-06",
+      "sourceRecord": "Applicant can select one or more types of disabilities. If 'None' is selected, then all others are unselected. If 'Do Not Wish to Provide' is selected, then all others are unselected. Allow entry for up to 4 Co-PD/Co-PIs."
+    }
+  ]
 }
