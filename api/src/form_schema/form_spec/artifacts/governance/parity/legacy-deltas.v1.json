@@ -1,0 +1,2184 @@
+{
+  "contract": "grants-form-parity-delta-ledger/v1",
+  "evidenceVerification": {
+    "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+    "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+    "receipt": "parity/consumer-evidence-verification.v1.json"
+  },
+  "records": [
+    {
+      "id": "sf424.schema.525a1ac4afff",
+      "formId": "sf424",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/date_received#readOnly",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/dateReceived"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "The portable declaration preserves calculated and system-managed ownership explicitly.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424.schema.298bea3a5fb1",
+      "formId": "sf424",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/total_estimated_funding#readOnly",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/totalEstimatedFunding"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "The portable declaration preserves calculated and system-managed ownership explicitly.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424.schema.b7445c53c8d0",
+      "formId": "sf424",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/aor_signature#readOnly",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/aorSignature"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "The portable declaration preserves calculated and system-managed ownership explicitly.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424.schema.5d59bb7873fa",
+      "formId": "sf424",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/date_signed#readOnly",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/dateSigned"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "The portable declaration preserves calculated and system-managed ownership explicitly.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424.schema.680f3bec006a",
+      "formId": "sf424",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/project_start_date#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/projectStartDate"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Canonical questions supply normalized source guidance.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424.schema.a06fc5f43cec",
+      "formId": "sf424",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/project_end_date#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/projectEndDate"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Canonical questions supply normalized source guidance.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424.schema.a99341c614b9",
+      "formId": "sf424",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/debt_explanation#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/debtExplanation"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Canonical questions supply normalized source guidance.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424.schema.9e441439b38e",
+      "formId": "sf424",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/authorized_representative_email#maxLength",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/authorizedRepresentativeEmail"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "The shared email constraint is explicit in the canonical question.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424.validation.2a97ecc9ed56",
+      "formId": "sf424",
+      "target": {
+        "dimension": "validation",
+        "differenceKey": "authorized_representative_email#maxLength",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/authorizedRepresentativeEmail"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "The shared email constraint is explicit in the canonical question.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424-short.schema.fc0d41ca094d",
+      "formId": "sf424-short",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/applicant_web_address#format",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/applicantWebAddress"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "The canonical website question preserves URI-reference validation.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "research/sf424-short/source-audit.json"
+          },
+          {
+            "id": "producer-source-2",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "evidence/forms/sf424-short/evidence.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_short_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424-short.ui.c74b18bea276",
+      "formId": "sf424-short",
+      "target": {
+        "dimension": "ui",
+        "differenceKey": "/0/children/0/type",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/agencyName"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Source-bound operational values are visible in the portable lower-environment form instead of hidden by the existing null presentation nodes.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "research/sf424-short/source-audit.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_short_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424-short.ui.740ac944b33e",
+      "formId": "sf424-short",
+      "target": {
+        "dimension": "ui",
+        "differenceKey": "/1/children/0/type",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/assistanceListingNumber"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Source-bound operational values are visible in the portable lower-environment form instead of hidden by the existing null presentation nodes.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "research/sf424-short/source-audit.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_short_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424-short.ui.6a06e647fb5d",
+      "formId": "sf424-short",
+      "target": {
+        "dimension": "ui",
+        "differenceKey": "/1/children/1/type",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/assistanceListingProgramTitle"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Source-bound operational values are visible in the portable lower-environment form instead of hidden by the existing null presentation nodes.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "research/sf424-short/source-audit.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_short_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424-short.ui.a63ad1a8292c",
+      "formId": "sf424-short",
+      "target": {
+        "dimension": "ui",
+        "differenceKey": "/3/children/0/type",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/fundingOpportunityNumber"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Source-bound operational values are visible in the portable lower-environment form instead of hidden by the existing null presentation nodes.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "research/sf424-short/source-audit.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_short_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424-short.ui.ac48d820ff17",
+      "formId": "sf424-short",
+      "target": {
+        "dimension": "ui",
+        "differenceKey": "/3/children/1/type",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/fundingOpportunityTitle"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Source-bound operational values are visible in the portable lower-environment form instead of hidden by the existing null presentation nodes.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "research/sf424-short/source-audit.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_short_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424-short.ui.bae2dbee0d26",
+      "formId": "sf424-short",
+      "target": {
+        "dimension": "ui",
+        "differenceKey": "/4/children/13/type",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/samUei"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Source-bound operational values are visible in the portable lower-environment form instead of hidden by the existing null presentation nodes.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "research/sf424-short/source-audit.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424_short_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.schema.c3c65a8eab72",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/total_budget_summary#title",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/totalBudgetSummary"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Shared budget blocks supply source-derived headings and in-form guidance.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.schema.7dde44e475ca",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/total_budget_summary#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/totalBudgetSummary"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Shared budget blocks supply source-derived headings and in-form guidance.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.schema.588d7774241a",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/total_budget_categories#title",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/totalBudgetCategories"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Shared budget blocks supply source-derived headings and in-form guidance.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.schema.7e25f7313a53",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/total_budget_categories#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/totalBudgetCategories"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Shared budget blocks supply source-derived headings and in-form guidance.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.schema.28f14304cd9f",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/total_non_federal_resources#title",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/totalNonFederalResources"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Shared budget blocks supply source-derived headings and in-form guidance.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.schema.771582c96401",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/total_non_federal_resources#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/totalNonFederalResources"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Shared budget blocks supply source-derived headings and in-form guidance.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.schema.315972baac94",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/total_federal_fund_estimates#title",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/totalFederalFundEstimates"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Shared budget blocks supply source-derived headings and in-form guidance.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.schema.2ddebf5c4f85",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/total_federal_fund_estimates#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/totalFederalFundEstimates"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Shared budget blocks supply source-derived headings and in-form guidance.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.schema.02a77b744091",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/direct_charges_explanation#minLength",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/directChargesExplanation"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Optional explanation questions reject a present empty string while remaining omittable.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "evidence/forms/sf424a/evidence.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.schema.debe29c560f7",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/indirect_charges_explanation#minLength",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/indirectChargesExplanation"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Optional explanation questions reject a present empty string while remaining omittable.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "evidence/forms/sf424a/evidence.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.schema.2549fbbb394a",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/remarks#minLength",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/remarks"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Optional explanation questions reject a present empty string while remaining omittable.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "evidence/forms/sf424a/evidence.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.ui.c3b076ef5876",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "ui",
+        "differenceKey": "/0/description",
+        "semanticTarget": {
+          "kind": "ui_section",
+          "value": "SectionA"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Section A adds source-derived table guidance, including the manual Column G behavior.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.validation.b6aa2c02d45c",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "validation",
+        "differenceKey": "activity_line_items[0].activity_title#minLength",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/activityLineItems/items/properties/activityTitle"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Canonical optional strings reject a supplied empty value; compatibility normalization removes exact empty values before validation.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "evidence/forms/sf424a/evidence.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.validation.02a502cc8c3a",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "validation",
+        "differenceKey": "activity_line_items[0].assistance_listing_number#minLength",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/activityLineItems/items/properties/assistanceListingNumber"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Canonical optional strings reject a supplied empty value; compatibility normalization removes exact empty values before validation.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "evidence/forms/sf424a/evidence.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.validation.b2fd9fd6269e",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "validation",
+        "differenceKey": "direct_charges_explanation#minLength",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/directChargesExplanation"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Canonical optional strings reject a supplied empty value; compatibility normalization removes exact empty values before validation.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "evidence/forms/sf424a/evidence.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.validation.1470c7dda7ca",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "validation",
+        "differenceKey": "indirect_charges_explanation#minLength",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/indirectChargesExplanation"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Canonical optional strings reject a supplied empty value; compatibility normalization removes exact empty values before validation.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "evidence/forms/sf424a/evidence.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424a.validation.6a7fb2b4ef8a",
+      "formId": "sf424a",
+      "target": {
+        "dimension": "validation",
+        "differenceKey": "remarks#minLength",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/remarks"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "Canonical optional strings reject a supplied empty value; compatibility normalization removes exact empty values before validation.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "evidence/forms/sf424a/evidence.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "key-contacts.schema.ad5c78aacddb",
+      "formId": "key-contacts",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/key_contacts#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/keyContacts"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "The canonical contact and repeater questions provide source guidance without changing validation.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_key_contacts_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "key-contacts.schema.5d3a712aae5d",
+      "formId": "key-contacts",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/key_contacts/items/properties/phone#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/keyContacts/items/properties/phone"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "The canonical contact and repeater questions provide source guidance without changing validation.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_key_contacts_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "key-contacts.schema.09a30bd18598",
+      "formId": "key-contacts",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/key_contacts/items/properties/fax#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/keyContacts/items/properties/fax"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "The canonical contact and repeater questions provide source guidance without changing validation.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_key_contacts_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "key-contacts.schema.9a8fa23fe116",
+      "formId": "key-contacts",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/key_contacts/items/properties/email#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/keyContacts/items/properties/email"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "The canonical contact and repeater questions provide source guidance without changing validation.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_key_contacts_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "key-contacts.ui.ab95a0dcaa1f",
+      "formId": "key-contacts",
+      "target": {
+        "dimension": "ui",
+        "differenceKey": "/0/children/1/definition",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/keyContacts"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "The portable fieldList carries an explicit schema pointer required by the generic renderer.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_key_contacts_parity.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "project-abstract-summary.schema.2b77cca88066",
+      "formId": "project-abstract-summary",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/funding_opportunity_number#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/fundingOpportunityNumber"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Portable canonical questions carry source-derived guidance omitted by the existing schema.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_project_abstract_summary_portable.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "project-abstract-summary.schema.354534a6a618",
+      "formId": "project-abstract-summary",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/assistance_listing_number#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/assistanceListingNumber"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Portable canonical questions carry source-derived guidance omitted by the existing schema.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_project_abstract_summary_portable.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "project-abstract-summary.schema.7411b18585f3",
+      "formId": "project-abstract-summary",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/project_abstract#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/projectAbstract"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Portable canonical questions carry source-derived guidance omitted by the existing schema.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_project_abstract_summary_portable.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424b.schema.ec57f6381180",
+      "formId": "sf424b",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/signature#readOnly",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/signature"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Official data-element ownership makes cover-derived and submission-managed values read-only.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424b_portable.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424b.schema.420082e98b4e",
+      "formId": "sf424b",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/title#readOnly",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/title"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Official data-element ownership makes cover-derived and submission-managed values read-only.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424b_portable.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424b.schema.7dffe35f4b0e",
+      "formId": "sf424b",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/applicant_organization#readOnly",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/applicantOrganization"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Official data-element ownership makes cover-derived and submission-managed values read-only.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424b_portable.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424b.schema.8f42a6d86f71",
+      "formId": "sf424b",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/date_signed#readOnly",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/signedDate"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Official data-element ownership makes cover-derived and submission-managed values read-only.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424b_portable.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424b.schema.664321728871",
+      "formId": "sf424b",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/title#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/title"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Canonical descriptions state the application-cover relationship directly.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424b_portable.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424b.schema.6e605fd4abfc",
+      "formId": "sf424b",
+      "target": {
+        "dimension": "schema",
+        "differenceKey": "/properties/applicant_organization#description",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/applicantOrganization"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Canonical descriptions state the application-cover relationship directly.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424b_portable.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424b.ui.b26b6dd73c76",
+      "formId": "sf424b",
+      "target": {
+        "dimension": "ui",
+        "differenceKey": "/1/description",
+        "semanticTarget": {
+          "kind": "policy_reference",
+          "value": "policy:grants-gov/nonconstruction-assurances@1.1#assurances"
+        }
+      },
+      "classification": "authoritative_source_correction",
+      "rationale": "The portable policy bundle preserves the pinned 19-assurance source text and normalized presentation.",
+      "sourceSupport": {
+        "status": "verified",
+        "evidenceReferences": [
+          {
+            "id": "producer-source-1",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "policies/nonconstruction-assurances-1.1.json"
+          },
+          {
+            "id": "producer-source-2",
+            "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+            "revision": "42070f20c1a755e624eebbfe284050976b050088",
+            "path": "evidence/forms/sf424b/evidence.json"
+          }
+        ]
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424b_portable.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424b.ui.0ab5a357fbd6",
+      "formId": "sf424b",
+      "target": {
+        "dimension": "ui",
+        "differenceKey": "/2/children/1/type",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/title"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Cover-derived title and applicant organization are hidden from editing by explicit ownership.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424b_portable.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    },
+    {
+      "id": "sf424b.ui.322b6826d72c",
+      "formId": "sf424b",
+      "target": {
+        "dimension": "ui",
+        "differenceKey": "/2/children/2/type",
+        "semanticTarget": {
+          "kind": "canonical_form_path",
+          "value": "/properties/applicantOrganization"
+        }
+      },
+      "classification": "unclassified",
+      "rationale": "Cover-derived title and applicant organization are hidden from editing by explicit ownership.",
+      "sourceSupport": {
+        "status": "unverified",
+        "evidenceReferences": []
+      },
+      "evidenceReferences": [
+        {
+          "id": "bounded-comparison",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_sf424b_portable.py"
+        },
+        {
+          "id": "differential-harness",
+          "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+          "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+          "path": "api/tests/src/form_schema/form_spec/test_differential.py"
+        }
+      ],
+      "differentialAssertion": {
+        "comparatorContract": "sgg-portable-legacy-differential/v3",
+        "evidenceReferenceId": "differential-harness",
+        "testId": "test_uniform_cohort_has_seven_comparison_gated_receipts"
+      },
+      "review": {
+        "status": "proposed",
+        "decisionEvidence": []
+      }
+    }
+  ]
+}

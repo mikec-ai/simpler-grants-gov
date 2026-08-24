@@ -31,15 +31,30 @@ def main() -> int:
                 status: sum(
                     receipt["dimensions"][dimension]["status"] == status for receipt in receipts
                 )
-                for status in ("parity", "intentional_delta", "not_applicable", "failed")
+                for status in (
+                    "parity",
+                    "reviewed_delta",
+                    "proposed_delta",
+                    "unresolved",
+                    "not_applicable",
+                    "failed",
+                )
             }
             for dimension in ("schema", "ui", "validation", "rules")
         }
+        failed_forms = sum(
+            any(
+                dimension["status"] in {"failed", "unresolved"}
+                for dimension in receipt["dimensions"].values()
+            )
+            for receipt in receipts
+        )
         summary = {
-            "contract": "sgg-portable-legacy-differential-summary/v2",
+            "contract": "sgg-portable-legacy-differential-summary/v3",
             "forms": len(receipts),
-            "passed": sum(receipt["comparisonGate"] for receipt in receipts),
-            "failed": sum(not receipt["comparisonGate"] for receipt in receipts),
+            "comparisonGatePassed": sum(receipt["comparisonGate"] for receipt in receipts),
+            "comparisonGateBlocked": sum(not receipt["comparisonGate"] for receipt in receipts),
+            "failed": failed_forms,
             "dimensionStatuses": dimension_statuses,
             "receipts": [f"{receipt['portableFormId']}.json" for receipt in receipts],
         }
@@ -52,7 +67,8 @@ def main() -> int:
     sys.stdout.write(
         "legacy_differential:\n"
         f"  forms: {summary['forms']}\n"
-        f"  passed: {summary['passed']}\n"
+        f"  comparison_gate_passed: {summary['comparisonGatePassed']}\n"
+        f"  comparison_gate_blocked: {summary['comparisonGateBlocked']}\n"
         f"  failed: {summary['failed']}\n"
         f"  output_directory: {args.output_dir}\n"
     )

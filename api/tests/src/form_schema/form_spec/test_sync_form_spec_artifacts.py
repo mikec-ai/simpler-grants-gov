@@ -12,6 +12,12 @@ from bin.sync_form_spec_artifacts import select_artifacts, verify_selected_xsds,
 
 
 def _bundle(path, files):
+    files = {
+        "contract/v1/parity-delta-ledger.schema.json": b"{}",
+        "parity/consumer-evidence-verification.v1.json": b"{}",
+        "parity/legacy-deltas.v1.json": b"{}",
+        **files,
+    }
     records = [
         {"path": name, "size": len(payload), "sha256": hashlib.sha256(payload).hexdigest()}
         for name, payload in sorted(files.items())
@@ -64,6 +70,9 @@ def test_selects_only_runtime_files_and_transitive_questions(tmp_path):
         "forms/example/targets/grants-gov-xml.json",
         "question-bank/a/schema.json",
         "question-bank/b/schema.json",
+        "governance/contract/v1/parity-delta-ledger.schema.json",
+        "governance/parity/consumer-evidence-verification.v1.json",
+        "governance/parity/legacy-deltas.v1.json",
     }
     assert manifest["source"]["revision"] == "abc123"
     assert manifest["selection"]["forms"] == ["example"]
@@ -71,6 +80,7 @@ def test_selects_only_runtime_files_and_transitive_questions(tmp_path):
     target = tmp_path / "artifacts"
     write_selection(target=target, manifest=manifest, files=selected)
     assert (target / "question-bank/b/schema.json").is_file()
+    assert (target / "governance/parity/legacy-deltas.v1.json").is_file()
     assert not (target / "question-bank/unrelated/schema.json").exists()
 
 
@@ -114,19 +124,18 @@ def test_selects_multiple_forms_and_deduplicates_their_shared_questions(tmp_path
     assert "forms/first/schema.json" in selected
     assert "forms/second/schema.json" in selected
     assert list(selected).count("question-bank/shared/schema.json") == 1
+    assert "governance/parity/legacy-deltas.v1.json" in selected
 
 
 def test_selected_xml_profiles_must_match_a_vendored_xsd(tmp_path):
     payload = b"<schema/>"
     digest = hashlib.sha256(payload).hexdigest()
-    profile = json.dumps(
-        {
-            "xsd": {
-                "uri": "https://apply.grants.gov/forms/Example-V1.0.xsd",
-                "sha256": digest,
-            }
+    profile = json.dumps({
+        "xsd": {
+            "uri": "https://apply.grants.gov/forms/Example-V1.0.xsd",
+            "sha256": digest,
         }
-    ).encode()
+    }).encode()
     xsd_directory = tmp_path / "xsds"
     xsd_directory.mkdir()
     (xsd_directory / "Example-V1.0.xsd").write_bytes(payload)

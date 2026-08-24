@@ -1,0 +1,36 @@
+{
+  "contract": "grants-form-parity-evidence-verification/v1",
+  "repository": "https://github.com/mikec-ai/simpler-grants-gov.git",
+  "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
+  "verificationMethod": "sha256 of files checked out at the pinned Git revision",
+  "files": [
+    {
+      "path": "api/tests/src/form_schema/form_spec/test_differential.py",
+      "sha256": "0b69d321946ece6225010bd883c609f2bb40ba64c0134a8cc279b6216392a183"
+    },
+    {
+      "path": "api/tests/src/form_schema/form_spec/test_key_contacts_parity.py",
+      "sha256": "8f308e2fdc976b3182b3deda395500b1e3a779e21eace198ba5e8b9482eabbad"
+    },
+    {
+      "path": "api/tests/src/form_schema/form_spec/test_project_abstract_summary_portable.py",
+      "sha256": "9300751b0cdfc5368a2e750eb0ece25f45947363d7b40cce97a7f7812765d075"
+    },
+    {
+      "path": "api/tests/src/form_schema/form_spec/test_sf424_parity.py",
+      "sha256": "d35b639b84a467992a359539c9f5e29041c4f167b729978dce5b9b22a2500272"
+    },
+    {
+      "path": "api/tests/src/form_schema/form_spec/test_sf424_short_parity.py",
+      "sha256": "a321557116a918397810aacf1ca8e16250c4460fc989bffdeb30a432a88d74a9"
+    },
+    {
+      "path": "api/tests/src/form_schema/form_spec/test_sf424a_parity.py",
+      "sha256": "cfbb038c1a5e876bd6f25bb20fd3a9bcf52102fce4d5343e7cbbbdbf6e2ec87e"
+    },
+    {
+      "path": "api/tests/src/form_schema/form_spec/test_sf424b_portable.py",
+      "sha256": "8736aa630a5b033de94621acfa05b296734bd069aaee8b5b3db91ea51b3905fa"
+    }
+  ]
+}

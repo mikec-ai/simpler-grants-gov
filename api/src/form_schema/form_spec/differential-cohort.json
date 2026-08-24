@@ -1,226 +1,28 @@
 {
   "contract": "sgg-portable-legacy-cohort/v1",
   "forms": [
-    {
-      "portableFormId": "sf424",
-      "existingDirectory": "sf424",
-      "existingVersion": "1.0",
-      "intentionalDeltas": {
-        "schema": [
-          {
-            "keys": [
-              "/properties/date_received#readOnly",
-              "/properties/total_estimated_funding#readOnly",
-              "/properties/aor_signature#readOnly",
-              "/properties/date_signed#readOnly"
-            ],
-            "reason": "The portable declaration preserves calculated and system-managed ownership explicitly.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424_parity.py"
-          },
-          {
-            "keys": [
-              "/properties/project_start_date#description",
-              "/properties/project_end_date#description",
-              "/properties/debt_explanation#description"
-            ],
-            "reason": "Canonical questions supply normalized source guidance.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424_parity.py"
-          },
-          {
-            "keys": ["/properties/authorized_representative_email#maxLength"],
-            "reason": "The shared email constraint is explicit in the canonical question.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424_parity.py"
-          }
-        ],
-        "ui": [],
-        "validation": [
-          {
-            "keys": ["authorized_representative_email#maxLength"],
-            "reason": "The shared email constraint is explicit in the canonical question.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424_parity.py"
-          }
-        ],
-        "rules": []
-      }
-    },
+    {"portableFormId": "sf424", "existingDirectory": "sf424", "existingVersion": "1.0"},
     {
       "portableFormId": "sf424-short",
       "existingDirectory": "sf424_short",
-      "existingVersion": "1.0",
-      "intentionalDeltas": {
-        "schema": [
-          {
-            "keys": ["/properties/applicant_web_address#format"],
-            "reason": "The canonical website question preserves URI-reference validation.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424_short_parity.py"
-          }
-        ],
-        "ui": [
-          {
-            "keys": [
-              "/0/children/0/type",
-              "/1/children/0/type",
-              "/1/children/1/type",
-              "/3/children/0/type",
-              "/3/children/1/type",
-              "/4/children/13/type"
-            ],
-            "reason": "Source-bound operational values are visible in the portable lower-environment form instead of hidden by the existing null presentation nodes.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424_short_parity.py"
-          }
-        ],
-        "validation": [],
-        "rules": []
-      }
+      "existingVersion": "1.0"
     },
-    {
-      "portableFormId": "sf424a",
-      "existingDirectory": "sf424a",
-      "existingVersion": "1.0",
-      "intentionalDeltas": {
-        "schema": [
-          {
-            "keys": [
-              "/properties/total_budget_summary#title",
-              "/properties/total_budget_summary#description",
-              "/properties/total_budget_categories#title",
-              "/properties/total_budget_categories#description",
-              "/properties/total_non_federal_resources#title",
-              "/properties/total_non_federal_resources#description",
-              "/properties/total_federal_fund_estimates#title",
-              "/properties/total_federal_fund_estimates#description"
-            ],
-            "reason": "Shared budget blocks supply source-derived headings and in-form guidance.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424a_parity.py"
-          },
-          {
-            "keys": [
-              "/properties/direct_charges_explanation#minLength",
-              "/properties/indirect_charges_explanation#minLength",
-              "/properties/remarks#minLength"
-            ],
-            "reason": "Optional explanation questions reject a present empty string while remaining omittable.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424a_parity.py"
-          }
-        ],
-        "ui": [
-          {
-            "keys": ["/0/description"],
-            "reason": "Section A adds source-derived table guidance, including the manual Column G behavior.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424a_parity.py"
-          }
-        ],
-        "validation": [
-          {
-            "keys": [
-              "activity_line_items[0].activity_title#minLength",
-              "activity_line_items[0].assistance_listing_number#minLength",
-              "direct_charges_explanation#minLength",
-              "indirect_charges_explanation#minLength",
-              "remarks#minLength"
-            ],
-            "reason": "Canonical optional strings reject a supplied empty value; compatibility normalization removes exact empty values before validation.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424a_parity.py"
-          }
-        ],
-        "rules": []
-      }
-    },
+    {"portableFormId": "sf424a", "existingDirectory": "sf424a", "existingVersion": "1.0"},
     {
       "portableFormId": "key-contacts",
       "existingDirectory": "key_contacts",
-      "existingVersion": "1.0",
-      "intentionalDeltas": {
-        "schema": [
-          {
-            "keys": [
-              "/properties/key_contacts#description",
-              "/properties/key_contacts/items/properties/phone#description",
-              "/properties/key_contacts/items/properties/fax#description",
-              "/properties/key_contacts/items/properties/email#description"
-            ],
-            "reason": "The canonical contact and repeater questions provide source guidance without changing validation.",
-            "evidence": "tests/src/form_schema/form_spec/test_key_contacts_parity.py"
-          }
-        ],
-        "ui": [
-          {
-            "keys": ["/0/children/1/definition"],
-            "reason": "The portable fieldList carries an explicit schema pointer required by the generic renderer.",
-            "evidence": "tests/src/form_schema/form_spec/test_key_contacts_parity.py"
-          }
-        ],
-        "validation": [],
-        "rules": []
-      }
+      "existingVersion": "1.0"
     },
     {
       "portableFormId": "project-abstract-summary",
       "existingDirectory": "project_abstract_summary",
-      "existingVersion": "1.0",
-      "intentionalDeltas": {
-        "schema": [
-          {
-            "keys": [
-              "/properties/funding_opportunity_number#description",
-              "/properties/assistance_listing_number#description",
-              "/properties/project_abstract#description"
-            ],
-            "reason": "Portable canonical questions carry source-derived guidance omitted by the existing schema.",
-            "evidence": "tests/src/form_schema/form_spec/test_project_abstract_summary_portable.py"
-          }
-        ],
-        "ui": [],
-        "validation": [],
-        "rules": []
-      }
+      "existingVersion": "1.0"
     },
     {
       "portableFormId": "project-narrative-attachments",
       "existingDirectory": "project_narrative_attachment",
-      "existingVersion": "1.0",
-      "intentionalDeltas": {"schema": [], "ui": [], "validation": [], "rules": []}
+      "existingVersion": "1.0"
     },
-    {
-      "portableFormId": "sf424b",
-      "existingDirectory": "sf424b",
-      "existingVersion": "1.0",
-      "intentionalDeltas": {
-        "schema": [
-          {
-            "keys": [
-              "/properties/signature#readOnly",
-              "/properties/title#readOnly",
-              "/properties/applicant_organization#readOnly",
-              "/properties/date_signed#readOnly"
-            ],
-            "reason": "Official data-element ownership makes cover-derived and submission-managed values read-only.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424b_portable.py"
-          },
-          {
-            "keys": [
-              "/properties/title#description",
-              "/properties/applicant_organization#description"
-            ],
-            "reason": "Canonical descriptions state the application-cover relationship directly.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424b_portable.py"
-          }
-        ],
-        "ui": [
-          {
-            "keys": ["/1/description"],
-            "reason": "The portable policy bundle preserves the pinned 19-assurance source text and normalized presentation.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424b_portable.py"
-          },
-          {
-            "keys": ["/2/children/1/type", "/2/children/2/type"],
-            "reason": "Cover-derived title and applicant organization are hidden from editing by explicit ownership.",
-            "evidence": "tests/src/form_schema/form_spec/test_sf424b_portable.py"
-          }
-        ],
-        "validation": [],
-        "rules": []
-      }
-    }
+    {"portableFormId": "sf424b", "existingDirectory": "sf424b", "existingVersion": "1.0"}
   ]
 }

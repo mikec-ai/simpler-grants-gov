@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simpler-grants.gov/contracts/parity-delta-ledger/v1",
+  "title": "Portable legacy parity delta ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "evidenceVerification", "records"],
+  "properties": {
+    "contract": {"const": "grants-form-parity-delta-ledger/v1"},
+    "evidenceVerification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "revision", "receipt"],
+      "properties": {
+        "repository": {"type": "string", "format": "uri"},
+        "revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "receipt": {"type": "string", "pattern": "^parity/.+\\.json$"}
+      }
+    },
+    "records": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/record"}
+    }
+  },
+  "$defs": {
+    "record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "formId",
+        "target",
+        "classification",
+        "rationale",
+        "sourceSupport",
+        "evidenceReferences",
+        "differentialAssertion",
+        "review"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$"},
+        "formId": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]+$"},
+        "target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["dimension", "differenceKey", "semanticTarget"],
+          "properties": {
+            "dimension": {"enum": ["schema", "ui", "validation", "rules"]},
+            "differenceKey": {"type": "string", "minLength": 1},
+            "semanticTarget": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kind", "value"],
+              "properties": {
+                "kind": {
+                  "enum": ["canonical_form_path", "ui_section", "policy_reference", "rule_path"]
+                },
+                "value": {"type": "string", "minLength": 1}
+              }
+            }
+          }
+        },
+        "classification": {
+          "enum": [
+            "unclassified",
+            "authoritative_source_correction",
+            "canonical_constraint_or_guidance",
+            "legacy_presentation_difference",
+            "approved_incompatibility",
+            "unresolved_mismatch"
+          ]
+        },
+        "rationale": {"type": "string", "minLength": 1},
+        "sourceSupport": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "evidenceReferences"],
+          "properties": {
+            "status": {"enum": ["unverified", "partial", "verified"]},
+            "evidenceReferences": {
+              "type": "array",
+              "items": {"$ref": "#/$defs/externalReference"}
+            }
+          }
+        },
+        "evidenceReferences": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/externalReference"}
+        },
+        "differentialAssertion": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["comparatorContract", "evidenceReferenceId", "testId"],
+          "properties": {
+            "comparatorContract": {"const": "sgg-portable-legacy-differential/v3"},
+            "evidenceReferenceId": {"type": "string", "minLength": 1},
+            "testId": {"type": "string", "minLength": 1}
+          }
+        },
+        "review": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "decisionEvidence"],
+          "properties": {
+            "status": {"enum": ["proposed", "accepted", "rejected"]},
+            "reviewer": {"type": "string", "minLength": 1},
+            "reviewedAt": {"type": "string", "format": "date-time"},
+            "decisionEvidence": {
+              "type": "array",
+              "items": {"$ref": "#/$defs/externalReference"}
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "review": {
+                "type": "object",
+                "properties": {"status": {"const": "accepted"}}
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "classification": {
+                "enum": [
+                  "authoritative_source_correction",
+                  "canonical_constraint_or_guidance",
+                  "legacy_presentation_difference",
+                  "approved_incompatibility"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {"classification": {"const": "authoritative_source_correction"}}
+          },
+          "then": {
+            "properties": {
+              "sourceSupport": {
+                "type": "object",
+                "properties": {"status": {"const": "verified"}}
+              }
+            }
+          }
+        }
+      ]
+    },
+    "externalReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "repository", "revision", "path"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$"},
+        "repository": {"type": "string", "format": "uri"},
+        "revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+        "path": {"type": "string", "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"}
+      }
+    }
+  }
+}

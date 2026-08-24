@@ -25,7 +25,14 @@ def test_vendored_artifacts_match_the_pinned_form_spec_build():
 
 def test_manifest_covers_every_vendored_json_artifact():
     manifest = json.loads(ARTIFACT_MANIFEST.read_text())
-    expected = {str(record["path"]).removeprefix("dist/") for record in manifest["files"]}
+    expected = {
+        (
+            str(record["path"]).removeprefix("dist/")
+            if record["path"].startswith("dist/")
+            else f"governance/{record['path']}"
+        )
+        for record in manifest["files"]
+    }
     present = {
         str(path.relative_to(ARTIFACTS))
         for path in ARTIFACTS.rglob("*.json")
@@ -77,7 +84,11 @@ def test_budget_family_behavior_evidence_pins_exact_f770_records(
 def test_changed_artifact_fails_closed(tmp_path):
     manifest = json.loads(ARTIFACT_MANIFEST.read_text())
     record = manifest["files"][0]
-    relative = record["path"].removeprefix("dist/")
+    relative = (
+        record["path"].removeprefix("dist/")
+        if record["path"].startswith("dist/")
+        else f"governance/{record['path']}"
+    )
     source = ARTIFACTS / relative
     selected = tmp_path / "artifacts"
     changed = selected / relative
