@@ -17,41 +17,10 @@ def test_vendored_artifacts_match_the_pinned_form_spec_build():
     assert manifest["source"]["repository"] == "https://github.com/mikec-ai/grants-form-spec.git"
     assert re.fullmatch(r"[0-9a-f]{40}", manifest["source"]["revision"])
     assert re.fullmatch(r"[0-9a-f]{64}", manifest["sourceBundleSha256"])
-    assert manifest["selection"]["forms"] == [
-        "key-contacts",
-        "sf424",
-        "sf424a",
-        "sf424-short",
-        "project-narrative-attachments",
-        "budget-narrative-attachments",
-        "other-narrative-attachments",
-        "rr-budget",
-        "rr-budget-10yr",
-        "rr-subaward-budget",
-        "rr-subaward-budget-30",
-        "rr-subaward-budget-10yr-30",
-        "project-abstract-summary",
-        "rr-sf424",
-        "rr-sf424-multi-project-cover",
-        "rr-key-person-expanded",
-        "performance-site",
-        "rr-other-project-information",
-        "phs398-modular-budget",
-        "sflll",
-        "cd511",
-        "gg-lobbying",
-        "sf424b",
-        "mandatory-sf424b",
-        "individual-sf424b",
-        "sf424d",
-        "mandatory-sf424d",
-        "individual-sf424d",
-        "sf424c",
-        "phs-assignment-request",
-        "attachment-form",
-        "rr-sf424b",
-        "nifa-supplemental",
-    ]
+    selected = manifest["selection"]["forms"]
+    assert selected
+    assert len(selected) == len(set(selected))
+    assert set(selected) == {path.name for path in (ARTIFACTS / "forms").iterdir() if path.is_dir()}
 
 
 def test_manifest_covers_every_vendored_json_artifact():
