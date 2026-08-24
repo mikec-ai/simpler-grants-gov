@@ -10,12 +10,27 @@ import {
   PLAN_CONTRACT,
   RECEIPT_CONTRACT,
   recoverBrowserPlanCandidates,
+  schemaDefinitionToControlId,
   summarizeReceipts,
   writeReceipt,
   type FormReceipt,
 } from "tests/e2e/portable-catalog/matrix-contract";
 
 describe("portable catalog matrix contract", () => {
+  it("maps schema definitions to stable RJSF control ids", () => {
+    expect(schemaDefinitionToControlId("/properties/organization_name")).toBe(
+      "organization_name",
+    );
+    expect(
+      schemaDefinitionToControlId(
+        "/properties/contact_person/properties/name/properties/first_name",
+      ),
+    ).toBe("contact_person--name--first_name");
+    expect(() => schemaDefinitionToControlId("relative/path")).toThrow(
+      "absolute pointer",
+    );
+  });
+
   it("classifies failures by their first failed boundary", () => {
     expect(classifyBoundary("artifact_integrity")).toBe("producer_content");
     expect(classifyBoundary("plan")).toBe("harness_inconclusive");

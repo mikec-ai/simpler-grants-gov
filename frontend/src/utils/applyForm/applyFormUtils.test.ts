@@ -317,6 +317,61 @@ describe("processFormSchema", () => {
     expect(mockExtricateConditionalValidationRules).toHaveBeenCalledWith({});
   });
 
+  it("extracts a conditional-only root allOf before rendering", () => {
+    const rootCondition = {
+      if: { properties: { applicantType: { const: "other" } } },
+      then: { required: ["applicantTypeOther"] },
+    };
+    mockExtricateConditionalValidationRules
+      .mockReturnValueOnce({
+        propertiesWithoutComplexConditionals: {
+          applicantType: { type: "string" },
+        },
+        conditionalValidationRules: {},
+      })
+      .mockReturnValueOnce({
+        propertiesWithoutComplexConditionals: {},
+        conditionalValidationRules: { "": [rootCondition] },
+      });
+
+    const processed = processFormSchema({
+      type: "object",
+      properties: { applicantType: { type: "string" } },
+      allOf: [rootCondition],
+    });
+
+    expect(mockExtricateConditionalValidationRules).toHaveBeenNthCalledWith(2, {
+      allOf: [rootCondition],
+    });
+    expect(processed.formSchema).toEqual({
+      type: "object",
+      properties: { applicantType: { type: "string" } },
+    });
+    expect(processed.conditionalValidationRules).toEqual({
+      "": [rootCondition],
+    });
+  });
+
+  it("drops resolved definitions from the renderable schema", () => {
+    const processed = processFormSchema({
+      $defs: {
+        unusedAfterResolution: {
+          allOf: [
+            {
+              if: { properties: { answer: { const: "yes" } } },
+              then: { required: ["explanation"] },
+            },
+          ],
+        },
+      },
+      properties: { answer: { type: "string" } },
+    });
+
+    expect(processed.formSchema).toEqual({
+      properties: { answer: { type: "string" } },
+    });
+  });
+
   it("calls mergeAllOf with the properties returned from extricateConditionalValidationRules", () => {
     const propertiesWithoutComplexConditionals: NonNullable<
       RJSFSchema["properties"]

@@ -66,6 +66,21 @@ def test_browser_plan_can_target_a_family_member_without_a_second_harness(
     }
 
 
+def test_browser_plan_does_not_treat_prepopulated_fields_as_editable(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "sf424-short")
+
+    capabilities = build_browser_plan()["forms"][0]["capabilities"]
+    editable_definitions = {
+        declaration["definition"] for declaration in capabilities["editableScalar"]["declarations"]
+    }
+
+    assert "/properties/agency_name" not in editable_definitions
+    assert "/properties/assistance_listing_number" not in editable_definitions
+    assert "/properties/organization_name" in editable_definitions
+
+
 def test_browser_seed_ids_preserve_full_catalog_and_isolate_canaries() -> None:
     assert browser_seed_ids(banked_form_ids()) == (SEED_OPPORTUNITY_ID, SEED_COMPETITION_ID)
     assert browser_seed_ids(("sf424",)) == browser_seed_ids(("sf424",))

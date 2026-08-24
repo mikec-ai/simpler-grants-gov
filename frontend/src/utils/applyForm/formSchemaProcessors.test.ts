@@ -413,6 +413,28 @@ describe("extricateConditionalValidationRules", () => {
       ],
     });
   });
+  it("extracts conditional entries from a mixed allOf", () => {
+    const condition = {
+      if: { properties: { country: { const: "USA" } } },
+      then: { required: ["state"] },
+    };
+    const structuralEntry = {
+      properties: { country: { type: "string" } },
+    };
+
+    expect(
+      extricateConditionalValidationRules({
+        address: { allOf: [structuralEntry, condition] },
+      }),
+    ).toEqual({
+      propertiesWithoutComplexConditionals: {
+        address: { allOf: [structuralEntry] },
+      },
+      conditionalValidationRules: {
+        address: [condition],
+      },
+    });
+  });
   it("handles multiple instances of if/then allOfs throughout a schema", () => {
     const result = extricateConditionalValidationRules({
       ...simpleProperties,
