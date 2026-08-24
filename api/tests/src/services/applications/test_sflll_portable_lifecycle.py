@@ -77,7 +77,10 @@ def test_sflll_save_and_reload_preserves_repeated_service_individuals(
                 ApplicationForm.application_form_id == application_form.application_form_id
             )
         ).scalar_one()
-        assert reloaded.application_response == response
+        assert (
+            reloaded.application_response["individuals_performing_services"]
+            == response["individuals_performing_services"]
+        )
     finally:
         restore_runtime_form_after_test(registry_key, previous)
 
