@@ -152,8 +152,47 @@ def _project_node(
     *,
     path: str,
     attachment_fields: dict[str, Any],
+    array_item: bool = False,
+    array_item_element: str | None = None,
+    array_item_namespace: str | None = None,
 ) -> dict[str, Any]:
     kind = node["kind"]
+    if kind == "value" and node.get("flatten") is True:
+        if not array_item:
+            raise ValueError(
+                f"flattened value mapping is only valid as an array item node at {path}"
+            )
+        ignored = set(node) - {"kind", "flatten"}
+        if ignored:
+            names = ", ".join(sorted(ignored))
+            raise ValueError(
+                f"flattened value mapping cannot declare ignored properties at {path}: {names}"
+            )
+        if array_item_element is not None:
+            item_transform: dict[str, Any] = {"target": array_item_element}
+            if array_item_namespace is not None:
+                item_transform["namespace"] = array_item_namespace
+            return {"xml_transform": item_transform}
+        return {"xml_transform": {"flatten_array_item": True}}
+    if kind == "attachment" and node.get("flatten") is True:
+        if not array_item or array_item_element is None:
+            raise ValueError(
+                "flattened attachment mapping is only valid as an array item node "
+                f"with a declared itemElement at {path}"
+            )
+        ignored = set(node) - {"kind", "flatten"}
+        if ignored:
+            names = ", ".join(sorted(ignored))
+            raise ValueError(
+                f"flattened attachment mapping cannot declare ignored properties at {path}: {names}"
+            )
+        item_transform = {"target": array_item_element, "type": "attachment"}
+        if array_item_namespace is not None:
+            item_transform["namespace"] = array_item_namespace
+        return {
+            "xml_transform": item_transform,
+            **_attachment_children(attachment_fields, path=path),
+        }
     if node.get("flatten"):
         if kind != "group":
             raise ValueError(f"only group mappings may be flattened at {path}")
@@ -252,6 +291,9 @@ def _project_node(
                 projection,
                 path=f"{path}[*]",
                 attachment_fields=attachment_fields,
+                array_item=True,
+                array_item_element=node.get("itemElement"),
+                array_item_namespace=node.get("itemNamespace"),
             )
     elif kind == "attachment":
         rule.update(_attachment_children(attachment_fields, path=path))

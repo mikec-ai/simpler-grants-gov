@@ -539,9 +539,26 @@ class RecursiveXMLTransformer:
                         else {"__value": transformed_item}
                     )
                     item_result = dict(item_result)
-                    item_result["__wrapper"] = item_transform["target"]
+                    # Scalar namespace metadata uses the ordinary ``__value__`` wrapper.
+                    # Array-item metadata predates it and the writer consumes ``__value``;
+                    # normalize the two generic internal representations here.
+                    if "__value__" in item_result:
+                        item_result["__value"] = item_result.pop("__value__")
+                    if item_transform.get("flatten_array_item"):
+                        # A flattened scalar array item is the simple content of the
+                        # array's repeated outer element. Leaving off ``__wrapper``
+                        # tells the generic writer to emit one ``field_name`` element
+                        # per value instead of nesting a second item element inside it.
+                        if namespace := transform_rule.get("namespace"):
+                            item_result["__namespace__"] = namespace
+                    else:
+                        item_result["__wrapper"] = item_transform["target"]
                     if namespace := item_transform.get("namespace"):
                         item_result["__namespace__"] = namespace
+                    if transform_rule.get("repeat_element_per_item"):
+                        item_result["__repeat_element_per_item__"] = True
+                    if item_attributes := transform_rule.get("item_attributes"):
+                        item_result["__attributes"] = item_attributes
                     transformed_items.append(item_result)
                 return transformed_items or None
             if not items_config:

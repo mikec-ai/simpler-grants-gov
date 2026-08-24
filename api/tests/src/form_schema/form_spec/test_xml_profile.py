@@ -75,6 +75,12 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
                     "kind": "array",
                     "items": {"node": {"element": "File", "kind": "attachment"}},
                 },
+                "countries": {
+                    "element": "EnrollmentCountry",
+                    "kind": "array",
+                    "namespace": "default",
+                    "items": {"node": {"kind": "value", "flatten": True}},
+                },
             }
         },
     }
@@ -95,6 +101,7 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
         "district_wrapper",
         "answer",
         "files",
+        "countries",
     }
     assert set(runtime["people"]["items"]) == {"given_name", "file"}
     assert runtime["people"]["xml_transform"] == {
@@ -128,6 +135,79 @@ def test_projects_canonical_source_names_through_the_consumer_projection() -> No
         "target": "File",
         "type": "attachment",
     }
+    assert runtime["countries"] == {
+        "xml_transform": {
+            "target": "EnrollmentCountry",
+            "type": "array",
+            "namespace": "default",
+        },
+        "item": {"xml_transform": {"flatten_array_item": True}},
+    }
+
+
+@pytest.mark.parametrize(
+    ("node", "message"),
+    [
+        (
+            {"element": "Answer", "kind": "value", "flatten": True},
+            "only valid as an array item node",
+        ),
+        (
+            {
+                "element": "Answers",
+                "kind": "array",
+                "items": {
+                    "node": {
+                        "kind": "value",
+                        "flatten": True,
+                        "element": "Ignored",
+                    }
+                },
+            },
+            "cannot declare ignored properties",
+        ),
+        (
+            {"element": "File", "kind": "attachment", "flatten": True},
+            "only valid as an array item node",
+        ),
+        (
+            {
+                "element": "Files",
+                "kind": "array",
+                "items": {"node": {"kind": "attachment", "flatten": True}},
+            },
+            "with a declared itemElement",
+        ),
+        (
+            {
+                "element": "Files",
+                "kind": "array",
+                "itemElement": "AttachedFile",
+                "items": {
+                    "node": {
+                        "kind": "attachment",
+                        "flatten": True,
+                        "namespace": "ignored",
+                    }
+                },
+            },
+            "cannot declare ignored properties",
+        ),
+    ],
+)
+def test_flattened_scalar_array_contract_fails_closed(
+    node: dict[str, object], message: str
+) -> None:
+    profile = {
+        "contract": "grants-gov-xml-profile/v1",
+        "xsd": {"uri": "https://example.gov/form.xsd", "sha256": "a" * 64},
+        "namespaces": {"default": "https://example.gov/form"},
+        "root": {"element": "Example", "namespacePrefix": "Example", "attributes": {}},
+        "mapping": {"fields": {"answer": node}},
+    }
+
+    with pytest.raises(ValueError, match=message):
+        project_grants_gov_xml_profile(profile, Projection())
 
 
 def test_projects_constants_value_maps_and_dynamic_attributes_without_form_logic() -> None:
