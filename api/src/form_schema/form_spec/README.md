@@ -111,6 +111,19 @@ mechanism can move from a fork to an upstream repository without changing the ar
 The workflow never edits `registrations.json`; instruction provisioning and production release
 remain separate, explicitly approved work.
 
+## CI tiers
+
+An additive banking PR that changes only `artifacts/` and exact XSD fixtures takes the lightweight
+portable-form lane. The lane verifies every artifact digest, every declared XSD digest, and that no
+previously selected form or artifact closure was removed. It does not initialize the API database or
+run browser tests because banked-only forms are not runtime-enabled or registered.
+
+The classifier fails closed: consumer adapter code, runtime identities, registrations, projections,
+tests, workflow files, unexpected paths, and every deletion select the full API and browser suites.
+Non-PR and reusable workflow invocations also retain full CI. Full CI remains the required release
+gate before an upstream contribution or production registration; the portable catalog browser matrix
+is run separately as a catalog-level conformance milestone.
+
 Portable forms cannot inject an alternate Python XML mapping into `build_runtime_form`; the
 optional XML profile in the producer package is their only mapping source. Legacy forms continue
 to use their existing inline schemas until they are migrated. Likewise, the centralized

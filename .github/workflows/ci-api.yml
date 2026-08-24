@@ -17,8 +17,38 @@ defaults:
     working-directory: ./api
 
 jobs:
-  lint-test:
+  classify-form-spec-change:
     if: ${{ inputs.skip_checks == null || inputs.skip_checks == false }}
+    name: Classify portable form change
+    runs-on: ubuntu-22.04
+    outputs:
+      bank_only: ${{ steps.classify.outputs.bank_only }}
+    steps:
+      - uses: actions/checkout@v4
+        if: ${{ github.event_name == 'pull_request' }}
+        with:
+          fetch-depth: 0
+
+      - name: Select CI tier
+        id: classify
+        working-directory: ./
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" != "pull_request" ]]; then
+            echo "bank_only=false" >> "$GITHUB_OUTPUT"
+            echo "reason=non-PR invocation requires full CI" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          PYTHONPATH=api python3 api/bin/check_form_spec_bank.py \
+            --base "$BASE_SHA" \
+            --head "$HEAD_SHA" \
+            --github-output "$GITHUB_OUTPUT"
+
+  lint-test:
+    needs: [classify-form-spec-change]
+    if: ${{ (inputs.skip_checks == null || inputs.skip_checks == false) && needs.classify-form-spec-change.outputs.bank_only != 'true' }}
     name: API Lint, Format & Tests
     runs-on: ubuntu-22.04
     steps:
@@ -41,6 +71,16 @@ jobs:
 
       - name: Start tests
         run: make test-coverage
+
+  portable-form-bank:
+    needs: [classify-form-spec-change]
+    if: ${{ needs.classify-form-spec-change.outputs.bank_only == 'true' }}
+    name: Portable Form Bank Checks
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Lightweight bank checks passed
+        working-directory: ./
+        run: echo "Artifact integrity, exact-XSD pins, and additive-selection checks passed."
 
   skip-checks:
     if: ${{ inputs.skip_checks != null && inputs.skip_checks == true }}

@@ -104,7 +104,9 @@ jobs:
         id: prepare
         shell: bash
         run: |
-          if git diff --quiet -- api/src/form_schema/form_spec/artifacts; then
+          if git diff --quiet -- \
+            api/src/form_schema/form_spec/artifacts \
+            api/src/services/xml_generation/xsds; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "The requested promotion is already present." >> "$GITHUB_STEP_SUMMARY"
             cat "$RECEIPT" >> "$GITHUB_STEP_SUMMARY"
@@ -123,7 +125,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git switch -C "$branch"
-          git add api/src/form_schema/form_spec/artifacts
+          git add \
+            api/src/form_schema/form_spec/artifacts \
+            api/src/services/xml_generation/xsds
           git commit -m "Promote portable forms from ${PRODUCER_REVISION:0:12}"
           git push --force-with-lease origin "$branch"
 
