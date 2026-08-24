@@ -1,0 +1,20 @@
+{
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "id": "phs398-research-plan",
+    "legacyFormId": 797,
+    "formName": "PHS 398 Research Plan",
+    "shortFormName": "PHS398_ResearchPlan_5_0",
+    "formVersion": "5.0",
+    "agencyCode": "GRANTS_GOV",
+    "ombNumber": "0925-0001"
+  },
+  "artifacts": {
+    "schema.json": "generated",
+    "ui.json": "generated",
+    "sgg/ui-schema.json": "generated",
+    "sgg/rule-schema.json": "generated",
+    "targets/grants-gov-xml.json": "generated",
+    "evidence.json": "passthrough"
+  }
+}

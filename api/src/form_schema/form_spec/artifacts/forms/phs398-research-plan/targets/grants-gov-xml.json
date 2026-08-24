@@ -1,0 +1,193 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "phs398-research-plan",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS398_ResearchPlan_5_0-V5.0.xsd",
+    "sha256": "6e7171465d1f44a16eb822f8921423ceede4fa486cb0819bc5dd327121b4bb56"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/PHS398_ResearchPlan_5_0-V5.0",
+    "PHS398_ResearchPlan_5_0": "http://apply.grants.gov/forms/PHS398_ResearchPlan_5_0-V5.0",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0"
+  },
+  "root": {
+    "element": "PHS398_ResearchPlan_5_0",
+    "namespacePrefix": "PHS398_ResearchPlan_5_0",
+    "attributes": {
+      "FormVersion": "5.0"
+    }
+  },
+  "attachment": {
+    "fields": {
+      "fileName": {
+        "element": "FileName",
+        "namespace": "att"
+      },
+      "mimeType": {
+        "element": "MimeType",
+        "namespace": "att"
+      },
+      "fileLocation": {
+        "element": "FileLocation",
+        "namespace": "att"
+      },
+      "hashValue": {
+        "element": "HashValue",
+        "namespace": "glob"
+      }
+    }
+  },
+  "mapping": {
+    "fields": {
+      "researchPlanAttachments": {
+        "element": "ResearchPlanAttachments",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "introduction": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/introduction",
+            "container": {
+              "element": "IntroductionToApplication",
+              "namespace": "default"
+            }
+          },
+          "specificAims": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/specificAims",
+            "container": {
+              "element": "SpecificAims",
+              "namespace": "default"
+            }
+          },
+          "researchStrategy": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/researchStrategy",
+            "container": {
+              "element": "ResearchStrategy",
+              "namespace": "default"
+            }
+          },
+          "progressReportPublicationList": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/progressReportPublicationList",
+            "container": {
+              "element": "ProgressReportPublicationList",
+              "namespace": "default"
+            }
+          },
+          "vertebrateAnimals": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/vertebrateAnimals",
+            "container": {
+              "element": "VertebrateAnimals",
+              "namespace": "default"
+            }
+          },
+          "selectAgentResearch": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/selectAgentResearch",
+            "container": {
+              "element": "SelectAgentResearch",
+              "namespace": "default"
+            }
+          },
+          "multiplePdPiLeadershipPlan": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/multiplePdPiLeadershipPlan",
+            "container": {
+              "element": "MultiplePDPILeadershipPlan",
+              "namespace": "default"
+            }
+          },
+          "consortiumContractualArrangements": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/consortiumContractualArrangements",
+            "container": {
+              "element": "ConsortiumContractualArrangements",
+              "namespace": "default"
+            }
+          },
+          "lettersOfSupport": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/lettersOfSupport",
+            "container": {
+              "element": "LettersOfSupport",
+              "namespace": "default"
+            }
+          },
+          "resourceSharingPlans": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/resourceSharingPlans",
+            "container": {
+              "element": "ResourceSharingPlans",
+              "namespace": "default"
+            }
+          },
+          "otherPlans": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/otherPlans",
+            "container": {
+              "element": "OtherPlans",
+              "namespace": "default"
+            }
+          },
+          "keyResourceAuthentication": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/keyResourceAuthentication",
+            "container": {
+              "element": "KeyBiologicalAndOrChemicalResources",
+              "namespace": "default"
+            }
+          },
+          "appendix": {
+            "element": "Appendix",
+            "kind": "array",
+            "namespace": "default",
+            "source": "/appendix",
+            "itemElement": "AttachedFile",
+            "itemNamespace": "att",
+            "items": {
+              "node": {
+                "kind": "attachment",
+                "flatten": true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-PHS398ResearchPlan.jsonl.manifest.json"
+  }
+}

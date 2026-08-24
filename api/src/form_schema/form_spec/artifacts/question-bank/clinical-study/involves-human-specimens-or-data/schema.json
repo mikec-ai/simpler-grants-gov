@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "clinical-study/involves-human-specimens-or-data/schema.json",
+  "type": "string",
+  "pattern": "^(Y: Yes|N: No)$",
+  "description": "Whether any proposed research involves human specimens and/or data."
+}

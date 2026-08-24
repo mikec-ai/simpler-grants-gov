@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "clinical-study/design/schema.json",
+  "type": "object",
+  "properties": {
+    "detailedDescription": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32000
+    },
+    "primaryPurpose": {
+      "$ref": "#/$defs/ClinicalPrimaryPurpose"
+    },
+    "otherPrimaryPurpose": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "interventions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ClinicalIntervention"
+      },
+      "maxItems": 20
+    },
+    "phase": {
+      "$ref": "#/$defs/ClinicalStudyPhase"
+    },
+    "nihDefinedPhase3": {
+      "$ref": "#/$defs/ClinicalYesNo"
+    },
+    "interventionModel": {
+      "$ref": "#/$defs/ClinicalInterventionModel"
+    },
+    "otherInterventionModel": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "masking": {
+      "$ref": "#/$defs/ClinicalYesNo"
+    },
+    "maskingParties": {
+      "$ref": "#/$defs/ClinicalMaskingParties"
+    },
+    "allocation": {
+      "$ref": "#/$defs/ClinicalAllocation"
+    }
+  },
+  "description": "Study-design fields for a clinical-trial protocol synopsis.",
+  "$defs": {
+    "ClinicalPrimaryPurpose": {
+      "type": "string",
+      "enum": [
+        "Treatment",
+        "Prevention",
+        "Diagnostics",
+        "Supportive Care",
+        "Screening",
+        "Health Services Research",
+        "Basic Science",
+        "Device Feasibility",
+        "Other"
+      ]
+    },
+    "ClinicalInterventionType": {
+      "type": "string",
+      "enum": [
+        "Drug (including placebo)",
+        "Device (including sham)",
+        "Biological/Vaccine",
+        "Procedure/Surgery",
+        "Radiation",
+        "Behavioral (e.g., Psychotherapy, Lifestyle Counseling)",
+        "Genetic (including gene transfer, stem cell and recombinant DNA)",
+        "Dietary Supplement (e.g., vitamins, minerals)",
+        "Combination Product",
+        "Diagnostic Test",
+        "Other"
+      ]
+    },
+    "ClinicalIntervention": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/ClinicalInterventionType"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 1000
+        }
+      },
+      "required": [
+        "type",
+        "name",
+        "description"
+      ]
+    },
+    "ClinicalStudyPhase": {
+      "type": "string",
+      "enum": [
+        "Early Phase 1 (or Phase 0)",
+        "Phase 1",
+        "Phase 1/2",
+        "Phase 2",
+        "Phase 2/3",
+        "Phase 3",
+        "Phase 4",
+        "N/A"
+      ]
+    },
+    "ClinicalYesNo": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    },
+    "ClinicalInterventionModel": {
+      "type": "string",
+      "enum": [
+        "Single Group",
+        "Parallel",
+        "Cross-Over",
+        "Factorial",
+        "Sequential",
+        "Other"
+      ]
+    },
+    "ClinicalMaskingParties": {
+      "type": "object",
+      "properties": {
+        "participant": {
+          "$ref": "#/$defs/ClinicalYesNo"
+        },
+        "careProvider": {
+          "$ref": "#/$defs/ClinicalYesNo"
+        },
+        "investigator": {
+          "$ref": "#/$defs/ClinicalYesNo"
+        },
+        "outcomesAssessor": {
+          "$ref": "#/$defs/ClinicalYesNo"
+        }
+      }
+    },
+    "ClinicalAllocation": {
+      "type": "string",
+      "enum": [
+        "Randomized",
+        "Non-randomized",
+        "N/A"
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-plan/select-agent-research/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Address the select-agent information requested for the proposed research."
+}

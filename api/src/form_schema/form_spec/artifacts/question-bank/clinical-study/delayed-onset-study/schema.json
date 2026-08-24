@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "clinical-study/delayed-onset-study/schema.json",
+  "type": "object",
+  "properties": {
+    "studyTitle": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 600
+    },
+    "anticipatedClinicalTrial": {
+      "$ref": "#/$defs/ClinicalYesNo"
+    },
+    "justification": {
+      "$ref": "../../../question-bank/clinical-study/delayed-onset-justification/schema.json"
+    }
+  },
+  "required": [
+    "studyTitle",
+    "justification"
+  ],
+  "description": "Describe one delayed-onset study whose specific plans are not yet available.",
+  "$defs": {
+    "ClinicalYesNo": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

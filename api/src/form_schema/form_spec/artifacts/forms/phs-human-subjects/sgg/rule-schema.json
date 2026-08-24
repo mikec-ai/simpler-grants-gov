@@ -1,0 +1,89 @@
+{
+  "specimensExplanation": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "otherRequestedInformation": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "studies": {
+    "gg_type": "array",
+    "populationCharacteristics": {
+      "inclusionAcrossLifespan": {
+        "gg_validation": {
+          "rule": "attachment"
+        }
+      },
+      "inclusionWomenMinorities": {
+        "gg_validation": {
+          "rule": "attachment"
+        }
+      },
+      "recruitmentRetentionPlan": {
+        "gg_validation": {
+          "rule": "attachment"
+        }
+      },
+      "studyTimeline": {
+        "gg_validation": {
+          "rule": "attachment"
+        }
+      }
+    },
+    "protectionMonitoringPlans": {
+      "protectionOfHumanSubjects": {
+        "gg_validation": {
+          "rule": "attachment"
+        }
+      },
+      "singleIrbPlan": {
+        "gg_validation": {
+          "rule": "attachment"
+        }
+      },
+      "dataSafetyMonitoringPlan": {
+        "gg_validation": {
+          "rule": "attachment"
+        }
+      },
+      "studyTeamStructure": {
+        "gg_validation": {
+          "rule": "attachment"
+        }
+      }
+    },
+    "protocolSynopsis": {
+      "statisticalDesignAndPower": {
+        "gg_validation": {
+          "rule": "attachment"
+        }
+      },
+      "investigationalProductAvailability": {
+        "gg_validation": {
+          "rule": "attachment"
+        }
+      },
+      "disseminationPlan": {
+        "gg_validation": {
+          "rule": "attachment"
+        }
+      }
+    },
+    "otherClinicalTrialAttachments": {
+      "gg_validation": {
+        "rule": "attachment"
+      }
+    }
+  },
+  "delayedOnsetStudies": {
+    "gg_type": "array",
+    "justification": {
+      "gg_validation": {
+        "rule": "attachment"
+      }
+    }
+  }
+}

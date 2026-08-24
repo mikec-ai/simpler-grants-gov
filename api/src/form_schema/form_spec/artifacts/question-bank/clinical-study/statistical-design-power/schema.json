@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "clinical-study/statistical-design-power/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Provide the statistical design and power analysis."
+}

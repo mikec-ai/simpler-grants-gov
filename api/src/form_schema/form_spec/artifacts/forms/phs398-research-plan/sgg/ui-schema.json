@@ -1,0 +1,95 @@
+[
+  {
+    "type": "section",
+    "name": "introduction",
+    "label": "Introduction",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/introduction",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "researchPlan",
+    "label": "Research Plan Section",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/specificAims",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/researchStrategy",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/progressReportPublicationList",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "otherResearchPlan",
+    "label": "Other Research Plan Section",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/vertebrateAnimals",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/selectAgentResearch",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/multiplePdPiLeadershipPlan",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/consortiumContractualArrangements",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/lettersOfSupport",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/resourceSharingPlans",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/otherPlans",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/keyResourceAuthentication",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "appendix",
+    "label": "Appendix",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/appendix",
+        "widget": "AttachmentArray"
+      }
+    ]
+  }
+]

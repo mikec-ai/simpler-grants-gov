@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:PHSHumanSubjectsAndClinicalTrialsInfo_3_0="http://apply.grants.gov/forms/PHSHumanSubjectsAndClinicalTrialsInfo_3_0-V3.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:glob="http://apply.grants.gov/system/Global-V1.0" xmlns:globLib="http://apply.grants.gov/system/GlobalLibrary-V2.0" xmlns:HumanSubjectStudy_3_0="http://apply.grants.gov/forms/HumanSubjectStudy_3_0-V3.0" xmlns:att="http://apply.grants.gov/system/Attachments-V1.0" xmlns:codes="http://apply.grants.gov/system/UniversalCodes-V2.0"  targetNamespace="http://apply.grants.gov/forms/PHSHumanSubjectsAndClinicalTrialsInfo_3_0-V3.0" elementFormDefault="qualified" attributeFormDefault="qualified" version="3.0">
+	<xs:import namespace="http://apply.grants.gov/system/Global-V1.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd"/>
+	<xs:import namespace="http://apply.grants.gov/system/GlobalLibrary-V2.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"/>
+	<xs:import namespace="http://apply.grants.gov/system/Attachments-V1.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd"/>
+	<xs:import namespace="http://apply.grants.gov/system/UniversalCodes-V2.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd"/>	
+	<xs:import namespace="http://apply.grants.gov/forms/HumanSubjectStudy_3_0-V3.0" schemaLocation="https://apply07.grants.gov/apply/forms/schemas/HumanSubjectStudy_3_0-V3.0.xsd"/>
+	<xs:element name="PHSHumanSubjectsAndClinicalTrialsInfo_3_0">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="InvolveHumanSpecimens" type="globLib:YesNoDataType"/>
+				<xs:element name="Explanation" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="attFile" type="att:AttachedFileDataType"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="HumanSubjectsIndicator" type="globLib:YesNoDataType"/>
+				<xs:element name="ExemptFedReg" type="globLib:YesNoDataType" minOccurs="0"/>
+				<xs:element name="ExemptionNumbers" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ExemptionNumber" maxOccurs="8">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="E1" />
+										<xs:enumeration value="E2" />
+										<xs:enumeration value="E3" />
+										<xs:enumeration value="E4" />
+										<xs:enumeration value="E5" />
+										<xs:enumeration value="E6" />
+										<xs:enumeration value="E7" />
+										<xs:enumeration value="E8" />
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="OtherRequestedInformation" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="attFile" type="att:AttachedFileDataType"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="HumanSubjectATT" minOccurs="0" maxOccurs="150">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ATT">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+										<xs:maxLength value="30"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DelayedOnsetStudy" minOccurs="0" maxOccurs="150">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="StudyTitle">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:minLength value="1"/>
+										<xs:maxLength value="600"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="AnticipatedClinicalTrial" type="globLib:YesNoDataType" minOccurs="0"/>
+							<xs:element name="Justification">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="attFile" type="att:AttachedFileDataType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="HumanSubjectStudyAttachment" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="HumanSubjectStudy_3_0:HumanSubjectStudy_3_0" minOccurs="0" maxOccurs="150"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Appl_id" minOccurs="0" >
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:minLength value="1"/>
+							<xs:maxLength value="40"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="FormVersion" type="globLib:FormVersionDataType" use="required" fixed="3.0"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

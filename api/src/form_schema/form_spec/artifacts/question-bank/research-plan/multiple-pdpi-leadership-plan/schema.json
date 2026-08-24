@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-plan/multiple-pdpi-leadership-plan/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Describe governance and responsibilities for a multiple-PD/PI application."
+}

@@ -437,6 +437,36 @@
       "size": 2808
     },
     {
+      "path": "dist/forms/phs-human-subjects/evidence.json",
+      "sha256": "d72cc11a2d5d7e62b0ebe5965a4c590dc2dae7a1c8a1a166ee552f7ffe9177b1",
+      "size": 10085
+    },
+    {
+      "path": "dist/forms/phs-human-subjects/manifest.json",
+      "sha256": "c31c759743a5266cd9ea941df73bc7edaf0d5ae68bb4250265ac44e7d86892f9",
+      "size": 587
+    },
+    {
+      "path": "dist/forms/phs-human-subjects/schema.json",
+      "sha256": "6f63890a2a0ad814acd1e4a8aeb2871d4cb3ac358d29d67d9bcc71daec6fd77d",
+      "size": 3247
+    },
+    {
+      "path": "dist/forms/phs-human-subjects/sgg/rule-schema.json",
+      "sha256": "4ed7df56d980603ed3efa54e4e57e3ab2183b5945edaacb700402501b748647c",
+      "size": 1817
+    },
+    {
+      "path": "dist/forms/phs-human-subjects/sgg/ui-schema.json",
+      "sha256": "205ac3cb247703f54a41b74a23bc56ef8d440ee25783c742641f62ddc2dbae10",
+      "size": 49561
+    },
+    {
+      "path": "dist/forms/phs-human-subjects/targets/grants-gov-xml.json",
+      "sha256": "b6a854c60a29e0325e150ba54c4ab5120b33184c66d59feed04a25af3cc2073f",
+      "size": 58348
+    },
+    {
       "path": "dist/forms/phs-inclusion-enrollment-report/evidence.json",
       "sha256": "b5391f73b10419fd3aacdeb398cf5c444a89b0cd74157576e169b40a6d37505e",
       "size": 15757
@@ -495,6 +525,36 @@
       "path": "dist/forms/phs398-modular-budget/targets/grants-gov-xml.json",
       "sha256": "75db8381f10ea17ff17262774d49a37d7e326ba39b71001160b898dd62b38d8d",
       "size": 6701
+    },
+    {
+      "path": "dist/forms/phs398-research-plan/evidence.json",
+      "sha256": "97ac481d60962731e082541f24e9fec361d84596e1a77e0519fce1102e6b4ef4",
+      "size": 8430
+    },
+    {
+      "path": "dist/forms/phs398-research-plan/manifest.json",
+      "sha256": "aae193c008dc74388df940bdd891c14660aed542418731865ae05238fa7dc7b0",
+      "size": 542
+    },
+    {
+      "path": "dist/forms/phs398-research-plan/schema.json",
+      "sha256": "bf906cce4660df45e0529595dc68089a534f1195868e73dc66fb8b9f62d527ee",
+      "size": 2556
+    },
+    {
+      "path": "dist/forms/phs398-research-plan/sgg/rule-schema.json",
+      "sha256": "80e0083d6815857284017f7ea07c3bff190a4462227c943c5097635c24d2df79",
+      "size": 1143
+    },
+    {
+      "path": "dist/forms/phs398-research-plan/sgg/ui-schema.json",
+      "sha256": "b4348397f8154c63e96520578d004e8c1d4d25c388e12169f05e4e0438def1d8",
+      "size": 2163
+    },
+    {
+      "path": "dist/forms/phs398-research-plan/targets/grants-gov-xml.json",
+      "sha256": "aebdebdfecc0b9cba217d59fcf0ba7ac8007a82cb041f3983c3af484dad88dd1",
+      "size": 6045
     },
     {
       "path": "dist/forms/project-abstract-summary/evidence.json",
@@ -1412,9 +1472,124 @@
       "size": 1938
     },
     {
+      "path": "dist/question-bank/clinical-study/clinical-trial-questionnaire/schema.json",
+      "sha256": "e70683240a5b6cb6e144e5af0257fd067342ef3998a577eab990c019461daa18",
+      "size": 863
+    },
+    {
+      "path": "dist/question-bank/clinical-study/data-safety-monitoring-plan/schema.json",
+      "sha256": "825659fb6fe644ae632a2f0717ebf359654888232deff02dc253ff3cb24d0d47",
+      "size": 236
+    },
+    {
+      "path": "dist/question-bank/clinical-study/delayed-onset-justification/schema.json",
+      "sha256": "4dbbfd7586fcad165a3eaa4f32804b9b30dfc972fd22b74878a9299b3dfbc358",
+      "size": 258
+    },
+    {
+      "path": "dist/question-bank/clinical-study/delayed-onset-study/schema.json",
+      "sha256": "1b41fa9bbdc6214daf8e626b7e9f50696d6f8d084ddeb2a5639f1ebeefe0bd9b",
+      "size": 749
+    },
+    {
+      "path": "dist/question-bank/clinical-study/design/schema.json",
+      "sha256": "cfbef5ff21e42cd8d86a21067eee9d4d59ae8d0f956dbe42fb3cea3668f28c60",
+      "size": 3664
+    },
+    {
+      "path": "dist/question-bank/clinical-study/dissemination-plan/schema.json",
+      "sha256": "6c8f85870a930df95e78e35d25fdf83a7e27528c005283e5bfbaeabe2ae80cae",
+      "size": 229
+    },
+    {
+      "path": "dist/question-bank/clinical-study/inclusion-across-lifespan/schema.json",
+      "sha256": "0ea33f02bfb58a1961c6e32f4e7f1dea6a11c9b7590d68624ae5885006041ea6",
+      "size": 243
+    },
+    {
       "path": "dist/question-bank/clinical-study/inclusion-enrollment-report/schema.json",
       "sha256": "99509418abea5be2079d09daaa4679f744ffbb45e650fbea9bcd9ad53d04d9bb",
       "size": 12284
+    },
+    {
+      "path": "dist/question-bank/clinical-study/inclusion-women-minorities/schema.json",
+      "sha256": "2efd542d054d5d224abea3f098ba92ea202357bd0fb583d6e74ad0aa502cfe10",
+      "size": 255
+    },
+    {
+      "path": "dist/question-bank/clinical-study/investigational-product-availability/schema.json",
+      "sha256": "5515e95ecb9659962cbc4bb87231987485d756684b8608162f62b3c09f35fd2f",
+      "size": 254
+    },
+    {
+      "path": "dist/question-bank/clinical-study/involves-human-specimens-or-data/schema.json",
+      "sha256": "faf9975c9c5366f593c9380b5d410bbb2ccb640cb88efae49ab6b7a6eadc7e20",
+      "size": 277
+    },
+    {
+      "path": "dist/question-bank/clinical-study/non-human-subjects-specimens-explanation/schema.json",
+      "sha256": "cf1a02c3ee54cbdcbc1240c0daf687bc46746d4f53eb94e24320e218233d68f5",
+      "size": 280
+    },
+    {
+      "path": "dist/question-bank/clinical-study/other-clinical-trial-document/schema.json",
+      "sha256": "600c4bdab2397f41fbe6b64ef1fab93431193b8a17871055d96fc8cb3d065df5",
+      "size": 252
+    },
+    {
+      "path": "dist/question-bank/clinical-study/other-requested-information/schema.json",
+      "sha256": "91ae88401bfd09078f14c799bd4992fc10c51a4c7b1a785e1e4150e1e65b4831",
+      "size": 270
+    },
+    {
+      "path": "dist/question-bank/clinical-study/population-characteristics/schema.json",
+      "sha256": "4cad49c88597b865a94370ca075fc5e5a3e8e6af787c46edd57165b55a94d988",
+      "size": 3875
+    },
+    {
+      "path": "dist/question-bank/clinical-study/protection-human-subjects/schema.json",
+      "sha256": "11cc8dda4c8f3daabd0e40842aa9ae3138c46478083fc8cf90729d386f4bc187",
+      "size": 227
+    },
+    {
+      "path": "dist/question-bank/clinical-study/protection-monitoring/schema.json",
+      "sha256": "96fb2456c9a8e2042c6883ea345a4cb72973b4fc800223c230368d187624efd5",
+      "size": 1196
+    },
+    {
+      "path": "dist/question-bank/clinical-study/protocol-synopsis/schema.json",
+      "sha256": "643c79e0d1996435bd0287f2e8c83d3dbcfbd29c3968d3baad2188e1a7ed0db2",
+      "size": 2080
+    },
+    {
+      "path": "dist/question-bank/clinical-study/recruitment-retention-plan/schema.json",
+      "sha256": "69c6a8e2343483414431dc2ce21e7eae3c26fc59bf0ac20def1e7f0923e08a33",
+      "size": 234
+    },
+    {
+      "path": "dist/question-bank/clinical-study/single-irb-plan/schema.json",
+      "sha256": "0c7f884a8d3196fcb5afb87c3907c816f82e51d08621d41e13f3d1efaa29054f",
+      "size": 208
+    },
+    {
+      "path": "dist/question-bank/clinical-study/statistical-design-power/schema.json",
+      "sha256": "96d1b674da2d757623f968a0547da4183b5d47fa5012d69b7e3a67b52af52f89",
+      "size": 239
+    },
+    {
+      "path": "dist/question-bank/clinical-study/study-record/schema.json",
+      "sha256": "79e588795c5de6aa1dce5918d55deb14c6b3731aee4149bc9619cd26dfcb487a",
+      "size": 2309
+    },
+    {
+      "path": "dist/question-bank/clinical-study/study-team-structure/schema.json",
+      "sha256": "46c66618e29cec845b6e328c954bae51c86ed15fbdd624628b263f750f7f3b67",
+      "size": 227
+    },
+    {
+      "path": "dist/question-bank/clinical-study/study-timeline/schema.json",
+      "sha256": "4a4ca1f2910c0637392b6cf22f138afdf29ec9382c2e9cab98b4ab7ef34e44b2",
+      "size": 206
     },
     {
       "path": "dist/question-bank/federal-action/award-amount/schema.json",
@@ -1797,6 +1972,71 @@
       "size": 275
     },
     {
+      "path": "dist/question-bank/research-plan/appendix-document/schema.json",
+      "sha256": "0f4044daa2c38b712bc98b0164e2e81e875e58e3ccdcde3f2c3ac29c93150a0c",
+      "size": 255
+    },
+    {
+      "path": "dist/question-bank/research-plan/consortium-contractual-arrangements/schema.json",
+      "sha256": "3cf669ba4d5baf383f9acc8d1f2b69931c06636f5b24356f02154de36b59409d",
+      "size": 273
+    },
+    {
+      "path": "dist/question-bank/research-plan/introduction/schema.json",
+      "sha256": "c75aaa4766ed938b7e60bc2cb4095c969df5568fad8534a392fbee5c2828eb0f",
+      "size": 263
+    },
+    {
+      "path": "dist/question-bank/research-plan/key-resource-authentication/schema.json",
+      "sha256": "5d9ee739dc04b60bddca3d0f4b406133db2f9bb627d5b2f12b917e3f7771694d",
+      "size": 276
+    },
+    {
+      "path": "dist/question-bank/research-plan/letters-of-support/schema.json",
+      "sha256": "4898942b9a502f4903269779534a8760c3a714e14546d1555fc1ae29be21174b",
+      "size": 249
+    },
+    {
+      "path": "dist/question-bank/research-plan/multiple-pdpi-leadership-plan/schema.json",
+      "sha256": "5198ebe055f0f1d67cb95b03d100fac5cc6ee25b675125d4193e6695e202b078",
+      "size": 267
+    },
+    {
+      "path": "dist/question-bank/research-plan/other-plans/schema.json",
+      "sha256": "ccfdc89869f702e6172ca7f362830db0f9a83fcf772b41ad038b9e6dfe7c8837",
+      "size": 262
+    },
+    {
+      "path": "dist/question-bank/research-plan/progress-report-publication-list/schema.json",
+      "sha256": "957199d1f04eb2c765622827facd4c9119d7406ac1152e921c456bd3a0f229fa",
+      "size": 270
+    },
+    {
+      "path": "dist/question-bank/research-plan/research-strategy/schema.json",
+      "sha256": "2273461fe5151ab32a268aee665c6141e736368db4c147b230457b3de78cca5c",
+      "size": 258
+    },
+    {
+      "path": "dist/question-bank/research-plan/resource-sharing-plans/schema.json",
+      "sha256": "3d4a45dccfc85ba340827863b6519a95a2ddff2332b42323ba9d3f45c9eebd4a",
+      "size": 243
+    },
+    {
+      "path": "dist/question-bank/research-plan/select-agent-research/schema.json",
+      "sha256": "33d5c42becbef2e21b3fb7a19c4d5cac55b5a468efb09bb604cfe0e3c9d738c1",
+      "size": 258
+    },
+    {
+      "path": "dist/question-bank/research-plan/specific-aims/schema.json",
+      "sha256": "f268a0f95843b2d2cfe14957076d16ba06edbaa6cdbf40b31b99528582629514",
+      "size": 226
+    },
+    {
+      "path": "dist/question-bank/research-plan/vertebrate-animals-document/schema.json",
+      "sha256": "acf4c0559aba6b8bce7f382ceb7f680ea4fc1ee13cb8550c270ccc70fc0b2c35",
+      "size": 269
+    },
+    {
       "path": "dist/question-bank/research-project/environmental-impact/schema.json",
       "sha256": "943efadf35bed68eeff1bc224347def4513b52e8e496aecf50ff509c403beb92",
       "size": 2431
@@ -1887,7 +2127,9 @@
       "attachment-form",
       "rr-sf424b",
       "nifa-supplemental",
-      "phs-inclusion-enrollment-report"
+      "phs-inclusion-enrollment-report",
+      "phs398-research-plan",
+      "phs-human-subjects"
     ],
     "policy": "form runtime and evidence artifacts plus transitive question-schema closure"
   },

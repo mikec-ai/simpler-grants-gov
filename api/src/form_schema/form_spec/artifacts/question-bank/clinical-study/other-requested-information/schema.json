@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "clinical-study/other-requested-information/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Provide information requested by the awarding component outside study records."
+}

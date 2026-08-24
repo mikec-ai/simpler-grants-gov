@@ -1,0 +1,230 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "phs-human-subjects",
+    "kind": "form",
+    "formVersion": "3.0"
+  },
+  "sources": [
+    {
+      "id": "phs-human-subjects-parent-xsd-v3-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/PHSHumanSubjectsAndClinicalTrialsInfo_3_0-V3.0.xsd",
+      "nativeVersion": "3.0",
+      "sha256": "29d859de80cc9febbd1599c28f5db9a3ec82bff26a4d32f4dbbc372effb56bf3"
+    },
+    {
+      "id": "human-subject-study-xsd-v3-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/HumanSubjectStudy_3_0-V3.0.xsd",
+      "nativeVersion": "3.0",
+      "sha256": "799205dea5eddcf13f926cc39d5fc7de27c6a6cdcc68eff4d49e1b629d4351cf"
+    },
+    {
+      "id": "attachments-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d"
+    },
+    {
+      "id": "global-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb"
+    },
+    {
+      "id": "global-library-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "universal-codes-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"
+    },
+    {
+      "id": "phs-human-subjects-dat-f705",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/PHSHumanSubjectsAndClinicalTrialsInfo_3_0-V3.0_F705.xls",
+      "nativeVersion": "3.0",
+      "sha256": "b02d18779d7eca89ca552056cb6d62d001dbaebd366f7b67b93b4dc7667c4dbd"
+    },
+    {
+      "id": "phs-human-subjects-readonly-pdf-v3-0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/PHSHumanSubjectsAndClinicalTrialsInfo_3_0-V3.0.pdf",
+      "nativeVersion": "3.0",
+      "sha256": "b56ab18e6b9c6df8bcc49b3ba1a5ae8cbfa8f2684646a6b927f5ac021d7c3d4a"
+    },
+    {
+      "id": "phs-human-subjects-xfa-pdf-v3-0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/PHSHumanSubjectsAndClinicalTrialsInfo_3_0-V3.0.pdf",
+      "nativeVersion": "3.0",
+      "sha256": "1b478db394ebe672d5452ed8ddd59493a30fc566622e68d281261487c87f267e"
+    },
+    {
+      "id": "nih-forms-i-general-application-guide",
+      "type": "instructions",
+      "uri": "https://grants.nih.gov/grants/how-to-apply-application-guide/forms-i/general-forms-i.pdf",
+      "nativeVersion": "Forms I",
+      "sha256": "97b323be4e8ca90a0a5f69fe46b7762e45188088dc220efd846e008df3c13588"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-PHSHumanSubjects.jsonl.manifest.json",
+    "sourceSetSha256": "0ea2ffec7e91299638cc4e63415ee8da6c32ef07fdd91bffb8d44241053ab72f",
+    "extractedAt": "2026-08-18T17:32:15.841439Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#",
+        "sourceId": "phs-human-subjects-parent-xsd-v3-0",
+        "sourcePath": "PHSHumanSubjectsAndClinicalTrialsInfo_3_0",
+        "status": "proposed",
+        "note": "Application determinations, typed attachments, structured studies, and delayed-onset records are composed without treating shared wire shapes as semantic equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/studies/items",
+        "sourceId": "human-subject-study-xsd-v3-0",
+        "sourcePath": "HumanSubjectStudy_3_0",
+        "status": "proposed",
+        "note": "The embedded study is structured canonical data; the legacy embedded-PDF workflow is capture behavior."
+      },
+      {
+        "canonicalPointer": "#/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items",
+        "sourceId": "human-subject-study-xsd-v3-0",
+        "sourcePath": "HumanSubjectStudy_3_0.StudyPopulationCharacteristics.InclusionEnrollmentReport[*]",
+        "status": "proposed",
+        "note": "One composite semantic question with 115 coordinate-qualified leaf occurrences; totals are entered values pending reviewed formula evidence."
+      },
+      {
+        "canonicalPointer": "#/properties/delayedOnsetStudies/items",
+        "sourceId": "phs-human-subjects-parent-xsd-v3-0",
+        "sourcePath": "PHSHumanSubjectsAndClinicalTrialsInfo_3_0.DelayedOnsetStudy[*]",
+        "status": "proposed",
+        "note": "A repeated structured record with a purpose-specific justification attachment."
+      }
+    ]
+  },
+  "behaviorEvidence": [
+    {
+      "canonicalPath": "/exemptFromFederalRegulations",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-human-subjects-dat-f705",
+      "sourcePath": "1-07",
+      "sourceRecord": "Required if HumanSubjectsIndicator is yes."
+    },
+    {
+      "canonicalPath": "/exemptions",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-human-subjects-dat-f705",
+      "sourcePath": "1-08",
+      "sourceRecord": "One selection required if ExemptFedReg is yes."
+    },
+    {
+      "canonicalPath": "/studies",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-human-subjects-dat-f705",
+      "sourcePath": "1-14",
+      "sourceRecord": "The Adobe PDF version of the Human Subject Study form will be compressed and embedded into this form. The applicant will click the button and a dialog box will appear where applicant indicates where to save the file. Disabled if HumanSubjectsIndicator is not Yes."
+    },
+    {
+      "canonicalPath": "/studies",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-human-subjects-dat-f705",
+      "sourcePath": "1-15-1",
+      "sourceRecord": "Delete the row. Disabled if only one entry exists. Disabled if HumanSubjectsIndicator is not Yes."
+    },
+    {
+      "canonicalPath": "/studies",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-human-subjects-dat-f705",
+      "sourcePath": "1-15-2",
+      "sourceRecord": "The number 1 in field label will vary from 1 to 150 to reflect the attachment number. Verify the attachment is a PDF format. Provide standard \"Add\", \"Delete\" and \"View\" features. Disabled if HumanSubjectsIndicator is not Yes."
+    },
+    {
+      "canonicalPath": "/studies",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-human-subjects-dat-f705",
+      "sourcePath": "1-16",
+      "sourceRecord": "Adds another entry. Disabled on 150th entry. Disabled if HumanSubjectsIndicator is not Yes."
+    },
+    {
+      "canonicalPath": "/delayedOnsetStudies",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-human-subjects-dat-f705",
+      "sourcePath": "1-19-1",
+      "sourceRecord": "Delete the row. Disabled if only one entry exists. Disabled if HumanSubjectsIndicator is not Yes."
+    },
+    {
+      "canonicalPath": "/delayedOnsetStudies/[]/studyTitle",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-human-subjects-dat-f705",
+      "sourcePath": "1-19-2",
+      "sourceRecord": "Required for each row entered. Disabled if HumanSubjectsIndicator is not Yes."
+    },
+    {
+      "canonicalPath": "/delayedOnsetStudies/[]/anticipatedClinicalTrial",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-human-subjects-dat-f705",
+      "sourcePath": "1-19-3",
+      "sourceRecord": "Disabled if HumanSubjectsIndicator is not Yes."
+    },
+    {
+      "canonicalPath": "/delayedOnsetStudies/[]/justification",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-human-subjects-dat-f705",
+      "sourcePath": "1-19-4",
+      "sourceRecord": "Required for each row entered. Provide standard \"Add\", \"Delete\" and \"View\" features. Disabled if HumanSubjectsIndicator is not Yes."
+    },
+    {
+      "canonicalPath": "/delayedOnsetStudies",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-human-subjects-dat-f705",
+      "sourcePath": "1-20",
+      "sourceRecord": "Adds another entry. Disabled on 150th entry. Disabled if HumanSubjectsIndicator is not Yes."
+    },
+    {
+      "canonicalPath": "/studies/[]/populationCharacteristics/inclusionEnrollmentReports/[]",
+      "ruleKind": "calculation",
+      "authority": "unresolved",
+      "executionStatus": "source-bound-uncompiled",
+      "owner": "source-review",
+      "reason": "One unresolved disposition covers all 28 total-like enrollment coordinates. The pinned parent XSD and F705 DAT contain zero calculation records, so no arithmetic is inferred.",
+      "removalCondition": "Pin exact version-matched embedded-study calculation evidence and review every one of the 28 coordinate bindings."
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-plan/consortium-contractual-arrangements/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Describe consortium or contractual arrangements for the proposed research."
+}

@@ -1,0 +1,812 @@
+[
+  {
+    "type": "section",
+    "name": "overview",
+    "label": "Use of Human Specimens and/or Data",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/involvesHumanSubjects"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/exemptFromFederalRegulations"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/exemptions"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/involvesHumanSpecimensOrData"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/specimensExplanation"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/otherRequestedInformation"
+      },
+      {
+        "type": "null",
+        "definition": "/properties/applicationId"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "studies",
+    "label": "Human Subject Study Records",
+    "children": [
+      {
+        "type": "fieldList",
+        "name": "studies",
+        "label": "studies",
+        "definition": "/properties/studies",
+        "children": [
+          {
+            "type": "null",
+            "definition": "/properties/studies/items/properties/studyId"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/studyTitle"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/exemptFromFederalRegulations"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/exemptionNumbers"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/clinicalTrialQuestionnaire/properties/humanParticipants"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/clinicalTrialQuestionnaire/properties/prospectivelyAssignedIntervention"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/clinicalTrialQuestionnaire/properties/evaluatesIntervention"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/clinicalTrialQuestionnaire/properties/healthRelatedOutcome"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/clinicalTrialsGovIdentifier"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/conditionsOrFocus"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/eligibilityCriteria"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/ageLimits/properties/minimum/properties/value"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/ageLimits/properties/minimum/properties/unit"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/ageLimits/properties/maximum/properties/value"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/ageLimits/properties/maximum/properties/unit"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionAcrossLifespan"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionWomenMinorities"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/recruitmentRetentionPlan"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/recruitmentStatus"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/studyTimeline"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/firstSubjectEnrollment/properties/date"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/firstSubjectEnrollment/properties/anticipatedActual"
+          },
+          {
+            "type": "fieldList",
+            "name": "inclusionEnrollmentReports",
+            "label": "inclusionEnrollmentReports",
+            "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports",
+            "children": [
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/title"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/usesExistingDatasetOrResource"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/locationType"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/enrollmentCountries"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/enrollmentLocations"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/comments"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/female/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/notHispanicLatino/properties/male/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/female/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/female/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/female/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/female/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/female/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/female/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/female/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/male/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/male/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/male/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/male/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/male/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/male/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/hispanicLatino/properties/male/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/total/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/total/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/total/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/total/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/total/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/total/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/planned/properties/total/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/female/properties/unknownNotReported"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/male/properties/unknownNotReported"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/notHispanicLatino/properties/unknownNotReportedSex/properties/unknownNotReported"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/female/properties/unknownNotReported"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/male/properties/unknownNotReported"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/hispanicLatino/properties/unknownNotReportedSex/properties/unknownNotReported"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/female/properties/unknownNotReported"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/male/properties/unknownNotReported"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/unknownNotReportedEthnicity/properties/unknownNotReportedSex/properties/unknownNotReported"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/total/properties/americanIndianAlaskaNative"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/total/properties/asian"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/total/properties/nativeHawaiianPacificIslander"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/total/properties/blackAfricanAmerican"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/total/properties/white"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/total/properties/moreThanOneRace"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/total/properties/total"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/cumulativeActual/properties/total/properties/unknownNotReported"
+              },
+              {
+                "type": "null",
+                "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports/items/properties/reportId"
+              }
+            ]
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protectionMonitoringPlans/properties/protectionOfHumanSubjects"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protectionMonitoringPlans/properties/multiSiteStudy"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protectionMonitoringPlans/properties/singleIrbPlan"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protectionMonitoringPlans/properties/dataSafetyMonitoringPlan"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protectionMonitoringPlans/properties/monitoringBoardAppointed"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protectionMonitoringPlans/properties/studyTeamStructure"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/detailedDescription"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/primaryPurpose"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/otherPrimaryPurpose"
+          },
+          {
+            "type": "fieldList",
+            "name": "interventions",
+            "label": "interventions",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/interventions",
+            "children": [
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/interventions/items/properties/type"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/interventions/items/properties/name"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/interventions/items/properties/description"
+              }
+            ]
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/phase"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/nihDefinedPhase3"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/interventionModel"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/otherInterventionModel"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/masking"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/maskingParties/properties/participant"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/maskingParties/properties/careProvider"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/maskingParties/properties/investigator"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/maskingParties/properties/outcomesAssessor"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/studyDesign/properties/allocation"
+          },
+          {
+            "type": "fieldList",
+            "name": "outcomeMeasures",
+            "label": "outcomeMeasures",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/outcomeMeasures",
+            "children": [
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/protocolSynopsis/properties/outcomeMeasures/items/properties/name"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/protocolSynopsis/properties/outcomeMeasures/items/properties/type"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/protocolSynopsis/properties/outcomeMeasures/items/properties/timeFrame"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/studies/items/properties/protocolSynopsis/properties/outcomeMeasures/items/properties/description"
+              }
+            ]
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/statisticalDesignAndPower"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/subjectParticipationDuration"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/fdaRegulatedIntervention"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/investigationalProductAvailability"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/applicableClinicalTrial"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/protocolSynopsis/properties/disseminationPlan"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/studies/items/properties/otherClinicalTrialAttachments",
+            "widget": "AttachmentArray"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "delayedOnset",
+    "label": "Delayed Onset Studies",
+    "children": [
+      {
+        "type": "fieldList",
+        "name": "delayedOnsetStudies",
+        "label": "delayedOnsetStudies",
+        "definition": "/properties/delayedOnsetStudies",
+        "children": [
+          {
+            "type": "field",
+            "definition": "/properties/delayedOnsetStudies/items/properties/studyTitle"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/delayedOnsetStudies/items/properties/anticipatedClinicalTrial"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/delayedOnsetStudies/items/properties/justification"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,177 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "phs398-research-plan",
+    "kind": "form",
+    "formVersion": "5.0"
+  },
+  "sources": [
+    {
+      "id": "phs398-research-plan-xsd-v5-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS398_ResearchPlan_5_0-V5.0.xsd",
+      "nativeVersion": "5.0",
+      "sha256": "6e7171465d1f44a16eb822f8921423ceede4fa486cb0819bc5dd327121b4bb56"
+    },
+    {
+      "id": "attachments-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d"
+    },
+    {
+      "id": "global-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb"
+    },
+    {
+      "id": "global-library-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "universal-codes-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"
+    },
+    {
+      "id": "phs398-research-plan-dat-f797",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/PHS398_ResearchPlan_5_0-V5.0_F797.xls",
+      "nativeVersion": null,
+      "sha256": "61af459ba15e7a4ef5ddc4856a598561ce91bccb19f34084e977edb4eb4e7c88"
+    },
+    {
+      "id": "phs398-research-plan-readonly-pdf-v5-0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/PHS398_ResearchPlan_5_0-V5.0.pdf",
+      "nativeVersion": "5.0",
+      "sha256": "1ae85b51a0502315b0370e596660c9c9518458152af3c15f1ef1c1d35638a12b"
+    },
+    {
+      "id": "phs398-research-plan-xfa-pdf-v5-0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/PHS398_ResearchPlan_5_0-V5.0.pdf",
+      "nativeVersion": "5.0",
+      "sha256": "587caf4945c63fd5070d28ae79d924d5a24c647231f8fdb32e17040b794b93db"
+    },
+    {
+      "id": "nih-forms-i-research-plan-instructions-capture",
+      "type": "instructions",
+      "uri": "https://raw.githubusercontent.com/mikec-ai/grants-form-spec/main/research/phs398-research-plan/nih-forms-i-g400-instructions.json",
+      "nativeVersion": "Forms I",
+      "sha256": "20531aa9715fe2a1f53eca4e38e684ac5c93c0ea7266e0a7ecc80852453af935"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-PHS398ResearchPlan.jsonl.manifest.json",
+    "sourceSetSha256": "b2373ff2a3f9e26a51a379c267e58329443cace14660b4fe4a66e14651614b01",
+    "extractedAt": "2026-08-18T17:32:17.999441Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/introduction",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.IntroductionToApplication.attFile",
+        "status": "proposed",
+        "note": "Proposed role-qualified research-content identity; attachment capture does not establish cross-form equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/specificAims",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.SpecificAims.attFile",
+        "status": "proposed",
+        "note": "Proposed role-qualified research-content identity; attachment capture does not establish cross-form equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/researchStrategy",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.ResearchStrategy.attFile",
+        "status": "proposed",
+        "note": "Proposed role-qualified research-content identity; attachment capture does not establish cross-form equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/progressReportPublicationList",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.ProgressReportPublicationList.attFile",
+        "status": "proposed",
+        "note": "Proposed role-qualified research-content identity; attachment capture does not establish cross-form equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/vertebrateAnimals",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.VertebrateAnimals.attFile",
+        "status": "proposed",
+        "note": "Proposed document identity distinct from the R&R Other Project Information yes/no vertebrate-animal question."
+      },
+      {
+        "canonicalPointer": "#/properties/selectAgentResearch",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.SelectAgentResearch.attFile",
+        "status": "proposed",
+        "note": "Proposed role-qualified research-content identity; attachment capture does not establish cross-form equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/multiplePdPiLeadershipPlan",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.MultiplePDPILeadershipPlan.attFile",
+        "status": "proposed",
+        "note": "Proposed role-qualified research-content identity; attachment capture does not establish cross-form equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/consortiumContractualArrangements",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.ConsortiumContractualArrangements.attFile",
+        "status": "proposed",
+        "note": "Proposed role-qualified research-content identity; attachment capture does not establish cross-form equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/lettersOfSupport",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.LettersOfSupport.attFile",
+        "status": "proposed",
+        "note": "Proposed role-qualified research-content identity; attachment capture does not establish cross-form equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/resourceSharingPlans",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.ResourceSharingPlans.attFile",
+        "status": "proposed",
+        "note": "Proposed role-qualified research-content identity; attachment capture does not establish cross-form equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/otherPlans",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.OtherPlans.attFile",
+        "status": "proposed",
+        "note": "Proposed role-qualified research-content identity; attachment capture does not establish cross-form equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/keyResourceAuthentication",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.KeyBiologicalAndOrChemicalResources.attFile",
+        "status": "proposed",
+        "note": "Proposed role-qualified research-content identity; attachment capture does not establish cross-form equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/appendix",
+        "sourceId": "phs398-research-plan-xsd-v5-0",
+        "sourcePath": "PHS398_ResearchPlan_5_0.ResearchPlanAttachments.Appendix.AttachedFile[*]",
+        "status": "proposed",
+        "note": "Proposed appendix-document identity; each uploaded file shares the role but not the generic attachment capture identity."
+      }
+    ]
+  },
+  "behaviorEvidence": []
+}

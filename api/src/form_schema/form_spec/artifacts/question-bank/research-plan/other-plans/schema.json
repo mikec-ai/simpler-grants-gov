@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-plan/other-plans/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Provide another applicable research plan, including a data management and sharing plan."
+}

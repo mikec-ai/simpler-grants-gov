@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "clinical-study/clinical-trial-questionnaire/schema.json",
+  "type": "object",
+  "properties": {
+    "humanParticipants": {
+      "$ref": "#/$defs/ClinicalYesNo"
+    },
+    "prospectivelyAssignedIntervention": {
+      "$ref": "#/$defs/ClinicalYesNo"
+    },
+    "evaluatesIntervention": {
+      "$ref": "#/$defs/ClinicalYesNo"
+    },
+    "healthRelatedOutcome": {
+      "$ref": "#/$defs/ClinicalYesNo"
+    }
+  },
+  "required": [
+    "humanParticipants",
+    "prospectivelyAssignedIntervention",
+    "evaluatesIntervention",
+    "healthRelatedOutcome"
+  ],
+  "description": "Four source questions used together to determine whether a study is a clinical trial.",
+  "$defs": {
+    "ClinicalYesNo": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

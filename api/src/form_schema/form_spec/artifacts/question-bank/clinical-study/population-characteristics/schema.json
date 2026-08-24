@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "clinical-study/population-characteristics/schema.json",
+  "type": "object",
+  "properties": {
+    "conditionsOrFocus": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ClinicalConditionOrFocus"
+      },
+      "maxItems": 20
+    },
+    "eligibilityCriteria": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 15000
+    },
+    "ageLimits": {
+      "$ref": "#/$defs/ClinicalAgeLimits"
+    },
+    "inclusionAcrossLifespan": {
+      "$ref": "../../../question-bank/clinical-study/inclusion-across-lifespan/schema.json"
+    },
+    "inclusionWomenMinorities": {
+      "$ref": "../../../question-bank/clinical-study/inclusion-women-minorities/schema.json"
+    },
+    "recruitmentRetentionPlan": {
+      "$ref": "../../../question-bank/clinical-study/recruitment-retention-plan/schema.json"
+    },
+    "recruitmentStatus": {
+      "$ref": "#/$defs/ClinicalRecruitmentStatus"
+    },
+    "studyTimeline": {
+      "$ref": "../../../question-bank/clinical-study/study-timeline/schema.json"
+    },
+    "firstSubjectEnrollment": {
+      "$ref": "#/$defs/FirstSubjectEnrollment"
+    },
+    "inclusionEnrollmentReports": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/EmbeddedInclusionEnrollmentReport",
+        "properties": {
+          "reportId": {
+            "readOnly": true
+          }
+        }
+      },
+      "maxItems": 20
+    }
+  },
+  "description": "Population, eligibility, inclusion, recruitment, and enrollment information for one study.",
+  "$defs": {
+    "ClinicalConditionOrFocus": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "ClinicalAgeUnit": {
+      "type": "string",
+      "enum": [
+        "Years",
+        "Months",
+        "Weeks",
+        "Days",
+        "Hours",
+        "Minutes",
+        "N/A (No limit)"
+      ]
+    },
+    "ClinicalAgeLimit": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 999
+        },
+        "unit": {
+          "$ref": "#/$defs/ClinicalAgeUnit"
+        }
+      },
+      "required": [
+        "unit"
+      ],
+      "description": "One age boundary expressed as a numeric value and source-defined unit."
+    },
+    "ClinicalAgeLimits": {
+      "type": "object",
+      "properties": {
+        "minimum": {
+          "$ref": "#/$defs/ClinicalAgeLimit"
+        },
+        "maximum": {
+          "$ref": "#/$defs/ClinicalAgeLimit"
+        }
+      }
+    },
+    "ClinicalRecruitmentStatus": {
+      "type": "string",
+      "enum": [
+        "Not yet recruiting",
+        "Recruiting",
+        "Enrolling by invitation",
+        "Active, not recruiting",
+        "Completed",
+        "Suspended",
+        "Terminated (Halted Prematurely)",
+        "Withdrawn (No Participants Enrolled)"
+      ]
+    },
+    "EnrollmentAnticipatedActual": {
+      "type": "string",
+      "enum": [
+        "Anticipated",
+        "Actual"
+      ]
+    },
+    "FirstSubjectEnrollment": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "anticipatedActual": {
+          "$ref": "#/$defs/EnrollmentAnticipatedActual"
+        }
+      },
+      "required": [
+        "date",
+        "anticipatedActual"
+      ]
+    },
+    "EmbeddedInclusionEnrollmentReport": {
+      "type": "object",
+      "properties": {
+        "reportId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "readOnly": true
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "../../../question-bank/clinical-study/inclusion-enrollment-report/schema.json"
+        }
+      ],
+      "description": "Embedded-study occurrence of the shared report with its source-owned technical identifier."
+    }
+  }
+}

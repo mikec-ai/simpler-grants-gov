@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "clinical-study/protection-monitoring/schema.json",
+  "type": "object",
+  "properties": {
+    "protectionOfHumanSubjects": {
+      "$ref": "../../../question-bank/clinical-study/protection-human-subjects/schema.json"
+    },
+    "multiSiteStudy": {
+      "$ref": "#/$defs/ClinicalYesNoNotApplicable"
+    },
+    "singleIrbPlan": {
+      "$ref": "../../../question-bank/clinical-study/single-irb-plan/schema.json"
+    },
+    "dataSafetyMonitoringPlan": {
+      "$ref": "../../../question-bank/clinical-study/data-safety-monitoring-plan/schema.json"
+    },
+    "monitoringBoardAppointed": {
+      "$ref": "#/$defs/ClinicalYesNo"
+    },
+    "studyTeamStructure": {
+      "$ref": "../../../question-bank/clinical-study/study-team-structure/schema.json"
+    }
+  },
+  "description": "Protection and monitoring plans for one human-subject study.",
+  "$defs": {
+    "ClinicalYesNoNotApplicable": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No",
+        "NA: Not Applicable"
+      ]
+    },
+    "ClinicalYesNo": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

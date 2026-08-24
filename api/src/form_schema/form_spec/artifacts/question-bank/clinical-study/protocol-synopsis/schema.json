@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "clinical-study/protocol-synopsis/schema.json",
+  "type": "object",
+  "properties": {
+    "studyDesign": {
+      "$ref": "../../../question-bank/clinical-study/design/schema.json"
+    },
+    "outcomeMeasures": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ClinicalOutcomeMeasure"
+      },
+      "maxItems": 50
+    },
+    "statisticalDesignAndPower": {
+      "$ref": "../../../question-bank/clinical-study/statistical-design-power/schema.json"
+    },
+    "subjectParticipationDuration": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "fdaRegulatedIntervention": {
+      "$ref": "#/$defs/ClinicalYesNo"
+    },
+    "investigationalProductAvailability": {
+      "$ref": "../../../question-bank/clinical-study/investigational-product-availability/schema.json"
+    },
+    "applicableClinicalTrial": {
+      "$ref": "#/$defs/ClinicalYesNo"
+    },
+    "disseminationPlan": {
+      "$ref": "../../../question-bank/clinical-study/dissemination-plan/schema.json"
+    }
+  },
+  "description": "Protocol, outcomes, regulatory, and dissemination information for a clinical trial.",
+  "$defs": {
+    "ClinicalOutcomeType": {
+      "type": "string",
+      "enum": [
+        "Primary",
+        "Secondary",
+        "Other"
+      ]
+    },
+    "ClinicalOutcomeMeasure": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "type": {
+          "$ref": "#/$defs/ClinicalOutcomeType"
+        },
+        "timeFrame": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 999
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "timeFrame",
+        "description"
+      ]
+    },
+    "ClinicalYesNo": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

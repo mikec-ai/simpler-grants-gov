@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-plan/specific-aims/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "State the specific aims of the proposed research."
+}
