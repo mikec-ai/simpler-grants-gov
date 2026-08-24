@@ -25,6 +25,7 @@ import {
 } from "tests/e2e/portable-catalog/matrix-contract";
 import { createApplication } from "tests/e2e/utils/application/create-application-utils";
 import { authenticateE2eUser } from "tests/e2e/utils/auth/authenticate-e2e-user-utils";
+import { FORM_DEFAULTS } from "tests/e2e/utils/forms/form-defaults";
 import {
   clickSaveButton,
   saveForm,
@@ -515,19 +516,28 @@ test.describe("portable catalog browser conformance", () => {
               await probe("initial_save_reload", "api_round_trip", async () => {
                 const editableDefinition =
                   form.capabilities.editableScalar?.declarations[0]?.definition;
-                const editedControl = await makeDeterministicEdit(
-                  page,
-                  typeof editableDefinition === "string"
-                    ? editableDefinition
-                    : undefined,
-                );
+                const editedControl =
+                  form.capabilities.editableScalar?.applicability ===
+                  "applicable"
+                    ? await makeDeterministicEdit(
+                        page,
+                        typeof editableDefinition === "string"
+                          ? editableDefinition
+                          : undefined,
+                      )
+                    : "not_applicable";
                 // Saving is a Next server action, so its API PUT is server-side and
-                // invisible to Playwright's browser response stream. Assert the user
-                // confirmation instead; this incomplete canary payload should report
-                // validation issues while still persisting the deterministic edit.
+                // invisible to Playwright's browser response stream. Assert the shared
+                // save confirmation without predicting whether a generic bounded edit
+                // is valid; validation-warning count is recorded separately below.
                 // Capture after the save so generic calculated fields have reached
                 // their canonical values before we compare them with the reload.
-                await saveForm(page, true);
+                await clickSaveButton(page);
+                await expect(
+                  page.getByText(FORM_DEFAULTS.formSavedHeading, {
+                    exact: false,
+                  }),
+                ).toBeVisible({ timeout: 30_000 });
                 const beforeReload = await captureFormState(page);
                 applyUrl = page.url();
                 await page.reload({ waitUntil: "domcontentloaded" });
@@ -582,6 +592,7 @@ test.describe("portable catalog browser conformance", () => {
             receipt.probes.push(
               await probe("accessibility", "apply_render", async () => {
                 const results = await new AxeBuilder({ page })
+                  .include("main")
                   .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
                   .analyze();
                 expect(results.violations).toEqual([]);

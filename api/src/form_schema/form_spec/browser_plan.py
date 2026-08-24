@@ -310,10 +310,11 @@ def build_browser_plan() -> dict[str, Any]:
             for node in ui_fields
             if node.get("type") == "fieldList"
         ]
+        attachment_widgets = {"Attachment", "AttachmentArray", "MultipleAttachment"}
         ui_attachments = [
             {"definition": node["definition"]}
             for node in ui_fields
-            if node.get("widget") in {"Attachment", "MultipleAttachment"}
+            if node.get("widget") in attachment_widgets
         ]
         conditionals = [
             {"definition": node["definition"], "conditional": node["conditional"]}
@@ -340,6 +341,7 @@ def build_browser_plan() -> dict[str, Any]:
             for node in ui_fields
             if node.get("type") in {"field", "multiField"}
             and node.get("interaction") not in {"readOnly", "disabled"}
+            and node.get("widget") not in attachment_widgets
             for definition in _ui_definition_paths(node)
             if response_path_by_schema_path.get(definition) not in calculated_response_paths
         ]
