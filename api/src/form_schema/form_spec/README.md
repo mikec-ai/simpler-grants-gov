@@ -54,6 +54,13 @@ instruction UUID is inferred. The portable form id joins these files to the prod
 The historical per-form Python modules remain compatibility import paths; they all return the
 same cached object built through the generic loader.
 
+The loader also projects source-backed `operationalBehaviorEvidence` into typed Simpler
+coordinates. Canonical destination and source pointers receive their respective form projections,
+and canonical source forms must have an explicit runtime identity. The projected records remain
+`source-bound-uncompiled`: they are inspectable adapter inputs, not runtime rules. Application-level
+prefill, replacement, or discard behavior requires a separate declarative lifecycle contract and
+end-to-end consumer conformance before any stronger execution claim is allowed.
+
 The legacy Grants.gov FID stays in the producer manifest because it identifies an official
 source form rather than an SGG runtime record. Form names, source version, agency, and OMB
 metadata likewise remain portable. Adding a runtime identity or registration changes data,

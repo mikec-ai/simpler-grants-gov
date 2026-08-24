@@ -653,8 +653,8 @@
     },
     {
       "path": "dist/forms/rr-budget-10yr/schema.json",
-      "sha256": "a6f93a92609cad7d209f6d14db784a02e98bb15ba3aa51a378dd5f6d1ea46ed4",
-      "size": 9023
+      "sha256": "5fd76fb4a24433417043e233f5f39cfdc349362da4eba9e3c7c03e35447b8755",
+      "size": 9395
     },
     {
       "path": "dist/forms/rr-budget-10yr/sgg/rule-schema.json",
@@ -663,8 +663,8 @@
     },
     {
       "path": "dist/forms/rr-budget-10yr/sgg/ui-schema.json",
-      "sha256": "ddef3e69acfbb1f4530fe6e63ed17d6d67a40216a04937456517afb6da531a4a",
-      "size": 28600
+      "sha256": "1b9cabdcbf9716e28e1b71329ec7272e3113ec3668262c870431d1d9aa02d37c",
+      "size": 28596
     },
     {
       "path": "dist/forms/rr-budget-10yr/targets/grants-gov-xml.json",
@@ -673,8 +673,8 @@
     },
     {
       "path": "dist/forms/rr-budget/evidence.json",
-      "sha256": "632978660dfd99a20ab80a24c46cbfbb8545331ab624386f816b0c3e8c08b0cd",
-      "size": 30705
+      "sha256": "1e8db0334274e428b9ec107bc114c413a3fef5fd77988164c4cc9c29321793c8",
+      "size": 32542
     },
     {
       "path": "dist/forms/rr-budget/manifest.json",
@@ -683,8 +683,8 @@
     },
     {
       "path": "dist/forms/rr-budget/schema.json",
-      "sha256": "7393f3547ee67ca9cfa6a209db37403366dbf309b248004a0948664c06f5329f",
-      "size": 9013
+      "sha256": "bcba8d39eacba4e683c95e680497a1357b054547411c3d5d3445052382e89fb7",
+      "size": 9385
     },
     {
       "path": "dist/forms/rr-budget/sgg/rule-schema.json",
@@ -693,8 +693,8 @@
     },
     {
       "path": "dist/forms/rr-budget/sgg/ui-schema.json",
-      "sha256": "8065c9979a96618a0d9ce2650bb7b1d3b73d8313dd96101a46d9fbdf3420ba6e",
-      "size": 28601
+      "sha256": "ecf9ec9c935519fec0a0c0937f60cfd7a78bb41b08a38c59eb0f72a5384d430f",
+      "size": 28597
     },
     {
       "path": "dist/forms/rr-budget/targets/grants-gov-xml.json",
@@ -898,8 +898,8 @@
     },
     {
       "path": "dist/forms/rr-subaward-budget-10yr-30/schema.json",
-      "sha256": "da60ad36238e03fb08a9e77df8e59fee438a122211e6d8fbe9e1518f4011e575",
-      "size": 9358
+      "sha256": "6f3d43fe07aa7fa6af6f230d45c7e119e4cee74789ee57022c00438ead08733b",
+      "size": 9802
     },
     {
       "path": "dist/forms/rr-subaward-budget-10yr-30/sgg/rule-schema.json",
@@ -908,8 +908,8 @@
     },
     {
       "path": "dist/forms/rr-subaward-budget-10yr-30/sgg/ui-schema.json",
-      "sha256": "6aeda89986d000b19c91e9bf577bcd20fe5f581eed1712b3486ece0043bbcfc1",
-      "size": 37059
+      "sha256": "b8c74c9f7ab120beb0c7f23b9156d95b00dac9d2eb5ed16fea06b71e5a639215",
+      "size": 37055
     },
     {
       "path": "dist/forms/rr-subaward-budget-10yr-30/targets/grants-gov-xml.json",
@@ -928,8 +928,8 @@
     },
     {
       "path": "dist/forms/rr-subaward-budget-30/schema.json",
-      "sha256": "4b222ac9c137e08b62839d6ab6a9d7f7ee82e1421cf0c120f9191ead4e21fc4e",
-      "size": 9474
+      "sha256": "521209d4b83d1cd484a3e9848fc906e566a9bb9d032ee98af7894fe4db902c8d",
+      "size": 9918
     },
     {
       "path": "dist/forms/rr-subaward-budget-30/sgg/rule-schema.json",
@@ -938,8 +938,8 @@
     },
     {
       "path": "dist/forms/rr-subaward-budget-30/sgg/ui-schema.json",
-      "sha256": "966726ddd61f100547f94d95fd73ea465dc7c7cd64c377c14028a2f41fb76846",
-      "size": 37056
+      "sha256": "bed619361615a2ecb4000d772db689aef89e710d1dec7bb24669f0c5cb1a29b2",
+      "size": 37052
     },
     {
       "path": "dist/forms/rr-subaward-budget-30/targets/grants-gov-xml.json",
@@ -958,8 +958,8 @@
     },
     {
       "path": "dist/forms/rr-subaward-budget/schema.json",
-      "sha256": "49743ee46e784d26eee0e47571863c5811763fdf3e767ffd659f9c47149776f4",
-      "size": 9165
+      "sha256": "286ab9d378d3872878413bfeef10dfc2498b179391b12b3eae58082b127b460a",
+      "size": 9609
     },
     {
       "path": "dist/forms/rr-subaward-budget/sgg/rule-schema.json",
@@ -968,8 +968,8 @@
     },
     {
       "path": "dist/forms/rr-subaward-budget/sgg/ui-schema.json",
-      "sha256": "232f52937647cf29bdebfe8f250a89216a7686c264b6c479910da10a0060ba6a",
-      "size": 37058
+      "sha256": "730988f0a511e3988f4899d02e7e825ccd5370412220ebdcfb3d41ca7f4196da",
+      "size": 37054
     },
     {
       "path": "dist/forms/rr-subaward-budget/targets/grants-gov-xml.json",
@@ -1518,13 +1518,13 @@
     },
     {
       "path": "dist/question-bank/budget/research/details-10yr/schema.json",
-      "sha256": "e84509f556f2fdf2a33218b970b4a8a7447cf265bcac2d38194c8574cf47efc7",
-      "size": 9100
+      "sha256": "d1ad5ea9157554b4ec9a0a559b97fd3f02fc30ebf3dbb792293bbcef160806cc",
+      "size": 9472
     },
     {
       "path": "dist/question-bank/budget/research/details/schema.json",
-      "sha256": "532c48831a4f4f4f6aef2823f3e976137b6d2e67211ec991da534eedeb527fc4",
-      "size": 9091
+      "sha256": "16259b5fac2051fcbdb55fea12e656b123ae31d2a194ae6fbb2fc6dcc588d68b",
+      "size": 9463
     },
     {
       "path": "dist/question-bank/budget/research/equipment/schema.json",
@@ -1548,8 +1548,8 @@
     },
     {
       "path": "dist/question-bank/budget/research/other-personnel/schema.json",
-      "sha256": "bbad4a115d131045f80bb0e4711fcd0d1f5164c3ff3ea6217bdfa985e45547f6",
-      "size": 10533
+      "sha256": "e66300862e52b45b029d07527d393f7e3af1ba8dc32d6161ed778e889cca6874",
+      "size": 11039
     },
     {
       "path": "dist/question-bank/budget/research/participant-trainee-support/schema.json",
@@ -1558,8 +1558,8 @@
     },
     {
       "path": "dist/question-bank/budget/research/period/schema.json",
-      "sha256": "32f8dd288fbdc1357d57c784197672340e3d9738303fd104da71c6d72f68860c",
-      "size": 10937
+      "sha256": "c9996c825f14c581aad9793e54fadce0edf8e659e0e4fa5fa8c2a283f205c0f2",
+      "size": 11237
     },
     {
       "path": "dist/question-bank/budget/research/travel/schema.json",
@@ -2443,7 +2443,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "e2e257b2723c5d347cee1c6b3067fb0d6835238c"
+    "revision": "bac08000460ef457b5970647d0c9019559398e42"
   },
-  "sourceBundleSha256": "a17571d7e11a1556b4781a4fc5c5eceda65fef5a09e08b07e6f9361b64e4b6fa"
+  "sourceBundleSha256": "dcfbadf3d151e8f3138acab0f1d4a71d0f136dd2f19b3e8c127cb918d8327ba8"
 }

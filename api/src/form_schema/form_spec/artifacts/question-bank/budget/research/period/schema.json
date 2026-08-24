@@ -94,6 +94,9 @@
           "properties": {
             "fundsRequested": {
               "readOnly": true
+            },
+            "projectRole": {
+              "readOnly": true
             }
           }
         },
@@ -113,12 +116,18 @@
           "properties": {
             "fundsRequested": {
               "readOnly": true
+            },
+            "projectRole": {
+              "readOnly": true
             }
           }
         },
         "secretarialClerical": {
           "properties": {
             "fundsRequested": {
+              "readOnly": true
+            },
+            "projectRole": {
               "readOnly": true
             }
           }
@@ -129,6 +138,9 @@
         "undergraduateStudents": {
           "properties": {
             "fundsRequested": {
+              "readOnly": true
+            },
+            "projectRole": {
               "readOnly": true
             }
           }

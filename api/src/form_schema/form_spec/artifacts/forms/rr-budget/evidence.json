@@ -604,10 +604,60 @@
       "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact calculation target."
     }
   ],
+  "operationalBehaviorEvidence": [
+    {
+      "canonicalPath": "/samUei",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/applicantInfo/organizationInfo/samUei"
+      },
+      "editability": "editable",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "0-06",
+      "sourceRecord": "Prefill the SAMUEI from SAMUEI on the R&R SF424. This element will only be enterable on the first budget period."
+    },
+    {
+      "canonicalPath": "/organizationName",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/applicantInfo/organizationInfo/organizationName"
+      },
+      "editability": "unspecified",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "0-07",
+      "sourceRecord": "Prefill the Organization Name from OrganizationName on the R&R SF424."
+    },
+    {
+      "canonicalPath": "/budgetYear/[]/budgetPeriodStartDate",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/proposedProjectPeriod/proposedStartDate"
+      },
+      "targetSelection": {
+        "arrayPath": "/budgetYear",
+        "index": 0
+      },
+      "editability": "unspecified",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "grantsgov-rr-budget-dat-3.0-f770",
+      "sourcePath": "0-10",
+      "sourceRecord": "Prefill the Start Date for the first budget year from ProposedStartDate on the R&R SF424. Start Date cannot be after End Date."
+    }
+  ],
   "semanticReview": {
     "status": "unreviewed",
     "mappings": []
   },
-  "operationalBehaviorEvidence": [],
   "responseNormalizationEvidence": []
 }
