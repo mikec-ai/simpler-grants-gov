@@ -23,6 +23,7 @@ from src.form_schema.form_spec.projection import (
 from src.form_schema.form_spec.response_normalization import (
     ResponseNormalizationPolicy,
     load_response_normalization,
+    reject_rule_target_overlap,
 )
 from src.form_schema.form_spec.runtime_identity import runtime_identity
 from src.form_schema.form_spec.xml_profile import project_grants_gov_xml_profile
@@ -148,12 +149,16 @@ def _load_banked_form(
         else None
     )
     projected_schema = project_schema(canonical, projection)
+    projected_rule_schema = (
+        project_rule_schema(rule_schema, projection) if rule_schema else rule_schema
+    )
     response_normalization = load_response_normalization(
         root,
         manifest=manifest,
         projected_schema=projected_schema,
         projection=projection,
     )
+    reject_rule_target_overlap(response_normalization, projected_rule_schema)
     # All artifacts use the same projection, so a pointer and the property it addresses cannot
     # be spelled differently.
     return LoadedForm(
@@ -161,7 +166,7 @@ def _load_banked_form(
         manifest=manifest,
         json_schema=projected_schema,
         ui_schema=project_ui_schema(ui_schema, projection),
-        rule_schema=project_rule_schema(rule_schema, projection) if rule_schema else rule_schema,
+        rule_schema=projected_rule_schema,
         json_to_xml_schema=json_to_xml_schema,
         response_normalization=response_normalization,
     )

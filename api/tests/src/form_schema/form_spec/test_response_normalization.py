@@ -19,6 +19,7 @@ from src.form_schema.form_spec.response_normalization import (
     load_response_normalization,
     merge_rule_response,
     normalize_response,
+    reject_rule_target_overlap,
 )
 from src.services.applications import application_validation
 
@@ -370,6 +371,39 @@ def test_persistence_merge_preserves_capture_blank_and_rule_writes() -> None:
     assert raw == {"blank": "", "input": "before"}
     assert rule_result == {"input": "before", "calculated": "42"}
     assert merge_rule_response(raw, {"blank": "rule-value"}, policy) == {"blank": "rule-value"}
+
+
+@pytest.mark.parametrize("handler", ["gg_pre_population", "gg_post_population"])
+def test_form_construction_rejects_normalization_rule_mutation_overlap(handler: str) -> None:
+    policy = ResponseNormalizationPolicy(
+        CONTRACT,
+        (ResponseNormalizationOperation("/nested/blank", OPERATION, "a"),),
+    )
+    rule_schema = {
+        "nested": {
+            "blank": {
+                handler: {
+                    "rule": "arbitrary",
+                    "null_population": "exclude_value",
+                }
+            }
+        }
+    }
+
+    with pytest.raises(ValueError, match="overlaps a rule mutation target"):
+        reject_rule_target_overlap(policy, rule_schema)
+
+
+def test_validation_only_rule_can_share_normalization_target() -> None:
+    policy = ResponseNormalizationPolicy(
+        CONTRACT,
+        (ResponseNormalizationOperation("/nested/blank", OPERATION, "a"),),
+    )
+    rule_schema = {
+        "nested": {"blank": {"gg_validation": {"rule": "required", "message": "Required"}}}
+    }
+
+    reject_rule_target_overlap(policy, rule_schema)
 
 
 def test_application_rules_and_schema_see_normalized_copy_while_capture_stays_raw(

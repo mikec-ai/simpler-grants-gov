@@ -232,6 +232,38 @@ def load_response_normalization(
     return ResponseNormalizationPolicy(CONTRACT, tuple(operations))
 
 
+def reject_rule_target_overlap(
+    policy: ResponseNormalizationPolicy | None,
+    rule_schema: dict[str, Any] | None,
+) -> None:
+    """Reject a form whose rules can mutate a normalization target.
+
+    Rule population handlers own their target path and may remove it when they produce
+    ``None``. Keeping those targets disjoint from capture-only normalization makes it safe
+    to restore exact raw blanks after rule processing without guessing rule intent.
+    """
+    if policy is None or rule_schema is None:
+        return
+
+    mutation_targets: set[str] = set()
+
+    def walk(node: dict[str, Any], path: tuple[str, ...]) -> None:
+        if "gg_pre_population" in node or "gg_post_population" in node:
+            encoded = "/".join(token.replace("~", "~0").replace("/", "~1") for token in path)
+            if encoded:
+                mutation_targets.add(f"/{encoded}")
+        for key, value in node.items():
+            if not key.startswith("gg_") and isinstance(value, dict):
+                walk(value, (*path, key))
+
+    walk(rule_schema, ())
+    for operation in policy.operations:
+        if operation.path in mutation_targets:
+            raise ValueError(
+                f"response normalization path {operation.path} overlaps a rule mutation target"
+            )
+
+
 def _lookup_parent(response: dict[str, Any], path: str) -> tuple[dict[str, Any] | None, str]:
     tokens = _decode_pointer(path)
     current: Any = response
