@@ -10,6 +10,7 @@ import {
   PLAN_CONTRACT,
   RECEIPT_CONTRACT,
   recoverBrowserPlanCandidates,
+  responsePathToControlId,
   schemaDefinitionToControlId,
   summarizeReceipts,
   writeReceipt,
@@ -28,6 +29,27 @@ describe("portable catalog matrix contract", () => {
     ).toBe("contact_person--name--first_name");
     expect(() => schemaDefinitionToControlId("relative/path")).toThrow(
       "absolute pointer",
+    );
+  });
+
+  it("maps direct and nested response paths to representative FieldList controls", () => {
+    expect(
+      responsePathToControlId(
+        "/budget_year/*/equipment/total_fund_for_attached_equipment",
+      ),
+    ).toBe("budget_year[0]--equipment--total_fund_for_attached_equipment");
+    expect(
+      responsePathToControlId(
+        "/budget_attachments/*/budget_year/*/key_persons/attached_key_persons",
+      ),
+    ).toBe(
+      "budget_attachments[0]--budget_year[0]--key_persons--attached_key_persons",
+    );
+    expect(() => responsePathToControlId("relative/path")).toThrow(
+      "absolute pointer",
+    );
+    expect(() => responsePathToControlId("/*/name")).toThrow(
+      "wildcard has no parent",
     );
   });
 
