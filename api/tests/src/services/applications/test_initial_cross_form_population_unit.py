@@ -6,6 +6,7 @@ from unittest.mock import Mock
 
 import pytest
 
+from src.form_schema.form_spec.preview import preview_form_id
 from src.form_schema.form_spec.runtime_identity import runtime_identity
 from src.services.applications.apply_initial_population import (
     apply_initial_population_from_source_update,
@@ -63,6 +64,27 @@ def test_exact_source_values_populate_declared_budget_targets(target_form_id: st
         "organization_name": "Example Research University",
         "budget_year": [{"budget_period_start_date": "2027-07-01"}],
     }
+
+
+def test_banked_preview_executes_the_same_operational_population_contract() -> None:
+    source, target = _forms({
+        "applicant_info": {
+            "organization_info": {
+                "sam_uei": "ABCDEFGHIJKL",
+                "organization_name": "Example Research University",
+            }
+        },
+        "proposed_project_period": {"proposed_start_date": "2027-07-01"},
+    })
+    target.form_id = preview_form_id("rr-budget")
+    application = SimpleNamespace(application_id=uuid.uuid4(), application_forms=[source, target])
+
+    changed = apply_initial_population_from_source_update(
+        _session_with_modified_targets(), application, source
+    )
+
+    assert changed == (target,)
+    assert target.application_response["samuei"] == "ABCDEFGHIJKL"
 
 
 @pytest.mark.parametrize("target_form_id", ["rr-budget", "rr-budget-10yr"])

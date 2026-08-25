@@ -203,6 +203,42 @@ describe("getFieldConfig", () => {
     });
   });
 
+  it("passes portable exclusive array values to MultiSelect", () => {
+    const uiFieldObject: UiSchemaField = {
+      type: "field",
+      definition: "/properties/race",
+      widget: "MultiSelect",
+    };
+    const formSchema: RJSFSchema = {
+      type: "object",
+      properties: {
+        race: {
+          type: "array",
+          items: { type: "string", enum: ["Asian", "Do Not Wish to Provide"] },
+          "x-exclusive-values": ["Do Not Wish to Provide"],
+        } as RJSFSchema,
+      },
+    };
+
+    const result = getFieldConfig({
+      uiFieldObject,
+      formSchema,
+      errors: null,
+      formData: { race: ["Asian"] },
+      requiredField: false,
+    });
+
+    expect(result.type).toBe("MultiSelect");
+    if (result.type === "FieldList") throw new Error("Expected MultiSelect");
+    expect(result.props.options).toEqual({
+      enumOptions: [
+        { value: "Asian", label: "Asian" },
+        { value: "Do Not Wish to Provide", label: "Do Not Wish to Provide" },
+      ],
+      exclusiveValues: ["Do Not Wish to Provide"],
+    });
+  });
+
   it("should handle fields with errors", () => {
     const uiFieldObject: UiSchemaField = {
       type: "field",

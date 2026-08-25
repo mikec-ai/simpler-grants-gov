@@ -17,6 +17,10 @@ from typing import TYPE_CHECKING, Any, cast
 
 from src.form_schema.form_spec.bank import ARTIFACT_MANIFEST
 from src.form_schema.form_spec.loader import _load_banked_form
+from src.form_schema.form_spec.operational_behavior import (
+    ProjectedOperationalBehavior,
+    apply_operational_editability,
+)
 
 if TYPE_CHECKING:
     from src.db.models.competition_models import Form
@@ -86,6 +90,30 @@ def preview_form_id(portable_id: str) -> uuid.UUID:
     return uuid.uuid5(PREVIEW_NAMESPACE, portable_id)
 
 
+def portable_id_for_preview_form_id(form_id: uuid.UUID) -> str | None:
+    """Reverse a lower-environment preview UUID without granting runtime eligibility."""
+
+    return next(
+        (
+            portable_id
+            for portable_id in banked_form_ids()
+            if preview_form_id(portable_id) == form_id
+        ),
+        None,
+    )
+
+
+def operational_behavior_for_preview_form_id(
+    form_id: uuid.UUID,
+) -> tuple[ProjectedOperationalBehavior, ...]:
+    """Load behavior for a banked preview without granting production identity."""
+
+    portable_id = portable_id_for_preview_form_id(form_id)
+    if portable_id is None:
+        return ()
+    return _load_banked_form(portable_id, project_xml=False).operational_behavior
+
+
 def build_preview_form(portable_id: str) -> Form:
     """Build one banked package as a non-production Simpler ``Form``."""
 
@@ -107,7 +135,10 @@ def build_preview_form(portable_id: str) -> Form:
         form_version=meta["formVersion"],
         agency_code=meta.get("agencyCode", "SGG"),
         omb_number=meta.get("ombNumber"),
-        form_json_schema=resolve_jsonschema(copy.deepcopy(loaded.form_json_schema)),
+        form_json_schema=apply_operational_editability(
+            resolve_jsonschema(copy.deepcopy(loaded.form_json_schema)),
+            loaded.operational_behavior,
+        ),
         form_ui_schema=cast(Any, loaded.form_ui_schema),
         form_rule_schema=loaded.form_rule_schema,
         json_to_xml_schema=None,

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import dataclasses
+import copy
 import uuid
 from collections.abc import Callable
 from typing import Any, Literal, cast
@@ -48,6 +49,42 @@ RuntimeFormIdFor = Callable[[str], uuid.UUID]
 Editability = Literal["editable", "read-only", "protected", "not-applicable", "unspecified"]
 
 _EDITABILITY = {"editable", "read-only", "protected", "not-applicable", "unspecified"}
+
+
+def apply_operational_editability(
+    schema: dict[str, Any],
+    behaviors: tuple[ProjectedOperationalBehavior, ...],
+) -> dict[str, Any]:
+    """Project protected source-owned values onto a resolved runtime schema.
+
+    Operational paths use response coordinates while JSON Schema nests those same names
+    below ``properties`` (and ``items`` for repeatable occurrences). The projection is
+    generic and deliberately limited to the closed editability vocabulary.
+    """
+
+    projected = copy.deepcopy(schema)
+    for behavior in behaviors:
+        if behavior.editability not in {"protected", "read-only"}:
+            continue
+        node: Any = projected
+        for token in _tokens(behavior.path):
+            if token == "[]":
+                node = node.get("items") if isinstance(node, dict) else None
+            else:
+                properties = node.get("properties") if isinstance(node, dict) else None
+                node = properties.get(token) if isinstance(properties, dict) else None
+            if not isinstance(node, dict):
+                raise ValueError(
+                    f"operational editability target {behavior.path!r} does not resolve in schema"
+                )
+        node["readOnly"] = True
+    return projected
+
+
+def _tokens(pointer: str) -> list[str]:
+    if not pointer.startswith("/"):
+        raise ValueError(f"operational pointer must be absolute: {pointer!r}")
+    return [token.replace("~1", "/").replace("~0", "~") for token in pointer[1:].split("/")]
 
 
 def _required_string(record: dict[str, Any], key: str, context: str) -> str:

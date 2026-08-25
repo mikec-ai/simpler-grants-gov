@@ -13,6 +13,7 @@ from src.constants.lookup_constants import ApplicationAuditEvent
 from src.db.models.competition_models import Application, ApplicationAudit, ApplicationForm
 from src.form_schema.form_spec.loader import load_form
 from src.form_schema.form_spec.operational_behavior import ProjectedOperationalBehavior
+from src.form_schema.form_spec.preview import operational_behavior_for_preview_form_id
 from src.form_schema.form_spec.runtime_identity import portable_id_for_runtime_form_id
 
 logger = logging.getLogger(__name__)
@@ -100,7 +101,8 @@ def apply_initial_population_from_source_update(
     """Apply matching portable values until each target receives its first user update."""
 
     modified_target_ids = set(
-        db_session.execute(
+        db_session
+        .execute(
             select(ApplicationAudit.target_application_form_id).where(
                 ApplicationAudit.application_id == application.application_id,
                 ApplicationAudit.application_audit_event == ApplicationAuditEvent.FORM_UPDATED,
@@ -118,11 +120,14 @@ def apply_initial_population_from_source_update(
         ):
             continue
         portable_id = portable_id_for_runtime_form_id(target_form.form_id)
-        if portable_id is None:
-            continue
+        available_behaviors = (
+            load_form(portable_id).operational_behavior
+            if portable_id is not None
+            else operational_behavior_for_preview_form_id(target_form.form_id)
+        )
         behaviors = tuple(
             behavior
-            for behavior in load_form(portable_id).operational_behavior
+            for behavior in available_behaviors
             if behavior.value_source.runtime_form_id == source_form.form_id
             and behavior.execution_policy.trigger == "source-response-updated"
             and behavior.execution_policy.write_policy == "until-target-user-modified"

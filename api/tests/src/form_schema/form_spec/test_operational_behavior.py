@@ -7,6 +7,8 @@ from src.form_schema.form_spec.loader import load_form
 from src.form_schema.form_spec.operational_behavior import (
     ProjectedCanonicalValueSource,
     ProjectedExecutionPolicy,
+    ProjectedOperationalBehavior,
+    apply_operational_editability,
     project_operational_behavior,
 )
 from src.form_schema.form_spec.projection import Projection
@@ -117,3 +119,69 @@ def test_projection_fails_closed_when_source_form_has_no_runtime_identity() -> N
             projection_for=lambda _form_id: Projection(),
             runtime_form_id_for=missing_identity,
         )
+
+
+def test_operational_editability_protects_nested_and_repeating_targets() -> None:
+    source = ProjectedCanonicalValueSource(
+        form_id="source",
+        runtime_form_id=RR_SF424_RUNTIME_ID,
+        canonical_path="/source",
+        path="/source",
+    )
+    policy = ProjectedExecutionPolicy(
+        trigger="source-response-updated",
+        write_policy="until-target-user-modified",
+        missing_source_policy="skip",
+    )
+    behaviors = tuple(
+        ProjectedOperationalBehavior(
+            canonical_path=path,
+            path=path,
+            operation_kind="prefill",
+            editability="protected",
+            execution_policy=policy,
+            value_source=source,
+            target_selection=None,
+        )
+        for path in ("/person/name", "/people/[]/name")
+    )
+    schema = {
+        "type": "object",
+        "properties": {
+            "person": {"type": "object", "properties": {"name": {"type": "string"}}},
+            "people": {
+                "type": "array",
+                "items": {"type": "object", "properties": {"name": {"type": "string"}}},
+            },
+        },
+    }
+
+    projected = apply_operational_editability(schema, behaviors)
+
+    assert projected["properties"]["person"]["properties"]["name"]["readOnly"] is True
+    assert projected["properties"]["people"]["items"]["properties"]["name"]["readOnly"] is True
+    assert "readOnly" not in schema["properties"]["person"]["properties"]["name"]
+
+
+def test_operational_editability_fails_closed_for_a_missing_target() -> None:
+    behavior = ProjectedOperationalBehavior(
+        canonical_path="/missing",
+        path="/missing",
+        operation_kind="prefill",
+        editability="protected",
+        execution_policy=ProjectedExecutionPolicy(
+            trigger="source-response-updated",
+            write_policy="until-target-user-modified",
+            missing_source_policy="skip",
+        ),
+        value_source=ProjectedCanonicalValueSource(
+            form_id="source",
+            runtime_form_id=RR_SF424_RUNTIME_ID,
+            canonical_path="/source",
+            path="/source",
+        ),
+        target_selection=None,
+    )
+
+    with pytest.raises(ValueError, match="does not resolve in schema"):
+        apply_operational_editability({"type": "object", "properties": {}}, (behavior,))
