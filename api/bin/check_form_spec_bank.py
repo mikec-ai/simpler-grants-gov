@@ -183,11 +183,11 @@ def classify_change(
     # form-local and every other changed path is that form's exact portable test.
     # XSD, question-bank, governance, registration, projection, runtime, frontend,
     # workflow, and ambiguous test changes therefore fail closed to full CI.
-    form_ids = {
-        form_id
-        for change in changes
-        if (form_id := _form_id_from_artifact(change.path)) is not None
-    }
+    form_ids: set[str] = set()
+    for change in changes:
+        candidate_form_id = _form_id_from_artifact(change.path)
+        if candidate_form_id is not None:
+            form_ids.add(candidate_form_id)
     mapped_tests = {test_file for form_id in form_ids for test_file in mapping.get(form_id, ())}
     changed_tests: set[str] = set()
     focused_paths = True
