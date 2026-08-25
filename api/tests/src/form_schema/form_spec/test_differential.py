@@ -297,3 +297,78 @@ def test_cli_rejects_unknown_flags() -> None:
 def test_invalid_injected_revision_fails_before_comparison() -> None:
     with pytest.raises(ValueError, match="full lowercase 40-character Git SHA"):
         compare_cohort(consumer_revision="main")
+
+
+def test_exact_form_subset_preserves_requested_order() -> None:
+    selected = compare_cohort(
+        consumer_revision=TEST_REVISION,
+        form_ids=("project-narrative-attachments", "project-abstract-summary"),
+    )
+
+    assert [receipt["portableFormId"] for receipt in selected] == [
+        "project-narrative-attachments",
+        "project-abstract-summary",
+    ]
+
+
+@pytest.mark.parametrize(
+    ("form_ids", "message"),
+    [
+        ((), "cannot be empty"),
+        (("sf424", "sf424"), "duplicate"),
+        (("not-in-cohort",), "outside the cohort"),
+    ],
+)
+def test_exact_form_subset_fails_closed(form_ids: tuple[str, ...], message: str) -> None:
+    with pytest.raises(ValueError, match=message):
+        compare_cohort(consumer_revision=TEST_REVISION, form_ids=form_ids)
+
+
+def test_cli_writes_only_requested_form_receipt(tmp_path: Path) -> None:
+    output = tmp_path / "receipts"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "bin/build_portable_legacy_differential.py",
+            "--consumer-revision",
+            TEST_REVISION,
+            "--form-id",
+            "project-narrative-attachments",
+            "--output-dir",
+            str(output),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        env={**os.environ, "PYTHONPATH": "."},
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert sorted(path.name for path in output.iterdir()) == [
+        "project-narrative-attachments.json",
+        "summary.json",
+    ]
+    assert json.loads((output / "summary.json").read_text())["forms"] == 1
+
+
+def test_cli_rejects_form_outside_cohort(tmp_path: Path) -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "bin/build_portable_legacy_differential.py",
+            "--consumer-revision",
+            TEST_REVISION,
+            "--form-id",
+            "not-in-cohort",
+            "--output-dir",
+            str(tmp_path),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        env={**os.environ, "PYTHONPATH": "."},
+    )
+
+    assert result.returncode == 1
+    assert result.stdout == ""
+    assert "outside the cohort" in result.stderr

@@ -512,10 +512,25 @@ def _validated_revision(revision: str) -> str:
 
 
 def compare_cohort(
-    cohort_path: Path = COHORT_PATH, *, consumer_revision: str | None = None
+    cohort_path: Path = COHORT_PATH,
+    *,
+    consumer_revision: str | None = None,
+    form_ids: Iterable[str] | None = None,
 ) -> list[dict[str, Any]]:
     """Compare every declaratively selected form through the same mechanism."""
     cohort = _load_cohort(cohort_path)
+    requested_form_ids = tuple(form_ids) if form_ids is not None else None
+    if requested_form_ids is not None:
+        if len(requested_form_ids) != len(set(requested_form_ids)):
+            raise ValueError("differential form selection contains duplicate portable form ids")
+        available_form_ids = {record["portableFormId"] for record in cohort["forms"]}
+        unknown_form_ids = sorted(set(requested_form_ids) - available_form_ids)
+        if unknown_form_ids:
+            raise ValueError(
+                "differential form selection is outside the cohort: " + ", ".join(unknown_form_ids)
+            )
+        if not requested_form_ids:
+            raise ValueError("differential form selection cannot be empty")
     ledger, ledger_source = _load_delta_ledger()
     revision = _validated_revision(
         consumer_revision if consumer_revision is not None else _consumer_revision()
@@ -535,7 +550,17 @@ def compare_cohort(
         raise ValueError(
             f"parity delta ledger contains forms outside the cohort: {extra_ledger_forms}"
         )
-    for record in cohort["forms"]:
+    selected_records = (
+        cohort["forms"]
+        if requested_form_ids is None
+        else [
+            record
+            for form_id in requested_form_ids
+            for record in cohort["forms"]
+            if record["portableFormId"] == form_id
+        ]
+    )
+    for record in selected_records:
         portable_id = record["portableFormId"]
         existing = load_versioned_form(
             forms_root / record["existingDirectory"], record["existingVersion"]

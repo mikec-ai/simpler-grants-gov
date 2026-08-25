@@ -19,9 +19,19 @@ def main() -> int:
         "--consumer-revision",
         help="Full lowercase 40-character Git SHA (defaults to local Git HEAD)",
     )
+    parser.add_argument(
+        "--form-id",
+        action="append",
+        dest="form_ids",
+        help="portable form id to compare (repeat for an exact subset)",
+    )
     args = parser.parse_args()
     try:
-        receipts = compare_cohort(args.cohort, consumer_revision=args.consumer_revision)
+        receipts = compare_cohort(
+            args.cohort,
+            consumer_revision=args.consumer_revision,
+            form_ids=args.form_ids,
+        )
         args.output_dir.mkdir(parents=True, exist_ok=True)
         for receipt in receipts:
             path = args.output_dir / f"{receipt['portableFormId']}.json"

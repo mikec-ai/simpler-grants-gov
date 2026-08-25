@@ -3,12 +3,15 @@
 from pathlib import Path
 
 WORKFLOW = Path(__file__).parents[1] / "workflows/ci-frontend-e2e.yml"
+API_WORKFLOW = Path(__file__).parents[1] / "workflows/ci-api.yml"
 
 
 def main() -> None:
     workflow = WORKFLOW.read_text()
+    api_workflow = API_WORKFLOW.read_text()
 
     assert workflow.count("portable_browser_form_ids:") == 2
+    assert "portable_form_ids: ${{ steps.classify.outputs.portable_form_ids }}" in workflow
     assert (
         "PORTABLE_BROWSER_FORM_IDS: ${{ inputs.portable_browser_form_ids || '' }}"
         in workflow
@@ -38,27 +41,39 @@ def main() -> None:
         in workflow
     )
     assert (
-        "shard: ${{ fromJSON(inputs.portable_browser_form_ids != '' "
+        "shard: ${{ fromJSON(needs.classify-form-spec-change.outputs.portable_form_ids != '' "
         "&& '[1]' || '[1,2,3,4]') }}" in workflow
     )
     assert (
-        "total_shards: ${{ fromJSON(inputs.portable_browser_form_ids != '' "
+        "total_shards: ${{ fromJSON(needs.classify-form-spec-change.outputs.portable_form_ids != '' "
         "&& '[1]' || '[4]') }}" in workflow
     )
     assert (
         workflow.count(
-            "do-firefox-install: ${{ (inputs.portable_browser_form_ids != '' "
+            "do-firefox-install: ${{ (needs.classify-form-spec-change.outputs.portable_form_ids != '' "
             "|| matrix.shard == 2) && 'true' || 'false' }}"
         )
         == 3
     )
     assert (
         workflow.count(
-            "do-webkit-install: ${{ (inputs.portable_browser_form_ids != '' "
+            "do-webkit-install: ${{ (needs.classify-form-spec-change.outputs.portable_form_ids != '' "
             "|| matrix.shard == 3) && 'true' || 'false' }}"
         )
         == 3
     )
+    assert (
+        "PORTABLE_BROWSER_FORM_IDS: "
+        "${{ needs.classify-form-spec-change.outputs.portable_form_ids }}" in workflow
+    )
+    assert 'echo "portable_form_ids=$PORTABLE_BROWSER_FORM_IDS"' in workflow
+    assert "tier: ${{ steps.classify.outputs.tier }}" in api_workflow
+    assert "needs.classify-form-spec-change.outputs.tier == 'portable_focused'" in api_workflow
+    assert (
+        "docker compose run -T --rm grants-api pytest "
+        "tests/src/form_schema/form_spec" in api_workflow
+    )
+    assert "python bin/build_portable_legacy_differential.py" in api_workflow
 
 
 if __name__ == "__main__":

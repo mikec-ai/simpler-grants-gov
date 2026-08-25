@@ -23,6 +23,9 @@ jobs:
     runs-on: ubuntu-22.04
     outputs:
       bank_only: ${{ steps.classify.outputs.bank_only }}
+      tier: ${{ steps.classify.outputs.tier }}
+      portable_form_ids: ${{ steps.classify.outputs.portable_form_ids }}
+      portable_test_files: ${{ steps.classify.outputs.portable_test_files }}
     steps:
       - uses: actions/checkout@v4
         if: ${{ github.event_name == 'pull_request' }}
@@ -38,6 +41,9 @@ jobs:
         run: |
           if [[ "$GITHUB_EVENT_NAME" != "pull_request" ]]; then
             echo "bank_only=false" >> "$GITHUB_OUTPUT"
+            echo "tier=full" >> "$GITHUB_OUTPUT"
+            echo "portable_form_ids=" >> "$GITHUB_OUTPUT"
+            echo "portable_test_files=" >> "$GITHUB_OUTPUT"
             echo "reason=non-PR invocation requires full CI" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -48,7 +54,7 @@ jobs:
 
   lint-test:
     needs: [classify-form-spec-change]
-    if: ${{ (inputs.skip_checks == null || inputs.skip_checks == false) && needs.classify-form-spec-change.outputs.bank_only != 'true' }}
+    if: ${{ (inputs.skip_checks == null || inputs.skip_checks == false) && needs.classify-form-spec-change.outputs.tier == 'full' }}
     name: API Lint, Format & Tests
     runs-on: ubuntu-22.04
     steps:
@@ -79,7 +85,7 @@ jobs:
         run: |
           docker compose run -T --rm grants-api \
             python bin/build_portable_legacy_differential.py \
-            --consumer-revision "${{ github.sha }}" \
+            --consumer-revision "${{ github.event.pull_request.head.sha || github.sha }}" \
             --output-dir /api/test-results/legacy-differential
 
       - name: Publish portable-versus-existing differential receipts
@@ -98,6 +104,70 @@ jobs:
       - name: Lightweight bank checks passed
         working-directory: ./
         run: echo "Artifact integrity, exact-XSD pins, and additive-selection checks passed."
+
+  portable-form-focused:
+    needs: [classify-form-spec-change]
+    if: ${{ needs.classify-form-spec-change.outputs.tier == 'portable_focused' }}
+    name: Focused Portable Form Checks
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Initialize the docker containers
+        run: make init
+
+      - name: Run format and Ruff checks
+        run: |
+          make format-check
+          make lint-ruff
+
+      - name: Run portable catalog and exact form tests
+        env:
+          PORTABLE_TEST_FILES: ${{ needs.classify-form-spec-change.outputs.portable_test_files }}
+        run: |
+          IFS=',' read -ra test_files <<< "$PORTABLE_TEST_FILES"
+          for path in "${test_files[@]}"; do
+            if [[ ! "$path" =~ ^api/tests/src/form_schema/form_spec/test_[a-z0-9_]+_portable(_xml|_xml_generation|_lifecycle)?\.py$ ]]; then
+              echo "invalid focused portable test path: $path" >&2
+              exit 2
+            fi
+          done
+          # The complete portable catalog suite catches cross-form invariants,
+          # including global-bundle provenance advancing independently of an
+          # individual form's pinned producer revision.
+          docker compose run -T --rm grants-api pytest tests/src/form_schema/form_spec
+
+      - name: Build exact portable-versus-existing differential receipts
+        id: differential
+        env:
+          PORTABLE_FORM_IDS: ${{ needs.classify-form-spec-change.outputs.portable_form_ids }}
+        run: |
+          mapfile -t cohort_ids < <(jq -r '.forms[].portableFormId' src/form_schema/form_spec/differential-cohort.json)
+          IFS=',' read -ra form_ids <<< "$PORTABLE_FORM_IDS"
+          differential_args=()
+          for form_id in "${form_ids[@]}"; do
+            if printf '%s\n' "${cohort_ids[@]}" | grep -Fxq "$form_id"; then
+              differential_args+=(--form-id "$form_id")
+            fi
+          done
+          if (( ${#differential_args[@]} == 0 )); then
+            echo "has_receipts=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          docker compose run -T --rm grants-api \
+            python bin/build_portable_legacy_differential.py \
+            --consumer-revision "${{ github.event.pull_request.head.sha || github.sha }}" \
+            --output-dir /api/test-results/legacy-differential \
+            "${differential_args[@]}"
+          echo "has_receipts=true" >> "$GITHUB_OUTPUT"
+
+      - name: Publish exact portable-versus-existing differential receipts
+        if: ${{ steps.differential.outputs.has_receipts == 'true' }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: portable-legacy-differential-${{ github.sha }}
+          path: api/test-results/legacy-differential/
+          if-no-files-found: error
 
   skip-checks:
     if: ${{ inputs.skip_checks != null && inputs.skip_checks == true }}
