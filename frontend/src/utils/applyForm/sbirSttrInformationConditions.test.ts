@@ -1,31 +1,21 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { ConditionalUi } from "src/types/applyForm/conditionalUiTypes";
-import type { UiSchema, UiSchemaNode } from "src/types/applyForm/types";
 import { resolveConditionalUiState } from "src/utils/applyForm/evaluateConditionalUi";
 
 const artifact = JSON.parse(
   readFileSync(
     resolve(
       __dirname,
-      "../../../../api/src/form_schema/form_spec/artifacts/forms/sbir-sttr-information/sgg/ui-schema.json",
+      "../../../../api/tests/src/form_schema/form_spec/sbir_sttr_projected_conditions.json",
     ),
     "utf8",
   ),
-) as UiSchema;
-
-const nodes = (schema: UiSchema): UiSchemaNode[] =>
-  schema.flatMap((node) => [
-    node,
-    ...(node.type === "section" || node.type === "fieldList"
-      ? nodes(node.children as UiSchema)
-      : []),
-  ]);
+) as Array<{ definition: string; conditional: ConditionalUi }>;
 
 const conditionFor = (definition: string): ConditionalUi => {
-  const field = nodes(artifact).find(
-    (candidate) =>
-      candidate.type === "field" && candidate.definition === definition,
+  const field = artifact.find(
+    (candidate) => candidate.definition === definition,
   );
   if (!field?.conditional) {
     throw new Error(
@@ -37,54 +27,54 @@ const conditionFor = (definition: string): ConditionalUi => {
 
 const cases = [
   [
-    "/properties/otherAgency",
+    "/properties/other_agency",
     { agency: { value: "Other" } },
     { agency: { value: "NIH" } },
   ],
   [
-    "/properties/federalSubcontractorNames",
-    { federalSubcontractsIncluded: { value: "Y: Yes" } },
-    { federalSubcontractsIncluded: { value: "N: No" } },
+    "/properties/federal_subcontractor_names",
+    { federal_subcontracts_included: { value: "Y: Yes" } },
+    { federal_subcontracts_included: { value: "N: No" } },
   ],
   [
-    "/properties/nonDomesticPerformanceExplanation",
-    { domesticPerformance: { value: "N: No" } },
-    { domesticPerformance: { value: "Y: Yes" } },
+    "/properties/non_domestic_performance_explanation",
+    { domestic_performance: { value: "N: No" } },
+    { domestic_performance: { value: "Y: Yes" } },
   ],
   [
-    "/properties/equivalentWorkFederalAgencies",
-    { equivalentFederalWork: { value: "Y: Yes" } },
-    { equivalentFederalWork: { value: "N: No" } },
+    "/properties/equivalent_work_federal_agencies",
+    { equivalent_federal_work: { value: "Y: Yes" } },
+    { equivalent_federal_work: { value: "N: No" } },
   ],
   [
-    "/properties/phaseIIAwardsReceived/properties/value",
-    { programType: { value: "SBIR" } },
-    { programType: { value: "STTR" } },
+    "/properties/phase_iiawards_received/properties/value",
+    { program_type: { value: "SBIR" } },
+    { program_type: { value: "STTR" } },
   ],
   [
-    "/properties/commercializationHistory",
-    { phaseIIAwardsReceived: { value: "Y: Yes" } },
-    { phaseIIAwardsReceived: { value: "N: No" } },
+    "/properties/commercialization_history",
+    { phase_iiawards_received: { value: "Y: Yes" } },
+    { phase_iiawards_received: { value: "N: No" } },
   ],
   [
-    "/properties/pdpiPrimaryEmployment/properties/value",
-    { programType: { value: "Both" } },
-    { programType: { value: "STTR" } },
+    "/properties/pdpi_primary_employment/properties/value",
+    { program_type: { value: "Both" } },
+    { program_type: { value: "STTR" } },
   ],
   [
-    "/properties/pdpiAppointmentAndEffort/properties/value",
-    { programType: { value: "STTR" } },
-    { programType: { value: "SBIR" } },
+    "/properties/pdpi_appointment_and_effort/properties/value",
+    { program_type: { value: "STTR" } },
+    { program_type: { value: "SBIR" } },
   ],
   [
-    "/properties/jointPerformancePercentage/properties/value",
-    { programType: { value: "Both" } },
-    { programType: { value: "SBIR" } },
+    "/properties/joint_performance_percentage/properties/value",
+    { program_type: { value: "Both" } },
+    { program_type: { value: "SBIR" } },
   ],
   [
-    "/properties/nonprofitResearchPartnerUei",
-    { programType: { value: "STTR" } },
-    { programType: { value: "SBIR" } },
+    "/properties/nonprofit_research_partner_uei",
+    { program_type: { value: "STTR" } },
+    { program_type: { value: "SBIR" } },
   ],
 ] as const;
 

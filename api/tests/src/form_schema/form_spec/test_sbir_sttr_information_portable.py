@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import uuid
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 from jsonschema import Draft202012Validator
@@ -13,8 +15,11 @@ from src.form_schema.form_spec.bank import ARTIFACTS
 from src.form_schema.form_spec.loader import _load_banked_form, load_form
 from src.form_schema.form_spec.preview import build_preview_form, preview_form_id
 from src.form_schema.form_spec.runtime_identity import runtime_identity
+from src.form_schema.rule_processing.json_rule_context import JsonRuleConfig, JsonRuleContext
+from src.form_schema.rule_processing.json_rule_processor import process_rule_schema_for_context
 from src.services.xml_generation.models import XMLGenerationRequest
 from src.services.xml_generation.service import XMLGenerationService
+from src.services.xml_generation.utils.attachment_mapping import AttachmentInfo
 from src.services.xml_generation.validation.xsd_validator import XSDValidator
 
 FORM_ID = "sbir-sttr-information"
@@ -22,6 +27,7 @@ FORM_ROOT = ARTIFACTS / "forms" / FORM_ID
 XSD = Path("src/services/xml_generation/xsds/SBIR_STTR_Information_3_0-V3.0.xsd")
 XSD_DIRECTORY = XSD.parent
 XSD_SHA256 = "32ed46a450c1b77d9ef64ebf2a4086ab90b076aa2d3cdfedfab8c00324adcebf"
+PROJECTED_CONDITIONS = Path(__file__).with_name("sbir_sttr_projected_conditions.json")
 COMPILED_PATHS = {
     "otherAgency",
     "agencyTopicSubtopic",
@@ -49,9 +55,23 @@ def _read(relative: str) -> dict:
 
 
 def _resolved_schema() -> dict:
-    # The source-authored portable contract intentionally retains canonical paths;
-    # consumer projection separately normalizes those paths for SGG runtime use.
-    return _read("schema.json")
+    return _load_banked_form(FORM_ID, project_xml=False).form_json_schema
+
+
+def _projected_conditions() -> list[dict]:
+    projected = _load_banked_form(FORM_ID, project_xml=False)
+
+    def walk(nodes: list[dict]):
+        for node in nodes:
+            yield node
+            if node.get("type") in {"section", "fieldList"}:
+                yield from walk(node.get("children", []))
+
+    return [
+        {"definition": node["definition"], "conditional": node["conditional"]}
+        for node in walk(projected.form_ui_schema)
+        if node.get("conditional") is not None
+    ]
 
 
 def _conditional_contract(schema: dict, required: set[str]) -> dict:
@@ -109,59 +129,63 @@ def test_exact_package_is_preview_only_and_preserves_review_boundaries() -> None
         load_form(FORM_ID)
 
 
+def test_frontend_condition_fixture_is_exact_consumer_adapter_output() -> None:
+    assert json.loads(PROJECTED_CONDITIONS.read_text()) == _projected_conditions()
+
+
 @pytest.mark.parametrize(
     ("required", "active", "inactive"),
     [
-        ({"otherAgency"}, {"agency": {"value": "Other"}}, {"agency": {"value": "NIH"}}),
+        ({"other_agency"}, {"agency": {"value": "Other"}}, {"agency": {"value": "NIH"}}),
         (
-            {"agencyTopicSubtopic"},
+            {"agency_topic_subtopic"},
             {"agency": {"value": "DOE"}},
             {"agency": {"value": "NIH"}},
         ),
         (
-            {"federalSubcontractorNames"},
-            {"federalSubcontractsIncluded": {"value": "Y: Yes"}},
-            {"federalSubcontractsIncluded": {"value": "N: No"}},
+            {"federal_subcontractor_names"},
+            {"federal_subcontracts_included": {"value": "Y: Yes"}},
+            {"federal_subcontracts_included": {"value": "N: No"}},
         ),
         (
-            {"nonDomesticPerformanceExplanation"},
-            {"domesticPerformance": {"value": "N: No"}},
-            {"domesticPerformance": {"value": "Y: Yes"}},
+            {"non_domestic_performance_explanation"},
+            {"domestic_performance": {"value": "N: No"}},
+            {"domestic_performance": {"value": "Y: Yes"}},
         ),
         (
-            {"equivalentWorkFederalAgencies"},
-            {"equivalentFederalWork": {"value": "Y: Yes"}},
-            {"equivalentFederalWork": {"value": "N: No"}},
-        ),
-        (
-            {
-                "phaseIIAwardsReceived",
-                "pdpiPrimaryEmployment",
-                "pdpiAppointmentAndEffort",
-                "jointPerformancePercentage",
-                "nonprofitResearchPartnerUei",
-            },
-            {"programType": {"value": "Both"}},
-            {"programType": {"value": "Other"}},
-        ),
-        (
-            {"phaseIIAwardsReceived", "pdpiPrimaryEmployment"},
-            {"programType": {"value": "SBIR"}},
-            {"programType": {"value": "Other"}},
+            {"equivalent_work_federal_agencies"},
+            {"equivalent_federal_work": {"value": "Y: Yes"}},
+            {"equivalent_federal_work": {"value": "N: No"}},
         ),
         (
             {
-                "pdpiAppointmentAndEffort",
-                "jointPerformancePercentage",
-                "nonprofitResearchPartnerUei",
+                "phase_iiawards_received",
+                "pdpi_primary_employment",
+                "pdpi_appointment_and_effort",
+                "joint_performance_percentage",
+                "nonprofit_research_partner_uei",
             },
-            {"programType": {"value": "STTR"}},
-            {"programType": {"value": "Other"}},
+            {"program_type": {"value": "Both"}},
+            {"program_type": {"value": "Other"}},
         ),
         (
-            {"commercializationHistory"},
-            {"phaseIIAwardsReceived": {"value": "Y: Yes"}},
-            {"phaseIIAwardsReceived": {"value": "N: No"}},
+            {"phase_iiawards_received", "pdpi_primary_employment"},
+            {"program_type": {"value": "SBIR"}},
+            {"program_type": {"value": "Other"}},
+        ),
+        (
+            {
+                "pdpi_appointment_and_effort",
+                "joint_performance_percentage",
+                "nonprofit_research_partner_uei",
+            },
+            {"program_type": {"value": "STTR"}},
+            {"program_type": {"value": "Other"}},
+        ),
+        (
+            {"commercialization_history"},
+            {"phase_iiawards_received": {"value": "Y: Yes"}},
+            {"phase_iiawards_received": {"value": "N: No"}},
         ),
     ],
 )
@@ -199,6 +223,79 @@ def test_three_distinct_attachments_use_the_shared_attachment_mechanism() -> Non
         "uri": "https://apply07.grants.gov/apply/forms/schemas/SBIR_STTR_Information_3_0-V3.0.xsd",
         "sha256": XSD_SHA256,
     }
+
+
+def test_all_three_projected_attachments_execute_shared_validation_and_xml() -> None:
+    attachment_ids = {
+        "non_domestic_performance_explanation": "11111111-1111-1111-1111-111111111111",
+        "commercialization_plan": "22222222-2222-2222-2222-222222222222",
+        "commercialization_history": "33333333-3333-3333-3333-333333333333",
+    }
+    projected = _load_banked_form(FORM_ID, project_xml=True)
+    response = {
+        "agency": {"value": "HHS"},
+        "sbc_control_id": "123456789",
+        "program_type": {"value": "SBIR"},
+        "application_type": {"value": "Phase II"},
+        "small_business_eligibility": {"value": "Y: Yes"},
+        "number_of_employees": 42,
+        "vcoc_ownership": {"value": "N: No"},
+        "faculty_student_ownership": {"value": "N: No"},
+        "federal_subcontracts_included": {"value": "N: No"},
+        "hubzone_location": {"value": "N: No"},
+        "domestic_performance": {"value": "N: No"},
+        "equivalent_federal_work": {"value": "N: No"},
+        "disclosure_permission": {"value": "Y: Yes"},
+        "taba_funding_request": {"value": "N: No"},
+        "phase_iiawards_received": {"value": "Y: Yes"},
+        "pdpi_primary_employment": {"value": "Y: Yes"},
+        **attachment_ids,
+    }
+    application = SimpleNamespace(
+        application_attachments=[
+            SimpleNamespace(application_attachment_id=uuid.UUID(attachment_id))
+            for attachment_id in attachment_ids.values()
+        ]
+    )
+    application_form = SimpleNamespace(
+        application_response=response,
+        application_form_id=uuid.uuid4(),
+        form_id=preview_form_id(FORM_ID),
+        application=application,
+        form=SimpleNamespace(form_rule_schema=projected.form_rule_schema),
+    )
+    context = JsonRuleContext(
+        application_form,
+        JsonRuleConfig(do_pre_population=False, do_post_population=False),
+    )
+
+    process_rule_schema_for_context(context)
+
+    assert context.validation_issues == []
+    assert context.attachment_ids == set(attachment_ids.values())
+
+    generated = XMLGenerationService().generate_xml(
+        XMLGenerationRequest(
+            application_data=context.json_data,
+            transform_config=projected.json_to_xml_schema,
+            attachment_mapping={
+                attachment_id: AttachmentInfo(
+                    filename=f"{field}.pdf",
+                    mime_type="application/pdf",
+                    file_location=f"./attachments/{field}.pdf",
+                    hash_value="YWJjZA==",
+                )
+                for field, attachment_id in attachment_ids.items()
+            },
+        )
+    )
+
+    assert generated.success, generated.error_message
+    assert generated.xml_data is not None
+    for field in attachment_ids:
+        assert f"<att:FileName>{field}.pdf</att:FileName>" in generated.xml_data
+    validation = XSDValidator(XSD_DIRECTORY).validate_xml_for_form(generated.xml_data, XSD.stem)
+    assert validation["valid"], validation
 
 
 def test_representative_sttr_response_emits_exact_xsd_valid_xml() -> None:
