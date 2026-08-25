@@ -1,0 +1,20 @@
+{
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "id": "phs-additional-indirect-costs",
+    "legacyFormId": 739,
+    "formName": "PHS Additional Indirect Costs",
+    "shortFormName": "PHS_Additional_IndirectCosts_2_0",
+    "formVersion": "2.0",
+    "agencyCode": "GRANTS_GOV",
+    "ombNumber": "0925-0001"
+  },
+  "artifacts": {
+    "schema.json": "generated",
+    "ui.json": "generated",
+    "sgg/ui-schema.json": "generated",
+    "sgg/rule-schema.json": "generated",
+    "targets/grants-gov-xml.json": "generated",
+    "evidence.json": "passthrough"
+  }
+}

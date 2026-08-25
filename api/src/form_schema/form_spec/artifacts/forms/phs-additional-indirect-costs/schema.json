@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phs-additional-indirect-costs/schema.json",
+  "type": "object",
+  "properties": {
+    "budgetYears": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/budget/additional-indirect-costs/period/schema.json",
+        "properties": {
+          "indirectCosts": {
+            "properties": {
+              "totalIndirectCosts": {
+                "readOnly": true
+              }
+            }
+          },
+          "budgetPeriodEndDate": {
+            "description": "End Date cannot be before Start Date."
+          }
+        }
+      },
+      "minItems": 1,
+      "maxItems": 10,
+      "title": "Budget Period",
+      "allOf": [
+        {
+          "items": {
+            "properties": {
+              "indirectCosts": {
+                "properties": {
+                  "totalIndirectCosts": {
+                    "readOnly": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "budgetJustificationAttachment": {
+      "$ref": "../../question-bank/budget/additional-indirect-costs/justification/schema.json",
+      "title": "Budget Justification (Only attach one file.)"
+    },
+    "budgetSummary": {
+      "$ref": "../../question-bank/budget/additional-indirect-costs/cumulative-summary/schema.json",
+      "title": "Cumulative Budget",
+      "allOf": [
+        {
+          "properties": {
+            "cumulativeTotalFundsRequestedIndirectCost": {
+              "readOnly": true
+            }
+          }
+        }
+      ],
+      "properties": {
+        "cumulativeTotalFundsRequestedIndirectCost": {
+          "readOnly": true
+        }
+      }
+    }
+  },
+  "required": [
+    "budgetYears"
+  ],
+  "description": "PHS Additional Indirect Costs, Grants.gov form version 2.0."
+}

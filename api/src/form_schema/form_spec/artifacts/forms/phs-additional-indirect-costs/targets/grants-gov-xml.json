@@ -1,0 +1,122 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "phs-additional-indirect-costs",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS_Additional_IndirectCosts_2_0-V2.0.xsd",
+    "sha256": "ba38a3500b025b0414edbcdbffe80dc12165ceb7a7fb657012d450b2e9682b66"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/PHS_Additional_IndirectCosts_2_0-V2.0",
+    "PHS_Additional_IndirectCosts_2_0": "http://apply.grants.gov/forms/PHS_Additional_IndirectCosts_2_0-V2.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0"
+  },
+  "root": {
+    "element": "PHS_Additional_IndirectCosts_2_0",
+    "namespacePrefix": "PHS_Additional_IndirectCosts_2_0",
+    "attributes": {
+      "FormVersion": "2.0"
+    }
+  },
+  "attachment": {
+    "fields": {
+      "fileName": {
+        "element": "FileName",
+        "namespace": "att"
+      },
+      "mimeType": {
+        "element": "MimeType",
+        "namespace": "att"
+      },
+      "fileLocation": {
+        "element": "FileLocation",
+        "namespace": "att"
+      },
+      "hashValue": {
+        "element": "HashValue",
+        "namespace": "glob"
+      }
+    }
+  },
+  "mapping": {
+    "fields": {
+      "budgetYears": {
+        "element": "BudgetYear",
+        "kind": "array",
+        "items": {
+          "fields": {
+            "samUei": {
+              "element": "SAMUEI",
+              "kind": "value"
+            },
+            "organizationName": {
+              "element": "OrganizationName",
+              "kind": "value"
+            },
+            "budgetType": {
+              "element": "BudgetType",
+              "kind": "value"
+            },
+            "budgetPeriodStartDate": {
+              "element": "BudgetPeriodStartDate",
+              "kind": "value"
+            },
+            "budgetPeriodEndDate": {
+              "element": "BudgetPeriodEndDate",
+              "kind": "value"
+            },
+            "indirectCosts": {
+              "element": "IndirectCosts",
+              "kind": "object",
+              "fields": {
+                "indirectCost": {
+                  "element": "IndirectCost",
+                  "kind": "array",
+                  "items": {
+                    "fields": {
+                      "costType": {
+                        "element": "CostType",
+                        "kind": "value"
+                      },
+                      "rate": {
+                        "element": "Rate",
+                        "kind": "value"
+                      },
+                      "base": {
+                        "element": "Base",
+                        "kind": "value"
+                      },
+                      "fundRequested": {
+                        "element": "FundRequested",
+                        "kind": "value"
+                      }
+                    }
+                  }
+                },
+                "totalIndirectCosts": {
+                  "element": "TotalIndirectCosts",
+                  "kind": "value"
+                }
+              }
+            }
+          }
+        }
+      },
+      "budgetJustificationAttachment": {
+        "element": "BudgetJustificationAttachment",
+        "kind": "attachment"
+      },
+      "budgetSummary": {
+        "element": "BudgetSummary",
+        "kind": "object",
+        "fields": {
+          "cumulativeTotalFundsRequestedIndirectCost": {
+            "element": "CumulativeTotalFundsRequestedIndirectCost",
+            "kind": "value"
+          }
+        }
+      }
+    }
+  }
+}
