@@ -204,6 +204,48 @@ def test_operational_editability_traverses_composed_object_schemas() -> None:
     }
 
 
+@pytest.mark.parametrize("keyword", ["allOf", "anyOf", "oneOf"])
+def test_operational_editability_combines_direct_and_parallel_composed_paths(
+    keyword: str,
+) -> None:
+    behavior = ProjectedOperationalBehavior(
+        canonical_path="/person/name",
+        path="/person/name",
+        operation_kind="prefill",
+        editability="protected",
+        execution_policy=ProjectedExecutionPolicy(
+            trigger="source-response-updated",
+            write_policy="until-target-user-modified",
+            missing_source_policy="skip",
+        ),
+        value_source=ProjectedCanonicalValueSource(
+            form_id="source",
+            runtime_form_id=RR_SF424_RUNTIME_ID,
+            canonical_path="/source",
+            path="/source",
+        ),
+        target_selection=None,
+    )
+    schema = {
+        "type": "object",
+        "properties": {"person": {"type": "object", "title": "Person"}},
+        keyword: [
+            {
+                "properties": {
+                    "person": {
+                        "type": "object",
+                        "properties": {"name": {"type": "string"}},
+                    }
+                }
+            }
+        ],
+    }
+
+    projected = apply_operational_editability(schema, (behavior,))
+
+    assert projected[keyword][0]["properties"]["person"]["properties"]["name"]["readOnly"] is True
+
+
 def test_operational_editability_fails_closed_for_a_missing_target() -> None:
     behavior = ProjectedOperationalBehavior(
         canonical_path="/missing",

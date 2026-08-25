@@ -17,7 +17,7 @@ jest.mock("@trussworks/react-uswds", () => {
         onChange,
         disabled,
       }: {
-        options: { value: string; label: string }[];
+        options: { value: string | number; label: string }[];
         onChange: (value?: string) => void;
         disabled?: boolean;
       },
@@ -79,5 +79,31 @@ describe("MultiSelectWidget", () => {
       "White",
     );
     expect(onChange).toHaveBeenLastCalledWith(["White"]);
+  });
+
+  it("preserves non-string enum values when synchronizing ordinary selections", async () => {
+    const user = userEvent.setup();
+    const onChange = jest.fn();
+    render(
+      <MultiSelectWidget
+        id="numbers"
+        schema={{ type: "array", title: "Numbers" }}
+        value={[]}
+        options={{
+          enumOptions: [
+            { value: 1, label: "One" },
+            { value: 2, label: "Two" },
+          ],
+        }}
+        onChange={onChange}
+      />,
+    );
+
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: "choices" }),
+      "2",
+    );
+
+    expect(onChange).toHaveBeenLastCalledWith([2]);
   });
 });

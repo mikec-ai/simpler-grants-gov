@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import dataclasses
 import copy
+import dataclasses
 import uuid
 from collections.abc import Callable
 from typing import Any, Literal, cast
@@ -87,16 +87,15 @@ def _schema_children(node: dict[str, Any], token: str) -> list[dict[str, Any]]:
     else:
         properties = node.get("properties")
         direct = properties.get(token) if isinstance(properties, dict) else None
-    if isinstance(direct, dict):
-        return [direct]
-
-    return [
+    direct_children = [direct] if isinstance(direct, dict) else []
+    composed_children = [
         child
         for keyword in ("allOf", "anyOf", "oneOf")
         for member in node.get(keyword, [])
         if isinstance(member, dict)
         for child in _schema_children(member, token)
     ]
+    return [*direct_children, *composed_children]
 
 
 def _tokens(pointer: str) -> list[str]:
