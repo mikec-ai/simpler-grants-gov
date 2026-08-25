@@ -136,35 +136,39 @@ def test_exact_dat_backed_calculations_execute_through_generic_rules() -> None:
 
 
 def test_dates_only_period_does_not_materialize_optional_cost_or_summary_branches() -> None:
-    response = _apply_rules({
-        "budget_years": [
-            {
-                "budget_period_start_date": "2026-01-01",
-                "budget_period_end_date": "2026-12-31",
-            }
-        ]
-    })
+    response = _apply_rules(
+        {
+            "budget_years": [
+                {
+                    "budget_period_start_date": "2026-01-01",
+                    "budget_period_end_date": "2026-12-31",
+                }
+            ]
+        }
+    )
 
     assert "indirect_costs" not in response["budget_years"][0]
     assert "budget_summary" not in response
 
 
 def test_cumulative_total_depends_only_on_materialized_period_totals() -> None:
-    response = _apply_rules({
-        "budget_years": [
-            {
-                "budget_period_start_date": "2026-01-01",
-                "budget_period_end_date": "2026-12-31",
-                "indirect_costs": {
-                    "indirect_cost": [{"cost_type": "MTDC", "fund_requested": "100.00"}]
+    response = _apply_rules(
+        {
+            "budget_years": [
+                {
+                    "budget_period_start_date": "2026-01-01",
+                    "budget_period_end_date": "2026-12-31",
+                    "indirect_costs": {
+                        "indirect_cost": [{"cost_type": "MTDC", "fund_requested": "100.00"}]
+                    },
                 },
-            },
-            {
-                "budget_period_start_date": "2027-01-01",
-                "budget_period_end_date": "2027-12-31",
-            },
-        ]
-    })
+                {
+                    "budget_period_start_date": "2027-01-01",
+                    "budget_period_end_date": "2027-12-31",
+                },
+            ]
+        }
+    )
 
     assert response["budget_years"][0]["indirect_costs"]["total_indirect_costs"] == ("100.00")
     assert "indirect_costs" not in response["budget_years"][1]
