@@ -4,7 +4,15 @@ on:
   pull_request:
     paths:
       - frontend/**
+      - "!frontend/tests/**"
+      - "!frontend/**/*.test.ts"
+      - "!frontend/**/*.test.tsx"
+      - "!frontend/**/__fixtures__/**"
       - .github/workflows/ci-frontend-a11y.yml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:

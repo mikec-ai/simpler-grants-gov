@@ -16,6 +16,10 @@ defaults:
   run:
     working-directory: ./api
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   classify-form-spec-change:
     if: ${{ inputs.skip_checks == null || inputs.skip_checks == false }}
