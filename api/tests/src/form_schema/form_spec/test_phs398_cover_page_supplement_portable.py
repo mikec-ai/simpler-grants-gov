@@ -34,10 +34,9 @@ GLOBAL_LIBRARY_NAMESPACE = "http://apply.grants.gov/system/GlobalLibrary-V2.0"
 ATTACHMENT_NAMESPACE = "http://apply.grants.gov/system/Attachments-V1.0"
 XSD_DIRECTORY = Path(__file__).parents[4] / "src/services/xml_generation/xsds"
 FORM_XSD = "PHS398_CoverPageSupplement_5_0-V5.0.xsd"
-PROJECTED_UI_FIXTURE = (
-    Path(__file__).parents[5]
-    / "frontend/src/utils/applyForm/__fixtures__/phs398-cover-page-supplement-ui-schema.json"
-)
+# Canonical JSON digest of the reviewed UI projection from consumer PR #124.
+# Keep the parity oracle API-owned so API-only test images do not mount frontend files.
+PROJECTED_UI_CANONICAL_SHA256 = "cbdb1a468bde9ab6ec765fb13ff1755941cf472c0db1f1f7c0b42e6f91749be4"
 PINNED_XSDS = {
     FORM_XSD: "ec538c9bb5fd233c36ac73ca567d31e60779ee3df2f3c7b456d9395b3ec2dc26",
     "Attachments-V1.0.xsd": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d",
@@ -211,7 +210,10 @@ def test_cover_page_preview_preserves_compiled_conditions_and_open_gates() -> No
         "human_fetal_tissue",
     ]
     assert len(conditionals) == 13
-    assert json.loads(PROJECTED_UI_FIXTURE.read_text()) == projected.form_ui_schema
+    projected_ui_canonical = json.dumps(
+        projected.form_ui_schema, sort_keys=True, separators=(",", ":")
+    ).encode()
+    assert hashlib.sha256(projected_ui_canonical).hexdigest() == PROJECTED_UI_CANONICAL_SHA256
     assert form.form_ui_schema == projected.form_ui_schema
     assert all(rule["then"] == {"interaction": "enabled"} for rule in conditionals)
     assert all(rule["otherwise"] == {"interaction": "disabled"} for rule in conditionals)
