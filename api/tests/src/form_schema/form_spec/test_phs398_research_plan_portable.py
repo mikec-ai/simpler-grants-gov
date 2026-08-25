@@ -22,14 +22,14 @@ from src.form_schema.form_spec.bank import ARTIFACTS
 from src.form_schema.form_spec.loader import _load_banked_form
 from src.form_schema.form_spec.preview import build_preview_form
 from src.form_schema.form_spec.registrations import REGISTRATIONS
-from src.services.xml_generation.models import XMLGenerationRequest
-from src.services.xml_generation.service import XMLGenerationService
-from src.services.xml_generation.utils.attachment_mapping import AttachmentInfo
-from src.services.xml_generation.validation.xsd_validator import XSDValidator
 from src.services.applications.application_validation import (
     ApplicationAction,
     validate_application_form,
 )
+from src.services.xml_generation.models import XMLGenerationRequest
+from src.services.xml_generation.service import XMLGenerationService
+from src.services.xml_generation.utils.attachment_mapping import AttachmentInfo
+from src.services.xml_generation.validation.xsd_validator import XSDValidator
 
 FORM_ID = "phs398-research-plan"
 FORM_ROOT = ARTIFACTS / "forms" / FORM_ID
