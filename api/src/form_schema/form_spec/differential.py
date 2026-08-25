@@ -30,6 +30,12 @@ LEDGER_SOURCE_PATH = "parity/legacy-deltas.v1.json"
 LEDGER_PATH = ARTIFACTS / "governance" / LEDGER_SOURCE_PATH
 LEDGER_SCHEMA_SOURCE_PATH = "contract/v1/parity-delta-ledger.schema.json"
 LEDGER_SCHEMA_PATH = ARTIFACTS / "governance" / LEDGER_SCHEMA_SOURCE_PATH
+DECISION_CONTRACT = "grants-form-parity-decision/v1"
+DECISION_RECEIPT_CONTRACT = "grants-form-parity-decision-verification/v1"
+DECISION_SCHEMA_SOURCE_PATH = "contract/v1/parity-decision-artifact.schema.json"
+DECISION_SCHEMA_PATH = ARTIFACTS / "governance" / DECISION_SCHEMA_SOURCE_PATH
+DECISION_RECEIPT_SCHEMA_SOURCE_PATH = "contract/v1/parity-decision-verification.schema.json"
+DECISION_RECEIPT_SCHEMA_PATH = ARTIFACTS / "governance" / DECISION_RECEIPT_SCHEMA_SOURCE_PATH
 FIELD_KEYWORDS = (
     "type",
     "format",
@@ -354,6 +360,10 @@ def _load_delta_ledger(
     manifest_path: Path = ARTIFACT_MANIFEST,
     schema_path: Path = LEDGER_SCHEMA_PATH,
     receipt_path: Path | None = None,
+    decision_receipt_path: Path | None = None,
+    decision_artifact_root: Path | None = None,
+    decision_schema_path: Path = DECISION_SCHEMA_PATH,
+    decision_receipt_schema_path: Path = DECISION_RECEIPT_SCHEMA_PATH,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     selection = json.loads(manifest_path.read_text())
     pinned = {row.get("path"): row for row in selection.get("files", [])}
@@ -362,6 +372,8 @@ def _load_delta_ledger(
         source_record = pinned.get(source_path)
         if source_record is None:
             raise ValueError(f"portable artifact selection does not pin {source_path}")
+        if not local_path.is_file():
+            raise ValueError(f"pinned portable artifact is missing: {source_path}")
         payload = local_path.read_bytes()
         if len(payload) != source_record.get("size") or hashlib.sha256(
             payload
@@ -410,12 +422,73 @@ def _load_delta_ledger(
         ):
             raise ValueError("parity delta evidence verification receipt has invalid files")
         verified_paths[evidence_path] = digest
+    verified_decisions: dict[tuple[str, str, str], dict[str, Any]] = {}
+    decision_receipt_record: dict[str, Any] | None = None
+    decision_verification = ledger.get("decisionVerification")
+    if decision_verification is not None:
+        decision_receipt_source_path = decision_verification["receipt"]
+        resolved_decision_receipt_path = (
+            decision_receipt_path or ARTIFACTS / "governance" / decision_receipt_source_path
+        )
+        decision_receipt_payload, decision_receipt_record = verified_payload(
+            decision_receipt_source_path, resolved_decision_receipt_path
+        )
+        decision_receipt_schema_payload, _ = verified_payload(
+            DECISION_RECEIPT_SCHEMA_SOURCE_PATH, decision_receipt_schema_path
+        )
+        decision_schema_payload, _ = verified_payload(
+            DECISION_SCHEMA_SOURCE_PATH, decision_schema_path
+        )
+        decision_receipt = json.loads(decision_receipt_payload)
+        decision_receipt_schema = json.loads(decision_receipt_schema_payload)
+        decision_schema = json.loads(decision_schema_payload)
+        receipt_errors = sorted(
+            jsonschema.Draft202012Validator(
+                decision_receipt_schema,
+                format_checker=jsonschema.Draft202012Validator.FORMAT_CHECKER,
+            ).iter_errors(decision_receipt),
+            key=lambda error: list(error.absolute_path),
+        )
+        if receipt_errors:
+            first = receipt_errors[0]
+            location = "/" + "/".join(str(step) for step in first.absolute_path)
+            raise ValueError(
+                f"parity decision verification contract failed at {location}: {first.message}"
+            )
+        if decision_receipt.get("contract") != DECISION_RECEIPT_CONTRACT:
+            raise ValueError("unsupported parity decision verification receipt")
+        artifact_root = decision_artifact_root or ARTIFACTS / "governance"
+        for entry in decision_receipt["artifacts"]:
+            key = (entry["repository"], entry["revision"], entry["path"])
+            if key in verified_decisions:
+                raise ValueError("parity decision verification receipt reuses an artifact pin")
+            artifact_payload, _ = verified_payload(entry["path"], artifact_root / entry["path"])
+            if hashlib.sha256(artifact_payload).hexdigest() != entry["sha256"]:
+                raise ValueError(f"verified decision artifact digest mismatch: {entry['path']}")
+            artifact = json.loads(artifact_payload)
+            artifact_errors = sorted(
+                jsonschema.Draft202012Validator(
+                    decision_schema,
+                    format_checker=jsonschema.Draft202012Validator.FORMAT_CHECKER,
+                ).iter_errors(artifact),
+                key=lambda error: list(error.absolute_path),
+            )
+            if artifact_errors:
+                first = artifact_errors[0]
+                location = "/" + "/".join(str(step) for step in first.absolute_path)
+                raise ValueError(
+                    f"parity decision artifact contract failed at {location}: {first.message}"
+                )
+            if artifact.get("contract") != DECISION_CONTRACT:
+                raise ValueError("unsupported parity decision artifact")
+            verified_decisions[key] = artifact
     records = ledger.get("records")
     if not isinstance(records, list):
         raise ValueError("parity delta ledger records must be an array")
     exact_targets: set[tuple[str, str, str]] = set()
     ids: set[str] = set()
     used_verified_paths: set[str] = set()
+    used_decisions: set[tuple[str, str, str]] = set()
     for record in records:
         target = record.get("target", {}) if isinstance(record, dict) else {}
         form_id = record.get("formId")
@@ -471,9 +544,42 @@ def _load_delta_ledger(
         ):
             raise ValueError(f"{record_id} accepted review lacks durable decision evidence")
         if review.get("status") == "accepted":
-            raise ValueError(
-                f"{record_id} accepted review requires an independent decision-artifact receipt"
+            decision_evidence = review["decisionEvidence"]
+            if len(decision_evidence) != 1:
+                raise ValueError(
+                    f"{record_id} accepted review requires exactly one decision artifact"
+                )
+            decision_reference = decision_evidence[0]
+            decision_key = (
+                decision_reference.get("repository"),
+                decision_reference.get("revision"),
+                decision_reference.get("path"),
             )
+            if decision_key in used_decisions:
+                raise ValueError(f"{record_id} reuses a decision artifact")
+            artifact = verified_decisions.get(decision_key)
+            if artifact is None:
+                raise ValueError(
+                    f"{record_id} decision evidence is absent from the offline verification receipt"
+                )
+            expected = {
+                "id": decision_reference.get("id"),
+                "ledgerRecordId": record_id,
+                "formId": form_id,
+                "target": target,
+                "classification": record.get("classification"),
+                "decision": "accepted",
+                "reviewer": review.get("reviewer"),
+                "reviewedAt": review.get("reviewedAt"),
+            }
+            stale = sorted(key for key, value in expected.items() if artifact.get(key) != value)
+            if stale:
+                raise ValueError(
+                    f"{record_id} decision artifact is stale for ledger fields: {stale}"
+                )
+            used_decisions.add(decision_key)
+        elif review.get("decisionEvidence"):
+            raise ValueError(f"{record_id} non-accepted review cannot claim decision evidence")
         if review.get("status") not in {"proposed", "accepted", "rejected"}:
             raise ValueError(f"{record_id} has unsupported review status")
         if (
@@ -484,6 +590,9 @@ def _load_delta_ledger(
     unused_receipt_paths = sorted(set(verified_paths) - used_verified_paths)
     if unused_receipt_paths:
         raise ValueError(f"parity delta evidence receipt has unused paths: {unused_receipt_paths}")
+    unused_decisions = sorted(set(verified_decisions) - used_decisions)
+    if unused_decisions:
+        raise ValueError(f"parity decision receipt has unused artifacts: {unused_decisions}")
     source = {
         "repository": selection["source"]["repository"],
         "revision": selection["source"]["revision"],
@@ -491,6 +600,8 @@ def _load_delta_ledger(
         "schemaSha256": schema_record["sha256"],
         "evidenceReceiptSha256": receipt_record["sha256"],
     }
+    if decision_receipt_record is not None:
+        source["decisionReceiptSha256"] = decision_receipt_record["sha256"]
     return ledger, source
 
 

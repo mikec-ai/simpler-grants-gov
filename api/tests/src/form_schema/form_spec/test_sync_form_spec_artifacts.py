@@ -11,11 +11,26 @@ import pytest
 from bin.sync_form_spec_artifacts import select_artifacts, verify_selected_xsds, write_selection
 
 
-def _bundle(path, files):
-    files = {
+def _bundle(path, files, *, with_decision=True):
+    governance = {
         "contract/v1/parity-delta-ledger.schema.json": b"{}",
         "parity/consumer-evidence-verification.v1.json": b"{}",
-        "parity/legacy-deltas.v1.json": b"{}",
+        "parity/legacy-deltas.v1.json": (
+            b'{"decisionVerification":{"receipt":"parity/decision-verification.v1.json"}}'
+            if with_decision
+            else b"{}"
+        ),
+    }
+    if with_decision:
+        governance.update(
+            {
+                "contract/v1/parity-decision-artifact.schema.json": b"{}",
+                "contract/v1/parity-decision-verification.schema.json": b"{}",
+                "parity/decision-verification.v1.json": b'{"artifacts":[]}',
+            }
+        )
+    files = {
+        **governance,
         **files,
     }
     records = [
@@ -73,7 +88,10 @@ def test_selects_only_runtime_files_and_transitive_questions(tmp_path):
         "question-bank/a/schema.json",
         "question-bank/b/schema.json",
         "governance/contract/v1/parity-delta-ledger.schema.json",
+        "governance/contract/v1/parity-decision-artifact.schema.json",
+        "governance/contract/v1/parity-decision-verification.schema.json",
         "governance/parity/consumer-evidence-verification.v1.json",
+        "governance/parity/decision-verification.v1.json",
         "governance/parity/legacy-deltas.v1.json",
     }
     assert manifest["source"]["revision"] == "abc123"
@@ -84,6 +102,79 @@ def test_selects_only_runtime_files_and_transitive_questions(tmp_path):
     assert (target / "question-bank/b/schema.json").is_file()
     assert (target / "governance/parity/legacy-deltas.v1.json").is_file()
     assert not (target / "question-bank/unrelated/schema.json").exists()
+
+
+def test_selects_every_offline_verified_decision_artifact(tmp_path):
+    decision_path = "parity/decisions/example-acceptance.json"
+    files = {
+        "dist/forms/example/manifest.json": b"{}",
+        "dist/forms/example/evidence.json": b"{}",
+        "dist/forms/example/schema.json": b"{}",
+        "dist/forms/example/sgg/rule-schema.json": b"{}",
+        "dist/forms/example/sgg/ui-schema.json": b"[]",
+        "parity/decision-verification.v1.json": json.dumps(
+            {"artifacts": [{"path": decision_path}]}
+        ).encode(),
+        decision_path: b'{"decision":"accepted"}',
+    }
+    bundle = tmp_path / "bundle.tar.gz"
+    _bundle(bundle, files)
+
+    _, selected = select_artifacts(bundle, "example")
+
+    assert f"governance/{decision_path}" in selected
+
+
+def test_legacy_bundle_without_decision_contract_remains_selectable(tmp_path):
+    files = {
+        "dist/forms/example/manifest.json": b"{}",
+        "dist/forms/example/evidence.json": b"{}",
+        "dist/forms/example/schema.json": b"{}",
+        "dist/forms/example/sgg/rule-schema.json": b"{}",
+        "dist/forms/example/sgg/ui-schema.json": b"[]",
+    }
+    bundle = tmp_path / "legacy-bundle.tar.gz"
+    _bundle(bundle, files, with_decision=False)
+
+    manifest, selected = select_artifacts(bundle, "example")
+    target = tmp_path / "legacy-selection"
+    write_selection(target=target, manifest=manifest, files=selected)
+
+    assert "governance/parity/legacy-deltas.v1.json" in selected
+    assert "governance/parity/decision-verification.v1.json" not in selected
+    assert "governance/contract/v1/parity-decision-artifact.schema.json" not in selected
+    assert (target / "forms/example/schema.json").is_file()
+    assert not (target / "governance/parity/decision-verification.v1.json").exists()
+
+
+def test_rejects_decision_artifact_path_traversal_before_selection(tmp_path):
+    malicious_path = "parity/decisions/../../../../../escaped.json"
+    files = {
+        "dist/forms/example/manifest.json": b"{}",
+        "dist/forms/example/evidence.json": b"{}",
+        "dist/forms/example/schema.json": b"{}",
+        "dist/forms/example/sgg/rule-schema.json": b"{}",
+        "dist/forms/example/sgg/ui-schema.json": b"[]",
+        "parity/decision-verification.v1.json": json.dumps(
+            {"artifacts": [{"path": malicious_path}]}
+        ).encode(),
+        malicious_path: b"{}",
+    }
+    bundle = tmp_path / "malicious-bundle.tar.gz"
+    _bundle(bundle, files)
+
+    with pytest.raises(ValueError, match="invalid artifact path"):
+        select_artifacts(bundle, "example")
+
+
+def test_write_selection_rejects_any_path_that_escapes_the_target(tmp_path):
+    target = tmp_path / "artifacts"
+    relative = "governance/parity/decisions/../../../../../escaped.json"
+
+    with pytest.raises(ValueError, match="escapes the target"):
+        write_selection(target=target, manifest={}, files={relative: b"tampered"})
+
+    assert not (tmp_path / "escaped.json").exists()
 
 
 def test_rejects_a_reference_outside_the_question_bank(tmp_path):

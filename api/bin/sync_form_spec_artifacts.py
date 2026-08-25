@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import posixpath
+import re
 import shutil
 import sys
 import tarfile
@@ -38,11 +39,18 @@ OPTIONAL_RUNTIME_FORM_FILES = (
     "response-normalization.json",
     "targets/grants-gov-xml.json",
 )
-PORTABLE_GOVERNANCE_FILES = (
+BASE_PORTABLE_GOVERNANCE_FILES = (
     "contract/v1/parity-delta-ledger.schema.json",
     "parity/consumer-evidence-verification.v1.json",
     "parity/legacy-deltas.v1.json",
 )
+DECISION_GOVERNANCE_FILES = (
+    "contract/v1/parity-decision-artifact.schema.json",
+    "contract/v1/parity-decision-verification.schema.json",
+    "parity/decision-verification.v1.json",
+)
+DECISION_RECEIPT_PATH = "parity/decision-verification.v1.json"
+DECISION_ARTIFACT_PATH = re.compile(r"^parity/decisions/[a-z0-9][a-z0-9.-]+\.json$")
 XSD_DIRECTORY = API_ROOT / "src" / "services" / "xml_generation" / "xsds"
 
 
@@ -94,11 +102,35 @@ def select_artifacts(
 
     selected = {
         *(f"dist/forms/{form}/{name}" for form in requested for name in RUNTIME_FORM_FILES),
-        *PORTABLE_GOVERNANCE_FILES,
+        *BASE_PORTABLE_GOVERNANCE_FILES,
     }
     missing = sorted(selected - set(payloads))
     if missing:
         raise ValueError(f"requested forms are missing runtime artifacts: {missing}")
+
+    ledger = json.loads(payloads["parity/legacy-deltas.v1.json"])
+    decision_verification = ledger.get("decisionVerification")
+    if decision_verification is not None:
+        if (
+            not isinstance(decision_verification, dict)
+            or decision_verification.get("receipt") != DECISION_RECEIPT_PATH
+        ):
+            raise ValueError("parity delta ledger declares an invalid decision receipt")
+        selected.update(DECISION_GOVERNANCE_FILES)
+        missing_decision_governance = sorted(selected - set(payloads))
+        if missing_decision_governance:
+            raise ValueError(
+                "decision-aware bundle is missing governance artifacts: "
+                f"{missing_decision_governance}"
+            )
+        decision_receipt = json.loads(payloads[DECISION_RECEIPT_PATH])
+        for entry in decision_receipt.get("artifacts", []):
+            path = entry.get("path") if isinstance(entry, dict) else None
+            if not isinstance(path, str) or DECISION_ARTIFACT_PATH.fullmatch(path) is None:
+                raise ValueError("decision receipt contains an invalid artifact path")
+            if path not in payloads:
+                raise ValueError(f"verified decision artifact is missing from the bundle: {path}")
+            selected.add(path)
 
     for form in requested:
         manifest_path = f"dist/forms/{form}/manifest.json"
@@ -155,8 +187,14 @@ def write_selection(*, target: Path, manifest: dict[str, Any], files: dict[str, 
     target.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(dir=target.parent) as directory:
         staged = Path(directory) / target.name
+        staged_root = staged.resolve()
+        destinations: list[tuple[Path, bytes]] = []
         for relative, payload in files.items():
-            destination = staged / relative
+            destination = (staged / relative).resolve()
+            if not destination.is_relative_to(staged_root):
+                raise ValueError(f"selected artifact path escapes the target: {relative}")
+            destinations.append((destination, payload))
+        for destination, payload in destinations:
             destination.parent.mkdir(parents=True, exist_ok=True)
             destination.write_bytes(payload)
         (staged / "artifact-manifest.json").write_text(
