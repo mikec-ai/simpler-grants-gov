@@ -1,0 +1,420 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "epa-key-contacts",
+    "kind": "form",
+    "formVersion": "2.0"
+  },
+  "sources": [
+    {
+      "id": "epa-key-contacts-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/EPA_KeyContacts_2_0-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "157a9c8a21cdc39b4c6b5df94c3745ecd4f174cb390187441de862fb35b50b01"
+    },
+    {
+      "id": "epa-key-contacts-dat-f674",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/EPA_KeyContacts_2_0-V2.0_F674.xls",
+      "nativeVersion": "2.0",
+      "sha256": "bc3db7e10eb19bb679020aa11d44d4fd9213331e5814d94568281bd45a3d4d04"
+    },
+    {
+      "id": "epa-key-contacts-readonly-pdf-v2-0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/EPA_KeyContacts_2_0-V2.0.pdf",
+      "nativeVersion": "2.0",
+      "sha256": "2d90213e02a22656f7f624dd83ce49c5d162c90ae0fbc220a61cc60ad16649f8"
+    },
+    {
+      "id": "epa-key-contacts-xfa-pdf-v2-0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/EPA_KeyContacts_2_0-V2.0.pdf",
+      "nativeVersion": "2.0",
+      "sha256": "6d12ccee7bcd95f66b019d7bca7c64a13303ff4d4ad9124b95c0aa2db54633c3"
+    },
+    {
+      "id": "global-library-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "universal-codes-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+    "artifact": "artifacts/proof/grantsgov-EPAKeyContacts.jsonl.manifest.json",
+    "sourceSetSha256": "3ab205db007c2e0319f6f2ff0f75352f5192b7ddf05a015ad3f0f1d0a09747dc",
+    "extractedAt": "2026-08-18T21:05:40.378463Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/authorizedRepresentative",
+        "sourceId": "epa-key-contacts-xsd-v2-0",
+        "sourcePath": "KeyContactPersons_2_0.AuthorizedRepresentative",
+        "status": "proposed",
+        "note": "Role-qualified Authorized Representative occurrence. Reusing the shared contact shape does not equate this role with another contact role."
+      },
+      {
+        "canonicalPointer": "#/properties/payee",
+        "sourceId": "epa-key-contacts-xsd-v2-0",
+        "sourcePath": "KeyContactPersons_2_0.Payee",
+        "status": "proposed",
+        "note": "Role-qualified Payee occurrence. Reusing the shared contact shape does not equate this role with another contact role."
+      },
+      {
+        "canonicalPointer": "#/properties/administrativeContact",
+        "sourceId": "epa-key-contacts-xsd-v2-0",
+        "sourcePath": "KeyContactPersons_2_0.AdminstrativeContact",
+        "status": "proposed",
+        "note": "Role-qualified Administrative Contact occurrence. The canonical spelling is corrected while the exact misspelled wire element remains source-bound for XML projection."
+      },
+      {
+        "canonicalPointer": "#/properties/projectManager",
+        "sourceId": "epa-key-contacts-xsd-v2-0",
+        "sourcePath": "KeyContactPersons_2_0.ProjectManager",
+        "status": "proposed",
+        "note": "Role-qualified Project Manager occurrence. Reusing the shared contact shape does not equate this role with another contact role."
+      }
+    ]
+  },
+  "behaviorEvidence": [
+    {
+      "canonicalPath": "authorizedRepresentative.name.firstName",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.AuthorizedRepresentative.Name.FirstName any-present rule",
+      "sourceRecord": "First Name is required when any Authorized Representative field is entered."
+    },
+    {
+      "canonicalPath": "authorizedRepresentative.name.lastName",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.AuthorizedRepresentative.Name.LastName any-present rule",
+      "sourceRecord": "Last Name is required when any Authorized Representative field is entered."
+    },
+    {
+      "canonicalPath": "authorizedRepresentative.address.street1",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.AuthorizedRepresentative.Address.Street1 any-present rule",
+      "sourceRecord": "Street1 is required when any Authorized Representative field is entered."
+    },
+    {
+      "canonicalPath": "authorizedRepresentative.address.city",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.AuthorizedRepresentative.Address.City any-present rule",
+      "sourceRecord": "City is required when any Authorized Representative field is entered."
+    },
+    {
+      "canonicalPath": "authorizedRepresentative.address.country",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.AuthorizedRepresentative.Address.Country any-present rule",
+      "sourceRecord": "Country is required when any Authorized Representative field is entered."
+    },
+    {
+      "canonicalPath": "authorizedRepresentative.phone",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.AuthorizedRepresentative.Phone any-present rule",
+      "sourceRecord": "Phone is required when any Authorized Representative field is entered."
+    },
+    {
+      "canonicalPath": "payee.name.firstName",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.Payee.Name.FirstName any-present rule",
+      "sourceRecord": "First Name is required when any Payee field is entered."
+    },
+    {
+      "canonicalPath": "payee.name.lastName",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.Payee.Name.LastName any-present rule",
+      "sourceRecord": "Last Name is required when any Payee field is entered."
+    },
+    {
+      "canonicalPath": "payee.address.street1",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.Payee.Address.Street1 any-present rule",
+      "sourceRecord": "Street1 is required when any Payee field is entered."
+    },
+    {
+      "canonicalPath": "payee.address.city",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.Payee.Address.City any-present rule",
+      "sourceRecord": "City is required when any Payee field is entered."
+    },
+    {
+      "canonicalPath": "payee.address.country",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.Payee.Address.Country any-present rule",
+      "sourceRecord": "Country is required when any Payee field is entered."
+    },
+    {
+      "canonicalPath": "payee.phone",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.Payee.Phone any-present rule",
+      "sourceRecord": "Phone is required when any Payee field is entered."
+    },
+    {
+      "canonicalPath": "administrativeContact.name.firstName",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.AdminstrativeContact.Name.FirstName any-present rule",
+      "sourceRecord": "First Name is required when any Administrative Contact field is entered."
+    },
+    {
+      "canonicalPath": "administrativeContact.name.lastName",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.AdminstrativeContact.Name.LastName any-present rule",
+      "sourceRecord": "Last Name is required when any Administrative Contact field is entered."
+    },
+    {
+      "canonicalPath": "administrativeContact.address.street1",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.AdminstrativeContact.Address.Street1 any-present rule",
+      "sourceRecord": "Street1 is required when any Administrative Contact field is entered."
+    },
+    {
+      "canonicalPath": "administrativeContact.address.city",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.AdminstrativeContact.Address.City any-present rule",
+      "sourceRecord": "City is required when any Administrative Contact field is entered."
+    },
+    {
+      "canonicalPath": "administrativeContact.address.country",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.AdminstrativeContact.Address.Country any-present rule",
+      "sourceRecord": "Country is required when any Administrative Contact field is entered."
+    },
+    {
+      "canonicalPath": "administrativeContact.phone",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.AdminstrativeContact.Phone any-present rule",
+      "sourceRecord": "Phone is required when any Administrative Contact field is entered."
+    },
+    {
+      "canonicalPath": "projectManager.name.firstName",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.ProjectManager.Name.FirstName any-present rule",
+      "sourceRecord": "First Name is required when any Project Manager field is entered."
+    },
+    {
+      "canonicalPath": "projectManager.name.lastName",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.ProjectManager.Name.LastName any-present rule",
+      "sourceRecord": "Last Name is required when any Project Manager field is entered."
+    },
+    {
+      "canonicalPath": "projectManager.address.street1",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.ProjectManager.Address.Street1 any-present rule",
+      "sourceRecord": "Street1 is required when any Project Manager field is entered."
+    },
+    {
+      "canonicalPath": "projectManager.address.city",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.ProjectManager.Address.City any-present rule",
+      "sourceRecord": "City is required when any Project Manager field is entered."
+    },
+    {
+      "canonicalPath": "projectManager.address.country",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.ProjectManager.Address.Country any-present rule",
+      "sourceRecord": "Country is required when any Project Manager field is entered."
+    },
+    {
+      "canonicalPath": "projectManager.phone",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "KeyContactPersons_2_0.ProjectManager.Phone any-present rule",
+      "sourceRecord": "Phone is required when any Project Manager field is entered."
+    },
+    {
+      "canonicalPath": "authorizedRepresentative.address.state",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "Authorized Representative State required rule",
+      "sourceRecord": "State is required when Country is USA."
+    },
+    {
+      "canonicalPath": "authorizedRepresentative.address.zipCode",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "Authorized Representative ZIP required rule",
+      "sourceRecord": "ZIP/Postal Code is required when Country is USA and optional otherwise."
+    },
+    {
+      "canonicalPath": "payee.address.state",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "Payee State required rule",
+      "sourceRecord": "State is required when Country is USA."
+    },
+    {
+      "canonicalPath": "payee.address.zipCode",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "Payee ZIP required rule",
+      "sourceRecord": "ZIP/Postal Code is required when Country is USA and optional otherwise."
+    },
+    {
+      "canonicalPath": "administrativeContact.address.state",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "Administrative Contact State required rule",
+      "sourceRecord": "State is required when Country is USA."
+    },
+    {
+      "canonicalPath": "administrativeContact.address.zipCode",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "Administrative Contact ZIP required rule",
+      "sourceRecord": "ZIP/Postal Code is required when Country is USA and optional otherwise."
+    },
+    {
+      "canonicalPath": "projectManager.address.state",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "Project Manager State required rule",
+      "sourceRecord": "State is required when Country is USA."
+    },
+    {
+      "canonicalPath": "projectManager.address.zipCode",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "epa-key-contacts-dat-f674",
+      "sourcePath": "Project Manager ZIP required rule",
+      "sourceRecord": "ZIP/Postal Code is required when Country is USA and optional otherwise."
+    },
+    {
+      "canonicalPath": "/authorizedRepresentative/address/state",
+      "ruleKind": "condition",
+      "authority": "unresolved",
+      "executionStatus": "source-bound-uncompiled",
+      "owner": "generic-runtime-design",
+      "reason": "The DAT keeps State active and optional on initial open, then makes it active and required for USA or inactive for non-USA after Country loses focus. A simple value condition would not preserve the initial state.",
+      "removalCondition": "Compile only after the portable interaction contract can represent the initial state plus the post-blur country transition, or after an intentional delta is reviewed."
+    },
+    {
+      "canonicalPath": "/payee/address/state",
+      "ruleKind": "condition",
+      "authority": "unresolved",
+      "executionStatus": "source-bound-uncompiled",
+      "owner": "generic-runtime-design",
+      "reason": "The DAT keeps State active and optional on initial open, then makes it active and required for USA or inactive for non-USA after Country loses focus. A simple value condition would not preserve the initial state.",
+      "removalCondition": "Compile only after the portable interaction contract can represent the initial state plus the post-blur country transition, or after an intentional delta is reviewed."
+    },
+    {
+      "canonicalPath": "/administrativeContact/address/state",
+      "ruleKind": "condition",
+      "authority": "unresolved",
+      "executionStatus": "source-bound-uncompiled",
+      "owner": "generic-runtime-design",
+      "reason": "The DAT keeps State active and optional on initial open, then makes it active and required for USA or inactive for non-USA after Country loses focus. A simple value condition would not preserve the initial state.",
+      "removalCondition": "Compile only after the portable interaction contract can represent the initial state plus the post-blur country transition, or after an intentional delta is reviewed."
+    },
+    {
+      "canonicalPath": "/projectManager/address/state",
+      "ruleKind": "condition",
+      "authority": "unresolved",
+      "executionStatus": "source-bound-uncompiled",
+      "owner": "generic-runtime-design",
+      "reason": "The DAT keeps State active and optional on initial open, then makes it active and required for USA or inactive for non-USA after Country loses focus. A simple value condition would not preserve the initial state.",
+      "removalCondition": "Compile only after the portable interaction contract can represent the initial state plus the post-blur country transition, or after an intentional delta is reviewed."
+    }
+  ],
+  "operationalBehaviorEvidence": [],
+  "responseNormalizationEvidence": []
+}

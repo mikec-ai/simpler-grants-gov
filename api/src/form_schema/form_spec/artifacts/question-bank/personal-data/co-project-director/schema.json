@@ -24,7 +24,22 @@
       },
       "maxItems": 5,
       "description": "Select every race category that applies, or decline to provide race.",
-      "title": "Race (check all that apply)"
+      "title": "Race (check all that apply)",
+      "x-exclusive-values": [
+        "Do Not Wish to Provide"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "contains": {
+              "const": "Do Not Wish to Provide"
+            }
+          },
+          "then": {
+            "maxItems": 1
+          }
+        }
+      ]
     },
     "ethnicity": {
       "$ref": "#/$defs/PersonalDataEthnicity",
@@ -38,7 +53,33 @@
       },
       "maxItems": 4,
       "description": "Select every disability status that applies, select None, or decline to provide it.",
-      "title": "Disability Status (check all that apply)"
+      "title": "Disability Status (check all that apply)",
+      "x-exclusive-values": [
+        "None",
+        "Do Not Wish to Provide"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "contains": {
+              "const": "None"
+            }
+          },
+          "then": {
+            "maxItems": 1
+          }
+        },
+        {
+          "if": {
+            "contains": {
+              "const": "Do Not Wish to Provide"
+            }
+          },
+          "then": {
+            "maxItems": 1
+          }
+        }
+      ]
     },
     "citizenship": {
       "$ref": "#/$defs/PersonalDataCitizenship",

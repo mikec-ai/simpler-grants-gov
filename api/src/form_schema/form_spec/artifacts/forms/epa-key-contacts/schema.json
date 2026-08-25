@@ -1,0 +1,315 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "epa-key-contacts/schema.json",
+  "type": "object",
+  "properties": {
+    "authorizedRepresentative": {
+      "$ref": "#/$defs/EPAKeyContactPerson",
+      "description": "Original awards and amendments will be sent to this individual for review and acceptance, unless otherwise indicated.",
+      "title": "Authorized Representative",
+      "properties": {
+        "name": {
+          "required": [
+            "firstName",
+            "lastName"
+          ]
+        },
+        "address": {
+          "required": [
+            "street1",
+            "city",
+            "country"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              },
+              "then": {
+                "required": [
+                  "zipCode"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              },
+              "then": {
+                "required": [
+                  "state"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "payee": {
+      "$ref": "#/$defs/EPAKeyContactPerson",
+      "description": "Individual authorized to accept payments.",
+      "title": "Payee",
+      "properties": {
+        "name": {
+          "required": [
+            "firstName",
+            "lastName"
+          ]
+        },
+        "address": {
+          "required": [
+            "street1",
+            "city",
+            "country"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              },
+              "then": {
+                "required": [
+                  "zipCode"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              },
+              "then": {
+                "required": [
+                  "state"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "administrativeContact": {
+      "$ref": "#/$defs/EPAKeyContactPerson",
+      "description": "Individual from Sponsored Programs Office to contact concerning administrative matters (i.e., indirect cost rate computation, rebudgeting requests etc).",
+      "title": "Administrative Contact",
+      "properties": {
+        "name": {
+          "required": [
+            "firstName",
+            "lastName"
+          ]
+        },
+        "address": {
+          "required": [
+            "street1",
+            "city",
+            "country"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              },
+              "then": {
+                "required": [
+                  "zipCode"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              },
+              "then": {
+                "required": [
+                  "state"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "projectManager": {
+      "$ref": "#/$defs/EPAKeyContactPerson",
+      "description": "Individual responsible for the technical completion of the proposed work.",
+      "title": "Project Manager",
+      "properties": {
+        "name": {
+          "required": [
+            "firstName",
+            "lastName"
+          ]
+        },
+        "address": {
+          "required": [
+            "street1",
+            "city",
+            "country"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              },
+              "then": {
+                "required": [
+                  "zipCode"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              },
+              "then": {
+                "required": [
+                  "state"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "description": "EPA KEY CONTACTS FORM, Grants.gov version 2.0.",
+  "$defs": {
+    "EPAKeyContactPerson": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "../../question-bank/generics/person-name/schema.json",
+          "title": "Name",
+          "required": [
+            "firstName",
+            "lastName"
+          ]
+        },
+        "title": {
+          "$ref": "../../question-bank/generics/contact-title/schema.json",
+          "title": "Title"
+        },
+        "address": {
+          "$ref": "../../question-bank/generics/address/schema.json",
+          "title": "Complete Address",
+          "required": [
+            "street1",
+            "city",
+            "country"
+          ],
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              },
+              "then": {
+                "required": [
+                  "zipCode"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "country": {
+                    "const": "USA: UNITED STATES"
+                  }
+                },
+                "required": [
+                  "country"
+                ]
+              },
+              "then": {
+                "required": [
+                  "state"
+                ]
+              }
+            }
+          ]
+        },
+        "phone": {
+          "$ref": "../../question-bank/generics/phone/schema.json",
+          "title": "Phone Number"
+        },
+        "fax": {
+          "$ref": "../../question-bank/generics/phone/schema.json",
+          "title": "Fax Number"
+        },
+        "email": {
+          "$ref": "../../question-bank/generics/email/schema.json",
+          "title": "E-mail Address"
+        }
+      },
+      "required": [
+        "name",
+        "address",
+        "phone"
+      ],
+      "description": "One source-defined EPA contact person.\n\nThe optional role object carries the DAT's any-field completeness boundary: once a role\nexists, first and last name, street 1, city, country, and phone are required. Email remains\noptional even though other shared contact compositions require it.",
+      "title": "Contact Person"
+    }
+  }
+}
