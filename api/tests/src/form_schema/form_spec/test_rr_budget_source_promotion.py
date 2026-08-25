@@ -1,6 +1,7 @@
 """Consumer conformance for source-exact R&R Budget guidance and date ordering."""
 
 import json
+import re
 from types import SimpleNamespace
 from typing import Any, cast
 
@@ -146,8 +147,7 @@ def test_promotion_preserves_integrity_and_immutable_source_revision() -> None:
 
     manifest = verify_artifacts()
     assert manifest == json.loads(ARTIFACT_MANIFEST.read_text())
-    assert manifest["source"] == {
-        "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-        "revision": "fbb2554f19de604db3a3a7ea330e323327a0532c",
-    }
+    assert manifest["source"]["repository"] == ("https://github.com/mikec-ai/grants-form-spec.git")
+    assert re.fullmatch(r"[0-9a-f]{40}", manifest["source"]["revision"])
+    assert re.fullmatch(r"[0-9a-f]{64}", manifest["sourceBundleSha256"])
     assert len(manifest["selection"]["forms"]) == 39

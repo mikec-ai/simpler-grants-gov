@@ -1558,8 +1558,8 @@
     },
     {
       "path": "dist/question-bank/budget/research/other-personnel/schema.json",
-      "sha256": "e66300862e52b45b029d07527d393f7e3af1ba8dc32d6161ed778e889cca6874",
-      "size": 11039
+      "sha256": "4d00e8e842b5eacf286dd0a46c74c75876b7238a9a949d881165ccb51e07d681",
+      "size": 11043
     },
     {
       "path": "dist/question-bank/budget/research/participant-trainee-support/schema.json",
@@ -2453,7 +2453,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "d75d511d19f5c790442049d7ed6b1aa47949982f"
+    "revision": "70d409bce191848c63fb7c85fae26714933e867c"
   },
-  "sourceBundleSha256": "476c62885821419813b8e2089e5bfdf10d18097a2be59f42fd897051edc0daa5"
+  "sourceBundleSha256": "1f3746f72f82b7c9bf215b9c5535af648c943abb230c0c36996320f8565653cb"
 }
