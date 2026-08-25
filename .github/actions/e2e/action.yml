@@ -233,6 +233,50 @@ runs:
         echo "=== API Container Logs ==="
         docker compose --project-name "${API_COMPOSE_PROJECT:-api}" logs grants-api || echo "Could not retrieve API logs"
         echo ""
+        echo "=== File Scanner Mounts ==="
+        for service in s3mock grants-api; do
+          container_id="$(docker compose --project-name "${API_COMPOSE_PROJECT:-api}" ps -q "$service")"
+          echo "--- $service ---"
+          if [[ -n "$container_id" ]]; then
+            docker inspect --format '{{range .Mounts}}{{printf "%s\t%s\t%s\t%s\n" .Type .Name .Source .Destination}}{{end}}' "$container_id"
+          else
+            echo "Container not found"
+          fi
+        done
+        echo ""
+        echo "=== S3Mock Container Logs ==="
+        docker compose --project-name "${API_COMPOSE_PROJECT:-api}" logs s3mock || echo "Could not retrieve S3Mock logs"
+        echo ""
+        echo "=== File Scanner Store Evidence ==="
+        docker compose --project-name "${API_COMPOSE_PROJECT:-api}" exec -T grants-api python - <<'PY'
+        import json
+        import os
+        from pathlib import Path
+
+        root = Path("/api/locals3root")
+        print(f"root={root} exists={root.exists()} is_dir={root.is_dir()}")
+
+        emitted = 0
+        if root.is_dir():
+            for current_root, directories, files in os.walk(root):
+                relative_root = Path(current_root).relative_to(root)
+                if len(relative_root.parts) >= 4:
+                    directories[:] = []
+                for file_name in sorted(files):
+                    path = Path(current_root) / file_name
+                    print(f"path={path} size={path.stat().st_size}")
+                    if file_name == "objectMetadata.json":
+                        try:
+                            key = json.loads(path.read_text(encoding="utf-8")).get("key")
+                        except (OSError, json.JSONDecodeError) as error:
+                            key = f"<unreadable:{type(error).__name__}>"
+                        print(f"metadata_path={path} key={key}")
+                    emitted += 1
+                    if emitted >= 200:
+                        print("output_truncated_after=200")
+                        raise SystemExit(0)
+        PY
+        echo ""
         echo "=== OpenSearch Container Logs ==="
         docker compose --project-name "${API_COMPOSE_PROJECT:-api}" logs opensearch-node || echo "Could not retrieve OpenSearch logs"
         echo ""
