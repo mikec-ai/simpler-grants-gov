@@ -68,6 +68,15 @@ def main() -> None:
     )
     assert 'echo "portable_form_ids=$PORTABLE_BROWSER_FORM_IDS"' in workflow
     assert "tier: ${{ steps.classify.outputs.tier }}" in api_workflow
+    assert "reason: ${{ steps.classify.outputs.reason }}" in api_workflow
+    assert (
+        "portable_frontend_evidence_files: "
+        "${{ steps.classify.outputs.portable_frontend_evidence_files }}" in api_workflow
+    )
+    assert "### Portable form CI classification" in api_workflow
+    assert "### Portable browser CI classification" in workflow
+    assert "CI_REASON: ${{ steps.classify.outputs.reason" in api_workflow
+    assert "CI_REASON: ${{ steps.classify.outputs.reason" in workflow
     assert "needs.classify-form-spec-change.outputs.tier == 'portable_focused'" in api_workflow
     assert (
         "docker compose run -T --rm grants-api pytest "
