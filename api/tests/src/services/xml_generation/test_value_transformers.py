@@ -208,6 +208,25 @@ class TestMapValues:
         assert transform_map_values(1, mappings) == "One"
         assert transform_map_values("2", mappings) == "Two"
 
+    def test_map_values_uses_json_canonical_boolean_keys(self):
+        mappings = {"true": "Y: Yes", "false": "N: No"}
+
+        assert transform_map_values(True, mappings) == "Y: Yes"
+        assert transform_map_values(False, mappings) == "N: No"
+
+    def test_map_values_boolean_canonicalization_does_not_change_string_lookup(self):
+        mappings = {"true": "canonical bool", "True": "literal string"}
+
+        assert transform_map_values(True, mappings) == "canonical bool"
+        assert transform_map_values("True", mappings) == "literal string"
+
+    def test_map_values_retains_legacy_title_case_boolean_fallback(self):
+        assert transform_map_values(True, {"True": "legacy yes"}) == "legacy yes"
+
+    def test_map_values_unmapped_boolean_still_fails_closed(self):
+        with pytest.raises(ValueTransformationError, match="not found in mappings"):
+            transform_map_values(True, {"false": "N: No"})
+
     def test_map_values_with_default(self):
         """Test mapping with default value for unmapped inputs."""
         mappings = {"A": "Alpha", "B": "Beta"}

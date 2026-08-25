@@ -161,11 +161,15 @@ def transform_map_values(
         transform_map_values("c. Program is not covered by E.O. 12372.", {"a. old": "a. new"}, passthrough_unknown=True)
         # Returns: "c. Program is not covered by E.O. 12372."  (not in mappings, returned as-is)
     """
-    # Convert value to string for mapping lookup
-    lookup_value = str(value)
+    # JSON object keys are strings. Portable profiles therefore serialize boolean
+    # mapping keys as lowercase ``true``/``false``, while ``str(bool)`` uses
+    # Python's title-case spelling. Prefer the JSON spelling for typed booleans,
+    # retaining the historical spelling as a compatibility fallback.
+    lookup_values = [str(value).lower(), str(value)] if isinstance(value, bool) else [str(value)]
 
-    if lookup_value in mappings:
-        return mappings[lookup_value]
+    matching_key = next((lookup for lookup in lookup_values if lookup in mappings), None)
+    if matching_key is not None:
+        return mappings[matching_key]
     elif default is not None:
         return default
     elif passthrough_unknown:
