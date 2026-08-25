@@ -10,14 +10,19 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+from types import SimpleNamespace
+from typing import Any, cast
 
 import xmlschema
 from lxml import etree
 
+from src.db.models.competition_models import ApplicationForm
 from src.form_schema.form_spec.bank import ARTIFACTS
 from src.form_schema.form_spec.loader import _load_banked_form
 from src.form_schema.form_spec.preview import build_preview_form
 from src.form_schema.form_spec.registrations import REGISTRATIONS
+from src.form_schema.rule_processing.json_rule_context import JsonRuleConfig, JsonRuleContext
+from src.form_schema.rule_processing.json_rule_processor import process_rule_schema_for_context
 from src.services.xml_generation.models import XMLGenerationRequest
 from src.services.xml_generation.service import XMLGenerationService
 from src.services.xml_generation.utils.attachment_mapping import AttachmentInfo
@@ -28,6 +33,10 @@ FORM_NAMESPACE = "http://apply.grants.gov/forms/PHS398_CoverPageSupplement_5_0-V
 GLOBAL_LIBRARY_NAMESPACE = "http://apply.grants.gov/system/GlobalLibrary-V2.0"
 XSD_DIRECTORY = Path(__file__).parents[4] / "src/services/xml_generation/xsds"
 FORM_XSD = "PHS398_CoverPageSupplement_5_0-V5.0.xsd"
+PROJECTED_UI_FIXTURE = (
+    Path(__file__).parents[5]
+    / "frontend/src/utils/applyForm/__fixtures__/phs398-cover-page-supplement-ui-schema.json"
+)
 PINNED_XSDS = {
     FORM_XSD: "ec538c9bb5fd233c36ac73ca567d31e60779ee3df2f3c7b456d9395b3ec2dc26",
     "Attachments-V1.0.xsd": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d",
@@ -37,6 +46,43 @@ PINNED_XSDS = {
 }
 ASSURANCE_ID = "11111111-1111-1111-1111-111111111111"
 CONSENT_ID = "22222222-2222-2222-2222-222222222222"
+SOURCE_BOUND_UNCOMPILED = {
+    ("B-1-1", "/programIncome/periods"),
+    ("B-2-1", "/programIncome/periods"),
+    ("B-2-2", "/programIncome/periods/[]/budgetPeriod"),
+    ("B-2-3", "/programIncome/periods/[]/anticipatedAmount"),
+    ("B-2-4", "/programIncome/periods/[]/source"),
+    ("B-2-5", "/programIncome/periods"),
+    ("C-3-2", "/humanEmbryonicStemCells/cellLines"),
+    ("C-3-4", "/humanEmbryonicStemCells/cellLines"),
+    ("E-1-1", "/inventionsAndPatents/inventions"),
+    ("F-1-1", "/changes/changeOfProjectDirector"),
+    ("F-2-1", "/changes/changeOfRecipientOrganization"),
+    (
+        "G.210 section 1, Are vertebrate animals euthanized?",
+        "/vertebrateAnimals/animalEuthanized",
+    ),
+    (
+        "G.210 section 2, Additional Instructions for Training and Multi-project",
+        "/programIncome/anticipated",
+    ),
+    (
+        "G.210 section 3, Additional Instructions for Multi-project",
+        "/humanEmbryonicStemCells/involved",
+    ),
+    (
+        "G.210 section 4, Additional Instructions for Multi-project",
+        "/humanFetalTissue/involved",
+    ),
+    (
+        "G.210 section 6, Change of Project Director/Principal Investigator",
+        "/changes/changeOfProjectDirector",
+    ),
+    (
+        "G.210 section 6, Change of Recipient Organization",
+        "/changes/changeOfRecipientOrganization",
+    ),
+}
 
 
 def read(relative: str):
@@ -116,8 +162,38 @@ def representative_response() -> dict[str, object]:
     }
 
 
+def attachment_rule_context(available_ids: tuple[str, ...]) -> JsonRuleContext:
+    projected = _load_banked_form(FORM_ID, project_xml=False)
+    application_form = cast(
+        ApplicationForm,
+        SimpleNamespace(
+            application_response=representative_response(),
+            application=SimpleNamespace(
+                application_attachments=[
+                    SimpleNamespace(application_attachment_id=attachment_id)
+                    for attachment_id in available_ids
+                ]
+            ),
+            application_form_id="phs398-cover-page-supplement-rule-test",
+            form_id="phs398-cover-page-supplement-preview",
+            form=projected,
+        ),
+    )
+    context = JsonRuleContext(
+        application_form,
+        JsonRuleConfig(
+            do_pre_population=False,
+            do_post_population=False,
+            do_field_validation=True,
+        ),
+    )
+    process_rule_schema_for_context(context)
+    return context
+
+
 def test_cover_page_preview_preserves_compiled_conditions_and_open_gates() -> None:
     form = build_preview_form(FORM_ID)
+    projected = _load_banked_form(FORM_ID, project_xml=False)
     evidence = read("evidence.json")
     conditionals = [
         node["conditional"]
@@ -134,28 +210,52 @@ def test_cover_page_preview_preserves_compiled_conditions_and_open_gates() -> No
         "human_fetal_tissue",
     ]
     assert len(conditionals) == 13
+    assert json.loads(PROJECTED_UI_FIXTURE.read_text()) == projected.form_ui_schema
+    assert form.form_ui_schema == projected.form_ui_schema
     assert all(rule["then"] == {"interaction": "enabled"} for rule in conditionals)
     assert all(rule["otherwise"] == {"interaction": "disabled"} for rule in conditionals)
 
     behaviors = evidence["behaviorEvidence"]
     source_bound = {
-        row["canonicalPath"]
+        (row["sourcePath"], row["canonicalPath"])
         for row in behaviors
         if row["executionStatus"] == "source-bound-uncompiled"
     }
-    assert "/humanEmbryonicStemCells/cellLines" in source_bound
-    assert "/inventionsAndPatents/inventions" in source_bound
-    assert "/changes/changeOfProjectDirector" in source_bound
+    assert len(source_bound) == 17
+    assert source_bound == SOURCE_BOUND_UNCOMPILED
+    hesc_unavailable = next(row for row in behaviors if row["sourcePath"] == "C-3-0")
+    assert "automatic unchecking" in hesc_unavailable["sourceRecord"]
+    assert "remains uncompiled" in hesc_unavailable["sourceRecord"]
     assert evidence["semanticReview"]["status"] == "proposed"
     assert {row["status"] for row in evidence["semanticReview"]["mappings"]} == {"proposed"}
 
 
+def test_cover_page_attachments_execute_through_shared_rule_processing() -> None:
+    valid = attachment_rule_context((ASSURANCE_ID, CONSENT_ID))
+    assert valid.attachment_ids == {ASSURANCE_ID, CONSENT_ID}
+    assert valid.validation_issues == []
+
+    for available, missing, expected_field in (
+        ((ASSURANCE_ID,), CONSENT_ID, "$.human_fetal_tissue.irb_consent_form"),
+        ((CONSENT_ID,), ASSURANCE_ID, "$.human_fetal_tissue.compliance_assurance"),
+    ):
+        context = attachment_rule_context(available)
+        assert context.attachment_ids == {ASSURANCE_ID, CONSENT_ID}
+        assert len(context.validation_issues) == 1
+        issue = context.validation_issues[0]
+        assert issue.field == expected_field
+        assert issue.value == missing
+
+
 def test_cover_page_emits_exact_source_valid_xml_through_generic_service() -> None:
+    context = attachment_rule_context((ASSURANCE_ID, CONSENT_ID))
+    assert context.attachment_ids == {ASSURANCE_ID, CONSENT_ID}
+    assert context.validation_issues == []
     projected = _load_banked_form(FORM_ID, project_xml=True)
     assert projected.json_to_xml_schema is not None
     generated = XMLGenerationService().generate_xml(
         XMLGenerationRequest(
-            application_data=representative_response(),
+            application_data=cast(dict[str, Any], context.json_data),
             transform_config=projected.json_to_xml_schema,
             attachment_mapping=attachment_mapping(),
         )

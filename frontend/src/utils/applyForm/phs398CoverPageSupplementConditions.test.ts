@@ -8,7 +8,7 @@ const artifact = JSON.parse(
   readFileSync(
     resolve(
       __dirname,
-      "../../../../api/src/form_schema/form_spec/artifacts/forms/phs398-cover-page-supplement/sgg/ui-schema.json",
+      "__fixtures__/phs398-cover-page-supplement-ui-schema.json",
     ),
     "utf8",
   ),
@@ -37,47 +37,47 @@ const conditionFor = (definition: string): ConditionalUi => {
 
 const cases = [
   {
-    definition: "/properties/vertebrateAnimals/properties/avmaConsistent",
-    pointer: ["vertebrateAnimals", "animalEuthanized"],
+    definition: "/properties/vertebrate_animals/properties/avma_consistent",
+    pointer: ["vertebrate_animals", "animal_euthanized"],
     enabled: "Y: Yes",
     disabled: "N: No",
   },
   {
-    definition: "/properties/vertebrateAnimals/properties/methodDescription",
-    pointer: ["vertebrateAnimals", "avmaConsistent"],
+    definition: "/properties/vertebrate_animals/properties/method_description",
+    pointer: ["vertebrate_animals", "avma_consistent"],
     enabled: "N: No",
     disabled: "Y: Yes",
   },
-  ...["specificLineUnavailable", "cellLines"].map((field) => ({
-    definition: `/properties/humanEmbryonicStemCells/properties/${field}`,
-    pointer: ["humanEmbryonicStemCells", "involved"],
+  ...["specific_line_unavailable", "cell_lines"].map((field) => ({
+    definition: `/properties/human_embryonic_stem_cells/properties/${field}`,
+    pointer: ["human_embryonic_stem_cells", "involved"],
     enabled: "Y: Yes",
     disabled: "N: No",
   })),
-  ...["complianceAssurance", "irbConsentForm"].map((field) => ({
-    definition: `/properties/humanFetalTissue/properties/${field}`,
-    pointer: ["humanFetalTissue", "involved"],
+  ...["compliance_assurance", "irb_consent_form"].map((field) => ({
+    definition: `/properties/human_fetal_tissue/properties/${field}`,
+    pointer: ["human_fetal_tissue", "involved"],
     enabled: "Y: Yes",
     disabled: "N: No",
   })),
   {
     definition:
-      "/properties/inventionsAndPatents/properties/previouslyReported",
-    pointer: ["inventionsAndPatents", "inventions"],
+      "/properties/inventions_and_patents/properties/previously_reported",
+    pointer: ["inventions_and_patents", "inventions"],
     enabled: "Y: Yes",
     disabled: "N: No",
   },
-  ...["prefix", "firstName", "middleName", "lastName", "suffix"].map(
+  ...["prefix", "first_name", "middle_name", "last_name", "suffix"].map(
     (field) => ({
-      definition: `/properties/formerProjectDirector/properties/${field}`,
-      pointer: ["changes", "changeOfProjectDirector"],
+      definition: `/properties/former_project_director/properties/${field}`,
+      pointer: ["changes", "change_of_project_director"],
       enabled: "Y: Yes",
       disabled: "N: No",
     }),
   ),
   {
-    definition: "/properties/formerOrganizationName",
-    pointer: ["changes", "changeOfRecipientOrganization"],
+    definition: "/properties/former_organization_name",
+    pointer: ["changes", "change_of_recipient_organization"],
     enabled: "Y: Yes",
     disabled: "N: No",
   },
