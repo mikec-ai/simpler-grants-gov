@@ -342,7 +342,8 @@ def test_browser_plan_protects_human_subject_determinations_declared_through_all
 ) -> None:
     monkeypatch.setenv(BROWSER_FORM_IDS, "phs-human-subjects")
 
-    capabilities = build_browser_plan()["forms"][0]["capabilities"]
+    form = build_browser_plan()["forms"][0]
+    capabilities = form["capabilities"]
     read_only_definitions = {
         declaration["definition"]
         for declaration in capabilities["readOnly"]["declarations"]
@@ -351,15 +352,40 @@ def test_browser_plan_protects_human_subject_determinations_declared_through_all
     editable_definitions = {
         declaration["definition"] for declaration in capabilities["editableScalar"]["declarations"]
     }
+
+    def top_level(definition: str) -> bool:
+        return definition.startswith("/properties/") and definition.count("/") == 2
+
+    top_level_editable = {
+        definition for definition in editable_definitions if top_level(definition)
+    }
+    top_level_repeaters = {
+        declaration["definition"]
+        for declaration in capabilities["repeater"]["declarations"]
+        if top_level(declaration["definition"])
+    }
+    top_level_ui_definitions = {
+        definition for definition in form["stablePaths"]["uiDefinitions"] if top_level(definition)
+    }
     system_owned = {
         "/properties/involves_human_subjects",
         "/properties/exempt_from_federal_regulations",
         "/properties/exemptions",
     }
+    applicant_editable = {
+        "/properties/involves_human_specimens_or_data",
+        "/properties/specimens_explanation",
+        "/properties/other_requested_information",
+    }
+    applicant_repeaters = {
+        "/properties/studies",
+        "/properties/delayed_onset_studies",
+    }
 
-    assert system_owned <= read_only_definitions
-    assert system_owned.isdisjoint(editable_definitions)
-    assert "/properties/involves_human_specimens_or_data" in editable_definitions
+    assert read_only_definitions == system_owned
+    assert top_level_editable == applicant_editable
+    assert top_level_repeaters == applicant_repeaters
+    assert top_level_ui_definitions == system_owned | applicant_editable | applicant_repeaters
 
 
 def test_browser_plan_discovers_multifield_editable_surface(
