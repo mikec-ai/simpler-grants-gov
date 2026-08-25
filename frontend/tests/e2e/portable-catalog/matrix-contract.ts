@@ -94,17 +94,47 @@ export function schemaDefinitionToControlId(definition: string): string {
       `schema definition is not an absolute pointer: ${definition}`,
     );
   }
-  const path = definition
-    .slice(1)
-    .split("/")
-    .map((segment) => segment.replaceAll("~1", "/").replaceAll("~0", "~"))
-    .filter((segment) => segment !== "properties" && segment !== "items");
-  if (!path.length) {
+  const parts: string[] = [];
+  for (const encoded of definition.slice(1).split("/")) {
+    const segment = encoded.replaceAll("~1", "/").replaceAll("~0", "~");
+    if (segment === "properties" || !segment) continue;
+    if (segment === "items") {
+      if (!parts.length) {
+        throw new Error(`schema items segment has no parent: ${definition}`);
+      }
+      parts[parts.length - 1] = `${parts.at(-1)}[0]`;
+    } else {
+      parts.push(segment);
+    }
+  }
+  if (!parts.length) {
     throw new Error(
       `schema definition does not identify a control: ${definition}`,
     );
   }
-  return path.join("--");
+  return parts.join("--");
+}
+
+export function schemaDefinitionToResponsePath(definition: string): string {
+  if (!definition.startsWith("/")) {
+    throw new Error(
+      `schema definition is not an absolute pointer: ${definition}`,
+    );
+  }
+  const parts: string[] = [];
+  for (const encoded of definition.slice(1).split("/")) {
+    const segment = encoded.replaceAll("~1", "/").replaceAll("~0", "~");
+    if (segment === "properties" || !segment) continue;
+    parts.push(segment === "items" ? "*" : segment);
+  }
+  if (!parts.length) {
+    throw new Error(
+      `schema definition does not identify a response path: ${definition}`,
+    );
+  }
+  return `/${parts
+    .map((segment) => segment.replaceAll("~", "~0").replaceAll("/", "~1"))
+    .join("/")}`;
 }
 
 export function responsePathToControlId(responsePath: string): string {
@@ -131,6 +161,31 @@ export function responsePathToControlId(responsePath: string): string {
     );
   }
   return parts.join("--");
+}
+
+export function responsePathToRepeaterContainerIds(
+  responsePath: string,
+): string[] {
+  if (!responsePath.startsWith("/")) {
+    throw new Error(
+      `response path is not an absolute pointer: ${responsePath}`,
+    );
+  }
+  const parts: string[] = [];
+  const containerIds: string[] = [];
+  for (const encoded of responsePath.slice(1).split("/")) {
+    const segment = encoded.replaceAll("~1", "/").replaceAll("~0", "~");
+    if (segment === "*") {
+      if (!parts.length) {
+        throw new Error(`response wildcard has no parent: ${responsePath}`);
+      }
+      containerIds.push(parts.join("--"));
+      parts[parts.length - 1] = `${parts.at(-1)}[0]`;
+    } else if (segment) {
+      parts.push(segment);
+    }
+  }
+  return containerIds;
 }
 
 const ownershipByBoundary: Record<Boundary, Ownership> = {
