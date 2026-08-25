@@ -88,6 +88,16 @@ export type RecoveredPlanCandidate = Pick<
   "portableFormId" | "previewFormId" | "artifactDigests"
 >;
 
+export function firstAddressableAttachmentDefinition(
+  form: BrowserPlanForm,
+): string | undefined {
+  const capability = form.capabilities.attachment;
+  if (capability?.applicability !== "applicable") return undefined;
+  return capability.declarations.find(
+    ({ definition }) => typeof definition === "string",
+  )?.definition as string | undefined;
+}
+
 export function schemaDefinitionToControlId(definition: string): string {
   if (!definition.startsWith("/")) {
     throw new Error(

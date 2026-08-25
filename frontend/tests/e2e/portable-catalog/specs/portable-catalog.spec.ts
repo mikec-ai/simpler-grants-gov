@@ -7,6 +7,7 @@ import {
   assertPortableMatrixEnvironment,
   classifyBoundary,
   completeBlockedProbes,
+  firstAddressableAttachmentDefinition,
   loadBrowserPlan,
   observedBoundary,
   RECEIPT_CONTRACT,
@@ -42,11 +43,16 @@ const receiptsDirectory = path.resolve(
   "test-results/portable-catalog",
 );
 const matrixEnabled = process.env.RUN_PORTABLE_BROWSER_MATRIX === "true";
+const attachmentFixture = path.resolve(
+  process.cwd(),
+  "tests/e2e/test-upload-files/sample-upload-kb.pdf",
+);
 const plannedFormProbes = [
   "preview_registration",
   "adapter_api_preflight",
   "apply_render",
   "static_content",
+  "attachment_upload_reload",
   "initial_save_reload",
   "schema_implication",
   "accessibility",
@@ -270,6 +276,50 @@ async function exerciseStaticContent(
       sectionName,
       sha256,
     })),
+  };
+}
+
+async function exerciseAttachmentUpload(
+  page: Page,
+  form: BrowserPlanForm,
+): Promise<Record<string, unknown>> {
+  const definition = firstAddressableAttachmentDefinition(form);
+  if (!definition) {
+    throw new Error(
+      "no mechanically addressable attachment widget is declared",
+    );
+  }
+  const controlId = schemaDefinitionToControlId(definition);
+  const visibleInput = page.locator(
+    `main input[type=file][id=${JSON.stringify(`${controlId}-visible`)}]`,
+  );
+  await expect(visibleInput).toBeAttached();
+  await visibleInput.setInputFiles(attachmentFixture);
+
+  const fileName = path.basename(attachmentFixture);
+  const existingFile = page
+    .getByTestId("file-input-existing-files")
+    .filter({ hasText: fileName });
+  await expect(existingFile).toHaveCount(1, { timeout: 30_000 });
+  const hiddenInput = page.locator(
+    `main input[type=hidden][id=${JSON.stringify(controlId)}]`,
+  );
+  await expect(hiddenInput).not.toHaveValue("", { timeout: 30_000 });
+
+  await saveForm(page);
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(
+    page.getByRole("heading", { level: 1, name: form.displayName }),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("file-input-existing-files").filter({ hasText: fileName }),
+  ).toHaveCount(1, { timeout: 30_000 });
+
+  return {
+    definition,
+    controlId,
+    fileName,
+    persistedAfterReload: true,
   };
 }
 
@@ -551,6 +601,7 @@ test.describe("portable catalog browser conformance", () => {
           page.on("pageerror", onPageError);
           page.on("response", onResponse);
           try {
+            let uploadedAttachmentFileName: string | undefined;
             receipt.probes.push(
               await probe("apply_render", "apply_render", async () => {
                 await openSelectedForm(page, applicationUrl, form.displayName);
@@ -600,6 +651,46 @@ test.describe("portable catalog browser conformance", () => {
                 durationMs: 0,
                 evidence: {
                   reason: "no section-level static content is declared",
+                },
+              });
+            }
+
+            const attachmentDefinition =
+              firstAddressableAttachmentDefinition(form);
+            if (attachmentDefinition && fs.existsSync(attachmentFixture)) {
+              receipt.probes.push(
+                await probe(
+                  "attachment_upload_reload",
+                  "api_round_trip",
+                  async () => {
+                    const evidence = await exerciseAttachmentUpload(page, form);
+                    uploadedAttachmentFileName = evidence.fileName as string;
+                    return evidence;
+                  },
+                ),
+              );
+            } else if (
+              form.capabilities.attachment?.applicability === "applicable"
+            ) {
+              receipt.probes.push({
+                probe: "attachment_upload_reload",
+                status: "inconclusive",
+                boundary: "missing_vector",
+                ownership: "harness_inconclusive",
+                durationMs: 0,
+                evidence: {
+                  reason: attachmentDefinition
+                    ? `deterministic attachment fixture is unavailable: ${attachmentFixture}`
+                    : "attachment rules exist but no mechanically addressable attachment widget is declared",
+                },
+              });
+            } else {
+              receipt.probes.push({
+                probe: "attachment_upload_reload",
+                status: "not_applicable",
+                durationMs: 0,
+                evidence: {
+                  reason: "no attachment widget or rule is declared",
                 },
               });
             }
@@ -726,6 +817,11 @@ test.describe("portable catalog browser conformance", () => {
                 await expect(
                   page.getByText("Error rendering form"),
                 ).toHaveCount(0);
+                if (uploadedAttachmentFileName) {
+                  await expect(preview).toContainText(
+                    uploadedAttachmentFileName,
+                  );
+                }
                 const interactiveControls = preview.locator(
                   "input:visible:not([type=hidden]):not([disabled]):not([readonly]), " +
                     "textarea:visible:not([disabled]):not([readonly]), " +
@@ -735,7 +831,12 @@ test.describe("portable catalog browser conformance", () => {
                 await expect(interactiveControls).toHaveCount(0);
                 expect(pageErrors).toEqual([]);
                 expect(failedFormRequests).toEqual([]);
-                return { route: printUrl, interactiveControls: 0 };
+                return {
+                  route: printUrl,
+                  interactiveControls: 0,
+                  attachmentFileName:
+                    uploadedAttachmentFileName ?? "not_applicable",
+                };
               }),
             );
           } finally {
