@@ -300,37 +300,25 @@ async function exerciseAttachmentUpload(
   const existingFile = page
     .getByTestId("file-input-existing-files")
     .filter({ hasText: fileName });
-  let onUploadResponse: ((response: Response) => Promise<void>) | undefined;
-  const failedUpload = new Promise<never>((_resolve, reject) => {
-    onUploadResponse = async (response: Response) => {
-      if (
-        response.ok() ||
-        !/\/api\/applications\/[^/]+\/attachments\/create$/.test(response.url())
-      ) {
-        return;
-      }
-      if (onUploadResponse) page.off("response", onUploadResponse);
-      const body = await response.text().catch(() => "response unavailable");
-      const scanUnavailable =
-        response.status() === 422 && /pending|scan/i.test(body);
-      reject(
-        boundaryError(
-          scanUnavailable ? "environment" : "api_round_trip",
-          `attachment upload failed with ${response.status()}: ${response.url()}; ${body}`,
-        ),
-      );
-    };
-    page.on("response", onUploadResponse);
-  });
-  try {
-    await visibleInput.setInputFiles(attachmentFixture);
-    await Promise.race([
-      expect(existingFile).toHaveCount(1, { timeout: 30_000 }),
-      failedUpload,
-    ]);
-  } finally {
-    if (onUploadResponse) page.off("response", onUploadResponse);
+  const uploadResponsePromise = page.waitForResponse(
+    (response) =>
+      /\/api\/applications\/[^/]+\/attachments\/create$/.test(response.url()),
+    { timeout: 30_000 },
+  );
+  await visibleInput.setInputFiles(attachmentFixture);
+  const uploadResponse = await uploadResponsePromise;
+  if (!uploadResponse.ok()) {
+    const body = await uploadResponse
+      .text()
+      .catch(() => "response unavailable");
+    const scanUnavailable =
+      uploadResponse.status() === 422 && /pending|scan/i.test(body);
+    throw boundaryError(
+      scanUnavailable ? "environment" : "api_round_trip",
+      `attachment upload failed with ${uploadResponse.status()}: ${uploadResponse.url()}; ${body}`,
+    );
   }
+  await expect(existingFile).toHaveCount(1, { timeout: 30_000 });
   const hiddenInput = page.locator(
     `main input[type=hidden][id=${JSON.stringify(controlId)}]`,
   );
