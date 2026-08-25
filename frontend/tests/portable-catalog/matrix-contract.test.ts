@@ -3,6 +3,7 @@ import os from "os";
 import path from "path";
 import {
   assertPortableMatrixEnvironment,
+  boundaryError,
   classifyBoundary,
   completeBlockedProbes,
   firstAddressableAttachmentDefinition,
@@ -21,6 +22,15 @@ import {
 } from "tests/e2e/portable-catalog/matrix-contract";
 
 describe("portable catalog matrix contract", () => {
+  it("preserves explicit probe boundaries on structured errors", () => {
+    expect(
+      observedBoundary(
+        boundaryError("environment", "scan pending"),
+        "api_round_trip",
+      ),
+    ).toBe("environment");
+  });
+
   it("selects the first mechanically addressable attachment declaration", () => {
     const baseForm = {
       portableFormId: "narrative",

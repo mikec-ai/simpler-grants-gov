@@ -5,6 +5,7 @@ import { expect, test, type Page, type Response } from "@playwright/test";
 import playwrightEnv from "tests/e2e/playwright-env";
 import {
   assertPortableMatrixEnvironment,
+  boundaryError,
   classifyBoundary,
   completeBlockedProbes,
   firstAddressableAttachmentDefinition,
@@ -294,13 +295,42 @@ async function exerciseAttachmentUpload(
     `main input[type=file][id=${JSON.stringify(`${controlId}-visible`)}]`,
   );
   await expect(visibleInput).toBeAttached();
-  await visibleInput.setInputFiles(attachmentFixture);
 
   const fileName = path.basename(attachmentFixture);
   const existingFile = page
     .getByTestId("file-input-existing-files")
     .filter({ hasText: fileName });
-  await expect(existingFile).toHaveCount(1, { timeout: 30_000 });
+  let onUploadResponse: ((response: Response) => Promise<void>) | undefined;
+  const failedUpload = new Promise<never>((_resolve, reject) => {
+    onUploadResponse = async (response: Response) => {
+      if (
+        response.ok() ||
+        !/\/api\/applications\/[^/]+\/attachments\/create$/.test(response.url())
+      ) {
+        return;
+      }
+      if (onUploadResponse) page.off("response", onUploadResponse);
+      const body = await response.text().catch(() => "response unavailable");
+      const scanUnavailable =
+        response.status() === 422 && /pending|scan/i.test(body);
+      reject(
+        boundaryError(
+          scanUnavailable ? "environment" : "api_round_trip",
+          `attachment upload failed with ${response.status()}: ${response.url()}; ${body}`,
+        ),
+      );
+    };
+    page.on("response", onUploadResponse);
+  });
+  try {
+    await visibleInput.setInputFiles(attachmentFixture);
+    await Promise.race([
+      expect(existingFile).toHaveCount(1, { timeout: 30_000 }),
+      failedUpload,
+    ]);
+  } finally {
+    if (onUploadResponse) page.off("response", onUploadResponse);
+  }
   const hiddenInput = page.locator(
     `main input[type=hidden][id=${JSON.stringify(controlId)}]`,
   );
@@ -698,6 +728,11 @@ test.describe("portable catalog browser conformance", () => {
                 },
               });
             }
+
+            // A failed attachment request belongs to the attachment probe. Do
+            // not let it cascade into otherwise independent save/reload and
+            // print receipts for the same form.
+            failedFormRequests.length = 0;
 
             let applyUrl = page.url();
             receipt.probes.push(
