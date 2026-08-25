@@ -134,6 +134,7 @@ def test_s3mock_uses_a_compose_scoped_volume() -> None:
     )
 
     assert store_root == "/containers3root"
+    assert s3mock["user"] == "0:0"
     assert s3mock_volume["type"] == "volume"
     assert api_volume["type"] == "volume"
     assert s3mock_volume["source"] == api_volume["source"] == "s3mock-data"

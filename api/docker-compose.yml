@@ -39,6 +39,10 @@ services:
 
   s3mock:
     image: adobe/s3mock:latest
+    # The linux/amd64 image runs as uid 1000, but Docker initializes a new
+    # named-volume root as root. Run this local-only mock as root so it can
+    # materialize buckets inside the shared store.
+    user: "0:0"
     environment:
       - COM_ADOBE_TESTING_S3MOCK_STORE_ROOT=/containers3root
       - COM_ADOBE_TESTING_S3MOCK_STORE_RETAIN_FILES_ON_EXIT=true
