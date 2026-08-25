@@ -152,7 +152,7 @@ async function captureFormState(page: Page) {
 }
 
 const editableControlSelector =
-  "main input:visible:not([type=hidden]):not([disabled]):not([readonly]), " +
+  "main input:visible:not([type=file]):not([type=hidden]):not([disabled]):not([readonly]), " +
   "main textarea:visible:not([disabled]):not([readonly]), " +
   "main select:visible:not([disabled])";
 
