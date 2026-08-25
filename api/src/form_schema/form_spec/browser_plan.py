@@ -6,6 +6,7 @@ artifacts.  It does not infer semantic test data and it never selects forms by n
 
 from __future__ import annotations
 
+import copy
 import hashlib
 import json
 import uuid
@@ -15,6 +16,7 @@ from typing import Any
 
 from src.form_schema.form_spec.bank import ARTIFACT_MANIFEST
 from src.form_schema.form_spec.loader import _load_banked_form
+from src.form_schema.form_spec.operational_behavior import apply_operational_editability
 from src.form_schema.form_spec.preview import (
     PREVIEW_FLAG,
     banked_form_ids,
@@ -301,7 +303,10 @@ def build_browser_plan() -> dict[str, Any]:
 
     for form_id in form_ids:
         loaded = _load_banked_form(form_id, project_xml=False)
-        resolved_schema = resolve_jsonschema(loaded.form_json_schema)
+        resolved_schema = apply_operational_editability(
+            resolve_jsonschema(copy.deepcopy(loaded.form_json_schema)),
+            loaded.operational_behavior,
+        )
         schema_fields = list(_schema_fields(resolved_schema))
         schema_implications = _simple_schema_implications(resolved_schema)
         ui_nodes = list(_walk(loaded.form_ui_schema))

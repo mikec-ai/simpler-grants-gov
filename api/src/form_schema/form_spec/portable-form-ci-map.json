@@ -29,7 +29,7 @@
     "rr-budget-10yr": ["api/tests/src/form_schema/form_spec/test_rr_budget10_portable.py"],
     "rr-key-person-expanded": ["api/tests/src/form_schema/form_spec/test_rr_key_person_expanded_portable.py"],
     "rr-other-project-information": ["api/tests/src/form_schema/form_spec/test_rr_other_project_information_portable.py"],
-    "rr-personal-data": ["api/tests/src/form_schema/form_spec/test_preview.py"],
+    "rr-personal-data": ["api/tests/src/form_schema/form_spec/test_rr_personal_data_portable.py"],
     "rr-sf424": ["api/tests/src/form_schema/form_spec/test_rr_sf424_portable.py"],
     "rr-sf424-multi-project-cover": ["api/tests/src/form_schema/form_spec/test_rr_sf424_multi_project_cover_portable.py"],
     "rr-sf424b": ["api/tests/src/form_schema/form_spec/test_sf424b_portable.py"],
