@@ -12,6 +12,7 @@ import pytest
 from src.form_schema.form_spec.differential import (
     COHORT_PATH,
     CONTRACT,
+    DISPOSITION_CONTRACT,
     LEDGER_PATH,
     LEDGER_SCHEMA_PATH,
     Difference,
@@ -19,6 +20,7 @@ from src.form_schema.form_spec.differential import (
     _load_cohort,
     _load_delta_ledger,
     compare_cohort,
+    no_oracle_disposition,
 )
 
 EXPECTED_FORMS = [
@@ -75,6 +77,8 @@ def test_uniform_cohort_has_seven_comparison_gated_receipts(receipts: list[dict]
     assert sum(receipt["comparisonGate"] for receipt in receipts) == 1
     assert all("releaseGate" not in receipt for receipt in receipts)
     assert all(receipt["source"]["revision"] == TEST_REVISION for receipt in receipts)
+    assert all(receipt["source"]["testedRevision"] == TEST_REVISION for receipt in receipts)
+    assert all(receipt["source"]["prHeadRevision"] == TEST_REVISION for receipt in receipts)
     assert len({receipt["source"]["cohortSha256"] for receipt in receipts}) == 1
 
     for receipt in receipts:
@@ -297,3 +301,172 @@ def test_cli_rejects_unknown_flags() -> None:
 def test_invalid_injected_revision_fails_before_comparison() -> None:
     with pytest.raises(ValueError, match="full lowercase 40-character Git SHA"):
         compare_cohort(consumer_revision="main")
+
+
+def test_tested_and_pr_head_revisions_are_attributed_separately() -> None:
+    pr_head = "2" * 40
+    selected = compare_cohort(
+        consumer_revision=TEST_REVISION,
+        pr_head_revision=pr_head,
+        form_ids=("project-narrative-attachments",),
+    )
+
+    assert selected[0]["source"]["revision"] == TEST_REVISION
+    assert selected[0]["source"]["testedRevision"] == TEST_REVISION
+    assert selected[0]["source"]["prHeadRevision"] == pr_head
+
+
+def test_no_oracle_disposition_is_versioned_and_revision_attributed() -> None:
+    disposition = no_oracle_disposition(
+        "sf424c",
+        consumer_revision=TEST_REVISION,
+        pr_head_revision="2" * 40,
+    )
+
+    assert disposition["contract"] == DISPOSITION_CONTRACT
+    assert disposition["outcome"] == "no_oracle"
+    assert disposition["reasonCode"] == "no-versioned-oracle-configured"
+    assert disposition["source"]["testedRevision"] == TEST_REVISION
+    assert disposition["source"]["prHeadRevision"] == "2" * 40
+
+
+def test_exact_form_subset_preserves_requested_order() -> None:
+    selected = compare_cohort(
+        consumer_revision=TEST_REVISION,
+        form_ids=("project-narrative-attachments", "project-abstract-summary"),
+    )
+
+    assert [receipt["portableFormId"] for receipt in selected] == [
+        "project-narrative-attachments",
+        "project-abstract-summary",
+    ]
+
+
+@pytest.mark.parametrize(
+    ("form_ids", "message"),
+    [
+        ((), "cannot be empty"),
+        (("sf424", "sf424"), "duplicate"),
+        (("not-in-cohort",), "outside the cohort"),
+    ],
+)
+def test_exact_form_subset_fails_closed(form_ids: tuple[str, ...], message: str) -> None:
+    with pytest.raises(ValueError, match=message):
+        compare_cohort(consumer_revision=TEST_REVISION, form_ids=form_ids)
+
+
+def test_cli_writes_only_requested_form_receipt(tmp_path: Path) -> None:
+    output = tmp_path / "receipts"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "bin/build_portable_legacy_differential.py",
+            "--consumer-revision",
+            TEST_REVISION,
+            "--form-id",
+            "project-narrative-attachments",
+            "--output-dir",
+            str(output),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        env={**os.environ, "PYTHONPATH": "."},
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert sorted(path.name for path in output.iterdir()) == [
+        "project-narrative-attachments.json",
+        "summary.json",
+    ]
+    summary = json.loads((output / "summary.json").read_text())
+    assert summary["forms"] == 1
+    assert summary["oracleReceipts"] == 1
+    assert summary["noOracleDispositions"] == 0
+
+
+def test_cli_writes_explicit_disposition_for_banked_form_without_oracle(tmp_path: Path) -> None:
+    output = tmp_path / "receipts"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "bin/build_portable_legacy_differential.py",
+            "--consumer-revision",
+            TEST_REVISION,
+            "--form-id",
+            "sf424c",
+            "--output-dir",
+            str(output),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        env={**os.environ, "PYTHONPATH": "."},
+    )
+
+    assert result.returncode == 0, result.stderr
+    disposition = json.loads((output / "sf424c.json").read_text())
+    summary = json.loads((output / "summary.json").read_text())
+    assert disposition["contract"] == DISPOSITION_CONTRACT
+    assert summary["selectedForms"] == ["sf424c"]
+    assert summary["oracleReceipts"] == 0
+    assert summary["noOracleDispositions"] == 1
+    assert summary["forms"] == summary["oracleReceipts"] + summary["noOracleDispositions"]
+
+
+def test_cli_accounts_for_every_selected_form_across_both_outcomes(tmp_path: Path) -> None:
+    output = tmp_path / "receipts"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "bin/build_portable_legacy_differential.py",
+            "--consumer-revision",
+            TEST_REVISION,
+            "--pr-head-revision",
+            "2" * 40,
+            "--form-id",
+            "project-narrative-attachments",
+            "--form-id",
+            "sf424c",
+            "--output-dir",
+            str(output),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        env={**os.environ, "PYTHONPATH": "."},
+    )
+
+    assert result.returncode == 0, result.stderr
+    summary = json.loads((output / "summary.json").read_text())
+    assert summary["selectedForms"] == ["project-narrative-attachments", "sf424c"]
+    assert summary["forms"] == 2
+    assert summary["oracleReceipts"] == 1
+    assert summary["noOracleDispositions"] == 1
+    for form_id in summary["selectedForms"]:
+        outcome = json.loads((output / f"{form_id}.json").read_text())
+        assert outcome["source"]["testedRevision"] == TEST_REVISION
+        assert outcome["source"]["prHeadRevision"] == "2" * 40
+
+
+def test_cli_rejects_unbanked_form(tmp_path: Path) -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "bin/build_portable_legacy_differential.py",
+            "--consumer-revision",
+            TEST_REVISION,
+            "--form-id",
+            "not-banked",
+            "--output-dir",
+            str(tmp_path),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        env={**os.environ, "PYTHONPATH": "."},
+    )
+
+    assert result.returncode == 1
+    assert result.stdout == ""
+    assert "not banked" in result.stderr

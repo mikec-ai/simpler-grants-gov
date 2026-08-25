@@ -22,6 +22,7 @@ from src.form_schema.jsonschema_resolver import resolve_jsonschema
 from src.form_schema.jsonschema_validator import _get_validator
 
 CONTRACT = "sgg-portable-legacy-differential/v3"
+DISPOSITION_CONTRACT = "sgg-portable-legacy-differential-disposition/v1"
 COHORT_CONTRACT = "sgg-portable-legacy-cohort/v1"
 COHORT_PATH = Path(__file__).with_name("differential-cohort.json")
 LEDGER_CONTRACT = "grants-form-parity-delta-ledger/v1"
@@ -511,18 +512,74 @@ def _validated_revision(revision: str) -> str:
     return revision
 
 
+def revision_attribution(
+    *, consumer_revision: str | None = None, pr_head_revision: str | None = None
+) -> dict[str, str]:
+    """Record both the tested checkout and the PR head without conflating them."""
+    tested_revision = _validated_revision(
+        consumer_revision if consumer_revision is not None else _consumer_revision()
+    )
+    resolved_pr_head = _validated_revision(
+        pr_head_revision if pr_head_revision is not None else tested_revision
+    )
+    return {
+        "revision": tested_revision,
+        "testedRevision": tested_revision,
+        "prHeadRevision": resolved_pr_head,
+    }
+
+
+def no_oracle_disposition(
+    portable_form_id: str,
+    *,
+    cohort_path: Path = COHORT_PATH,
+    consumer_revision: str | None = None,
+    pr_head_revision: str | None = None,
+) -> dict[str, Any]:
+    """Emit an explicit machine-readable outcome when no comparison oracle exists."""
+    return {
+        "contract": DISPOSITION_CONTRACT,
+        "portableFormId": portable_form_id,
+        "outcome": "no_oracle",
+        "reasonCode": "no-versioned-oracle-configured",
+        "reason": "the differential cohort has no versioned Simpler oracle configured for this form",
+        "source": {
+            "repository": "https://github.com/mikec-ai/simpler-grants-gov",
+            **revision_attribution(
+                consumer_revision=consumer_revision, pr_head_revision=pr_head_revision
+            ),
+            "cohortSha256": hashlib.sha256(cohort_path.read_bytes()).hexdigest(),
+        },
+    }
+
+
 def compare_cohort(
-    cohort_path: Path = COHORT_PATH, *, consumer_revision: str | None = None
+    cohort_path: Path = COHORT_PATH,
+    *,
+    consumer_revision: str | None = None,
+    pr_head_revision: str | None = None,
+    form_ids: Iterable[str] | None = None,
 ) -> list[dict[str, Any]]:
     """Compare every declaratively selected form through the same mechanism."""
     cohort = _load_cohort(cohort_path)
+    requested_form_ids = tuple(form_ids) if form_ids is not None else None
+    if requested_form_ids is not None:
+        if len(requested_form_ids) != len(set(requested_form_ids)):
+            raise ValueError("differential form selection contains duplicate portable form ids")
+        available_form_ids = {record["portableFormId"] for record in cohort["forms"]}
+        unknown_form_ids = sorted(set(requested_form_ids) - available_form_ids)
+        if unknown_form_ids:
+            raise ValueError(
+                "differential form selection is outside the cohort: " + ", ".join(unknown_form_ids)
+            )
+        if not requested_form_ids:
+            raise ValueError("differential form selection cannot be empty")
     ledger, ledger_source = _load_delta_ledger()
-    revision = _validated_revision(
-        consumer_revision if consumer_revision is not None else _consumer_revision()
-    )
     source = {
         "repository": "https://github.com/mikec-ai/simpler-grants-gov",
-        "revision": revision,
+        **revision_attribution(
+            consumer_revision=consumer_revision, pr_head_revision=pr_head_revision
+        ),
         "cohortSha256": hashlib.sha256(cohort_path.read_bytes()).hexdigest(),
         "deltaLedger": ledger_source,
     }
@@ -535,7 +592,17 @@ def compare_cohort(
         raise ValueError(
             f"parity delta ledger contains forms outside the cohort: {extra_ledger_forms}"
         )
-    for record in cohort["forms"]:
+    selected_records = (
+        cohort["forms"]
+        if requested_form_ids is None
+        else [
+            record
+            for form_id in requested_form_ids
+            for record in cohort["forms"]
+            if record["portableFormId"] == form_id
+        ]
+    )
+    for record in selected_records:
         portable_id = record["portableFormId"]
         existing = load_versioned_form(
             forms_root / record["existingDirectory"], record["existingVersion"]

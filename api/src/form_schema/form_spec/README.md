@@ -154,11 +154,16 @@ uv run python bin/build_portable_legacy_differential.py \
   --output-dir test-results/legacy-differential
 ```
 
-CI passes `--consumer-revision` explicitly because the runtime image does not contain Git. Local
-runs may omit it to record the current repository HEAD. Both paths require a full lowercase
-40-character Git SHA.
+CI resolves the actually tested checkout with `git rev-parse HEAD` on the host and passes it as
+`--consumer-revision` because the runtime image does not contain Git. It records the pull-request
+head separately with `--pr-head-revision`; a merge checkout must never be attributed to the PR
+head. Local runs may omit both values to record the current repository HEAD for each. All supplied
+revisions require a full lowercase 40-character Git SHA.
 
-The command emits one comparable JSON receipt per form and a cohort summary. The directory is
+The command emits one versioned JSON outcome per selected form and a cohort summary. Forms with an
+existing Simpler oracle receive a comparison receipt; banked forms outside the oracle cohort
+receive an explicit `no_oracle` disposition. The summary fails closed unless selected forms equal
+oracle receipts plus no-oracle dispositions. The directory is
 ignored locally and published by full API CI as a build artifact. Existing Simpler behavior is a
 compatibility oracle, not source or semantic authority. Exact differences join to the producer's
 digest-pinned parity ledger. A mechanically bounded proposal reports `proposed_delta` and blocks
