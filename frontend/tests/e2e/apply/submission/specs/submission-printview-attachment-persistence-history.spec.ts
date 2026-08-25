@@ -195,6 +195,9 @@ for (const {
         await expect
           .poll(
             async () => {
+              await page.goto(applicationUrl, {
+                waitUntil: "domcontentloaded",
+              });
               const activities = await getApplicationHistoryActivities(page);
               return {
                 attachmentPersisted: activities.some((activity) =>
@@ -205,7 +208,7 @@ for (const {
                 ),
               };
             },
-            { timeout: 30_000 },
+            { intervals: [1_000, 2_000, 5_000], timeout: 30_000 },
           )
           .toEqual({ attachmentPersisted: true, submissionRecorded: true });
 
