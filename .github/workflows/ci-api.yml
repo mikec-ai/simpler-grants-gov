@@ -30,6 +30,8 @@ jobs:
       tier: ${{ steps.classify.outputs.tier }}
       portable_form_ids: ${{ steps.classify.outputs.portable_form_ids }}
       portable_test_files: ${{ steps.classify.outputs.portable_test_files }}
+      portable_frontend_evidence_files: ${{ steps.classify.outputs.portable_frontend_evidence_files }}
+      reason: ${{ steps.classify.outputs.reason }}
     steps:
       - uses: actions/checkout@v4
         if: ${{ github.event_name == 'pull_request' }}
@@ -49,6 +51,7 @@ jobs:
               echo "tier=full"
               echo "portable_form_ids="
               echo "portable_test_files="
+              echo "portable_frontend_evidence_files="
               echo "reason=non-PR invocation requires full CI"
             } >> "$GITHUB_OUTPUT"
             exit 0
@@ -57,6 +60,21 @@ jobs:
             --base "$BASE_SHA" \
             --head "$HEAD_SHA" \
             --github-output "$GITHUB_OUTPUT"
+
+      - name: Summarize CI classification
+        if: ${{ always() }}
+        working-directory: ./
+        env:
+          CI_TIER: ${{ steps.classify.outputs.tier || 'unavailable' }}
+          CI_REASON: ${{ steps.classify.outputs.reason || 'classification did not complete' }}
+          PORTABLE_FORM_IDS: ${{ steps.classify.outputs.portable_form_ids || '' }}
+        run: |
+          {
+            echo "### Portable form CI classification"
+            printf -- "- Tier: %s\n" "$CI_TIER"
+            printf -- "- Reason: %s\n" "$CI_REASON"
+            printf -- "- Form IDs: %s\n" "${PORTABLE_FORM_IDS:-none}"
+          } >> "$GITHUB_STEP_SUMMARY"
 
   lint-test:
     needs: [classify-form-spec-change]

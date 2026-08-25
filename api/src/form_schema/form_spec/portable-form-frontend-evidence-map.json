@@ -1,0 +1,13 @@
+{
+  "contract": "sgg-portable-form-frontend-evidence-map/v1",
+  "forms": {
+    "phs398-cover-page-supplement": [
+      "frontend/src/utils/applyForm/__fixtures__/phs398-cover-page-supplement-ui-schema.json",
+      "frontend/src/utils/applyForm/phs398CoverPageSupplementConditions.test.ts"
+    ],
+    "sbir-sttr-information": [
+      "api/tests/src/form_schema/form_spec/sbir_sttr_projected_conditions.json",
+      "frontend/src/utils/applyForm/sbirSttrInformationConditions.test.ts"
+    ]
+  }
+}

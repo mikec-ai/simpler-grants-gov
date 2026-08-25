@@ -5,8 +5,8 @@ The lightweight CI lanes are intentionally narrow. New vendored artifacts and
 exact XSD fixtures can use bank-only CI. Existing form-local artifacts can use
 focused CI when their exact mapped tests are selected. A test-only change can
 also use focused CI, but only when every changed path is an exact, unambiguous
-entry in the versioned portable CI map. Consumer code, registration, projection,
-shared files, unknown tests, mixed changes, and deletions fail closed to full CI.
+entry in the versioned portable CI maps. Consumer code, registration, projection,
+shared files, unknown evidence, mixed-form changes, and deletions fail closed to full CI.
 """
 
 from __future__ import annotations
@@ -33,6 +33,10 @@ FORM_ARTIFACT_PREFIX = f"{ARTIFACTS.as_posix()}/forms/"
 PORTABLE_TEST_PREFIX = "api/tests/src/form_schema/form_spec/"
 PORTABLE_CI_MAP = Path("api/src/form_schema/form_spec/portable-form-ci-map.json")
 PORTABLE_CI_MAP_CONTRACT = "sgg-portable-form-ci-map/v1"
+FRONTEND_EVIDENCE_MAP = Path(
+    "api/src/form_schema/form_spec/portable-form-frontend-evidence-map.json"
+)
+FRONTEND_EVIDENCE_MAP_CONTRACT = "sgg-portable-form-frontend-evidence-map/v1"
 REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 TIER_BANK_ONLY = "bank_only"
 TIER_PORTABLE_FOCUSED = "portable_focused"
@@ -51,6 +55,7 @@ class Classification:
     reason: str
     form_ids: tuple[str, ...] = ()
     test_files: tuple[str, ...] = ()
+    frontend_evidence_files: tuple[str, ...] = ()
 
     @property
     def bank_only(self) -> bool:
@@ -109,8 +114,71 @@ def load_portable_ci_map(path: Path = PORTABLE_CI_MAP) -> dict[str, tuple[str, .
     return mapping
 
 
+def _is_frontend_evidence_path(path: str) -> bool:
+    if path.startswith("frontend/"):
+        return path.endswith((".test.ts", ".test.tsx")) or (
+            "/__fixtures__/" in path and path.endswith(".json")
+        )
+    return path.startswith(PORTABLE_TEST_PREFIX) and path.endswith(".json")
+
+
+def load_frontend_evidence_map(
+    path: Path = FRONTEND_EVIDENCE_MAP,
+) -> dict[str, tuple[str, ...]]:
+    resolved_path = path if path.is_absolute() else REPOSITORY_ROOT / path
+    payload = json.loads(resolved_path.read_text())
+    if payload.get("contract") != FRONTEND_EVIDENCE_MAP_CONTRACT:
+        raise ValueError("unsupported portable form frontend evidence map contract")
+    forms = payload.get("forms")
+    if not isinstance(forms, dict) or not forms:
+        raise ValueError("portable form frontend evidence map must contain forms")
+    mapping: dict[str, tuple[str, ...]] = {}
+    for form_id, evidence_files in forms.items():
+        if (
+            not isinstance(form_id, str)
+            or not isinstance(evidence_files, list)
+            or not evidence_files
+        ):
+            raise ValueError(
+                "portable form frontend evidence map entries require a form id and evidence"
+            )
+        if any(
+            not isinstance(evidence_file, str) or not _is_frontend_evidence_path(evidence_file)
+            for evidence_file in evidence_files
+        ):
+            raise ValueError(
+                f"portable form frontend evidence map has invalid evidence for {form_id}"
+            )
+        if len(evidence_files) != len(set(evidence_files)):
+            raise ValueError(
+                f"portable form frontend evidence map has duplicate evidence for {form_id}"
+            )
+        missing = [
+            evidence_file
+            for evidence_file in evidence_files
+            if not (REPOSITORY_ROOT / evidence_file).is_file()
+        ]
+        if missing:
+            raise ValueError(
+                f"portable form frontend evidence map has missing evidence for {form_id}: {missing}"
+            )
+        mapping[form_id] = tuple(sorted(evidence_files))
+    return mapping
+
+
+def _reverse_mapping(mapping: dict[str, tuple[str, ...]]) -> dict[str, set[str]]:
+    reverse: dict[str, set[str]] = {}
+    for form_id, paths in mapping.items():
+        for path in paths:
+            reverse.setdefault(path, set()).add(form_id)
+    return reverse
+
+
 def classify_change(
-    changes: list[Change], *, portable_ci_map: dict[str, tuple[str, ...]] | None = None
+    changes: list[Change],
+    *,
+    portable_ci_map: dict[str, tuple[str, ...]] | None = None,
+    frontend_evidence_map: dict[str, tuple[str, ...]] | None = None,
 ) -> Classification:
     if not changes:
         return Classification(TIER_FULL, "no changed files")
@@ -153,60 +221,76 @@ def classify_change(
         )
 
     mapping = portable_ci_map if portable_ci_map is not None else load_portable_ci_map()
-
-    # Test-only closure is focused only when every changed path is one exact,
-    # unambiguous reverse-map entry. Filename similarity is deliberately ignored.
-    reverse_mapping: dict[str, set[str]] = {}
-    for form_id, test_files in mapping.items():
-        for test_file in test_files:
-            reverse_mapping.setdefault(test_file, set()).add(form_id)
-    test_only_form_ids: set[str] = set()
-    exact_test_only = True
-    for change in changes:
-        owners = reverse_mapping.get(change.path, set())
-        if len(owners) != 1:
-            exact_test_only = False
-            break
-        test_only_form_ids.update(owners)
-    if exact_test_only and test_only_form_ids:
-        selected_tests = tuple(
-            sorted(test_file for form_id in test_only_form_ids for test_file in mapping[form_id])
+    frontend_mapping = (
+        frontend_evidence_map
+        if frontend_evidence_map is not None
+        else (load_frontend_evidence_map() if portable_ci_map is None else {})
+    )
+    unknown_frontend_forms = sorted(set(frontend_mapping) - set(mapping))
+    if unknown_frontend_forms:
+        raise ValueError(
+            "portable form frontend evidence map references forms without API tests: "
+            + ", ".join(unknown_frontend_forms)
         )
+
+    # Evidence-only closure is focused only when every changed path is an exact
+    # map entry and the complete change resolves to exactly one form. API tests
+    # and frontend tests/fixtures remain distinct output classes.
+    api_reverse_mapping = _reverse_mapping(mapping)
+    frontend_reverse_mapping = _reverse_mapping(frontend_mapping)
+    evidence_only_owners: set[str] = set()
+    exact_evidence_only = True
+    for change in changes:
+        owners = api_reverse_mapping.get(change.path, set()) | frontend_reverse_mapping.get(
+            change.path, set()
+        )
+        if not owners:
+            exact_evidence_only = False
+            break
+        evidence_only_owners.update(owners)
+    if exact_evidence_only and len(evidence_only_owners) == 1:
+        evidence_form_id = next(iter(evidence_only_owners))
         return Classification(
             TIER_PORTABLE_FOCUSED,
-            "only exact unambiguous CI-mapped portable tests changed",
-            tuple(sorted(test_only_form_ids)),
-            selected_tests,
+            "only exact single-form CI-mapped API and frontend evidence changed",
+            (evidence_form_id,),
+            mapping[evidence_form_id],
+            frontend_mapping.get(evidence_form_id, ()),
         )
 
     # Existing-form changes are focused only when every non-manifest artifact is
-    # form-local and every other changed path is that form's exact portable test.
+    # form-local and every other changed path is that form's exact mapped evidence.
     # XSD, question-bank, governance, registration, projection, runtime, frontend,
-    # workflow, and ambiguous test changes therefore fail closed to full CI.
+    # workflow, unknown evidence, and multiple-form changes fail closed to full CI.
     form_ids: set[str] = set()
     for change in changes:
         candidate_form_id = _form_id_from_artifact(change.path)
         if candidate_form_id is not None:
             form_ids.add(candidate_form_id)
-    mapped_tests = {test_file for form_id in form_ids for test_file in mapping.get(form_id, ())}
-    changed_tests: set[str] = set()
+    selected_form_id = next(iter(form_ids)) if len(form_ids) == 1 else None
+    mapped_tests = set(mapping.get(selected_form_id, ())) if selected_form_id is not None else set()
+    mapped_frontend_evidence = (
+        set(frontend_mapping.get(selected_form_id, ())) if selected_form_id is not None else set()
+    )
     focused_paths = True
     for change in changes:
         if change.path == MANIFEST.as_posix() or _form_id_from_artifact(change.path):
             continue
-        if change.path not in mapped_tests:
+        owners = api_reverse_mapping.get(change.path, set()) | frontend_reverse_mapping.get(
+            change.path, set()
+        )
+        if owners != ({selected_form_id} if selected_form_id is not None else set()):
             focused_paths = False
             break
-        changed_tests.add(change.path)
 
     missing_mappings = sorted(form_ids - mapping.keys())
-    if form_ids and focused_paths and not missing_mappings:
-        selected_tests = tuple(sorted(mapped_tests | changed_tests))
+    if selected_form_id is not None and focused_paths and not missing_mappings:
         return Classification(
             TIER_PORTABLE_FOCUSED,
-            "only attributable form-local artifacts and their registered portable tests changed",
-            tuple(sorted(form_ids)),
-            selected_tests,
+            "only attributable single-form artifacts and their exact mapped evidence changed",
+            (selected_form_id,),
+            tuple(sorted(mapped_tests)),
+            tuple(sorted(mapped_frontend_evidence)),
         )
 
     return Classification(
@@ -322,6 +406,9 @@ def write_output(stream: TextIO, *, classification: Classification) -> None:
     stream.write(f"tier={classification.tier}\n")
     stream.write(f"portable_form_ids={','.join(classification.form_ids)}\n")
     stream.write(f"portable_test_files={','.join(classification.test_files)}\n")
+    stream.write(
+        "portable_frontend_evidence_files=" f"{','.join(classification.frontend_evidence_files)}\n"
+    )
     stream.write(f"reason={classification.reason}\n")
 
 
@@ -345,17 +432,21 @@ def main() -> None:
         "reason": classification.reason,
         "portableFormIds": list(classification.form_ids),
         "portableTestFiles": list(classification.test_files),
+        "portableFrontendEvidenceFiles": list(classification.frontend_evidence_files),
         "changedFiles": [change.path for change in changes],
     }
     if classification.bank_only:
         receipt.update(verify_additive_bank(args.base))
     elif classification.tier == TIER_PORTABLE_FOCUSED:
-        test_only = all(change.path in classification.test_files for change in changes)
+        exact_evidence_paths = set(classification.test_files) | set(
+            classification.frontend_evidence_files
+        )
+        evidence_only = all(change.path in exact_evidence_paths for change in changes)
         receipt.update(
             verify_focused_forms(
                 args.base,
                 classification.form_ids,
-                allow_unchanged_artifacts=test_only,
+                allow_unchanged_artifacts=evidence_only,
             )
         )
 
