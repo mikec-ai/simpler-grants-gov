@@ -190,3 +190,110 @@ def test_attachment_item_node_propagates_repeated_outer_and_item_attributes() ->
     assert [
         document[0].find(f"{{{attachment_namespace}}}FileName").text for document in documents
     ] == ["one.pdf", "two.pdf"]
+
+
+def test_path_local_namespaces_win_when_array_and_attachment_names_collide() -> None:
+    root_namespace = "http://example.org/root"
+    study_namespace = "http://example.org/study"
+    attachment_namespace = "http://example.org/attachments"
+    global_namespace = "http://example.org/global"
+    attachment_fields = {
+        "file_name": {"xml_transform": {"target": "FileName", "namespace": "att"}},
+        "mime_type": {"xml_transform": {"target": "MimeType", "namespace": "att"}},
+        "file_location": {"xml_transform": {"target": "FileLocation", "namespace": "att"}},
+        "hash_value": {"xml_transform": {"target": "HashValue", "namespace": "glob"}},
+    }
+    config = {
+        "_xml_config": {
+            "namespaces": {
+                "default": root_namespace,
+                "study": study_namespace,
+                "att": attachment_namespace,
+                "glob": global_namespace,
+            },
+            "xml_structure": {"root_element": "Report", "version": "1.0"},
+            "xsd_url": "https://example.org/report.xsd",
+        },
+        "root_values": {
+            "xml_transform": {
+                "target": "ExemptionNumbers",
+                "type": "array",
+                "namespace": "default",
+                "item_wrapper": "ExemptionNumber",
+                "item_namespace": "default",
+                "repeat_element_per_item": True,
+            },
+            "item": {"xml_transform": {"target": "ExemptionNumber", "namespace": "default"}},
+        },
+        "root_file": {
+            "xml_transform": {
+                "target": "attFile",
+                "type": "attachment",
+                "namespace": "default",
+            },
+            **attachment_fields,
+        },
+        "study": {
+            "xml_transform": {
+                "target": "Study",
+                "type": "nested_object",
+                "namespace": "study",
+            },
+            "values": {
+                "xml_transform": {
+                    "target": "ExemptionNumbers",
+                    "type": "array",
+                    "namespace": "study",
+                    "item_wrapper": "ExemptionNumber",
+                    "item_namespace": "study",
+                },
+                "item": {"xml_transform": {"target": "ExemptionNumber", "namespace": "study"}},
+            },
+            "file": {
+                "xml_transform": {
+                    "target": "attFile",
+                    "type": "attachment",
+                    "namespace": "study",
+                },
+                **attachment_fields,
+            },
+        },
+    }
+    attachments = {
+        attachment_id: AttachmentInfo(
+            filename=f"{attachment_id}.pdf",
+            mime_type="application/pdf",
+            file_location=f"./attachments/{attachment_id}.pdf",
+            hash_value="YWJj",
+        )
+        for attachment_id in ("root-file", "study-file")
+    }
+
+    response = XMLGenerationService().generate_xml(
+        XMLGenerationRequest(
+            application_data={
+                "root_values": ["E1", "E2"],
+                "root_file": "root-file",
+                "study": {"values": ["E3"], "file": "study-file"},
+            },
+            transform_config=config,
+            attachment_mapping=attachments,
+        )
+    )
+
+    assert response.success, response.error_message
+    root = lxml_etree.fromstring(response.xml_data.encode())
+    root_values = root.findall(f"{{{root_namespace}}}ExemptionNumbers")
+    root_file = root.find(f"{{{root_namespace}}}attFile")
+    study = root.find(f"{{{study_namespace}}}Study")
+    assert len(root_values) == 2
+    assert [container[0].text for container in root_values] == ["E1", "E2"]
+    assert root_file is not None
+    assert root_file.findtext(f"{{{attachment_namespace}}}FileName") == "root-file.pdf"
+    assert study is not None
+    study_values = study.find(f"{{{study_namespace}}}ExemptionNumbers")
+    study_file = study.find(f"{{{study_namespace}}}attFile")
+    assert study_values is not None
+    assert [node.text for node in study_values] == ["E3"]
+    assert study_file is not None
+    assert study_file.findtext(f"{{{attachment_namespace}}}FileName") == "study-file.pdf"

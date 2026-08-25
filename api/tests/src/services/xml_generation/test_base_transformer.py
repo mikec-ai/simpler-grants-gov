@@ -276,6 +276,7 @@ class TestRecursiveXMLTransformer:
             "Files": {
                 "__namespace__": "default",
                 "AttachedFile": {
+                    "__namespace__": "default",
                     "FileName": "evidence.pdf",
                     "MimeType": "application/pdf",
                     "FileLocation": "",

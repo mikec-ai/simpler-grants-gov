@@ -339,7 +339,19 @@ class RecursiveXMLTransformer:
         path: list[str],
     ) -> None:
         """Assign one transformed value, optionally under one declared leaf wrapper."""
-        payload: dict[str, Any] = {transform_rule["target"]: value}
+        target = transform_rule["target"]
+        payload: dict[str, Any] = {target: value}
+        namespace = transform_rule.get("namespace")
+        if namespace and isinstance(value, dict) and "__namespace__" not in value:
+            # Attachment transforms return a structured dictionary rather than the
+            # scalar namespace wrapper used by ordinary values. Preserve the mapping
+            # node's namespace on that dictionary so an identical local name in a
+            # nested imported schema cannot overwrite it in the legacy flat index.
+            payload[target] = {"__namespace__": namespace, **value}
+        elif namespace and isinstance(value, list):
+            # Lists cannot carry in-band dictionary metadata. Store the path-local
+            # namespace beside the list, mirroring field-specific attribute metadata.
+            payload[f"__{target}__namespace"] = namespace
         if container := transform_rule.get("container"):
             payload = {
                 container["target"]: {
