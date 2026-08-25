@@ -1,6 +1,6 @@
 import { EnumOptionsType, RJSFSchema } from "@rjsf/utils";
 import { get as getSchemaObjectFromPointer } from "json-pointer";
-import { get } from "lodash";
+import { get, startCase } from "lodash";
 import { getSimpleTranslationsSync } from "src/i18n/getMessagesSync";
 import {
   BroadlyDefinedWidgetValue,
@@ -614,12 +614,24 @@ const getFieldListConfig = ({
       }
 
       const { value: _value, key: _key, ...rest } = childWidgetConfig.props;
+      const childSchema = rest.schema;
+      // This is an accessible presentation fallback derived from the stable
+      // machine path; it does not replace reviewed source labels or assert a
+      // semantic mapping.
+      const childTitle =
+        childSchema.title ?? storagePath.map(startCase).join(" ");
 
       return {
         widget: childWidgetConfig.type,
         baseId,
         storagePath,
-        generalProps: rest,
+        generalProps: {
+          ...rest,
+          schema: {
+            ...childSchema,
+            title: childTitle,
+          },
+        },
         definition: childNode.definition,
         conditional: childNode.conditional,
       };
@@ -739,6 +751,7 @@ export const getFieldConfig = <V extends string | Record<string, unknown>>({
       id: widgetId,
       key: widgetId,
       disabled: uiFieldObject.type === "null",
+      ...(fieldSchema.readOnly === true ? { readOnly: true } : {}),
       required: requiredField,
       minLength: fieldSchema?.minLength,
       maxLength: fieldSchema?.maxLength,

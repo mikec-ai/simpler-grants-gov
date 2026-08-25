@@ -477,8 +477,14 @@ function FieldListEntry({
           required: isRequired,
           updateOnInput: true,
           additionalDescribedById: entryHeadingId,
-          disabled: isInteractionDisabled || isConditionallyDisabled,
-          readOnly: isInteractionDisabled || isConditionallyReadOnly,
+          disabled:
+            Boolean(groupItem.generalProps.disabled) ||
+            isInteractionDisabled ||
+            isConditionallyDisabled,
+          readOnly:
+            Boolean(groupItem.generalProps.readOnly) ||
+            isInteractionDisabled ||
+            isConditionallyReadOnly,
           isFormLocked: isInteractionDisabled,
           onChange: (nextValue) => {
             handleFieldChange({

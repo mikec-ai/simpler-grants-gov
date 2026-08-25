@@ -339,6 +339,7 @@ describe("getFieldConfig", () => {
             required: ["firstName"],
             properties: {
               firstName: { type: "string", title: "First Name" },
+              unlabeledValue: { type: "string", readOnly: true },
               calculatedTotal: { type: "string", title: "Calculated Total" },
               address: {
                 type: "object",
@@ -388,6 +389,37 @@ describe("getFieldConfig", () => {
       expect(result.props.groupDefinition[0].storagePath).toEqual([
         "firstName",
       ]);
+      expect(result.props.groupDefinition[0].generalProps).toMatchObject({
+        schema: { title: "First Name" },
+      });
+    });
+
+    it("gives an unlabeled FieldList child a deterministic title and preserves readOnly", () => {
+      const uiFieldObject: UiSchemaFieldList = {
+        type: "fieldList",
+        name: "contacts",
+        label: "Contacts",
+        children: [
+          {
+            type: "field",
+            definition: "/properties/contacts/items/properties/unlabeledValue",
+          },
+        ],
+      };
+
+      const result = getFieldConfig({
+        errors: null,
+        formSchema,
+        formData: {},
+        uiFieldObject,
+        requiredField: false,
+      });
+
+      if (result.type !== "FieldList") throw new Error("Expected FieldList");
+      expect(result.props.groupDefinition[0].generalProps).toMatchObject({
+        readOnly: true,
+        schema: { title: "Unlabeled Value" },
+      });
     });
 
     it("preserves portable conditions on FieldList children", () => {
@@ -997,6 +1029,7 @@ describe("getFieldConfig", () => {
         id: "budget_summary_table",
         key: "budget_summary_table",
         disabled: false,
+        readOnly: true,
         required: false,
         minLength: undefined,
         maxLength: undefined,
