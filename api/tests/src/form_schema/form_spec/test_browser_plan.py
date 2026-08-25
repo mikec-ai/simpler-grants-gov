@@ -12,6 +12,7 @@ from src.form_schema.form_spec.browser_plan import (
     SEED_COMPETITION_ID,
     SEED_OPPORTUNITY_ID,
     _resolve_schema_pointer,
+    _schema_pointer_is_read_only,
     browser_seed_ids,
     build_browser_plan,
 )
@@ -140,6 +141,26 @@ def test_browser_plan_applies_operational_protection_before_selecting_browser_ed
     assert (
         "/properties/co_project_directors/items/properties/name/properties/first_name" in editable
     )
+
+
+def test_browser_plan_protects_nifa_fields_beneath_readonly_parent(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "nifa-supplemental")
+
+    capabilities = build_browser_plan()["forms"][0]["capabilities"]
+    editable_definitions = {
+        declaration["definition"] for declaration in capabilities["editableScalar"]["declarations"]
+    }
+    readonly_definitions = {
+        declaration["definition"]
+        for declaration in capabilities["readOnly"]["declarations"]
+        if "definition" in declaration
+    }
+
+    title = "/properties/funding_opportunity/properties/title"
+    assert title not in editable_definitions
+    assert title in readonly_definitions
 
 
 def test_browser_plan_classifies_attachment_controls_separately_from_editable_scalars(
@@ -482,3 +503,22 @@ def test_schema_pointer_resolution_fails_closed() -> None:
     assert _resolve_schema_pointer(schema, "/properties/name") == {"type": "string"}
     with pytest.raises(ValueError, match="does not resolve"):
         _resolve_schema_pointer(schema, "/properties/missing")
+
+
+def test_schema_pointer_readonly_protection_includes_parent_objects() -> None:
+    schema = {
+        "properties": {
+            "protected": {
+                "type": "object",
+                "readOnly": True,
+                "properties": {"child": {"type": "string"}},
+            },
+            "editable": {
+                "type": "object",
+                "properties": {"child": {"type": "string"}},
+            },
+        }
+    }
+
+    assert _schema_pointer_is_read_only(schema, "/properties/protected/properties/child")
+    assert not _schema_pointer_is_read_only(schema, "/properties/editable/properties/child")

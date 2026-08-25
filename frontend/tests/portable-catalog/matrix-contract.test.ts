@@ -7,11 +7,13 @@ import {
   classifyBoundary,
   completeBlockedProbes,
   firstAddressableAttachmentDefinition,
+  isolateProbeLedger,
   loadBrowserPlan,
   observedBoundary,
   PLAN_CONTRACT,
   RECEIPT_CONTRACT,
   recoverBrowserPlanCandidates,
+  requiresPageIsolationAfterProbe,
   responsePathToControlId,
   responsePathToRepeaterContainerIds,
   schemaDefinitionToControlId,
@@ -19,9 +21,40 @@ import {
   summarizeReceipts,
   writeReceipt,
   type FormReceipt,
+  type ProbeReceipt,
 } from "tests/e2e/portable-catalog/matrix-contract";
 
 describe("portable catalog matrix contract", () => {
+  it.each([
+    ["failed", true],
+    ["inconclusive", true],
+    ["passed", false],
+    ["not_applicable", false],
+  ] as const)(
+    "isolates later probes after a %s stateful probe",
+    (status, expected) => {
+      const receipt: ProbeReceipt = {
+        probe: "stateful_probe",
+        status,
+        durationMs: 0,
+      };
+      expect(requiresPageIsolationAfterProbe(receipt)).toBe(expected);
+    },
+  );
+
+  it("attributes only a failed probe's ledger delta", () => {
+    const ledger = ["pre-existing", "probe request", "probe retry"];
+
+    expect(isolateProbeLedger(ledger, 1)).toEqual([
+      "probe request",
+      "probe retry",
+    ]);
+    expect(ledger).toEqual(["pre-existing"]);
+    expect(() => isolateProbeLedger(ledger, 2)).toThrow(
+      "invalid probe ledger boundary",
+    );
+  });
+
   it("preserves explicit probe boundaries on structured errors", () => {
     expect(
       observedBoundary(

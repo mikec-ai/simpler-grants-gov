@@ -234,6 +234,29 @@ def _resolve_schema_pointer(schema: dict[str, Any], pointer: str) -> dict[str, A
     return _schema_pointer_nodes(schema, pointer)[0]
 
 
+def _schema_pointer_is_read_only(schema: dict[str, Any], pointer: str) -> bool:
+    """Return whether a schema pointer is protected by itself or an ancestor.
+
+    JSON Schema's ``readOnly`` annotation applies to the protected value, including an
+    object's descendants. UI definitions address leaf fields, so inspecting only the
+    selected leaf can incorrectly advertise a child of a read-only object as editable.
+    Walk every resolvable pointer prefix and preserve all ``allOf`` candidates exposed
+    by ``_schema_pointer_nodes``.
+    """
+
+    if any(value is True for value in _schema_keyword_values(schema, "readOnly")):
+        return True
+
+    encoded_segments = pointer.removeprefix("/").split("/")
+    for length in range(1, len(encoded_segments) + 1):
+        prefix = "/" + "/".join(encoded_segments[:length])
+        if any(
+            candidate.get("readOnly") is True for candidate in _schema_pointer_nodes(schema, prefix)
+        ):
+            return True
+    return False
+
+
 def _schema_keyword_values(schema: dict[str, Any], keyword: str) -> Iterator[Any]:
     if keyword in schema:
         yield schema[keyword]
@@ -362,8 +385,8 @@ def build_browser_plan() -> dict[str, Any]:
         }
         read_only_definitions = {
             definition
-            for definition, candidates in schema_nodes_by_definition.items()
-            if any(candidate.get("readOnly") is True for candidate in candidates)
+            for definition in schema_nodes_by_definition
+            if _schema_pointer_is_read_only(resolved_schema, definition)
         }
         readonly.extend(
             {"definition": definition}
