@@ -6,7 +6,9 @@ import React from "react";
 import MultiSelectWidget from "src/components/apply-form/widgets/MultiSelectWidget";
 
 jest.mock("@trussworks/react-uswds", () => {
-  const actual = jest.requireActual("@trussworks/react-uswds") as object;
+  const actual = jest.requireActual<typeof import("@trussworks/react-uswds")>(
+    "@trussworks/react-uswds",
+  );
   return {
     ...actual,
     ComboBox: React.forwardRef(function MockComboBox(

@@ -114,7 +114,7 @@ export default function MultiSelect<
           (value) =>
             allOptions.find((option) => String(option.value) === value)?.value,
         )
-        .filter((value) => value !== undefined) as unknown,
+        .filter((value) => value !== undefined),
     );
   };
 

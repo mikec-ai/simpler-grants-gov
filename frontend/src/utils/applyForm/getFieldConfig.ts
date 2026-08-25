@@ -743,7 +743,9 @@ export const getFieldConfig = <V extends string | Record<string, unknown>>({
           fieldSchema,
         })
       : {};
-  const exclusiveValues = fieldSchema["x-exclusive-values"];
+  const exclusiveValues: unknown = (fieldSchema as Record<string, unknown>)[
+    "x-exclusive-values"
+  ];
   const options =
     widgetType === "MultiSelect" &&
     Array.isArray(exclusiveValues) &&
