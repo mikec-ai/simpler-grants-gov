@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import {
   activateBinaryControl,
   saveForPersistenceProbe,
+  selectEligibleAttachmentControl,
 } from "tests/e2e/portable-catalog/portable-interactions";
 
 test.describe("portable catalog harness regressions", () => {
@@ -80,5 +81,52 @@ test.describe("portable catalog harness regressions", () => {
       "sample-upload-kb.pdf",
     );
     await expect(page.getByRole("button", { name: "Delete" })).toBeVisible();
+  });
+
+  test("selects the first visible and enabled attachment in declared order", async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <input id="hidden_attachment-visible" type="file" hidden />
+        <input id="disabled_attachment-visible" type="file" disabled />
+        <input id="eligible_attachment-visible" type="file" />
+        <input id="later_attachment-visible" type="file" />
+      </main>
+    `);
+
+    const selected = await selectEligibleAttachmentControl(page, [
+      "/properties/hidden_attachment",
+      "/properties/disabled_attachment",
+      "/properties/eligible_attachment",
+      "/properties/later_attachment",
+    ]);
+
+    expect(selected.definition).toBe("/properties/eligible_attachment");
+    expect(selected.controlId).toBe("eligible_attachment");
+    await expect(selected.visibleInput).toHaveAttribute(
+      "id",
+      "eligible_attachment-visible",
+    );
+  });
+
+  test("fails explicitly when no declared attachment is eligible", async ({
+    page,
+  }) => {
+    await page.setContent(`
+      <main>
+        <input id="hidden_attachment-visible" type="file" hidden />
+        <input id="disabled_attachment-visible" type="file" disabled />
+      </main>
+    `);
+
+    await expect(
+      selectEligibleAttachmentControl(page, [
+        "/properties/hidden_attachment",
+        "/properties/disabled_attachment",
+      ]),
+    ).rejects.toThrow(
+      "no declared attachment widget is currently visible and enabled",
+    );
   });
 });

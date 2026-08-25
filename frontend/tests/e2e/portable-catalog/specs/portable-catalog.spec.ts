@@ -1,13 +1,7 @@
 import fs from "fs";
 import path from "path";
 import AxeBuilder from "@axe-core/playwright";
-import {
-  expect,
-  test,
-  type Locator,
-  type Page,
-  type Response,
-} from "@playwright/test";
+import { expect, test, type Page, type Response } from "@playwright/test";
 import playwrightEnv from "tests/e2e/playwright-env";
 import {
   addressableAttachmentDefinitions,
@@ -40,6 +34,7 @@ import {
   activateBinaryControl,
   clickPortableSaveButton,
   saveForPersistenceProbe,
+  selectEligibleAttachmentControl,
 } from "tests/e2e/portable-catalog/portable-interactions";
 import { createApplication } from "tests/e2e/utils/application/create-application-utils";
 import { authenticateE2eUser } from "tests/e2e/utils/auth/authenticate-e2e-user-utils";
@@ -304,29 +299,8 @@ async function exerciseAttachmentUpload(
       "no mechanically addressable attachment widget is declared",
     );
   }
-  let selected:
-    | { definition: string; controlId: string; visibleInput: Locator }
-    | undefined;
-  for (const definition of definitions) {
-    const controlId = schemaDefinitionToControlId(definition);
-    const visibleInput = page.locator(
-      `main input[type=file][id=${JSON.stringify(`${controlId}-visible`)}]`,
-    );
-    if (
-      (await visibleInput.count()) > 0 &&
-      (await visibleInput.isVisible()) &&
-      (await visibleInput.isEnabled())
-    ) {
-      selected = { definition, controlId, visibleInput };
-      break;
-    }
-  }
-  if (!selected) {
-    throw new Error(
-      "no declared attachment widget is currently visible and enabled",
-    );
-  }
-  const { definition, controlId, visibleInput } = selected;
+  const { definition, controlId, visibleInput } =
+    await selectEligibleAttachmentControl(page, definitions);
 
   const fileName = path.basename(attachmentFixture);
   const existingFile = page
