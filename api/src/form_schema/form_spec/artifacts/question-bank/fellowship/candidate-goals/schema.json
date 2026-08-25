@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fellowship/candidate-goals/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Attach the fellowship candidate's goals, preparation, and potential narrative."
+}

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fellowship/graduate-degree-sought/schema.json",
+  "type": "object",
+  "properties": {
+    "degreeType": {
+      "$ref": "#/$defs/FellowshipDegreeType",
+      "title": "Degree Sought"
+    },
+    "otherDegreeTypeText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 10,
+      "title": "Other Degree Type"
+    },
+    "degreeDate": {
+      "$ref": "#/$defs/FellowshipMonthYear",
+      "title": "Expected Completion Date (MM/YYYY)"
+    }
+  },
+  "required": [
+    "degreeType",
+    "degreeDate"
+  ],
+  "description": "The graduate degree sought and expected completion month for the candidate.",
+  "$defs": {
+    "FellowshipDegreeType": {
+      "type": "string",
+      "enum": [
+        "MA: Master of Arts",
+        "MBA: Master of Business Administration",
+        "MLS: Master of Library Science",
+        "MPA: Master of Public Administration",
+        "MPH: Master of Public Health",
+        "MS: Master of Science",
+        "MSN: Master of Science In Nursing",
+        "DC: Doctor of Chiropractic",
+        "DNSC: Doctor of Nursing Science",
+        "DPH: Doctor of Public Health",
+        "DRPH: Doctor of Public Health",
+        "DSC: Doctor of Science",
+        "EDD: Doctor of Education",
+        "EGND: Foreign Doctor Engineering",
+        "JD: Doctor of Juris Prudence",
+        "PHD: Doctor of Philosophy",
+        "SCD: Doctor of Science",
+        "DDS: Doctor of Dental Surgery",
+        "DMD: Doctor of Medical Dentistry",
+        "DO: Doctor of Osteopathy",
+        "DPM: Doctor of Podiatric Medicine",
+        "DSW: Doctor of Social Work",
+        "DVM: Doctor of Veterinary Medicine",
+        "MB: Foreign - Bachelor of Medicine",
+        "MBBS: Foreign - Bachelor of Medicine and Surgery",
+        "MD: Doctor of Medicine",
+        "ND: Doctor of Naturopathy",
+        "OD: Doctor of Optometry",
+        "PHMD: Doctor of Pharmacy",
+        "PSYD: Doctor of Psychology",
+        "VMD: Doctor of Veterinary Medicine",
+        "MOTH: Other Masters Degree",
+        "DOTH: Other Doctorate",
+        "DDOT: Other Doctor of Medical Dentistry",
+        "MDOT: Other Doctor of Medicine",
+        "VDOT: Other Doctor of Veterinary Medicine",
+        "OTH: Other"
+      ],
+      "description": "Select the graduate degree sought by the fellowship candidate."
+    },
+    "FellowshipMonthYear": {
+      "type": "string",
+      "minLength": 7,
+      "maxLength": 7,
+      "pattern": "^(0[1-9]|1[0-2])/[0-9]{4}$",
+      "description": "A month and year in the source-defined MM/YYYY format."
+    }
+  }
+}

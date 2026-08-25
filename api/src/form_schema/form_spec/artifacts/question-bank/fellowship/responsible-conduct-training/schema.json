@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fellowship/responsible-conduct-training/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Attach the plan for training in the responsible conduct of research."
+}

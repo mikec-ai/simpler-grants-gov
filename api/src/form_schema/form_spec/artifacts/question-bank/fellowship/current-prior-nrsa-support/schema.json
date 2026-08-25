@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fellowship/current-prior-nrsa-support/schema.json",
+  "type": "object",
+  "properties": {
+    "hasSupport": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Have you received current or prior NRSA support?"
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/FellowshipNrsaSupportRecord"
+      },
+      "maxItems": 4,
+      "title": "Current or Prior NRSA Support"
+    }
+  },
+  "required": [
+    "hasSupport"
+  ],
+  "description": "Report current or prior NRSA support and up to four support records.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    },
+    "FellowshipNrsaLevel": {
+      "type": "string",
+      "enum": [
+        "Predoctoral",
+        "Postdoctoral"
+      ]
+    },
+    "FellowshipNrsaType": {
+      "type": "string",
+      "enum": [
+        "Individual",
+        "Institutional"
+      ]
+    },
+    "FellowshipNrsaSupportRecord": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "$ref": "#/$defs/FellowshipNrsaLevel",
+          "title": "Level"
+        },
+        "type": {
+          "$ref": "#/$defs/FellowshipNrsaType",
+          "title": "Type"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "date",
+          "title": "Start Date"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "date",
+          "title": "End Date"
+        },
+        "grantNumber": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 19,
+          "title": "Grant Number"
+        }
+      },
+      "required": [
+        "level",
+        "type"
+      ],
+      "description": "One current or prior NRSA support record."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "hasSupport": {
+            "const": "Y: Yes"
+          }
+        },
+        "required": [
+          "hasSupport"
+        ]
+      },
+      "then": {
+        "properties": {
+          "records": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}

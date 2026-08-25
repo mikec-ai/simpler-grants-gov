@@ -1,0 +1,683 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "phs-fellowship-supplemental",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS_Fellowship_Supplemental_8_0-V8.0.xsd",
+    "sha256": "85f8e33df4641c56f3b6b96108690f89d214de8b5c864b1d6bd1e6bf8c7cc7bc"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/PHS_Fellowship_Supplemental_8_0-V8.0",
+    "PHS_Fellowship_Supplemental_8_0": "http://apply.grants.gov/forms/PHS_Fellowship_Supplemental_8_0-V8.0",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0"
+  },
+  "root": {
+    "element": "PHS_Fellowship_Supplemental_8_0",
+    "namespacePrefix": "PHS_Fellowship_Supplemental_8_0",
+    "attributes": {
+      "FormVersion": "8.0"
+    }
+  },
+  "attachment": {
+    "fields": {
+      "fileName": {
+        "element": "FileName",
+        "namespace": "att"
+      },
+      "mimeType": {
+        "element": "MimeType",
+        "namespace": "att"
+      },
+      "fileLocation": {
+        "element": "FileLocation",
+        "namespace": "att"
+      },
+      "hashValue": {
+        "element": "HashValue",
+        "namespace": "glob"
+      }
+    }
+  },
+  "mapping": {
+    "fields": {
+      "introductionSection": {
+        "element": "Introduction",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "introduction": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/introduction",
+            "container": {
+              "element": "IntroductionToApplication",
+              "namespace": "default"
+            }
+          }
+        }
+      },
+      "candidateSection": {
+        "element": "CandidateSection",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "candidateGoals": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/candidateGoals",
+            "container": {
+              "element": "Goals",
+              "namespace": "default"
+            }
+          }
+        }
+      },
+      "researchTrainingPlan": {
+        "element": "ResearchTrainingPlan",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "trainingActivities": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/trainingActivities",
+            "container": {
+              "element": "TrainingActivities",
+              "namespace": "default"
+            }
+          },
+          "researchProjectAims": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/researchProjectAims",
+            "container": {
+              "element": "ResearchProjectAims",
+              "namespace": "default"
+            }
+          },
+          "researchProjectStrategy": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/researchProjectStrategy",
+            "container": {
+              "element": "ResearchProjectStrategy",
+              "namespace": "default"
+            }
+          },
+          "progressReportPublicationList": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/progressReportPublicationList",
+            "container": {
+              "element": "ProgressReportPublicationList",
+              "namespace": "default"
+            }
+          },
+          "responsibleConductTraining": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/responsibleConductTraining",
+            "container": {
+              "element": "TrainingInResponsibleConductOfResearch",
+              "namespace": "default"
+            }
+          }
+        }
+      },
+      "commitmentSection": {
+        "element": "CommitmentSection",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "sponsorCommitment": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/sponsorCommitment",
+            "container": {
+              "element": "SponsorsCommitment",
+              "namespace": "default"
+            }
+          },
+          "lettersOfSupport": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/lettersOfSupport",
+            "container": {
+              "element": "LettersOfSupport",
+              "namespace": "default"
+            }
+          },
+          "candidateContribution": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/candidateContribution",
+            "container": {
+              "element": "CandidateContribution",
+              "namespace": "default"
+            }
+          }
+        }
+      },
+      "otherResearchTrainingPlan": {
+        "element": "OtherResearchTrainingPlan",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "vertebrateAnimalsUsed": {
+            "element": "VertebrateAnimalsUsed",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/vertebrateAnimalsUsed"
+          },
+          "animalEuthanized": {
+            "element": "AreAnimalsEuthanized",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/vertebrateAnimalEuthanasia/animalEuthanized"
+          },
+          "avmaConsistent": {
+            "element": "AVMAConsistentIndicator",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/vertebrateAnimalEuthanasia/avmaConsistent"
+          },
+          "methodDescription": {
+            "element": "EuthanasiaMethodDescription",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/vertebrateAnimalEuthanasia/methodDescription"
+          },
+          "vertebrateAnimalsDocument": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/vertebrateAnimalsDocument",
+            "container": {
+              "element": "VertebrateAnimals",
+              "namespace": "default"
+            }
+          },
+          "selectAgentResearch": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/selectAgentResearch",
+            "container": {
+              "element": "SelectAgentResearch",
+              "namespace": "default"
+            }
+          },
+          "resourceSharingPlans": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/resourceSharingPlans",
+            "container": {
+              "element": "ResourceSharingPlan",
+              "namespace": "default"
+            }
+          },
+          "otherPlans": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/otherPlans",
+            "container": {
+              "element": "OtherPlans",
+              "namespace": "default"
+            }
+          },
+          "keyResourceAuthentication": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/keyResourceAuthentication",
+            "container": {
+              "element": "KeyBiologicalAndOrChemicalResources",
+              "namespace": "default"
+            }
+          }
+        }
+      },
+      "additionalInformation": {
+        "element": "AdditionalInformation",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "stemCells": {
+            "element": "StemCells",
+            "kind": "group",
+            "namespace": "default",
+            "fields": {
+              "involved": {
+                "element": "isHumanStemCellsInvolved",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/humanEmbryonicStemCells/involved"
+              },
+              "specificLineUnavailable": {
+                "element": "StemCellsIndicator",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/humanEmbryonicStemCells/specificLineUnavailable"
+              },
+              "cellLines": {
+                "element": "CellLines",
+                "kind": "array",
+                "namespace": "default",
+                "source": "/humanEmbryonicStemCells/cellLines",
+                "items": {
+                  "node": {
+                    "kind": "value",
+                    "flatten": true
+                  }
+                }
+              }
+            }
+          },
+          "candidateInformation": {
+            "element": "AlernatePhoneNumber",
+            "kind": "group",
+            "namespace": "default",
+            "source": "/candidateInformation",
+            "flatten": true,
+            "fields": {
+              "alternatePhone": {
+                "element": "AlernatePhoneNumber",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/candidateInformation/alternatePhone"
+              },
+              "graduateDegreeSought": {
+                "element": "GraduateDegreeSought",
+                "kind": "group",
+                "namespace": "default",
+                "source": "/candidateInformation/graduateDegreeSought",
+                "fields": {
+                  "degreeType": {
+                    "element": "DegreeType",
+                    "kind": "value",
+                    "namespace": "default",
+                    "source": "/candidateInformation/graduateDegreeSought/degreeType"
+                  },
+                  "otherDegreeTypeText": {
+                    "element": "OtherDegreeTypeText",
+                    "kind": "value",
+                    "namespace": "default",
+                    "source": "/candidateInformation/graduateDegreeSought/otherDegreeTypeText"
+                  },
+                  "degreeDate": {
+                    "element": "DegreeDate",
+                    "kind": "value",
+                    "namespace": "default",
+                    "source": "/candidateInformation/graduateDegreeSought/degreeDate"
+                  }
+                }
+              },
+              "fieldOfTraining": {
+                "element": "FieldOfTraining",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/candidateInformation/fieldOfTraining"
+              },
+              "currentPriorNrsaSupport": {
+                "element": "CurrentPriorNRSASupportIndicator",
+                "kind": "group",
+                "namespace": "default",
+                "source": "/candidateInformation/currentPriorNrsaSupport",
+                "flatten": true,
+                "fields": {
+                  "hasSupport": {
+                    "element": "CurrentPriorNRSASupportIndicator",
+                    "kind": "value",
+                    "namespace": "default",
+                    "source": "/candidateInformation/currentPriorNrsaSupport/hasSupport"
+                  },
+                  "records": {
+                    "element": "CurrentPriorNRSASupport",
+                    "kind": "array",
+                    "namespace": "default",
+                    "source": "/candidateInformation/currentPriorNrsaSupport/records",
+                    "items": {
+                      "fields": {
+                        "level": {
+                          "element": "Level",
+                          "kind": "value",
+                          "namespace": "default"
+                        },
+                        "type": {
+                          "element": "Type",
+                          "kind": "value",
+                          "namespace": "default"
+                        },
+                        "startDate": {
+                          "element": "StartDate",
+                          "kind": "value",
+                          "namespace": "default"
+                        },
+                        "endDate": {
+                          "element": "EndDate",
+                          "kind": "value",
+                          "namespace": "default"
+                        },
+                        "grantNumber": {
+                          "element": "GrantNumber",
+                          "kind": "value",
+                          "namespace": "default"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "concurrentSupport": {
+                "element": "ConcurrentSupport",
+                "kind": "group",
+                "namespace": "default",
+                "source": "/candidateInformation/concurrentSupport",
+                "flatten": true,
+                "fields": {
+                  "hasConcurrentSupport": {
+                    "element": "ConcurrentSupport",
+                    "kind": "value",
+                    "namespace": "default",
+                    "source": "/candidateInformation/concurrentSupport/hasConcurrentSupport"
+                  },
+                  "description": {
+                    "element": "attFile",
+                    "kind": "attachment",
+                    "namespace": "default",
+                    "source": "/candidateInformation/concurrentSupport/description",
+                    "container": {
+                      "element": "ConcurrentSupportDescription",
+                      "namespace": "default"
+                    }
+                  }
+                }
+              },
+              "citizenship": {
+                "element": "USCitizen",
+                "kind": "group",
+                "namespace": "default",
+                "source": "/candidateInformation/citizenship",
+                "flatten": true,
+                "fields": {
+                  "usCitizen": {
+                    "element": "USCitizen",
+                    "kind": "value",
+                    "namespace": "default",
+                    "source": "/candidateInformation/citizenship/usCitizen"
+                  },
+                  "nonUsCitizenStatus": {
+                    "element": "NonUSCitizen",
+                    "kind": "value",
+                    "namespace": "default",
+                    "source": "/candidateInformation/citizenship/nonUsCitizenStatus"
+                  },
+                  "permanentResidentByAward": {
+                    "element": "PermanentResidentByAwardIndicator",
+                    "kind": "value",
+                    "namespace": "default",
+                    "source": "/candidateInformation/citizenship/permanentResidentByAward"
+                  }
+                }
+              },
+              "institutionChange": {
+                "element": "ChangeOfInstitution",
+                "kind": "group",
+                "namespace": "default",
+                "source": "/candidateInformation/institutionChange",
+                "flatten": true,
+                "fields": {
+                  "changesInstitution": {
+                    "element": "ChangeOfInstitution",
+                    "kind": "value",
+                    "namespace": "default",
+                    "source": "/candidateInformation/institutionChange/changesInstitution"
+                  },
+                  "formerInstitution": {
+                    "element": "FormerInstitution",
+                    "kind": "value",
+                    "namespace": "default",
+                    "source": "/candidateInformation/institutionChange/formerInstitution"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "budget": {
+        "element": "Budget",
+        "kind": "group",
+        "namespace": "default",
+        "source": "/budget",
+        "fields": {
+          "tuition": {
+            "element": "TuitionAndFeesRequested",
+            "kind": "group",
+            "namespace": "default",
+            "source": "/budget/tuition",
+            "flatten": true,
+            "fields": {
+              "fundsRequested": {
+                "element": "TuitionAndFeesRequested",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/tuition/fundsRequested"
+              },
+              "year1": {
+                "element": "TuitionRequestedYear1",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/tuition/year1"
+              },
+              "year2": {
+                "element": "TuitionRequestedYear2",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/tuition/year2"
+              },
+              "year3": {
+                "element": "TuitionRequestedYear3",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/tuition/year3"
+              },
+              "year4": {
+                "element": "TuitionRequestedYear4",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/tuition/year4"
+              },
+              "year5": {
+                "element": "TuitionRequestedYear5",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/tuition/year5"
+              },
+              "year6": {
+                "element": "TuitionRequestedYear6",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/tuition/year6"
+              },
+              "total": {
+                "element": "TuitionRequestedTotal",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/tuition/total"
+              }
+            }
+          },
+          "childcare": {
+            "element": "ChildcareCostsRequested",
+            "kind": "group",
+            "namespace": "default",
+            "source": "/budget/childcare",
+            "flatten": true,
+            "fields": {
+              "fundsRequested": {
+                "element": "ChildcareCostsRequested",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/childcare/fundsRequested"
+              },
+              "year1": {
+                "element": "ChildcareRequestedYear1",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/childcare/year1"
+              },
+              "year2": {
+                "element": "ChildcareRequestedYear2",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/childcare/year2"
+              },
+              "year3": {
+                "element": "ChildcareRequestedYear3",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/childcare/year3"
+              },
+              "year4": {
+                "element": "ChildcareRequestedYear4",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/childcare/year4"
+              },
+              "year5": {
+                "element": "ChildcareRequestedYear5",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/childcare/year5"
+              },
+              "year6": {
+                "element": "ChildcareRequestedYear6",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/childcare/year6"
+              },
+              "total": {
+                "element": "ChildcareRequestedTotal",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/childcare/total"
+              }
+            }
+          },
+          "institutionalBaseSalary": {
+            "element": "InstitutionalBaseSalary",
+            "kind": "group",
+            "namespace": "default",
+            "source": "/budget/institutionalBaseSalary",
+            "fields": {
+              "amount": {
+                "element": "Amount",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/institutionalBaseSalary/amount"
+              },
+              "academicPeriod": {
+                "element": "AcademicPeriod",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/institutionalBaseSalary/academicPeriod"
+              },
+              "numberOfMonths": {
+                "element": "NumberOfMonths",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/institutionalBaseSalary/numberOfMonths"
+              }
+            }
+          },
+          "federalStipend": {
+            "element": "FederalStipendRequested",
+            "kind": "group",
+            "namespace": "default",
+            "source": "/budget/federalStipend",
+            "fields": {
+              "amount": {
+                "element": "Amount",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/federalStipend/amount"
+              },
+              "numberOfMonths": {
+                "element": "NumberOfMonths",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/federalStipend/numberOfMonths"
+              }
+            }
+          },
+          "supplementation": {
+            "element": "SupplementationFromOtherSources",
+            "kind": "group",
+            "namespace": "default",
+            "source": "/budget/supplementation",
+            "fields": {
+              "amount": {
+                "element": "Amount",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/supplementation/amount"
+              },
+              "numberOfMonths": {
+                "element": "NumberOfMonths",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/supplementation/numberOfMonths"
+              },
+              "type": {
+                "element": "Type",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/supplementation/type"
+              },
+              "source": {
+                "element": "Source",
+                "kind": "value",
+                "namespace": "default",
+                "source": "/budget/supplementation/source"
+              }
+            }
+          }
+        }
+      },
+      "appendix": {
+        "element": "Appendix",
+        "kind": "array",
+        "namespace": "default",
+        "source": "/appendix",
+        "itemElement": "AttachedFile",
+        "itemNamespace": "att",
+        "items": {
+          "node": {
+            "kind": "attachment",
+            "flatten": true
+          }
+        }
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-PHSFellowshipSupplemental.jsonl.manifest.json"
+  }
+}

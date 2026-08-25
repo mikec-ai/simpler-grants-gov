@@ -34,23 +34,25 @@
       "title": "Budget Period",
       "allOf": [
         {
-          "properties": {
-            "directCosts": {
-              "properties": {
-                "totalDirectCosts": {
-                  "readOnly": true
+          "items": {
+            "properties": {
+              "directCosts": {
+                "properties": {
+                  "totalDirectCosts": {
+                    "readOnly": true
+                  }
                 }
-              }
-            },
-            "indirectCosts": {
-              "properties": {
-                "totalIndirectCosts": {
-                  "readOnly": true
+              },
+              "indirectCosts": {
+                "properties": {
+                  "totalIndirectCosts": {
+                    "readOnly": true
+                  }
                 }
+              },
+              "totalDirectAndIndirectCosts": {
+                "readOnly": true
               }
-            },
-            "totalDirectAndIndirectCosts": {
-              "readOnly": true
             }
           }
         }
