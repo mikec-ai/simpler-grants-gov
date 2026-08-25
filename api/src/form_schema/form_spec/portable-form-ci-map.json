@@ -22,7 +22,7 @@
     "phs398-career-development-supplemental": ["api/tests/src/form_schema/form_spec/test_phs398_career_development_portable.py"],
     "phs398-cover-page-supplement": ["api/tests/src/form_schema/form_spec/test_registrations.py"],
     "phs398-modular-budget": ["api/tests/src/form_schema/form_spec/test_phs398_modular_budget_portable.py"],
-    "phs398-research-plan": ["api/tests/src/form_schema/form_spec/test_registrations.py"],
+    "phs398-research-plan": ["api/tests/src/form_schema/form_spec/test_phs398_research_plan_portable.py"],
     "project-abstract-summary": ["api/tests/src/form_schema/form_spec/test_project_abstract_summary_portable.py"],
     "project-narrative-attachments": ["api/tests/src/form_schema/form_spec/test_attachment_form_parity.py"],
     "rr-budget": ["api/tests/src/form_schema/form_spec/test_rr_budget_portable.py"],

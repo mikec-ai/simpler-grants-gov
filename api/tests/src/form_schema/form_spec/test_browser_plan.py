@@ -258,6 +258,39 @@ def test_browser_plan_exposes_career_development_reuse_and_conditions(
     assert capabilities["repeater"]["applicability"] == "not_applicable"
 
 
+def test_browser_plan_exposes_research_plan_attachment_roles_without_local_conditions(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "phs398-research-plan")
+
+    form = build_browser_plan()["forms"][0]
+    capabilities = form["capabilities"]
+
+    assert form["counts"] == {"uiNodes": 17, "uiFields": 13, "schemaFields": 13}
+    expected_definitions = set(form["stablePaths"]["uiDefinitions"])
+    assert {
+        declaration["definition"]
+        for declaration in capabilities["attachment"]["declarations"]
+        if "definition" in declaration
+    } == expected_definitions
+    assert {
+        declaration["rulePath"]
+        for declaration in capabilities["attachment"]["declarations"]
+        if "rulePath" in declaration
+    } == {definition.removeprefix("/properties") for definition in expected_definitions}
+    assert capabilities["requiredField"]["declarations"] == [
+        {
+            "schemaPath": "/properties/research_strategy",
+            "responsePath": "/research_strategy",
+        }
+    ]
+    assert capabilities["conditional"] == {
+        "applicability": "not_applicable",
+        "declarations": [],
+        "reason": "no UI conditional is declared",
+    }
+
+
 def test_browser_plan_combines_schema_and_ui_readonly_declarations(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
