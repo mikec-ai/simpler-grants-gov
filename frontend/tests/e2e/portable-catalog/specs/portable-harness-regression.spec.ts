@@ -1,6 +1,8 @@
 import { expect, test } from "@playwright/test";
 import {
   activateBinaryControl,
+  PORTABLE_INTERACTION_TIMEOUT,
+  PORTABLE_SAVE_ACK_TIMEOUT,
   saveForPersistenceProbe,
   selectEligibleAttachmentControl,
 } from "tests/e2e/portable-catalog/portable-interactions";
@@ -81,6 +83,8 @@ test.describe("portable catalog harness regressions", () => {
       "sample-upload-kb.pdf",
     );
     await expect(page.getByRole("button", { name: "Delete" })).toBeVisible();
+    expect(PORTABLE_INTERACTION_TIMEOUT).toBe(10_000);
+    expect(PORTABLE_SAVE_ACK_TIMEOUT).toBe(30_000);
   });
 
   test("selects the first visible and enabled attachment in declared order", async ({
