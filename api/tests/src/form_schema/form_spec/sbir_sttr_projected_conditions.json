@@ -1,0 +1,125 @@
+[
+  {
+    "definition": "/properties/other_agency",
+    "conditional": {
+      "when": {
+        "op": "equals",
+        "ref": { "scope": "root", "pointer": "/agency/value" },
+        "value": "Other"
+      },
+      "then": { "interaction": "enabled" },
+      "otherwise": { "interaction": "disabled" }
+    }
+  },
+  {
+    "definition": "/properties/federal_subcontractor_names",
+    "conditional": {
+      "when": {
+        "op": "equals",
+        "ref": {
+          "scope": "root",
+          "pointer": "/federal_subcontracts_included/value"
+        },
+        "value": "Y: Yes"
+      },
+      "then": { "interaction": "enabled" },
+      "otherwise": { "interaction": "disabled" }
+    }
+  },
+  {
+    "definition": "/properties/non_domestic_performance_explanation",
+    "conditional": {
+      "when": {
+        "op": "equals",
+        "ref": { "scope": "root", "pointer": "/domestic_performance/value" },
+        "value": "N: No"
+      },
+      "then": { "interaction": "enabled" },
+      "otherwise": { "interaction": "disabled" }
+    }
+  },
+  {
+    "definition": "/properties/equivalent_work_federal_agencies",
+    "conditional": {
+      "when": {
+        "op": "equals",
+        "ref": { "scope": "root", "pointer": "/equivalent_federal_work/value" },
+        "value": "Y: Yes"
+      },
+      "then": { "interaction": "enabled" },
+      "otherwise": { "interaction": "disabled" }
+    }
+  },
+  {
+    "definition": "/properties/phase_iiawards_received/properties/value",
+    "conditional": {
+      "when": {
+        "op": "in",
+        "ref": { "scope": "root", "pointer": "/program_type/value" },
+        "values": ["SBIR", "Both"]
+      },
+      "then": { "interaction": "enabled" },
+      "otherwise": { "interaction": "disabled" }
+    }
+  },
+  {
+    "definition": "/properties/commercialization_history",
+    "conditional": {
+      "when": {
+        "op": "equals",
+        "ref": { "scope": "root", "pointer": "/phase_iiawards_received/value" },
+        "value": "Y: Yes"
+      },
+      "then": { "interaction": "enabled" },
+      "otherwise": { "interaction": "disabled" }
+    }
+  },
+  {
+    "definition": "/properties/pdpi_primary_employment/properties/value",
+    "conditional": {
+      "when": {
+        "op": "in",
+        "ref": { "scope": "root", "pointer": "/program_type/value" },
+        "values": ["SBIR", "Both"]
+      },
+      "then": { "interaction": "enabled" },
+      "otherwise": { "interaction": "disabled" }
+    }
+  },
+  {
+    "definition": "/properties/pdpi_appointment_and_effort/properties/value",
+    "conditional": {
+      "when": {
+        "op": "in",
+        "ref": { "scope": "root", "pointer": "/program_type/value" },
+        "values": ["STTR", "Both"]
+      },
+      "then": { "interaction": "enabled" },
+      "otherwise": { "interaction": "disabled" }
+    }
+  },
+  {
+    "definition": "/properties/joint_performance_percentage/properties/value",
+    "conditional": {
+      "when": {
+        "op": "in",
+        "ref": { "scope": "root", "pointer": "/program_type/value" },
+        "values": ["STTR", "Both"]
+      },
+      "then": { "interaction": "enabled" },
+      "otherwise": { "interaction": "disabled" }
+    }
+  },
+  {
+    "definition": "/properties/nonprofit_research_partner_uei",
+    "conditional": {
+      "when": {
+        "op": "in",
+        "ref": { "scope": "root", "pointer": "/program_type/value" },
+        "values": ["STTR", "Both"]
+      },
+      "then": { "interaction": "enabled" },
+      "otherwise": { "interaction": "disabled" }
+    }
+  }
+]
