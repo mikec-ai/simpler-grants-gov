@@ -428,8 +428,8 @@
     },
     {
       "path": "dist/forms/phs-additional-indirect-costs/sgg/rule-schema.json",
-      "sha256": "3ae0d5db44c78e0916af251b71412dd58e069705879caf1f51b2b8340dd6f6df",
-      "size": 833
+      "sha256": "6c295acf7f2a71b2db23b010442e7fc4bf04b3ce1f953f4c172c5afab026093b",
+      "size": 1129
     },
     {
       "path": "dist/forms/phs-additional-indirect-costs/sgg/ui-schema.json",
@@ -1453,8 +1453,8 @@
     },
     {
       "path": "dist/question-bank/budget/additional-indirect-costs/period/schema.json",
-      "sha256": "4d550376d9d18ba8afcb0b6d1dad07600d443749fcfb31aeccfd565117a3d1ab",
-      "size": 3399
+      "sha256": "0b07fd91c3b71121f95bef32f98737d190b804d9be11a479de8de708766dfd1d",
+      "size": 3425
     },
     {
       "path": "dist/question-bank/budget/categories/schema.json",
@@ -2689,13 +2689,14 @@
       "phs398-cover-page-supplement",
       "sbir-sttr-information",
       "phs-fellowship-supplemental",
-      "phs398-career-development-supplemental"
+      "phs398-career-development-supplemental",
+      "phs-additional-indirect-costs"
     ],
     "policy": "form runtime and evidence artifacts, transitive question-schema closure, and portable governance contracts"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "a19b2dd2bd93bc195c1be0af808a0bc13504b65f"
+    "revision": "4b3b1d78a96ea8e501f51e6edbaa0190d67b9949"
   },
-  "sourceBundleSha256": "af4d280b791502454b4293b12ef7b00cc2158a206e8533ecab8bf43e698d77c6"
+  "sourceBundleSha256": "3f9d850517933d8d8f2b20234f3ed13a2bb58108a91f0f51cda65708a38f008c"
 }

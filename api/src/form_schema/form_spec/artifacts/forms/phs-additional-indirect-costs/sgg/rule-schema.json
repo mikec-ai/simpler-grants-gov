@@ -16,6 +16,10 @@
           "fields": [
             "@THIS.indirectCost[*].fundRequested"
           ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.indirectCost[*].fundRequested"
+          ],
           "order": 1
         }
       }
@@ -31,6 +35,10 @@
       "gg_pre_population": {
         "rule": "sum_monetary",
         "fields": [
+          "budgetYears[*].indirectCosts.totalIndirectCosts"
+        ],
+        "materialize": "when_any_source_present",
+        "presence_fields": [
           "budgetYears[*].indirectCosts.totalIndirectCosts"
         ],
         "order": 2
