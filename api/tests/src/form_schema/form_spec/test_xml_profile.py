@@ -240,6 +240,11 @@ def test_projects_constants_value_maps_and_dynamic_attributes_without_form_logic
                             "source": "/entityType",
                             "valueMap": {"prime": "Y: Yes", "sub": "N: No"},
                         },
+                        "implicitAnswer": {
+                            "element": "ImplicitAnswer",
+                            "kind": "value",
+                            "valueMap": {"prime": "Y: Yes", "sub": "N: No"},
+                        },
                         "metadata": {
                             "element": "Metadata",
                             "kind": "group",
@@ -275,6 +280,13 @@ def test_projects_constants_value_maps_and_dynamic_attributes_without_form_logic
     assert runtime["wire"]["answer"]["xml_transform"] == {
         "target": "Answer",
         "source": "/legacy_entity_type",
+        "value_transform": {
+            "type": "map_values",
+            "params": {"mappings": {"prime": "Y: Yes", "sub": "N: No"}},
+        },
+    }
+    assert runtime["wire"]["implicit_answer"]["xml_transform"] == {
+        "target": "ImplicitAnswer",
         "value_transform": {
             "type": "map_values",
             "params": {"mappings": {"prime": "Y: Yes", "sub": "N: No"}},

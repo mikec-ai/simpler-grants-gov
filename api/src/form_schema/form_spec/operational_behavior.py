@@ -66,19 +66,37 @@ def apply_operational_editability(
     for behavior in behaviors:
         if behavior.editability not in {"protected", "read-only"}:
             continue
-        node: Any = projected
+        nodes: list[dict[str, Any]] = [projected]
         for token in _tokens(behavior.path):
-            if token == "[]":
-                node = node.get("items") if isinstance(node, dict) else None
-            else:
-                properties = node.get("properties") if isinstance(node, dict) else None
-                node = properties.get(token) if isinstance(properties, dict) else None
-            if not isinstance(node, dict):
+            nodes = [child for node in nodes for child in _schema_children(node, token)]
+            if not nodes:
                 raise ValueError(
                     f"operational editability target {behavior.path!r} does not resolve in schema"
                 )
-        node["readOnly"] = True
+        for node in nodes:
+            node["readOnly"] = True
     return projected
+
+
+def _schema_children(node: dict[str, Any], token: str) -> list[dict[str, Any]]:
+    """Find one response child through ordinary JSON Schema composition."""
+
+    direct: Any
+    if token == "[]":
+        direct = node.get("items")
+    else:
+        properties = node.get("properties")
+        direct = properties.get(token) if isinstance(properties, dict) else None
+    if isinstance(direct, dict):
+        return [direct]
+
+    return [
+        child
+        for keyword in ("allOf", "anyOf", "oneOf")
+        for member in node.get(keyword, [])
+        if isinstance(member, dict)
+        for child in _schema_children(member, token)
+    ]
 
 
 def _tokens(pointer: str) -> list[str]:

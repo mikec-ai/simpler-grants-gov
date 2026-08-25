@@ -163,6 +163,47 @@ def test_operational_editability_protects_nested_and_repeating_targets() -> None
     assert "readOnly" not in schema["properties"]["person"]["properties"]["name"]
 
 
+def test_operational_editability_traverses_composed_object_schemas() -> None:
+    behavior = ProjectedOperationalBehavior(
+        canonical_path="/person/name",
+        path="/person/name",
+        operation_kind="prefill",
+        editability="protected",
+        execution_policy=ProjectedExecutionPolicy(
+            trigger="source-response-updated",
+            write_policy="until-target-user-modified",
+            missing_source_policy="skip",
+        ),
+        value_source=ProjectedCanonicalValueSource(
+            form_id="source",
+            runtime_form_id=RR_SF424_RUNTIME_ID,
+            canonical_path="/source",
+            path="/source",
+        ),
+        target_selection=None,
+    )
+    schema = {
+        "type": "object",
+        "properties": {
+            "person": {
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {"name": {"type": "string"}},
+                    }
+                ]
+            }
+        },
+    }
+
+    projected = apply_operational_editability(schema, (behavior,))
+
+    assert projected["properties"]["person"]["allOf"][0]["properties"]["name"] == {
+        "type": "string",
+        "readOnly": True,
+    }
+
+
 def test_operational_editability_fails_closed_for_a_missing_target() -> None:
     behavior = ProjectedOperationalBehavior(
         canonical_path="/missing",
