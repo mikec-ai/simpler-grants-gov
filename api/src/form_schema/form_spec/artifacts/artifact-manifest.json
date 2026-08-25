@@ -2701,7 +2701,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "4fb6667bc914f5ea3f8ee49a34bb8e887c4fad63"
+    "revision": "b6a584df98570c9ee1c521eda75635e010fa1555"
   },
-  "sourceBundleSha256": "d818f8d1da4d0fc7aa6823f73a9c71654c2f9de84b331ac8b21123bdde5297f5"
+  "sourceBundleSha256": "eadcc7cb745351140f32da32244b401fb92102893a9f6f99a984811a5a4a1e98"
 }

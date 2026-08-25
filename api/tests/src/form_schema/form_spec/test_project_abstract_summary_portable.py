@@ -17,7 +17,7 @@ from src.services.xml_generation.validation.xsd_validator import XSDValidator
 from tests.src.form_schema.form_spec import parity
 
 FORM_ID = "project-abstract-summary"
-PRODUCER_REVISION = "4fb6667bc914f5ea3f8ee49a34bb8e887c4fad63"
+PRODUCER_REVISION = "b6a584df98570c9ee1c521eda75635e010fa1555"
 XSD_NAME = "Project_AbstractSummary_2_0-V2.0.xsd"
 XSD_SHA256 = "3022f177a7f0ebb9a1888e9b8a4a644ed2ba7857a775d2d05642a9fbd1cc008f"
 XSD_DIRECTORY = Path(__file__).parents[4] / "src/services/xml_generation/xsds"
