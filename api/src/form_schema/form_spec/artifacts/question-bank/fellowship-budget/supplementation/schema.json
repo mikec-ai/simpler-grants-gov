@@ -4,20 +4,24 @@
   "type": "object",
   "properties": {
     "amount": {
-      "$ref": "#/$defs/ResearchBudgetAmount14"
+      "$ref": "#/$defs/ResearchBudgetAmount14",
+      "title": "Supplementation Amount"
     },
     "numberOfMonths": {
-      "$ref": "#/$defs/FellowshipMonthsUpTo12"
+      "$ref": "#/$defs/FellowshipMonthsUpTo12",
+      "title": "Number of Months"
     },
     "type": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 30
+      "maxLength": 30,
+      "title": "Type of Supplementation"
     },
     "source": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 60
+      "maxLength": 60,
+      "title": "Source of Supplementation"
     }
   },
   "required": [
