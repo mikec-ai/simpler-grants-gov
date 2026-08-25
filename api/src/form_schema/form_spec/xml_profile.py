@@ -245,8 +245,6 @@ def _project_node(
             raise ValueError(f"portable XML mapping at {path} declares source and constant")
         transform["static_value"] = node["constant"]
     if value_map := node.get("valueMap"):
-        if "source" not in node:
-            raise ValueError(f"portable XML value map at {path} requires a source")
         transform["value_transform"] = {
             "type": "map_values",
             "params": {"mappings": dict(value_map)},

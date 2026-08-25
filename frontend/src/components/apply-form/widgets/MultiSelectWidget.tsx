@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  enumOptionsValueForIndex,
-  FormContextType,
-  RJSFSchema,
-  StrictRJSFSchema,
-} from "@rjsf/utils";
+import { FormContextType, RJSFSchema, StrictRJSFSchema } from "@rjsf/utils";
 import { UswdsWidgetProps } from "src/types/applyForm/types";
 
 import React, { useCallback, useMemo, useRef } from "react";
@@ -62,7 +57,12 @@ export default function MultiSelect<
   const { enumOptions: opts, enumDisabled } = (options ?? {}) as {
     enumOptions?: ComboBoxOption[];
     enumDisabled?: Array<string | number>;
+    exclusiveValues?: string[];
   };
+  const exclusiveValues = useMemo(
+    () => new Set((options?.exclusiveValues as string[] | undefined) ?? []),
+    [options?.exclusiveValues],
+  );
   // Future:
   // allows us to enforce the minimum number
   // we can later pass it as prop if design likes the idea
@@ -91,11 +91,12 @@ export default function MultiSelect<
 
   const availableOptions = useMemo(
     () =>
-      allOptions.filter(
-        (option) =>
-          !selected.includes(String(option.value)) && !isOptDisabled(option),
-      ),
-    [allOptions, selected, isOptDisabled],
+      allOptions.filter((option) => {
+        const value = String(option.value);
+        if (selected.includes(value) || isOptDisabled(option)) return false;
+        return !atMaxSelection || exclusiveValues.has(value);
+      }),
+    [allOptions, selected, isOptDisabled, atMaxSelection, exclusiveValues],
   );
 
   const error = rawErrors.length ? true : undefined;
@@ -108,13 +109,18 @@ export default function MultiSelect<
   const syncUpstream = (next: string[]) => {
     setSelected(next);
     onChange(
-      enumOptionsValueForIndex<S>(next, allOptions, undefined) as unknown,
+      next
+        .map(
+          (value) =>
+            allOptions.find((option) => String(option.value) === value)?.value,
+        )
+        .filter((value) => value !== undefined),
     );
   };
 
   const addByLabelOrValue = (raw: string): void => {
     const text = raw.trim();
-    if (!text || atMaxSelection) return;
+    if (!text) return;
 
     const match =
       allOptions.find(
@@ -128,8 +134,14 @@ export default function MultiSelect<
 
     const selectValue = String(match.value);
     if (selected.includes(selectValue)) return;
+    if (atMaxSelection && !exclusiveValues.has(selectValue)) return;
 
-    const next = [...selected, selectValue];
+    const next = exclusiveValues.has(selectValue)
+      ? [selectValue]
+      : [
+          ...selected.filter((value) => !exclusiveValues.has(value)),
+          selectValue,
+        ];
     syncUpstream(next);
     comboRef.current?.clearSelection();
   };
@@ -173,7 +185,7 @@ export default function MultiSelect<
         id={`${id}__combobox`}
         name={""}
         options={availableOptions}
-        disabled={disabled || readOnly || atMaxSelection}
+        disabled={disabled || readOnly || availableOptions.length === 0}
         onChange={(val?: string) => {
           if (!val) return;
           addByLabelOrValue(val);

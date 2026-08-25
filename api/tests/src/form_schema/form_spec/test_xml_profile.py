@@ -7,6 +7,8 @@ import pytest
 from src.form_schema.form_spec.bank import ARTIFACTS
 from src.form_schema.form_spec.projection import Projection
 from src.form_schema.form_spec.xml_profile import project_grants_gov_xml_profile
+from src.services.xml_generation.models import XMLGenerationRequest
+from src.services.xml_generation.service import XMLGenerationService
 
 
 def test_projects_canonical_source_names_through_the_consumer_projection() -> None:
@@ -240,6 +242,11 @@ def test_projects_constants_value_maps_and_dynamic_attributes_without_form_logic
                             "source": "/entityType",
                             "valueMap": {"prime": "Y: Yes", "sub": "N: No"},
                         },
+                        "implicitAnswer": {
+                            "element": "ImplicitAnswer",
+                            "kind": "value",
+                            "valueMap": {"prime": "Y: Yes", "sub": "N: No"},
+                        },
                         "metadata": {
                             "element": "Metadata",
                             "kind": "group",
@@ -280,6 +287,13 @@ def test_projects_constants_value_maps_and_dynamic_attributes_without_form_logic
             "params": {"mappings": {"prime": "Y: Yes", "sub": "N: No"}},
         },
     }
+    assert runtime["wire"]["implicit_answer"]["xml_transform"] == {
+        "target": "ImplicitAnswer",
+        "value_transform": {
+            "type": "map_values",
+            "params": {"mappings": {"prime": "Y: Yes", "sub": "N: No"}},
+        },
+    }
     assert runtime["wire"]["legacy_entity_type"]["xml_transform"] == {
         "target": "EntityType",
         "static_value": "Prime",
@@ -315,6 +329,37 @@ def test_rejects_ambiguous_portable_attribute_values(declaration: dict[str, obje
 
     with pytest.raises(ValueError, match="portable XML value"):
         project_grants_gov_xml_profile(profile, Projection())
+
+
+def test_implicit_field_value_map_executes_in_the_generic_xml_runtime() -> None:
+    profile = {
+        "contract": "grants-gov-xml-profile/v1",
+        "xsd": {"uri": "https://example.gov/form.xsd", "sha256": "a" * 64},
+        "namespaces": {"default": "https://example.gov/form"},
+        "root": {"element": "Example", "namespacePrefix": "default", "attributes": {}},
+        "mapping": {
+            "fields": {
+                "answer": {
+                    "element": "Answer",
+                    "kind": "value",
+                    "valueMap": {"prime": "Y", "sub": "N"},
+                }
+            }
+        },
+    }
+    runtime = project_grants_gov_xml_profile(profile, Projection())
+
+    generated = XMLGenerationService().generate_xml(
+        XMLGenerationRequest(
+            application_data={"answer": "prime"},
+            transform_config=runtime,
+            attachment_mapping={},
+        )
+    )
+
+    assert generated.success is True
+    assert generated.xml_data is not None
+    assert "<default:Answer>Y</default:Answer>" in generated.xml_data
 
 
 def test_budget_profiles_are_loaded_from_portable_artifacts_not_python_form_modules() -> None:

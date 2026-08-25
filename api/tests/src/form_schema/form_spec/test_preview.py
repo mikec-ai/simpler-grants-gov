@@ -12,9 +12,12 @@ from src.form_schema.form_spec.preview import (
     PREVIEW_FLAG,
     banked_form_ids,
     build_preview_form,
+    operational_behavior_for_preview_form_id,
+    portable_id_for_preview_form_id,
     portable_preview_enabled,
     preview_form_id,
     preview_portable_forms,
+    runtime_source_id_for_preview_form_id,
     selected_browser_form_ids,
 )
 from src.form_schema.form_spec.runtime_identity import _records as runtime_identity_records
@@ -59,6 +62,24 @@ def test_preview_identity_is_stable_and_separate_from_runtime_identity() -> None
     assert first == preview_form_id("sf424")
     assert first != preview_form_id("sf424a")
     assert first != runtime_identity_records()["sf424"].form_id
+    assert portable_id_for_preview_form_id(first) == "sf424"
+    assert portable_id_for_preview_form_id(runtime_identity_records()["sf424"].form_id) is None
+
+
+def test_preview_behavior_uses_the_banked_contract_without_runtime_identity() -> None:
+    behaviors = operational_behavior_for_preview_form_id(preview_form_id("rr-budget"))
+
+    assert behaviors
+    assert (
+        operational_behavior_for_preview_form_id(runtime_identity_records()["sf424"].form_id) == ()
+    )
+
+
+def test_preview_source_can_match_an_existing_runtime_identity() -> None:
+    assert runtime_source_id_for_preview_form_id(preview_form_id("rr-sf424")) == (
+        runtime_identity_records()["rr-sf424"].form_id
+    )
+    assert runtime_source_id_for_preview_form_id(preview_form_id("rr-personal-data")) is None
 
 
 def test_every_banked_package_builds_as_a_preview_form() -> None:

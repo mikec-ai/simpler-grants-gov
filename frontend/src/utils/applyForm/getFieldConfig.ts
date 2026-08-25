@@ -734,7 +734,7 @@ export const getFieldConfig = <V extends string | Record<string, unknown>>({
   });
 
   // if the widget type requires an option list, generate it here
-  const options =
+  const enumOptions =
     widgetType === "Select" ||
     widgetType === "MultiSelect" ||
     widgetType === "Radio"
@@ -743,6 +743,15 @@ export const getFieldConfig = <V extends string | Record<string, unknown>>({
           fieldSchema,
         })
       : {};
+  const exclusiveValues: unknown = (fieldSchema as Record<string, unknown>)[
+    "x-exclusive-values"
+  ];
+  const options =
+    widgetType === "MultiSelect" &&
+    Array.isArray(exclusiveValues) &&
+    exclusiveValues.every((value) => typeof value === "string")
+      ? { ...enumOptions, exclusiveValues }
+      : enumOptions;
 
   const widgetId = htmlFieldName || uiFieldObject.name || fieldName;
 

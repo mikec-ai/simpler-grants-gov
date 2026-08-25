@@ -17,6 +17,7 @@ from src.constants.lookup_constants import FormType
 from src.form_schema.form_spec.bank import ARTIFACTS, _bank_projection, verify_artifacts
 from src.form_schema.form_spec.operational_behavior import (
     ProjectedOperationalBehavior,
+    apply_operational_editability,
     project_operational_behavior,
 )
 from src.form_schema.form_spec.projection import (
@@ -232,7 +233,10 @@ def build_runtime_form(
         # Portable declarations retain $ref composition as their reviewable source of
         # truth. Simpler's current renderer expects an expanded schema, so resolving is
         # a generic consumer-adapter concern rather than a form-specific declaration.
-        form_json_schema=resolve_jsonschema(copy.deepcopy(loaded.form_json_schema)),
+        form_json_schema=apply_operational_editability(
+            resolve_jsonschema(copy.deepcopy(loaded.form_json_schema)),
+            loaded.operational_behavior,
+        ),
         # The persisted model annotation predates the list-shaped UI contract used by
         # every registered form; keep the adapter's accurate type and cross that legacy
         # boundary explicitly.

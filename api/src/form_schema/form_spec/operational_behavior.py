@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import dataclasses
 import uuid
 from collections.abc import Callable
@@ -48,6 +49,59 @@ RuntimeFormIdFor = Callable[[str], uuid.UUID]
 Editability = Literal["editable", "read-only", "protected", "not-applicable", "unspecified"]
 
 _EDITABILITY = {"editable", "read-only", "protected", "not-applicable", "unspecified"}
+
+
+def apply_operational_editability(
+    schema: dict[str, Any],
+    behaviors: tuple[ProjectedOperationalBehavior, ...],
+) -> dict[str, Any]:
+    """Project protected source-owned values onto a resolved runtime schema.
+
+    Operational paths use response coordinates while JSON Schema nests those same names
+    below ``properties`` (and ``items`` for repeatable occurrences). The projection is
+    generic and deliberately limited to the closed editability vocabulary.
+    """
+
+    projected = copy.deepcopy(schema)
+    for behavior in behaviors:
+        if behavior.editability not in {"protected", "read-only"}:
+            continue
+        nodes: list[dict[str, Any]] = [projected]
+        for token in _tokens(behavior.path):
+            nodes = [child for node in nodes for child in _schema_children(node, token)]
+            if not nodes:
+                raise ValueError(
+                    f"operational editability target {behavior.path!r} does not resolve in schema"
+                )
+        for node in nodes:
+            node["readOnly"] = True
+    return projected
+
+
+def _schema_children(node: dict[str, Any], token: str) -> list[dict[str, Any]]:
+    """Find one response child through ordinary JSON Schema composition."""
+
+    direct: Any
+    if token == "[]":
+        direct = node.get("items")
+    else:
+        properties = node.get("properties")
+        direct = properties.get(token) if isinstance(properties, dict) else None
+    direct_children = [direct] if isinstance(direct, dict) else []
+    composed_children = [
+        child
+        for keyword in ("allOf", "anyOf", "oneOf")
+        for member in node.get(keyword, [])
+        if isinstance(member, dict)
+        for child in _schema_children(member, token)
+    ]
+    return [*direct_children, *composed_children]
+
+
+def _tokens(pointer: str) -> list[str]:
+    if not pointer.startswith("/"):
+        raise ValueError(f"operational pointer must be absolute: {pointer!r}")
+    return [token.replace("~1", "/").replace("~0", "~") for token in pointer[1:].split("/")]
 
 
 def _required_string(record: dict[str, Any], key: str, context: str) -> str:
