@@ -4,7 +4,8 @@ import copy
 import hashlib
 import json
 from pathlib import Path
-from xml.etree import ElementTree as ET
+
+import defusedxml.ElementTree as ET
 
 import src.form_schema.forms as forms_package
 from src.form_schema.form_spec.bank import ARTIFACTS
