@@ -205,10 +205,30 @@ def manifest_at(revision: str) -> dict:
     return json.loads(result.stdout)
 
 
+def verify_portable_ci_map_selection(
+    manifest: dict, *, portable_ci_map: dict[str, tuple[str, ...]] | None = None
+) -> None:
+    selected_forms = set(manifest["selection"]["forms"])
+    mapping = portable_ci_map if portable_ci_map is not None else load_portable_ci_map()
+    mapped_forms = set(mapping)
+    missing = sorted(selected_forms - mapped_forms)
+    stale = sorted(mapped_forms - selected_forms)
+    if missing or stale:
+        details = []
+        if missing:
+            details.append(f"missing selected forms: {missing}")
+        if stale:
+            details.append(f"stale unselected forms: {stale}")
+        raise ValueError(
+            "portable form CI map does not match artifact selection: " + "; ".join(details)
+        )
+
+
 def verify_additive_bank(base: str) -> dict[str, object]:
     previous = manifest_at(base)
     current = verify_artifact_selection(artifacts=ARTIFACTS, manifest_path=MANIFEST)
     verify_artifact_xsds(artifacts=ARTIFACTS, xsd_directory=XSD_DIRECTORY)
+    verify_portable_ci_map_selection(current)
 
     previous_forms = set(previous["selection"]["forms"])
     current_forms = set(current["selection"]["forms"])

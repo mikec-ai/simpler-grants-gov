@@ -3,6 +3,7 @@ from pathlib import Path
 
 import pytest
 
+import bin.check_form_spec_bank as checker
 from bin.check_form_spec_bank import (
     TIER_FULL,
     TIER_PORTABLE_FOCUSED,
@@ -10,6 +11,7 @@ from bin.check_form_spec_bank import (
     classify,
     classify_change,
     load_portable_ci_map,
+    verify_portable_ci_map_selection,
 )
 
 ARTIFACT_MANIFEST = Path("src/form_schema/form_spec/artifacts/artifact-manifest.json")
@@ -148,6 +150,27 @@ def test_portable_ci_map_exactly_covers_banked_forms_and_existing_tests():
         for tests in mapping.values()
         for test_file in tests
     )
+
+
+def test_additive_bank_rejects_manifest_map_drift_for_new_form(monkeypatch):
+    previous = json.loads(ARTIFACT_MANIFEST.read_text())
+    current = json.loads(ARTIFACT_MANIFEST.read_text())
+    current["selection"]["forms"].append("newly-banked-form")
+    monkeypatch.setattr(checker, "manifest_at", lambda _revision: previous)
+    monkeypatch.setattr(checker, "verify_artifact_selection", lambda **_kwargs: current)
+    monkeypatch.setattr(checker, "verify_artifact_xsds", lambda **_kwargs: None)
+
+    with pytest.raises(ValueError, match="missing selected forms.*newly-banked-form"):
+        checker.verify_additive_bank("base-revision")
+
+
+def test_bank_verification_rejects_stale_unselected_map_entry():
+    manifest = json.loads(ARTIFACT_MANIFEST.read_text())
+    mapping = load_portable_ci_map()
+    mapping["stale-form"] = ("api/tests/src/form_schema/form_spec/test_registrations.py",)
+
+    with pytest.raises(ValueError, match="stale unselected forms.*stale-form"):
+        verify_portable_ci_map_selection(manifest, portable_ci_map=mapping)
 
 
 def test_multiple_focused_forms_are_sorted_deterministically():
