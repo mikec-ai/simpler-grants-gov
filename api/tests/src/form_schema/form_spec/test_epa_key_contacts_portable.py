@@ -39,6 +39,7 @@ ROLE_REQUIRED_LEAVES = {
 }
 XSD = Path("src/services/xml_generation/xsds/EPA_KeyContacts_2_0-V2.0.xsd")
 XSD_SHA256 = "157a9c8a21cdc39b4c6b5df94c3745ecd4f174cb390187441de862fb35b50b01"
+PORTABLE_CI_MAP = ARTIFACTS.parent / "portable-form-ci-map.json"
 
 
 def _resolved_schema() -> dict:
@@ -70,9 +71,13 @@ def _required_leaf_paths(role_schema: dict) -> set[str]:
 
 def test_package_is_banked_for_preview_but_not_registered() -> None:
     manifest = json.loads((ARTIFACTS / "artifact-manifest.json").read_text())
+    ci_map = json.loads(PORTABLE_CI_MAP.read_text())
 
     assert manifest["source"]["revision"] == "7c3be8e32968b49b5ce48f53a832c00220eb5bee"
     assert manifest["selection"]["forms"][-1] == FORM_ID
+    assert ci_map["forms"][FORM_ID] == [
+        "api/tests/src/form_schema/form_spec/test_epa_key_contacts_portable.py"
+    ]
     assert hashlib.sha256(XSD.read_bytes()).hexdigest() == XSD_SHA256
     with pytest.raises(ValueError, match="no SGG runtime identity"):
         runtime_identity(FORM_ID)

@@ -4,6 +4,7 @@
     "attachment-form": ["api/tests/src/form_schema/form_spec/test_attachment_form_portable_xml.py"],
     "budget-narrative-attachments": ["api/tests/src/form_schema/form_spec/test_attachment_form_parity.py"],
     "cd511": ["api/tests/src/form_schema/form_spec/test_cd511_portable.py"],
+    "epa-key-contacts": ["api/tests/src/form_schema/form_spec/test_epa_key_contacts_portable.py"],
     "gg-lobbying": ["api/tests/src/form_schema/form_spec/test_gg_lobbying_portable.py"],
     "individual-sf424b": ["api/tests/src/form_schema/form_spec/test_sf424b_portable.py"],
     "individual-sf424d": ["api/tests/src/form_schema/form_spec/test_sf424d_portable.py"],
