@@ -1,6 +1,5 @@
 services:
   nextjs:
-    container_name: next-dev
     platform: linux/amd64
     build:
       context: .
@@ -12,13 +11,12 @@ services:
       - ./public:/frontend/public
     restart: always
     ports:
-      - 3000:3000
+      - "${FRONTEND_HOST_PORT:-3000}:3000"
     networks:
       - default
       - api_grants_backend
 
   nextjs-prod:
-    container_name: next-prod
     platform: linux/amd64
     build:
       context: .
@@ -30,13 +28,12 @@ services:
       - ./public:/frontend/public
     restart: always
     ports:
-      - 3000:3000
+      - "${FRONTEND_HOST_PORT:-3000}:3000"
     networks:
       - default
       - api_grants_backend
 
   storybook:
-    container_name: storybook
     platform: linux/amd64
     build:
       context: .
@@ -49,10 +46,11 @@ services:
       - ./stories:/frontend/stories
     restart: always
     ports:
-      - 6006:6006
+      - "${STORYBOOK_HOST_PORT:-6006}:6006"
     networks:
       - default
 
 networks:
   api_grants_backend:
     external: true
+    name: ${API_BACKEND_NETWORK_NAME:-api_grants_backend}

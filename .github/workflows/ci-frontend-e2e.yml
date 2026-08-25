@@ -45,6 +45,7 @@ env:
   LOCKFILE_PATH: ./frontend/package-lock.json
   PACKAGE_MANAGER: npm
   NODE_OPTIONS: --dns-result-order=ipv4first
+  PLAYWRIGHT_WORKERS: 6
   PORTABLE_BROWSER_FORM_IDS: ${{ inputs.portable_browser_form_ids || '' }}
 
 concurrency:
@@ -530,6 +531,7 @@ jobs:
           current_shard: ${{ matrix.shard }}
           api_logs: ${{ inputs.api_logs && 'true' || 'false' }}
           playwright_tags: ""
+          workers: ${{ env.PLAYWRIGHT_WORKERS }}
           # Not a secret: the local API seeds the test-user manager with the
           # committed LOCAL_TEST_USER_MANAGER_API_KEY default from api/local.env,
           # so the frontend must send that same literal value.
@@ -552,6 +554,7 @@ jobs:
           current_shard: ${{ matrix.shard }}
           api_logs: ${{ inputs.api_logs && 'true' || 'false' }}
           playwright_tags: ${{ env.test_group_tags }}
+          workers: ${{ env.PLAYWRIGHT_WORKERS }}
           # Not a secret: the local API seeds the test-user manager with the
           # committed LOCAL_TEST_USER_MANAGER_API_KEY default from api/local.env,
           # so the frontend must send that same literal value.
@@ -576,6 +579,7 @@ jobs:
           api_logs: ${{ inputs.api_logs && 'true' || 'false' }}
           playwright_tags: ""
           spec_files: ${{ env.E2E_SPECS_CHANGED }}
+          workers: ${{ env.PLAYWRIGHT_WORKERS }}
           # Not a secret: the local API seeds the test-user manager with the
           # committed LOCAL_TEST_USER_MANAGER_API_KEY default from api/local.env,
           # so the frontend must send that same literal value.

@@ -14,3 +14,7 @@ services:
         "8080",
         "--no-reload",
       ]
+    environment:
+      # The hosted browser stack is deliberately single-process, so start the
+      # local scanner without relying on Werkzeug's reloader-child marker.
+      LOCAL_FILE_SCANNER_RUN_WITHOUT_RELOADER: "TRUE"

@@ -75,9 +75,28 @@ You can also run only certain tests by pattern matching the file name and log mo
 make test args="tests/src/task/notifications/*"
 make test args="-x -s -vv tests/src/api/users/test_user_route_login.py"
 ```
+
 * -x will stop and fail the test suite on the first test that fails
 * -s will not print the commands being run
 * -vv reports all runtimes, not just those above a certain threshold
+
+### Isolated worktree test runs
+
+Agents or developers running tests from multiple Git worktrees can use the
+repository-level isolated runner. It assigns distinct Compose projects,
+networks, volumes, and deterministic host ports to each stack while leaving
+the ordinary single-worktree commands unchanged.
+
+```bash
+bin/run-isolated-api-test test \
+  --stack-id sf424c-review \
+  -- tests/src/form_schema/test_portable_form_adapter.py -q
+```
+
+The stack is removed when the command exits, including after a failed test or
+interrupt. Use `--keep` to preserve it for diagnosis, inspect the derived
+configuration with `bin/run-isolated-api-test plan --stack-id <id>`, and later
+remove it with `bin/run-isolated-api-test down --stack-id <id>`.
 
 ## Running jobs/tasks
 

@@ -31,7 +31,7 @@ cleanup() {
 }
 
 docker_compose() {
-  (cd "$API_DIR" && docker compose "$@")
+  (cd "$API_DIR" && docker compose --project-name "${API_COMPOSE_PROJECT:-api}" "$@")
 }
 
 emit_container_diagnostics() {

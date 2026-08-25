@@ -2,7 +2,6 @@
 
 from pathlib import Path
 
-
 WORKFLOW = Path(__file__).parents[1] / "workflows/ci-frontend-e2e.yml"
 
 
@@ -10,7 +9,12 @@ def main() -> None:
     workflow = WORKFLOW.read_text()
 
     assert workflow.count("portable_browser_form_ids:") == 2
-    assert "PORTABLE_BROWSER_FORM_IDS: ${{ inputs.portable_browser_form_ids || '' }}" in workflow
+    assert (
+        "PORTABLE_BROWSER_FORM_IDS: ${{ inputs.portable_browser_form_ids || '' }}"
+        in workflow
+    )
+    assert "PLAYWRIGHT_WORKERS: 6" in workflow
+    assert workflow.count("workers: ${{ env.PLAYWRIGHT_WORKERS }}") == 3
     assert "-e PORTABLE_BROWSER_FORM_IDS" in workflow
     assert "portable_browser_form_ids must be a comma-separated list" in workflow
     assert "test_group_tags=@portable-catalog" in workflow
@@ -30,7 +34,8 @@ def main() -> None:
     )
     assert (
         "if: ${{ env.PORTABLE_BROWSER_FORM_IDS == '' "
-        "&& env.E2E_SPECS_CHANGED != '' && env.E2E_UTILS_CHANGED != 'true' }}" in workflow
+        "&& env.E2E_SPECS_CHANGED != '' && env.E2E_UTILS_CHANGED != 'true' }}"
+        in workflow
     )
     assert (
         "shard: ${{ fromJSON(inputs.portable_browser_form_ids != '' "

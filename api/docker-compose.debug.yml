@@ -10,4 +10,4 @@ services:
       "--host", "0.0.0.0", "--port", "8080", "--no-reload"
     ]
     ports:
-      - 5678:5678
+      - "${DEBUG_HOST_PORT:-5678}:5678"

@@ -274,7 +274,7 @@ make test args="tests/src/api/users/test_user_route_login.py"
 make login-db
 
 # Or use docker exec
-docker exec -it grants-db psql -U app -d app
+docker compose --project-name backend -f ../backend/docker-compose.db.yml exec grants-db psql -U app -d app
 ```
 
 ### Access the API Container Shell
@@ -308,7 +308,7 @@ If the database isn't ready:
 
 ```bash
 # Check database logs
-docker logs grants-db
+docker compose --project-name backend -f ../backend/docker-compose.db.yml logs grants-db
 
 # Wait for database to be ready
 make start-db
