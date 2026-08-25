@@ -97,7 +97,7 @@ def test_multi_project_lifecycle_is_not_inferred_from_standalone_cover() -> None
     assert "aor_signed_date" not in rules
 
 
-def test_multi_project_evidence_remains_unreviewed_and_xml_is_an_explicit_gate() -> None:
+def test_multi_project_evidence_remains_unreviewed_and_xml_is_source_bound() -> None:
     root = ARTIFACTS / "forms" / "rr-sf424-multi-project-cover"
     evidence = json.loads((root / "evidence.json").read_text())
     manifest = json.loads((root / "manifest.json").read_text())
@@ -118,4 +118,4 @@ def test_multi_project_evidence_remains_unreviewed_and_xml_is_an_explicit_gate()
         "#/properties/grantsTrackingNumber",
     }.issubset({mapping["canonicalPointer"] for mapping in review["mappings"]})
     assert all(mapping["status"] == "proposed" for mapping in review["mappings"])
-    assert "xml-schema.json" not in manifest["artifacts"]
+    assert manifest["artifacts"]["targets/grants-gov-xml.json"] == "generated"

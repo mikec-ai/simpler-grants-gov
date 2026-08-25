@@ -903,8 +903,8 @@
     },
     {
       "path": "dist/forms/rr-sf424-multi-project-cover/manifest.json",
-      "sha256": "5d67502965e733a8669a51574575f70c43fe2ff8092ae76d7a56e3b1e2d9ce24",
-      "size": 536
+      "sha256": "8168800d1831dd45ba3b793a96e5516d1adf35062ccbbe1c43e1a2d8427017e6",
+      "size": 584
     },
     {
       "path": "dist/forms/rr-sf424-multi-project-cover/schema.json",
@@ -920,6 +920,11 @@
       "path": "dist/forms/rr-sf424-multi-project-cover/sgg/ui-schema.json",
       "sha256": "d8f3892f7f3a16418d6fe429ceac9bc14fd0d270b1921209f02022e2525c1220",
       "size": 22553
+    },
+    {
+      "path": "dist/forms/rr-sf424-multi-project-cover/targets/grants-gov-xml.json",
+      "sha256": "a7fd62be7264eb7e78348efcf021194694066b33cc38865bb1a6e2e2dc252529",
+      "size": 21306
     },
     {
       "path": "dist/forms/rr-sf424/evidence.json",
@@ -948,8 +953,8 @@
     },
     {
       "path": "dist/forms/rr-sf424/targets/grants-gov-xml.json",
-      "sha256": "23015dd8940e677666e335d2533012865439952db03c57eea61056f8764ca9ca",
-      "size": 21200
+      "sha256": "01e598882f33a5586d8e1ea5847dba2ccd40258863f3b1e929e54b02d3769664",
+      "size": 21064
     },
     {
       "path": "dist/forms/rr-sf424b/evidence.json",
@@ -2701,7 +2706,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "b6a584df98570c9ee1c521eda75635e010fa1555"
+    "revision": "551228220521140440f651b3bad94f1ca00bac19"
   },
-  "sourceBundleSha256": "eadcc7cb745351140f32da32244b401fb92102893a9f6f99a984811a5a4a1e98"
+  "sourceBundleSha256": "1b9ea118f9eaecddeb555c08e9361c5eb74ae0a312bca9419a9b241a35cfc3dc"
 }
