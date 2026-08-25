@@ -276,8 +276,8 @@
         },
         "projectRole": {
           "type": "string",
-          "const": "Secretarial/Clerical",
-          "default": "Secretarial/Clerical",
+          "const": "Secretarial / Clerical",
+          "default": "Secretarial / Clerical",
           "title": "Project Role Secretarial/Clerical",
           "readOnly": true
         },
