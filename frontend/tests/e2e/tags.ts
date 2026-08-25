@@ -7,6 +7,7 @@ enum validFeatureTags {
   AUTH = "@auth",
   USER_MANAGEMENT = "@user-management",
   APPLY_FORMS = "@apply-forms",
+  ATTACHMENT_PERSISTENCE = "@attachment-persistence",
   OPPORTUNITY_MANAGEMENT = "@opportunity-management",
 }
 
