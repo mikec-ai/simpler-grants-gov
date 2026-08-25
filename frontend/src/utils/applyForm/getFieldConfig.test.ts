@@ -1029,7 +1029,6 @@ describe("getFieldConfig", () => {
         id: "budget_summary_table",
         key: "budget_summary_table",
         disabled: false,
-        readOnly: true,
         required: false,
         minLength: undefined,
         maxLength: undefined,

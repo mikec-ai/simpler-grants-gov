@@ -627,6 +627,7 @@ const getFieldListConfig = ({
         storagePath,
         generalProps: {
           ...rest,
+          ...(childSchema.readOnly === true ? { readOnly: true } : {}),
           schema: {
             ...childSchema,
             title: childTitle,
@@ -751,7 +752,6 @@ export const getFieldConfig = <V extends string | Record<string, unknown>>({
       id: widgetId,
       key: widgetId,
       disabled: uiFieldObject.type === "null",
-      ...(fieldSchema.readOnly === true ? { readOnly: true } : {}),
       required: requiredField,
       minLength: fieldSchema?.minLength,
       maxLength: fieldSchema?.maxLength,
