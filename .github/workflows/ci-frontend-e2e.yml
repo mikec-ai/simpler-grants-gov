@@ -371,9 +371,6 @@ jobs:
           {
             echo "LOGIN_FINAL_DESTINATION=http://localhost:3000/api/auth/callback"
             echo "ENVIRONMENT=local"
-            # start-ci runs Flask without the development reloader, so opt into
-            # exactly one local file-scanner thread for hosted attachment tests.
-            echo "LOCAL_FILE_SCANNER_RUN_WITHOUT_RELOADER=TRUE"
             echo "ENABLE_PORTABLE_FORM_PREVIEW=true"
             if [[ -n "$PORTABLE_BROWSER_FORM_IDS" ]]; then
               echo "PORTABLE_BROWSER_FORM_IDS=$PORTABLE_BROWSER_FORM_IDS"

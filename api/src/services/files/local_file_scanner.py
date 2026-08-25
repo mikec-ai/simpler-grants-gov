@@ -43,7 +43,6 @@ TERMINAL_STATUS_PREFIX: dict[FileScanStatus, str] = {
 S3MOCK_METADATA_FILENAME = "objectMetadata.json"
 
 LOCAL_FILE_SCANNER_THREAD_NAME = "local-file-scanner"
-WATCH_PATH_POLL_SECONDS = 0.1
 
 
 class _EnvironmentConfig(PydanticBaseEnvConfig):
@@ -102,42 +101,43 @@ def setup_local_file_scanner() -> None:
 
     s3_config = S3Config()
     bucket_name = file_util.get_s3_bucket(s3_config.file_scan_bucket_path)
-    watch_path = Path(config.local_s3_store_path) / bucket_name
+    store_path = Path(config.local_s3_store_path)
 
     logger.info(
         "Starting local file scanner background thread",
-        extra={"watch_path": watch_path},
+        extra={"watch_path": store_path, "bucket_name": bucket_name},
     )
 
     thread = threading.Thread(
         target=_run_scanner,
-        args=(watch_path,),
+        args=(store_path, bucket_name),
         name=LOCAL_FILE_SCANNER_THREAD_NAME,
         daemon=True,
     )
     thread.start()
 
 
-def _run_scanner(watch_path: Path) -> None:
-    # S3Mock owns the shared volume and creates its bucket directories. The
-    # API user can read that volume but must not attempt to create paths in it.
-    # Since Compose readiness is asynchronous, wait for S3Mock to initialize
-    # the exact bucket before handing it to watchfiles.
-    while not watch_path.is_dir():
-        time.sleep(WATCH_PATH_POLL_SECONDS)
-
+def _run_scanner(store_path: Path, bucket_name: str) -> None:
     # Imported inline because watchfiles is a dev-only dependency
     from watchfiles import Change, watch
 
     db_client = db.PostgresDBClient()
+    bucket_path = store_path / bucket_name
 
     # force_polling makes the watcher work across Docker bind mounts on macOS
     # and Windows, where native inotify events do not propagate from the host.
-    for changes in watch(str(watch_path), force_polling=True):
+    # Watch the store root, which exists as soon as the volume is mounted,
+    # rather than the bucket directory that S3Mock materializes on first use.
+    # This ensures the first object cannot be created before watch establishes
+    # its baseline.
+    for changes in watch(str(store_path), force_polling=True):
         for change_type, file_path in changes:
             if change_type == Change.deleted:
                 continue
-            if not file_path.endswith(S3MOCK_METADATA_FILENAME):
+            metadata_path = Path(file_path)
+            if metadata_path.name != S3MOCK_METADATA_FILENAME:
+                continue
+            if not metadata_path.is_relative_to(bucket_path):
                 continue
             _spawn_worker(file_path, db_client)
 

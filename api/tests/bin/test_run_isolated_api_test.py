@@ -105,4 +105,4 @@ def test_hosted_browser_stack_starts_single_process_file_scanner() -> None:
 
     assert 'LOCAL_FILE_SCANNER_RUN_WITHOUT_RELOADER: "TRUE"' in ci_compose
     if e2e_workflow_path.is_file():
-        assert "LOCAL_FILE_SCANNER_RUN_WITHOUT_RELOADER=TRUE" in e2e_workflow_path.read_text()
+        assert "LOCAL_FILE_SCANNER_RUN_WITHOUT_RELOADER=TRUE" not in e2e_workflow_path.read_text()

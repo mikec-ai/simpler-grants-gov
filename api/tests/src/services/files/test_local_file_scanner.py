@@ -308,28 +308,29 @@ class TestSetupLocalFileScanner:
                 started.append(self.name)
 
         started: list[str] = []
-        captured_args: list[Path] = []
+        captured_args: list[object] = []
         monkeypatch.setattr(local_file_scanner.threading, "Thread", FakeThread)
 
         setup_local_file_scanner()
 
         assert started == [local_file_scanner.LOCAL_FILE_SCANNER_THREAD_NAME]
-        assert captured_args == [tmp_path / "local-mock-file-scan-bucket"]
-        assert not captured_args[0].exists()
+        assert captured_args == [tmp_path, "local-mock-file-scan-bucket"]
 
-    def test_scanner_waits_for_s3mock_to_create_owned_bucket(self, monkeypatch, tmp_path):
-        watch_path = tmp_path / "local-mock-file-scan-bucket"
-        sleeps = 0
-
-        def create_bucket_after_first_poll(_seconds):
-            nonlocal sleeps
-            sleeps += 1
-            watch_path.mkdir()
+    def test_scanner_watches_store_before_s3mock_creates_bucket(self, monkeypatch, tmp_path):
+        bucket_name = "local-mock-file-scan-bucket"
+        metadata_path = tmp_path / bucket_name / "object-id" / "objectMetadata.json"
 
         class StopAfterPathReady(Exception):
             pass
 
-        monkeypatch.setattr(local_file_scanner.time, "sleep", create_bucket_after_first_poll)
+        watched_paths: list[str] = []
+
+        def fake_watch(path, **_kwargs):
+            watched_paths.append(path)
+            metadata_path.parent.mkdir(parents=True)
+            yield {("added", str(metadata_path))}
+            raise StopAfterPathReady
+
         monkeypatch.setitem(
             __import__("sys").modules,
             "watchfiles",
@@ -338,15 +339,56 @@ class TestSetupLocalFileScanner:
                 (),
                 {
                     "Change": type("Change", (), {"deleted": "deleted"}),
-                    "watch": staticmethod(
-                        lambda *_args, **_kwargs: (_ for _ in ()).throw(StopAfterPathReady())
-                    ),
+                    "watch": staticmethod(fake_watch),
                 },
             ),
         )
         monkeypatch.setattr(local_file_scanner.db, "PostgresDBClient", lambda: object())
+        spawned: list[str] = []
+        monkeypatch.setattr(
+            local_file_scanner,
+            "_spawn_worker",
+            lambda path, _db_client: spawned.append(path),
+        )
 
         with pytest.raises(StopAfterPathReady):
-            local_file_scanner._run_scanner(watch_path)
+            local_file_scanner._run_scanner(tmp_path, bucket_name)
 
-        assert sleeps == 1
+        assert watched_paths == [str(tmp_path)]
+        assert spawned == [str(metadata_path)]
+
+    def test_scanner_ignores_metadata_from_other_buckets(self, monkeypatch, tmp_path):
+        bucket_name = "local-mock-file-scan-bucket"
+        other_metadata_path = tmp_path / "other-bucket" / "object-id" / "objectMetadata.json"
+
+        class StopAfterChange(Exception):
+            pass
+
+        def fake_watch(*_args, **_kwargs):
+            yield {("added", str(other_metadata_path))}
+            raise StopAfterChange
+
+        monkeypatch.setitem(
+            __import__("sys").modules,
+            "watchfiles",
+            type(
+                "FakeWatchfiles",
+                (),
+                {
+                    "Change": type("Change", (), {"deleted": "deleted"}),
+                    "watch": staticmethod(fake_watch),
+                },
+            ),
+        )
+        monkeypatch.setattr(local_file_scanner.db, "PostgresDBClient", lambda: object())
+        spawned: list[str] = []
+        monkeypatch.setattr(
+            local_file_scanner,
+            "_spawn_worker",
+            lambda path, _db_client: spawned.append(path),
+        )
+
+        with pytest.raises(StopAfterChange):
+            local_file_scanner._run_scanner(tmp_path, bucket_name)
+
+        assert spawned == []
