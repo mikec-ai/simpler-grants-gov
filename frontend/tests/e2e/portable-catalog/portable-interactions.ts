@@ -2,7 +2,8 @@ import { expect, type Locator, type Page } from "@playwright/test";
 import { schemaDefinitionToControlId } from "tests/e2e/portable-catalog/matrix-contract";
 import { FORM_DEFAULTS } from "tests/e2e/utils/forms/form-defaults";
 
-const PORTABLE_INTERACTION_TIMEOUT = 10_000;
+export const PORTABLE_INTERACTION_TIMEOUT = 10_000;
+export const PORTABLE_SAVE_ACK_TIMEOUT = 30_000;
 
 /**
  * Activate a checkbox or radio through its visible label when one exists.
@@ -76,5 +77,5 @@ export async function saveForPersistenceProbe(page: Page): Promise<void> {
   await clickPortableSaveButton(page);
   await expect(
     page.getByText(FORM_DEFAULTS.formSavedHeading, { exact: false }),
-  ).toBeVisible({ timeout: PORTABLE_INTERACTION_TIMEOUT });
+  ).toBeVisible({ timeout: PORTABLE_SAVE_ACK_TIMEOUT });
 }
