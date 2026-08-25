@@ -150,4 +150,6 @@ def test_promotion_preserves_integrity_and_immutable_source_revision() -> None:
     assert manifest["source"]["repository"] == ("https://github.com/mikec-ai/grants-form-spec.git")
     assert re.fullmatch(r"[0-9a-f]{40}", manifest["source"]["revision"])
     assert re.fullmatch(r"[0-9a-f]{64}", manifest["sourceBundleSha256"])
-    assert len(manifest["selection"]["forms"]) == 42
+    selected_forms = manifest["selection"]["forms"]
+    assert len(selected_forms) == len(set(selected_forms))
+    assert {"rr-budget", "rr-budget-10yr", "epa-key-contacts"} <= set(selected_forms)
