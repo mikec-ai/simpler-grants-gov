@@ -102,6 +102,40 @@ def test_browser_plan_classifies_attachment_controls_separately_from_editable_sc
     } == {f"/properties/att{index}" for index in range(1, 16)}
 
 
+def test_browser_plan_exposes_modular_budget_review_surfaces_without_form_logic(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "phs398-modular-budget")
+
+    form = build_browser_plan()["forms"][0]
+    capabilities = form["capabilities"]
+
+    assert form["counts"] == {"uiNodes": 26, "uiFields": 23, "schemaFields": 26}
+    assert capabilities["repeater"]["declarations"] == [
+        {"definition": "/properties/periods", "name": "periods"},
+        {
+            "definition": (
+                "/properties/periods/items/properties/indirect_costs/"
+                "properties/indirect_cost_items"
+            ),
+            "name": "indirect_cost_items",
+        },
+    ]
+    assert len(capabilities["attachment"]["declarations"]) == 6
+    assert sorted(
+        declaration["declaration"]["order"]
+        for declaration in capabilities["calculation"]["declarations"]
+    ) == list(range(1, 9))
+    calculated_paths = {
+        declaration["rulePath"] for declaration in capabilities["calculation"]["declarations"]
+    }
+    editable_paths = {
+        declaration["definition"] for declaration in capabilities["editableScalar"]["declarations"]
+    }
+    assert calculated_paths.isdisjoint(editable_paths)
+    assert len(capabilities["readOnly"]["declarations"]) == 8
+
+
 def test_browser_plan_discovers_multifield_editable_surface(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

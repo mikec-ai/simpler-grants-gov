@@ -28,7 +28,7 @@
             "definition": "/properties/periods/items/properties/directCosts/properties/consortiumFandA"
           },
           {
-            "type": "null",
+            "type": "field",
             "definition": "/properties/periods/items/properties/directCosts/properties/totalDirectCosts"
           },
           {
@@ -65,11 +65,11 @@
             "definition": "/properties/periods/items/properties/indirectCosts/properties/indirectCostAgreementDate"
           },
           {
-            "type": "null",
+            "type": "field",
             "definition": "/properties/periods/items/properties/indirectCosts/properties/totalIndirectCosts"
           },
           {
-            "type": "null",
+            "type": "field",
             "definition": "/properties/periods/items/properties/totalDirectAndIndirectCosts"
           }
         ]
@@ -82,23 +82,23 @@
     "label": "Cumulative Budget Information",
     "children": [
       {
-        "type": "null",
+        "type": "field",
         "definition": "/properties/cumulativeBudgetInformation/properties/cumulativeDirectCostLessConsortiumFandA"
       },
       {
-        "type": "null",
+        "type": "field",
         "definition": "/properties/cumulativeBudgetInformation/properties/cumulativeConsortiumFandA"
       },
       {
-        "type": "null",
+        "type": "field",
         "definition": "/properties/cumulativeBudgetInformation/properties/cumulativeTotalDirectCosts"
       },
       {
-        "type": "null",
+        "type": "field",
         "definition": "/properties/cumulativeBudgetInformation/properties/cumulativeTotalIndirectCosts"
       },
       {
-        "type": "null",
+        "type": "field",
         "definition": "/properties/cumulativeBudgetInformation/properties/cumulativeTotalDirectAndIndirectCosts"
       }
     ]
