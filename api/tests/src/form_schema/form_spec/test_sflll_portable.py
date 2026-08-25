@@ -200,8 +200,18 @@ def test_sflll_submit_populates_signature_and_date_through_generic_rules() -> No
     assert_json_round_trip(application_form.application_response)
 
 
-def test_sflll_submitter_output_emits_exact_xsd_valid_xml() -> None:
-    application_form = submit_form("sflll", VALID_RESPONSE)
+@pytest.mark.parametrize(
+    ("reporting_entity_type", "expected_is_prime"),
+    [("Prime", "Y: Yes"), ("SubAwardee", "N: No")],
+)
+def test_sflll_submitter_output_emits_exact_xsd_valid_xml(
+    reporting_entity_type: str, expected_is_prime: str
+) -> None:
+    response = copy.deepcopy(VALID_RESPONSE)
+    response["reporting_entity_type"] = reporting_entity_type
+    if reporting_entity_type == "SubAwardee":
+        response["prime_organization"] = copy.deepcopy(response["reporting_organization"])
+    application_form = submit_form("sflll", response)
     projected = load_form("sflll")
     generated = XMLGenerationService().generate_xml(
         XMLGenerationRequest(
@@ -213,6 +223,7 @@ def test_sflll_submitter_output_emits_exact_xsd_valid_xml() -> None:
     assert generated.success, generated.error_message
     assert generated.xml_data is not None
     assert "<SFLLL_2_0:Signature>reviewer@example.gov</" in generated.xml_data
+    assert f"<SFLLL_2_0:ReportEntityIsPrime>{expected_is_prime}</" in generated.xml_data
     xsd = XSD_DIRECTORY / XSD_NAME
     assert hashlib.sha256(xsd.read_bytes()).hexdigest() == XSD_SHA256
     validation = XSDValidator(XSD_DIRECTORY).validate_xml(generated.xml_data, xsd)
@@ -238,7 +249,27 @@ def test_sflll_browser_plan_uses_only_generic_declared_capabilities(
     assert {
         declaration["responsePath"] for declaration in capabilities["readOnly"]["declarations"]
     } == {"/signature_block/signature", "/signature_block/signed_date"}
-    assert len(capabilities["calculation"]["declarations"]) == 3
+    assert capabilities["calculation"]["declarations"] == [
+        {
+            "rulePath": "/federal_agency_department",
+            "declaration": {"rule": "agency_name"},
+        },
+        {
+            "rulePath": "/federal_program/name",
+            "declaration": {"rule": "assistance_listing_program_title"},
+        },
+        {
+            "rulePath": "/federal_program/assistance_listing_number",
+            "declaration": {"rule": "assistance_listing_number"},
+        },
+    ]
+    projected = load_form("sflll")
+    assert projected.json_to_xml_schema["report_entity"]["report_entity_is_prime"]["xml_transform"][
+        "value_transform"
+    ] == {
+        "type": "map_values",
+        "params": {"mappings": {"Prime": "Y: Yes", "SubAwardee": "N: No"}},
+    }
     assert capabilities["staticContent"]["applicability"] == "not_applicable"
 
 

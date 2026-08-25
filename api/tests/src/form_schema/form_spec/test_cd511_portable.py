@@ -170,6 +170,13 @@ def test_cd511_keeps_policy_and_evidence_pins_with_the_runtime_selection() -> No
             "573a8757193f0fdb7c79ed8099b66ef936f067254cbf442679768750a6a6ae2e",
         ),
     ]
+    assert evidence["extraction"] == {
+        "repository": "https://github.com/mikec-ai/simpler-grants-gov",
+        "revision": "30dd50cf0493146c32f89f78398979523e040080",
+        "artifact": "api/src/form_schema/forms/cd511/1/0/form_json.py",
+        "sourceSetSha256": "3a55d83271db5d7e057895c207b6c22942ac8c5b70b9ed4071518ea49feb0b83",
+        "extractedAt": "2026-08-23T20:00:00Z",
+    }
 
 
 def test_cd511_canary_is_not_registered_before_release_review() -> None:

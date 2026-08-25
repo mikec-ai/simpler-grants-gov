@@ -217,16 +217,57 @@ def test_gg_lobbying_evidence_pins_official_sources_and_legacy_oracle() -> None:
     assert oracle["nativeVersion"] == "30dd50cf0493146c32f89f78398979523e040080"
     assert oracle["sha256"] == ("bdf73a05a75b5020218f06864118f4c1e9ccc396934feaccc49e9acbbe406ad8")
     assert evidence["semanticReview"]["status"] == "proposed"
-    assert [(source["type"], source["sha256"]) for source in evidence["sources"]] == [
-        ("xsd", "a41d88b19e240dbb5f9b13815c0426d2396414fc1af8d6ab6a96f35855a0a5f7"),
-        ("pdf", "9c8194fd874951382f448a047c81fe1a901f5f70cb9bfeb7e31a7478748b6439"),
-        ("dat", "4489cf1e023991a36a49d4015b323fb87ad152dfa915ef750f0f19c5d5138ba2"),
-        ("instructions", "72062133a94e4757b90a8694c900d5303daa62d2093f3d4444f1aae0bb5ba0e8"),
-        ("xsd", "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb"),
-        ("xsd", "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"),
-        ("xsd", "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a"),
-        ("implementation", "bdf73a05a75b5020218f06864118f4c1e9ccc396934feaccc49e9acbbe406ad8"),
+    assert [
+        (source["type"], source["uri"], source["sha256"]) for source in evidence["sources"]
+    ] == [
+        (
+            "xsd",
+            "https://apply07.grants.gov/apply/forms/schemas/GG_LobbyingForm-V1.1.xsd",
+            "a41d88b19e240dbb5f9b13815c0426d2396414fc1af8d6ab6a96f35855a0a5f7",
+        ),
+        (
+            "pdf",
+            "https://apply07.grants.gov/apply/forms/readonly/GG_LobbyingForm-V1.1.pdf",
+            "9c8194fd874951382f448a047c81fe1a901f5f70cb9bfeb7e31a7478748b6439",
+        ),
+        (
+            "dat",
+            "https://apply07.grants.gov/apply/forms/sample/GG_LobbyingForm-V1.1_F255.xls",
+            "4489cf1e023991a36a49d4015b323fb87ad152dfa915ef750f0f19c5d5138ba2",
+        ),
+        (
+            "instructions",
+            "https://apply07.grants.gov/apply/forms/instructions/GG_LobbyingForm-V1.1-Instructions.pdf",
+            "72062133a94e4757b90a8694c900d5303daa62d2093f3d4444f1aae0bb5ba0e8",
+        ),
+        (
+            "xsd",
+            "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+            "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb",
+        ),
+        (
+            "xsd",
+            "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+            "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8",
+        ),
+        (
+            "xsd",
+            "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+            "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a",
+        ),
+        (
+            "implementation",
+            "https://github.com/mikec-ai/simpler-grants-gov/blob/30dd50cf0493146c32f89f78398979523e040080/api/src/form_schema/forms/gg_lobbying_form/1/0/form_json.py",
+            "bdf73a05a75b5020218f06864118f4c1e9ccc396934feaccc49e9acbbe406ad8",
+        ),
     ]
+    assert evidence["extraction"] == {
+        "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+        "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+        "artifact": "artifacts/proof/grantsgov-GGLobbyingForm.jsonl.manifest.json",
+        "sourceSetSha256": "b545bd44a103bba32721c07e7e1dd0d708e5435b416a2ccf1005cc4de9325895",
+        "extractedAt": "2026-08-18T19:43:18.826487Z",
+    }
 
 
 def test_gg_lobbying_canary_is_not_registered_before_release_review() -> None:
