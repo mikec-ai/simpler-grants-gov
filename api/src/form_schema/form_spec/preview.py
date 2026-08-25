@@ -21,6 +21,7 @@ from src.form_schema.form_spec.operational_behavior import (
     ProjectedOperationalBehavior,
     apply_operational_editability,
 )
+from src.form_schema.form_spec.runtime_identity import runtime_identity
 
 if TYPE_CHECKING:
     from src.db.models.competition_models import Form
@@ -112,6 +113,18 @@ def operational_behavior_for_preview_form_id(
     if portable_id is None:
         return ()
     return _load_banked_form(portable_id, project_xml=False).operational_behavior
+
+
+def runtime_source_id_for_preview_form_id(form_id: uuid.UUID) -> uuid.UUID | None:
+    """Return an existing runtime source identity for its lower-environment preview."""
+
+    portable_id = portable_id_for_preview_form_id(form_id)
+    if portable_id is None:
+        return None
+    try:
+        return runtime_identity(portable_id).form_id
+    except ValueError:
+        return None
 
 
 def build_preview_form(portable_id: str) -> Form:

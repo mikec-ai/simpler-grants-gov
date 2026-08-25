@@ -78,6 +78,7 @@ def test_banked_preview_executes_the_same_operational_population_contract() -> N
             "proposed_project_period": {"proposed_start_date": "2027-07-01"},
         }
     )
+    source.form_id = preview_form_id("rr-sf424")
     target.form_id = preview_form_id("rr-budget")
     application = SimpleNamespace(application_id=uuid.uuid4(), application_forms=[source, target])
 

@@ -13,7 +13,10 @@ from src.constants.lookup_constants import ApplicationAuditEvent
 from src.db.models.competition_models import Application, ApplicationAudit, ApplicationForm
 from src.form_schema.form_spec.loader import load_form
 from src.form_schema.form_spec.operational_behavior import ProjectedOperationalBehavior
-from src.form_schema.form_spec.preview import operational_behavior_for_preview_form_id
+from src.form_schema.form_spec.preview import (
+    operational_behavior_for_preview_form_id,
+    runtime_source_id_for_preview_form_id,
+)
 from src.form_schema.form_spec.runtime_identity import portable_id_for_runtime_form_id
 
 logger = logging.getLogger(__name__)
@@ -112,6 +115,9 @@ def apply_initial_population_from_source_update(
         .all()
     )
     changed: list[ApplicationForm] = []
+    source_runtime_form_id = (
+        runtime_source_id_for_preview_form_id(source_form.form_id) or source_form.form_id
+    )
     for target_form in application.application_forms:
         if (
             target_form.application_form_id == source_form.application_form_id
@@ -127,7 +133,7 @@ def apply_initial_population_from_source_update(
         behaviors = tuple(
             behavior
             for behavior in available_behaviors
-            if behavior.value_source.runtime_form_id == source_form.form_id
+            if behavior.value_source.runtime_form_id == source_runtime_form_id
             and behavior.execution_policy.trigger == "source-response-updated"
             and behavior.execution_policy.write_policy == "until-target-user-modified"
             and behavior.execution_policy.missing_source_policy == "skip"
