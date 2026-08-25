@@ -130,3 +130,88 @@ def test_human_subjects_nested_report_repeats_countries_and_validates_exact_xsd(
     files = root.findall(f".//{{{attachment_namespace}}}AttachedFile")
     assert len(files) == 1
     assert files[0].find(f"{{{attachment_namespace}}}FileName").text == "clinical-trial.pdf"
+
+
+def test_human_subjects_parent_and_embedded_namespaces_validate_together() -> None:
+    parent_attachment = "11111111-1111-1111-1111-111111111111"
+    study_attachment = "22222222-2222-2222-2222-222222222222"
+    delayed_attachment = "33333333-3333-3333-3333-333333333333"
+    attachments = {
+        attachment_id: AttachmentInfo(
+            filename=filename,
+            mime_type="application/pdf",
+            file_location=f"./attachments/{filename}",
+            hash_value="YWJj",
+        )
+        for attachment_id, filename in (
+            (parent_attachment, "parent.pdf"),
+            (study_attachment, "study.pdf"),
+            (delayed_attachment, "delayed.pdf"),
+        )
+    }
+    xml = _generate(
+        "phs-human-subjects",
+        {
+            "involves_human_specimens_or_data": "N: No",
+            "specimens_explanation": parent_attachment,
+            "involves_human_subjects": "Y: Yes",
+            "exempt_from_federal_regulations": "Y: Yes",
+            "exemptions": ["E1"],
+            "studies": [
+                {
+                    "study_title": "Structured study",
+                    "exempt_from_federal_regulations": "Y: Yes",
+                    "exemption_numbers": ["E2"],
+                    "clinical_trial_questionnaire": {
+                        "human_participants": "Y: Yes",
+                        "prospectively_assigned_intervention": "Y: Yes",
+                        "evaluates_intervention": "Y: Yes",
+                        "health_related_outcome": "Y: Yes",
+                    },
+                    "other_clinical_trial_attachments": [study_attachment],
+                }
+            ],
+            "delayed_onset_studies": [
+                {
+                    "study_title": "Delayed study",
+                    "justification": delayed_attachment,
+                }
+            ],
+        },
+        attachments,
+    )
+    root = _assert_pinned_xsd(xml, "PHSHumanSubjectsAndClinicalTrialsInfo_3_0-V3.0.xsd")
+    parent_namespace = (
+        "http://apply.grants.gov/forms/PHSHumanSubjectsAndClinicalTrialsInfo_3_0-V3.0"
+    )
+    study_namespace = "http://apply.grants.gov/forms/HumanSubjectStudy_3_0-V3.0"
+    attachment_namespace = "http://apply.grants.gov/system/Attachments-V1.0"
+
+    parent_exemptions = root.find(f"{{{parent_namespace}}}ExemptionNumbers")
+    parent_file = root.find(f"{{{parent_namespace}}}Explanation/{{{parent_namespace}}}attFile")
+    study = root.find(
+        f"{{{parent_namespace}}}HumanSubjectStudyAttachment/"
+        f"{{{study_namespace}}}HumanSubjectStudy_3_0"
+    )
+    delayed_file = root.find(
+        f"{{{parent_namespace}}}DelayedOnsetStudy/"
+        f"{{{parent_namespace}}}Justification/{{{parent_namespace}}}attFile"
+    )
+    assert parent_exemptions is not None
+    assert [node.text for node in parent_exemptions] == ["E1"]
+    assert parent_file is not None
+    assert parent_file.findtext(f"{{{attachment_namespace}}}FileName") == "parent.pdf"
+    assert study is not None
+    study_exemptions = study.find(f"{{{study_namespace}}}ExemptionNumbers")
+    study_file = study.find(f"{{{study_namespace}}}OtherClinicalTrialAttachment")
+    assert study_exemptions is not None
+    assert [node.text for node in study_exemptions] == ["E2"]
+    assert study_file is not None
+    assert (
+        study_file.findtext(
+            f"{{{attachment_namespace}}}AttachedFile/{{{attachment_namespace}}}FileName"
+        )
+        == "study.pdf"
+    )
+    assert delayed_file is not None
+    assert delayed_file.findtext(f"{{{attachment_namespace}}}FileName") == "delayed.pdf"

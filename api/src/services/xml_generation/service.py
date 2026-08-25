@@ -363,6 +363,7 @@ class XMLGenerationService:
         transform_config: dict | None = None,
         root_element_name: str | None = None,
         attributes: dict[str, str] | None = None,
+        explicit_namespace: str | None = None,
     ) -> None:
         """Add an element to a parent using lxml with proper namespace handling."""
 
@@ -402,7 +403,7 @@ class XMLGenerationService:
 
             # Create outer container when items have __wrapper
             array_parent = (
-                _make_subelement(field_name, parent)
+                _make_subelement(field_name, parent, explicit_namespace)
                 if has_wrapped_items and not repeats_outer
                 else parent
             )
@@ -421,7 +422,9 @@ class XMLGenerationService:
                     item_element_name = item_wrapper if item_wrapper else field_name
 
                     item_parent = (
-                        _make_subelement(field_name, parent) if repeats_outer else array_parent
+                        _make_subelement(field_name, parent, explicit_namespace)
+                        if repeats_outer
+                        else array_parent
                     )
                     item_element = _make_subelement(item_element_name, item_parent, item_namespace)
 
@@ -454,6 +457,7 @@ class XMLGenerationService:
                         if data_value is not None:
                             nested_attr_key = f"__{data_field}__attributes"
                             nested_attributes = item.get(nested_attr_key)
+                            nested_namespace = item.get(f"__{data_field}__namespace")
                             self._add_lxml_element_to_parent(
                                 item_element,
                                 data_field,
@@ -464,10 +468,11 @@ class XMLGenerationService:
                                 transform_config,
                                 root_element_name,
                                 nested_attributes,
+                                nested_namespace,
                             )
                 else:
                     # Simple value in array
-                    item_element = _make_subelement(field_name, array_parent)
+                    item_element = _make_subelement(field_name, array_parent, explicit_namespace)
                     item_element.text = str(item)
 
         elif isinstance(value, dict) and "__value__" in value:
@@ -586,6 +591,7 @@ class XMLGenerationService:
                         # Check for attributes for nested fields
                         nested_attr_key = f"__{nested_field}__attributes"
                         nested_attributes = value.get(nested_attr_key, None)
+                        nested_namespace = value.get(f"__{nested_field}__namespace")
                         self._add_lxml_element_to_parent(
                             nested_element,
                             nested_field,
@@ -596,6 +602,7 @@ class XMLGenerationService:
                             transform_config,
                             root_element_name,
                             nested_attributes,
+                            nested_namespace,
                         )
         elif value == "INCLUDE_NULL_MARKER" or value is None:
             # Create empty element for INCLUDE_NULL_MARKER values or handle None values
@@ -673,6 +680,7 @@ class XMLGenerationService:
                     # Check for attributes for address fields
                     attr_key = f"__{field_name}__attributes"
                     attributes = address_data.get(attr_key, None)
+                    namespace = address_data.get(f"__{field_name}__namespace")
                     self._add_lxml_element_to_parent(
                         parent,
                         field_name,
@@ -683,6 +691,7 @@ class XMLGenerationService:
                         transform_config,
                         root_element_name,
                         attributes,
+                        namespace,
                     )
 
     def _add_ordered_form_elements(
@@ -743,6 +752,7 @@ class XMLGenerationService:
                     # Check for attributes stored with special key
                     attr_key = f"__{field_name}__attributes"
                     attributes = data.get(attr_key, None)
+                    namespace = data.get(f"__{field_name}__namespace")
                     self._add_lxml_element_to_parent(
                         root,
                         field_name,
@@ -753,6 +763,7 @@ class XMLGenerationService:
                         transform_config,
                         root_element_name,
                         attributes,
+                        namespace,
                     )
 
         # Add any remaining fields that weren't in the predefined order (skip attachment and attribute metadata)
@@ -766,6 +777,7 @@ class XMLGenerationService:
                 # Check for attributes stored with special key
                 attr_key = f"__{field_name}__attributes"
                 attributes = data.get(attr_key, None)
+                namespace = data.get(f"__{field_name}__namespace")
                 self._add_lxml_element_to_parent(
                     root,
                     field_name,
@@ -776,6 +788,7 @@ class XMLGenerationService:
                     transform_config,
                     root_element_name,
                     attributes,
+                    namespace,
                 )
 
     def _add_element_to_parent(self, parent: ET.Element, field_name: str, value: Any) -> None:
