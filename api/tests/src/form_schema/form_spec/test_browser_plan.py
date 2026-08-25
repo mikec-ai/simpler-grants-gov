@@ -114,6 +114,34 @@ def test_browser_plan_does_not_treat_prepopulated_fields_as_editable(
     assert "/properties/organization_name" in editable_definitions
 
 
+def test_browser_plan_applies_operational_protection_before_selecting_browser_edits(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "rr-personal-data")
+
+    capabilities = build_browser_plan()["forms"][0]["capabilities"]
+    protected = {
+        declaration["definition"]
+        for declaration in capabilities["readOnly"]["declarations"]
+        if "definition" in declaration
+    }
+    editable = {
+        declaration["definition"] for declaration in capabilities["editableScalar"]["declarations"]
+    }
+    protected_names = {
+        f"/properties/project_director/properties/name/properties/{name}"
+        for name in ("prefix", "first_name", "middle_name", "last_name", "suffix")
+    }
+
+    assert protected_names <= protected
+    assert len(protected) == 5
+    assert protected_names.isdisjoint(editable)
+    assert "/properties/project_director/properties/sex" in editable
+    assert (
+        "/properties/co_project_directors/items/properties/name/properties/first_name" in editable
+    )
+
+
 def test_browser_plan_classifies_attachment_controls_separately_from_editable_scalars(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:

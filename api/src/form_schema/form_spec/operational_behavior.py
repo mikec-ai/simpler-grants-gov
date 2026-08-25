@@ -62,7 +62,12 @@ def apply_operational_editability(
     generic and deliberately limited to the closed editability vocabulary.
     """
 
-    projected = copy.deepcopy(schema)
+    # JSON Schema resolvers may reuse the same Python object for multiple resolved
+    # references. ``deepcopy`` preserves that aliasing, which would let protecting one
+    # role-qualified occurrence silently protect a different occurrence that reuses the
+    # same block. Rebuild the JSON tree without an identity memo so each occurrence can
+    # receive its own runtime projection.
+    projected = cast(dict[str, Any], _clone_json_tree(schema))
     for behavior in behaviors:
         if behavior.editability not in {"protected", "read-only"}:
             continue
@@ -76,6 +81,14 @@ def apply_operational_editability(
         for node in nodes:
             node["readOnly"] = True
     return projected
+
+
+def _clone_json_tree(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {key: _clone_json_tree(child) for key, child in value.items()}
+    if isinstance(value, list):
+        return [_clone_json_tree(child) for child in value]
+    return copy.deepcopy(value)
 
 
 def _schema_children(node: dict[str, Any], token: str) -> list[dict[str, Any]]:
