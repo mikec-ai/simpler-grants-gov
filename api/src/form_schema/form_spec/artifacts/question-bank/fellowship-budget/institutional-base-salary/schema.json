@@ -4,13 +4,16 @@
   "type": "object",
   "properties": {
     "amount": {
-      "$ref": "#/$defs/ResearchBudgetAmount14"
+      "$ref": "#/$defs/ResearchBudgetAmount14",
+      "title": "Institutional Base Salary Amount"
     },
     "academicPeriod": {
-      "$ref": "#/$defs/FellowshipAcademicPeriod"
+      "$ref": "#/$defs/FellowshipAcademicPeriod",
+      "title": "Academic Period"
     },
     "numberOfMonths": {
-      "$ref": "#/$defs/FellowshipMonthsUpTo24"
+      "$ref": "#/$defs/FellowshipMonthsUpTo24",
+      "title": "Number of Months"
     }
   },
   "required": [

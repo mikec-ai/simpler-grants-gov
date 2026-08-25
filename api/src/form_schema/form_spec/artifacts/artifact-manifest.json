@@ -1753,13 +1753,13 @@
     },
     {
       "path": "dist/question-bank/fellowship-budget/federal-stipend/schema.json",
-      "sha256": "a2a154db4a7696da8502d676a9ad97f4645f0313c6b4fcc9598e84fce308c95a",
-      "size": 757
+      "sha256": "aaff6a6037039868413a47a3169e6823c27c2e40bd5d2459f45e13e64a9225bb",
+      "size": 833
     },
     {
       "path": "dist/question-bank/fellowship-budget/institutional-base-salary/schema.json",
-      "sha256": "d121d58dc03089640ff2e1b0a6cfd53c352702c0f6df3fb91f9c73a3be359b6d",
-      "size": 1036
+      "sha256": "2579716029538d3568a4651aa0d29e54dccb4efbea2b0b8bd197a4c4f2a98ab0",
+      "size": 1156
     },
     {
       "path": "dist/question-bank/fellowship-budget/request/schema.json",
@@ -1768,8 +1768,8 @@
     },
     {
       "path": "dist/question-bank/fellowship-budget/supplementation/schema.json",
-      "sha256": "d3e1487a8130ddd824c64085d0bcdae3cca4dcf82a516d505545bef469de5772",
-      "size": 967
+      "sha256": "2ebf3d81d81428a4dbf19507ee59fb4a8804970240bc2569f034d78fe77ce714",
+      "size": 1129
     },
     {
       "path": "dist/question-bank/fellowship-budget/tuition/schema.json",
@@ -2579,7 +2579,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "16e23d43a803c5ef523edb4a23d52bb9cc459443"
+    "revision": "057555e0af94e699c3a947f2df8e2bcc46c89c75"
   },
-  "sourceBundleSha256": "6bd4bf8c477bc5dc47a3c4adb07bc7c7ca3e295be171136d86b7ece04d683295"
+  "sourceBundleSha256": "6c7603193b79a6c7414d16e21841228ff224e38357af16af693ca1d965f2bdd1"
 }

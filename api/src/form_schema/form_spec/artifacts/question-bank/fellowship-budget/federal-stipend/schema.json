@@ -4,10 +4,12 @@
   "type": "object",
   "properties": {
     "amount": {
-      "$ref": "#/$defs/ResearchBudgetAmount14"
+      "$ref": "#/$defs/ResearchBudgetAmount14",
+      "title": "Federal Stipend Amount"
     },
     "numberOfMonths": {
-      "$ref": "#/$defs/FellowshipMonthsUpTo12"
+      "$ref": "#/$defs/FellowshipMonthsUpTo12",
+      "title": "Number of Months"
     }
   },
   "required": [
