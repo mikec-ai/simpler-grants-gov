@@ -3,6 +3,7 @@
 import copy
 import hashlib
 import json
+import re
 from pathlib import Path
 
 import defusedxml.ElementTree as ET
@@ -18,10 +19,20 @@ from src.services.xml_generation.validation.xsd_validator import XSDValidator
 from tests.src.form_schema.form_spec import parity
 
 FORM_ID = "project-abstract-summary"
-PRODUCER_REVISION = "b6a584df98570c9ee1c521eda75635e010fa1555"
+INTRODUCED_BY_PRODUCER_REVISION = "b6a584df98570c9ee1c521eda75635e010fa1555"
 XSD_NAME = "Project_AbstractSummary_2_0-V2.0.xsd"
 XSD_SHA256 = "3022f177a7f0ebb9a1888e9b8a4a644ed2ba7857a775d2d05642a9fbd1cc008f"
 XSD_DIRECTORY = Path(__file__).parents[4] / "src/services/xml_generation/xsds"
+PRODUCER_FORM_ARTIFACT_SHA256 = {
+    "evidence.json": "40d2365535e5af67ed6ed9a93e57528bb7bcf16ac8849e5fc0dab897e62083ee",
+    "manifest.json": "095b63e851c2ef84efdc9d48fafec219d8e293709d2113053a8f59727adf7fe6",
+    "schema.json": "aff8c3d21ca798205e25156139bee30ee68adefdfd5c36c688ea17dd104e1541",
+    "sgg/rule-schema.json": "f12170c71e91d43d1b0fe4e7e6e2cd4acc36608d4bd2d55dbda435f2377be336",
+    "sgg/ui-schema.json": "92f7aa57483e04e5baf99bfd914d334c5ff88d478b34d02b8e60418aaf1d9bc9",
+    "targets/grants-gov-xml.json": (
+        "51fd9698bf5205bb6c655fe25d378bdc00500177c093036731860c029322ac9c"
+    ),
+}
 
 RENDERED = {
     "/properties/funding_opportunity_number#description": (
@@ -167,7 +178,18 @@ def test_current_pin_preserves_producer_receipts_without_semantic_acceptance() -
     evidence = json.loads((form_root / "evidence.json").read_text())
     profile = json.loads((form_root / "targets/grants-gov-xml.json").read_text())
 
-    assert artifact_manifest["source"]["revision"] == PRODUCER_REVISION
+    assert INTRODUCED_BY_PRODUCER_REVISION == ("b6a584df98570c9ee1c521eda75635e010fa1555")
+    # The selection manifest advances whenever any portable form is promoted. Exact
+    # form-scoped hashes are the durable receipt that Project Abstract remains identical
+    # to its historical producer handoff after later bundle promotions.
+    assert artifact_manifest["source"]["repository"] == (
+        "https://github.com/mikec-ai/grants-form-spec.git"
+    )
+    assert re.fullmatch(r"[0-9a-f]{40}", artifact_manifest["source"]["revision"])
+    assert {
+        relative_path: hashlib.sha256((form_root / relative_path).read_bytes()).hexdigest()
+        for relative_path in PRODUCER_FORM_ARTIFACT_SHA256
+    } == PRODUCER_FORM_ARTIFACT_SHA256
     assert profile["xsd"] == {
         "uri": "https://apply07.grants.gov/apply/forms/schemas/Project_AbstractSummary_2_0-V2.0.xsd",
         "sha256": XSD_SHA256,

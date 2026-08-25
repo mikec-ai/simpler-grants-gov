@@ -1,21 +1,22 @@
 {
   "contract": "grants-gov-xml-profile/v1",
-  "formId": "rr-sf424",
+  "formId": "rr-sf424-multi-project-cover",
   "xsd": {
-    "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_SF424_5_0-V5.0.xsd",
-    "sha256": "f140f32afed9d7efbe30fc8f299542bbbc3121dbc87a79aa351fcf096163d3bc"
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/RR_SF424_Multi_Project_Cover_4_0-V4.0.xsd",
+    "sha256": "5d5599068d721e6554fa442df88711f8d9386a5fafc18b01cb1d1becc41f84e7"
   },
   "namespaces": {
-    "default": "http://apply.grants.gov/forms/RR_SF424_5_0-V5.0",
+    "default": "http://apply.grants.gov/forms/RR_SF424_Multi_Project_Cover_4_0-V4.0",
+    "RR_SF424_Multi_Project_Cover_4_0": "http://apply.grants.gov/forms/RR_SF424_Multi_Project_Cover_4_0-V4.0",
     "att": "http://apply.grants.gov/system/Attachments-V1.0",
     "glob": "http://apply.grants.gov/system/Global-V1.0",
     "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0"
   },
   "root": {
-    "element": "RR_SF424_5_0",
-    "namespacePrefix": "RR_SF424_5_0",
+    "element": "RR_SF424_Multi_Project_Cover_4_0",
+    "namespacePrefix": "RR_SF424_Multi_Project_Cover_4_0",
     "attributes": {
-      "FormVersion": "5.0"
+      "FormVersion": "4.0"
     }
   },
   "attachment": {
@@ -75,8 +76,8 @@
         "kind": "value",
         "namespace": "default"
       },
-      "grantsGovTrackingId": {
-        "element": "GGTrackingID",
+      "grantsTrackingNumber": {
+        "element": "GrantsTrackingNumber",
         "kind": "value",
         "namespace": "default"
       },
@@ -685,16 +686,6 @@
           }
         }
       },
-      "aorSignature": {
-        "element": "AOR_Signature",
-        "kind": "value",
-        "namespace": "default"
-      },
-      "aorSignedDate": {
-        "element": "AOR_SignedDate",
-        "kind": "value",
-        "namespace": "default"
-      },
       "preApplicationAttachment": {
         "element": "PreApplicationAttachment",
         "kind": "attachment",
@@ -704,13 +695,23 @@
         "element": "CoverLetterAttachment",
         "kind": "attachment",
         "namespace": "default"
+      },
+      "aorSignature": {
+        "element": "AOR_Signature",
+        "kind": "value",
+        "namespace": "default"
+      },
+      "aorSignedDate": {
+        "element": "AOR_SignedDate",
+        "kind": "value",
+        "namespace": "default"
       }
     }
   },
   "evidence": {
     "status": "source-bound-unreviewed",
     "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
-    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
-    "artifact": "artifacts/sgm/RRSF424-quad7-proof.json"
+    "revision": "c1573287e0664d7b991e69c352038534b771189f",
+    "artifact": "artifacts/proof/grantsgov-RRSF424MPCover.jsonl.manifest.json"
   }
 }
