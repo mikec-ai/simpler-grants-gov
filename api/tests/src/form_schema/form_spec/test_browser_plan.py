@@ -315,6 +315,53 @@ def test_browser_plan_combines_schema_and_ui_readonly_declarations(
     assert len([item for item in declarations if item.get("interaction") == "disabled"]) == 1
 
 
+def test_schema_pointer_readonly_resolves_property_level_allof_without_hiding_applicant_fields():
+    schema = {
+        "type": "object",
+        "properties": {
+            "system_owned": {
+                "allOf": [
+                    {"type": "string"},
+                    {"readOnly": True},
+                ]
+            },
+            "applicant_owned": {
+                "allOf": [
+                    {"type": "string"},
+                ]
+            },
+        },
+    }
+
+    assert _schema_pointer_is_read_only(schema, "/properties/system_owned") is True
+    assert _schema_pointer_is_read_only(schema, "/properties/applicant_owned") is False
+
+
+def test_browser_plan_protects_human_subject_determinations_declared_through_allof(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "phs-human-subjects")
+
+    capabilities = build_browser_plan()["forms"][0]["capabilities"]
+    read_only_definitions = {
+        declaration["definition"]
+        for declaration in capabilities["readOnly"]["declarations"]
+        if "definition" in declaration
+    }
+    editable_definitions = {
+        declaration["definition"] for declaration in capabilities["editableScalar"]["declarations"]
+    }
+    system_owned = {
+        "/properties/involves_human_subjects",
+        "/properties/exempt_from_federal_regulations",
+        "/properties/exemptions",
+    }
+
+    assert system_owned <= read_only_definitions
+    assert system_owned.isdisjoint(editable_definitions)
+    assert "/properties/involves_human_specimens_or_data" in editable_definitions
+
+
 def test_browser_plan_discovers_multifield_editable_surface(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
