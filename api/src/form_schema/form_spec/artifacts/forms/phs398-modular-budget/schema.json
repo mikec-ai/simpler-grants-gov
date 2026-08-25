@@ -31,11 +31,55 @@
         }
       },
       "maxItems": 5,
-      "title": "Budget Period"
+      "title": "Budget Period",
+      "allOf": [
+        {
+          "properties": {
+            "directCosts": {
+              "properties": {
+                "totalDirectCosts": {
+                  "readOnly": true
+                }
+              }
+            },
+            "indirectCosts": {
+              "properties": {
+                "totalIndirectCosts": {
+                  "readOnly": true
+                }
+              }
+            },
+            "totalDirectAndIndirectCosts": {
+              "readOnly": true
+            }
+          }
+        }
+      ]
     },
     "cumulativeBudgetInformation": {
       "$ref": "../../question-bank/budget/phs398-modular/cumulative-summary/schema.json",
       "title": "Cumulative Budget Information",
+      "allOf": [
+        {
+          "properties": {
+            "cumulativeDirectCostLessConsortiumFandA": {
+              "readOnly": true
+            },
+            "cumulativeConsortiumFandA": {
+              "readOnly": true
+            },
+            "cumulativeTotalDirectCosts": {
+              "readOnly": true
+            },
+            "cumulativeTotalIndirectCosts": {
+              "readOnly": true
+            },
+            "cumulativeTotalDirectAndIndirectCosts": {
+              "readOnly": true
+            }
+          }
+        }
+      ],
       "properties": {
         "cumulativeDirectCostLessConsortiumFandA": {
           "readOnly": true

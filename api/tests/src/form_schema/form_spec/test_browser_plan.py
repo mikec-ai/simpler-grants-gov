@@ -110,7 +110,7 @@ def test_browser_plan_exposes_modular_budget_review_surfaces_without_form_logic(
     form = build_browser_plan()["forms"][0]
     capabilities = form["capabilities"]
 
-    assert form["counts"] == {"uiNodes": 26, "uiFields": 15, "schemaFields": 26}
+    assert form["counts"] == {"uiNodes": 26, "uiFields": 23, "schemaFields": 26}
     assert capabilities["repeater"]["declarations"] == [
         {"definition": "/properties/periods", "name": "periods"},
         {

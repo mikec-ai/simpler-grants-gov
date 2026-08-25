@@ -35,11 +35,28 @@ def test_modular_budget_loads_without_form_specific_adapter_code() -> None:
     assert projected.meta["formName"] == "PHS 398 Modular Budget"
     assert projected.meta["formVersion"] == "1.2"
     assert projected.meta["legacyFormId"] == 403
-    assert len(fields) == 13
+    assert len(fields) == 21
     assert len(lists) == 2
     assert projected.form_json_schema["properties"]["periods"]["maxItems"] == 5
     assert len(calculations) == 8
     assert sorted(rule["order"] for rule in calculations) == list(range(1, 9))
+    calculated_definitions = {
+        "/properties/periods/items/properties/direct_costs/properties/total_direct_costs",
+        "/properties/periods/items/properties/indirect_costs/properties/total_indirect_costs",
+        "/properties/periods/items/properties/total_direct_and_indirect_costs",
+        (
+            "/properties/cumulative_budget_information/properties/"
+            "cumulative_direct_cost_less_consortium_fand_a"
+        ),
+        ("/properties/cumulative_budget_information/properties/" "cumulative_consortium_fand_a"),
+        ("/properties/cumulative_budget_information/properties/" "cumulative_total_direct_costs"),
+        ("/properties/cumulative_budget_information/properties/" "cumulative_total_indirect_costs"),
+        (
+            "/properties/cumulative_budget_information/properties/"
+            "cumulative_total_direct_and_indirect_costs"
+        ),
+    }
+    assert calculated_definitions <= {field["definition"] for field in fields}
     assert projected.form_rule_schema["periods"]["budget_period_end_date"]["gg_validation"] == {
         "rule": "date_not_before",
         "fields": ["@THIS.budget_period_start_date"],
