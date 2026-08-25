@@ -78,11 +78,13 @@ jobs:
             exit 2
           fi
           if [[ "$GITHUB_EVENT_NAME" != "pull_request" ]]; then
-            echo "bank_only=false" >> "$GITHUB_OUTPUT"
-            echo "tier=full" >> "$GITHUB_OUTPUT"
-            echo "portable_form_ids=$PORTABLE_BROWSER_FORM_IDS" >> "$GITHUB_OUTPUT"
-            echo "portable_test_files=" >> "$GITHUB_OUTPUT"
-            echo "reason=non-PR invocation requires full CI" >> "$GITHUB_OUTPUT"
+            {
+              echo "bank_only=false"
+              echo "tier=full"
+              echo "portable_form_ids=$PORTABLE_BROWSER_FORM_IDS"
+              echo "portable_test_files="
+              echo "reason=non-PR invocation requires full CI"
+            } >> "$GITHUB_OUTPUT"
             exit 0
           fi
           PYTHONPATH=api python3 api/bin/check_form_spec_bank.py \
