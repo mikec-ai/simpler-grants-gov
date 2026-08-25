@@ -101,8 +101,7 @@ def apply_initial_population_from_source_update(
     """Apply matching portable values until each target receives its first user update."""
 
     modified_target_ids = set(
-        db_session
-        .execute(
+        db_session.execute(
             select(ApplicationAudit.target_application_form_id).where(
                 ApplicationAudit.application_id == application.application_id,
                 ApplicationAudit.application_audit_event == ApplicationAuditEvent.FORM_UPDATED,
