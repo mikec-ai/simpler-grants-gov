@@ -658,7 +658,7 @@ describe("FieldListWidget", () => {
       />,
     );
 
-    const amount = screen.getByLabelText("periods[0]--amount");
+    const amount = screen.getByLabelText("contacts[0]--periods[0]--amount");
     expect(amount).toHaveValue("10");
     await user.clear(amount);
     await user.type(amount, "25");

@@ -1295,6 +1295,34 @@ describe("addPrintWidgetToFields", () => {
       ).toBe("contact_people_test[2]--first_name");
     });
 
+    it("builds a row-aware html field through nested FieldLists", () => {
+      expect(
+        getHtmlFieldForWarning({
+          definition:
+            "/properties/budget_attachments/items/properties/budget_year/items/properties/equipment/properties/attachment",
+          field: "$.budget_attachments[2].budget_year[3].equipment.attachment",
+          schema: {
+            title: "Attachment",
+            type: "string",
+          },
+        }),
+      ).toBe("budget_attachments[2]--budget_year[3]--equipment--attachment");
+    });
+
+    it("falls back to representative nested FieldList row zero", () => {
+      expect(
+        getHtmlFieldForWarning({
+          definition:
+            "/properties/budget_attachments/items/properties/budget_year/items/properties/equipment/properties/attachment",
+          field: "$.budget_attachments",
+          schema: {
+            title: "Attachment",
+            type: "string",
+          },
+        }),
+      ).toBe("budget_attachments[0]--budget_year[0]--equipment--attachment");
+    });
+
     it("falls back to entry 0 when the FieldList warning is not indexed", () => {
       expect(
         getHtmlFieldForWarning({

@@ -116,6 +116,27 @@ const replaceFieldListIndexPlaceholder = ({
 };
 
 /**
+ * Qualifies a locally generated FieldList child id with the rendered id of
+ * its enclosing list. Nested lists receive a row-aware rendered id from their
+ * parent, while their declarative child templates remain local to the nested
+ * list name. Joining them here prevents duplicate DOM ids across outer rows.
+ */
+const qualifyFieldListBaseId = ({
+  baseId,
+  fieldListId,
+}: {
+  baseId: string;
+  fieldListId: string;
+}): string => {
+  const entryMarker = `[${FIELD_LIST_INDEX_TOKEN}]`;
+  const markerIndex = baseId.indexOf(entryMarker);
+  if (markerIndex < 0) {
+    throw new Error(`FieldList child id lacks an entry marker: ${baseId}`);
+  }
+  return `${fieldListId}${baseId.slice(markerIndex)}`;
+};
+
+/**
  * Extracts the final field name from a FieldList base id.
  *
  * This is only used to build a stable React key for the rendered child widget.
@@ -328,6 +349,7 @@ function FieldListEntry({
   isInteractionDisabled,
   rawErrors,
   fieldListPath,
+  renderedFieldListId,
   groupDefinition,
   requiredFields,
   minItemsHeading,
@@ -345,6 +367,7 @@ function FieldListEntry({
   isInteractionDisabled: boolean;
   rawErrors?: FormattedFormValidationWarning[];
   fieldListPath: string;
+  renderedFieldListId: string;
   groupDefinition: FieldListGroupItem[];
   requiredFields?: string[];
   minItemsHeading?: string;
@@ -386,8 +409,12 @@ function FieldListEntry({
           requiredFields ?? [],
         );
 
-        const generatedId = replaceFieldListIndexPlaceholder({
+        const qualifiedBaseId = qualifyFieldListBaseId({
           baseId: groupItem.baseId,
+          fieldListId: renderedFieldListId,
+        });
+        const generatedId = replaceFieldListIndexPlaceholder({
+          baseId: qualifiedBaseId,
           entryIndex,
         });
 
@@ -733,6 +760,7 @@ function FieldListWidget(widgetProps: FieldListWidgetProps) {
             groupDefinition={groupDefinition}
             rawErrors={rawErrors}
             fieldListPath={fieldListPath}
+            renderedFieldListId={id}
             requiredFields={widgetProps.requiredFields}
             minItemsHeading={resolvedMinItemsHeading}
             minItemsHelperText={resolvedMinItemsHelperText}

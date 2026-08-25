@@ -339,37 +339,32 @@ export function getHtmlFieldForWarning({
   field?: string;
   schema?: SchemaField;
 }): string | undefined {
-  const match = definition
-    ? definition.match(/^\/properties\/([^/]+)\/items\/properties\/(.+)$/)
-    : null;
-
-  if (!match) {
+  if (!definition?.includes("/items/")) {
     return getFieldNameForHtml({
       definition,
       schema,
     });
   }
 
-  const [, fieldListName, childDefinitionPath] = match;
-  const childFieldPath = childDefinitionPath.replace(
-    /\/properties\//g,
-    VALIDATION_ERROR_NESTING_DELIMITER,
-  );
-  const childHtmlPath = childFieldPath.replace(
-    /\./g,
-    FORM_DATA_NESTING_DELIMITER,
-  );
-
-  const entryMatch = field?.match(
-    new RegExp(`^\\$\\.${fieldListName}\\[(\\d+)\\]\\.${childFieldPath}$`),
-  );
-
-  if (entryMatch) {
-    const [, entryIndex] = entryMatch;
-    return `${fieldListName}[${entryIndex}]--${childHtmlPath}`;
+  const indexedFieldPath = field?.match(/^\$\.(.+\[\d+\]\..+)$/)?.[1];
+  if (indexedFieldPath) {
+    return indexedFieldPath.replaceAll(
+      VALIDATION_ERROR_NESTING_DELIMITER,
+      FORM_DATA_NESTING_DELIMITER,
+    );
   }
 
-  return `${fieldListName}[0]--${childHtmlPath}`;
+  const parts: string[] = [];
+  for (const encoded of definition.slice(1).split("/")) {
+    const segment = encoded.replaceAll("~1", "/").replaceAll("~0", "~");
+    if (segment === "properties" || !segment) continue;
+    if (segment === "items") {
+      if (parts.length > 0) parts[parts.length - 1] = `${parts.at(-1)}[0]`;
+    } else {
+      parts.push(segment);
+    }
+  }
+  return parts.join(FORM_DATA_NESTING_DELIMITER);
 }
 
 // Finds the parent FieldList label for a child field definition so it can be
