@@ -101,5 +101,8 @@ def test_s3mock_uses_a_compose_scoped_volume() -> None:
 
 def test_hosted_browser_stack_starts_single_process_file_scanner() -> None:
     ci_compose = (API_ROOT / "docker-compose.ci.yml").read_text()
+    e2e_workflow_path = CHECKOUT_ROOT / ".github" / "workflows" / "ci-frontend-e2e.yml"
 
     assert 'LOCAL_FILE_SCANNER_RUN_WITHOUT_RELOADER: "TRUE"' in ci_compose
+    if e2e_workflow_path.is_file():
+        assert "LOCAL_FILE_SCANNER_RUN_WITHOUT_RELOADER=TRUE" in e2e_workflow_path.read_text()
