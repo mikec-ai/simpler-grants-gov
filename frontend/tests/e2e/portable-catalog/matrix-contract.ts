@@ -106,11 +106,19 @@ export type RecoveredPlanCandidate = Pick<
 export function firstAddressableAttachmentDefinition(
   form: BrowserPlanForm,
 ): string | undefined {
+  return addressableAttachmentDefinitions(form)[0];
+}
+
+export function addressableAttachmentDefinitions(
+  form: BrowserPlanForm,
+): string[] {
   const capability = form.capabilities.attachment;
-  if (capability?.applicability !== "applicable") return undefined;
-  return capability.declarations.find(
-    ({ definition }) => typeof definition === "string",
-  )?.definition as string | undefined;
+  if (capability?.applicability !== "applicable") return [];
+  return capability.declarations
+    .map(({ definition }) => definition)
+    .filter(
+      (definition): definition is string => typeof definition === "string",
+    );
 }
 
 export function schemaDefinitionToControlId(definition: string): string {

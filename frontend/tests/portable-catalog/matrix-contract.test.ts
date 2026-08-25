@@ -2,6 +2,7 @@ import fs from "fs";
 import os from "os";
 import path from "path";
 import {
+  addressableAttachmentDefinitions,
   assertPortableMatrixEnvironment,
   boundaryError,
   classifyBoundary,
@@ -98,6 +99,32 @@ describe("portable catalog matrix contract", () => {
         },
       }),
     ).toBeUndefined();
+  });
+
+  it("preserves all mechanically addressable attachment declarations for runtime selection", () => {
+    const form = {
+      portableFormId: "research-plan",
+      previewFormId: "123e4567-e89b-12d3-a456-426614174001",
+      displayName: "Research Plan",
+      form: { formName: "ResearchPlan", formVersion: "1.0" },
+      artifactDigests: {},
+      capabilities: {
+        attachment: {
+          applicability: "applicable" as const,
+          declarations: [
+            { definition: "/properties/conditional_attachment" },
+            { rulePath: "/conditional_attachment" },
+            { definition: "/properties/unconditional_attachment" },
+          ],
+          reason: null,
+        },
+      },
+    };
+
+    expect(addressableAttachmentDefinitions(form)).toEqual([
+      "/properties/conditional_attachment",
+      "/properties/unconditional_attachment",
+    ]);
   });
 
   it("maps schema definitions to stable RJSF control ids", () => {
