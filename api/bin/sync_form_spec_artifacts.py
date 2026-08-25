@@ -40,7 +40,10 @@ OPTIONAL_RUNTIME_FORM_FILES = (
 )
 PORTABLE_GOVERNANCE_FILES = (
     "contract/v1/parity-delta-ledger.schema.json",
+    "contract/v1/parity-decision-artifact.schema.json",
+    "contract/v1/parity-decision-verification.schema.json",
     "parity/consumer-evidence-verification.v1.json",
+    "parity/decision-verification.v1.json",
     "parity/legacy-deltas.v1.json",
 )
 XSD_DIRECTORY = API_ROOT / "src" / "services" / "xml_generation" / "xsds"
@@ -99,6 +102,15 @@ def select_artifacts(
     missing = sorted(selected - set(payloads))
     if missing:
         raise ValueError(f"requested forms are missing runtime artifacts: {missing}")
+
+    decision_receipt = json.loads(payloads["parity/decision-verification.v1.json"])
+    for entry in decision_receipt.get("artifacts", []):
+        path = entry.get("path") if isinstance(entry, dict) else None
+        if not isinstance(path, str) or not path.startswith("parity/decisions/"):
+            raise ValueError("decision receipt contains an invalid artifact path")
+        if path not in payloads:
+            raise ValueError(f"verified decision artifact is missing from the bundle: {path}")
+        selected.add(path)
 
     for form in requested:
         manifest_path = f"dist/forms/{form}/manifest.json"

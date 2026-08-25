@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -43,6 +44,8 @@ def _write_fixture_bundle(
     *,
     ledger: dict | None = None,
     receipt: dict | None = None,
+    decision_receipt: dict | None = None,
+    decision_artifacts: dict[str, bytes] | None = None,
 ) -> tuple[Path, Path, Path]:
     ledger_path = tmp_path / "ledger.json"
     receipt_path = tmp_path / "receipt.json"
@@ -55,15 +58,160 @@ def _write_fixture_bundle(
             json.dumps(receipt or json.loads(RECEIPT_PATH.read_text())) + "\n"
         ).encode(),
     }
+    if decision_receipt is not None:
+        payloads["parity/decision-verification.v1.json"] = (
+            json.dumps(decision_receipt) + "\n"
+        ).encode()
+        ledger_schema = json.loads(LEDGER_SCHEMA_PATH.read_text())
+        if "decisionVerification" not in ledger_schema["properties"]:
+            ledger_schema["required"].append("decisionVerification")
+            ledger_schema["properties"]["decisionVerification"] = {
+                "type": "object",
+                "required": ["receipt"],
+                "properties": {"receipt": {"type": "string"}},
+            }
+        payloads["contract/v1/parity-delta-ledger.schema.json"] = (
+            json.dumps(ledger_schema) + "\n"
+        ).encode()
+        payloads["contract/v1/parity-decision-verification.schema.json"] = (
+            json.dumps(
+                {
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "type": "object",
+                    "required": ["contract", "artifacts"],
+                    "properties": {
+                        "contract": {"const": "grants-form-parity-decision-verification/v1"},
+                        "artifacts": {"type": "array", "items": {"type": "object"}},
+                    },
+                }
+            )
+            + "\n"
+        ).encode()
+        payloads["contract/v1/parity-decision-artifact.schema.json"] = (
+            json.dumps(
+                {
+                    "$schema": "https://json-schema.org/draft/2020-12/schema",
+                    "type": "object",
+                    "required": [
+                        "contract",
+                        "id",
+                        "ledgerRecordId",
+                        "formId",
+                        "target",
+                        "classification",
+                        "decision",
+                        "reviewer",
+                        "reviewedAt",
+                        "rationale",
+                    ],
+                    "properties": {
+                        "contract": {"const": "grants-form-parity-decision/v1"},
+                        "decision": {"const": "accepted"},
+                    },
+                }
+            )
+            + "\n"
+        ).encode()
+    payloads.update(decision_artifacts or {})
     ledger_path.write_bytes(payloads["parity/legacy-deltas.v1.json"])
     receipt_path.write_bytes(payloads[RECEIPT_SOURCE_PATH])
+    if decision_receipt is not None:
+        (tmp_path / "decision-receipt.json").write_bytes(
+            payloads["parity/decision-verification.v1.json"]
+        )
+        (tmp_path / "decision-ledger-schema.json").write_bytes(
+            payloads["contract/v1/parity-delta-ledger.schema.json"]
+        )
+        (tmp_path / "decision-receipt-schema.json").write_bytes(
+            payloads["contract/v1/parity-decision-verification.schema.json"]
+        )
+        (tmp_path / "decision-artifact-schema.json").write_bytes(
+            payloads["contract/v1/parity-decision-artifact.schema.json"]
+        )
+    for source_path, artifact_payload in (decision_artifacts or {}).items():
+        artifact_path = tmp_path / source_path
+        artifact_path.parent.mkdir(parents=True, exist_ok=True)
+        artifact_path.write_bytes(artifact_payload)
     manifest = json.loads(ARTIFACT_MANIFEST.read_text())
     for record in manifest["files"]:
         payload = payloads.get(record["path"])
         if payload is not None:
             record.update(size=len(payload), sha256=hashlib.sha256(payload).hexdigest())
+    existing = {record["path"] for record in manifest["files"]}
+    for source_path, payload in payloads.items():
+        if source_path not in existing:
+            manifest["files"].append(
+                {
+                    "path": source_path,
+                    "size": len(payload),
+                    "sha256": hashlib.sha256(payload).hexdigest(),
+                }
+            )
     manifest_path.write_text(json.dumps(manifest))
     return ledger_path, receipt_path, manifest_path
+
+
+def _accepted_decision_fixture(
+    tmp_path: Path,
+) -> tuple[Path, Path, Path, Path, Path, Path, Path, Path]:
+    ledger = json.loads(LEDGER_PATH.read_text())
+    ledger["decisionVerification"] = {"receipt": "parity/decision-verification.v1.json"}
+    record = next(
+        row
+        for row in ledger["records"]
+        if row["classification"] == "authoritative_source_correction"
+    )
+    decision_path = "parity/decisions/fixture-acceptance.json"
+    decision_reference = {
+        "id": "fixture-acceptance",
+        "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+        "revision": "3" * 40,
+        "path": decision_path,
+    }
+    record["review"] = {
+        "status": "accepted",
+        "reviewer": "accountable-reviewer",
+        "reviewedAt": "2026-08-25T12:00:00Z",
+        "decisionEvidence": [decision_reference],
+    }
+    artifact = {
+        "contract": "grants-form-parity-decision/v1",
+        "id": decision_reference["id"],
+        "ledgerRecordId": record["id"],
+        "formId": record["formId"],
+        "target": record["target"],
+        "classification": record["classification"],
+        "decision": "accepted",
+        "reviewer": record["review"]["reviewer"],
+        "reviewedAt": record["review"]["reviewedAt"],
+        "rationale": "The accountable reviewer accepts this exact fixture delta.",
+    }
+    artifact_payload = (json.dumps(artifact, sort_keys=True) + "\n").encode()
+    decision_receipt = {
+        "contract": "grants-form-parity-decision-verification/v1",
+        "artifacts": [
+            {
+                **{key: decision_reference[key] for key in ("repository", "revision", "path")},
+                "sha256": hashlib.sha256(artifact_payload).hexdigest(),
+            }
+        ],
+    }
+    ledger_path, receipt_path, manifest_path = _write_fixture_bundle(
+        tmp_path,
+        ledger=ledger,
+        decision_receipt=decision_receipt,
+        decision_artifacts={decision_path: artifact_payload},
+    )
+    return (
+        ledger_path,
+        receipt_path,
+        manifest_path,
+        tmp_path / "decision-receipt.json",
+        tmp_path / decision_path,
+        tmp_path / "decision-ledger-schema.json",
+        tmp_path / "decision-receipt-schema.json",
+        tmp_path / "decision-artifact-schema.json",
+    )
 
 
 @pytest.fixture(scope="module")
@@ -275,12 +423,203 @@ def test_accepted_review_requires_an_independent_decision_receipt(tmp_path: Path
     }
     ledger_path, receipt_path, manifest_path = _write_fixture_bundle(tmp_path, ledger=ledger)
 
-    with pytest.raises(ValueError, match="independent decision-artifact receipt"):
+    with pytest.raises(ValueError, match="absent from the offline verification receipt"):
         _load_delta_ledger(
             ledger_path,
             manifest_path=manifest_path,
             schema_path=LEDGER_SCHEMA_PATH,
             receipt_path=receipt_path,
+        )
+
+
+def test_exact_offline_verified_accountable_decision_is_accepted(tmp_path: Path) -> None:
+    (
+        ledger_path,
+        receipt_path,
+        manifest_path,
+        decision_receipt_path,
+        _,
+        ledger_schema_path,
+        receipt_schema_path,
+        artifact_schema_path,
+    ) = _accepted_decision_fixture(tmp_path)
+
+    ledger, source = _load_delta_ledger(
+        ledger_path,
+        manifest_path=manifest_path,
+        schema_path=ledger_schema_path,
+        receipt_path=receipt_path,
+        decision_receipt_path=decision_receipt_path,
+        decision_artifact_root=tmp_path,
+        decision_receipt_schema_path=receipt_schema_path,
+        decision_schema_path=artifact_schema_path,
+    )
+
+    assert any(record["review"]["status"] == "accepted" for record in ledger["records"])
+    assert re.fullmatch(r"[0-9a-f]{64}", source["decisionReceiptSha256"])
+
+
+def test_decision_evidence_rejects_missing_tampered_and_stale_artifacts(tmp_path: Path) -> None:
+    (
+        ledger_path,
+        receipt_path,
+        manifest_path,
+        decision_receipt_path,
+        artifact_path,
+        ledger_schema_path,
+        receipt_schema_path,
+        artifact_schema_path,
+    ) = _accepted_decision_fixture(tmp_path)
+    artifact_path.unlink()
+    with pytest.raises(ValueError, match="pinned portable artifact is missing"):
+        _load_delta_ledger(
+            ledger_path,
+            manifest_path=manifest_path,
+            schema_path=ledger_schema_path,
+            receipt_path=receipt_path,
+            decision_receipt_path=decision_receipt_path,
+            decision_artifact_root=tmp_path,
+            decision_receipt_schema_path=receipt_schema_path,
+            decision_schema_path=artifact_schema_path,
+        )
+
+    other = tmp_path / "tampered"
+    other.mkdir()
+    (
+        ledger_path,
+        receipt_path,
+        manifest_path,
+        decision_receipt_path,
+        artifact_path,
+        ledger_schema_path,
+        receipt_schema_path,
+        artifact_schema_path,
+    ) = _accepted_decision_fixture(other)
+    artifact_path.write_bytes(artifact_path.read_bytes() + b" ")
+    with pytest.raises(ValueError, match="does not match its pinned producer artifact"):
+        _load_delta_ledger(
+            ledger_path,
+            manifest_path=manifest_path,
+            schema_path=ledger_schema_path,
+            receipt_path=receipt_path,
+            decision_receipt_path=decision_receipt_path,
+            decision_artifact_root=other,
+            decision_receipt_schema_path=receipt_schema_path,
+            decision_schema_path=artifact_schema_path,
+        )
+
+    stale = tmp_path / "stale"
+    stale.mkdir()
+    (
+        ledger_path,
+        receipt_path,
+        manifest_path,
+        decision_receipt_path,
+        artifact_path,
+        ledger_schema_path,
+        receipt_schema_path,
+        artifact_schema_path,
+    ) = _accepted_decision_fixture(stale)
+    ledger = json.loads(ledger_path.read_text())
+    accepted = next(
+        record for record in ledger["records"] if record["review"]["status"] == "accepted"
+    )
+    accepted["review"]["reviewer"] = "different-reviewer"
+    payload = (json.dumps(ledger) + "\n").encode()
+    ledger_path.write_bytes(payload)
+    manifest = json.loads(manifest_path.read_text())
+    manifest_record = next(
+        row for row in manifest["files"] if row["path"] == "parity/legacy-deltas.v1.json"
+    )
+    manifest_record.update(size=len(payload), sha256=hashlib.sha256(payload).hexdigest())
+    manifest_path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="stale for ledger fields.*reviewer"):
+        _load_delta_ledger(
+            ledger_path,
+            manifest_path=manifest_path,
+            schema_path=ledger_schema_path,
+            receipt_path=receipt_path,
+            decision_receipt_path=decision_receipt_path,
+            decision_artifact_root=stale,
+            decision_receipt_schema_path=receipt_schema_path,
+            decision_schema_path=artifact_schema_path,
+        )
+
+
+def test_decision_evidence_rejects_unverified_and_reused_artifacts(tmp_path: Path) -> None:
+    (
+        ledger_path,
+        receipt_path,
+        manifest_path,
+        decision_receipt_path,
+        _,
+        ledger_schema_path,
+        receipt_schema_path,
+        artifact_schema_path,
+    ) = _accepted_decision_fixture(tmp_path)
+    ledger = json.loads(ledger_path.read_text())
+    accepted = next(
+        record for record in ledger["records"] if record["review"]["status"] == "accepted"
+    )
+    accepted["review"]["decisionEvidence"][0]["revision"] = "4" * 40
+    payload = (json.dumps(ledger) + "\n").encode()
+    ledger_path.write_bytes(payload)
+    manifest = json.loads(manifest_path.read_text())
+    manifest_record = next(
+        row for row in manifest["files"] if row["path"] == "parity/legacy-deltas.v1.json"
+    )
+    manifest_record.update(size=len(payload), sha256=hashlib.sha256(payload).hexdigest())
+    manifest_path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="absent from the offline verification receipt"):
+        _load_delta_ledger(
+            ledger_path,
+            manifest_path=manifest_path,
+            schema_path=ledger_schema_path,
+            receipt_path=receipt_path,
+            decision_receipt_path=decision_receipt_path,
+            decision_artifact_root=tmp_path,
+            decision_receipt_schema_path=receipt_schema_path,
+            decision_schema_path=artifact_schema_path,
+        )
+
+    reused = tmp_path / "reused"
+    reused.mkdir()
+    (
+        ledger_path,
+        receipt_path,
+        manifest_path,
+        decision_receipt_path,
+        _,
+        ledger_schema_path,
+        receipt_schema_path,
+        artifact_schema_path,
+    ) = _accepted_decision_fixture(reused)
+    ledger = json.loads(ledger_path.read_text())
+    accepted = next(
+        record for record in ledger["records"] if record["review"]["status"] == "accepted"
+    )
+    duplicate = json.loads(json.dumps(accepted))
+    duplicate["id"] = "fixture.second-accepted-delta"
+    duplicate["target"]["differenceKey"] = "/different#key"
+    ledger["records"].append(duplicate)
+    payload = (json.dumps(ledger) + "\n").encode()
+    ledger_path.write_bytes(payload)
+    manifest = json.loads(manifest_path.read_text())
+    manifest_record = next(
+        row for row in manifest["files"] if row["path"] == "parity/legacy-deltas.v1.json"
+    )
+    manifest_record.update(size=len(payload), sha256=hashlib.sha256(payload).hexdigest())
+    manifest_path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="reuses a decision artifact"):
+        _load_delta_ledger(
+            ledger_path,
+            manifest_path=manifest_path,
+            schema_path=ledger_schema_path,
+            receipt_path=receipt_path,
+            decision_receipt_path=decision_receipt_path,
+            decision_artifact_root=reused,
+            decision_receipt_schema_path=receipt_schema_path,
+            decision_schema_path=artifact_schema_path,
         )
 
 

@@ -14,7 +14,10 @@ from bin.sync_form_spec_artifacts import select_artifacts, verify_selected_xsds,
 def _bundle(path, files):
     files = {
         "contract/v1/parity-delta-ledger.schema.json": b"{}",
+        "contract/v1/parity-decision-artifact.schema.json": b"{}",
+        "contract/v1/parity-decision-verification.schema.json": b"{}",
         "parity/consumer-evidence-verification.v1.json": b"{}",
+        "parity/decision-verification.v1.json": b'{"artifacts":[]}',
         "parity/legacy-deltas.v1.json": b"{}",
         **files,
     }
@@ -73,7 +76,10 @@ def test_selects_only_runtime_files_and_transitive_questions(tmp_path):
         "question-bank/a/schema.json",
         "question-bank/b/schema.json",
         "governance/contract/v1/parity-delta-ledger.schema.json",
+        "governance/contract/v1/parity-decision-artifact.schema.json",
+        "governance/contract/v1/parity-decision-verification.schema.json",
         "governance/parity/consumer-evidence-verification.v1.json",
+        "governance/parity/decision-verification.v1.json",
         "governance/parity/legacy-deltas.v1.json",
     }
     assert manifest["source"]["revision"] == "abc123"
@@ -84,6 +90,27 @@ def test_selects_only_runtime_files_and_transitive_questions(tmp_path):
     assert (target / "question-bank/b/schema.json").is_file()
     assert (target / "governance/parity/legacy-deltas.v1.json").is_file()
     assert not (target / "question-bank/unrelated/schema.json").exists()
+
+
+def test_selects_every_offline_verified_decision_artifact(tmp_path):
+    decision_path = "parity/decisions/example-acceptance.json"
+    files = {
+        "dist/forms/example/manifest.json": b"{}",
+        "dist/forms/example/evidence.json": b"{}",
+        "dist/forms/example/schema.json": b"{}",
+        "dist/forms/example/sgg/rule-schema.json": b"{}",
+        "dist/forms/example/sgg/ui-schema.json": b"[]",
+        "parity/decision-verification.v1.json": json.dumps(
+            {"artifacts": [{"path": decision_path}]}
+        ).encode(),
+        decision_path: b'{"decision":"accepted"}',
+    }
+    bundle = tmp_path / "bundle.tar.gz"
+    _bundle(bundle, files)
+
+    _, selected = select_artifacts(bundle, "example")
+
+    assert f"governance/{decision_path}" in selected
 
 
 def test_rejects_a_reference_outside_the_question_bank(tmp_path):
