@@ -102,6 +102,36 @@
       "size": 2451
     },
     {
+      "path": "dist/forms/epa-key-contacts/evidence.json",
+      "sha256": "07f73b4dae1a107bc42fb3a0d9b4ebdddb3f03b8d93902c886b4fe1ecee074e1",
+      "size": 19110
+    },
+    {
+      "path": "dist/forms/epa-key-contacts/manifest.json",
+      "sha256": "35e9bea76dc806198e72c5e1c48788e009ecbd4a1cf5e034d42fb211f123f053",
+      "size": 523
+    },
+    {
+      "path": "dist/forms/epa-key-contacts/schema.json",
+      "sha256": "63dcfdb25f74878eaed43656561aa47a92667488c04929abb72e748738bfb205",
+      "size": 8044
+    },
+    {
+      "path": "dist/forms/epa-key-contacts/sgg/rule-schema.json",
+      "sha256": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed",
+      "size": 5
+    },
+    {
+      "path": "dist/forms/epa-key-contacts/sgg/ui-schema.json",
+      "sha256": "c0a3f974f8ea83144e7139cd081381ca82fb70662eeb60460a14d916bb79d256",
+      "size": 8058
+    },
+    {
+      "path": "dist/forms/epa-key-contacts/targets/grants-gov-xml.json",
+      "sha256": "0e09e13e8d4a8f7eeeec88284086dc5d23644056be38b2a6ab73e622316d6933",
+      "size": 13184
+    },
+    {
       "path": "dist/forms/gg-lobbying/evidence.json",
       "sha256": "1adfcf8ece4e0ca02a1a3ddf4a0995e736e6c095b4588a9e49ae5bb0b95451c5",
       "size": 4799
@@ -868,13 +898,18 @@
     },
     {
       "path": "dist/forms/rr-personal-data/evidence.json",
-      "sha256": "c3abbb53b9b2cdb9fcfb324d6ed47be1aec7e55ea7c4e640ec92811c741c72a2",
-      "size": 13297
+      "sha256": "91d0982d3796c1795eaa7238fb9303436c6605bc01c1e59dd36c86b572c081aa",
+      "size": 14027
     },
     {
       "path": "dist/forms/rr-personal-data/manifest.json",
-      "sha256": "ef02d83c571d127c8578bfcfdca36532336548360a7a37f2b087f14af9128aca",
-      "size": 545
+      "sha256": "0486119601912eacf286dc8df018757946bc73f802fb03bb82853dff6c573975",
+      "size": 591
+    },
+    {
+      "path": "dist/forms/rr-personal-data/operational-behavior.json",
+      "sha256": "3f3454c384a6344c163d67aa7b39ff83e4d26b4ef4af7750bf95cab79712867f",
+      "size": 2392
     },
     {
       "path": "dist/forms/rr-personal-data/schema.json",
@@ -2128,13 +2163,13 @@
     },
     {
       "path": "dist/question-bank/personal-data/co-project-director/schema.json",
-      "sha256": "1af8e5d2a702fb3d40aa2afc1b7160e2ae98c1f3638e6ebb8c154101cc824764",
-      "size": 3339
+      "sha256": "e93dca8b3a8823b9f2028391a6d6048dc454767d0a548d671125e405f7a2905a",
+      "size": 4125
     },
     {
       "path": "dist/question-bank/personal-data/project-director/schema.json",
-      "sha256": "1ed207b93feed00c2f9ed86f7ab5479130d732b5f37798eee75417954fd36bad",
-      "size": 3338
+      "sha256": "1bc6547803a848b9ef4140bd0606045a7a5bae38002e2a554bf9889cceecce76",
+      "size": 4124
     },
     {
       "path": "dist/question-bank/poc/details/schema.json",
@@ -2700,13 +2735,14 @@
       "sbir-sttr-information",
       "phs-fellowship-supplemental",
       "phs398-career-development-supplemental",
-      "phs-additional-indirect-costs"
+      "phs-additional-indirect-costs",
+      "epa-key-contacts"
     ],
     "policy": "form runtime and evidence artifacts, transitive question-schema closure, and portable governance contracts"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "551228220521140440f651b3bad94f1ca00bac19"
+    "revision": "7c3be8e32968b49b5ce48f53a832c00220eb5bee"
   },
-  "sourceBundleSha256": "1b9ea118f9eaecddeb555c08e9361c5eb74ae0a312bca9419a9b241a35cfc3dc"
+  "sourceBundleSha256": "e67fbb6553f0b9e7c454a41eaa4b462557b401e34b10c6882eb742088636dc84"
 }

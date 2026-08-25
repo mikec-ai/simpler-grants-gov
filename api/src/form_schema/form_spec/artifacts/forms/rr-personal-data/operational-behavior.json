@@ -1,0 +1,81 @@
+{
+  "contract": "grants-form-operational-behavior/v1",
+  "formId": "rr-personal-data",
+  "behaviors": [
+    {
+      "canonicalPath": "/projectDirector/name/prefix",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/principalInvestigator/name/prefix"
+      },
+      "editability": "protected",
+      "executionPolicy": {
+        "trigger": "source-response-updated",
+        "writePolicy": "until-target-user-modified",
+        "missingSourcePolicy": "skip"
+      }
+    },
+    {
+      "canonicalPath": "/projectDirector/name/firstName",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/principalInvestigator/name/firstName"
+      },
+      "editability": "protected",
+      "executionPolicy": {
+        "trigger": "source-response-updated",
+        "writePolicy": "until-target-user-modified",
+        "missingSourcePolicy": "skip"
+      }
+    },
+    {
+      "canonicalPath": "/projectDirector/name/middleName",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/principalInvestigator/name/middleName"
+      },
+      "editability": "protected",
+      "executionPolicy": {
+        "trigger": "source-response-updated",
+        "writePolicy": "until-target-user-modified",
+        "missingSourcePolicy": "skip"
+      }
+    },
+    {
+      "canonicalPath": "/projectDirector/name/lastName",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/principalInvestigator/name/lastName"
+      },
+      "editability": "protected",
+      "executionPolicy": {
+        "trigger": "source-response-updated",
+        "writePolicy": "until-target-user-modified",
+        "missingSourcePolicy": "skip"
+      }
+    },
+    {
+      "canonicalPath": "/projectDirector/name/suffix",
+      "operationKind": "prefill",
+      "valueSource": {
+        "kind": "canonical",
+        "blockId": "rr-sf424",
+        "path": "/principalInvestigator/name/suffix"
+      },
+      "editability": "protected",
+      "executionPolicy": {
+        "trigger": "source-response-updated",
+        "writePolicy": "until-target-user-modified",
+        "missingSourcePolicy": "skip"
+      }
+    }
+  ]
+}
