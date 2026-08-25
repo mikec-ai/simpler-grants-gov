@@ -36,7 +36,7 @@
     "rr-subaward-budget": ["api/tests/src/form_schema/form_spec/test_rr_subaward_budget_portable.py"],
     "rr-subaward-budget-10yr-30": ["api/tests/src/form_schema/form_spec/test_rr_subaward_budget10_30_portable.py"],
     "rr-subaward-budget-30": ["api/tests/src/form_schema/form_spec/test_rr_subaward_budget30_portable.py"],
-    "sbir-sttr-information": ["api/tests/src/form_schema/form_spec/test_registrations.py"],
+    "sbir-sttr-information": ["api/tests/src/form_schema/form_spec/test_sbir_sttr_information_portable.py"],
     "sf424": ["api/tests/src/form_schema/form_spec/test_sf424_parity.py"],
     "sf424-short": ["api/tests/src/form_schema/form_spec/test_sf424_short_parity.py"],
     "sf424a": ["api/tests/src/form_schema/form_spec/test_sf424a_parity.py"],
