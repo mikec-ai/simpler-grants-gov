@@ -83,6 +83,21 @@ export type FormReceipt = {
   firstFailureOwnership?: Ownership;
 };
 
+export function requiresPageIsolationAfterProbe(
+  receipt: ProbeReceipt,
+): boolean {
+  return receipt.status === "failed" || receipt.status === "inconclusive";
+}
+
+export function isolateProbeLedger<T>(ledger: T[], probeStart: number): T[] {
+  if (probeStart < 0 || probeStart > ledger.length) {
+    throw new Error(`invalid probe ledger boundary: ${probeStart}`);
+  }
+  const probeDelta = ledger.slice(probeStart);
+  ledger.length = probeStart;
+  return probeDelta;
+}
+
 export type RecoveredPlanCandidate = Pick<
   BrowserPlanForm,
   "portableFormId" | "previewFormId" | "artifactDigests"

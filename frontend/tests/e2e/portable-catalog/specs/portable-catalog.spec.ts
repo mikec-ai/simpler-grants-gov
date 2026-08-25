@@ -9,10 +9,12 @@ import {
   classifyBoundary,
   completeBlockedProbes,
   firstAddressableAttachmentDefinition,
+  isolateProbeLedger,
   loadBrowserPlan,
   observedBoundary,
   RECEIPT_CONTRACT,
   recoverBrowserPlanCandidates,
+  requiresPageIsolationAfterProbe,
   responsePathToControlId,
   responsePathToRepeaterContainerIds,
   schemaDefinitionToControlId,
@@ -677,24 +679,26 @@ test.describe("portable catalog browser conformance", () => {
               });
             }
 
+            let applyUrl = page.url();
             const attachmentDefinition =
               firstAddressableAttachmentDefinition(form);
+            const attachmentFailedRequestStart = failedFormRequests.length;
+            const attachmentPageErrorStart = pageErrors.length;
+            let attachmentProbe: ProbeReceipt;
             if (attachmentDefinition && fs.existsSync(attachmentFixture)) {
-              receipt.probes.push(
-                await probe(
-                  "attachment_upload_reload",
-                  "api_round_trip",
-                  async () => {
-                    const evidence = await exerciseAttachmentUpload(page, form);
-                    uploadedAttachmentFileName = evidence.fileName as string;
-                    return evidence;
-                  },
-                ),
+              attachmentProbe = await probe(
+                "attachment_upload_reload",
+                "api_round_trip",
+                async () => {
+                  const evidence = await exerciseAttachmentUpload(page, form);
+                  uploadedAttachmentFileName = evidence.fileName as string;
+                  return evidence;
+                },
               );
             } else if (
               form.capabilities.attachment?.applicability === "applicable"
             ) {
-              receipt.probes.push({
+              attachmentProbe = {
                 probe: "attachment_upload_reload",
                 status: "inconclusive",
                 boundary: "missing_vector",
@@ -705,26 +709,53 @@ test.describe("portable catalog browser conformance", () => {
                     ? `deterministic attachment fixture is unavailable: ${attachmentFixture}`
                     : "attachment rules exist but no mechanically addressable attachment widget is declared",
                 },
-              });
+              };
             } else {
-              receipt.probes.push({
+              attachmentProbe = {
                 probe: "attachment_upload_reload",
                 status: "not_applicable",
                 durationMs: 0,
                 evidence: {
                   reason: "no attachment widget or rule is declared",
                 },
-              });
+              };
+            }
+            receipt.probes.push(attachmentProbe);
+
+            if (requiresPageIsolationAfterProbe(attachmentProbe)) {
+              // Attribute only errors observed during this stateful probe.
+              // Earlier failures remain in their owning probe's ledger and
+              // continue to fail later independent receipts.
+              const attachmentFailedRequests = isolateProbeLedger(
+                failedFormRequests,
+                attachmentFailedRequestStart,
+              );
+              const attachmentPageErrors = isolateProbeLedger(
+                pageErrors,
+                attachmentPageErrorStart,
+              );
+              attachmentProbe.evidence = {
+                ...attachmentProbe.evidence,
+                failedFormRequests: attachmentFailedRequests,
+                pageErrors: attachmentPageErrors,
+              };
             }
 
-            // A failed attachment request belongs to the attachment probe. Do
-            // not let it cascade into otherwise independent save/reload and
-            // print receipts for the same form.
-            failedFormRequests.length = 0;
-
-            let applyUrl = page.url();
             receipt.probes.push(
               await probe("initial_save_reload", "api_round_trip", async () => {
+                if (requiresPageIsolationAfterProbe(attachmentProbe)) {
+                  // A stateful probe can fail after changing unsaved page data.
+                  // Re-enter the form so independent save evidence starts from
+                  // the persisted application state, while retaining the
+                  // original attachment receipt unchanged.
+                  await page.goto(applyUrl, { waitUntil: "domcontentloaded" });
+                  await expect(
+                    page.getByRole("heading", {
+                      level: 1,
+                      name: form.displayName,
+                    }),
+                  ).toBeVisible();
+                }
                 const editableDefinition =
                   form.capabilities.editableScalar?.declarations[0]?.definition;
                 if (typeof editableDefinition === "string") {
