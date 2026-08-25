@@ -46,11 +46,19 @@ const plannedFormProbes = [
   "preview_registration",
   "adapter_api_preflight",
   "apply_render",
+  "static_content",
   "initial_save_reload",
   "schema_implication",
   "accessibility",
   "print_render",
 ] as const;
+
+type StaticContentDeclaration = {
+  sectionName: string;
+  label: string;
+  paragraphs: string[];
+  sha256: string;
+};
 
 test.use({ trace: "off" });
 
@@ -234,6 +242,35 @@ async function reachDeclaredEditableControl(
   throw new Error(
     "keyboard traversal did not reach a declared editable form control",
   );
+}
+
+async function exerciseStaticContent(
+  page: Page,
+  form: BrowserPlanForm,
+): Promise<Record<string, unknown>> {
+  const capability = form.capabilities.staticContent;
+  if (capability?.applicability !== "applicable") {
+    throw new Error("no section-level static content is declared");
+  }
+  const declarations = capability.declarations as StaticContentDeclaration[];
+  for (const declaration of declarations) {
+    const section = page.locator(
+      `main [id=${JSON.stringify(`form-section-${declaration.sectionName}`)}]`,
+    );
+    await expect(section).toBeVisible();
+    await expect(
+      section.getByRole("heading", { name: declaration.label, exact: true }),
+    ).toBeVisible();
+    for (const paragraph of declaration.paragraphs) {
+      await expect(section.getByText(paragraph, { exact: true })).toBeVisible();
+    }
+  }
+  return {
+    sections: declarations.map(({ sectionName, sha256 }) => ({
+      sectionName,
+      sha256,
+    })),
+  };
 }
 
 function implicationWitnesses(pattern: string): {
@@ -546,6 +583,25 @@ test.describe("portable catalog browser conformance", () => {
             if (receipt.probes.at(-1)?.status !== "passed") {
               completeBlockedProbes(receipt, plannedFormProbes);
               continue;
+            }
+
+            if (
+              form.capabilities.staticContent?.applicability === "applicable"
+            ) {
+              receipt.probes.push(
+                await probe("static_content", "apply_render", async () =>
+                  exerciseStaticContent(page, form),
+                ),
+              );
+            } else {
+              receipt.probes.push({
+                probe: "static_content",
+                status: "not_applicable",
+                durationMs: 0,
+                evidence: {
+                  reason: "no section-level static content is declared",
+                },
+              });
             }
 
             let applyUrl = page.url();
