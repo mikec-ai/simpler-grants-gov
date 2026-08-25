@@ -143,6 +143,38 @@ describe("Budget424aSectionA", () => {
     expect(screen.queryByText(/sum of row 1/i)).not.toBeInTheDocument();
   });
 
+  it("keeps the source Column G label when the shared schema title is generic", () => {
+    const props = {
+      ...WidgetProps,
+      formContext: {
+        rootFormData: budget424a,
+        rootSchema: {
+          type: "object",
+          properties: {
+            total_budget_summary: {
+              type: "object",
+              properties: {
+                total_amount: {
+                  type: "string",
+                  title: "Budget monetary amount",
+                },
+              },
+            },
+          },
+        } as RJSFSchema,
+      },
+    };
+
+    render(<Budget424aSectionA {...props} />);
+
+    expect(screen.getByRole("textbox", { name: "Total, row 1" })).toBeEnabled();
+    expect(
+      screen.queryByRole("textbox", {
+        name: "Budget monetary amount, row 1",
+      }),
+    ).not.toBeInTheDocument();
+  });
+
   it("locks every applicant-entered value, including Column G", () => {
     render(<Budget424aSectionA {...WidgetProps} disabled />);
 

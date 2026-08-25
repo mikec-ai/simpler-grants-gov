@@ -523,7 +523,10 @@ function Budget424aSectionA<
                       readOnly={readOnly}
                       schema={fieldSchemas.totalAmount}
                       hideLabel
-                      ariaLabel={`${title(fieldSchemas.totalAmount, "Total budgeted amount")}, row ${row + 1}`}
+                      // Column G is labeled "Total" in the source form. Keep
+                      // that accessible name stable even when the reusable
+                      // monetary schema contributes a more generic title.
+                      ariaLabel={`Total, row ${row + 1}`}
                     />
                   </div>
                 </div>
