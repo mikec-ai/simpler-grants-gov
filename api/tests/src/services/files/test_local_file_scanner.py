@@ -316,20 +316,25 @@ class TestSetupLocalFileScanner:
         assert started == [local_file_scanner.LOCAL_FILE_SCANNER_THREAD_NAME]
         assert captured_args == [tmp_path, "local-mock-file-scan-bucket"]
 
-    def test_scanner_watches_store_before_s3mock_creates_bucket(self, monkeypatch, tmp_path):
+    def test_scanner_waits_for_bucket_and_reconciles_first_object(self, monkeypatch, tmp_path):
         bucket_name = "local-mock-file-scan-bucket"
+        bucket_path = tmp_path / bucket_name
         metadata_path = tmp_path / bucket_name / "object-id" / "objectMetadata.json"
 
-        class StopAfterPathReady(Exception):
+        class StopAfterStartup(Exception):
             pass
 
         watched_paths: list[str] = []
+        watch_kwargs: list[dict[str, object]] = []
 
-        def fake_watch(path, **_kwargs):
+        def fake_watch(path, **kwargs):
             watched_paths.append(path)
-            metadata_path.parent.mkdir(parents=True)
-            yield {("added", str(metadata_path))}
-            raise StopAfterPathReady
+            watch_kwargs.append(kwargs)
+            raise StopAfterStartup
+            yield  # pragma: no cover
+
+        def fake_sleep(_seconds):
+            _write_metadata(metadata_path, f"unscanned/{uuid.uuid4()}/first.pdf")
 
         monkeypatch.setitem(
             __import__("sys").modules,
@@ -343,28 +348,47 @@ class TestSetupLocalFileScanner:
                 },
             ),
         )
+        monkeypatch.setattr(local_file_scanner.time, "sleep", fake_sleep)
         monkeypatch.setattr(local_file_scanner.db, "PostgresDBClient", lambda: object())
-        spawned: list[str] = []
+        queued: list[Path] = []
+
+        class FakeQueue:
+            def enqueue(self, path):
+                queued.append(path)
+
         monkeypatch.setattr(
             local_file_scanner,
-            "_spawn_worker",
-            lambda path, _db_client: spawned.append(path),
+            "_MetadataWorkQueue",
+            lambda _db_client: FakeQueue(),
         )
 
-        with pytest.raises(StopAfterPathReady):
+        with pytest.raises(StopAfterStartup):
             local_file_scanner._run_scanner(tmp_path, bucket_name)
 
-        assert watched_paths == [str(tmp_path)]
-        assert spawned == [str(metadata_path)]
+        assert watched_paths == [str(bucket_path)]
+        assert watch_kwargs == [
+            {
+                "force_polling": True,
+                "yield_on_timeout": True,
+                "rust_timeout": local_file_scanner.LOCAL_FILE_SCANNER_RECONCILE_INTERVAL_MS,
+            }
+        ]
+        assert queued == [metadata_path]
 
-    def test_scanner_ignores_metadata_from_other_buckets(self, monkeypatch, tmp_path):
+    def test_scanner_never_watches_or_scans_other_buckets(self, monkeypatch, tmp_path):
         bucket_name = "local-mock-file-scan-bucket"
+        bucket_path = tmp_path / bucket_name
+        bucket_path.mkdir()
         other_metadata_path = tmp_path / "other-bucket" / "object-id" / "objectMetadata.json"
+        _write_metadata(other_metadata_path, f"unscanned/{uuid.uuid4()}/other.pdf")
 
         class StopAfterChange(Exception):
             pass
 
-        def fake_watch(*_args, **_kwargs):
+        watched_paths: list[str] = []
+
+        def fake_watch(path, **_kwargs):
+            watched_paths.append(path)
             yield {("added", str(other_metadata_path))}
             raise StopAfterChange
 
@@ -381,14 +405,176 @@ class TestSetupLocalFileScanner:
             ),
         )
         monkeypatch.setattr(local_file_scanner.db, "PostgresDBClient", lambda: object())
-        spawned: list[str] = []
+        queued: list[Path] = []
+
+        class FakeQueue:
+            def enqueue(self, path):
+                queued.append(path)
+
         monkeypatch.setattr(
             local_file_scanner,
-            "_spawn_worker",
-            lambda path, _db_client: spawned.append(path),
+            "_MetadataWorkQueue",
+            lambda _db_client: FakeQueue(),
         )
 
         with pytest.raises(StopAfterChange):
             local_file_scanner._run_scanner(tmp_path, bucket_name)
 
-        assert spawned == []
+        assert watched_paths == [str(bucket_path)]
+        assert queued == []
+
+    def test_startup_reconciliation_queues_burst_paths(self, monkeypatch, tmp_path):
+        bucket_name = "local-mock-file-scan-bucket"
+        bucket_path = tmp_path / bucket_name
+        metadata_paths = [
+            _write_metadata(
+                bucket_path / f"object-{index}" / "objectMetadata.json",
+                f"unscanned/{uuid.uuid4()}/file-{index}.pdf",
+            )
+            for index in range(4)
+        ]
+
+        class StopAfterStartup(Exception):
+            pass
+
+        def fake_watch(*_args, **_kwargs):
+            raise StopAfterStartup
+            yield  # pragma: no cover
+
+        monkeypatch.setitem(
+            __import__("sys").modules,
+            "watchfiles",
+            type(
+                "FakeWatchfiles",
+                (),
+                {
+                    "Change": type("Change", (), {"deleted": "deleted"}),
+                    "watch": staticmethod(fake_watch),
+                },
+            ),
+        )
+        monkeypatch.setattr(local_file_scanner.db, "PostgresDBClient", lambda: object())
+        queued: list[Path] = []
+
+        class FakeQueue:
+            def enqueue(self, path):
+                queued.append(path)
+
+        monkeypatch.setattr(
+            local_file_scanner,
+            "_MetadataWorkQueue",
+            lambda _db_client: FakeQueue(),
+        )
+
+        with pytest.raises(StopAfterStartup):
+            local_file_scanner._run_scanner(tmp_path, bucket_name)
+
+        assert set(queued) == set(metadata_paths)
+
+    def test_periodic_reconciliation_retries_failed_worker(self, monkeypatch, tmp_path):
+        bucket_name = "local-mock-file-scan-bucket"
+        metadata_path = _write_metadata(
+            tmp_path / bucket_name / "object" / "objectMetadata.json",
+            f"unscanned/{uuid.uuid4()}/retry.pdf",
+        )
+
+        class StopAfterTimeout(Exception):
+            pass
+
+        def fake_watch(*_args, **_kwargs):
+            yield set()
+            raise StopAfterTimeout
+
+        monkeypatch.setitem(
+            __import__("sys").modules,
+            "watchfiles",
+            type(
+                "FakeWatchfiles",
+                (),
+                {
+                    "Change": type("Change", (), {"deleted": "deleted"}),
+                    "watch": staticmethod(fake_watch),
+                },
+            ),
+        )
+        monkeypatch.setattr(local_file_scanner.db, "PostgresDBClient", lambda: object())
+
+        process_calls: list[str] = []
+
+        def fake_process(path, _db_client):
+            process_calls.append(path)
+            if len(process_calls) == 1:
+                raise RuntimeError("transient")
+
+        monkeypatch.setattr(local_file_scanner, "_safe_process_metadata_change", fake_process)
+
+        class SynchronousThread:
+            def __init__(self, **kwargs):
+                self.target = kwargs["target"]
+                self.args = kwargs["args"]
+
+            def start(self):
+                try:
+                    self.target(*self.args)
+                except RuntimeError:
+                    pass
+
+        monkeypatch.setattr(local_file_scanner.threading, "Thread", SynchronousThread)
+
+        with pytest.raises(StopAfterTimeout):
+            local_file_scanner._run_scanner(tmp_path, bucket_name)
+
+        assert process_calls == [str(metadata_path), str(metadata_path)]
+
+
+class TestMetadataWorkQueue:
+    def test_deduplicates_in_flight_path_but_allows_concurrent_paths(self, monkeypatch, tmp_path):
+        started: list[tuple[object, tuple[object, ...]]] = []
+
+        class FakeThread:
+            def __init__(self, **kwargs):
+                self.target = kwargs["target"]
+                self.args = kwargs["args"]
+
+            def start(self):
+                started.append((self.target, self.args))
+
+        monkeypatch.setattr(local_file_scanner.threading, "Thread", FakeThread)
+        queue = local_file_scanner._MetadataWorkQueue(object())
+        first_path = tmp_path / "first" / "objectMetadata.json"
+        second_path = tmp_path / "second" / "objectMetadata.json"
+
+        queue.enqueue(first_path)
+        queue.enqueue(first_path)
+        queue.enqueue(second_path)
+
+        assert len(started) == 2
+        assert {args for _, args in started} == {(str(first_path),), (str(second_path),)}
+
+    def test_failed_worker_path_can_be_retried(self, monkeypatch, tmp_path):
+        started: list[tuple[object, tuple[object, ...]]] = []
+
+        class FakeThread:
+            def __init__(self, **kwargs):
+                self.target = kwargs["target"]
+                self.args = kwargs["args"]
+
+            def start(self):
+                started.append((self.target, self.args))
+
+        monkeypatch.setattr(local_file_scanner.threading, "Thread", FakeThread)
+        monkeypatch.setattr(
+            local_file_scanner,
+            "_safe_process_metadata_change",
+            lambda *_args: (_ for _ in ()).throw(RuntimeError("transient")),
+        )
+        queue = local_file_scanner._MetadataWorkQueue(object())
+        metadata_path = tmp_path / "object" / "objectMetadata.json"
+
+        queue.enqueue(metadata_path)
+        target, args = started[0]
+        with pytest.raises(RuntimeError, match="transient"):
+            target(*args)
+        queue.enqueue(metadata_path)
+
+        assert len(started) == 2

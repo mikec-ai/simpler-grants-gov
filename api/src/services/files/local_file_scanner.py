@@ -43,6 +43,8 @@ TERMINAL_STATUS_PREFIX: dict[FileScanStatus, str] = {
 S3MOCK_METADATA_FILENAME = "objectMetadata.json"
 
 LOCAL_FILE_SCANNER_THREAD_NAME = "local-file-scanner"
+LOCAL_FILE_SCANNER_BUCKET_WAIT_SECONDS = 0.1
+LOCAL_FILE_SCANNER_RECONCILE_INTERVAL_MS = 1_000
 
 
 class _EnvironmentConfig(PydanticBaseEnvConfig):
@@ -105,7 +107,7 @@ def setup_local_file_scanner() -> None:
 
     logger.info(
         "Starting local file scanner background thread",
-        extra={"watch_path": store_path, "bucket_name": bucket_name},
+        extra={"watch_path": store_path / bucket_name, "bucket_name": bucket_name},
     )
 
     thread = threading.Thread(
@@ -123,14 +125,27 @@ def _run_scanner(store_path: Path, bucket_name: str) -> None:
 
     db_client = db.PostgresDBClient()
     bucket_path = store_path / bucket_name
+    work_queue = _MetadataWorkQueue(db_client)
+
+    # S3Mock creates initial buckets asynchronously. Wait for this exact bucket
+    # rather than recursively polling the whole store, which may contain large
+    # unrelated buckets during E2E runs.
+    while not bucket_path.is_dir():
+        time.sleep(LOCAL_FILE_SCANNER_BUCKET_WAIT_SECONDS)
+
+    # Reconcile before watching, and again on every bounded watcher timeout.
+    # This closes the small baseline race between the startup sweep and watch,
+    # and retries a file after any transient worker failure.
+    _reconcile_bucket(bucket_path, work_queue)
 
     # force_polling makes the watcher work across Docker bind mounts on macOS
     # and Windows, where native inotify events do not propagate from the host.
-    # Watch the store root, which exists as soon as the volume is mounted,
-    # rather than the bucket directory that S3Mock materializes on first use.
-    # This ensures the first object cannot be created before watch establishes
-    # its baseline.
-    for changes in watch(str(store_path), force_polling=True):
+    for changes in watch(
+        str(bucket_path),
+        force_polling=True,
+        yield_on_timeout=True,
+        rust_timeout=LOCAL_FILE_SCANNER_RECONCILE_INTERVAL_MS,
+    ):
         for change_type, file_path in changes:
             if change_type == Change.deleted:
                 continue
@@ -139,18 +154,55 @@ def _run_scanner(store_path: Path, bucket_name: str) -> None:
                 continue
             if not metadata_path.is_relative_to(bucket_path):
                 continue
-            _spawn_worker(file_path, db_client)
+            if _is_unscanned_metadata(metadata_path):
+                work_queue.enqueue(metadata_path)
+        _reconcile_bucket(bucket_path, work_queue)
 
 
-def _spawn_worker(metadata_file_path: str, db_client: db.DBClient) -> None:
-    # Run each scan in its own daemon thread so a wait10s scenario doesn't
-    # block the watch loop from picking up other files.
-    worker = threading.Thread(
-        target=_safe_process_metadata_change,
-        args=(metadata_file_path, db_client),
-        daemon=True,
-    )
-    worker.start()
+class _MetadataWorkQueue:
+    """Deduplicate active metadata paths while allowing later retries."""
+
+    def __init__(self, db_client: db.DBClient) -> None:
+        self._db_client = db_client
+        self._in_flight: set[str] = set()
+        self._lock = threading.Lock()
+
+    def enqueue(self, metadata_path: Path) -> None:
+        metadata_file_path = str(metadata_path)
+        with self._lock:
+            if metadata_file_path in self._in_flight:
+                return
+            self._in_flight.add(metadata_file_path)
+
+        # Run each scan in its own daemon thread so a wait10s scenario doesn't
+        # block the watch loop from picking up other files.
+        worker = threading.Thread(
+            target=self._process,
+            args=(metadata_file_path,),
+            daemon=True,
+        )
+        worker.start()
+
+    def _process(self, metadata_file_path: str) -> None:
+        try:
+            _safe_process_metadata_change(metadata_file_path, self._db_client)
+        finally:
+            with self._lock:
+                self._in_flight.discard(metadata_file_path)
+
+
+def _reconcile_bucket(bucket_path: Path, work_queue: _MetadataWorkQueue) -> None:
+    for metadata_path in bucket_path.rglob(S3MOCK_METADATA_FILENAME):
+        if _is_unscanned_metadata(metadata_path):
+            work_queue.enqueue(metadata_path)
+
+
+def _is_unscanned_metadata(metadata_path: Path) -> bool:
+    metadata = _read_metadata(str(metadata_path))
+    if metadata is None:
+        return False
+    s3_key = metadata.get("key")
+    return isinstance(s3_key, str) and s3_key.startswith(UNSCANNED_PREFIX)
 
 
 def _safe_process_metadata_change(metadata_file_path: str, db_client: db.DBClient) -> None:
