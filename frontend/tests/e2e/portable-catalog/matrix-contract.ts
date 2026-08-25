@@ -88,6 +88,16 @@ export type RecoveredPlanCandidate = Pick<
   "portableFormId" | "previewFormId" | "artifactDigests"
 >;
 
+export function firstAddressableAttachmentDefinition(
+  form: BrowserPlanForm,
+): string | undefined {
+  const capability = form.capabilities.attachment;
+  if (capability?.applicability !== "applicable") return undefined;
+  return capability.declarations.find(
+    ({ definition }) => typeof definition === "string",
+  )?.definition as string | undefined;
+}
+
 export function schemaDefinitionToControlId(definition: string): string {
   if (!definition.startsWith("/")) {
     throw new Error(
@@ -206,7 +216,18 @@ export function classifyBoundary(boundary: Boundary): Ownership {
   return ownershipByBoundary[boundary];
 }
 
+export function boundaryError(boundary: Boundary, message: string): Error {
+  return Object.assign(new Error(message), { boundary });
+}
+
 export function observedBoundary(error: unknown, fallback: Boundary): Boundary {
+  const declaredBoundary = (error as { boundary?: unknown } | null)?.boundary;
+  if (
+    typeof declaredBoundary === "string" &&
+    Object.hasOwn(ownershipByBoundary, declaredBoundary)
+  ) {
+    return declaredBoundary as Boundary;
+  }
   const message = error instanceof Error ? error.message : String(error);
   return error instanceof Error &&
     (error.name === "TimeoutError" || /timeout|timed out/i.test(message))

@@ -3,8 +3,10 @@ import os from "os";
 import path from "path";
 import {
   assertPortableMatrixEnvironment,
+  boundaryError,
   classifyBoundary,
   completeBlockedProbes,
+  firstAddressableAttachmentDefinition,
   loadBrowserPlan,
   observedBoundary,
   PLAN_CONTRACT,
@@ -20,6 +22,51 @@ import {
 } from "tests/e2e/portable-catalog/matrix-contract";
 
 describe("portable catalog matrix contract", () => {
+  it("preserves explicit probe boundaries on structured errors", () => {
+    expect(
+      observedBoundary(
+        boundaryError("environment", "scan pending"),
+        "api_round_trip",
+      ),
+    ).toBe("environment");
+  });
+
+  it("selects the first mechanically addressable attachment declaration", () => {
+    const baseForm = {
+      portableFormId: "narrative",
+      previewFormId: "123e4567-e89b-12d3-a456-426614174000",
+      displayName: "Narrative",
+      form: { formName: "Narrative", formVersion: "1.0" },
+      artifactDigests: {},
+      capabilities: {
+        attachment: {
+          applicability: "applicable" as const,
+          declarations: [
+            { definition: "/properties/attachments" },
+            { rulePath: "/attachments" },
+          ],
+          reason: null,
+        },
+      },
+    };
+
+    expect(firstAddressableAttachmentDefinition(baseForm)).toBe(
+      "/properties/attachments",
+    );
+    expect(
+      firstAddressableAttachmentDefinition({
+        ...baseForm,
+        capabilities: {
+          attachment: {
+            applicability: "applicable",
+            declarations: [{ rulePath: "/attachments" }],
+            reason: null,
+          },
+        },
+      }),
+    ).toBeUndefined();
+  });
+
   it("maps schema definitions to stable RJSF control ids", () => {
     expect(schemaDefinitionToControlId("/properties/organization_name")).toBe(
       "organization_name",

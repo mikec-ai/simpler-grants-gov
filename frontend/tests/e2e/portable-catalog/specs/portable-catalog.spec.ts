@@ -5,8 +5,10 @@ import { expect, test, type Page, type Response } from "@playwright/test";
 import playwrightEnv from "tests/e2e/playwright-env";
 import {
   assertPortableMatrixEnvironment,
+  boundaryError,
   classifyBoundary,
   completeBlockedProbes,
+  firstAddressableAttachmentDefinition,
   loadBrowserPlan,
   observedBoundary,
   RECEIPT_CONTRACT,
@@ -42,11 +44,16 @@ const receiptsDirectory = path.resolve(
   "test-results/portable-catalog",
 );
 const matrixEnabled = process.env.RUN_PORTABLE_BROWSER_MATRIX === "true";
+const attachmentFixture = path.resolve(
+  process.cwd(),
+  "tests/e2e/test-upload-files/sample-upload-kb.pdf",
+);
 const plannedFormProbes = [
   "preview_registration",
   "adapter_api_preflight",
   "apply_render",
   "static_content",
+  "attachment_upload_reload",
   "initial_save_reload",
   "schema_implication",
   "accessibility",
@@ -273,6 +280,67 @@ async function exerciseStaticContent(
   };
 }
 
+async function exerciseAttachmentUpload(
+  page: Page,
+  form: BrowserPlanForm,
+): Promise<Record<string, unknown>> {
+  const definition = firstAddressableAttachmentDefinition(form);
+  if (!definition) {
+    throw new Error(
+      "no mechanically addressable attachment widget is declared",
+    );
+  }
+  const controlId = schemaDefinitionToControlId(definition);
+  const visibleInput = page.locator(
+    `main input[type=file][id=${JSON.stringify(`${controlId}-visible`)}]`,
+  );
+  await expect(visibleInput).toBeAttached();
+
+  const fileName = path.basename(attachmentFixture);
+  const existingFile = page
+    .getByTestId("file-input-existing-files")
+    .filter({ hasText: fileName });
+  const uploadResponsePromise = page.waitForResponse(
+    (response) =>
+      /\/api\/applications\/[^/]+\/attachments\/create$/.test(response.url()),
+    { timeout: 30_000 },
+  );
+  await visibleInput.setInputFiles(attachmentFixture);
+  const uploadResponse = await uploadResponsePromise;
+  if (!uploadResponse.ok()) {
+    const body = await uploadResponse
+      .text()
+      .catch(() => "response unavailable");
+    const scanUnavailable =
+      uploadResponse.status() === 422 && /pending|scan/i.test(body);
+    throw boundaryError(
+      scanUnavailable ? "environment" : "api_round_trip",
+      `attachment upload failed with ${uploadResponse.status()}: ${uploadResponse.url()}; ${body}`,
+    );
+  }
+  await expect(existingFile).toHaveCount(1, { timeout: 30_000 });
+  const hiddenInput = page.locator(
+    `main input[type=hidden][id=${JSON.stringify(controlId)}]`,
+  );
+  await expect(hiddenInput).not.toHaveValue("", { timeout: 30_000 });
+
+  await saveForm(page);
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await expect(
+    page.getByRole("heading", { level: 1, name: form.displayName }),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("file-input-existing-files").filter({ hasText: fileName }),
+  ).toHaveCount(1, { timeout: 30_000 });
+
+  return {
+    definition,
+    controlId,
+    fileName,
+    persistedAfterReload: true,
+  };
+}
+
 function implicationWitnesses(pattern: string): {
   triggering: string;
   nonTriggering: string;
@@ -402,6 +470,10 @@ async function fetchApiJson<T>(url: string, token: string): Promise<T> {
 }
 
 test.describe("portable catalog browser conformance", () => {
+  // Each attempt emits per-probe receipts with exact failure ownership. Repeating
+  // the full catalog does not add evidence and can multiply bounded gate runs by
+  // four when an environment capability is unavailable.
+  test.describe.configure({ retries: 0 });
   test.skip(
     !matrixEnabled,
     "portable catalog matrix requires explicit lower-environment opt-in",
@@ -551,6 +623,7 @@ test.describe("portable catalog browser conformance", () => {
           page.on("pageerror", onPageError);
           page.on("response", onResponse);
           try {
+            let uploadedAttachmentFileName: string | undefined;
             receipt.probes.push(
               await probe("apply_render", "apply_render", async () => {
                 await openSelectedForm(page, applicationUrl, form.displayName);
@@ -603,6 +676,51 @@ test.describe("portable catalog browser conformance", () => {
                 },
               });
             }
+
+            const attachmentDefinition =
+              firstAddressableAttachmentDefinition(form);
+            if (attachmentDefinition && fs.existsSync(attachmentFixture)) {
+              receipt.probes.push(
+                await probe(
+                  "attachment_upload_reload",
+                  "api_round_trip",
+                  async () => {
+                    const evidence = await exerciseAttachmentUpload(page, form);
+                    uploadedAttachmentFileName = evidence.fileName as string;
+                    return evidence;
+                  },
+                ),
+              );
+            } else if (
+              form.capabilities.attachment?.applicability === "applicable"
+            ) {
+              receipt.probes.push({
+                probe: "attachment_upload_reload",
+                status: "inconclusive",
+                boundary: "missing_vector",
+                ownership: "harness_inconclusive",
+                durationMs: 0,
+                evidence: {
+                  reason: attachmentDefinition
+                    ? `deterministic attachment fixture is unavailable: ${attachmentFixture}`
+                    : "attachment rules exist but no mechanically addressable attachment widget is declared",
+                },
+              });
+            } else {
+              receipt.probes.push({
+                probe: "attachment_upload_reload",
+                status: "not_applicable",
+                durationMs: 0,
+                evidence: {
+                  reason: "no attachment widget or rule is declared",
+                },
+              });
+            }
+
+            // A failed attachment request belongs to the attachment probe. Do
+            // not let it cascade into otherwise independent save/reload and
+            // print receipts for the same form.
+            failedFormRequests.length = 0;
 
             let applyUrl = page.url();
             receipt.probes.push(
@@ -726,6 +844,11 @@ test.describe("portable catalog browser conformance", () => {
                 await expect(
                   page.getByText("Error rendering form"),
                 ).toHaveCount(0);
+                if (uploadedAttachmentFileName) {
+                  await expect(preview).toContainText(
+                    uploadedAttachmentFileName,
+                  );
+                }
                 const interactiveControls = preview.locator(
                   "input:visible:not([type=hidden]):not([disabled]):not([readonly]), " +
                     "textarea:visible:not([disabled]):not([readonly]), " +
@@ -735,7 +858,12 @@ test.describe("portable catalog browser conformance", () => {
                 await expect(interactiveControls).toHaveCount(0);
                 expect(pageErrors).toEqual([]);
                 expect(failedFormRequests).toEqual([]);
-                return { route: printUrl, interactiveControls: 0 };
+                return {
+                  route: printUrl,
+                  interactiveControls: 0,
+                  attachmentFileName:
+                    uploadedAttachmentFileName ?? "not_applicable",
+                };
               }),
             );
           } finally {
