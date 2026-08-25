@@ -17,7 +17,10 @@
     "phs-additional-indirect-costs": ["api/tests/src/form_schema/form_spec/test_phs_additional_indirect_costs_portable.py"],
     "phs-assignment-request": ["api/tests/src/form_schema/form_spec/test_phs_assignment_request_portable.py"],
     "phs-fellowship-supplemental": ["api/tests/src/form_schema/form_spec/test_registrations.py"],
-    "phs-human-subjects": ["api/tests/src/form_schema/form_spec/test_phs_flattened_scalar_xml.py"],
+    "phs-human-subjects": [
+      "api/tests/src/form_schema/form_spec/test_phs_flattened_scalar_xml.py",
+      "api/tests/src/form_schema/form_spec/test_phs_human_subjects_portable.py"
+    ],
     "phs-inclusion-enrollment-report": ["api/tests/src/form_schema/form_spec/test_phs_inclusion_enrollment_report_portable.py"],
     "phs398-career-development-supplemental": ["api/tests/src/form_schema/form_spec/test_phs398_career_development_portable.py"],
     "phs398-cover-page-supplement": [
