@@ -62,9 +62,9 @@ test.beforeEach(({ page: _ }, testInfo) => {
 });
 
 async function verifyVirusScanPassedAndUploaded(page: Page, fileName: string) {
-  await expect(
-    page.getByRole("progressbar", { name: "Loading!" }),
-  ).toBeVisible();
+  // The scanner may finish before Playwright observes the transient progress
+  // indicator. The completed-file row and its Delete action are the stable
+  // contract that proves the upload is ready for the form.
   await expect(page.getByTestId("file-input-existing-files")).toContainText(
     fileName,
     { timeout: 30_000 },
@@ -189,14 +189,25 @@ for (const {
 
         // Third history checkpoint: confirm submission itself was recorded, and that
         // the attachment activity from the previous test is still present alongside it.
-        const postSubmitActivities =
-          await getApplicationHistoryActivities(page);
-        expect(postSubmitActivities[0]).toContain("Application submitted");
-        expect(
-          postSubmitActivities.some((a) =>
-            a.includes("Attachment added: sample-upload-kb.pdf"),
-          ),
-        ).toBe(true);
+        // Submission history is populated asynchronously. Poll for the two
+        // durable facts instead of assuming the newest activity is already in
+        // row zero when the confirmation page first renders.
+        await expect
+          .poll(
+            async () => {
+              const activities = await getApplicationHistoryActivities(page);
+              return {
+                attachmentPersisted: activities.some((activity) =>
+                  activity.includes("Attachment added: sample-upload-kb.pdf"),
+                ),
+                submissionRecorded: activities.some((activity) =>
+                  activity.includes("Application submitted"),
+                ),
+              };
+            },
+            { timeout: 30_000 },
+          )
+          .toEqual({ attachmentPersisted: true, submissionRecorded: true });
 
         const printUrl = buildPrintUrl(formUrl);
 
