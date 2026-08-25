@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import uuid
 from pathlib import Path
 from types import SimpleNamespace
@@ -22,7 +23,6 @@ from src.services.xml_generation.validation.xsd_validator import XSDValidator
 FORM_ID = "phs-additional-indirect-costs"
 INTRODUCED_BY_PRODUCER_REVISION = "893b0710ee69d8e3455b5c954e9071504a3a61b0"
 REPAIRED_BY_PRODUCER_REVISION = "4b3b1d78a96ea8e501f51e6edbaa0190d67b9949"
-EMITTED_FROM_PRODUCER_REVISION = REPAIRED_BY_PRODUCER_REVISION
 XSD_DIRECTORY = Path(__file__).parents[4] / "src/services/xml_generation/xsds"
 XSD_NAME = "PHS_Additional_IndirectCosts_2_0-V2.0.xsd"
 XSD_SHA256 = "ba38a3500b025b0414edbcdbffe80dc12165ceb7a7fb657012d450b2e9682b66"
@@ -210,13 +210,18 @@ def test_source_and_review_gates_remain_explicit() -> None:
     assert {source["type"] for source in evidence["sources"]} == {"dat", "xsd"}
 
 
-def test_current_pin_preserves_producer_repair_receipts() -> None:
+def test_current_selected_bundle_preserves_producer_repair_receipts() -> None:
     root = ARTIFACTS / "forms" / FORM_ID
     manifest = json.loads((ARTIFACTS / "artifact-manifest.json").read_text())
 
     assert INTRODUCED_BY_PRODUCER_REVISION == ("893b0710ee69d8e3455b5c954e9071504a3a61b0")
     assert REPAIRED_BY_PRODUCER_REVISION == ("4b3b1d78a96ea8e501f51e6edbaa0190d67b9949")
-    assert manifest["source"]["revision"] == EMITTED_FROM_PRODUCER_REVISION
+    # The selection manifest identifies the immutable producer bundle currently banked by
+    # Simpler. Its revision advances whenever any portable form is promoted, so it must not be
+    # equated with this form's historical repair commit. Exact artifact hashes below are the
+    # durable, form-scoped evidence that the repair remains present after later promotions.
+    assert manifest["source"]["repository"] == ("https://github.com/mikec-ai/grants-form-spec.git")
+    assert re.fullmatch(r"[0-9a-f]{40}", manifest["source"]["revision"])
     assert {
         relative_path: hashlib.sha256((root / relative_path).read_bytes()).hexdigest()
         for relative_path in PRODUCER_REPAIR_FORM_ARTIFACT_SHA256
