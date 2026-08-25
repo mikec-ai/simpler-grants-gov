@@ -291,3 +291,24 @@ class TestSetupLocalFileScanner:
         monkeypatch.delenv("WERKZEUG_RUN_MAIN", raising=False)
         setup_local_file_scanner()
         assert not self._scanner_thread_running()
+
+    def test_single_process_mode_can_run_without_werkzeug_reloader(self, monkeypatch, tmp_path):
+        monkeypatch.setenv("ENVIRONMENT", "local")
+        monkeypatch.setenv("ENABLE_LOCAL_FILE_SCANNER", "TRUE")
+        monkeypatch.setenv("LOCAL_FILE_SCANNER_RUN_WITHOUT_RELOADER", "TRUE")
+        monkeypatch.setenv("LOCAL_S3_STORE_PATH", str(tmp_path))
+        monkeypatch.delenv("WERKZEUG_RUN_MAIN", raising=False)
+
+        class FakeThread:
+            def __init__(self, **kwargs):
+                self.name = kwargs["name"]
+
+            def start(self):
+                started.append(self.name)
+
+        started: list[str] = []
+        monkeypatch.setattr(local_file_scanner.threading, "Thread", FakeThread)
+
+        setup_local_file_scanner()
+
+        assert started == [local_file_scanner.LOCAL_FILE_SCANNER_THREAD_NAME]

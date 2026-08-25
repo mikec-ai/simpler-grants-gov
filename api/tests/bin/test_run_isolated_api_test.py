@@ -97,3 +97,9 @@ def test_s3mock_uses_a_compose_scoped_volume() -> None:
     assert "s3mock-data:/containers3root" in api_compose
     assert "s3mock-data:/api/locals3root" in api_compose
     assert "./locals3root:/containers3root" not in api_compose
+
+
+def test_hosted_browser_stack_starts_single_process_file_scanner() -> None:
+    ci_compose = (API_ROOT / "docker-compose.ci.yml").read_text()
+
+    assert 'LOCAL_FILE_SCANNER_RUN_WITHOUT_RELOADER: "TRUE"' in ci_compose

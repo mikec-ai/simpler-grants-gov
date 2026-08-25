@@ -59,6 +59,12 @@ class LocalFileScannerConfig(PydanticBaseEnvConfig):
     # Required (not defaulted) so a misconfigured local env explodes early
     # rather than silently spawning (or not spawning) the scanner thread.
     enable_local_file_scanner: bool = Field(alias="ENABLE_LOCAL_FILE_SCANNER")
+    # Hosted browser checks intentionally run Flask without the development
+    # reloader. They are a single-process environment, so they can explicitly
+    # opt into one scanner thread without relying on WERKZEUG_RUN_MAIN.
+    run_without_reloader: bool = Field(
+        default=False, alias="LOCAL_FILE_SCANNER_RUN_WITHOUT_RELOADER"
+    )
     # Path the api container can read s3mock's on-disk store from.
     local_s3_store_path: str = Field(alias="LOCAL_S3_STORE_PATH")
     # Pause this long after a metadata change before reading s3mock's file,
@@ -78,10 +84,9 @@ class LocalFileScannerConfig(PydanticBaseEnvConfig):
 def setup_local_file_scanner() -> None:
     """Start a background thread that mocks the s3 virus-scanning lambda.
 
-    Runs only when ENVIRONMENT=local, ENABLE_LOCAL_FILE_SCANNER=TRUE, and
-    WERKZEUG_RUN_MAIN=true. The Flask reloader sets that last env var in its
-    worker child only -- gating on it prevents the parent from starting a
-    second copy of the thread.
+    Runs only when ENVIRONMENT=local and ENABLE_LOCAL_FILE_SCANNER=TRUE. In
+    development, WERKZEUG_RUN_MAIN=true limits the scanner to the reloader
+    worker. Single-process hosted checks opt in explicitly instead.
     """
     env = _EnvironmentConfig()
     if env.environment != "local":
@@ -91,7 +96,7 @@ def setup_local_file_scanner() -> None:
     if not config.enable_local_file_scanner:
         return
 
-    if env.werkzeug_run_main != "true":
+    if env.werkzeug_run_main != "true" and not config.run_without_reloader:
         return
 
     s3_config = S3Config()
