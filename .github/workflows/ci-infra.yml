@@ -39,6 +39,8 @@ jobs:
           docker compose -f api/docker-compose.yml -f api/docker-compose.ci.yml config --quiet
       - name: Validate bounded hosted browser workflow contract
         run: python3 .github/scripts/test_bounded_browser_workflow.py
+      - name: Validate fork-disabled workflow contract
+        run: python3 .github/scripts/test_fork_disabled_workflows.py
   check-terraform-format:
     name: Check Terraform format
     runs-on: ubuntu-22.04

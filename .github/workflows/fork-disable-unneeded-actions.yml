@@ -36,6 +36,8 @@ jobs:
           gh workflow disable "Co-planning: Sync Fider to GitHub" || true
           gh workflow disable "Co-planning: Sync GitHub to Fider" || true
           gh workflow disable "Deliverable mapping: Issue level" || true
+          gh workflow disable "Deploy frontend" || true
+          gh workflow disable "Deploy Storybook" || true
           gh workflow disable "E2E Test Daily" || true
           gh workflow disable "E2E Tests Weekly" || true
           gh workflow disable "ECR Cleanup" || true
