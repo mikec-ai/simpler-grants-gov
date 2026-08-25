@@ -97,6 +97,8 @@ services:
       - "${API_HOST_PORT:-8080}:8080"
     volumes:
       - .:/api
+      # The local scanner and S3Mock must observe the same per-project store.
+      - s3mock-data:/api/locals3root
     depends_on:
       - opensearch-node
       - s3mock

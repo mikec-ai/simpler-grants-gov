@@ -86,4 +86,5 @@ def test_s3mock_uses_a_compose_scoped_volume() -> None:
     api_compose = (REPO_ROOT / "api" / "docker-compose.yml").read_text()
 
     assert "s3mock-data:/containers3root" in api_compose
+    assert "s3mock-data:/api/locals3root" in api_compose
     assert "./locals3root:/containers3root" not in api_compose
