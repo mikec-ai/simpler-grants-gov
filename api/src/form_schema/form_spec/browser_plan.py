@@ -251,7 +251,8 @@ def _schema_pointer_is_read_only(schema: dict[str, Any], pointer: str) -> bool:
     for length in range(1, len(encoded_segments) + 1):
         prefix = "/" + "/".join(encoded_segments[:length])
         if any(
-            candidate.get("readOnly") is True for candidate in _schema_pointer_nodes(schema, prefix)
+            any(value is True for value in _schema_keyword_values(candidate, "readOnly"))
+            for candidate in _schema_pointer_nodes(schema, prefix)
         ):
             return True
     return False

@@ -315,6 +315,79 @@ def test_browser_plan_combines_schema_and_ui_readonly_declarations(
     assert len([item for item in declarations if item.get("interaction") == "disabled"]) == 1
 
 
+def test_schema_pointer_readonly_resolves_property_level_allof_without_hiding_applicant_fields():
+    schema = {
+        "type": "object",
+        "properties": {
+            "system_owned": {
+                "allOf": [
+                    {"type": "string"},
+                    {"readOnly": True},
+                ]
+            },
+            "applicant_owned": {
+                "allOf": [
+                    {"type": "string"},
+                ]
+            },
+        },
+    }
+
+    assert _schema_pointer_is_read_only(schema, "/properties/system_owned") is True
+    assert _schema_pointer_is_read_only(schema, "/properties/applicant_owned") is False
+
+
+def test_browser_plan_protects_human_subject_determinations_declared_through_allof(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "phs-human-subjects")
+
+    form = build_browser_plan()["forms"][0]
+    capabilities = form["capabilities"]
+    read_only_definitions = {
+        declaration["definition"]
+        for declaration in capabilities["readOnly"]["declarations"]
+        if "definition" in declaration
+    }
+    editable_definitions = {
+        declaration["definition"] for declaration in capabilities["editableScalar"]["declarations"]
+    }
+
+    def top_level(definition: str) -> bool:
+        return definition.startswith("/properties/") and definition.count("/") == 2
+
+    top_level_editable = {
+        definition for definition in editable_definitions if top_level(definition)
+    }
+    top_level_repeaters = {
+        declaration["definition"]
+        for declaration in capabilities["repeater"]["declarations"]
+        if top_level(declaration["definition"])
+    }
+    top_level_ui_definitions = {
+        definition for definition in form["stablePaths"]["uiDefinitions"] if top_level(definition)
+    }
+    system_owned = {
+        "/properties/involves_human_subjects",
+        "/properties/exempt_from_federal_regulations",
+        "/properties/exemptions",
+    }
+    applicant_editable = {
+        "/properties/involves_human_specimens_or_data",
+        "/properties/specimens_explanation",
+        "/properties/other_requested_information",
+    }
+    applicant_repeaters = {
+        "/properties/studies",
+        "/properties/delayed_onset_studies",
+    }
+
+    assert read_only_definitions == system_owned
+    assert top_level_editable == applicant_editable
+    assert top_level_repeaters == applicant_repeaters
+    assert top_level_ui_definitions == system_owned | applicant_editable | applicant_repeaters
+
+
 def test_browser_plan_discovers_multifield_editable_surface(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
