@@ -3,12 +3,20 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
+from pathlib import Path
+
+import pytest
 
 from src.form_schema.form_spec.bank import ARTIFACTS
+from src.form_schema.form_spec.browser_plan import build_browser_plan
 from src.form_schema.form_spec.loader import load_form
 from src.form_schema.form_spec.registrations import REGISTRATIONS
 from src.form_schema.jsonschema_resolver import resolve_jsonschema
+from src.services.xml_generation.models import XMLGenerationRequest
+from src.services.xml_generation.service import XMLGenerationService
+from src.services.xml_generation.validation.xsd_validator import XSDValidator
 from tests.src.form_schema.form_spec.lifecycle import (
     ValidationCase,
     assert_json_round_trip,
@@ -54,6 +62,9 @@ VALID_RESPONSE = {
         "phone": "202-555-0100",
     },
 }
+XSD_DIRECTORY = Path(__file__).parents[4] / "src/services/xml_generation/xsds"
+XSD_NAME = "SFLLL_2_0-V2.0.xsd"
+XSD_SHA256 = "fff7449d00c715efb79d83b572bc7b1ef3e8171f6a9ba841436b26242e883664"
 
 
 def _walk(nodes: list[object]):
@@ -120,9 +131,30 @@ def test_sflll_evidence_is_pinned_to_the_factory_and_exact_xsd() -> None:
         "sourceSetSha256": "86c5849f65a3f3d8fcdc7da17cfa6070c185008eae9916184e7d6c32cd098b05",
     }
     assert evidence["semanticReview"]["status"] == "proposed"
-    assert evidence["sources"][0]["sha256"] == (
-        "fff7449d00c715efb79d83b572bc7b1ef3e8171f6a9ba841436b26242e883664"
-    )
+    assert [
+        (source["type"], source["uri"], source["sha256"]) for source in evidence["sources"]
+    ] == [
+        (
+            "xsd",
+            "https://apply07.grants.gov/apply/forms/schemas/SFLLL_2_0-V2.0.xsd",
+            "fff7449d00c715efb79d83b572bc7b1ef3e8171f6a9ba841436b26242e883664",
+        ),
+        (
+            "xsd",
+            "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+            "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb",
+        ),
+        (
+            "xsd",
+            "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+            "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8",
+        ),
+        (
+            "xsd",
+            "https://apply07.grants.gov/apply/system/schemas/UniversalCodes-V2.0.xsd",
+            "78f33338e9319ef31a052d1328b8984931a4380db2485493bcc78ab9e2c11f3a",
+        ),
+    ]
 
 
 def test_sflll_executes_conditional_submission_requirements() -> None:
@@ -166,6 +198,79 @@ def test_sflll_submit_populates_signature_and_date_through_generic_rules() -> No
     assert signature["signature"] == "reviewer@example.gov"
     assert len(signature["signed_date"].split("-")) == 3
     assert_json_round_trip(application_form.application_response)
+
+
+@pytest.mark.parametrize(
+    ("reporting_entity_type", "expected_is_prime"),
+    [("Prime", "Y: Yes"), ("SubAwardee", "N: No")],
+)
+def test_sflll_submitter_output_emits_exact_xsd_valid_xml(
+    reporting_entity_type: str, expected_is_prime: str
+) -> None:
+    response = copy.deepcopy(VALID_RESPONSE)
+    response["reporting_entity_type"] = reporting_entity_type
+    if reporting_entity_type == "SubAwardee":
+        response["prime_organization"] = copy.deepcopy(response["reporting_organization"])
+    application_form = submit_form("sflll", response)
+    projected = load_form("sflll")
+    generated = XMLGenerationService().generate_xml(
+        XMLGenerationRequest(
+            application_data=application_form.application_response,
+            transform_config=projected.json_to_xml_schema,
+        )
+    )
+
+    assert generated.success, generated.error_message
+    assert generated.xml_data is not None
+    assert "<SFLLL_2_0:Signature>reviewer@example.gov</" in generated.xml_data
+    assert f"<SFLLL_2_0:ReportEntityIsPrime>{expected_is_prime}</" in generated.xml_data
+    xsd = XSD_DIRECTORY / XSD_NAME
+    assert hashlib.sha256(xsd.read_bytes()).hexdigest() == XSD_SHA256
+    validation = XSDValidator(XSD_DIRECTORY).validate_xml(generated.xml_data, xsd)
+    assert validation["valid"], validation
+
+
+def test_sflll_browser_plan_uses_only_generic_declared_capabilities(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("ENVIRONMENT", "test")
+    monkeypatch.setenv("ENABLE_PORTABLE_FORM_PREVIEW", "true")
+    monkeypatch.setenv("PORTABLE_BROWSER_FORM_IDS", "sflll")
+
+    capabilities = build_browser_plan()["forms"][0]["capabilities"]
+
+    assert len(capabilities["conditional"]["declarations"]) == 11
+    assert capabilities["repeater"]["declarations"] == [
+        {
+            "definition": "/properties/individuals_performing_services",
+            "name": "individuals_performing_services",
+        }
+    ]
+    assert {
+        declaration["responsePath"] for declaration in capabilities["readOnly"]["declarations"]
+    } == {"/signature_block/signature", "/signature_block/signed_date"}
+    assert capabilities["calculation"]["declarations"] == [
+        {
+            "rulePath": "/federal_agency_department",
+            "declaration": {"rule": "agency_name"},
+        },
+        {
+            "rulePath": "/federal_program/name",
+            "declaration": {"rule": "assistance_listing_program_title"},
+        },
+        {
+            "rulePath": "/federal_program/assistance_listing_number",
+            "declaration": {"rule": "assistance_listing_number"},
+        },
+    ]
+    projected = load_form("sflll")
+    assert projected.json_to_xml_schema["report_entity"]["report_entity_is_prime"]["xml_transform"][
+        "value_transform"
+    ] == {
+        "type": "map_values",
+        "params": {"mappings": {"Prime": "Y: Yes", "SubAwardee": "N: No"}},
+    }
+    assert capabilities["staticContent"]["applicability"] == "not_applicable"
 
 
 def test_sflll_canary_is_not_registered_before_release_review() -> None:
