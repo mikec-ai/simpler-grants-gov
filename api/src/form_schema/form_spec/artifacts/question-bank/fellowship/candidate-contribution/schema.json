@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fellowship/candidate-contribution/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Attach the candidate's contribution to the goals of the fellowship training plan."
+}

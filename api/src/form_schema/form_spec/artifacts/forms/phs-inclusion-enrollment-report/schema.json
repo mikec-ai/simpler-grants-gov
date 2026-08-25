@@ -9,7 +9,187 @@
         "$ref": "../../question-bank/clinical-study/inclusion-enrollment-report/schema.json"
       },
       "minItems": 1,
-      "maxItems": 20
+      "maxItems": 20,
+      "allOf": [
+        {
+          "items": {
+            "properties": {
+              "planned": {
+                "properties": {
+                  "hispanicLatino": {
+                    "properties": {
+                      "female": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      },
+                      "male": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "total": {
+                    "properties": {
+                      "white": {
+                        "readOnly": true
+                      },
+                      "americanIndianAlaskaNative": {
+                        "readOnly": true
+                      },
+                      "blackAfricanAmerican": {
+                        "readOnly": true
+                      },
+                      "asian": {
+                        "readOnly": true
+                      },
+                      "total": {
+                        "readOnly": true
+                      },
+                      "nativeHawaiianPacificIslander": {
+                        "readOnly": true
+                      },
+                      "moreThanOneRace": {
+                        "readOnly": true
+                      }
+                    }
+                  },
+                  "notHispanicLatino": {
+                    "properties": {
+                      "male": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      },
+                      "female": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "cumulativeActual": {
+                "properties": {
+                  "total": {
+                    "properties": {
+                      "blackAfricanAmerican": {
+                        "readOnly": true
+                      },
+                      "americanIndianAlaskaNative": {
+                        "readOnly": true
+                      },
+                      "total": {
+                        "readOnly": true
+                      },
+                      "white": {
+                        "readOnly": true
+                      },
+                      "unknownNotReported": {
+                        "readOnly": true
+                      },
+                      "asian": {
+                        "readOnly": true
+                      },
+                      "moreThanOneRace": {
+                        "readOnly": true
+                      },
+                      "nativeHawaiianPacificIslander": {
+                        "readOnly": true
+                      }
+                    }
+                  },
+                  "hispanicLatino": {
+                    "properties": {
+                      "unknownNotReportedSex": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      },
+                      "male": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      },
+                      "female": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "notHispanicLatino": {
+                    "properties": {
+                      "male": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      },
+                      "female": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      },
+                      "unknownNotReportedSex": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "unknownNotReportedEthnicity": {
+                    "properties": {
+                      "female": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      },
+                      "unknownNotReportedSex": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      },
+                      "male": {
+                        "properties": {
+                          "total": {
+                            "readOnly": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
     }
   },
   "required": [

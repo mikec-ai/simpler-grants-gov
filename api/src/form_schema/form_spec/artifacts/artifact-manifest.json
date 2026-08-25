@@ -442,6 +442,36 @@
       "size": 2808
     },
     {
+      "path": "dist/forms/phs-fellowship-supplemental/evidence.json",
+      "sha256": "4fde5829b3c2c25328b34e6b40070c22889aa742c2f97e6190062f4031a1b4b7",
+      "size": 18661
+    },
+    {
+      "path": "dist/forms/phs-fellowship-supplemental/manifest.json",
+      "sha256": "dc4055f7277d3a8b361e88148ebfc8ad8d0d5cfa1757c5c168b6f18b563abb02",
+      "size": 568
+    },
+    {
+      "path": "dist/forms/phs-fellowship-supplemental/schema.json",
+      "sha256": "65427e35948d91ca19737dc245c7f18afdd130b40dd22f8a1370d00382caa711",
+      "size": 6161
+    },
+    {
+      "path": "dist/forms/phs-fellowship-supplemental/sgg/rule-schema.json",
+      "sha256": "8e3d9d3cecf5c6e8b5515f9d3f0816b3914e65d7f4b0f6be9b70fa7fec72bc49",
+      "size": 3022
+    },
+    {
+      "path": "dist/forms/phs-fellowship-supplemental/sgg/ui-schema.json",
+      "sha256": "57e0321da4ec19117217e4e6fc79062e81e3ada9bf8446bdb9f15aad4cd06f92",
+      "size": 19156
+    },
+    {
+      "path": "dist/forms/phs-fellowship-supplemental/targets/grants-gov-xml.json",
+      "sha256": "011fac352c72997406b94c4356abbdb548593bced228abe42bc5075e0b157702",
+      "size": 23837
+    },
+    {
       "path": "dist/forms/phs-human-subjects/evidence.json",
       "sha256": "7635ee65d02df3716a21d4a8a96a3807ae87114003acaacb994baaa55ae0054e",
       "size": 10161
@@ -483,8 +513,8 @@
     },
     {
       "path": "dist/forms/phs-inclusion-enrollment-report/schema.json",
-      "sha256": "2d3c7962d3518c3dcee7b5a86d87e82ca4c034ca37133507d6bdb2862c7e7495",
-      "size": 491
+      "sha256": "b99fcfb169ac398c0babd8ebec60fab7569ebf673a4caba9f942d312a3ff8675",
+      "size": 6347
     },
     {
       "path": "dist/forms/phs-inclusion-enrollment-report/sgg/rule-schema.json",
@@ -543,8 +573,8 @@
     },
     {
       "path": "dist/forms/phs398-modular-budget/schema.json",
-      "sha256": "48ca6b25021c3c430d3aeb448528442f7300af5f93c50094f57305235d4bb1d3",
-      "size": 3354
+      "sha256": "5da0c8d1fb40b352af640d1e807c3c432b35439f7891354c59df31e9a9f9d9a0",
+      "size": 3425
     },
     {
       "path": "dist/forms/phs398-modular-budget/sgg/rule-schema.json",
@@ -1717,6 +1747,101 @@
       "size": 257
     },
     {
+      "path": "dist/question-bank/fellowship-budget/childcare/schema.json",
+      "sha256": "82dcfca09983a552e6db2cfc8496437e39cb93b0552e812cbb310e7ff4e3faf4",
+      "size": 1583
+    },
+    {
+      "path": "dist/question-bank/fellowship-budget/federal-stipend/schema.json",
+      "sha256": "a2a154db4a7696da8502d676a9ad97f4645f0313c6b4fcc9598e84fce308c95a",
+      "size": 757
+    },
+    {
+      "path": "dist/question-bank/fellowship-budget/institutional-base-salary/schema.json",
+      "sha256": "d121d58dc03089640ff2e1b0a6cfd53c352702c0f6df3fb91f9c73a3be359b6d",
+      "size": 1036
+    },
+    {
+      "path": "dist/question-bank/fellowship-budget/request/schema.json",
+      "sha256": "1565df8d30b59a553b5720968a6e6eae0dcfc9ad51149034781c0b4e24b8413f",
+      "size": 1042
+    },
+    {
+      "path": "dist/question-bank/fellowship-budget/supplementation/schema.json",
+      "sha256": "d3e1487a8130ddd824c64085d0bcdae3cca4dcf82a516d505545bef469de5772",
+      "size": 967
+    },
+    {
+      "path": "dist/question-bank/fellowship-budget/tuition/schema.json",
+      "sha256": "fe60a09a2d67a7f8f42805e27e5e04f785e7c4419ea1072c9ed6c2f7fec662bd",
+      "size": 1584
+    },
+    {
+      "path": "dist/question-bank/fellowship/candidate-additional-information/schema.json",
+      "sha256": "8a573319310bf63ee1f6bbb60239e712b11e130143023be841031d522de24bf6",
+      "size": 4828
+    },
+    {
+      "path": "dist/question-bank/fellowship/candidate-citizenship/schema.json",
+      "sha256": "db929ac238120c1bbc9df5f5465e50d727dca9116d35b9c506c75c343dfb271d",
+      "size": 1242
+    },
+    {
+      "path": "dist/question-bank/fellowship/candidate-contribution/schema.json",
+      "sha256": "0b91a9a9d0cb3d97738df03712ccf6ff31c010621fdf3e70cb381984b256f8e1",
+      "size": 264
+    },
+    {
+      "path": "dist/question-bank/fellowship/candidate-goals/schema.json",
+      "sha256": "129e5169662d5a4d5d7d7b89083f6e0c133396b02f1470eb671333b3d63bb9c5",
+      "size": 254
+    },
+    {
+      "path": "dist/question-bank/fellowship/concurrent-support-description/schema.json",
+      "sha256": "54444411a132c5236d507f585f8c99fefdcd8e729eeb63590906b16eaf8d37ad",
+      "size": 253
+    },
+    {
+      "path": "dist/question-bank/fellowship/concurrent-support/schema.json",
+      "sha256": "c15ad3e1a4b50281ae2f903116755c8539d9c6ac101a62ef48ffbe9e4659532e",
+      "size": 1025
+    },
+    {
+      "path": "dist/question-bank/fellowship/current-prior-nrsa-support/schema.json",
+      "sha256": "27ff4b878ca43400fe13605bf7f735129ecde7a29d6455631cf7e9e0bbd50e88",
+      "size": 2156
+    },
+    {
+      "path": "dist/question-bank/fellowship/graduate-degree-sought/schema.json",
+      "sha256": "25dd65144f990caa2919aa8667b2d4a49c7d931f6802d70feb6866ed315515b7",
+      "size": 2597
+    },
+    {
+      "path": "dist/question-bank/fellowship/institution-change/schema.json",
+      "sha256": "9c097fcd90afa0e584a5191e28d04999a8a6342de543fcfe1233353d8c3ef87b",
+      "size": 657
+    },
+    {
+      "path": "dist/question-bank/fellowship/responsible-conduct-training/schema.json",
+      "sha256": "a9eaf8ea9b546547bf1f25293c7c5fb7c1dee2840eb121a48be2289725bdd5f8",
+      "size": 257
+    },
+    {
+      "path": "dist/question-bank/fellowship/sponsor-commitment/schema.json",
+      "sha256": "b98e0d428db28cdedd37233183bc169ba0454fb9c707d6c44659c6fd6c3953b2",
+      "size": 248
+    },
+    {
+      "path": "dist/question-bank/fellowship/training-activities/schema.json",
+      "sha256": "e91da77c82ef9e898e0b302124ab186758f18c72a6b5f036055996656a13b93f",
+      "size": 228
+    },
+    {
+      "path": "dist/question-bank/fellowship/vertebrate-animals-used/schema.json",
+      "sha256": "e84b39003081ac6545cca472cfa0d5b51b1cf6d441b06f367a888b1a8bae2a41",
+      "size": 265
+    },
+    {
       "path": "dist/question-bank/generics/address/schema.json",
       "sha256": "03dddcf6693d7f92663312fce8951899c5dde106a9f1b72e0fbfcb979fd27d23",
       "size": 10869
@@ -2447,13 +2572,14 @@
       "phs-human-subjects",
       "rr-personal-data",
       "phs398-cover-page-supplement",
-      "sbir-sttr-information"
+      "sbir-sttr-information",
+      "phs-fellowship-supplemental"
     ],
     "policy": "form runtime and evidence artifacts, transitive question-schema closure, and portable governance contracts"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "4d3d969a398e1d6a19095bf5ec00eaa66a36a830"
+    "revision": "16e23d43a803c5ef523edb4a23d52bb9cc459443"
   },
-  "sourceBundleSha256": "cbe35c1f973f417535e8ac16be5c475e30069e98f9407352cfb527c101c0727a"
+  "sourceBundleSha256": "6bd4bf8c477bc5dc47a3c4adb07bc7c7ca3e295be171136d86b7ece04d683295"
 }

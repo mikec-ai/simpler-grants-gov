@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fellowship/concurrent-support/schema.json",
+  "type": "object",
+  "properties": {
+    "hasConcurrentSupport": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Applications for Concurrent Support"
+    },
+    "description": {
+      "$ref": "../../../question-bank/fellowship/concurrent-support-description/schema.json",
+      "title": "Concurrent Support Description"
+    }
+  },
+  "required": [
+    "hasConcurrentSupport"
+  ],
+  "description": "Report whether another application requests support concurrently.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "hasConcurrentSupport": {
+            "const": "Y: Yes"
+          }
+        },
+        "required": [
+          "hasConcurrentSupport"
+        ]
+      },
+      "then": {
+        "required": [
+          "description"
+        ]
+      }
+    }
+  ]
+}

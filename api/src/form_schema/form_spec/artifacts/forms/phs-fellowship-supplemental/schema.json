@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phs-fellowship-supplemental/schema.json",
+  "type": "object",
+  "properties": {
+    "introduction": {
+      "$ref": "../../question-bank/research-plan/introduction/schema.json",
+      "title": "Introduction to Application"
+    },
+    "candidateGoals": {
+      "$ref": "../../question-bank/fellowship/candidate-goals/schema.json",
+      "title": "Goals for Fellowship Training and Career"
+    },
+    "trainingActivities": {
+      "$ref": "../../question-bank/fellowship/training-activities/schema.json",
+      "title": "Activities Planned Under This Award"
+    },
+    "researchProjectAims": {
+      "$ref": "../../question-bank/research-plan/specific-aims/schema.json",
+      "title": "Research Project Specific Aims"
+    },
+    "researchProjectStrategy": {
+      "$ref": "../../question-bank/research-plan/research-strategy/schema.json",
+      "title": "Research Strategy"
+    },
+    "progressReportPublicationList": {
+      "$ref": "../../question-bank/research-plan/progress-report-publication-list/schema.json",
+      "title": "Progress Report Publication List"
+    },
+    "responsibleConductTraining": {
+      "$ref": "../../question-bank/fellowship/responsible-conduct-training/schema.json",
+      "title": "Training in the Responsible Conduct of Research"
+    },
+    "sponsorCommitment": {
+      "$ref": "../../question-bank/fellowship/sponsor-commitment/schema.json",
+      "title": "Sponsor and Co-Sponsor Statements"
+    },
+    "lettersOfSupport": {
+      "$ref": "../../question-bank/research-plan/letters-of-support/schema.json",
+      "title": "Letters of Support from Collaborators, Contributors, and Consultants"
+    },
+    "candidateContribution": {
+      "$ref": "../../question-bank/fellowship/candidate-contribution/schema.json",
+      "title": "Description of Candidate's Contribution to Programmatic Goals"
+    },
+    "vertebrateAnimalsUsed": {
+      "$ref": "../../question-bank/fellowship/vertebrate-animals-used/schema.json",
+      "title": "Are Vertebrate Animals Used?"
+    },
+    "vertebrateAnimalEuthanasia": {
+      "$ref": "#/$defs/FellowshipVertebrateAnimalEuthanasia"
+    },
+    "vertebrateAnimalsDocument": {
+      "$ref": "../../question-bank/research-plan/vertebrate-animals-document/schema.json",
+      "title": "Vertebrate Animals"
+    },
+    "selectAgentResearch": {
+      "$ref": "../../question-bank/research-plan/select-agent-research/schema.json",
+      "title": "Select Agent Research"
+    },
+    "resourceSharingPlans": {
+      "$ref": "../../question-bank/research-plan/resource-sharing-plans/schema.json",
+      "title": "Resource Sharing Plan(s)"
+    },
+    "otherPlans": {
+      "$ref": "../../question-bank/research-plan/other-plans/schema.json",
+      "title": "Other Plan(s)"
+    },
+    "keyResourceAuthentication": {
+      "$ref": "../../question-bank/research-plan/key-resource-authentication/schema.json",
+      "title": "Authentication of Key Biological and/or Chemical Resources"
+    },
+    "humanEmbryonicStemCells": {
+      "$ref": "#/$defs/FellowshipHumanEmbryonicStemCells",
+      "title": "Human Embryonic Stem Cells"
+    },
+    "candidateInformation": {
+      "$ref": "../../question-bank/fellowship/candidate-additional-information/schema.json",
+      "title": "Fellowship Candidate Information"
+    },
+    "budget": {
+      "$ref": "../../question-bank/fellowship-budget/request/schema.json",
+      "title": "Fellowship Budget",
+      "properties": {
+        "tuition": {
+          "properties": {
+            "total": {
+              "readOnly": true
+            }
+          }
+        },
+        "childcare": {
+          "properties": {
+            "total": {
+              "readOnly": true
+            }
+          }
+        }
+      }
+    },
+    "appendix": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/research-plan/appendix-document/schema.json"
+      },
+      "maxItems": 100,
+      "title": "Appendix"
+    }
+  },
+  "required": [
+    "candidateGoals",
+    "trainingActivities",
+    "researchProjectAims",
+    "researchProjectStrategy",
+    "responsibleConductTraining",
+    "vertebrateAnimalsUsed",
+    "humanEmbryonicStemCells",
+    "candidateInformation",
+    "budget"
+  ],
+  "description": "PHS Fellowship Supplemental Form, Grants.gov FID 836, version 8.0.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    },
+    "FellowshipVertebrateAnimalEuthanasia": {
+      "type": "object",
+      "properties": {
+        "animalEuthanized": {
+          "$ref": "#/$defs/YesNoCode",
+          "title": "Are vertebrate animals euthanized?"
+        }
+      },
+      "required": [
+        "animalEuthanized"
+      ],
+      "allOf": [
+        {
+          "$ref": "../../question-bank/hhs-research-policy/vertebrate-animal-euthanasia/schema.json"
+        }
+      ],
+      "description": "The fellowship occurrence requires the first euthanasia answer when applicable."
+    },
+    "HumanEmbryonicStemCellLine": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 4,
+      "pattern": "^[0-9]{4}$",
+      "description": "A four-digit registration number from the NIH human embryonic stem-cell registry."
+    },
+    "FellowshipHumanEmbryonicStemCells": {
+      "type": "object",
+      "properties": {
+        "cellLines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HumanEmbryonicStemCellLine"
+          },
+          "maxItems": 20,
+          "title": "Cell Line(s)"
+        }
+      },
+      "allOf": [
+        {
+          "$ref": "../../question-bank/hhs-research-policy/human-embryonic-stem-cells/schema.json"
+        }
+      ],
+      "description": "The fellowship occurrence of the shared stem-cell question, limited to 20 source records."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "vertebrateAnimalsUsed": {
+            "const": "Y: Yes"
+          }
+        },
+        "required": [
+          "vertebrateAnimalsUsed"
+        ]
+      },
+      "then": {
+        "required": [
+          "vertebrateAnimalEuthanasia"
+        ]
+      }
+    }
+  ]
+}

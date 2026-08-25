@@ -1,0 +1,414 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "phs-fellowship-supplemental",
+    "kind": "form",
+    "formVersion": "8.0"
+  },
+  "sources": [
+    {
+      "id": "phs-fellowship-supplemental-xsd-v8-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS_Fellowship_Supplemental_8_0-V8.0.xsd",
+      "nativeVersion": "8.0",
+      "sha256": "85f8e33df4641c56f3b6b96108690f89d214de8b5c864b1d6bd1e6bf8c7cc7bc"
+    },
+    {
+      "id": "attachments-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d"
+    },
+    {
+      "id": "global-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb"
+    },
+    {
+      "id": "global-library-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "phs-fellowship-supplemental-dat-f836",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0_F836.xls",
+      "nativeVersion": "8.0",
+      "sha256": "fe9c42a0ec7008f6d9076e250bb37243629a71403331b69afcbf1069929f8beb"
+    },
+    {
+      "id": "phs-fellowship-supplemental-readonly-pdf-v8-0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/PHS_Fellowship_Supplemental_8_0-V8.0.pdf",
+      "nativeVersion": "8.0",
+      "sha256": "20c65f3c9cf5d88c4caae01ae340c6b41f0bd099bc130e8a809e91dc2b0c350e"
+    },
+    {
+      "id": "phs-fellowship-supplemental-xfa-pdf-v8-0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/PHS_Fellowship_Supplemental_8_0-V8.0.pdf",
+      "nativeVersion": "8.0",
+      "sha256": "551c8eae61563692554a16f900a880aeb326a3407714a18a5a144c7270a6040a"
+    },
+    {
+      "id": "nih-forms-i-fellowship-guide",
+      "type": "instructions",
+      "uri": "https://www.grants.nih.gov/grants/how-to-apply-application-guide/forms-i/fellowship-forms-i.pdf",
+      "nativeVersion": "Forms I (released December 2025)",
+      "sha256": "6177d4e9c0a2b0bd4785173cefe28539210305459a26e5bc6f936b4db0dcb08e"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-PHSFellowshipSupplemental.jsonl.manifest.json",
+    "sourceSetSha256": "ced520509653ed07d7e572edd8d7678d15901ec5b912b3bec6978688c105677f",
+    "extractedAt": "2026-08-18T20:59:38.138023Z"
+  },
+  "behaviorEvidence": [
+    {
+      "canonicalPath": "vertebrateAnimalEuthanasia.avmaConsistent",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "E-0-13",
+      "sourceRecord": "Enabled and REQUIRED, only if response E-0-10 above (AreAnimalsEuthanized \"yes\") is checked. Otherwise this question is disabled."
+    },
+    {
+      "canonicalPath": "vertebrateAnimalEuthanasia.methodDescription",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "E-0-16",
+      "sourceRecord": "Enabled and REQUIRED, only if response E-0-15 above (AVMAConsistentIndicator \"no\") is checked. Otherwise this question is disabled."
+    },
+    {
+      "canonicalPath": "/candidateInformation/graduateDegreeSought/degreeDate",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-3-3",
+      "sourceRecord": "Date format is MM/YYYY. Do NOT accept or require a specific day of the month. If an option has been selected for degree sought (G-3-1), then this field is both ENABLED and REQUIRED. If no entry is provided for degree-sought, then this field is DISABLED."
+    },
+    {
+      "canonicalPath": "/candidateInformation/currentPriorNrsaSupport/records",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-5-01",
+      "sourceRecord": "If \"yes\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are enabled, and first occurrence of G-5-04 and G-5-05 must be entered."
+    },
+    {
+      "canonicalPath": "candidateInformation.concurrentSupport.description",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-6-3",
+      "sourceRecord": "If \"Yes\" is checked as the answer to \"Applications for Concurrent Support\" above (G-6-1) then this field is ENABLED and REQUIRED. Otherwise, this field is DISABLED. Provide standard \"Add\", \"Delete\" and \"View\" features"
+    },
+    {
+      "canonicalPath": "candidateInformation.citizenship.nonUsCitizenStatus",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-7-3",
+      "sourceRecord": "Radio group disabled by default. Enabled and REQUIRED only when answer to USCitizen (G-7-2) is 'No'."
+    },
+    {
+      "canonicalPath": "candidateInformation.citizenship.permanentResidentByAward",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-7-6",
+      "sourceRecord": "Checkbox disabled by default. Enabled only when answer to NonUSCitizen (G-7-3) is 'With a Temporary U.S. Visa'."
+    },
+    {
+      "canonicalPath": "candidateInformation.institutionChange.formerInstitution",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-7-8",
+      "sourceRecord": "If the \"Change of Sponsoring Institution\" box (G-7-7) was checked, then this field is ENABLED. Otherwise this field is DISABLED and CLEARED."
+    },
+    {
+      "canonicalPath": "budget.tuition.year1",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1-04",
+      "sourceRecord": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked."
+    },
+    {
+      "canonicalPath": "budget.tuition.year2",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1-05",
+      "sourceRecord": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked."
+    },
+    {
+      "canonicalPath": "budget.tuition.year3",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1-06",
+      "sourceRecord": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked."
+    },
+    {
+      "canonicalPath": "budget.tuition.year4",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1-07",
+      "sourceRecord": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked."
+    },
+    {
+      "canonicalPath": "budget.tuition.year5",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1-08",
+      "sourceRecord": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked."
+    },
+    {
+      "canonicalPath": "budget.tuition.year6",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1-09",
+      "sourceRecord": "Enabled only if \"Funds Requested\" (H-1-03 above) is checked."
+    },
+    {
+      "canonicalPath": "budget.childcare.year1",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1a-04",
+      "sourceRecord": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked."
+    },
+    {
+      "canonicalPath": "budget.childcare.year2",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1a-05",
+      "sourceRecord": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked."
+    },
+    {
+      "canonicalPath": "budget.childcare.year3",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1a-06",
+      "sourceRecord": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked."
+    },
+    {
+      "canonicalPath": "budget.childcare.year4",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1a-07",
+      "sourceRecord": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked."
+    },
+    {
+      "canonicalPath": "budget.childcare.year5",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1a-08",
+      "sourceRecord": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked."
+    },
+    {
+      "canonicalPath": "budget.childcare.year6",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1a-09",
+      "sourceRecord": "Enabled only if \"Funds Requested\" (H-1a-03 above) is checked."
+    },
+    {
+      "canonicalPath": "budget.tuition.total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1-10",
+      "sourceRecord": "Summation of Tuition and Fees Requested, for years 1 through 6 (H-1-04 through H-1-09). No data entry is allowed in this field."
+    },
+    {
+      "canonicalPath": "budget.childcare.total",
+      "ruleKind": "calculation",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1a-10",
+      "sourceRecord": "Summation of Childcare Costs Requested, for years 1 through 6 (H-1a-04 through H-1a-09). No data entry is allowed in this field."
+    },
+    {
+      "canonicalPath": "/introduction",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "A-1",
+      "sourceRecord": "ENABLED only when RR SF424 ApplicationTypeCodeDataType of \"Revision\" or \"Resubmission\" is indicated. Otherwise this field is DISABLED and CLEARED. Provide standard \"Add\", \"Delete\" and \"View\" features"
+    },
+    {
+      "canonicalPath": "/progressReportPublicationList",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "C-4",
+      "sourceRecord": "ENABLED only when application type of \"Renewal\" or \"Resubmission\" is indicated. Otherwise this field is DISABLED and CLEARED. Provide standard \"Add\", \"Delete\" and \"View\" features"
+    },
+    {
+      "canonicalPath": "vertebrateAnimalEuthanasia.animalEuthanized",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "E-0-09",
+      "sourceRecord": "Enabled and REQUIRED, only if response E-0-04 above (VertebrateAnimalsUsed \"yes\") is checked. Otherwise this question is disabled."
+    },
+    {
+      "canonicalPath": "/humanEmbryonicStemCells",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-1-03",
+      "sourceRecord": "If this box is checked, then G-1-06 and G-1-09 below are both ENABLED. In that case, either G-1-06 or G-1-09 MUST also be answered."
+    },
+    {
+      "canonicalPath": "humanEmbryonicStemCells.specificLineUnavailable",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-1-06",
+      "sourceRecord": "If answer to G-1-02 is \"yes\" then this field is ENABLED."
+    },
+    {
+      "canonicalPath": "/humanEmbryonicStemCells/specificLineUnavailable",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-1-06",
+      "sourceRecord": "If answer to G-1-02 is \"yes\" then this field is ENABLED. If answer to G-1-02 is \"no\" then this field is DISABLED and cleared. If this box is checked, then G-1-09 below is DISABLED and cleared. Also automatically un-checked if one or more specific stem cell lines are listed below."
+    },
+    {
+      "canonicalPath": "/humanEmbryonicStemCells/cellLines",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-1-09",
+      "sourceRecord": "If the answer to G-1-02 is \"yes\" AND if G-1-06 is UNCHECKED then this field is ENABLED. Otherwise, this field is DISABLED and CLEARED. Display only ONE of G-1-09 on form, additions must be made with G-1-10."
+    },
+    {
+      "canonicalPath": "/candidateInformation/graduateDegreeSought/otherDegreeTypeText",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-3-2",
+      "sourceRecord": "If one of the \"other\" degree types is selected under degree sought (G-3-1), then this field (G-3-2) is ENABLED and REQUIRED. If one of the \"other\" degree types is NOT selected in G-3-1, then this field (G-3-2) is DISABLED and CLEARED."
+    },
+    {
+      "canonicalPath": "/candidateInformation/currentPriorNrsaSupport/records",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-5-02",
+      "sourceRecord": "If \"no\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are DISABLED and CLEARED."
+    },
+    {
+      "canonicalPath": "/candidateInformation/institutionChange/formerInstitution",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "G-7-7",
+      "sourceRecord": "If box is checked, then the \"Name of Former Institution\" field (G-7-8) is ENABLED. Otherwise the \"Name of Former Institution\" field is DISABLED and CLEARED."
+    },
+    {
+      "canonicalPath": "/budget/tuition",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1-02",
+      "sourceRecord": "If this option is selected, then all of the requested amount fields for years 1-6 (H-1-04 through H-1-09) are DISABLED and CLEARED."
+    },
+    {
+      "canonicalPath": "/budget/childcare",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-1a-02",
+      "sourceRecord": "If this option is selected, then all of the requested amount fields for years 1-6 (H-1a-04 through H-1a-09) are DISABLED and CLEARED."
+    },
+    {
+      "canonicalPath": "/budget/institutionalBaseSalary",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-2-2",
+      "sourceRecord": "If any of these three fields (H-2-2 through H-2-4) is entered, all three fields are required."
+    },
+    {
+      "canonicalPath": "/budget/federalStipend",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-2-6-a-1",
+      "sourceRecord": "If either of these two fields (H-2-6-a-1 or H-2-6-a-2) is entered, then both are required."
+    },
+    {
+      "canonicalPath": "/budget/supplementation",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs-fellowship-supplemental-dat-f836",
+      "sourcePath": "H-2-6-b-1",
+      "sourceRecord": "If any of these four fields (H-2-6-b-1 through H-2-6-b-4) is entered, then all four fields are required."
+    }
+  ],
+  "semanticReview": {
+    "status": "unreviewed",
+    "mappings": []
+  },
+  "operationalBehaviorEvidence": [],
+  "responseNormalizationEvidence": []
+}
