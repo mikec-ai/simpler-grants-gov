@@ -1,0 +1,355 @@
+[
+  {
+    "type": "section",
+    "name": "vertebrate_animals",
+    "label": "1. Vertebrate Animals",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/vertebrate_animals/properties/animal_euthanized"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/vertebrate_animals/properties/avma_consistent",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/vertebrate_animals/animal_euthanized"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/vertebrate_animals/properties/method_description",
+        "widget": "TextArea",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/vertebrate_animals/avma_consistent"
+            },
+            "value": "N: No"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "program_income",
+    "label": "2. Program Income",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/program_income/properties/anticipated"
+      },
+      {
+        "type": "fieldList",
+        "name": "periods",
+        "label": "Program income by budget period",
+        "definition": "/properties/program_income/properties/periods",
+        "children": [
+          {
+            "type": "field",
+            "definition": "/properties/program_income/properties/periods/items/properties/budget_period"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/program_income/properties/periods/items/properties/anticipated_amount"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/program_income/properties/periods/items/properties/source"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "stem_cells",
+    "label": "3. Human Embryonic Stem Cells",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/human_embryonic_stem_cells/properties/involved"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/human_embryonic_stem_cells/properties/specific_line_unavailable",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/human_embryonic_stem_cells/involved"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/human_embryonic_stem_cells/properties/cell_lines",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/human_embryonic_stem_cells/involved"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "fetal_tissue",
+    "label": "4. Human Fetal Tissue",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/human_fetal_tissue/properties/involved"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/human_fetal_tissue/properties/compliance_assurance",
+        "widget": "Attachment",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/human_fetal_tissue/involved"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/human_fetal_tissue/properties/irb_consent_form",
+        "widget": "Attachment",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/human_fetal_tissue/involved"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "inventions",
+    "label": "5. Inventions and Patents",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/inventions_and_patents/properties/inventions"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/inventions_and_patents/properties/previously_reported",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/inventions_and_patents/inventions"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "changes",
+    "label": "6. Change of Investigator / Change of Recipient Organization",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/changes/properties/change_of_project_director"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/changes/properties/change_of_recipient_organization"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/former_project_director/properties/prefix",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/changes/change_of_project_director"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/former_project_director/properties/first_name",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/changes/change_of_project_director"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/former_project_director/properties/middle_name",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/changes/change_of_project_director"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/former_project_director/properties/last_name",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/changes/change_of_project_director"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/former_project_director/properties/suffix",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/changes/change_of_project_director"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/former_organization_name",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/changes/change_of_recipient_organization"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      }
+    ]
+  }
+]
