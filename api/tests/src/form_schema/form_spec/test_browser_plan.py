@@ -189,6 +189,26 @@ def test_browser_plan_protects_exact_inclusion_enrollment_calculation_targets(
     }
 
 
+def test_browser_plan_exposes_career_development_reuse_and_conditions(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "phs398-career-development-supplemental")
+
+    form = build_browser_plan()["forms"][0]
+    capabilities = form["capabilities"]
+
+    assert form["counts"] == {"uiNodes": 41, "uiFields": 22, "schemaFields": 20}
+    assert len(capabilities["attachment"]["declarations"]) == 38
+    assert {
+        declaration["definition"] for declaration in capabilities["conditional"]["declarations"]
+    } == {
+        "/properties/citizenship/properties/non_us_citizen_status",
+        "/properties/citizenship/properties/permanent_resident_by_award",
+    }
+    assert capabilities["calculation"]["applicability"] == "not_applicable"
+    assert capabilities["repeater"]["applicability"] == "not_applicable"
+
+
 def test_browser_plan_combines_schema_and_ui_readonly_declarations(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
