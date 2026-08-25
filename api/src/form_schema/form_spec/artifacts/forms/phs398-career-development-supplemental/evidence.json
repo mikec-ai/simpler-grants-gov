@@ -1,0 +1,211 @@
+{
+  "contract": "grants-form-evidence/v1",
+  "block": {
+    "id": "phs398-career-development-supplemental",
+    "kind": "form",
+    "formVersion": "6.0"
+  },
+  "sources": [
+    {
+      "id": "phs398-career-development-xsd-v6-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS398_CareerDevelopmentAwardSup_6_0-V6.0.xsd",
+      "nativeVersion": "6.0",
+      "sha256": "613641fc799a5c92d47928c98ebd90fad5d348b7637005929f0c0dc4a07e95c1"
+    },
+    {
+      "id": "attachments-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d"
+    },
+    {
+      "id": "global-xsd-v1-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd",
+      "nativeVersion": "1.0",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb"
+    },
+    {
+      "id": "global-library-xsd-v2-0",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8"
+    },
+    {
+      "id": "phs398-career-development-dat-f799",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/PHS398_CareerDevelopmentAwardSup_6_0-V6.0_F799.xls",
+      "nativeVersion": "6.0",
+      "sha256": "be709f9d3e28537c79593527673f1af5fbc40c32664f6521256336116671318e"
+    },
+    {
+      "id": "phs398-career-development-readonly-pdf-v6-0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/readonly/PHS398_CareerDevelopmentAwardSup_6_0-V6.0.pdf",
+      "nativeVersion": "6.0",
+      "sha256": "f9a0831b99947dfe83a2bee604f31d5b019b81e3438920d986c5d6ff93636ac2"
+    },
+    {
+      "id": "phs398-career-development-xfa-pdf-v6-0",
+      "type": "pdf",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/PHS398_CareerDevelopmentAwardSup_6_0-V6.0.pdf",
+      "nativeVersion": "6.0",
+      "sha256": "7b940e77591ebdebfc87139f8c7be72c58720a54d524edf0e04aa1c5e2212e3b"
+    },
+    {
+      "id": "nih-forms-i-career-guide",
+      "type": "instructions",
+      "uri": "https://www.grants.nih.gov/grants/how-to-apply-application-guide/forms-i/career-forms-i.pdf",
+      "nativeVersion": "Forms I (released December 2025)",
+      "sha256": "1eaecf95ffe6c31d6ecb1258cd49189fa6d02ae7d9eec48ece6360a9ed7b9c24"
+    }
+  ],
+  "extraction": {
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-PHSCareerDevelopment.jsonl.manifest.json",
+    "sourceSetSha256": "613641fc799a5c92d47928c98ebd90fad5d348b7637005929f0c0dc4a07e95c1",
+    "extractedAt": "2026-08-18T21:05:40.194998Z"
+  },
+  "semanticReview": {
+    "status": "proposed",
+    "mappings": [
+      {
+        "canonicalPointer": "#/properties/introduction",
+        "sourceId": "phs398-career-development-xsd-v6-0",
+        "sourcePath": "PHS398_CareerDevelopmentAwardSup_6_0.CareerDevelopmentAwardAttachments.IntroductionToApplication.attFile",
+        "status": "proposed",
+        "note": "Proposed reuse of the role-qualified research-plan introduction; attachment capture alone is not equivalence."
+      },
+      {
+        "canonicalPointer": "#/properties/specificAims",
+        "sourceId": "phs398-career-development-xsd-v6-0",
+        "sourcePath": "PHS398_CareerDevelopmentAwardSup_6_0.CareerDevelopmentAwardAttachments.SpecificAims.attFile",
+        "status": "proposed",
+        "note": "Proposed reuse of the role-qualified research-plan specific aims."
+      },
+      {
+        "canonicalPointer": "#/properties/researchStrategy",
+        "sourceId": "phs398-career-development-xsd-v6-0",
+        "sourcePath": "PHS398_CareerDevelopmentAwardSup_6_0.CareerDevelopmentAwardAttachments.ResearchStrategy.attFile",
+        "status": "proposed",
+        "note": "Proposed reuse of the role-qualified research strategy."
+      },
+      {
+        "canonicalPointer": "#/properties/progressReportPublicationList",
+        "sourceId": "phs398-career-development-xsd-v6-0",
+        "sourcePath": "PHS398_CareerDevelopmentAwardSup_6_0.CareerDevelopmentAwardAttachments.ProgressReportPublicationList.attFile",
+        "status": "proposed",
+        "note": "Proposed reuse of the role-qualified renewal publication list."
+      },
+      {
+        "canonicalPointer": "#/properties/lettersOfSupport",
+        "sourceId": "phs398-career-development-xsd-v6-0",
+        "sourcePath": "PHS398_CareerDevelopmentAwardSup_6_0.CareerDevelopmentAwardAttachments.LettersOfSupport.attFile",
+        "status": "proposed",
+        "note": "Proposed reuse of research-plan collaborator and consultant letters of support."
+      },
+      {
+        "canonicalPointer": "#/properties/vertebrateAnimals",
+        "sourceId": "phs398-career-development-xsd-v6-0",
+        "sourcePath": "PHS398_CareerDevelopmentAwardSup_6_0.CareerDevelopmentAwardAttachments.VertebrateAnimals.attFile",
+        "status": "proposed",
+        "note": "Proposed document identity, distinct from the policy yes/no question."
+      },
+      {
+        "canonicalPointer": "#/properties/selectAgentResearch",
+        "sourceId": "phs398-career-development-xsd-v6-0",
+        "sourcePath": "PHS398_CareerDevelopmentAwardSup_6_0.CareerDevelopmentAwardAttachments.SelectAgentResearch.attFile",
+        "status": "proposed",
+        "note": "Proposed reuse of the role-qualified select-agent narrative."
+      },
+      {
+        "canonicalPointer": "#/properties/consortiumContractualArrangements",
+        "sourceId": "phs398-career-development-xsd-v6-0",
+        "sourcePath": "PHS398_CareerDevelopmentAwardSup_6_0.CareerDevelopmentAwardAttachments.ConsortiumContractualArrangements.attFile",
+        "status": "proposed",
+        "note": "Proposed reuse of consortium or contractual arrangements."
+      },
+      {
+        "canonicalPointer": "#/properties/resourceSharingPlans",
+        "sourceId": "phs398-career-development-xsd-v6-0",
+        "sourcePath": "PHS398_CareerDevelopmentAwardSup_6_0.CareerDevelopmentAwardAttachments.ResourceSharingPlans.attFile",
+        "status": "proposed",
+        "note": "Proposed reuse of research resource-sharing plans."
+      },
+      {
+        "canonicalPointer": "#/properties/otherPlans",
+        "sourceId": "phs398-career-development-xsd-v6-0",
+        "sourcePath": "PHS398_CareerDevelopmentAwardSup_6_0.CareerDevelopmentAwardAttachments.OtherPlans.attFile",
+        "status": "proposed",
+        "note": "Proposed reuse of other research plans."
+      },
+      {
+        "canonicalPointer": "#/properties/keyResourceAuthentication",
+        "sourceId": "phs398-career-development-xsd-v6-0",
+        "sourcePath": "PHS398_CareerDevelopmentAwardSup_6_0.CareerDevelopmentAwardAttachments.KeyBiologicalAndOrChemicalResources.attFile",
+        "status": "proposed",
+        "note": "Proposed reuse of key-resource authentication."
+      },
+      {
+        "canonicalPointer": "#/properties/appendix",
+        "sourceId": "phs398-career-development-xsd-v6-0",
+        "sourcePath": "PHS398_CareerDevelopmentAwardSup_6_0.CareerDevelopmentAwardAttachments.Appendix.AttachedFile[*]",
+        "status": "proposed",
+        "note": "Proposed appendix-document identity, separate from its generic attachment capture."
+      }
+    ]
+  },
+  "behaviorEvidence": [
+    {
+      "canonicalPath": "/introduction",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs398-career-development-dat-f799",
+      "sourcePath": "1-1",
+      "sourceRecord": "ENABLED only when RR SF424 ApplicationTypeCodeDataType of Revision or Resubmission is indicated. Otherwise this field is DISABLED and CLEARED."
+    },
+    {
+      "canonicalPath": "/progressReportPublicationList",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs398-career-development-dat-f799",
+      "sourcePath": "3-3",
+      "sourceRecord": "ENABLED only when RR SF424 ApplicationTypeCodeDataType of Renewal or Resubmission is indicated. Otherwise this field is DISABLED and CLEARED."
+    },
+    {
+      "canonicalPath": "/vertebrateAnimals",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "phs398-career-development-dat-f799",
+      "sourcePath": "7-1",
+      "sourceRecord": "Required if Are Vertebrate Animals Used is Yes on R&R Other Project Information."
+    },
+    {
+      "canonicalPath": "citizenship.nonUsCitizenStatus",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs398-career-development-dat-f799",
+      "sourcePath": "9-2-1",
+      "sourceRecord": "Radio group disabled by default. Enabled and REQUIRED only when answer to Citizenship is No."
+    },
+    {
+      "canonicalPath": "citizenship.permanentResidentByAward",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "phs398-career-development-dat-f799",
+      "sourcePath": "9-3",
+      "sourceRecord": "Checkbox disabled by default. Enabled only when NonUSCitizenship is With a Temporary U.S. Visa."
+    }
+  ],
+  "operationalBehaviorEvidence": [],
+  "responseNormalizationEvidence": []
+}

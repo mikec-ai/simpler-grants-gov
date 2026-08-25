@@ -532,6 +532,36 @@
       "size": 31303
     },
     {
+      "path": "dist/forms/phs398-career-development-supplemental/evidence.json",
+      "sha256": "aee69638b50ad955718e47272dd75c410061ce19c6165d21799a8e539902a18e",
+      "size": 9635
+    },
+    {
+      "path": "dist/forms/phs398-career-development-supplemental/manifest.json",
+      "sha256": "44674929b6785a3397eafbe37d4d829172eadafaf30397a15a4afa6925ce1b29",
+      "size": 602
+    },
+    {
+      "path": "dist/forms/phs398-career-development-supplemental/schema.json",
+      "sha256": "185fa1ac3e2b844692157e08d87c12130637028563d80a8ad9bfd3a4a5833e9e",
+      "size": 4119
+    },
+    {
+      "path": "dist/forms/phs398-career-development-supplemental/sgg/rule-schema.json",
+      "sha256": "8e41ed0cfbfb1bfcbad482b15250746427ffc52784ba8d8dc1c754532fe8327c",
+      "size": 1687
+    },
+    {
+      "path": "dist/forms/phs398-career-development-supplemental/sgg/ui-schema.json",
+      "sha256": "c53eacd78497999a61f6e2c9163e2d58fe3a41eb60a0478c90767bf4da03792b",
+      "size": 4806
+    },
+    {
+      "path": "dist/forms/phs398-career-development-supplemental/targets/grants-gov-xml.json",
+      "sha256": "c94f5af48415852b0582443cb87697bc58918fc6c753f6553d53b0942e4e2578",
+      "size": 9023
+    },
+    {
       "path": "dist/forms/phs398-cover-page-supplement/evidence.json",
       "sha256": "bd470d700ae2ebfe106c5f7f817ce477a8a0f8b3699aae82675b4835bca3f8f5",
       "size": 18827
@@ -1612,6 +1642,26 @@
       "size": 1938
     },
     {
+      "path": "dist/question-bank/candidate/career-development-information-and-goals/schema.json",
+      "sha256": "3a0bd03eb67b5018804e06fe8b92021e1bec1f42798f2f10dbad4b9789eb7353",
+      "size": 268
+    },
+    {
+      "path": "dist/question-bank/candidate/citizenship-and-residency-status/schema.json",
+      "sha256": "ab597e8cdac07b5b82d1210c8542ceb4876985509dd1fb0880cef8f81e713375",
+      "size": 1320
+    },
+    {
+      "path": "dist/question-bank/candidate/contribution-to-program-goals/schema.json",
+      "sha256": "db66c4724caafbd8b6c9f5df9ff4c794f7785542d0eb3f9a5101f8f014d57001",
+      "size": 242
+    },
+    {
+      "path": "dist/question-bank/candidate/plan-to-provide-mentoring/schema.json",
+      "sha256": "321a7b4d763151e5e20e367d06fd3f37cf5b58e317f5885f053486f8bbc7c3cf",
+      "size": 237
+    },
+    {
       "path": "dist/question-bank/clinical-study/clinical-trial-questionnaire/schema.json",
       "sha256": "e70683240a5b6cb6e144e5af0257fd067342ef3998a577eab990c019461daa18",
       "size": 863
@@ -1952,6 +2002,11 @@
       "size": 1454
     },
     {
+      "path": "dist/question-bank/mentoring/mentor-and-co-mentor-statements/schema.json",
+      "sha256": "297a397f307c6cf43112cc9223c2f259b9d709113d14ec76ed08b97ba6eea506",
+      "size": 244
+    },
+    {
       "path": "dist/question-bank/nifa/additional-applicant-type/schema.json",
       "sha256": "3a1bbb45832f75df2ee9aa8ca026853a6d77a8f29cd09390309191085d2e8942",
       "size": 904
@@ -2212,6 +2267,16 @@
       "size": 721
     },
     {
+      "path": "dist/question-bank/research-environment/institutional-career-development-commitment/schema.json",
+      "sha256": "c97dc0358a2b2a7d943c77f45a232c662b41f3cb47f459b16a5e98b1fb457982",
+      "size": 297
+    },
+    {
+      "path": "dist/question-bank/research-environment/institutional-environment-description/schema.json",
+      "sha256": "05d8f5ff62607a3c6b7752a24ae6837583040c997b5b064d9cf0ba35d03a7c32",
+      "size": 287
+    },
+    {
       "path": "dist/question-bank/research-person/additional-biographical-sketches-upload/schema.json",
       "sha256": "78afff79dbe1064b8010f1c56e653ae229390e6f37e0264fafc1b63fce930a0a",
       "size": 299
@@ -2330,6 +2395,11 @@
       "path": "dist/question-bank/research-plan/vertebrate-animals-document/schema.json",
       "sha256": "acf4c0559aba6b8bce7f382ceb7f680ea4fc1ee13cb8550c270ccc70fc0b2c35",
       "size": 269
+    },
+    {
+      "path": "dist/question-bank/research-policy/responsible-conduct-training-plan/schema.json",
+      "sha256": "a011578d881e817b55921bed15dcf03995c1533e4b70db1d6f1a528cbd3f1879",
+      "size": 270
     },
     {
       "path": "dist/question-bank/research-project/environmental-impact/schema.json",
@@ -2573,13 +2643,14 @@
       "rr-personal-data",
       "phs398-cover-page-supplement",
       "sbir-sttr-information",
-      "phs-fellowship-supplemental"
+      "phs-fellowship-supplemental",
+      "phs398-career-development-supplemental"
     ],
     "policy": "form runtime and evidence artifacts, transitive question-schema closure, and portable governance contracts"
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "057555e0af94e699c3a947f2df8e2bcc46c89c75"
+    "revision": "a19b2dd2bd93bc195c1be0af808a0bc13504b65f"
   },
-  "sourceBundleSha256": "6c7603193b79a6c7414d16e21841228ff224e38357af16af693ca1d965f2bdd1"
+  "sourceBundleSha256": "af4d280b791502454b4293b12ef7b00cc2158a206e8533ecab8bf43e698d77c6"
 }

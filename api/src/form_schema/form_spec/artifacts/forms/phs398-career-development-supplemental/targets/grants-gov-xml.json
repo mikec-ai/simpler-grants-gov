@@ -1,0 +1,280 @@
+{
+  "contract": "grants-gov-xml-profile/v1",
+  "formId": "phs398-career-development-supplemental",
+  "xsd": {
+    "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS398_CareerDevelopmentAwardSup_6_0-V6.0.xsd",
+    "sha256": "613641fc799a5c92d47928c98ebd90fad5d348b7637005929f0c0dc4a07e95c1"
+  },
+  "namespaces": {
+    "default": "http://apply.grants.gov/forms/PHS398_CareerDevelopmentAwardSup_6_0-V6.0",
+    "PHS398_CareerDevelopmentAwardSup_6_0": "http://apply.grants.gov/forms/PHS398_CareerDevelopmentAwardSup_6_0-V6.0",
+    "att": "http://apply.grants.gov/system/Attachments-V1.0",
+    "globLib": "http://apply.grants.gov/system/GlobalLibrary-V2.0",
+    "glob": "http://apply.grants.gov/system/Global-V1.0"
+  },
+  "root": {
+    "element": "PHS398_CareerDevelopmentAwardSup_6_0",
+    "namespacePrefix": "PHS398_CareerDevelopmentAwardSup_6_0",
+    "attributes": {
+      "FormVersion": "6.0"
+    }
+  },
+  "attachment": {
+    "fields": {
+      "fileName": {
+        "element": "FileName",
+        "namespace": "att"
+      },
+      "mimeType": {
+        "element": "MimeType",
+        "namespace": "att"
+      },
+      "fileLocation": {
+        "element": "FileLocation",
+        "namespace": "att"
+      },
+      "hashValue": {
+        "element": "HashValue",
+        "namespace": "glob"
+      }
+    }
+  },
+  "mapping": {
+    "fields": {
+      "attachments": {
+        "element": "CareerDevelopmentAwardAttachments",
+        "kind": "group",
+        "namespace": "default",
+        "fields": {
+          "introduction": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/introduction",
+            "container": {
+              "element": "IntroductionToApplication",
+              "namespace": "default"
+            }
+          },
+          "candidateInformationAndGoals": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/candidateInformationAndGoals",
+            "container": {
+              "element": "CandidateInformationAndGoals",
+              "namespace": "default"
+            }
+          },
+          "specificAims": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/specificAims",
+            "container": {
+              "element": "SpecificAims",
+              "namespace": "default"
+            }
+          },
+          "researchStrategy": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/researchStrategy",
+            "container": {
+              "element": "ResearchStrategy",
+              "namespace": "default"
+            }
+          },
+          "progressReportPublicationList": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/progressReportPublicationList",
+            "container": {
+              "element": "ProgressReportPublicationList",
+              "namespace": "default"
+            }
+          },
+          "responsibleConductOfResearch": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/responsibleConductOfResearch",
+            "container": {
+              "element": "ResponsibleConductOfResearch",
+              "namespace": "default"
+            }
+          },
+          "mentoringPlan": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/mentoringPlan",
+            "container": {
+              "element": "MentoringPlan",
+              "namespace": "default"
+            }
+          },
+          "statementsOfSupport": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/statementsOfSupport",
+            "container": {
+              "element": "StatementsOfSupport",
+              "namespace": "default"
+            }
+          },
+          "lettersOfSupport": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/lettersOfSupport",
+            "container": {
+              "element": "LettersOfSupport",
+              "namespace": "default"
+            }
+          },
+          "institutionalEnvironment": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/institutionalEnvironment",
+            "container": {
+              "element": "InsitutionalEnvironment",
+              "namespace": "default"
+            }
+          },
+          "institutionalCommitment": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/institutionalCommitment",
+            "container": {
+              "element": "InstitutionalCommitment",
+              "namespace": "default"
+            }
+          },
+          "candidateContribution": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/candidateContribution",
+            "container": {
+              "element": "CandidatesContribution",
+              "namespace": "default"
+            }
+          },
+          "vertebrateAnimals": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/vertebrateAnimals",
+            "container": {
+              "element": "VertebrateAnimals",
+              "namespace": "default"
+            }
+          },
+          "selectAgentResearch": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/selectAgentResearch",
+            "container": {
+              "element": "SelectAgentResearch",
+              "namespace": "default"
+            }
+          },
+          "consortiumContractualArrangements": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/consortiumContractualArrangements",
+            "container": {
+              "element": "ConsortiumContractualArrangements",
+              "namespace": "default"
+            }
+          },
+          "resourceSharingPlans": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/resourceSharingPlans",
+            "container": {
+              "element": "ResourceSharingPlans",
+              "namespace": "default"
+            }
+          },
+          "otherPlans": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/otherPlans",
+            "container": {
+              "element": "OtherPlans",
+              "namespace": "default"
+            }
+          },
+          "keyResourceAuthentication": {
+            "element": "attFile",
+            "kind": "attachment",
+            "namespace": "default",
+            "source": "/keyResourceAuthentication",
+            "container": {
+              "element": "KeyBiologicalAndOrChemicalResources",
+              "namespace": "default"
+            }
+          },
+          "appendix": {
+            "element": "Appendix",
+            "kind": "array",
+            "namespace": "default",
+            "source": "/appendix",
+            "itemElement": "AttachedFile",
+            "itemNamespace": "att",
+            "items": {
+              "node": {
+                "kind": "attachment",
+                "flatten": true
+              }
+            }
+          }
+        }
+      },
+      "citizenship": {
+        "element": "CitizenshipIndicator",
+        "kind": "group",
+        "namespace": "default",
+        "source": "/citizenship",
+        "flatten": true,
+        "fields": {
+          "usCitizenOrNational": {
+            "element": "CitizenshipIndicator",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/citizenship/usCitizenOrNational"
+          },
+          "nonUsCitizenStatus": {
+            "element": "isNonUSCitizenship",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/citizenship/nonUsCitizenStatus"
+          },
+          "permanentResidentByAward": {
+            "element": "PermanentResidentByAwardIndicator",
+            "kind": "value",
+            "namespace": "default",
+            "source": "/citizenship/permanentResidentByAward"
+          }
+        }
+      }
+    }
+  },
+  "evidence": {
+    "status": "source-bound-unreviewed",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "4312f6504b060e2b9ffdbd2307fc41130c3123a0",
+    "artifact": "artifacts/proof/grantsgov-PHSCareerDevelopment.jsonl.manifest.json"
+  }
+}

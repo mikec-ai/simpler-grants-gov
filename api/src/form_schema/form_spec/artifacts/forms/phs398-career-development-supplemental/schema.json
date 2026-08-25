@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "phs398-career-development-supplemental/schema.json",
+  "type": "object",
+  "properties": {
+    "introduction": {
+      "$ref": "../../question-bank/research-plan/introduction/schema.json",
+      "title": "1. Introduction to Application (for Resubmission and Revision applications)"
+    },
+    "candidateInformationAndGoals": {
+      "$ref": "../../question-bank/candidate/career-development-information-and-goals/schema.json",
+      "title": "2. Candidate Information and Goals for Career Development"
+    },
+    "specificAims": {
+      "$ref": "../../question-bank/research-plan/specific-aims/schema.json",
+      "title": "3. Specific Aims"
+    },
+    "researchStrategy": {
+      "$ref": "../../question-bank/research-plan/research-strategy/schema.json",
+      "title": "4. Research Strategy"
+    },
+    "progressReportPublicationList": {
+      "$ref": "../../question-bank/research-plan/progress-report-publication-list/schema.json",
+      "title": "5. Progress Report Publication List (for Renewal applications)"
+    },
+    "responsibleConductOfResearch": {
+      "$ref": "../../question-bank/research-policy/responsible-conduct-training-plan/schema.json",
+      "title": "6. Training in the Responsible Conduct of Research"
+    },
+    "mentoringPlan": {
+      "$ref": "../../question-bank/candidate/plan-to-provide-mentoring/schema.json",
+      "title": "7. Candidate's Plan to Provide Mentoring"
+    },
+    "statementsOfSupport": {
+      "$ref": "../../question-bank/mentoring/mentor-and-co-mentor-statements/schema.json",
+      "title": "8. Plans and Statements of Mentor and Co-Mentor(s)"
+    },
+    "lettersOfSupport": {
+      "$ref": "../../question-bank/research-plan/letters-of-support/schema.json",
+      "title": "9. Letters of Support from Collaborators, Contributors, and Consultants"
+    },
+    "institutionalEnvironment": {
+      "$ref": "../../question-bank/research-environment/institutional-environment-description/schema.json",
+      "title": "10. Description of Institutional Environment"
+    },
+    "institutionalCommitment": {
+      "$ref": "../../question-bank/research-environment/institutional-career-development-commitment/schema.json",
+      "title": "11. Institutional Commitment to Candidate's Research Career Development"
+    },
+    "candidateContribution": {
+      "$ref": "../../question-bank/candidate/contribution-to-program-goals/schema.json",
+      "title": "12. Description of Candidate's Contribution to Program Goals"
+    },
+    "vertebrateAnimals": {
+      "$ref": "../../question-bank/research-plan/vertebrate-animals-document/schema.json",
+      "title": "13. Vertebrate Animals"
+    },
+    "selectAgentResearch": {
+      "$ref": "../../question-bank/research-plan/select-agent-research/schema.json",
+      "title": "14. Select Agent Research"
+    },
+    "consortiumContractualArrangements": {
+      "$ref": "../../question-bank/research-plan/consortium-contractual-arrangements/schema.json",
+      "title": "15. Consortium/Contractual Arrangements"
+    },
+    "resourceSharingPlans": {
+      "$ref": "../../question-bank/research-plan/resource-sharing-plans/schema.json",
+      "title": "16. Resource Sharing"
+    },
+    "otherPlans": {
+      "$ref": "../../question-bank/research-plan/other-plans/schema.json",
+      "title": "17. Other Plan(s)"
+    },
+    "keyResourceAuthentication": {
+      "$ref": "../../question-bank/research-plan/key-resource-authentication/schema.json",
+      "title": "18. Authentication of Key Biological and/or Chemical Resources"
+    },
+    "appendix": {
+      "type": "array",
+      "items": {
+        "$ref": "../../question-bank/research-plan/appendix-document/schema.json"
+      },
+      "maxItems": 10,
+      "title": "19. Appendix"
+    },
+    "citizenship": {
+      "$ref": "../../question-bank/candidate/citizenship-and-residency-status/schema.json",
+      "title": "20. Citizenship"
+    }
+  },
+  "required": [
+    "researchStrategy",
+    "citizenship"
+  ],
+  "description": "PHS 398 Career Development Award Supplemental Form, Grants.gov FID 799, version 6.0."
+}
