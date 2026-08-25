@@ -845,6 +845,79 @@ describe("buildWarningTree", () => {
       }),
     ]);
   });
+
+  it("preserves a warning through nested FieldLists", () => {
+    const attachmentDefinition =
+      "/properties/budget_attachments/items/properties/budget_year/items/properties/equipment/properties/attachment";
+    const uiSchema: UiSchema = [
+      {
+        type: "fieldList",
+        name: "budget_attachments",
+        label: "Subaward budgets",
+        children: [
+          {
+            type: "fieldList",
+            name: "budget_year",
+            label: "Budget Period",
+            children: [
+              {
+                type: "field",
+                definition: attachmentDefinition,
+                schema: { title: "Additional Equipment", type: "string" },
+              },
+            ],
+          },
+        ],
+      },
+    ];
+    const warnings = [
+      {
+        field: "$.budget_attachments[2].budget_year[3].equipment.attachment",
+        message: "'attachment' is a required property",
+        type: "required",
+        value: null,
+      },
+    ];
+    const formSchema: RJSFSchema = {
+      type: "object",
+      properties: {
+        budget_attachments: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              budget_year: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    equipment: {
+                      type: "object",
+                      properties: {
+                        attachment: {
+                          type: "string",
+                          title: "Additional Equipment",
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    };
+
+    expect(buildWarningTree(uiSchema, null, warnings, formSchema)).toEqual([
+      expect.objectContaining({
+        field: "$.budget_attachments[2].budget_year[3].equipment.attachment",
+        htmlField:
+          "budget_attachments[2]--budget_year[3]--equipment--attachment",
+        formatted: "Additional Equipment is required",
+      }),
+    ]);
+  });
 });
 
 it("pushes direct warnings for uiSchema fields", () => {
