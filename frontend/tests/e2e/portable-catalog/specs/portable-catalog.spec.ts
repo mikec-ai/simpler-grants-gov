@@ -12,7 +12,9 @@ import {
   RECEIPT_CONTRACT,
   recoverBrowserPlanCandidates,
   responsePathToControlId,
+  responsePathToRepeaterContainerIds,
   schemaDefinitionToControlId,
+  schemaDefinitionToResponsePath,
   summarizeReceipts,
   writeReceipt,
   type Boundary,
@@ -259,10 +261,31 @@ function firstBrowserSchemaImplication(
     ({ trigger, consequence }) =>
       typeof trigger.constraint?.pattern === "string" &&
       consequence.required &&
-      consequence.constraint === null &&
-      trigger.responsePath.split("/").filter((part) => part === "*").length ===
-        1,
+      consequence.constraint === null,
   );
+}
+
+async function materializeRepresentativeRepeaters(
+  page: Page,
+  responsePath: string,
+): Promise<string[]> {
+  const containerIds = responsePathToRepeaterContainerIds(responsePath);
+  for (const containerId of containerIds) {
+    const container = page.locator(`main [id=${JSON.stringify(containerId)}]`);
+    await expect(container).toBeVisible();
+    const directEntries = container.locator(
+      ":scope > .field-list-widget__entry",
+    );
+    if ((await directEntries.count()) === 0) {
+      const addButton = container.locator(
+        ":scope > .field-list-widget__controls button",
+      );
+      await expect(addButton).toBeEnabled();
+      await addButton.click();
+      await expect(directEntries).toHaveCount(1);
+    }
+  }
+  return containerIds;
 }
 
 async function exerciseSchemaImplication(
@@ -272,13 +295,17 @@ async function exerciseSchemaImplication(
   const declaration = firstBrowserSchemaImplication(form);
   if (!declaration) {
     throw new Error(
-      "no single-repeater patterned schema implication is declared",
+      "no mechanically addressable patterned schema implication is declared",
     );
   }
   const pattern = declaration.trigger.constraint?.pattern;
   if (typeof pattern !== "string") {
     throw new Error("schema implication trigger does not declare a pattern");
   }
+  const repeaterContainers = await materializeRepresentativeRepeaters(
+    page,
+    declaration.trigger.responsePath,
+  );
   const triggerId = responsePathToControlId(declaration.trigger.responsePath);
   const consequenceId = responsePathToControlId(
     declaration.consequence.responsePath,
@@ -320,6 +347,7 @@ async function exerciseSchemaImplication(
     errorFocus:
       consequenceControl === visibleConsequence ? "visible_upload" : "control",
     persistedNonTriggeringValue: true,
+    repeaterContainers,
   };
 }
 
@@ -498,6 +526,15 @@ test.describe("portable catalog browser conformance", () => {
                   form.capabilities.editableScalar?.applicability ===
                   "applicable"
                 ) {
+                  const editableDefinition =
+                    form.capabilities.editableScalar.declarations[0]
+                      ?.definition;
+                  if (typeof editableDefinition === "string") {
+                    await materializeRepresentativeRepeaters(
+                      page,
+                      schemaDefinitionToResponsePath(editableDefinition),
+                    );
+                  }
                   const editableControls = page.locator(
                     editableControlSelector,
                   );
@@ -516,6 +553,12 @@ test.describe("portable catalog browser conformance", () => {
               await probe("initial_save_reload", "api_round_trip", async () => {
                 const editableDefinition =
                   form.capabilities.editableScalar?.declarations[0]?.definition;
+                if (typeof editableDefinition === "string") {
+                  await materializeRepresentativeRepeaters(
+                    page,
+                    schemaDefinitionToResponsePath(editableDefinition),
+                  );
+                }
                 const editedControl =
                   form.capabilities.editableScalar?.applicability ===
                   "applicable"
@@ -583,7 +626,7 @@ test.describe("portable catalog browser conformance", () => {
                   reason:
                     form.capabilities.schemaImplication?.applicability ===
                     "applicable"
-                      ? "no single-repeater patterned implication is declared"
+                      ? "no mechanically addressable patterned implication is declared"
                       : "no simple schema implication is declared",
                 },
               });

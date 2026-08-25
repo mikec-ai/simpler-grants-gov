@@ -11,7 +11,9 @@ import {
   RECEIPT_CONTRACT,
   recoverBrowserPlanCandidates,
   responsePathToControlId,
+  responsePathToRepeaterContainerIds,
   schemaDefinitionToControlId,
+  schemaDefinitionToResponsePath,
   summarizeReceipts,
   writeReceipt,
   type FormReceipt,
@@ -27,8 +29,46 @@ describe("portable catalog matrix contract", () => {
         "/properties/contact_person/properties/name/properties/first_name",
       ),
     ).toBe("contact_person--name--first_name");
+    expect(
+      schemaDefinitionToControlId(
+        "/properties/budget_attachments/items/properties/budget_year/items/properties/start_date",
+      ),
+    ).toBe("budget_attachments[0]--budget_year[0]--start_date");
     expect(() => schemaDefinitionToControlId("relative/path")).toThrow(
       "absolute pointer",
+    );
+  });
+
+  it("maps schema item boundaries to response wildcards", () => {
+    expect(
+      schemaDefinitionToResponsePath(
+        "/properties/budget_attachments/items/properties/budget_year/items/properties/start_date",
+      ),
+    ).toBe("/budget_attachments/*/budget_year/*/start_date");
+    expect(
+      schemaDefinitionToResponsePath(
+        "/properties/contact/properties/display~1name",
+      ),
+    ).toBe("/contact/display~1name");
+    expect(() => schemaDefinitionToResponsePath("relative/path")).toThrow(
+      "absolute pointer",
+    );
+  });
+
+  it("maps response wildcards to ordered representative repeater containers", () => {
+    expect(
+      responsePathToRepeaterContainerIds(
+        "/budget_attachments/*/budget_year/*/equipment/total",
+      ),
+    ).toEqual(["budget_attachments", "budget_attachments[0]--budget_year"]);
+    expect(responsePathToRepeaterContainerIds("/organization/name")).toEqual(
+      [],
+    );
+    expect(() => responsePathToRepeaterContainerIds("relative/path")).toThrow(
+      "absolute pointer",
+    );
+    expect(() => responsePathToRepeaterContainerIds("/*/name")).toThrow(
+      "wildcard has no parent",
     );
   });
 
