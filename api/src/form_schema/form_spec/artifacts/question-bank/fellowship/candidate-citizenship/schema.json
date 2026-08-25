@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fellowship/candidate-citizenship/schema.json",
+  "type": "object",
+  "properties": {
+    "usCitizen": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "U.S. Citizen"
+    },
+    "nonUsCitizenStatus": {
+      "$ref": "#/$defs/FellowshipNonUsCitizenStatus",
+      "title": "Non-U.S. Citizen Status"
+    },
+    "permanentResidentByAward": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Permanent Resident by Award"
+    }
+  },
+  "required": [
+    "usCitizen"
+  ],
+  "description": "Report the fellowship candidate's source-defined citizenship and residency status.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    },
+    "FellowshipNonUsCitizenStatus": {
+      "type": "string",
+      "enum": [
+        "With a Permanent U.S. Resident Visa",
+        "With a Temporary U.S. Visa"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "usCitizen": {
+            "const": "N: No"
+          }
+        },
+        "required": [
+          "usCitizen"
+        ]
+      },
+      "then": {
+        "required": [
+          "nonUsCitizenStatus"
+        ]
+      }
+    }
+  ]
+}

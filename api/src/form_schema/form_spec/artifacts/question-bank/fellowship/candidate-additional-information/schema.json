@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fellowship/candidate-additional-information/schema.json",
+  "type": "object",
+  "properties": {
+    "alternatePhone": {
+      "$ref": "../../../question-bank/generics/phone/schema.json",
+      "title": "Alternate Phone Number"
+    },
+    "graduateDegreeSought": {
+      "$ref": "../../../question-bank/fellowship/graduate-degree-sought/schema.json",
+      "title": "Graduate Degree Sought"
+    },
+    "fieldOfTraining": {
+      "$ref": "#/$defs/FellowshipFieldOfTraining",
+      "title": "Field of Training"
+    },
+    "currentPriorNrsaSupport": {
+      "$ref": "../../../question-bank/fellowship/current-prior-nrsa-support/schema.json"
+    },
+    "concurrentSupport": {
+      "$ref": "../../../question-bank/fellowship/concurrent-support/schema.json"
+    },
+    "citizenship": {
+      "$ref": "../../../question-bank/fellowship/candidate-citizenship/schema.json"
+    },
+    "institutionChange": {
+      "$ref": "../../../question-bank/fellowship/institution-change/schema.json"
+    }
+  },
+  "required": [
+    "fieldOfTraining",
+    "currentPriorNrsaSupport",
+    "concurrentSupport",
+    "citizenship"
+  ],
+  "description": "Additional identity, education, support, and citizenship information for the candidate.",
+  "$defs": {
+    "FellowshipFieldOfTraining": {
+      "type": "string",
+      "enum": [
+        "100 Biochemistry",
+        "102 Bioinformatics",
+        "103 Biomedical Sciences (see also Statistics in MATHEMATICS and SOCIAL SCIENCES)",
+        "104 Computational Biology",
+        "105 Biophysics (also in Physics)",
+        "107 Biotechnology",
+        "110 Bacteriology",
+        "115 Plant Genetics",
+        "120 Plant Pathology/Phytopathology",
+        "125 Plant Physiology",
+        "129 Botany/Plant Biology",
+        "130 Anatomy",
+        "133 Biometrics & Biostatistics",
+        "136 Cell/Cellular Biology & Histology",
+        "137 Evolutionary Biology",
+        "139 Ecology",
+        "142 Developmental Biology/Embryology",
+        "145 Endocrinology",
+        "148 Entomology",
+        "151 Immunology",
+        "152 Marine Biology & Biological Oceanography",
+        "154 Molecular Biology",
+        "155 Structural Biology",
+        "157 Microbiology",
+        "158 Cancer Biology",
+        "160 Neurosciences & Neurobiology",
+        "163 Nutrition Sciences",
+        "166 Parasitology",
+        "167 Environmental Toxicology",
+        "168 Virology",
+        "169 Toxicology",
+        "170 Genetics/Genomics, Human & Animal",
+        "175 Pathology, Human & Animal",
+        "180 Pharmacology, Human & Animal",
+        "185 Physiology, Human & Animal",
+        "189 Zoology",
+        "198 Biology/Biomedical Sciences, General",
+        "199 Biology/Biomedical Sciences, Other",
+        "200 Speech-Language Pathology & Audiology",
+        "207 Oral Biology/Oral Pathology",
+        "210 Environmental Health",
+        "212 Health Systems/Service Administration",
+        "215 Public Health",
+        "217 Health Policy Analysis",
+        "220 Epidemiology",
+        "222 Kinesiology/Exercise Physiology",
+        "227 Gerontology (Also in Social Sciences)",
+        "230 Nursing Science",
+        "240 Medicinal/Pharmaceutical Sciences",
+        "245 Rehabilitation/Therapeutic Services",
+        "250 Veterinary Sciences",
+        "290 Clinical and Translational Sciences",
+        "298 Health Sciences, General",
+        "299 Health Sciences, Other",
+        "526 Organic Chemistry",
+        "539 Chemistry, Other",
+        "565 Biophysics (also in BIOLOGICAL SCIENCES)",
+        "577 Medical Physics/Radiological Science",
+        "579 Physics, Other",
+        "410 Information Sciences & Systems (see also Bioinformatics in BIOLOGICAL SCIENCES)",
+        "419 Computer & Information Science, Other",
+        "450 Statistics (also in SOCIAL SCIENCES; see also Biometrics and Statistics in BIOLOGICAL SCIENCES)",
+        "306 Bioengineering & Biomedical Engineering",
+        "399 Engineering, Other",
+        "600 Clinical Psychology",
+        "603 Cognitive Psychology & Psycholinguistics",
+        "612 Developmental & Child Psychology",
+        "615 Experimental Psychology",
+        "614 Health & Medical Psychology",
+        "627 Neuropsychology/Physiological Psychology",
+        "624 Personality Psychology",
+        "633 Psychometrics & Quantitative Psychology",
+        "639 Social Psychology",
+        "649 Psychology, Other",
+        "662 Demography/Population Studies",
+        "684 Gerontology (also in HEALTH SCIENCES)",
+        "690 Statistics (also in MATHEMATICS; see also Biometrics and Statistics in BIOLOGICAL SCIENCES)",
+        "980 Social Work",
+        "989 Other"
+      ],
+      "description": "Select the candidate's field of training from the source-defined PHS vocabulary."
+    }
+  }
+}

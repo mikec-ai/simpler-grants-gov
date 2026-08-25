@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fellowship/vertebrate-animals-used/schema.json",
+  "type": "string",
+  "pattern": "^(Y: Yes|N: No)$",
+  "description": "Report whether the proposed fellowship work uses vertebrate animals."
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fellowship/institution-change/schema.json",
+  "type": "object",
+  "properties": {
+    "changesInstitution": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Change of Sponsoring Institution"
+    },
+    "formerInstitution": {
+      "$ref": "../../../question-bank/generics/organization-name/schema.json",
+      "title": "Name of Former Institution"
+    }
+  },
+  "description": "Report a change of sponsoring institution and name the former institution.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    }
+  }
+}

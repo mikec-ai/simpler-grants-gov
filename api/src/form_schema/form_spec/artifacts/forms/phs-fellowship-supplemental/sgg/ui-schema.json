@@ -1,0 +1,694 @@
+[
+  {
+    "type": "section",
+    "name": "introduction",
+    "label": "Introduction",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/introduction",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "candidate",
+    "label": "Candidate Section",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/candidateGoals",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "researchTrainingPlan",
+    "label": "Research Training Plan",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/trainingActivities",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/researchProjectAims",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/researchProjectStrategy",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/progressReportPublicationList",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/responsibleConductTraining",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "commitment",
+    "label": "Commitment to Candidate",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/sponsorCommitment",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/lettersOfSupport",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateContribution",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "otherResearchTrainingPlan",
+    "label": "Other Research Training Plan",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/vertebrateAnimalsUsed"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/vertebrateAnimalEuthanasia/properties/animalEuthanized",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/vertebrateAnimalsUsed"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/vertebrateAnimalEuthanasia/properties/avmaConsistent",
+        "conditional": {
+          "when": {
+            "op": "all",
+            "predicates": [
+              {
+                "op": "equals",
+                "ref": {
+                  "scope": "root",
+                  "pointer": "/vertebrateAnimalsUsed"
+                },
+                "value": "Y: Yes"
+              },
+              {
+                "op": "equals",
+                "ref": {
+                  "scope": "root",
+                  "pointer": "/vertebrateAnimalEuthanasia/animalEuthanized"
+                },
+                "value": "Y: Yes"
+              }
+            ]
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/vertebrateAnimalEuthanasia/properties/methodDescription",
+        "widget": "TextArea",
+        "conditional": {
+          "when": {
+            "op": "all",
+            "predicates": [
+              {
+                "op": "equals",
+                "ref": {
+                  "scope": "root",
+                  "pointer": "/vertebrateAnimalsUsed"
+                },
+                "value": "Y: Yes"
+              },
+              {
+                "op": "equals",
+                "ref": {
+                  "scope": "root",
+                  "pointer": "/vertebrateAnimalEuthanasia/avmaConsistent"
+                },
+                "value": "N: No"
+              }
+            ]
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/vertebrateAnimalsDocument",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/selectAgentResearch",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/resourceSharingPlans",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/otherPlans",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/keyResourceAuthentication",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "additionalInformation",
+    "label": "Additional Information",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/humanEmbryonicStemCells/properties/involved"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/humanEmbryonicStemCells/properties/specificLineUnavailable",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/humanEmbryonicStemCells/involved"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/humanEmbryonicStemCells/properties/cellLines"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/alternatePhone"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/graduateDegreeSought/properties/degreeType"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/graduateDegreeSought/properties/otherDegreeTypeText"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/graduateDegreeSought/properties/degreeDate"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/fieldOfTraining"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/currentPriorNrsaSupport/properties/hasSupport"
+      },
+      {
+        "type": "fieldList",
+        "name": "records",
+        "label": "Current or Prior NRSA Support",
+        "definition": "/properties/candidateInformation/properties/currentPriorNrsaSupport/properties/records",
+        "children": [
+          {
+            "type": "field",
+            "definition": "/properties/candidateInformation/properties/currentPriorNrsaSupport/properties/records/items/properties/level"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/candidateInformation/properties/currentPriorNrsaSupport/properties/records/items/properties/type"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/candidateInformation/properties/currentPriorNrsaSupport/properties/records/items/properties/startDate"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/candidateInformation/properties/currentPriorNrsaSupport/properties/records/items/properties/endDate"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/candidateInformation/properties/currentPriorNrsaSupport/properties/records/items/properties/grantNumber"
+          }
+        ]
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/concurrentSupport/properties/hasConcurrentSupport"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/concurrentSupport/properties/description",
+        "widget": "Attachment",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/candidateInformation/concurrentSupport/hasConcurrentSupport"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/citizenship/properties/usCitizen"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/citizenship/properties/nonUsCitizenStatus",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/candidateInformation/citizenship/usCitizen"
+            },
+            "value": "N: No"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/citizenship/properties/permanentResidentByAward",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/candidateInformation/citizenship/nonUsCitizenStatus"
+            },
+            "value": "With a Temporary U.S. Visa"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/institutionChange/properties/changesInstitution"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformation/properties/institutionChange/properties/formerInstitution",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/candidateInformation/institutionChange/changesInstitution"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "budget",
+    "label": "Budget",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/tuition/properties/fundsRequested"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/tuition/properties/year1",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/budget/tuition/fundsRequested"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/tuition/properties/year2",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/budget/tuition/fundsRequested"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/tuition/properties/year3",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/budget/tuition/fundsRequested"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/tuition/properties/year4",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/budget/tuition/fundsRequested"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/tuition/properties/year5",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/budget/tuition/fundsRequested"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/tuition/properties/year6",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/budget/tuition/fundsRequested"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "null",
+        "definition": "/properties/budget/properties/tuition/properties/total"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/childcare/properties/fundsRequested"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/childcare/properties/year1",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/budget/childcare/fundsRequested"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/childcare/properties/year2",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/budget/childcare/fundsRequested"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/childcare/properties/year3",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/budget/childcare/fundsRequested"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/childcare/properties/year4",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/budget/childcare/fundsRequested"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/childcare/properties/year5",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/budget/childcare/fundsRequested"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/childcare/properties/year6",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/budget/childcare/fundsRequested"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "null",
+        "definition": "/properties/budget/properties/childcare/properties/total"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/institutionalBaseSalary/properties/amount"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/institutionalBaseSalary/properties/academicPeriod"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/institutionalBaseSalary/properties/numberOfMonths"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/federalStipend/properties/amount"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/federalStipend/properties/numberOfMonths"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/supplementation/properties/amount"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/supplementation/properties/numberOfMonths"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/supplementation/properties/type"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/budget/properties/supplementation/properties/source"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "appendix",
+    "label": "Appendix",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/appendix",
+        "widget": "AttachmentArray"
+      }
+    ]
+  }
+]

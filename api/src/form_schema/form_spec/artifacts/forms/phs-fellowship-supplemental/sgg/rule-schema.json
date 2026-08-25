@@ -1,0 +1,154 @@
+{
+  "introduction": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "candidateGoals": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "trainingActivities": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "researchProjectAims": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "researchProjectStrategy": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "progressReportPublicationList": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "responsibleConductTraining": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "sponsorCommitment": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "lettersOfSupport": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "candidateContribution": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "vertebrateAnimalsDocument": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "selectAgentResearch": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "resourceSharingPlans": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "otherPlans": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "keyResourceAuthentication": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "candidateInformation": {
+    "currentPriorNrsaSupport": {
+      "records": {
+        "gg_type": "array",
+        "endDate": {
+          "gg_validation": {
+            "rule": "date_not_before",
+            "fields": [
+              "@THIS.startDate"
+            ]
+          }
+        }
+      }
+    },
+    "concurrentSupport": {
+      "description": {
+        "gg_validation": {
+          "rule": "attachment"
+        }
+      }
+    }
+  },
+  "appendix": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "budget": {
+    "tuition": {
+      "total": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.year1",
+            "@THIS.year2",
+            "@THIS.year3",
+            "@THIS.year4",
+            "@THIS.year5",
+            "@THIS.year6"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.year1",
+            "@THIS.year2",
+            "@THIS.year3",
+            "@THIS.year4",
+            "@THIS.year5",
+            "@THIS.year6"
+          ]
+        }
+      }
+    },
+    "childcare": {
+      "total": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.year1",
+            "@THIS.year2",
+            "@THIS.year3",
+            "@THIS.year4",
+            "@THIS.year5",
+            "@THIS.year6"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.year1",
+            "@THIS.year2",
+            "@THIS.year3",
+            "@THIS.year4",
+            "@THIS.year5",
+            "@THIS.year6"
+          ]
+        }
+      }
+    }
+  }
+}

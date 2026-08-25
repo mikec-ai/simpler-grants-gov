@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fellowship-budget/federal-stipend/schema.json",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "$ref": "#/$defs/ResearchBudgetAmount14"
+    },
+    "numberOfMonths": {
+      "$ref": "#/$defs/FellowshipMonthsUpTo12"
+    }
+  },
+  "required": [
+    "amount",
+    "numberOfMonths"
+  ],
+  "description": "Enter the federal stipend requested for the candidate.",
+  "$defs": {
+    "ResearchBudgetAmount14": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 15,
+      "pattern": "^(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    },
+    "FellowshipMonthsUpTo12": {
+      "type": "string",
+      "pattern": "^(?:[0-9]|1[0-2])(?:[.][0-9]{1,2})?$"
+    }
+  }
+}
