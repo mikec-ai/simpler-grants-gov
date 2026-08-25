@@ -452,6 +452,10 @@ async function fetchApiJson<T>(url: string, token: string): Promise<T> {
 }
 
 test.describe("portable catalog browser conformance", () => {
+  // Each attempt emits per-probe receipts with exact failure ownership. Repeating
+  // the full catalog does not add evidence and can multiply bounded gate runs by
+  // four when an environment capability is unavailable.
+  test.describe.configure({ retries: 0 });
   test.skip(
     !matrixEnabled,
     "portable catalog matrix requires explicit lower-environment opt-in",
