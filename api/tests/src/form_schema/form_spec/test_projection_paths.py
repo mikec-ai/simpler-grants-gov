@@ -28,8 +28,7 @@ def test_ui_paths_decode_fields_and_preserve_non_field_identifiers() -> None:
                 {
                     "type": "field",
                     "definition": (
-                        "/properties/contact~1info/items/properties/value~0code/"
-                        "$defs/DoNotRename"
+                        "/properties/contact~1info/items/properties/value~0code/$defs/DoNotRename"
                     ),
                     "conditional": {
                         "when": {
@@ -48,6 +47,21 @@ def test_ui_paths_decode_fields_and_preserve_non_field_identifiers() -> None:
                         "/properties/contact~1info",
                         "/properties/properties/properties/childValue",
                     ],
+                    "children": {
+                        "columns": [{"columnHeader": "Value"}],
+                        "rows": [
+                            {
+                                "cells": [
+                                    {
+                                        "type": "input",
+                                        "definition": (
+                                            "/properties/contact~1info/properties/value~0code"
+                                        ),
+                                    }
+                                ]
+                            }
+                        ],
+                    },
                 },
             ],
         }
@@ -68,6 +82,9 @@ def test_ui_paths_decode_fields_and_preserve_non_field_identifiers() -> None:
         "/properties/contacts",
         "/properties/legacy_properties/properties/legacy_child",
     ]
+    assert widget["children"]["rows"][0]["cells"][0]["definition"] == (
+        "/properties/contacts/properties/legacy_value"
+    )
 
 
 def test_rule_paths_share_exact_ancestry_across_relative_and_root_references() -> None:

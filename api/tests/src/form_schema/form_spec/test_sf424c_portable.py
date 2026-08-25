@@ -111,6 +111,44 @@ def test_all_calculations_execute_with_source_aware_materialization() -> None:
     }
 
 
+def test_table_layout_projects_all_rows_and_cell_paths_generically() -> None:
+    table = load_form("sf424c").form_ui_schema[0]["children"][0]
+
+    assert table["widget"] == "Table"
+    assert table["definition"] == ["/properties/budget_information"]
+    assert [column["columnHeader"] for column in table["children"]["columns"]] == [
+        "Cost Classification",
+        "Total Cost",
+        "Costs Not Allowable for Participation",
+        "Total Allowable Costs (Columns a - b)",
+    ]
+    rows = table["children"]["rows"]
+    assert len(rows) == 16
+    assert all(len(row["cells"]) == 4 for row in rows)
+    assert rows[0]["cells"][1:] == [
+        {
+            "type": "input",
+            "definition": "/properties/administrative_and_legal_expenses/properties/total_cost",
+            "format": "dollar",
+        },
+        {
+            "type": "input",
+            "definition": (
+                "/properties/administrative_and_legal_expenses/properties/non_allowable_cost"
+            ),
+            "format": "dollar",
+        },
+        {
+            "type": "readOnly",
+            "definition": (
+                "/properties/administrative_and_legal_expenses/properties/total_allowable_cost"
+            ),
+            "format": "dollar",
+        },
+    ]
+    assert all(cell["type"] == "readOnly" for cell in rows[-1]["cells"][1:])
+
+
 def test_promotion_receipt_boundary_and_release_gates_remain_explicit() -> None:
     manifest = verify_artifacts()
     evidence = json.loads((ARTIFACTS / "forms/sf424c/evidence.json").read_text())

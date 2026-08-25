@@ -302,7 +302,8 @@
           }
         }
       },
-      "description": "The sixteen cost-classification rows on SF-424C."
+      "description": "The sixteen cost-classification rows on SF-424C.",
+      "title": "Cost Classification"
     }
   }
 }

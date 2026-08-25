@@ -1148,8 +1148,8 @@
     },
     {
       "path": "dist/forms/sf424c/schema.json",
-      "sha256": "3aafebbe767c7444d81becf4c0d7e9939602f279b37c4d45c4831d85562cb3c3",
-      "size": 8503
+      "sha256": "70451de88904b3a21a1fceef3dcc02c54229f4056414d991de612a0b5451a4d3",
+      "size": 8541
     },
     {
       "path": "dist/forms/sf424c/sgg/rule-schema.json",
@@ -1158,8 +1158,8 @@
     },
     {
       "path": "dist/forms/sf424c/sgg/ui-schema.json",
-      "sha256": "d04fc57c2e1b36922fcaff6e61cb0d6bae0a87432f83af8fdd008b9318017da1",
-      "size": 959
+      "sha256": "0fa0d4df6f21302663b48046fe397febb515cb4a0c6e6ef2c067b3ea36c8583b",
+      "size": 14618
     },
     {
       "path": "dist/forms/sf424c/targets/grants-gov-xml.json",
@@ -2453,7 +2453,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "fbb2554f19de604db3a3a7ea330e323327a0532c"
+    "revision": "d75d511d19f5c790442049d7ed6b1aa47949982f"
   },
-  "sourceBundleSha256": "c20a524d8878bffe506ff02241450f54787b90beefd7f1cd537c7e67992c163e"
+  "sourceBundleSha256": "476c62885821419813b8e2089e5bfdf10d18097a2be59f42fd897051edc0daa5"
 }

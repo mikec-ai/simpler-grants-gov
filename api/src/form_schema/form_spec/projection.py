@@ -189,14 +189,22 @@ def _project_ui_schema(
             else:
                 out[key] = projection.rename(str(value), str(value))
         elif key == "children":
-            out[key] = [
-                _project_ui_schema(child, projection, item_parent=child_item_parent)
-                for child in value
-            ]
+            out[key] = _project_ui_schema(
+                value,
+                projection,
+                item_parent=child_item_parent,
+            )
         elif key == "conditional":
             out[key] = _project_ui_conditional(value, projection, item_parent=item_parent)
         else:
-            out[key] = value
+            # Table layouts add a nested columns/rows/cells structure under children.
+            # Recurse through target-owned presentation metadata so definitions at any
+            # supported depth cross the same canonical-to-consumer naming boundary.
+            out[key] = _project_ui_schema(
+                value,
+                projection,
+                item_parent=item_parent,
+            )
     return out
 
 
