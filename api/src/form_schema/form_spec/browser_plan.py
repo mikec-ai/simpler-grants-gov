@@ -208,7 +208,7 @@ def _rule_capabilities(rule_schema: dict[str, Any]) -> tuple[list[dict], list[di
     return attachments, calculations
 
 
-def _resolve_schema_pointer(schema: dict[str, Any], pointer: str) -> dict[str, Any]:
+def _schema_pointer_nodes(schema: dict[str, Any], pointer: str) -> tuple[dict[str, Any], ...]:
     if not pointer.startswith("/"):
         raise ValueError(f"UI definition is not an absolute schema pointer: {pointer!r}")
     nodes: list[Any] = [schema]
@@ -220,11 +220,16 @@ def _resolve_schema_pointer(schema: dict[str, Any], pointer: str) -> dict[str, A
             if isinstance(node, dict)
             for candidate in _schema_keyword_values(node, segment)
         ]
-        if not nodes:
-            raise ValueError(f"UI definition does not resolve in projected schema: {pointer!r}")
-    if not any(isinstance(node, dict) for node in nodes):
+    if not nodes:
+        raise ValueError(f"UI definition does not resolve in projected schema: {pointer!r}")
+    resolved = tuple(node for node in nodes if isinstance(node, dict))
+    if not resolved:
         raise ValueError(f"UI definition does not select a schema object: {pointer!r}")
-    return next(node for node in nodes if isinstance(node, dict))
+    return resolved
+
+
+def _resolve_schema_pointer(schema: dict[str, Any], pointer: str) -> dict[str, Any]:
+    return _schema_pointer_nodes(schema, pointer)[0]
 
 
 def _schema_keyword_values(schema: dict[str, Any], keyword: str) -> Iterator[Any]:
@@ -317,9 +322,12 @@ def build_browser_plan() -> dict[str, Any]:
             and isinstance(node.get("description"), str)
             and node["description"]
         ]
+        schema_nodes_by_definition: dict[str, tuple[dict[str, Any], ...]] = {}
         for node in ui_fields:
             for definition in _ui_definition_paths(node):
-                _resolve_schema_pointer(resolved_schema, definition)
+                schema_nodes_by_definition[definition] = _schema_pointer_nodes(
+                    resolved_schema, definition
+                )
 
         repeaters = [
             {"definition": node["definition"], "name": node.get("name")}
@@ -342,6 +350,20 @@ def build_browser_plan() -> dict[str, Any]:
             for schema_path, response_path, node, _ in schema_fields
             if node.get("readOnly") is True
         ]
+        readonly_schema_paths = {
+            schema_path
+            for declaration in readonly
+            if isinstance((schema_path := declaration.get("schemaPath")), str)
+        }
+        read_only_definitions = {
+            definition
+            for definition, candidates in schema_nodes_by_definition.items()
+            if any(candidate.get("readOnly") is True for candidate in candidates)
+        }
+        readonly.extend(
+            {"definition": definition}
+            for definition in sorted(read_only_definitions - readonly_schema_paths)
+        )
         readonly.extend(
             {"definition": node["definition"], "interaction": node["interaction"]}
             for node in ui_fields
@@ -359,6 +381,7 @@ def build_browser_plan() -> dict[str, Any]:
             and node.get("interaction") not in {"readOnly", "disabled"}
             and node.get("widget") not in attachment_widgets
             for definition in _ui_definition_paths(node)
+            if definition not in read_only_definitions
             if response_path_by_schema_path.get(definition) not in calculated_response_paths
         ]
         required = [

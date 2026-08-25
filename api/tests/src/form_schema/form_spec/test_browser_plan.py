@@ -1,3 +1,4 @@
+import copy
 import json
 import os
 import subprocess
@@ -5,6 +6,7 @@ import sys
 
 import pytest
 
+import src.form_schema.form_spec.browser_plan as browser_plan
 from src.form_schema.form_spec.browser_plan import (
     PLAN_CONTRACT,
     SEED_COMPETITION_ID,
@@ -164,6 +166,51 @@ def test_browser_plan_exposes_modular_budget_review_surfaces_without_form_logic(
     }
     assert calculated_paths.isdisjoint(editable_paths)
     assert len(capabilities["readOnly"]["declarations"]) == 8
+
+
+def test_browser_plan_protects_exact_inclusion_enrollment_calculation_targets(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "phs-inclusion-enrollment-report")
+
+    form = build_browser_plan()["forms"][0]
+    capabilities = form["capabilities"]
+
+    assert form["counts"] == {"uiNodes": 123, "uiFields": 122, "schemaFields": 1}
+    assert capabilities["repeater"]["declarations"] == [
+        {"definition": "/properties/reports", "name": "reports"}
+    ]
+    assert len(capabilities["editableScalar"]["declarations"]) == 93
+    assert len(capabilities["readOnly"]["declarations"]) == 28
+    assert capabilities["calculation"] == {
+        "applicability": "not_applicable",
+        "declarations": [],
+        "reason": "no executable calculation is declared",
+    }
+
+
+def test_browser_plan_combines_schema_and_ui_readonly_declarations(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, "cd511")
+    load_banked_form = browser_plan._load_banked_form
+
+    def load_with_ui_readonly(form_id: str, *, project_xml: bool):
+        loaded = copy.deepcopy(load_banked_form(form_id, project_xml=project_xml))
+        first_field = next(
+            node
+            for _, node in browser_plan._walk(loaded.form_ui_schema)
+            if node.get("type") == "field" and isinstance(node.get("definition"), str)
+        )
+        first_field["interaction"] = "disabled"
+        return loaded
+
+    monkeypatch.setattr(browser_plan, "_load_banked_form", load_with_ui_readonly)
+
+    declarations = build_browser_plan()["forms"][0]["capabilities"]["readOnly"]["declarations"]
+
+    assert len([item for item in declarations if "schemaPath" in item]) == 2
+    assert len([item for item in declarations if item.get("interaction") == "disabled"]) == 1
 
 
 def test_browser_plan_discovers_multifield_editable_surface(

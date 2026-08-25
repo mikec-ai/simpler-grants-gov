@@ -587,6 +587,40 @@ describe("FieldListWidget", () => {
     );
   });
 
+  it("preserves child schema protection when rendering a FieldList entry", () => {
+    render(
+      <FieldListWidget
+        id="contacts"
+        key="contacts"
+        schema={{ type: "array", title: "Contacts" }}
+        label="Contacts"
+        minItems={1}
+        groupDefinition={[
+          {
+            ...baseGroupDefinition[0],
+            generalProps: {
+              ...baseGroupDefinition[0].generalProps,
+              disabled: true,
+              readOnly: true,
+            },
+          },
+        ]}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="contacts"
+      />,
+    );
+
+    expect(screen.getByTestId("mock-widget")).toHaveAttribute(
+      "data-disabled",
+      "true",
+    );
+    expect(screen.getByTestId("mock-widget")).toHaveAttribute(
+      "data-read-only",
+      "true",
+    );
+  });
+
   it("renders nested FieldList values from storagePath", () => {
     render(
       <FieldListWidget
