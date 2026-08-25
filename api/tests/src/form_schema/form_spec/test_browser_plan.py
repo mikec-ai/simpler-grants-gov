@@ -48,7 +48,37 @@ def test_browser_plan_follows_live_manifest_and_discovers_capabilities() -> None
         "repeater",
         "requiredField",
         "schemaImplication",
+        "staticContent",
     }
+
+
+@pytest.mark.parametrize(
+    "form_id",
+    [
+        "sf424b",
+        "mandatory-sf424b",
+        "individual-sf424b",
+        "sf424d",
+        "mandatory-sf424d",
+        "individual-sf424d",
+    ],
+)
+def test_browser_plan_exposes_assurance_policy_content_without_form_logic(
+    monkeypatch: pytest.MonkeyPatch,
+    form_id: str,
+) -> None:
+    monkeypatch.setenv(BROWSER_FORM_IDS, form_id)
+
+    capability = build_browser_plan()["forms"][0]["capabilities"]["staticContent"]
+
+    assert capability["applicability"] == "applicable"
+    assert [declaration["sectionName"] for declaration in capability["declarations"]] == (
+        ["directions", "acknowledgement"]
+        if form_id.endswith("sf424b") or form_id == "sf424b"
+        else ["burden_statement", "directions"]
+    )
+    assert all(len(declaration["sha256"]) == 64 for declaration in capability["declarations"])
+    assert all(declaration["paragraphs"] for declaration in capability["declarations"])
 
 
 @pytest.mark.parametrize("form_id", ["sf424", "sf424-short"])

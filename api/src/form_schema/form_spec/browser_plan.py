@@ -301,6 +301,22 @@ def build_browser_plan() -> dict[str, Any]:
         schema_implications = _simple_schema_implications(resolved_schema)
         ui_nodes = list(_walk(loaded.form_ui_schema))
         ui_fields = [node for _, node in ui_nodes if _ui_definition_paths(node)]
+        static_content = [
+            {
+                "sectionName": node["name"],
+                "label": node["label"],
+                "paragraphs": [
+                    paragraph for paragraph in node["description"].split("\n") if paragraph
+                ],
+                "sha256": hashlib.sha256(node["description"].encode()).hexdigest(),
+            }
+            for _, node in ui_nodes
+            if node.get("type") == "section"
+            and isinstance(node.get("name"), str)
+            and isinstance(node.get("label"), str)
+            and isinstance(node.get("description"), str)
+            and node["description"]
+        ]
         for node in ui_fields:
             for definition in _ui_definition_paths(node):
                 _resolve_schema_pointer(resolved_schema, definition)
@@ -407,6 +423,10 @@ def build_browser_plan() -> dict[str, Any]:
                     ),
                     "readOnly": _capability(
                         readonly, missing_reason="no protected field is declared"
+                    ),
+                    "staticContent": _capability(
+                        static_content,
+                        missing_reason="no section-level static content is declared",
                     ),
                 },
             }
