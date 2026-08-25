@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Classify and verify attributable portable-form changes.
 
-The lightweight CI lane is intentionally narrow: it applies only when a pull
-request adds new vendored artifacts and exact XSD fixtures. Updating an existing
-artifact may change a runtime-enabled form, so modifications, consumer code,
-registration, projection, and deletions normally require full CI. A second,
-fail-closed tier accepts updates to existing form-local artifacts only when the
-same change carries that form's exact portable test and does not alter shared
-artifact closure.
+The lightweight CI lanes are intentionally narrow. New vendored artifacts and
+exact XSD fixtures can use bank-only CI. Existing form-local artifacts can use
+focused CI when their exact mapped tests are selected. A test-only change can
+also use focused CI, but only when every changed path is an exact, unambiguous
+entry in the versioned portable CI map. Consumer code, registration, projection,
+shared files, unknown tests, mixed changes, and deletions fail closed to full CI.
 """
 
 from __future__ import annotations
@@ -153,6 +152,33 @@ def classify_change(
             TIER_BANK_ONLY, "only new portable artifacts and exact XSD fixtures were added"
         )
 
+    mapping = portable_ci_map if portable_ci_map is not None else load_portable_ci_map()
+
+    # Test-only closure is focused only when every changed path is one exact,
+    # unambiguous reverse-map entry. Filename similarity is deliberately ignored.
+    reverse_mapping: dict[str, set[str]] = {}
+    for form_id, test_files in mapping.items():
+        for test_file in test_files:
+            reverse_mapping.setdefault(test_file, set()).add(form_id)
+    test_only_form_ids: set[str] = set()
+    exact_test_only = True
+    for change in changes:
+        owners = reverse_mapping.get(change.path, set())
+        if len(owners) != 1:
+            exact_test_only = False
+            break
+        test_only_form_ids.update(owners)
+    if exact_test_only and test_only_form_ids:
+        selected_tests = tuple(
+            sorted(test_file for form_id in test_only_form_ids for test_file in mapping[form_id])
+        )
+        return Classification(
+            TIER_PORTABLE_FOCUSED,
+            "only exact unambiguous CI-mapped portable tests changed",
+            tuple(sorted(test_only_form_ids)),
+            selected_tests,
+        )
+
     # Existing-form changes are focused only when every non-manifest artifact is
     # form-local and every other changed path is that form's exact portable test.
     # XSD, question-bank, governance, registration, projection, runtime, frontend,
@@ -162,7 +188,6 @@ def classify_change(
         for change in changes
         if (form_id := _form_id_from_artifact(change.path)) is not None
     }
-    mapping = portable_ci_map if portable_ci_map is not None else load_portable_ci_map()
     mapped_tests = {test_file for form_id in form_ids for test_file in mapping.get(form_id, ())}
     changed_tests: set[str] = set()
     focused_paths = True
@@ -253,7 +278,9 @@ def verify_additive_bank(base: str) -> dict[str, object]:
     }
 
 
-def verify_focused_forms(base: str, form_ids: tuple[str, ...]) -> dict[str, object]:
+def verify_focused_forms(
+    base: str, form_ids: tuple[str, ...], *, allow_unchanged_artifacts: bool = False
+) -> dict[str, object]:
     previous = manifest_at(base)
     current = verify_artifact_selection(artifacts=ARTIFACTS, manifest_path=MANIFEST)
     verify_artifact_xsds(artifacts=ARTIFACTS, xsd_directory=XSD_DIRECTORY)
@@ -279,7 +306,7 @@ def verify_focused_forms(base: str, form_ids: tuple[str, ...]) -> dict[str, obje
         raise ValueError(
             "focused form CI cannot change shared artifact closure: " + ", ".join(outside_forms)
         )
-    if not changed_records:
+    if not changed_records and not allow_unchanged_artifacts:
         raise ValueError("focused form CI requires a changed selected form artifact")
 
     return {
@@ -323,7 +350,14 @@ def main() -> None:
     if classification.bank_only:
         receipt.update(verify_additive_bank(args.base))
     elif classification.tier == TIER_PORTABLE_FOCUSED:
-        receipt.update(verify_focused_forms(args.base, classification.form_ids))
+        test_only = all(change.path in classification.test_files for change in changes)
+        receipt.update(
+            verify_focused_forms(
+                args.base,
+                classification.form_ids,
+                allow_unchanged_artifacts=test_only,
+            )
+        )
 
     if args.github_output is not None:
         with args.github_output.open("a") as stream:

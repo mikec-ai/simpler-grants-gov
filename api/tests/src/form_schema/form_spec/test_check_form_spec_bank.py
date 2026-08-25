@@ -253,3 +253,119 @@ def test_deletion_never_uses_focused_ci():
 
     assert classification.tier == TIER_FULL
     assert "deletions require full CI" in classification.reason
+
+
+def test_one_exact_mapped_test_uses_focused_ci_without_an_artifact_change():
+    test_file = "api/tests/src/form_schema/form_spec/test_sf424c_portable.py"
+
+    classification = classify_change(
+        [Change("M", test_file)],
+        portable_ci_map={"sf424c": (test_file,)},
+    )
+
+    assert classification == checker.Classification(
+        TIER_PORTABLE_FOCUSED,
+        "only exact unambiguous CI-mapped portable tests changed",
+        ("sf424c",),
+        (test_file,),
+    )
+
+
+def test_multiple_exact_mapped_tests_select_the_union_deterministically():
+    cd511_test = "api/tests/src/form_schema/form_spec/test_cd511_portable.py"
+    sf424c_test = "api/tests/src/form_schema/form_spec/test_sf424c_portable.py"
+    sf424c_registration_test = "api/tests/src/form_schema/form_spec/test_registrations.py"
+
+    classification = classify_change(
+        [Change("M", sf424c_test), Change("M", cd511_test)],
+        portable_ci_map={
+            "sf424c": (sf424c_test, sf424c_registration_test),
+            "cd511": (cd511_test,),
+        },
+    )
+
+    assert classification.tier == TIER_PORTABLE_FOCUSED
+    assert classification.form_ids == ("cd511", "sf424c")
+    assert classification.test_files == (
+        cd511_test,
+        sf424c_registration_test,
+        sf424c_test,
+    )
+
+
+def test_unknown_test_only_change_requires_full_ci():
+    mapped_test = "api/tests/src/form_schema/form_spec/test_sf424c_portable.py"
+
+    classification = classify_change(
+        [Change("M", "api/tests/src/form_schema/form_spec/test_unknown_portable.py")],
+        portable_ci_map={"sf424c": (mapped_test,)},
+    )
+
+    assert classification.tier == TIER_FULL
+    assert classification.form_ids == ()
+
+
+def test_ambiguous_reverse_test_mapping_requires_full_ci():
+    shared_test = "api/tests/src/form_schema/form_spec/test_registrations.py"
+
+    classification = classify_change(
+        [Change("M", shared_test)],
+        portable_ci_map={
+            "cd511": (shared_test,),
+            "sf424c": (shared_test,),
+        },
+    )
+
+    assert classification.tier == TIER_FULL
+    assert classification.form_ids == ()
+
+
+def test_deleted_mapped_test_requires_full_ci():
+    mapped_test = "api/tests/src/form_schema/form_spec/test_sf424c_portable.py"
+
+    classification = classify_change(
+        [Change("D", mapped_test)],
+        portable_ci_map={"sf424c": (mapped_test,)},
+    )
+
+    assert classification.tier == TIER_FULL
+    assert "deletions require full CI" in classification.reason
+
+
+@pytest.mark.parametrize(
+    "mixed_path",
+    [
+        "api/src/form_schema/form_spec/loader.py",
+        "api/src/form_schema/form_spec/registrations.json",
+        "api/src/form_schema/form_spec/artifacts/artifact-manifest.json",
+        "api/src/services/xml_generation/xsds/SF424C-V2.0.xsd",
+        "frontend/src/components/apply-form/Form.tsx",
+        ".github/workflows/ci-api.yml",
+    ],
+)
+def test_mapped_test_mixed_with_any_nonmapped_path_requires_full_ci(mixed_path: str):
+    mapped_test = "api/tests/src/form_schema/form_spec/test_sf424c_portable.py"
+
+    classification = classify_change(
+        [Change("M", mapped_test), Change("M", mixed_path)],
+        portable_ci_map={"sf424c": (mapped_test,)},
+    )
+
+    assert classification.tier == TIER_FULL
+    assert classification.form_ids == ()
+
+
+def test_focused_verification_allows_unchanged_artifacts_only_when_explicit(monkeypatch):
+    manifest = json.loads(ARTIFACT_MANIFEST.read_text())
+    monkeypatch.setattr(checker, "manifest_at", lambda _revision: manifest)
+    monkeypatch.setattr(checker, "verify_artifact_selection", lambda **_kwargs: manifest)
+    monkeypatch.setattr(checker, "verify_artifact_xsds", lambda **_kwargs: None)
+
+    with pytest.raises(ValueError, match="requires a changed selected form artifact"):
+        checker.verify_focused_forms("base-revision", ("sf424c",))
+
+    receipt = checker.verify_focused_forms(
+        "base-revision", ("sf424c",), allow_unchanged_artifacts=True
+    )
+    assert receipt["focusedForms"] == ["sf424c"]
+    assert receipt["changedArtifacts"] == []
