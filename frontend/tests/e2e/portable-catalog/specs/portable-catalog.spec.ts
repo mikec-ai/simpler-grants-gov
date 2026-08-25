@@ -4,6 +4,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page, type Response } from "@playwright/test";
 import playwrightEnv from "tests/e2e/playwright-env";
 import {
+  addressableAttachmentDefinitions,
   assertPortableMatrixEnvironment,
   boundaryError,
   classifyBoundary,
@@ -29,6 +30,12 @@ import {
   type RecoveredPlanCandidate,
   type SchemaImplicationDeclaration,
 } from "tests/e2e/portable-catalog/matrix-contract";
+import {
+  activateBinaryControl,
+  clickPortableSaveButton,
+  saveForPersistenceProbe,
+  selectEligibleAttachmentControl,
+} from "tests/e2e/portable-catalog/portable-interactions";
 import { createApplication } from "tests/e2e/utils/application/create-application-utils";
 import { authenticateE2eUser } from "tests/e2e/utils/auth/authenticate-e2e-user-utils";
 import { FORM_DEFAULTS } from "tests/e2e/utils/forms/form-defaults";
@@ -186,7 +193,7 @@ async function makeDeterministicEdit(
     declaredControl && (await declaredControl.count()) > 0
       ? declaredControl
       : page.locator(editableControlSelector).first();
-  await expect(control).toBeVisible();
+  await expect(control).toBeVisible({ timeout: 10_000 });
   const identity =
     (await control.getAttribute("id")) ??
     (await control.getAttribute("name")) ??
@@ -201,17 +208,17 @@ async function makeDeterministicEdit(
       .first()
       .getAttribute("value");
     if (!value) throw new Error("editable select has no non-empty option");
-    await control.selectOption(value);
+    await control.selectOption(value, { timeout: 10_000 });
   } else if (kind.type === "checkbox" || kind.type === "radio") {
-    await control.check();
+    await activateBinaryControl(control);
   } else if (kind.type === "date") {
-    await control.fill("2026-01-01");
+    await control.fill("2026-01-01", { timeout: 10_000 });
   } else if (kind.type === "email") {
-    await control.fill("browser-canary@example.com");
+    await control.fill("browser-canary@example.com", { timeout: 10_000 });
   } else if (kind.type === "number") {
-    await control.fill("1");
+    await control.fill("1", { timeout: 10_000 });
   } else {
-    await control.fill("Browser canary");
+    await control.fill("Browser canary", { timeout: 10_000 });
   }
   return identity;
 }
@@ -286,17 +293,14 @@ async function exerciseAttachmentUpload(
   page: Page,
   form: BrowserPlanForm,
 ): Promise<Record<string, unknown>> {
-  const definition = firstAddressableAttachmentDefinition(form);
-  if (!definition) {
+  const definitions = addressableAttachmentDefinitions(form);
+  if (definitions.length === 0) {
     throw new Error(
       "no mechanically addressable attachment widget is declared",
     );
   }
-  const controlId = schemaDefinitionToControlId(definition);
-  const visibleInput = page.locator(
-    `main input[type=file][id=${JSON.stringify(`${controlId}-visible`)}]`,
-  );
-  await expect(visibleInput).toBeAttached();
+  const { definition, controlId, visibleInput } =
+    await selectEligibleAttachmentControl(page, definitions);
 
   const fileName = path.basename(attachmentFixture);
   const existingFile = page
@@ -326,14 +330,19 @@ async function exerciseAttachmentUpload(
   );
   await expect(hiddenInput).not.toHaveValue("", { timeout: 30_000 });
 
-  await saveForm(page);
+  await saveForPersistenceProbe(page);
   await page.reload({ waitUntil: "domcontentloaded" });
   await expect(
     page.getByRole("heading", { level: 1, name: form.displayName }),
   ).toBeVisible();
+  const persistedFile = page
+    .getByTestId("file-input-existing-files")
+    .filter({ hasText: fileName });
+  await expect(persistedFile).toHaveCount(1, { timeout: 30_000 });
   await expect(
-    page.getByTestId("file-input-existing-files").filter({ hasText: fileName }),
-  ).toHaveCount(1, { timeout: 30_000 });
+    persistedFile.getByRole("button", { name: /delete/i }),
+  ).toBeVisible();
+  await expect(hiddenInput).not.toHaveValue("", { timeout: 30_000 });
 
   return {
     definition,
@@ -780,7 +789,7 @@ test.describe("portable catalog browser conformance", () => {
                 // is valid; validation-warning count is recorded separately below.
                 // Capture after the save so generic calculated fields have reached
                 // their canonical values before we compare them with the reload.
-                await clickSaveButton(page);
+                await clickPortableSaveButton(page);
                 await expect(
                   page.getByText(FORM_DEFAULTS.formSavedHeading, {
                     exact: false,
