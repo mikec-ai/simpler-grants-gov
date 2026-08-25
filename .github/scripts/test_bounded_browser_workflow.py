@@ -74,6 +74,11 @@ def main() -> None:
         "tests/src/form_schema/form_spec" in api_workflow
     )
     assert "python bin/build_portable_legacy_differential.py" in api_workflow
+    assert 'TESTED_REVISION="$(git rev-parse HEAD)"' in api_workflow
+    assert "--pr-head-revision" in api_workflow
+    assert "oracleReceipts + .noOracleDispositions" in api_workflow
+    assert "differential-cohort.json" not in api_workflow
+    assert "test_[a-z0-9_]+\\.py" in api_workflow
 
 
 if __name__ == "__main__":

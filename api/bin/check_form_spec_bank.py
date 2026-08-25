@@ -32,12 +32,9 @@ BANKABLE_PREFIXES = (
 )
 FORM_ARTIFACT_PREFIX = f"{ARTIFACTS.as_posix()}/forms/"
 PORTABLE_TEST_PREFIX = "api/tests/src/form_schema/form_spec/"
-PORTABLE_TEST_SUFFIXES = (
-    "_portable.py",
-    "_portable_xml.py",
-    "_portable_xml_generation.py",
-    "_portable_lifecycle.py",
-)
+PORTABLE_CI_MAP = Path("api/src/form_schema/form_spec/portable-form-ci-map.json")
+PORTABLE_CI_MAP_CONTRACT = "sgg-portable-form-ci-map/v1"
+REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
 TIER_BANK_ONLY = "bank_only"
 TIER_PORTABLE_FOCUSED = "portable_focused"
 TIER_FULL = "full"
@@ -83,21 +80,39 @@ def _form_id_from_artifact(path: str) -> str | None:
     return form_id if separator and child else None
 
 
-def _form_id_from_portable_test(path: str) -> str | None:
-    if not path.startswith(PORTABLE_TEST_PREFIX):
-        return None
-    relative = path.removeprefix(PORTABLE_TEST_PREFIX)
-    if "/" in relative or not relative.startswith("test_"):
-        return None
-    stem = relative.removeprefix("test_")
-    for suffix in PORTABLE_TEST_SUFFIXES:
-        if stem.endswith(suffix):
-            slug = stem.removesuffix(suffix)
-            return slug.replace("_", "-") if slug else None
-    return None
+def load_portable_ci_map(path: Path = PORTABLE_CI_MAP) -> dict[str, tuple[str, ...]]:
+    resolved_path = path if path.is_absolute() else REPOSITORY_ROOT / path
+    payload = json.loads(resolved_path.read_text())
+    if payload.get("contract") != PORTABLE_CI_MAP_CONTRACT:
+        raise ValueError("unsupported portable form CI map contract")
+    forms = payload.get("forms")
+    if not isinstance(forms, dict) or not forms:
+        raise ValueError("portable form CI map must contain forms")
+    mapping: dict[str, tuple[str, ...]] = {}
+    for form_id, test_files in forms.items():
+        if not isinstance(form_id, str) or not isinstance(test_files, list) or not test_files:
+            raise ValueError("portable form CI map entries require a form id and tests")
+        if any(
+            not isinstance(test_file, str)
+            or not test_file.startswith(PORTABLE_TEST_PREFIX)
+            or not test_file.endswith(".py")
+            for test_file in test_files
+        ):
+            raise ValueError(f"portable form CI map has invalid tests for {form_id}")
+        if len(test_files) != len(set(test_files)):
+            raise ValueError(f"portable form CI map has duplicate tests for {form_id}")
+        missing = [
+            test_file for test_file in test_files if not (REPOSITORY_ROOT / test_file).is_file()
+        ]
+        if missing:
+            raise ValueError(f"portable form CI map has missing tests for {form_id}: {missing}")
+        mapping[form_id] = tuple(sorted(test_files))
+    return mapping
 
 
-def classify_change(changes: list[Change]) -> Classification:
+def classify_change(
+    changes: list[Change], *, portable_ci_map: dict[str, tuple[str, ...]] | None = None
+) -> Classification:
     if not changes:
         return Classification(TIER_FULL, "no changed files")
 
@@ -147,23 +162,26 @@ def classify_change(changes: list[Change]) -> Classification:
         for change in changes
         if (form_id := _form_id_from_artifact(change.path)) is not None
     }
-    test_ids: dict[str, str] = {}
+    mapping = portable_ci_map if portable_ci_map is not None else load_portable_ci_map()
+    mapped_tests = {test_file for form_id in form_ids for test_file in mapping.get(form_id, ())}
+    changed_tests: set[str] = set()
     focused_paths = True
     for change in changes:
         if change.path == MANIFEST.as_posix() or _form_id_from_artifact(change.path):
             continue
-        test_form_id = _form_id_from_portable_test(change.path)
-        if test_form_id is None:
+        if change.path not in mapped_tests:
             focused_paths = False
             break
-        test_ids[change.path] = test_form_id
+        changed_tests.add(change.path)
 
-    if form_ids and focused_paths and set(test_ids.values()) == form_ids:
+    missing_mappings = sorted(form_ids - mapping.keys())
+    if form_ids and focused_paths and not missing_mappings:
+        selected_tests = tuple(sorted(mapped_tests | changed_tests))
         return Classification(
             TIER_PORTABLE_FOCUSED,
-            "only attributable form-local artifacts and their exact portable tests changed",
+            "only attributable form-local artifacts and their registered portable tests changed",
             tuple(sorted(form_ids)),
-            tuple(sorted(test_ids)),
+            selected_tests,
         )
 
     return Classification(

@@ -1,3 +1,6 @@
+import json
+from pathlib import Path
+
 import pytest
 
 from bin.check_form_spec_bank import (
@@ -6,7 +9,10 @@ from bin.check_form_spec_bank import (
     Change,
     classify,
     classify_change,
+    load_portable_ci_map,
 )
+
+ARTIFACT_MANIFEST = Path("src/form_schema/form_spec/artifacts/artifact-manifest.json")
 
 
 def test_artifact_and_xsd_additions_use_bank_only_ci():
@@ -22,9 +28,8 @@ def test_artifact_and_xsd_additions_use_bank_only_ci():
     assert "new portable artifacts" in reason
 
 
-def test_existing_artifact_or_xsd_modification_requires_full_ci():
+def test_shared_artifact_or_xsd_modification_requires_full_ci():
     for path in (
-        "api/src/form_schema/form_spec/artifacts/forms/sf424/schema.json",
         "api/src/form_schema/form_spec/artifacts/question-bank/generics/email/schema.json",
         "api/src/services/xml_generation/xsds/SF424-V4.0.xsd",
     ):
@@ -118,6 +123,33 @@ def test_existing_form_artifacts_and_exact_test_use_focused_ci():
     )
 
 
+def test_registered_form_artifact_without_test_edit_uses_focused_ci():
+    classification = classify_change(
+        [
+            Change("M", "api/src/form_schema/form_spec/artifacts/artifact-manifest.json"),
+            Change("M", "api/src/form_schema/form_spec/artifacts/forms/sf424c/schema.json"),
+        ]
+    )
+
+    assert classification.tier == TIER_PORTABLE_FOCUSED
+    assert classification.form_ids == ("sf424c",)
+    assert classification.test_files == (
+        "api/tests/src/form_schema/form_spec/test_sf424c_portable.py",
+    )
+
+
+def test_portable_ci_map_exactly_covers_banked_forms_and_existing_tests():
+    mapping = load_portable_ci_map()
+    selected = set(json.loads(ARTIFACT_MANIFEST.read_text())["selection"]["forms"])
+
+    assert set(mapping) == selected
+    assert all(
+        (Path("..").resolve() / test_file).is_file()
+        for tests in mapping.values()
+        for test_file in tests
+    )
+
+
 def test_multiple_focused_forms_are_sorted_deterministically():
     classification = classify_change(
         [
@@ -164,20 +196,27 @@ def test_shared_or_ambiguous_changes_require_full_ci(path: str):
     assert classification.form_ids == ()
 
 
-def test_unmatched_or_missing_portable_test_requires_full_ci():
-    for tests in (
-        [],
-        [Change("M", "api/tests/src/form_schema/form_spec/test_sf424d_portable.py")],
-    ):
-        classification = classify_change(
-            [
-                Change("M", "api/src/form_schema/form_spec/artifacts/artifact-manifest.json"),
-                Change("M", "api/src/form_schema/form_spec/artifacts/forms/sf424c/schema.json"),
-                *tests,
-            ]
-        )
+def test_unmatched_portable_test_requires_full_ci():
+    classification = classify_change(
+        [
+            Change("M", "api/src/form_schema/form_spec/artifacts/artifact-manifest.json"),
+            Change("M", "api/src/form_schema/form_spec/artifacts/forms/sf424c/schema.json"),
+            Change("M", "api/tests/src/form_schema/form_spec/test_sf424d_portable.py"),
+        ]
+    )
 
-        assert classification.tier == TIER_FULL
+    assert classification.tier == TIER_FULL
+
+
+def test_form_missing_from_explicit_ci_map_requires_full_ci():
+    classification = classify_change(
+        [Change("M", "api/src/form_schema/form_spec/artifacts/forms/new-form/schema.json")],
+        portable_ci_map={
+            "sf424c": ("api/tests/src/form_schema/form_spec/test_sf424c_portable.py",)
+        },
+    )
+
+    assert classification.tier == TIER_FULL
 
 
 def test_deletion_never_uses_focused_ci():

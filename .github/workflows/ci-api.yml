@@ -85,9 +85,11 @@ jobs:
 
       - name: Build portable-versus-existing differential receipts
         run: |
+          TESTED_REVISION="$(git rev-parse HEAD)"
           docker compose run -T --rm grants-api \
             python bin/build_portable_legacy_differential.py \
-            --consumer-revision "${{ github.event.pull_request.head.sha || github.sha }}" \
+            --consumer-revision "$TESTED_REVISION" \
+            --pr-head-revision "${{ github.event.pull_request.head.sha || github.sha }}" \
             --output-dir /api/test-results/legacy-differential
 
       - name: Publish portable-versus-existing differential receipts
@@ -129,7 +131,7 @@ jobs:
         run: |
           IFS=',' read -ra test_files <<< "$PORTABLE_TEST_FILES"
           for path in "${test_files[@]}"; do
-            if [[ ! "$path" =~ ^api/tests/src/form_schema/form_spec/test_[a-z0-9_]+_portable(_xml|_xml_generation|_lifecycle)?\.py$ ]]; then
+            if [[ ! "$path" =~ ^api/tests/src/form_schema/form_spec/test_[a-z0-9_]+\.py$ ]]; then
               echo "invalid focused portable test path: $path" >&2
               exit 2
             fi
@@ -140,31 +142,26 @@ jobs:
           docker compose run -T --rm grants-api pytest tests/src/form_schema/form_spec
 
       - name: Build exact portable-versus-existing differential receipts
-        id: differential
         env:
           PORTABLE_FORM_IDS: ${{ needs.classify-form-spec-change.outputs.portable_form_ids }}
         run: |
-          mapfile -t cohort_ids < <(jq -r '.forms[].portableFormId' src/form_schema/form_spec/differential-cohort.json)
           IFS=',' read -ra form_ids <<< "$PORTABLE_FORM_IDS"
           differential_args=()
           for form_id in "${form_ids[@]}"; do
-            if printf '%s\n' "${cohort_ids[@]}" | grep -Fxq "$form_id"; then
-              differential_args+=(--form-id "$form_id")
-            fi
+            differential_args+=(--form-id "$form_id")
           done
-          if (( ${#differential_args[@]} == 0 )); then
-            echo "has_receipts=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
+          TESTED_REVISION="$(git rev-parse HEAD)"
           docker compose run -T --rm grants-api \
             python bin/build_portable_legacy_differential.py \
-            --consumer-revision "${{ github.event.pull_request.head.sha || github.sha }}" \
+            --consumer-revision "$TESTED_REVISION" \
+            --pr-head-revision "${{ github.event.pull_request.head.sha || github.sha }}" \
             --output-dir /api/test-results/legacy-differential \
             "${differential_args[@]}"
-          echo "has_receipts=true" >> "$GITHUB_OUTPUT"
+          selected_count="${#form_ids[@]}"
+          outcome_count="$(jq '.oracleReceipts + .noOracleDispositions' test-results/legacy-differential/summary.json)"
+          [[ "$selected_count" -eq "$outcome_count" ]]
 
       - name: Publish exact portable-versus-existing differential receipts
-        if: ${{ steps.differential.outputs.has_receipts == 'true' }}
         uses: actions/upload-artifact@v7
         with:
           name: portable-legacy-differential-${{ github.sha }}
