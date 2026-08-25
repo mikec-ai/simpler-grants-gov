@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "mentoring/mentor-and-co-mentor-statements/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Attach the mentor and co-mentor plans and statements."
+}

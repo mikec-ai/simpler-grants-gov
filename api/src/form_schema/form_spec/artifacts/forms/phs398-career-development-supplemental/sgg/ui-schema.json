@@ -1,0 +1,204 @@
+[
+  {
+    "type": "section",
+    "name": "introduction",
+    "label": "Introduction",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/introduction",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "candidate",
+    "label": "Candidate Section",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/candidateInformationAndGoals",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "researchPlan",
+    "label": "Research Plan Section",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/specificAims",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/researchStrategy",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/progressReportPublicationList",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/responsibleConductOfResearch",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "otherCandidate",
+    "label": "Other Candidate Information Section",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/mentoringPlan",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "mentor",
+    "label": "Mentor, Co-Mentor, Consultant, Collaborators Section",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/statementsOfSupport",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/lettersOfSupport",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "environment",
+    "label": "Environment and Institutional Commitment to the Candidate Section",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/institutionalEnvironment",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/institutionalCommitment",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/candidateContribution",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "otherResearchPlan",
+    "label": "Other Research Plan Section",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/vertebrateAnimals",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/selectAgentResearch",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/consortiumContractualArrangements",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/resourceSharingPlans",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/otherPlans",
+        "widget": "Attachment"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/keyResourceAuthentication",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "appendix",
+    "label": "Appendix",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/appendix",
+        "widget": "AttachmentArray"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "citizenship",
+    "label": "Citizenship",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/citizenship/properties/usCitizenOrNational"
+      },
+      {
+        "type": "field",
+        "definition": "/properties/citizenship/properties/nonUsCitizenStatus",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/citizenship/usCitizenOrNational"
+            },
+            "value": "N: No"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      },
+      {
+        "type": "field",
+        "definition": "/properties/citizenship/properties/permanentResidentByAward",
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/citizenship/nonUsCitizenStatus"
+            },
+            "value": "Temporary U.S. Visa"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
+      }
+    ]
+  }
+]

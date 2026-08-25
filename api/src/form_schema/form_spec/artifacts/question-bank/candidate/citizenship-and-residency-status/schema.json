@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "candidate/citizenship-and-residency-status/schema.json",
+  "type": "object",
+  "properties": {
+    "usCitizenOrNational": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "U.S. Citizen or Non-Citizen National?"
+    },
+    "nonUsCitizenStatus": {
+      "$ref": "#/$defs/CareerNonUsCitizenStatus",
+      "title": "Non-U.S. Citizen Status"
+    },
+    "permanentResidentByAward": {
+      "$ref": "#/$defs/YesNoCode",
+      "title": "Permanent Resident by Award"
+    }
+  },
+  "required": [
+    "usCitizenOrNational"
+  ],
+  "description": "Report the candidate's source-defined citizenship and residency status.",
+  "$defs": {
+    "YesNoCode": {
+      "type": "string",
+      "enum": [
+        "Y: Yes",
+        "N: No"
+      ]
+    },
+    "CareerNonUsCitizenStatus": {
+      "type": "string",
+      "enum": [
+        "Permanent U.S. Resident Visa",
+        "Temporary U.S. Visa",
+        "Not Residing in the U.S."
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "usCitizenOrNational": {
+            "const": "N: No"
+          }
+        },
+        "required": [
+          "usCitizenOrNational"
+        ]
+      },
+      "then": {
+        "required": [
+          "nonUsCitizenStatus"
+        ]
+      }
+    }
+  ]
+}

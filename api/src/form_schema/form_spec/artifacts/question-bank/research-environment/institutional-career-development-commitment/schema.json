@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "research-environment/institutional-career-development-commitment/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Attach the institution's commitment to the candidate's research career development."
+}

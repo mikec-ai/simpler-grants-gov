@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "candidate/career-development-information-and-goals/schema.json",
+  "type": "string",
+  "format": "uuid",
+  "description": "Attach the candidate's information and goals for career development."
+}
