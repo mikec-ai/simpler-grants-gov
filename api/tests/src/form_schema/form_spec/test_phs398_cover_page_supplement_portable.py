@@ -31,6 +31,7 @@ FORM_ID = "phs398-cover-page-supplement"
 FORM_ROOT = ARTIFACTS / "forms" / FORM_ID
 FORM_NAMESPACE = "http://apply.grants.gov/forms/PHS398_CoverPageSupplement_5_0-V5.0"
 GLOBAL_LIBRARY_NAMESPACE = "http://apply.grants.gov/system/GlobalLibrary-V2.0"
+ATTACHMENT_NAMESPACE = "http://apply.grants.gov/system/Attachments-V1.0"
 XSD_DIRECTORY = Path(__file__).parents[4] / "src/services/xml_generation/xsds"
 FORM_XSD = "PHS398_CoverPageSupplement_5_0-V5.0.xsd"
 PROJECTED_UI_FIXTURE = (
@@ -294,6 +295,15 @@ def test_cover_page_emits_exact_source_valid_xml_through_generic_service() -> No
     assert former is not None
     assert former.findtext(f"{{{GLOBAL_LIBRARY_NAMESPACE}}}FirstName") == "Ada"
     assert root.findtext(q("FormerInstitutionName")) == "Former Research Institute"
+    namespaces = {"cover": FORM_NAMESPACE, "att": ATTACHMENT_NAMESPACE}
+    assert root.xpath(
+        "cover:ComplianceAssurance/cover:attFile/att:FileName/text()",
+        namespaces=namespaces,
+    ) == ["HFTComplianceAssurance.pdf"]
+    assert root.xpath(
+        "cover:HFTIRBConsentForm/cover:attFile/att:FileName/text()",
+        namespaces=namespaces,
+    ) == ["HFTSampleIRBConsentForm.pdf"]
 
 
 def test_cover_page_remains_unregistered_with_proposed_semantics() -> None:
