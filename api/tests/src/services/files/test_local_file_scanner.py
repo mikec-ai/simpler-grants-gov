@@ -302,13 +302,51 @@ class TestSetupLocalFileScanner:
         class FakeThread:
             def __init__(self, **kwargs):
                 self.name = kwargs["name"]
+                captured_args.extend(kwargs["args"])
 
             def start(self):
                 started.append(self.name)
 
         started: list[str] = []
+        captured_args: list[Path] = []
         monkeypatch.setattr(local_file_scanner.threading, "Thread", FakeThread)
 
         setup_local_file_scanner()
 
         assert started == [local_file_scanner.LOCAL_FILE_SCANNER_THREAD_NAME]
+        assert captured_args == [tmp_path / "local-mock-file-scan-bucket"]
+        assert not captured_args[0].exists()
+
+    def test_scanner_waits_for_s3mock_to_create_owned_bucket(self, monkeypatch, tmp_path):
+        watch_path = tmp_path / "local-mock-file-scan-bucket"
+        sleeps = 0
+
+        def create_bucket_after_first_poll(_seconds):
+            nonlocal sleeps
+            sleeps += 1
+            watch_path.mkdir()
+
+        class StopAfterPathReady(Exception):
+            pass
+
+        monkeypatch.setattr(local_file_scanner.time, "sleep", create_bucket_after_first_poll)
+        monkeypatch.setitem(
+            __import__("sys").modules,
+            "watchfiles",
+            type(
+                "FakeWatchfiles",
+                (),
+                {
+                    "Change": type("Change", (), {"deleted": "deleted"}),
+                    "watch": staticmethod(
+                        lambda *_args, **_kwargs: (_ for _ in ()).throw(StopAfterPathReady())
+                    ),
+                },
+            ),
+        )
+        monkeypatch.setattr(local_file_scanner.db, "PostgresDBClient", lambda: object())
+
+        with pytest.raises(StopAfterPathReady):
+            local_file_scanner._run_scanner(watch_path)
+
+        assert sleeps == 1

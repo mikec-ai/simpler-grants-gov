@@ -43,6 +43,7 @@ TERMINAL_STATUS_PREFIX: dict[FileScanStatus, str] = {
 S3MOCK_METADATA_FILENAME = "objectMetadata.json"
 
 LOCAL_FILE_SCANNER_THREAD_NAME = "local-file-scanner"
+WATCH_PATH_POLL_SECONDS = 0.1
 
 
 class _EnvironmentConfig(PydanticBaseEnvConfig):
@@ -102,7 +103,6 @@ def setup_local_file_scanner() -> None:
     s3_config = S3Config()
     bucket_name = file_util.get_s3_bucket(s3_config.file_scan_bucket_path)
     watch_path = Path(config.local_s3_store_path) / bucket_name
-    watch_path.mkdir(parents=True, exist_ok=True)
 
     logger.info(
         "Starting local file scanner background thread",
@@ -119,6 +119,13 @@ def setup_local_file_scanner() -> None:
 
 
 def _run_scanner(watch_path: Path) -> None:
+    # S3Mock owns the shared volume and creates its bucket directories. The
+    # API user can read that volume but must not attempt to create paths in it.
+    # Since Compose readiness is asynchronous, wait for S3Mock to initialize
+    # the exact bucket before handing it to watchfiles.
+    while not watch_path.is_dir():
+        time.sleep(WATCH_PATH_POLL_SECONDS)
+
     # Imported inline because watchfiles is a dev-only dependency
     from watchfiles import Change, watch
 
