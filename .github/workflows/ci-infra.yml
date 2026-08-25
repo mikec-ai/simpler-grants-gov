@@ -41,6 +41,8 @@ jobs:
         run: python3 .github/scripts/test_bounded_browser_workflow.py
       - name: Validate fork-disabled workflow contract
         run: python3 .github/scripts/test_fork_disabled_workflows.py
+      - name: Validate PR CI concurrency and Pa11y routing contracts
+        run: python3 .github/scripts/test_pr_ci_concurrency.py
   check-terraform-format:
     name: Check Terraform format
     runs-on: ubuntu-22.04
