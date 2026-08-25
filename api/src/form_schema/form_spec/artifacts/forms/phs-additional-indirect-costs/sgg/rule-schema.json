@@ -1,0 +1,48 @@
+{
+  "budgetYears": {
+    "gg_type": "array",
+    "budgetPeriodEndDate": {
+      "gg_validation": {
+        "rule": "date_not_before",
+        "fields": [
+          "@THIS.budgetPeriodStartDate"
+        ]
+      }
+    },
+    "indirectCosts": {
+      "totalIndirectCosts": {
+        "gg_pre_population": {
+          "rule": "sum_monetary",
+          "fields": [
+            "@THIS.indirectCost[*].fundRequested"
+          ],
+          "materialize": "when_any_source_present",
+          "presence_fields": [
+            "@THIS.indirectCost[*].fundRequested"
+          ],
+          "order": 1
+        }
+      }
+    }
+  },
+  "budgetJustificationAttachment": {
+    "gg_validation": {
+      "rule": "attachment"
+    }
+  },
+  "budgetSummary": {
+    "cumulativeTotalFundsRequestedIndirectCost": {
+      "gg_pre_population": {
+        "rule": "sum_monetary",
+        "fields": [
+          "budgetYears[*].indirectCosts.totalIndirectCosts"
+        ],
+        "materialize": "when_any_source_present",
+        "presence_fields": [
+          "budgetYears[*].indirectCosts.totalIndirectCosts"
+        ],
+        "order": 2
+      }
+    }
+  }
+}

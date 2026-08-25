@@ -1,0 +1,89 @@
+[
+  {
+    "type": "section",
+    "name": "periods",
+    "label": "Budget Periods",
+    "children": [
+      {
+        "type": "fieldList",
+        "name": "budgetYears",
+        "label": "Budget Period",
+        "definition": "/properties/budgetYears",
+        "children": [
+          {
+            "type": "field",
+            "definition": "/properties/budgetYears/items/properties/samUei"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/budgetYears/items/properties/organizationName"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/budgetYears/items/properties/budgetType",
+            "widget": "Select"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/budgetYears/items/properties/budgetPeriodStartDate"
+          },
+          {
+            "type": "field",
+            "definition": "/properties/budgetYears/items/properties/budgetPeriodEndDate"
+          },
+          {
+            "type": "fieldList",
+            "name": "indirectCost",
+            "label": "Indirect Costs",
+            "definition": "/properties/budgetYears/items/properties/indirectCosts/properties/indirectCost",
+            "children": [
+              {
+                "type": "field",
+                "definition": "/properties/budgetYears/items/properties/indirectCosts/properties/indirectCost/items/properties/costType"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetYears/items/properties/indirectCosts/properties/indirectCost/items/properties/rate"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetYears/items/properties/indirectCosts/properties/indirectCost/items/properties/base"
+              },
+              {
+                "type": "field",
+                "definition": "/properties/budgetYears/items/properties/indirectCosts/properties/indirectCost/items/properties/fundRequested"
+              }
+            ]
+          },
+          {
+            "type": "field",
+            "definition": "/properties/budgetYears/items/properties/indirectCosts/properties/totalIndirectCosts"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "justification",
+    "label": "Budget Justification",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/budgetJustificationAttachment",
+        "widget": "Attachment"
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "name": "cumulative",
+    "label": "Cumulative Budget",
+    "children": [
+      {
+        "type": "field",
+        "definition": "/properties/budgetSummary/properties/cumulativeTotalFundsRequestedIndirectCost"
+      }
+    ]
+  }
+]

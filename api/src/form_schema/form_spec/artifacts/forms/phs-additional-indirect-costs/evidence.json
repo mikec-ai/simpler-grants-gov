@@ -1,0 +1,78 @@
+{
+  "block": {
+    "id": "phs-additional-indirect-costs",
+    "kind": "form",
+    "formVersion": "2.0"
+  },
+  "contract": "grants-form-evidence/v1",
+  "extraction": {
+    "artifact": "artifacts/authoring/fed-nonfed-budget-family/forms/PHSAdditionalIndirectCosts.json",
+    "extractedAt": "2026-08-19T23:33:45Z",
+    "repository": "https://github.com/mikec-ai/grants-question-crosswalk",
+    "revision": "dfe9e47ffd6a25c967b8ed38703480ccdc15a8ef",
+    "sourceSetSha256": "991e5e4d3e8f0cff585bf8d5dc59e59e6b3225b2132fc8bafdd54d7b4d74ae65"
+  },
+  "semanticReview": {
+    "mappings": [],
+    "status": "unreviewed"
+  },
+  "sources": [
+    {
+      "id": "source-dat-b0d0411dbb97",
+      "nativeVersion": null,
+      "sha256": "b0d0411dbb9794ba031b45dfaa4a94f735aad42311409a77bf44a0810196d3dd",
+      "type": "dat",
+      "uri": "https://apply07.grants.gov/apply/forms/sample/PHS_Additional_IndirectCosts_2_0-V2.0_F739.xls"
+    },
+    {
+      "id": "source-xsd-ba38a3500b02",
+      "nativeVersion": "2.0",
+      "sha256": "ba38a3500b025b0414edbcdbffe80dc12165ceb7a7fb657012d450b2e9682b66",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/forms/schemas/PHS_Additional_IndirectCosts_2_0-V2.0.xsd"
+    },
+    {
+      "id": "source-attachments-ae2ebb3618f7",
+      "nativeVersion": "1.0",
+      "sha256": "ae2ebb3618f7d8fb337be2309b3096e9121b4af659e913af423aab85d13dcb1d",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd"
+    },
+    {
+      "id": "source-global-4b338db91915",
+      "nativeVersion": "1.0",
+      "sha256": "4b338db919152eb8b96a1a846902d04ef8bca8d08127b21f80f927eaa62283cb",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd"
+    },
+    {
+      "id": "source-global-library-ff0214de91b9",
+      "nativeVersion": "2.0",
+      "sha256": "ff0214de91b95a4209f50f0fe08a18d0f3d17f280ab8c8bbcb52878f37de7be8",
+      "type": "xsd",
+      "uri": "https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"
+    }
+  ],
+  "behaviorEvidence": [
+    {
+      "authority": "official_source",
+      "canonicalPath": "budgetYears[*].indirectCosts.totalIndirectCosts",
+      "executionStatus": "compiled",
+      "ruleKind": "calculation",
+      "sourceId": "source-dat-b0d0411dbb97",
+      "sourcePath": "Form DAT / Total Indirect Costs / Business Rules",
+      "sourceRecord": "Calculated, read-only. Sum of each entered Indirect Cost FundRequested. Required if any Indirect Cost FundRequested were entered."
+    },
+    {
+      "authority": "official_source",
+      "canonicalPath": "budgetSummary.cumulativeTotalFundsRequestedIndirectCost",
+      "executionStatus": "compiled",
+      "ruleKind": "calculation",
+      "sourceId": "source-dat-b0d0411dbb97",
+      "sourcePath": "Form DAT / Total Indirect Costs (Cumulative Budget) / Business Rules",
+      "sourceRecord": "Calculated, read-only. Cumulative total - Sum of TotalIndirectCosts for all budget periods. Required if any Indirect Cost FundRequested were entered."
+    }
+  ],
+  "operationalBehaviorEvidence": [],
+  "responseNormalizationEvidence": []
+}

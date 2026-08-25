@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/additional-indirect-costs/cumulative-summary/schema.json",
+  "type": "object",
+  "properties": {
+    "cumulativeTotalFundsRequestedIndirectCost": {
+      "$ref": "#/$defs/ResearchBudgetTotalAmount15",
+      "title": "Indirect Costs",
+      "readOnly": true
+    }
+  },
+  "description": "Cumulative indirect costs requested across all budget periods.",
+  "$defs": {
+    "ResearchBudgetTotalAmount15": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
+    }
+  }
+}

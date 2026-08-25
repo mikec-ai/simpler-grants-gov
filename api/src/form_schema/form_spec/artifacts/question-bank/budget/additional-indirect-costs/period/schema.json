@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "budget/additional-indirect-costs/period/schema.json",
+  "type": "object",
+  "properties": {
+    "samUei": {
+      "$ref": "../../../../question-bank/primary-org/uei/schema.json",
+      "title": "UEI:"
+    },
+    "organizationName": {
+      "$ref": "../../../../question-bank/generics/organization-name/schema.json",
+      "title": "Enter name of Organization:"
+    },
+    "budgetType": {
+      "$ref": "#/$defs/PHSAdditionalIndirectCostsBudgetType",
+      "title": "Budget Type:"
+    },
+    "budgetPeriodStartDate": {
+      "type": "string",
+      "format": "date",
+      "title": "Start Date"
+    },
+    "budgetPeriodEndDate": {
+      "type": "string",
+      "format": "date",
+      "title": "End Date",
+      "description": "End Date cannot be before Start Date."
+    },
+    "indirectCosts": {
+      "$ref": "#/$defs/PHSAdditionalIndirectCostsForPeriod",
+      "title": "Indirect Costs",
+      "properties": {
+        "totalIndirectCosts": {
+          "readOnly": true
+        }
+      }
+    }
+  },
+  "required": [
+    "budgetPeriodStartDate",
+    "budgetPeriodEndDate"
+  ],
+  "description": "A dated period of additional indirect costs.",
+  "$defs": {
+    "PHSAdditionalIndirectCostsBudgetType": {
+      "type": "string",
+      "enum": [
+        "Project",
+        "Subaward/Consortium"
+      ],
+      "description": "Whether this is the project budget or a subaward or consortium budget."
+    },
+    "ResearchBudgetIndirectRate": {
+      "type": "string",
+      "pattern": "^(?:\\d{1,3}|\\d{1,3}[.]\\d|\\d{1,3}[.]\\d{2})$"
+    },
+    "ResearchBudgetAmount14": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 15,
+      "pattern": "^(?:\\d{1,14}|\\d{1,13}[.]\\d|\\d{1,12}[.]\\d{2})$"
+    },
+    "PHSAdditionalIndirectCostItem": {
+      "type": "object",
+      "properties": {
+        "costType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "title": "Indirect Cost Type"
+        },
+        "rate": {
+          "$ref": "#/$defs/ResearchBudgetIndirectRate",
+          "title": "Indirect Cost Rate (%)"
+        },
+        "base": {
+          "$ref": "#/$defs/ResearchBudgetAmount14",
+          "title": "Indirect Cost Base ($)"
+        },
+        "fundRequested": {
+          "$ref": "#/$defs/ResearchBudgetAmount14",
+          "title": "Funds Requested ($)"
+        }
+      },
+      "required": [
+        "costType",
+        "fundRequested"
+      ],
+      "description": "One indirect-cost rate and requested amount."
+    },
+    "ResearchBudgetTotalAmount15": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16,
+      "pattern": "^(?:\\d{1,15}|\\d{1,14}[.]\\d|\\d{1,13}[.]\\d{2})$"
+    },
+    "PHSAdditionalIndirectCostsForPeriod": {
+      "type": "object",
+      "properties": {
+        "indirectCost": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PHSAdditionalIndirectCostItem"
+          },
+          "minItems": 1,
+          "maxItems": 4,
+          "title": "Indirect Costs"
+        },
+        "totalIndirectCosts": {
+          "$ref": "#/$defs/ResearchBudgetTotalAmount15",
+          "title": "Total Indirect Costs",
+          "readOnly": true
+        }
+      },
+      "required": [
+        "indirectCost",
+        "totalIndirectCosts"
+      ],
+      "description": "Indirect costs requested for one budget period."
+    }
+  }
+}

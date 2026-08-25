@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:PHS_Additional_IndirectCosts_2_0="http://apply.grants.gov/forms/PHS_Additional_IndirectCosts_2_0-V2.0" xmlns:att="http://apply.grants.gov/system/Attachments-V1.0" xmlns:globLib="http://apply.grants.gov/system/GlobalLibrary-V2.0" xmlns:glob="http://apply.grants.gov/system/Global-V1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://apply.grants.gov/forms/PHS_Additional_IndirectCosts_2_0-V2.0" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.0">
+	<xs:import namespace="http://apply.grants.gov/system/Attachments-V1.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/Attachments-V1.0.xsd"/>
+	<xs:import namespace="http://apply.grants.gov/system/Global-V1.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/Global-V1.0.xsd"/>
+	<xs:import namespace="http://apply.grants.gov/system/GlobalLibrary-V2.0" schemaLocation="https://apply07.grants.gov/apply/system/schemas/GlobalLibrary-V2.0.xsd"/>
+	<xs:element name="PHS_Additional_IndirectCosts_2_0">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="BudgetYear" type="PHS_Additional_IndirectCosts_2_0:BudgetYearDataType" minOccurs="1" maxOccurs="10"/>
+				<xs:element name="BudgetJustificationAttachment" type="att:AttachedFileDataType" minOccurs="0"/>
+				<xs:element name="BudgetSummary" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CumulativeTotalFundsRequestedIndirectCost" type="globLib:BudgetTotalAmountDataType" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="FormVersion" type="globLib:FormVersionDataType" use="required" fixed="2.0"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="BudgetYearDataType">
+		<xs:sequence>
+			<xs:element name="SAMUEI" type="globLib:SAMUEIDataType" minOccurs="0"/>
+			<xs:element name="OrganizationName" type="globLib:OrganizationNameDataType" minOccurs="0"/>
+			<xs:element name="BudgetType" type="PHS_Additional_IndirectCosts_2_0:BudgetTypeDataType" minOccurs="0"/>
+			<xs:element name="BudgetPeriodStartDate" type="xs:date"/>
+			<xs:element name="BudgetPeriodEndDate" type="xs:date"/>
+			<xs:element name="IndirectCosts" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="IndirectCost" maxOccurs="4">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="CostType" type="PHS_Additional_IndirectCosts_2_0:String1_64DataType"/>
+									<xs:element name="Rate" minOccurs="0">
+										<xs:simpleType>
+											<xs:restriction base="xs:decimal">
+												<xs:minInclusive value="0.00"/>
+												<xs:maxInclusive value="999.99"/>
+												<xs:totalDigits value="5"/>
+												<xs:fractionDigits value="2"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="Base" type="glob:DecimalMin1Max14Places2Type" minOccurs="0"/>
+									<xs:element name="FundRequested" type="glob:DecimalMin1Max14Places2Type"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="TotalIndirectCosts" type="glob:DecimalMin1Max15Places2Type"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BudgetTypeDataType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Project"/>
+			<xs:enumeration value="Subaward/Consortium"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String1_64DataType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="64"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
