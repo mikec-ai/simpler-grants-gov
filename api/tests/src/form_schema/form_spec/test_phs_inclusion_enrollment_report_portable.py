@@ -23,13 +23,21 @@ def _walk(value: object) -> Iterator[dict[str, Any]]:
 
 def test_inclusion_enrollment_loads_without_form_specific_adapter_code() -> None:
     projected = _load_banked_form(FORM_ID, project_xml=True)
-    fields = [node for node in _walk(projected.form_ui_schema) if node.get("type") == "field"]
+    fields = [
+        node
+        for node in _walk(projected.form_ui_schema)
+        if node.get("type") in {"field", "input", "readOnly"}
+        and isinstance(node.get("definition"), str)
+    ]
     lists = [node for node in _walk(projected.form_ui_schema) if node.get("type") == "fieldList"]
+    tables = [node for node in _walk(projected.form_ui_schema) if node.get("widget") == "Table"]
 
     assert projected.meta["formName"] == "PHS Inclusion Enrollment Report"
     assert projected.meta["formVersion"] == "1.0"
     assert projected.meta["legacyFormId"] == 791
     assert len(fields) == 121
+    assert [table["name"] for table in tables] == ["planned", "cumulativeActual"]
+    assert sum(node["type"] == "readOnly" for node in fields) == 28
     assert len(lists) == 1
     assert lists[0]["name"] == "reports"
     assert lists[0]["definition"] == "/properties/reports"

@@ -32,10 +32,12 @@
       "maxLength": 500
     },
     "planned": {
-      "$ref": "#/$defs/PlannedEnrollmentMatrix"
+      "$ref": "#/$defs/PlannedEnrollmentMatrix",
+      "title": "Planned Enrollment"
     },
     "cumulativeActual": {
-      "$ref": "#/$defs/CumulativeEnrollmentMatrix"
+      "$ref": "#/$defs/CumulativeEnrollmentMatrix",
+      "title": "Cumulative Enrollment"
     }
   },
   "required": [
@@ -342,39 +344,50 @@
       "type": "object",
       "properties": {
         "americanIndianAlaskaNative": {
-          "$ref": "#/$defs/ClinicalCount9"
+          "$ref": "#/$defs/ClinicalCount9",
+          "title": "American Indian or Alaska Native"
         },
         "asian": {
-          "$ref": "#/$defs/ClinicalCount9"
+          "$ref": "#/$defs/ClinicalCount9",
+          "title": "Asian"
         },
         "nativeHawaiianPacificIslander": {
-          "$ref": "#/$defs/ClinicalCount9"
+          "$ref": "#/$defs/ClinicalCount9",
+          "title": "Native Hawaiian or Other Pacific Islander"
         },
         "blackAfricanAmerican": {
-          "$ref": "#/$defs/ClinicalCount9"
+          "$ref": "#/$defs/ClinicalCount9",
+          "title": "Black or African American"
         },
         "white": {
-          "$ref": "#/$defs/ClinicalCount9"
+          "$ref": "#/$defs/ClinicalCount9",
+          "title": "White"
         },
         "moreThanOneRace": {
-          "$ref": "#/$defs/ClinicalCount9"
+          "$ref": "#/$defs/ClinicalCount9",
+          "title": "More Than One Race"
         },
         "total": {
-          "$ref": "#/$defs/ClinicalCount10"
+          "$ref": "#/$defs/ClinicalCount10",
+          "title": "Total"
         }
       },
-      "description": "Counts for the source racial categories at one ethnicity/sex coordinate."
+      "description": "Counts for the source racial categories at one ethnicity/sex coordinate.",
+      "title": "Race"
     },
     "PlannedEthnicityCounts": {
       "type": "object",
       "properties": {
         "female": {
-          "$ref": "#/$defs/PlannedRaceCounts"
+          "$ref": "#/$defs/PlannedRaceCounts",
+          "title": "Female"
         },
         "male": {
-          "$ref": "#/$defs/PlannedRaceCounts"
+          "$ref": "#/$defs/PlannedRaceCounts",
+          "title": "Male"
         }
-      }
+      },
+      "title": "Sex"
     },
     "ClinicalCount11": {
       "type": "integer",
@@ -385,47 +398,60 @@
       "type": "object",
       "properties": {
         "americanIndianAlaskaNative": {
-          "$ref": "#/$defs/ClinicalCount10"
+          "$ref": "#/$defs/ClinicalCount10",
+          "title": "American Indian or Alaska Native"
         },
         "asian": {
-          "$ref": "#/$defs/ClinicalCount10"
+          "$ref": "#/$defs/ClinicalCount10",
+          "title": "Asian"
         },
         "nativeHawaiianPacificIslander": {
-          "$ref": "#/$defs/ClinicalCount10"
+          "$ref": "#/$defs/ClinicalCount10",
+          "title": "Native Hawaiian or Other Pacific Islander"
         },
         "blackAfricanAmerican": {
-          "$ref": "#/$defs/ClinicalCount10"
+          "$ref": "#/$defs/ClinicalCount10",
+          "title": "Black or African American"
         },
         "white": {
-          "$ref": "#/$defs/ClinicalCount10"
+          "$ref": "#/$defs/ClinicalCount10",
+          "title": "White"
         },
         "moreThanOneRace": {
-          "$ref": "#/$defs/ClinicalCount10"
+          "$ref": "#/$defs/ClinicalCount10",
+          "title": "More Than One Race"
         },
         "total": {
-          "$ref": "#/$defs/ClinicalCount11"
+          "$ref": "#/$defs/ClinicalCount11",
+          "title": "Total"
         }
-      }
+      },
+      "title": "Race"
     },
     "PlannedEnrollmentMatrix": {
       "type": "object",
       "properties": {
         "notHispanicLatino": {
-          "$ref": "#/$defs/PlannedEthnicityCounts"
+          "$ref": "#/$defs/PlannedEthnicityCounts",
+          "title": "Not Hispanic or Latino"
         },
         "hispanicLatino": {
-          "$ref": "#/$defs/PlannedEthnicityCounts"
+          "$ref": "#/$defs/PlannedEthnicityCounts",
+          "title": "Hispanic or Latino"
         },
         "total": {
-          "$ref": "#/$defs/PlannedTotalCounts"
+          "$ref": "#/$defs/PlannedTotalCounts",
+          "title": "Total"
         }
-      }
+      },
+      "title": "Ethnicity"
     },
     "CumulativeRaceCounts": {
       "type": "object",
       "properties": {
         "unknownNotReported": {
-          "$ref": "#/$defs/ClinicalCount9"
+          "$ref": "#/$defs/ClinicalCount9",
+          "title": "Unknown/Not Reported"
         }
       },
       "allOf": [
@@ -438,21 +464,26 @@
       "type": "object",
       "properties": {
         "female": {
-          "$ref": "#/$defs/CumulativeRaceCounts"
+          "$ref": "#/$defs/CumulativeRaceCounts",
+          "title": "Female"
         },
         "male": {
-          "$ref": "#/$defs/CumulativeRaceCounts"
+          "$ref": "#/$defs/CumulativeRaceCounts",
+          "title": "Male"
         },
         "unknownNotReportedSex": {
-          "$ref": "#/$defs/CumulativeRaceCounts"
+          "$ref": "#/$defs/CumulativeRaceCounts",
+          "title": "Unknown/Not Reported"
         }
-      }
+      },
+      "title": "Sex"
     },
     "CumulativeTotalCounts": {
       "type": "object",
       "properties": {
         "unknownNotReported": {
-          "$ref": "#/$defs/ClinicalCount10"
+          "$ref": "#/$defs/ClinicalCount10",
+          "title": "Unknown/Not Reported"
         }
       },
       "allOf": [
@@ -465,18 +496,23 @@
       "type": "object",
       "properties": {
         "notHispanicLatino": {
-          "$ref": "#/$defs/CumulativeEthnicityCounts"
+          "$ref": "#/$defs/CumulativeEthnicityCounts",
+          "title": "Not Hispanic or Latino"
         },
         "hispanicLatino": {
-          "$ref": "#/$defs/CumulativeEthnicityCounts"
+          "$ref": "#/$defs/CumulativeEthnicityCounts",
+          "title": "Hispanic or Latino"
         },
         "unknownNotReportedEthnicity": {
-          "$ref": "#/$defs/CumulativeEthnicityCounts"
+          "$ref": "#/$defs/CumulativeEthnicityCounts",
+          "title": "Unknown/Not Reported"
         },
         "total": {
-          "$ref": "#/$defs/CumulativeTotalCounts"
+          "$ref": "#/$defs/CumulativeTotalCounts",
+          "title": "Total"
         }
-      }
+      },
+      "title": "Ethnicity"
     }
   }
 }

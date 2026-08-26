@@ -563,8 +563,8 @@
     },
     {
       "path": "dist/forms/phs-human-subjects/sgg/ui-schema.json",
-      "sha256": "f30214dfd983b7f8acd3ea23d7a4ef3f9281a1c9ac57f5d4cefd1f1478741ead",
-      "size": 50352
+      "sha256": "39b469bf044f3551fe9d8df0731430af67f68227a82532fe3317f48d0a2540c9",
+      "size": 64931
     },
     {
       "path": "dist/forms/phs-human-subjects/targets/grants-gov-xml.json",
@@ -593,8 +593,8 @@
     },
     {
       "path": "dist/forms/phs-inclusion-enrollment-report/sgg/ui-schema.json",
-      "sha256": "4923c32ab5d56b111c4044cf566e40f726bfb6831c281d2313f1fd90e6eda22f",
-      "size": 24959
+      "sha256": "ab9bc0be95d983bfdc35bc7c523cebad5f6585472f575c05a032be70fa669258",
+      "size": 38324
     },
     {
       "path": "dist/forms/phs-inclusion-enrollment-report/targets/grants-gov-xml.json",
@@ -1798,8 +1798,8 @@
     },
     {
       "path": "dist/question-bank/clinical-study/inclusion-enrollment-report/schema.json",
-      "sha256": "841e166920efa66eae3a410059fdc57288da5c4e48f6cfe7f1a436ae7714b208",
-      "size": 12326
+      "sha256": "6d345649cd8e0067fe47805d794f092c8499f9c2449662f81e9f80642b5d7639",
+      "size": 13645
     },
     {
       "path": "dist/question-bank/clinical-study/inclusion-women-minorities/schema.json",
@@ -2757,7 +2757,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "92aad605ea9a8e6709bd6562ce9ed000a9512fb0"
+    "revision": "c700c8bd1edb4e7537325e26a141776826f643b8"
   },
-  "sourceBundleSha256": "ddf39538291defd7990bfcaf3a8305b5d1ae5df5acb7d7dacf60b6f98db78ba6"
+  "sourceBundleSha256": "60b9d65cbccfb8dc611de156bc58f7145faa216c62351edc5bb6f482d9ca6bb2"
 }
