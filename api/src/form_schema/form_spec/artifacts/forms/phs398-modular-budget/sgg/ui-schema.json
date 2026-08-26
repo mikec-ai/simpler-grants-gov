@@ -19,17 +19,48 @@
             "definition": "/properties/periods/items/properties/budgetPeriodEndDate"
           },
           {
-            "type": "field",
-            "definition": "/properties/periods/items/properties/directCosts/properties/directCostLessConsortiumFandA",
-            "widget": "Select"
-          },
-          {
-            "type": "field",
-            "definition": "/properties/periods/items/properties/directCosts/properties/consortiumFandA"
-          },
-          {
-            "type": "field",
-            "definition": "/properties/periods/items/properties/directCosts/properties/totalDirectCosts"
+            "type": "multiField",
+            "name": "directCosts",
+            "widget": "Table",
+            "definition": [
+              "/properties/periods/items/properties/directCosts"
+            ],
+            "children": {
+              "columns": [
+                {
+                  "columnHeader": "Direct Cost less Consortium Indirect (F&A)",
+                  "width": 33.333333333333336
+                },
+                {
+                  "columnHeader": "Consortium Indirect (F&A)",
+                  "width": 33.333333333333336
+                },
+                {
+                  "columnHeader": "Total Funds Requested for Direct Costs",
+                  "width": 33.333333333333336
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    {
+                      "type": "input",
+                      "definition": "/properties/periods/items/properties/directCosts/properties/directCostLessConsortiumFandA"
+                    },
+                    {
+                      "type": "input",
+                      "definition": "/properties/periods/items/properties/directCosts/properties/consortiumFandA",
+                      "format": "dollar"
+                    },
+                    {
+                      "type": "readOnly",
+                      "definition": "/properties/periods/items/properties/directCosts/properties/totalDirectCosts",
+                      "format": "dollar"
+                    }
+                  ]
+                }
+              ]
+            }
           },
           {
             "type": "fieldList",
