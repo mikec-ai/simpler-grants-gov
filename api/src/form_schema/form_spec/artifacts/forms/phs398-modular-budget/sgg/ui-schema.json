@@ -19,17 +19,61 @@
             "definition": "/properties/periods/items/properties/budgetPeriodEndDate"
           },
           {
-            "type": "field",
-            "definition": "/properties/periods/items/properties/directCosts/properties/directCostLessConsortiumFandA",
-            "widget": "Select"
-          },
-          {
-            "type": "field",
-            "definition": "/properties/periods/items/properties/directCosts/properties/consortiumFandA"
-          },
-          {
-            "type": "field",
-            "definition": "/properties/periods/items/properties/directCosts/properties/totalDirectCosts"
+            "type": "multiField",
+            "name": "directCosts",
+            "widget": "Table",
+            "definition": [
+              "/properties/periods/items/properties/directCosts"
+            ],
+            "children": {
+              "columns": [
+                {
+                  "columnHeader": "Direct Cost less Consortium Indirect (F&A)",
+                  "width": 33.333333333333336
+                },
+                {
+                  "columnHeader": "Consortium Indirect (F&A)",
+                  "width": 33.333333333333336
+                },
+                {
+                  "columnHeader": "Total Funds Requested for Direct Costs",
+                  "width": 33.333333333333336
+                }
+              ],
+              "rows": [
+                {
+                  "cells": [
+                    {
+                      "type": "select",
+                      "definition": "/properties/periods/items/properties/directCosts/properties/directCostLessConsortiumFandA",
+                      "options": [
+                        "0.00",
+                        "25000.00",
+                        "50000.00",
+                        "75000.00",
+                        "100000.00",
+                        "125000.00",
+                        "150000.00",
+                        "175000.00",
+                        "200000.00",
+                        "225000.00",
+                        "250000.00"
+                      ]
+                    },
+                    {
+                      "type": "input",
+                      "definition": "/properties/periods/items/properties/directCosts/properties/consortiumFandA",
+                      "format": "dollar"
+                    },
+                    {
+                      "type": "readOnly",
+                      "definition": "/properties/periods/items/properties/directCosts/properties/totalDirectCosts",
+                      "format": "dollar"
+                    }
+                  ]
+                }
+              ]
+            }
           },
           {
             "type": "fieldList",
