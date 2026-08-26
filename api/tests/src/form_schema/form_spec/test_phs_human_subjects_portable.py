@@ -111,7 +111,6 @@ ATTACHMENT_VALIDATION_FIELDS = {
 SOURCE_BOUND_CONDITIONS = (
     ("1-07", "/exemptFromFederalRegulations"),
     ("1-08", "/exemptions"),
-    ("1-14", "/studies"),
     ("1-15-1", "/studies"),
     ("1-15-2", "/studies"),
     ("1-16", "/studies"),
@@ -119,7 +118,6 @@ SOURCE_BOUND_CONDITIONS = (
     ("1-19-2", "/delayedOnsetStudies/[]/studyTitle"),
     ("1-19-3", "/delayedOnsetStudies/[]/anticipatedClinicalTrial"),
     ("1-19-4", "/delayedOnsetStudies/[]/justification"),
-    ("1-20", "/delayedOnsetStudies"),
 )
 EXPECTED_SOURCE_RECORDS = (
     (
@@ -439,6 +437,21 @@ def test_human_subjects_loads_complete_portable_inventory() -> None:
         "outcome_measures",
         "delayed_onset_studies",
     }
+    reusable_lists = {node["name"]: node for node in lists}
+    expected_human_subjects_gate = {
+        "when": {
+            "op": "equals",
+            "ref": {"scope": "root", "pointer": "/involves_human_subjects"},
+            "value": "Y: Yes",
+        },
+        "then": {"interaction": "enabled"},
+        "otherwise": {"interaction": "disabled"},
+    }
+    assert reusable_lists["studies"]["label"] == "Human Subject Study"
+    assert reusable_lists["studies"]["conditional"] == expected_human_subjects_gate
+    assert reusable_lists["delayed_onset_studies"]["label"] == "Delayed Onset Study"
+    assert reusable_lists["delayed_onset_studies"]["conditional"] == expected_human_subjects_gate
+    assert reusable_lists["inclusion_enrollment_reports"]["label"] == "Inclusion Enrollment Report"
     assert projected.form_rule_schema is not None
     assert projected.json_to_xml_schema is not None
 
@@ -511,10 +524,10 @@ def test_human_subjects_preserves_exact_provenance_and_open_behavior_gates() -> 
         ),
         (
             "1-14",
-            "/studies",
+            "studies",
             "condition",
             "official_source",
-            "source-bound-uncompiled",
+            "compiled",
             "phs-human-subjects-dat-f705",
             "The Adobe PDF version of the Human Subject Study form will be compressed and "
             "embedded into this form. The applicant will click the button and a dialog box will "
@@ -592,19 +605,26 @@ def test_human_subjects_preserves_exact_provenance_and_open_behavior_gates() -> 
         ),
         (
             "1-20",
-            "/delayedOnsetStudies",
+            "delayedOnsetStudies",
             "condition",
             "official_source",
-            "source-bound-uncompiled",
+            "compiled",
             "phs-human-subjects-dat-f705",
             "Adds another entry. Disabled on 150th entry. Disabled if HumanSubjectsIndicator is "
             "not Yes.",
         ),
     ]
     assert len(condition_records) == 11
-    assert [(row["sourcePath"], row["canonicalPath"]) for row in condition_records] == list(
-        SOURCE_BOUND_CONDITIONS
-    )
+    assert [
+        (row["sourcePath"], row["canonicalPath"])
+        for row in condition_records
+        if row["executionStatus"] == "source-bound-uncompiled"
+    ] == list(SOURCE_BOUND_CONDITIONS)
+    assert [
+        (row["sourcePath"], row["canonicalPath"])
+        for row in condition_records
+        if row["executionStatus"] == "compiled"
+    ] == [("1-14", "studies"), ("1-20", "delayedOnsetStudies")]
     assert calculations == [
         {
             "canonicalPath": "/studies/[]/populationCharacteristics/"

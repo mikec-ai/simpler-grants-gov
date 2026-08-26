@@ -4,7 +4,7 @@
   "title": "Portable legacy parity delta ledger",
   "type": "object",
   "additionalProperties": false,
-  "required": ["contract", "evidenceVerification", "records"],
+  "required": ["contract", "evidenceVerification", "decisionVerification", "records"],
   "properties": {
     "contract": {"const": "grants-form-parity-delta-ledger/v1"},
     "evidenceVerification": {
@@ -15,6 +15,14 @@
         "repository": {"type": "string", "format": "uri"},
         "revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
         "receipt": {"type": "string", "pattern": "^parity/.+\\.json$"}
+      }
+    },
+    "decisionVerification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["receipt"],
+      "properties": {
+        "receipt": {"const": "parity/decision-verification.v1.json"}
       }
     },
     "records": {
@@ -109,6 +117,7 @@
             "reviewedAt": {"type": "string", "format": "date-time"},
             "decisionEvidence": {
               "type": "array",
+              "uniqueItems": true,
               "items": {"$ref": "#/$defs/externalReference"}
             }
           }
@@ -133,6 +142,15 @@
                   "legacy_presentation_difference",
                   "approved_incompatibility"
                 ]
+              },
+              "review": {
+                "type": "object",
+                "required": ["reviewer", "reviewedAt"],
+                "properties": {
+                  "reviewer": {"type": "string", "minLength": 1},
+                  "reviewedAt": {"type": "string", "format": "date-time"},
+                  "decisionEvidence": {"type": "array", "minItems": 1, "maxItems": 1}
+                }
               }
             }
           }

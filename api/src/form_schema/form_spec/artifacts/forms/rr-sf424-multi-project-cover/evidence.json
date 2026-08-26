@@ -231,116 +231,256 @@
   },
   "behaviorEvidence": [
     {
+      "canonicalPath": "/applicantInfo/organizationInfo/address/state",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "05-5e",
+      "sourceRecord": "This field is active if Country is US. If Country is not US, then this field is inactive."
+    },
+    {
       "canonicalPath": "applicantInfo.organizationInfo.address.state",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI enables State for USA and disables it otherwise, matching the official active/inactive direction, but equivalence and inactive-value retention or clearing have not been reviewed.",
+      "removalCondition": "Approve the enabled/disabled projection and inactive-value policy against the exact official rule."
     },
     {
+      "canonicalPath": "/applicantInfo/organizationInfo/address/province",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "05-5e1",
+      "sourceRecord": "If Country is US then this field is inactive. If Country is not US, then this field is active"
+    },
+    {
       "canonicalPath": "applicantInfo.organizationInfo.address.province",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI makes Province read-only for USA and enabled otherwise. The official DAT says inactive rather than read-only, and inactive-value retention or clearing is not encoded.",
+      "removalCondition": "Approve read-only as equivalent to the official inactive state and decide inactive-value retention, or compile a more exact interaction."
     },
     {
+      "canonicalPath": "/applicantInfo/contactPersonInfo/address/state",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "05-6j",
+      "sourceRecord": "This field is active if Country is US. If Country is not US, then inactive"
+    },
+    {
       "canonicalPath": "applicantInfo.contactPersonInfo.address.state",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI enables State for USA and disables it otherwise, matching the official active/inactive direction, but equivalence and inactive-value retention or clearing have not been reviewed.",
+      "removalCondition": "Approve the enabled/disabled projection and inactive-value policy against the exact official rule."
     },
     {
+      "canonicalPath": "/applicantInfo/contactPersonInfo/address/province",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "05-6k",
+      "sourceRecord": "If Country is US then this field is inactive. If Country is not US, then it is active."
+    },
+    {
       "canonicalPath": "applicantInfo.contactPersonInfo.address.province",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI makes Province read-only for USA and enabled otherwise. The official DAT says inactive rather than read-only, and inactive-value retention or clearing is not encoded.",
+      "removalCondition": "Approve read-only as equivalent to the official inactive state and decide inactive-value retention, or compile a more exact interaction."
     },
     {
+      "canonicalPath": "/applicantType/applicantTypeCodeOtherExplanation",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "07-1",
+      "sourceRecord": "Other Field remain grayed out unless they select \"Other as the Applicant Type."
+    },
+    {
       "canonicalPath": "applicantType.applicantTypeCodeOtherExplanation",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI disables the explanation until Applicant Type is Other. That is structurally consistent with the source's grayed-out direction, but equivalence and inactive-value retention or clearing remain unreviewed.",
+      "removalCondition": "Approve the enabled/disabled projection and inactive-value policy against the exact official rule."
     },
     {
+      "canonicalPath": "/applicantType/smallBusinessOrganizationType/sociallyEconomicallyDisadvantaged",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "07-4",
+      "sourceRecord": "If Small Business Organization is selected above, please answer but not required. Grayed out until Small Business Organzation is selected. Not a picklist. Each is own checkbox"
+    },
+    {
       "canonicalPath": "applicantType.smallBusinessOrganizationType.sociallyEconomicallyDisadvantaged",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The optional checkbox is disabled until Applicant Type is Small Business. This reflects the official grayed-out interaction, but the source wording, parent trigger, and inactive-value policy have not been accepted as equivalent.",
+      "removalCondition": "Approve the trigger and enabled/disabled projection, including inactive-value handling, against the exact source rule."
     },
     {
+      "canonicalPath": "/applicantType/smallBusinessOrganizationType/womenOwned",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "07-3",
+      "sourceRecord": "If Small Business Organization is selected above, please answer, but not required. Grayed out until Small Business Organzation is selected. Not a picklist. Each is own checkbox"
+    },
+    {
       "canonicalPath": "applicantType.smallBusinessOrganizationType.womenOwned",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The optional checkbox is disabled until Applicant Type is Small Business. This reflects the official grayed-out interaction, but the source wording, parent trigger, and inactive-value policy have not been accepted as equivalent.",
+      "removalCondition": "Approve the trigger and enabled/disabled projection, including inactive-value handling, against the exact source rule."
     },
     {
+      "canonicalPath": "/applicationType/otherAgencySubmissionExplanation",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "08-2-3",
+      "sourceRecord": "Grayed out until OtherAgencySubmission = Y."
+    },
+    {
       "canonicalPath": "applicationType.otherAgencySubmissionExplanation",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI disables the explanation until Other Agency Submission is Yes, matching the source direction structurally, but equivalence and inactive-value retention or clearing remain unreviewed.",
+      "removalCondition": "Approve the enabled/disabled projection and inactive-value policy against the exact official rule."
     },
     {
+      "canonicalPath": "/applicationType/revisionCode",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "08-1-1 through 08-1-5",
+      "sourceRecord": "Can select two. Checkbox Implementation Grayed-out until ApplicationTypeCode = Revision. Not a picklist. Each is own checkbox. Valid combinations are AC, AD, BC, BD, or E Enumerations in schema should include: A, B, C, D, E, AC, AD, BC, BD to enforce stricter validation."
+    },
+    {
       "canonicalPath": "applicationType.revisionCode",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The encoded checkbox group preserves the official values and combinations and is disabled until Application Type is Revision, but the five source rows, presentation equivalence, and inactive-value policy remain unreviewed.",
+      "removalCondition": "Approve the encoded-checkbox and enabled/disabled projection against all five exact source rows, including inactive-value handling."
     },
     {
+      "canonicalPath": "/applicationType/revisionCodeOtherExplanation",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "08-1-6",
+      "sourceRecord": "Grayed out until 'E' is selected for RevisionCode."
+    },
+    {
       "canonicalPath": "applicationType.revisionCodeOtherExplanation",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI disables the explanation until Revision Code is E, matching the source direction structurally, but equivalence and inactive-value retention or clearing remain unreviewed.",
+      "removalCondition": "Approve the enabled/disabled projection and inactive-value policy against the exact official rule."
     },
     {
+      "canonicalPath": "/principalInvestigator/address/province",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "14-10e1",
+      "sourceRecord": "If Country is US then inactive. If Country is not US, then active."
+    },
+    {
       "canonicalPath": "principalInvestigator.address.province",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI makes Province read-only for USA and enabled otherwise. The official DAT says inactive rather than read-only, and inactive-value retention or clearing is not encoded.",
+      "removalCondition": "Approve read-only as equivalent to the official inactive state and decide inactive-value retention, or compile a more exact interaction."
     },
     {
+      "canonicalPath": "/stateReview/stateReviewDate",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "16-3",
+      "sourceRecord": "Grayed-out until StateReviewCodeType = Yes."
+    },
+    {
       "canonicalPath": "stateReview.stateReviewDate",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI disables State Review Date until the review answer is Yes, matching the source direction structurally, but equivalence and inactive-value retention or clearing remain unreviewed.",
+      "removalCondition": "Approve the enabled/disabled projection and inactive-value policy against the exact official rule."
     },
     {
+      "canonicalPath": "/authorizedRepresentative/address/state",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "19-10e",
+      "sourceRecord": "If Country is US then active. If Country is not US, then inactive"
+    },
+    {
       "canonicalPath": "authorizedRepresentative.address.state",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI enables State for USA and disables it otherwise, matching the official active/inactive direction, but equivalence and inactive-value retention or clearing have not been reviewed.",
+      "removalCondition": "Approve the enabled/disabled projection and inactive-value policy against the exact official rule."
     },
     {
+      "canonicalPath": "/authorizedRepresentative/address/province",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-361e00da500c",
+      "sourcePath": "19-10e1",
+      "sourceRecord": "If Country is US then inactive. If Country is not US, then active."
+    },
+    {
       "canonicalPath": "authorizedRepresentative.address.province",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI makes Province read-only for USA and enabled otherwise. The official DAT says inactive rather than read-only, and inactive-value retention or clearing is not encoded.",
+      "removalCondition": "Approve read-only as equivalent to the official inactive state and decide inactive-value retention, or compile a more exact interaction."
     }
   ],
   "operationalBehaviorEvidence": [],

@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simpler-grants.gov/contracts/parity-decision-artifact/v1",
+  "title": "Accountable parity acceptance decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "id",
+    "ledgerRecordId",
+    "formId",
+    "target",
+    "classification",
+    "decision",
+    "reviewer",
+    "reviewedAt",
+    "rationale"
+  ],
+  "properties": {
+    "contract": {"const": "grants-form-parity-decision/v1"},
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$"},
+    "ledgerRecordId": {"type": "string", "pattern": "^[a-z0-9][a-z0-9.-]+$"},
+    "formId": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]+$"},
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["dimension", "differenceKey", "semanticTarget"],
+      "properties": {
+        "dimension": {"enum": ["schema", "ui", "validation", "rules"]},
+        "differenceKey": {"type": "string", "minLength": 1},
+        "semanticTarget": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": {
+              "enum": ["canonical_form_path", "ui_section", "policy_reference", "rule_path"]
+            },
+            "value": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "classification": {
+      "enum": [
+        "authoritative_source_correction",
+        "canonical_constraint_or_guidance",
+        "legacy_presentation_difference",
+        "approved_incompatibility"
+      ]
+    },
+    "decision": {"const": "accepted"},
+    "reviewer": {"type": "string", "minLength": 1},
+    "reviewedAt": {"type": "string", "format": "date-time"},
+    "rationale": {"type": "string", "minLength": 1}
+  }
+}

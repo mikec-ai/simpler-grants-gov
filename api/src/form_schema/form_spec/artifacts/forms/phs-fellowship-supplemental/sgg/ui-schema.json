@@ -283,7 +283,23 @@
             "type": "field",
             "definition": "/properties/candidateInformation/properties/currentPriorNrsaSupport/properties/records/items/properties/grantNumber"
           }
-        ]
+        ],
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/candidateInformation/currentPriorNrsaSupport/hasSupport"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
       },
       {
         "type": "field",

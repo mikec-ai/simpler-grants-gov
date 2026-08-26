@@ -44,6 +44,7 @@
     "locationType"
   ],
   "description": "Enrollment count measure instantiated by reporting period, ethnicity, sex, and race.",
+  "title": "Inclusion Enrollment Report",
   "$defs": {
     "ClinicalYesNo": {
       "type": "string",

@@ -238,68 +238,148 @@
   },
   "behaviorEvidence": [
     {
+      "canonicalPath": "/grantsGovTrackingId",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-532938a75c58",
+      "sourcePath": "04-2",
+      "sourceRecord": "Required if SubmissionTypeCode = Changed/Corrected Application"
+    },
+    {
       "canonicalPath": "grantsGovTrackingId",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable schema compiles conditional requiredness and the UI hides the field unless the submission is changed or corrected. The official DAT establishes requiredness but does not say the field should be hidden rather than remain visible and optional for other submission types.",
+      "removalCondition": "Approve hidden presentation as equivalent to the official requiredness rule or change the UI to preserve source-authorized presentation without weakening conditional requiredness."
     },
     {
+      "canonicalPath": "/applicantType/applicantTypeCodeOtherExplanation",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-532938a75c58",
+      "sourcePath": "07-1",
+      "sourceRecord": "Other Field remain grayed out unless they select \"Other as the Applicant Type. Required if \"Other\" is selected as the Applicant Type."
+    },
+    {
       "canonicalPath": "applicantType.applicantTypeCodeOtherExplanation",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "Conditional requiredness is compiled, but the portable UI hides the explanation instead of keeping it visible and grayed out as the official DAT specifies.",
+      "removalCondition": "Approve hidden presentation as equivalent or compile the official disabled/enabled interaction while retaining conditional requiredness."
     },
     {
+      "canonicalPath": "/applicantType/smallBusinessOrganizationType/sociallyEconomicallyDisadvantaged",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-532938a75c58",
+      "sourcePath": "07-3",
+      "sourceRecord": "If Small Business Organization is selected above, please answer but not required. Grayed out until Small Business Organization is selected. Not a picklist. Each is own checkbox"
+    },
+    {
       "canonicalPath": "applicantType.smallBusinessOrganizationType.sociallyEconomicallyDisadvantaged",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The checkbox remains optional and is conditionally exposed through its parent object, but the portable UI hides it rather than rendering the grayed-out checkbox described by the official DAT.",
+      "removalCondition": "Approve the parent-visibility projection as equivalent or compile the official disabled/enabled checkbox interaction."
     },
     {
+      "canonicalPath": "/applicantType/smallBusinessOrganizationType/womenOwned",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-532938a75c58",
+      "sourcePath": "07-2",
+      "sourceRecord": "If Small Business Organization is selected above, please answer, but not required. Grayed out until Small Business Organization is selected. Not a picklist. Each is own checkbox"
+    },
+    {
       "canonicalPath": "applicantType.smallBusinessOrganizationType.womenOwned",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The checkbox remains optional and is conditionally exposed through its parent object, but the portable UI hides it rather than rendering the grayed-out checkbox described by the official DAT.",
+      "removalCondition": "Approve the parent-visibility projection as equivalent or compile the official disabled/enabled checkbox interaction."
     },
     {
+      "canonicalPath": "/applicationType/otherAgencySubmissionExplanation",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-532938a75c58",
+      "sourcePath": "08-2-3",
+      "sourceRecord": "Required if OtherAgencySubmission = Y. Grayed out until OtherAgencySubmission = Y."
+    },
+    {
       "canonicalPath": "applicationType.otherAgencySubmissionExplanation",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "Conditional requiredness is compiled, but the portable UI hides the explanation instead of keeping it visible and grayed out as the official DAT specifies.",
+      "removalCondition": "Approve hidden presentation as equivalent or compile the official disabled/enabled interaction while retaining conditional requiredness."
     },
     {
+      "canonicalPath": "/applicationType/revisionCode",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-532938a75c58",
+      "sourcePath": "08-1-1 through 08-1-5",
+      "sourceRecord": "Can select two. Checkbox Implementation Grayed-out until ApplicationTypeCode = Revision. Not a picklist. Each is own checkbox. Valid combinations are AC, AD, BC, BD, or E Enumerations in schema should include: A, B, C, D, E, AC, AD, BC, BD to enforce stricter validation."
+    },
+    {
       "canonicalPath": "applicationType.revisionCode",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The encoded checkbox group preserves the official values and combinations and is conditionally required, but the portable UI hides it instead of rendering the grayed-out controls described in each of the five DAT rows.",
+      "removalCondition": "Approve hidden presentation as equivalent or compile the official disabled/enabled encoded-checkbox interaction without changing its allowed combinations."
     },
     {
+      "canonicalPath": "/applicationType/revisionCodeOtherExplanation",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-532938a75c58",
+      "sourcePath": "08-1-6",
+      "sourceRecord": "Required if RevisionCode = E. Other Grayed out until 'E' is selected for RevisionCode."
+    },
+    {
       "canonicalPath": "applicationType.revisionCodeOtherExplanation",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "Conditional requiredness is compiled, but the portable UI hides the explanation instead of keeping it visible and grayed out as the official DAT specifies.",
+      "removalCondition": "Approve hidden presentation as equivalent or compile the official disabled/enabled interaction while retaining conditional requiredness."
     },
     {
+      "canonicalPath": "/stateReview/stateReviewDate",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-532938a75c58",
+      "sourcePath": "16-3",
+      "sourceRecord": "Conditionally required and active if StateReviewCodeType = Yes. If StateReviewCodeType is not Yes, then inactive."
+    },
+    {
       "canonicalPath": "stateReview.stateReviewDate",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "Conditional requiredness is compiled, but the portable UI hides the date instead of preserving the official active/inactive interaction.",
+      "removalCondition": "Approve hidden presentation as equivalent or compile the official enabled/disabled interaction while retaining conditional requiredness."
     }
   ],
   "operationalBehaviorEvidence": [],

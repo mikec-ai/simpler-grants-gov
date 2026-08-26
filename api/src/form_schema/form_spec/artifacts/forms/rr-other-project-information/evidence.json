@@ -55,108 +55,337 @@
   ],
   "behaviorEvidence": [
     {
+      "canonicalPath": "/humanSubjects/exemptFromFederalRegulations",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-1",
+      "sourceRecord": "Required if YES to question 01-0, otherwise disabled."
+    },
+    {
+      "canonicalPath": "/humanSubjects/exemptions",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-1c",
+      "sourceRecord": "Required if YES selected for question 01-a-1, otherwise disabled."
+    },
+    {
+      "canonicalPath": "/humanSubjects/exemptions",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-1d",
+      "sourceRecord": "Enabled only if ExemptFedReg = Yes."
+    },
+    {
+      "canonicalPath": "/humanSubjects/exemptions",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-1e",
+      "sourceRecord": "Enabled only if ExemptFedReg = Yes."
+    },
+    {
+      "canonicalPath": "/humanSubjects/exemptions",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-1f",
+      "sourceRecord": "Enabled only if ExemptFedReg = Yes."
+    },
+    {
+      "canonicalPath": "/humanSubjects/exemptions",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-1g",
+      "sourceRecord": "Enabled only if ExemptFedReg = Yes."
+    },
+    {
+      "canonicalPath": "/humanSubjects/exemptions",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-1h",
+      "sourceRecord": "Enabled only if ExemptFed = Yes."
+    },
+    {
+      "canonicalPath": "/humanSubjects/exemptions",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-1i",
+      "sourceRecord": "Enabled only if ExemptFedReg = Yes."
+    },
+    {
+      "canonicalPath": "/humanSubjects/exemptions",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-1j",
+      "sourceRecord": "Enabled only if ExemptFedReg = Yes."
+    },
+    {
+      "canonicalPath": "/humanSubjects/exemptions",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-1k",
+      "sourceRecord": "Enabled only if ExemptFedReg = Yes."
+    },
+    {
+      "canonicalPath": "/humanSubjects/irbReviewPending",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-2a",
+      "sourceRecord": "Required if ExemptFedReg = No. Otherwise disabled."
+    },
+    {
+      "canonicalPath": "/humanSubjects/irbApprovalDate",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-3",
+      "sourceRecord": "Required if IRBReviewPending = No, otherwise disabled."
+    },
+    {
+      "canonicalPath": "/humanSubjects/assuranceNumber",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "01-a-4",
+      "sourceRecord": "Active only if \"Yes\" to HumanSubjectsIndicator."
+    },
+    {
+      "canonicalPath": "/vertebrateAnimals/iacucReviewPending",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "02-a-2a",
+      "sourceRecord": "Required if VertebrateAnimalsIndicator = Yes. Otherwise disabled."
+    },
+    {
+      "canonicalPath": "/vertebrateAnimals/iacucApprovalDate",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "02-a-3",
+      "sourceRecord": "Required if VertebrateAnimalsIACUCReviewIndicator = No. Otherwise disabled."
+    },
+    {
+      "canonicalPath": "/vertebrateAnimals/assuranceNumber",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "02-a-4",
+      "sourceRecord": "Required if VertebrateAnimalsIACUCReviewIndicator = No. Enabled only if VertebrateAnimalsIndicator = Yes."
+    },
+    {
+      "canonicalPath": "/environmentalImpact/environmentalImpactExplanation",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "04-b",
+      "sourceRecord": "Required if EnvironmentalImpactIndicator is Yes, otherwise disabled"
+    },
+    {
+      "canonicalPath": "/environmentalImpact/hasEnvironmentalExemptionOrAssessment",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "04-c",
+      "sourceRecord": "Enabled only if answer to 4.a. = Yes."
+    },
+    {
+      "canonicalPath": "/environmentalImpact/environmentalExemptionOrAssessmentExplanation",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "04-d",
+      "sourceRecord": "Required if EnvironmentalExemptionIndicator is Yes, otherwise disabled"
+    },
+    {
+      "canonicalPath": "/historicPlaces/explanation",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "05-a",
+      "sourceRecord": "Required if HistoricDesignation is Yes, otherwise disabled"
+    },
+    {
+      "canonicalPath": "/internationalActivities/countries",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "06-a",
+      "sourceRecord": "Required if InternationalActivitiesIndicator is Yes, otherwise disabled"
+    },
+    {
+      "canonicalPath": "/projectSummaryAbstract",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "07-0",
+      "sourceRecord": "Required unless SubmissionTypeCode (SF424(R&R)) on Cover Page is Pre-application. Validation occurs server-side, not on PDF or webform."
+    },
+    {
+      "canonicalPath": "/projectNarrative",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "08-0",
+      "sourceRecord": "Required unless SubmissionTypeCode (SF424(R&R)) on Cover Page is Pre-application. Validation occurs server-side, not on PDF or webform."
+    },
+    {
+      "canonicalPath": "/otherAttachments",
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-54234acd9882",
+      "sourcePath": "12-1",
+      "sourceRecord": "Read only checkbox, no matching xml data element. Indicates whether an Optional Other Attachment is attached."
+    },
+    {
       "canonicalPath": "humanSubjects.exemptFromFederalRegulations",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI compiles the same Yes trigger and conditional requiredness but hides the field otherwise; the official source says disabled. Value retention and hidden-versus-disabled parity require human review.",
+      "removalCondition": "Approve the visible/hidden projection as equivalent to the source or compile the source-required disabled and value-clearing behavior."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "humanSubjects.exemptions",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI aggregates eight source checkboxes into one enum array and hides it unless exemption status is Yes. The source separately conditions the presentation row and each checkbox, and requires a selection; the emitted schema has minItems 1 but does not conditionally require the array property.",
+      "removalCondition": "Approve the aggregate array projection and add exact conditional requiredness, or preserve the source checkbox-level behavior explicitly."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "humanSubjects.irbReviewPending",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI compiles the No trigger and conditional requiredness but hides the field otherwise; the official source says disabled.",
+      "removalCondition": "Approve hidden as equivalent to disabled or compile the exact disabled/value-retention behavior."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "humanSubjects.irbApprovalDate",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI compiles the IRB-pending No trigger and conditional requiredness but hides the field otherwise; the official source says disabled.",
+      "removalCondition": "Approve hidden as equivalent to disabled or compile the exact disabled/value-retention behavior."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "humanSubjects.assuranceNumber",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI hides the field unless human subjects is Yes; the official source says active only for Yes. Human review must decide hidden-versus-inactive behavior and value retention.",
+      "removalCondition": "Approve the visibility projection or compile the exact active/inactive behavior."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "vertebrateAnimals.iacucReviewPending",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI compiles the Yes trigger and conditional requiredness but hides the field otherwise; the official source says disabled.",
+      "removalCondition": "Approve hidden as equivalent to disabled or compile the exact disabled/value-retention behavior."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "vertebrateAnimals.iacucApprovalDate",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI compiles the IACUC-pending No trigger and conditional requiredness but hides the field otherwise; the official source says disabled.",
+      "removalCondition": "Approve hidden as equivalent to disabled or compile the exact disabled/value-retention behavior."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "vertebrateAnimals.assuranceNumber",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI makes the field visible and required when IACUC review is not pending. The source also separately enables it only when vertebrate animals is Yes; that outer condition and hidden-versus-disabled behavior are not represented exactly.",
+      "removalCondition": "Compile the complete two-part source rule or approve the current implication-based projection and value-retention behavior."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "environmentalImpact.environmentalImpactExplanation",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI compiles the Yes trigger and conditional requiredness but hides the field otherwise; the official source says disabled.",
+      "removalCondition": "Approve hidden as equivalent to disabled or compile the exact disabled/value-retention behavior."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "environmentalImpact.hasEnvironmentalExemptionOrAssessment",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI hides this field unless environmental impact is Yes and also makes it conditionally required. The official source only says enabled for Yes, so the additional requiredness needs policy review.",
+      "removalCondition": "Confirm the additional requiredness from an authoritative source or remove it, and resolve hidden-versus-disabled behavior."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "environmentalImpact.environmentalExemptionOrAssessmentExplanation",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI compiles the exemption Yes trigger and conditional requiredness but hides the field otherwise; the official source says disabled.",
+      "removalCondition": "Approve hidden as equivalent to disabled or compile the exact disabled/value-retention behavior."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "historicPlaces.explanation",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI compiles the historic-designation Yes trigger and conditional requiredness but hides the field otherwise; the official source says disabled.",
+      "removalCondition": "Approve hidden as equivalent to disabled or compile the exact disabled/value-retention behavior."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "internationalActivities.countries",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The current UI compiles the international-activities Yes trigger and conditional requiredness but hides the field otherwise; the official source says disabled.",
+      "removalCondition": "Approve hidden as equivalent to disabled or compile the exact disabled/value-retention behavior."
     }
   ],
   "operationalBehaviorEvidence": [],

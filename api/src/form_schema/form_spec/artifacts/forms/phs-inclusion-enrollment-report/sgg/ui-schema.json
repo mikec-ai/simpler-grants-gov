@@ -7,7 +7,7 @@
       {
         "type": "fieldList",
         "name": "reports",
-        "label": "reports",
+        "label": "Inclusion Enrollment Report",
         "definition": "/properties/reports",
         "children": [
           {

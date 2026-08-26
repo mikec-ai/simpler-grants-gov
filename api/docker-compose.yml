@@ -101,6 +101,9 @@ services:
       - "${API_HOST_PORT:-8080}:8080"
     volumes:
       - .:/api
+      # Portable-form CI validates versioned frontend evidence paths from the
+      # repository-wide map while the API test runner is mounted at /api.
+      - ../frontend:/frontend:ro
       # The local scanner and S3Mock must observe the same per-project store.
       - s3mock-data:/api/locals3root
     depends_on:

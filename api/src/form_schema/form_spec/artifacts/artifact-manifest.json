@@ -2,9 +2,19 @@
   "contract": "grants-form-artifact-selection/v1",
   "files": [
     {
+      "path": "contract/v1/parity-decision-artifact.schema.json",
+      "sha256": "e5543dc03538e5f675c2106196c6a027d07fc4cf83cfc3717accba8326aea65a",
+      "size": 1839
+    },
+    {
+      "path": "contract/v1/parity-decision-verification.schema.json",
+      "sha256": "d7b67506c25a1be0aeabfdc2b49792c0e1bc4d914d3cd1f5b44a17bc9e279946",
+      "size": 984
+    },
+    {
       "path": "contract/v1/parity-delta-ledger.schema.json",
-      "sha256": "96cb4b4fa00c4505a78865f6273dcf2885f25c080f13a15d1b809fcc1c49f14a",
-      "size": 5539
+      "sha256": "cabb0649595737ec92600f3a2bae76d260bfd0f2fcc12dea8c776d7b91bb25b0",
+      "size": 6236
     },
     {
       "path": "dist/forms/attachment-form/evidence.json",
@@ -413,8 +423,8 @@
     },
     {
       "path": "dist/forms/performance-site/evidence.json",
-      "sha256": "aaab6a826441ff03c96e44ef358897f49f5168adf45cf1fc6892f70810a14432",
-      "size": 4363
+      "sha256": "6d6882f0781a87cfae177a87cd60e722e5bc768b68ae113edcfcf73f84a86a3c",
+      "size": 6737
     },
     {
       "path": "dist/forms/performance-site/manifest.json",
@@ -503,8 +513,8 @@
     },
     {
       "path": "dist/forms/phs-fellowship-supplemental/evidence.json",
-      "sha256": "4fde5829b3c2c25328b34e6b40070c22889aa742c2f97e6190062f4031a1b4b7",
-      "size": 18661
+      "sha256": "1c465aba122b42f60e5b03795633d543d30868b9336b98ff5005b7538b763724",
+      "size": 18645
     },
     {
       "path": "dist/forms/phs-fellowship-supplemental/manifest.json",
@@ -523,8 +533,8 @@
     },
     {
       "path": "dist/forms/phs-fellowship-supplemental/sgg/ui-schema.json",
-      "sha256": "57e0321da4ec19117217e4e6fc79062e81e3ada9bf8446bdb9f15aad4cd06f92",
-      "size": 19156
+      "sha256": "1d4f73d97d9d24f8eb29e3d6fc9c079691d97237562c4d9481f3585f47ebbb7f",
+      "size": 19579
     },
     {
       "path": "dist/forms/phs-fellowship-supplemental/targets/grants-gov-xml.json",
@@ -533,8 +543,8 @@
     },
     {
       "path": "dist/forms/phs-human-subjects/evidence.json",
-      "sha256": "7635ee65d02df3716a21d4a8a96a3807ae87114003acaacb994baaa55ae0054e",
-      "size": 10161
+      "sha256": "de7fa27ef18e6973be47f92117cf887d9c7c4de09bc64eb5b66703409ec469ab",
+      "size": 10129
     },
     {
       "path": "dist/forms/phs-human-subjects/manifest.json",
@@ -543,8 +553,8 @@
     },
     {
       "path": "dist/forms/phs-human-subjects/schema.json",
-      "sha256": "6f63890a2a0ad814acd1e4a8aeb2871d4cb3ac358d29d67d9bcc71daec6fd77d",
-      "size": 3247
+      "sha256": "de00af3221eb0216723a7f97cc74b1eface4b4e3dd3ac05f221cc3a86f7f58d6",
+      "size": 3599
     },
     {
       "path": "dist/forms/phs-human-subjects/sgg/rule-schema.json",
@@ -553,8 +563,8 @@
     },
     {
       "path": "dist/forms/phs-human-subjects/sgg/ui-schema.json",
-      "sha256": "205ac3cb247703f54a41b74a23bc56ef8d440ee25783c742641f62ddc2dbae10",
-      "size": 49561
+      "sha256": "f30214dfd983b7f8acd3ea23d7a4ef3f9281a1c9ac57f5d4cefd1f1478741ead",
+      "size": 50352
     },
     {
       "path": "dist/forms/phs-human-subjects/targets/grants-gov-xml.json",
@@ -583,8 +593,8 @@
     },
     {
       "path": "dist/forms/phs-inclusion-enrollment-report/sgg/ui-schema.json",
-      "sha256": "29089df3b4f26fbcf94c55e8f7f3a722934a55409a721a4d1fb0f2bd954ceda7",
-      "size": 24939
+      "sha256": "4923c32ab5d56b111c4044cf566e40f726bfb6831c281d2313f1fd90e6eda22f",
+      "size": 24959
     },
     {
       "path": "dist/forms/phs-inclusion-enrollment-report/targets/grants-gov-xml.json",
@@ -868,8 +878,8 @@
     },
     {
       "path": "dist/forms/rr-other-project-information/evidence.json",
-      "sha256": "d75cb36724a8c6de4128c9fd3c37c3c004b7a33edac240370b36f968585ad931",
-      "size": 7478
+      "sha256": "2259756c84c0b089b385c051abbb1622bc9e3dc6b9a1532beb02851ea21a0fed",
+      "size": 17678
     },
     {
       "path": "dist/forms/rr-other-project-information/manifest.json",
@@ -933,8 +943,8 @@
     },
     {
       "path": "dist/forms/rr-sf424-multi-project-cover/evidence.json",
-      "sha256": "6b9a005fb429a321d2c87075e68aca818fe9aa1eb001a00b41af6b17cd221bc6",
-      "size": 17138
+      "sha256": "d1f0d170cd1c27af08b953aa6fcc3396284ce7d0e2e4ba6957665718a55d4f5a",
+      "size": 25110
     },
     {
       "path": "dist/forms/rr-sf424-multi-project-cover/manifest.json",
@@ -963,8 +973,8 @@
     },
     {
       "path": "dist/forms/rr-sf424/evidence.json",
-      "sha256": "3de179e2f72f3365705ee1f3e490da765ffba03c3641e2c63f8d237e36df8b5b",
-      "size": 14377
+      "sha256": "58d9fd2cd142128af7b9424074279645255e5761e07c9be82ea153803b1b1cfd",
+      "size": 19326
     },
     {
       "path": "dist/forms/rr-sf424/manifest.json",
@@ -1768,8 +1778,8 @@
     },
     {
       "path": "dist/question-bank/clinical-study/delayed-onset-study/schema.json",
-      "sha256": "1b41fa9bbdc6214daf8e626b7e9f50696d6f8d084ddeb2a5639f1ebeefe0bd9b",
-      "size": 749
+      "sha256": "2895bfaee1471044df4aec5070d1eee3e5b35871b3be034a632de43b05d6fe39",
+      "size": 783
     },
     {
       "path": "dist/question-bank/clinical-study/design/schema.json",
@@ -1788,8 +1798,8 @@
     },
     {
       "path": "dist/question-bank/clinical-study/inclusion-enrollment-report/schema.json",
-      "sha256": "99509418abea5be2079d09daaa4679f744ffbb45e650fbea9bcd9ad53d04d9bb",
-      "size": 12284
+      "sha256": "841e166920efa66eae3a410059fdc57288da5c4e48f6cfe7f1a436ae7714b208",
+      "size": 12326
     },
     {
       "path": "dist/question-bank/clinical-study/inclusion-women-minorities/schema.json",
@@ -1823,8 +1833,8 @@
     },
     {
       "path": "dist/question-bank/clinical-study/population-characteristics/schema.json",
-      "sha256": "4cad49c88597b865a94370ca075fc5e5a3e8e6af787c46edd57165b55a94d988",
-      "size": 3875
+      "sha256": "bb95bf819e965f887ba45a755050014d0f65975cc1b8ae2860a19e5e008522cf",
+      "size": 3921
     },
     {
       "path": "dist/question-bank/clinical-study/protection-human-subjects/schema.json",
@@ -1858,8 +1868,8 @@
     },
     {
       "path": "dist/question-bank/clinical-study/study-record/schema.json",
-      "sha256": "79e588795c5de6aa1dce5918d55deb14c6b3731aee4149bc9619cd26dfcb487a",
-      "size": 2309
+      "sha256": "bfbcd5e533962e8bdd875059ae8fda1d0e0b01e65f4610b4416d4702b31d6746",
+      "size": 2343
     },
     {
       "path": "dist/question-bank/clinical-study/study-team-structure/schema.json",
@@ -2687,9 +2697,14 @@
       "size": 1519
     },
     {
+      "path": "parity/decision-verification.v1.json",
+      "sha256": "db3a94a55bca7a868eb799a8deab9fb8bd227c97b9a90d83c2809990c5cb181c",
+      "size": 83
+    },
+    {
       "path": "parity/legacy-deltas.v1.json",
-      "sha256": "b643d3d37400ff86bd5c46dd50e30d011468d2444c3cca8a6ea7d7aaa9c83957",
-      "size": 82050
+      "sha256": "1873097f9f29e799cf3b6931a4ee7d1bdd6ab45ad9efde53bc4583a28ddbefce",
+      "size": 82137
     }
   ],
   "selection": {
@@ -2742,7 +2757,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "7c3be8e32968b49b5ce48f53a832c00220eb5bee"
+    "revision": "92aad605ea9a8e6709bd6562ce9ed000a9512fb0"
   },
-  "sourceBundleSha256": "e67fbb6553f0b9e7c454a41eaa4b462557b401e34b10c6882eb742088636dc84"
+  "sourceBundleSha256": "ddf39538291defd7990bfcaf3a8305b5d1ae5df5acb7d7dacf60b6f98db78ba6"
 }

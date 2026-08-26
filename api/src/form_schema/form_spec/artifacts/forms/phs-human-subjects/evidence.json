@@ -137,10 +137,10 @@
       "sourceRecord": "One selection required if ExemptFedReg is yes."
     },
     {
-      "canonicalPath": "/studies",
+      "canonicalPath": "studies",
       "ruleKind": "condition",
       "authority": "official_source",
-      "executionStatus": "source-bound-uncompiled",
+      "executionStatus": "compiled",
       "sourceId": "phs-human-subjects-dat-f705",
       "sourcePath": "1-14",
       "sourceRecord": "The Adobe PDF version of the Human Subject Study form will be compressed and embedded into this form. The applicant will click the button and a dialog box will appear where applicant indicates where to save the file. Disabled if HumanSubjectsIndicator is not Yes."
@@ -209,10 +209,10 @@
       "sourceRecord": "Required for each row entered. Provide standard \"Add\", \"Delete\" and \"View\" features. Disabled if HumanSubjectsIndicator is not Yes."
     },
     {
-      "canonicalPath": "/delayedOnsetStudies",
+      "canonicalPath": "delayedOnsetStudies",
       "ruleKind": "condition",
       "authority": "official_source",
-      "executionStatus": "source-bound-uncompiled",
+      "executionStatus": "compiled",
       "sourceId": "phs-human-subjects-dat-f705",
       "sourcePath": "1-20",
       "sourceRecord": "Adds another entry. Disabled on 150th entry. Disabled if HumanSubjectsIndicator is not Yes."

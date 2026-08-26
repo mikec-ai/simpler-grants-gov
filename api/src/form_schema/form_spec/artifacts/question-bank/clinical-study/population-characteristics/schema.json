@@ -147,7 +147,8 @@
           "$ref": "../../../question-bank/clinical-study/inclusion-enrollment-report/schema.json"
         }
       ],
-      "description": "Embedded-study occurrence of the shared report with its source-owned technical identifier."
+      "description": "Embedded-study occurrence of the shared report with its source-owned technical identifier.",
+      "title": "Inclusion Enrollment Report"
     }
   }
 }
