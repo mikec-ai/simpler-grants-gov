@@ -227,8 +227,17 @@ type NestedFieldListGroupItem = {
   conditional?: ConditionalUi;
 };
 
+type FieldListTableGroupItem = {
+  widget: "Table";
+  generalProps: Omit<UswdsWidgetProps, "id" | "value" | "key">;
+  baseId: string;
+  definition: string;
+  storagePath: string[];
+  conditional?: ConditionalUi;
+};
+
 export type FieldListGroupItem =
-  FieldListLeafGroupItem | NestedFieldListGroupItem;
+  FieldListLeafGroupItem | NestedFieldListGroupItem | FieldListTableGroupItem;
 
 export type UiSchemaTableCellType = "input" | "readOnly" | "plainText";
 
@@ -372,9 +381,7 @@ export interface UiSchemaFieldList {
   description?: string;
   additionalDescribedById?: string;
   conditional?: ConditionalUi;
-  children: (
-    Exclude<UiSchemaField, UiSchemaTableMultiField> | UiSchemaFieldList
-  )[];
+  children: (UiSchemaField | UiSchemaFieldList)[];
 }
 
 export type UiSchemaNode = UiSchemaField | UiSchemaSection | UiSchemaFieldList;

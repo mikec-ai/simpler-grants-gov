@@ -660,6 +660,71 @@ describe("getFieldConfig", () => {
         "amount",
       ]);
     });
+
+    it("returns nested Table config for one portable definition root", () => {
+      const root = "/properties/reports/items/properties/planned";
+      const matrixSchema: RJSFSchema = {
+        type: "object",
+        properties: {
+          reports: {
+            type: "array",
+            items: {
+              type: "object",
+              properties: {
+                planned: {
+                  type: "object",
+                  properties: { female: { type: "integer" } },
+                },
+              },
+            },
+          },
+        },
+      };
+      const uiFieldObject: UiSchemaFieldList = {
+        type: "fieldList",
+        name: "reports",
+        label: "Reports",
+        definition: "/properties/reports",
+        children: [
+          {
+            type: "multiField",
+            name: "planned",
+            widget: "Table",
+            definition: [root],
+            children: {
+              columns: [{ columnHeader: "Sex" }, { columnHeader: "Count" }],
+              rows: [
+                {
+                  cells: [
+                    { type: "plainText", staticContent: "Female" },
+                    {
+                      type: "input",
+                      definition: `${root}/properties/female`,
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+      };
+
+      const result = getFieldConfig({
+        errors: null,
+        formSchema: matrixSchema,
+        formData: {},
+        uiFieldObject,
+        requiredField: false,
+      });
+
+      expect(result.type).toBe("FieldList");
+      if (result.type !== "FieldList") throw new Error("Expected FieldList");
+      expect(result.props.groupDefinition[0]).toMatchObject({
+        widget: "Table",
+        definition: root,
+        storagePath: ["planned"],
+      });
+    });
   });
 
   describe("getFieldListRequiredFields", () => {
