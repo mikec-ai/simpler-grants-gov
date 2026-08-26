@@ -333,6 +333,22 @@ describe("ApplyForm", () => {
 
   it("preserves an encoded checkbox selection across conditional rerenders", async () => {
     const user = userEvent.setup();
+    const revisionCodeSchema = {
+      type: "string",
+      title: "Revision type",
+      enum: ["A", "C", "AC"],
+      "x-encoded-checkbox-group": {
+        choices: [
+          { code: "A", label: "A. Increase Award" },
+          { code: "C", label: "C. Increase Duration" },
+        ],
+        combinations: [
+          { value: "A", members: ["A"] },
+          { value: "C", members: ["C"] },
+          { value: "AC", members: ["A", "C"] },
+        ],
+      },
+    } as RJSFSchema;
     const encodedSchema: RJSFSchema = {
       type: "object",
       properties: {
@@ -341,22 +357,7 @@ describe("ApplyForm", () => {
           title: "Application type",
           enum: ["New", "Revision"],
         },
-        revisionCode: {
-          type: "string",
-          title: "Revision type",
-          enum: ["A", "C", "AC"],
-          "x-encoded-checkbox-group": {
-            choices: [
-              { code: "A", label: "A. Increase Award" },
-              { code: "C", label: "C. Increase Duration" },
-            ],
-            combinations: [
-              { value: "A", members: ["A"] },
-              { value: "C", members: ["C"] },
-              { value: "AC", members: ["A", "C"] },
-            ],
-          },
-        },
+        revisionCode: revisionCodeSchema,
       },
     };
     const encodedUiSchema: UiSchema = [

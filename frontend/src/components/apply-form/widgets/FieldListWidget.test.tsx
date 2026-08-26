@@ -139,6 +139,45 @@ const keyPersonFieldList = keyPersonUiSchema
   );
 
 describe("FieldListWidget", () => {
+  it("uses fully qualified keys when nested fields share a leaf name", () => {
+    const consoleError = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => undefined);
+
+    render(
+      <FieldListWidget
+        id="budget_year"
+        key="budget_year"
+        schema={{ type: "array", title: "Budget period" }}
+        label="Budget period"
+        minItems={1}
+        groupDefinition={[
+          {
+            ...baseGroupDefinition[0],
+            baseId: "budget_year[~~index~~]--key_person--requested_salary",
+            storagePath: ["key_person", "requested_salary"],
+          },
+          {
+            ...baseGroupDefinition[0],
+            baseId: "budget_year[~~index~~]--other_personnel--requested_salary",
+            storagePath: ["other_personnel", "requested_salary"],
+          },
+        ]}
+        rawErrors={[]}
+        requiredFields={[]}
+        name="budget_year"
+      />,
+    );
+
+    expect(screen.getAllByTestId("mock-widget")).toHaveLength(2);
+    expect(
+      consoleError.mock.calls.some((call) =>
+        String(call[0]).includes("same key"),
+      ),
+    ).toBe(false);
+    consoleError.mockRestore();
+  });
+
   it("uses the R&R Key Person artifact for add, delete, and maximum interactions", async () => {
     const user = userEvent.setup();
     const onChange = jest.fn();

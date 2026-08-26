@@ -137,17 +137,6 @@ const qualifyFieldListBaseId = ({
 };
 
 /**
- * Extracts the final field name from a FieldList base id.
- *
- * This is only used to build a stable React key for the rendered child widget.
- * Field values are read and written using `storagePath`.
- */
-const getFieldListChildKey = ({ baseId }: { baseId: string }): string => {
-  const baseIdParts = baseId.split("--");
-  return baseIdParts[baseIdParts.length - 1];
-};
-
-/**
  * Returns a new entry array with one additional empty entry appended.
  */
 const addFieldListEntry = ({
@@ -418,9 +407,7 @@ function FieldListEntry({
           entryIndex,
         });
 
-        const childKey = getFieldListChildKey({
-          baseId: groupItem.baseId,
-        });
+        const childKey = generatedId;
 
         const childErrors = getFieldListChildErrors({
           rawErrors,
