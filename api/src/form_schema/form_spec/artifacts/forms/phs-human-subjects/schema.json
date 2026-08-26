@@ -4,7 +4,8 @@
   "type": "object",
   "properties": {
     "involvesHumanSpecimensOrData": {
-      "$ref": "../../question-bank/clinical-study/involves-human-specimens-or-data/schema.json"
+      "$ref": "../../question-bank/clinical-study/involves-human-specimens-or-data/schema.json",
+      "title": "Does any proposed research involve human specimens and/or data?"
     },
     "specimensExplanation": {
       "$ref": "../../question-bank/clinical-study/non-human-subjects-specimens-explanation/schema.json"
@@ -35,14 +36,16 @@
           }
         }
       },
-      "maxItems": 150
+      "maxItems": 150,
+      "title": "Human Subject Study Records"
     },
     "delayedOnsetStudies": {
       "type": "array",
       "items": {
         "$ref": "../../question-bank/clinical-study/delayed-onset-study/schema.json"
       },
-      "maxItems": 150
+      "maxItems": 150,
+      "title": "Delayed Onset Studies"
     },
     "applicationId": {
       "type": "string",
@@ -53,6 +56,7 @@
     "involvesHumanSubjects": {
       "allOf": [
         {
+          "title": "Does the proposed project involve human subjects?",
           "readOnly": true
         }
       ]
@@ -60,6 +64,7 @@
     "exemptFromFederalRegulations": {
       "allOf": [
         {
+          "title": "Is the project exempt from federal regulations?",
           "readOnly": true
         }
       ]
@@ -67,6 +72,7 @@
     "exemptions": {
       "allOf": [
         {
+          "title": "Exemption Number(s)",
           "readOnly": true
         }
       ]

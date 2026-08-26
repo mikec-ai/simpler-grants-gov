@@ -99,10 +99,10 @@
       "sourceRecord": "Date format is MM/YYYY. Do NOT accept or require a specific day of the month. If an option has been selected for degree sought (G-3-1), then this field is both ENABLED and REQUIRED. If no entry is provided for degree-sought, then this field is DISABLED."
     },
     {
-      "canonicalPath": "/candidateInformation/currentPriorNrsaSupport/records",
+      "canonicalPath": "candidateInformation.currentPriorNrsaSupport.records",
       "ruleKind": "condition",
       "authority": "official_source",
-      "executionStatus": "source-bound-uncompiled",
+      "executionStatus": "compiled",
       "sourceId": "phs-fellowship-supplemental-dat-f836",
       "sourcePath": "G-5-01",
       "sourceRecord": "If \"yes\" is selected, then the support detail entries (G-5-04 through G-5-08 below) are enabled, and first occurrence of G-5-04 and G-5-05 must be entered."

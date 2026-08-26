@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://simpler-grants.gov/contracts/parity-decision-verification/v1",
+  "title": "Offline parity decision verification receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract", "artifacts"],
+  "properties": {
+    "contract": {"const": "grants-form-parity-decision-verification/v1"},
+    "artifacts": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["repository", "revision", "path", "sha256"],
+        "properties": {
+          "repository": {"const": "https://github.com/mikec-ai/grants-form-spec.git"},
+          "revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+          "path": {"type": "string", "pattern": "^parity/decisions/[a-z0-9][a-z0-9.-]+\\.json$"},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    }
+  }
+}

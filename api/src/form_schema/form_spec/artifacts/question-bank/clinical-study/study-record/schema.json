@@ -67,6 +67,7 @@
     "clinicalTrialQuestionnaire"
   ],
   "description": "One complete PHS human-subject study record.",
+  "title": "Human Subject Study",
   "$defs": {
     "ClinicalYesNo": {
       "type": "string",

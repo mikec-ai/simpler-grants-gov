@@ -62,44 +62,85 @@
   ],
   "behaviorEvidence": [
     {
+      "canonicalPath": "/primarySite/address/state",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-c0747c333fb8",
+      "sourcePath": "1-07",
+      "sourceRecord": "Conditionally required if Country is US then active. If Country is not US, then inactive"
+    },
+    {
       "canonicalPath": "primarySite.address.state",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI compiles the country-dependent active/inactive interaction, but the source also says the State is conditionally required for a US address. The emitted schema does not yet compile that requiredness, so the current interaction is not asserted as complete source parity.",
+      "removalCondition": "Resolve the exact active-versus-required interpretation and either compile the complete official rule or record an approved source-parity exception."
     },
     {
+      "canonicalPath": "/primarySite/address/province",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-c0747c333fb8",
+      "sourcePath": "1-08",
+      "sourceRecord": "If Country is US then inactive. If Country is not US, then active"
+    },
+    {
       "canonicalPath": "primarySite.address.province",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The portable UI renders Province read-only for a US address and enabled otherwise. Human review must decide whether read-only is equivalent to the source's inactive behavior, including whether an existing province value must be cleared.",
+      "removalCondition": "Approve the read-only projection as exact parity or compile the source-required disabled and value-clearing behavior."
     },
     {
+      "canonicalPath": "/additionalSites/[]/address/state",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-c0747c333fb8",
+      "sourcePath": "2-08",
+      "sourceRecord": "Conditionally required if Country is US then active. If Country is not US, then inactive"
+    },
+    {
       "canonicalPath": "additionalSites[*].address.state",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The repeating-site UI compiles the country-dependent active/inactive interaction, but the source also says the State is conditionally required for a US address. The emitted item schema does not yet compile that requiredness.",
+      "removalCondition": "Resolve the exact active-versus-required interpretation and either compile the complete official repeating-item rule or record an approved source-parity exception."
     },
     {
+      "canonicalPath": "/additionalSites/[]/address/province",
       "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "source-bound-uncompiled",
+      "sourceId": "source-1-c0747c333fb8",
+      "sourcePath": "2-08a",
+      "sourceRecord": "If Country is US then inactive. If Country is not US, then active"
+    },
+    {
       "canonicalPath": "additionalSites[*].address.province",
+      "ruleKind": "condition",
       "authority": "unresolved",
+      "executionStatus": "compiled",
       "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "reason": "The repeating-site UI renders Province read-only for a US address and enabled otherwise. Human review must decide whether read-only is equivalent to the source's inactive behavior, including whether an existing province value must be cleared.",
+      "removalCondition": "Approve the read-only projection as exact parity or compile the source-required disabled and value-clearing behavior for repeating sites."
     },
     {
-      "ruleKind": "condition",
       "canonicalPath": "additionalLocations",
-      "authority": "unresolved",
-      "owner": "form-semantic-review",
-      "reason": "Exact official condition evidence has not yet been reconciled for this emitted target.",
-      "removalCondition": "Replace this record when an official source is pinned and reviewed for the exact condition target."
+      "ruleKind": "condition",
+      "authority": "official_source",
+      "executionStatus": "compiled",
+      "sourceId": "source-1-c0747c333fb8",
+      "sourcePath": "3-3",
+      "sourceRecord": "Button becomes active only after the maximum number of sites (i.e 299) has been entered."
     }
   ],
   "operationalBehaviorEvidence": [],

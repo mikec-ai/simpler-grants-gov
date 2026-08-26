@@ -20,6 +20,7 @@
     "justification"
   ],
   "description": "Describe one delayed-onset study whose specific plans are not yet available.",
+  "title": "Delayed Onset Study",
   "$defs": {
     "ClinicalYesNo": {
       "type": "string",

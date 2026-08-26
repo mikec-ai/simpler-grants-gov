@@ -5,6 +5,9 @@
     "revision": "1e4cdb8b6481a0e34946df7b380e8cf306d552cd",
     "receipt": "parity/consumer-evidence-verification.v1.json"
   },
+  "decisionVerification": {
+    "receipt": "parity/decision-verification.v1.json"
+  },
   "records": [
     {
       "id": "sf424.schema.525a1ac4afff",

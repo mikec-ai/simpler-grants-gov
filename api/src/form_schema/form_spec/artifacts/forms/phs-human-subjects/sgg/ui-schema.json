@@ -42,7 +42,7 @@
       {
         "type": "fieldList",
         "name": "studies",
-        "label": "studies",
+        "label": "Human Subject Study",
         "definition": "/properties/studies",
         "children": [
           {
@@ -136,7 +136,7 @@
           {
             "type": "fieldList",
             "name": "inclusionEnrollmentReports",
-            "label": "inclusionEnrollmentReports",
+            "label": "Inclusion Enrollment Report",
             "definition": "/properties/studies/items/properties/populationCharacteristics/properties/inclusionEnrollmentReports",
             "children": [
               {
@@ -778,7 +778,23 @@
             "definition": "/properties/studies/items/properties/otherClinicalTrialAttachments",
             "widget": "AttachmentArray"
           }
-        ]
+        ],
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/involvesHumanSubjects"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
       }
     ]
   },
@@ -790,7 +806,7 @@
       {
         "type": "fieldList",
         "name": "delayedOnsetStudies",
-        "label": "delayedOnsetStudies",
+        "label": "Delayed Onset Study",
         "definition": "/properties/delayedOnsetStudies",
         "children": [
           {
@@ -805,7 +821,23 @@
             "type": "field",
             "definition": "/properties/delayedOnsetStudies/items/properties/justification"
           }
-        ]
+        ],
+        "conditional": {
+          "when": {
+            "op": "equals",
+            "ref": {
+              "scope": "root",
+              "pointer": "/involvesHumanSubjects"
+            },
+            "value": "Y: Yes"
+          },
+          "then": {
+            "interaction": "enabled"
+          },
+          "otherwise": {
+            "interaction": "disabled"
+          }
+        }
       }
     ]
   }
