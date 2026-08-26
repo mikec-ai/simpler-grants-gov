@@ -683,8 +683,8 @@
     },
     {
       "path": "dist/forms/phs398-modular-budget/sgg/ui-schema.json",
-      "sha256": "2ef2c416800416fbd9875a5875678c6d06f1915b61c87e30701443d5ccf6dfaf",
-      "size": 5478
+      "sha256": "515aca972d2107503c1cb1aa2a1a06191efe6f65eae9a5e91da8bf9f5aba1b7e",
+      "size": 5937
     },
     {
       "path": "dist/forms/phs398-modular-budget/targets/grants-gov-xml.json",
@@ -2757,7 +2757,7 @@
   },
   "source": {
     "repository": "https://github.com/mikec-ai/grants-form-spec.git",
-    "revision": "72b2ff69129f56f0146ae601e047d20bb8e3fb6f"
+    "revision": "77fcbe1d63fdb5d5e247f0a9e3bb3b7a1939b46d"
   },
-  "sourceBundleSha256": "2d0aaf0e40de3ec744f197013eb8bf77924bd70c26addc7d1537910d52ffd017"
+  "sourceBundleSha256": "670ef923d95b0aba19765d136ccdb74e3a48c8a98b67dc3f43975f79fcb48a80"
 }

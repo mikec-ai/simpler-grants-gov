@@ -46,9 +46,22 @@ def test_modular_budget_loads_without_form_specific_adapter_code() -> None:
     direct_costs_table = tables[0]
     assert direct_costs_table["name"] == "directCosts"
     assert [cell["type"] for cell in direct_costs_table["children"]["rows"][0]["cells"]] == [
-        "input",
+        "select",
         "input",
         "readOnly",
+    ]
+    assert direct_costs_table["children"]["rows"][0]["cells"][0]["options"] == [
+        "0.00",
+        "25000.00",
+        "50000.00",
+        "75000.00",
+        "100000.00",
+        "125000.00",
+        "150000.00",
+        "175000.00",
+        "200000.00",
+        "225000.00",
+        "250000.00",
     ]
     assert sum(column["width"] for column in direct_costs_table["children"]["columns"]) == 100
     assert projected.form_json_schema["properties"]["periods"]["maxItems"] == 5
@@ -73,7 +86,7 @@ def test_modular_budget_loads_without_form_specific_adapter_code() -> None:
     table_cells = [
         node
         for node in _walk(direct_costs_table["children"])
-        if node.get("type") in {"input", "readOnly"}
+        if node.get("type") in {"input", "select", "readOnly"}
     ]
     assert calculated_definitions <= {
         node["definition"] for node in [*fields, *table_cells] if "definition" in node
