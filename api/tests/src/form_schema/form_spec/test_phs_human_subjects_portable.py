@@ -420,8 +420,14 @@ def rule_context(available_ids: set[str]) -> JsonRuleContext:
 def test_human_subjects_loads_complete_portable_inventory() -> None:
     form = build_preview_form(FORM_ID)
     projected = _load_banked_form(FORM_ID, project_xml=True)
-    fields = [node for node in walk(form.form_ui_schema) if node.get("type") == "field"]
+    fields = [
+        node
+        for node in walk(form.form_ui_schema)
+        if node.get("type") in {"field", "input", "readOnly"}
+        and isinstance(node.get("definition"), str)
+    ]
     lists = [node for node in walk(form.form_ui_schema) if node.get("type") == "fieldList"]
+    tables = [node for node in walk(form.form_ui_schema) if node.get("widget") == "Table"]
 
     assert form.form_name == (
         "[Portable preview] PHS Human Subjects and Clinical Trials Information"
@@ -429,6 +435,7 @@ def test_human_subjects_loads_complete_portable_inventory() -> None:
     assert form.form_version == "3.0"
     assert form.legacy_form_id == 705
     assert len(fields) == 184
+    assert [table["name"] for table in tables] == ["planned", "cumulativeActual"]
     assert len(lists) == 5
     assert {node["name"] for node in lists} == {
         "studies",

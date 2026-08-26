@@ -273,24 +273,7 @@ export const UiJsonSchema: RJSFSchema = {
                 $ref: "#/$defs/field",
               },
               {
-                allOf: [
-                  {
-                    $ref: "#/$defs/multiField",
-                  },
-                  {
-                    // the sibling multiField ref already requires an object, so
-                    // declaring the type here only satisfies ajv's strictTypes check
-                    not: {
-                      type: "object",
-                      properties: {
-                        widget: {
-                          const: "Table",
-                        },
-                      },
-                      required: ["widget"],
-                    },
-                  },
-                ],
+                $ref: "#/$defs/multiField",
               },
               {
                 $ref: "#/$defs/fieldList",

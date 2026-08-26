@@ -616,8 +616,8 @@ describe("validateFormData", () => {
       expect(errors).toBeFalsy();
     });
 
-    it("should invalidate fieldList with a Table child", () => {
-      const invalidUiSchema = [
+    it("should validate fieldList with a Table child", () => {
+      const validUiSchema = [
         {
           type: "fieldList",
           label: "Test",
@@ -650,19 +650,9 @@ describe("validateFormData", () => {
         },
       ] as unknown as UiSchema;
 
-      const errors = validateUiSchema(invalidUiSchema);
+      const errors = validateUiSchema(validUiSchema);
 
-      expect(Array.isArray(errors)).toBe(true);
-
-      const hasFieldListTableError =
-        Array.isArray(errors) &&
-        errors.some((error) => {
-          const instancePath =
-            typeof error.instancePath === "string" ? error.instancePath : "";
-          return instancePath.startsWith("/0/children/0");
-        });
-
-      expect(hasFieldListTableError).toBe(true);
+      expect(errors).toBeFalsy();
     });
   });
 });
