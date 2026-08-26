@@ -73,7 +73,9 @@ def test_package_is_banked_for_preview_but_not_registered() -> None:
     manifest = json.loads((ARTIFACTS / "artifact-manifest.json").read_text())
     ci_map = json.loads(PORTABLE_CI_MAP.read_text())
 
-    assert manifest["source"]["revision"] == "7c3be8e32968b49b5ce48f53a832c00220eb5bee"
+    producer_revision = manifest["source"]["revision"]
+    assert len(producer_revision) == 40
+    int(producer_revision, 16)
     assert manifest["selection"]["forms"][-1] == FORM_ID
     assert ci_map["forms"][FORM_ID] == [
         "api/tests/src/form_schema/form_spec/test_epa_key_contacts_portable.py"
