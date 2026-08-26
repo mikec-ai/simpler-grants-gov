@@ -19,10 +19,15 @@ import TableCell from "./TableCell";
 
 function getJsonSchemaValuePath(
   definition: string | undefined,
+  rootDefinition?: string,
 ): string | undefined {
   if (!definition) return undefined;
 
-  const jsonPath = jsonSchemaPointerToPath(definition);
+  const relativeDefinition =
+    rootDefinition && definition.startsWith(`${rootDefinition}/properties/`)
+      ? definition.slice(rootDefinition.length)
+      : definition;
+  const jsonPath = jsonSchemaPointerToPath(relativeDefinition);
   return jsonPath.startsWith("$.") ? jsonPath.slice(2) : jsonPath;
 }
 
@@ -39,8 +44,9 @@ function isObjectRecord(value: unknown): value is Record<string, unknown> {
 function getRenderValue(
   definition: string | undefined,
   value: unknown,
+  rootDefinition?: string,
 ): string | number | undefined {
-  const valuePath = getJsonSchemaValuePath(definition);
+  const valuePath = getJsonSchemaValuePath(definition, rootDefinition);
 
   if (!valuePath || !isObjectRecord(value)) {
     return undefined;
@@ -81,12 +87,13 @@ function getMaxFormattedLength(
   rows: UiSchemaTableRow[],
   colIndex: number,
   value: unknown,
+  rootDefinition?: string,
 ): number {
   let maxLen = 0;
   rows.forEach((row) => {
     const cell = row.cells[colIndex];
     if (!cell || cell.type === "plainText") return;
-    const renderValue = getRenderValue(cell.definition, value);
+    const renderValue = getRenderValue(cell.definition, value, rootDefinition);
     const formatted = formatTableCellValue(renderValue, cell.format);
     if (formatted.length > maxLen) {
       maxLen = formatted.length;
@@ -107,12 +114,13 @@ function computePrintColumnWidths(
   columns: UiSchemaTableColumn[],
   rows: UiSchemaTableRow[],
   value: unknown,
+  rootDefinition?: string,
 ): number[] {
   const units = columns.map((_, colIndex) => {
     if (isPlainTextColumn(rows, colIndex)) {
       return PRINT_TEXT_COLUMN_UNIT;
     }
-    const maxLen = getMaxFormattedLength(rows, colIndex, value);
+    const maxLen = getMaxFormattedLength(rows, colIndex, value, rootDefinition);
     const buffer = Math.max(2, Math.ceil(maxLen * 0.15));
     return maxLen + buffer;
   });
@@ -199,11 +207,17 @@ function TableWidget({
   disabled,
   isFormLocked,
   label,
+  name,
   onChange,
   rawErrors = [],
   uiSchemaField,
   value,
 }: UswdsWidgetProps) {
+  const rootDefinition =
+    Array.isArray(uiSchemaField?.definition) &&
+    uiSchemaField.definition.length === 1
+      ? uiSchemaField.definition[0]
+      : undefined;
   /**
    * Handle changes to input cells and update the form value.
    * @param definition - JSON Schema property path for the cell
@@ -211,7 +225,7 @@ function TableWidget({
    */
   const handleCellChange = useCallback(
     (definition: string, nextValue: string) => {
-      const valuePath = getJsonSchemaValuePath(definition);
+      const valuePath = getJsonSchemaValuePath(definition, rootDefinition);
 
       if (!valuePath) {
         return;
@@ -223,7 +237,7 @@ function TableWidget({
 
       onChange?.(nextFormValue);
     },
-    [onChange, value],
+    [onChange, rootDefinition, value],
   );
   // ensure hooks are called unconditionally; default to empty arrays
   const columns: UiSchemaTableColumn[] =
@@ -235,8 +249,8 @@ function TableWidget({
 
   // Only used by the print stylesheet below — does not affect on-screen widths.
   const printColumnWidths = useMemo(
-    () => computePrintColumnWidths(columns, rows, value),
-    [columns, rows, value],
+    () => computePrintColumnWidths(columns, rows, value, rootDefinition),
+    [columns, rootDefinition, rows, value],
   );
 
   const cellChangeHandlers = useMemo(
@@ -290,6 +304,16 @@ function TableWidget({
     rowIndex?: number,
   ): string | undefined => {
     if (!cellDefinition) return undefined;
+
+    if (
+      typeof name === "string" &&
+      rootDefinition &&
+      cellDefinition.startsWith(`${rootDefinition}/properties/`)
+    ) {
+      const relativeDefinition = cellDefinition.slice(rootDefinition.length);
+      const childHtml = getFieldNameForHtml({ definition: relativeDefinition });
+      return childHtml ? `${name}--${childHtml}` : name;
+    }
 
     // Handle field-list child definitions: /properties/<list>/items/properties/<child>
     const listMatch = cellDefinition.match(
@@ -428,10 +452,9 @@ function TableWidget({
         </thead>
         <tbody>
           {rows.map((row, rowIndex) => {
-            const rowLabel =
-              row.cells[0]?.type === "plainText"
-                ? row.cells[0].staticContent
-                : undefined;
+            const rowContext = row.cells
+              .filter((cell) => cell.type === "plainText" && cell.staticContent)
+              .map((cell) => cell.staticContent);
 
             return (
               <tr key={`table-row-${rowIndex}`}>
@@ -455,7 +478,7 @@ function TableWidget({
                         name={buildCellName(cell.definition, rowIndex)}
                         ariaLabel={
                           cell.type === "input"
-                            ? [rowLabel, columns[cellIndex]?.columnHeader]
+                            ? [...rowContext, columns[cellIndex]?.columnHeader]
                                 .filter(Boolean)
                                 .join(", ")
                             : undefined
@@ -468,7 +491,11 @@ function TableWidget({
                         value={
                           cell.type === "plainText"
                             ? undefined
-                            : getRenderValue(cell.definition, value)
+                            : getRenderValue(
+                                cell.definition,
+                                value,
+                                rootDefinition,
+                              )
                         }
                       />
                     </td>

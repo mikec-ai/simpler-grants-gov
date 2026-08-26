@@ -345,6 +345,60 @@ describe("TableWidget", () => {
     });
   });
 
+  it("resolves full portable paths against a nested field-list table value", () => {
+    const root = "/properties/reports/items/properties/planned";
+    const onChange = jest.fn();
+    render(
+      <TableWidget
+        {...props}
+        name="reports[2]--planned"
+        onChange={onChange}
+        schema={{}}
+        rawErrors={[]}
+        value={{ notHispanic: { female: { asian: 10 } } }}
+        options={{}}
+        uiSchemaField={{
+          type: "multiField",
+          name: "planned",
+          widget: "Table",
+          definition: [root],
+          children: {
+            columns: [
+              { columnHeader: "Ethnicity" },
+              { columnHeader: "Sex" },
+              { columnHeader: "Asian" },
+            ],
+            rows: [
+              {
+                cells: [
+                  { type: "plainText", staticContent: "Not Hispanic" },
+                  { type: "plainText", staticContent: "Female" },
+                  {
+                    type: "input",
+                    definition: `${root}/properties/notHispanic/properties/female/properties/asian`,
+                  },
+                ],
+              },
+            ],
+          },
+        }}
+      />,
+    );
+
+    const input = screen.getByTestId("planned-0-2-input");
+    expect(input).toHaveValue("10");
+    expect(input).toHaveAttribute(
+      "name",
+      "reports[2]--planned--notHispanic--female--asian",
+    );
+    expect(input).toHaveAttribute("aria-label", "Not Hispanic, Female, Asian");
+
+    fireEvent.change(input, { target: { value: "25" } });
+    expect(onChange).toHaveBeenCalledWith({
+      notHispanic: { female: { asian: "25" } },
+    });
+  });
+
   it("throws when a row does not contain one cell for each configured column", async () => {
     const { children: tableChildren, ...tableUiSchema } = props.uiSchemaField;
 

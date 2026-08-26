@@ -563,9 +563,16 @@ const getFieldListConfig = ({
         throw new Error("fieldList child field must include a definition");
       }
 
-      if (Array.isArray(childNode.definition)) {
+      const childDefinition = Array.isArray(childNode.definition)
+        ? childNode.type === "multiField" &&
+          childNode.widget === "Table" &&
+          childNode.definition.length === 1
+          ? childNode.definition[0]
+          : undefined
+        : childNode.definition;
+      if (!childDefinition) {
         throw new Error(
-          "fieldList child field definition must be a single path",
+          "fieldList child field definition must resolve to a single path",
         );
       }
 
@@ -577,16 +584,12 @@ const getFieldListConfig = ({
         requiredField: false,
       });
 
-      if (childWidgetConfig.type === "Table") {
-        throw new Error("table inside fieldList is not supported");
-      }
-
       // Build once so the renderer can use the same path for id generation,
       // value lookup, and nested value updates.
       const storagePath = buildFieldListStoragePath({
         fieldListName: uiFieldObject.name,
         fieldListDefinition: uiFieldObject.definition,
-        childDefinition: childNode.definition,
+        childDefinition,
       });
 
       const baseId = buildFieldListBaseId({
@@ -608,7 +611,7 @@ const getFieldListConfig = ({
           baseId,
           storagePath,
           generalProps: nestedProps,
-          definition: childNode.definition,
+          definition: childDefinition,
           conditional: childNode.conditional,
         };
       }
@@ -633,7 +636,7 @@ const getFieldListConfig = ({
             title: childTitle,
           },
         },
-        definition: childNode.definition,
+        definition: childDefinition,
         conditional: childNode.conditional,
       };
     },
