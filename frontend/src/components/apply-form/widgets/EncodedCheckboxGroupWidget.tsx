@@ -116,6 +116,7 @@ export default function EncodedCheckboxGroupWidget<
   value,
   rawErrors = [],
   autofocus = false,
+  formContext,
   onChange = () => ({}),
   onBlur = () => ({}),
   onFocus = () => ({}),
@@ -124,6 +125,7 @@ export default function EncodedCheckboxGroupWidget<
   const externalValue = typeof value === "string" ? value : "";
   const [encodedValue, setEncodedValue] = useState(externalValue);
   const hiddenInputRef = useRef<HTMLInputElement>(null);
+  const syncFormData = formContext?.widgetSupport?.syncFormData;
   const externalValueRef = useRef(externalValue);
   useEffect(() => {
     if (externalValueRef.current === externalValue) return;
@@ -155,6 +157,10 @@ export default function EncodedCheckboxGroupWidget<
     if (hiddenInputRef.current) hiddenInputRef.current.value = nextValue;
     setEncodedValue(nextValue);
     onChange(nextValue);
+    // Apply forms derive conditional state from native FormData. Synchronize the
+    // encoded hidden value before the bubbling checkbox event can rerender this
+    // conditional subtree and remount the widget with its previous value.
+    syncFormData?.();
   };
 
   const canToggle = (code: string): boolean => {

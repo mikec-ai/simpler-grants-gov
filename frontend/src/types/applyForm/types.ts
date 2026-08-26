@@ -450,6 +450,7 @@ export interface UswdsWidgetProps<
         deletedEntryIndex: number,
       ) => void;
       markFormDirty?: () => void;
+      syncFormData?: () => void;
       attachmentsUploadingCounter?: AttachmentsUploadingCounter;
     };
   };
