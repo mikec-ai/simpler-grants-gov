@@ -1,6 +1,7 @@
 import { readFileSync } from "fs";
 import path from "path";
 import { fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { TableWidgetProps } from "src/types/applyForm/types";
 import { wrapForExpectedError } from "src/utils/testing/commonTestUtils";
 
@@ -55,6 +56,46 @@ describe("TableWidget", () => {
         ],
       },
     },
+  };
+
+  const nestedTableProps: TableWidgetProps = {
+    ...props,
+    name: "reports[2]--planned",
+    uiSchemaField: {
+      type: "multiField",
+      name: "planned",
+      widget: "Table",
+      definition: ["/properties/reports/items/properties/planned"],
+      children: {
+        columns: [
+          { columnHeader: "Ethnicity" },
+          { columnHeader: "Sex" },
+          { columnHeader: "Asian" },
+          { columnHeader: "White" },
+        ],
+        rows: [
+          {
+            cells: [
+              { type: "plainText", staticContent: "Not Hispanic" },
+              { type: "plainText", staticContent: "Female" },
+              {
+                type: "input",
+                definition:
+                  "/properties/reports/items/properties/planned/properties/notHispanic/properties/female/properties/asian",
+              },
+              {
+                type: "input",
+                definition:
+                  "/properties/reports/items/properties/planned/properties/notHispanic/properties/female/properties/white",
+              },
+            ],
+          },
+        ],
+      },
+    },
+  };
+  const nestedTableValue = {
+    notHispanic: { female: { asian: 10, white: 20 } },
   };
 
   it("applies the print-scoped table class used to force fixed table-layout in print", () => {
@@ -397,6 +438,75 @@ describe("TableWidget", () => {
     expect(onChange).toHaveBeenCalledWith({
       notHispanic: { female: { asian: "25" } },
     });
+  });
+
+  it("routes fully qualified repeat-entry validation errors to the nested table cell", () => {
+    render(
+      <TableWidget
+        {...nestedTableProps}
+        schema={{}}
+        value={nestedTableValue}
+        rawErrors={[
+          {
+            field: "reports[2]--planned--notHispanic--female--asian",
+            message: "Asian enrollment must be zero or greater",
+            type: "minimum",
+            value: "-1",
+          },
+        ]}
+        options={{}}
+      />,
+    );
+
+    const input = screen.getByTestId("planned-0-2-input");
+    expect(input).toHaveAttribute("aria-invalid", "true");
+    expect(
+      screen.getByText("Asian enrollment must be zero or greater"),
+    ).toBeInTheDocument();
+  });
+
+  it("renders nested table inputs as non-interactive values when the form is locked", () => {
+    render(
+      <TableWidget
+        {...nestedTableProps}
+        schema={{}}
+        value={nestedTableValue}
+        rawErrors={[]}
+        options={{}}
+        isFormLocked
+      />,
+    );
+
+    expect(screen.queryByTestId("planned-0-2-input")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("planned-0-3-input")).not.toBeInTheDocument();
+    expect(screen.getByTestId("planned-0-2-read-only")).toHaveTextContent("10");
+    expect(screen.getByTestId("planned-0-2-read-only")).toHaveAttribute(
+      "tabindex",
+      "-1",
+    );
+  });
+
+  it("keeps nested editable cells in row-major keyboard order", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <TableWidget
+        {...nestedTableProps}
+        schema={{}}
+        value={nestedTableValue}
+        rawErrors={[]}
+        options={{}}
+      />,
+    );
+
+    await user.tab();
+    expect(screen.getByTestId("scrollable-table-container")).toHaveFocus();
+
+    await user.tab();
+    expect(screen.getByTestId("planned-0-2-input")).toHaveFocus();
+
+    await user.tab();
+    expect(screen.getByTestId("planned-0-3-input")).toHaveFocus();
   });
 
   it("throws when a row does not contain one cell for each configured column", async () => {
