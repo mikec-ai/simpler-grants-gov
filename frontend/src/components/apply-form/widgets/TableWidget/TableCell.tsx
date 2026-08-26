@@ -30,10 +30,11 @@ type TableCellProps = {
 /**
  * TableCell renders a single cell in a table widget.
  *
- * Supports three types of cells:
+ * Supports four types of cells:
  * - `plainText`: Static text content, non-interactive
  * - `readOnly`: Formatted numeric value, non-interactive with distinctive styling
  * - `input`: Editable numeric input field, with decimal number validation
+ * - `select`: Editable choice constrained to the declared options
  *
  * When an input cell is disabled, it renders as a read-only formatted value
  * to prevent user interaction while displaying the current value clearly.
@@ -105,8 +106,16 @@ function TableCell({
   const hasError = cellErrors.length > 0;
   const inputId = name ?? id;
 
-  if (cell.type === "readOnly" || (cell.type === "input" && disabled)) {
-    const renderedValue = formatTableCellValue(value, cell.format);
+  if (
+    cell.type === "readOnly" ||
+    ((cell.type === "input" || cell.type === "select") && disabled)
+  ) {
+    const renderedValue =
+      cell.type === "select"
+        ? value === undefined || value === null
+          ? ""
+          : String(value)
+        : formatTableCellValue(value, cell.format);
 
     return (
       <>
@@ -147,6 +156,46 @@ function TableCell({
       onChange?.(nextValue);
     }
   };
+  const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const nextValue = event.target.value;
+    setInputValue(nextValue);
+    onChange?.(nextValue);
+  };
+
+  if (cell.type === "select") {
+    return (
+      <>
+        {hasError && (
+          <div
+            className="display-block width-full"
+            data-testid={`${id}-error-container`}
+          >
+            <FieldErrors fieldName={id} rawErrors={cellErrors} />
+          </div>
+        )}
+        <select
+          aria-label={ariaLabel ?? `Table choice for ${cell.definition}`}
+          aria-describedby={hasError ? `error-for-${id}` : undefined}
+          aria-invalid={hasError}
+          className={`usa-select margin-0 width-full applyform-table-cell-value${
+            hasError ? " usa-input--error" : ""
+          }`}
+          data-testid={`${id}-select`}
+          disabled={disabled}
+          id={inputId}
+          name={name}
+          onChange={handleSelectChange}
+          value={inputValue}
+        >
+          {cell.options.map((option) => (
+            <option key={String(option)} value={String(option)}>
+              {String(option)}
+            </option>
+          ))}
+        </select>
+      </>
+    );
+  }
   const inputWrapperClass =
     cell.format === "dollar"
       ? "simpler-currency-input-wrapper width-full display-block"

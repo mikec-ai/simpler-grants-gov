@@ -129,6 +129,46 @@ describe("TableWidget", () => {
     });
   });
 
+  it("updates the table widget value when a select cell changes", () => {
+    const onChange = jest.fn();
+    const selectProps: TableWidgetProps = {
+      ...props,
+      uiSchemaField: {
+        ...props.uiSchemaField,
+        children: {
+          columns: [{ columnHeader: "Direct cost" }],
+          rows: [
+            {
+              cells: [
+                {
+                  type: "select",
+                  definition: "/properties/direct_cost",
+                  options: ["0.00", "25000.00"],
+                },
+              ],
+            },
+          ],
+        },
+      },
+    };
+
+    render(
+      <TableWidget
+        {...selectProps}
+        onChange={onChange}
+        schema={{}}
+        rawErrors={[]}
+        value={{ direct_cost: "0.00" }}
+        options={{}}
+      />,
+    );
+
+    fireEvent.change(screen.getByTestId("summary_table_test-0-0-select"), {
+      target: { value: "25000.00" },
+    });
+    expect(onChange).toHaveBeenCalledWith({ direct_cost: "25000.00" });
+  });
+
   it("uses the HTML field name as the editable input id for summary anchors", () => {
     const tableProps: TableWidgetProps = {
       ...props,

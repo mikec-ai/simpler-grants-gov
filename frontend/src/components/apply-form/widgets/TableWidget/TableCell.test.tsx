@@ -56,6 +56,51 @@ describe("TableCell", () => {
     expect(input).toHaveValue("1250.5");
   });
 
+  it("renders a select constrained to the portable cell options", async () => {
+    const onChange = jest.fn();
+    const user = userEvent.setup();
+
+    render(
+      <TableCell
+        cell={{
+          type: "select",
+          definition: "/properties/direct_cost",
+          options: ["0.00", "25000.00", "50000.00"],
+        }}
+        id="direct-cost-cell"
+        value="0.00"
+        onChange={onChange}
+      />,
+    );
+
+    const select = screen.getByTestId("direct-cost-cell-select");
+    expect(select).toHaveValue("0.00");
+    expect(screen.getAllByRole("option")).toHaveLength(3);
+
+    await user.selectOptions(select, "25000.00");
+    expect(onChange).toHaveBeenCalledWith("25000.00");
+  });
+
+  it("renders a disabled select as a non-interactive value", () => {
+    render(
+      <TableCell
+        cell={{
+          type: "select",
+          definition: "/properties/direct_cost",
+          options: ["0.00", "25000.00"],
+        }}
+        disabled
+        id="direct-cost-cell"
+        value="25000.00"
+      />,
+    );
+
+    expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
+    expect(screen.getByTestId("direct-cost-cell-read-only")).toHaveTextContent(
+      "25000.00",
+    );
+  });
+
   it("renders a dollar-formatted input with a visible currency prefix wrapper", () => {
     render(
       <TableCell

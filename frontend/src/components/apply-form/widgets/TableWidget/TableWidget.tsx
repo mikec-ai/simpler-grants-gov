@@ -144,6 +144,7 @@ function computePrintColumnWidths(
  * with the following cell types:
  * - `plainText`: Static text content (category names, labels, etc.)
  * - `input`: Editable numeric input fields for form data
+ * - `select`: Editable choices constrained by the portable contract
  * - `readOnly`: Calculated/computed values that cannot be edited
  *
  * Features:
@@ -258,7 +259,10 @@ function TableWidget({
       rows.reduce(
         (handlers, row) => {
           row.cells.forEach((cell) => {
-            if (cell.type === "input" && cell.definition) {
+            if (
+              (cell.type === "input" || cell.type === "select") &&
+              cell.definition
+            ) {
               handlers[cell.definition] = (nextValue: string) =>
                 handleCellChange(cell.definition, nextValue);
             }
@@ -472,19 +476,22 @@ function TableWidget({
                           buildCellName(cell.definition, rowIndex),
                         )}
                         disabled={
-                          cell.type === "input" ? isInteractionDisabled : false
+                          cell.type === "input" || cell.type === "select"
+                            ? isInteractionDisabled
+                            : false
                         }
                         id={cellId}
                         name={buildCellName(cell.definition, rowIndex)}
                         ariaLabel={
-                          cell.type === "input"
+                          cell.type === "input" || cell.type === "select"
                             ? [...rowContext, columns[cellIndex]?.columnHeader]
                                 .filter(Boolean)
                                 .join(", ")
                             : undefined
                         }
                         onChange={
-                          cell.type === "input" && cell.definition
+                          (cell.type === "input" || cell.type === "select") &&
+                          cell.definition
                             ? cellChangeHandlers[cell.definition]
                             : undefined
                         }

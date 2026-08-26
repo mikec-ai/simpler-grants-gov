@@ -463,7 +463,7 @@ export const UiJsonSchema: RJSFSchema = {
       properties: {
         type: {
           type: "string",
-          enum: ["input", "readOnly", "plainText"],
+          enum: ["input", "select", "readOnly", "plainText"],
         },
         definition: {
           type: "string",
@@ -476,9 +476,39 @@ export const UiJsonSchema: RJSFSchema = {
           type: "string",
           enum: ["integer", "decimal", "currency", "dollar", "percentage"],
         },
+        options: {
+          type: "array",
+          minItems: 1,
+          uniqueItems: true,
+          items: {
+            type: ["string", "number"],
+          },
+        },
       },
       required: ["type"],
       allOf: [
+        {
+          if: {
+            properties: {
+              type: {
+                const: "select",
+              },
+            },
+          },
+          then: {
+            required: ["definition", "options"],
+            not: {
+              anyOf: [
+                {
+                  required: ["staticContent"],
+                },
+                {
+                  required: ["format"],
+                },
+              ],
+            },
+          },
+        },
         {
           if: {
             properties: {
