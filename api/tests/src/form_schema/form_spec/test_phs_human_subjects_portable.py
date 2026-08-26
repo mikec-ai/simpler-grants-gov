@@ -451,10 +451,7 @@ def test_human_subjects_loads_complete_portable_inventory() -> None:
     assert reusable_lists["studies"]["conditional"] == expected_human_subjects_gate
     assert reusable_lists["delayed_onset_studies"]["label"] == "Delayed Onset Study"
     assert reusable_lists["delayed_onset_studies"]["conditional"] == expected_human_subjects_gate
-    assert (
-        reusable_lists["inclusion_enrollment_reports"]["label"]
-        == "Inclusion Enrollment Report"
-    )
+    assert reusable_lists["inclusion_enrollment_reports"]["label"] == "Inclusion Enrollment Report"
     assert projected.form_rule_schema is not None
     assert projected.json_to_xml_schema is not None
 
