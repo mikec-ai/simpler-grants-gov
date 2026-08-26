@@ -239,7 +239,8 @@ type FieldListTableGroupItem = {
 export type FieldListGroupItem =
   FieldListLeafGroupItem | NestedFieldListGroupItem | FieldListTableGroupItem;
 
-export type UiSchemaTableCellType = "input" | "readOnly" | "plainText";
+export type UiSchemaTableCellType =
+  "input" | "select" | "readOnly" | "plainText";
 
 export type UiSchemaTableNumberFormat =
   "integer" | "decimal" | "currency" | "dollar" | "percentage";
@@ -266,6 +267,13 @@ export type TableWidgetCellConfig =
        * while read-only cells use this value for display formatting.
        */
       format?: UiSchemaTableNumberFormat;
+      staticContent?: undefined;
+    }
+  | {
+      type: "select";
+      definition: PropertyPath;
+      options: Array<string | number>;
+      format?: undefined;
       staticContent?: undefined;
     }
   | {

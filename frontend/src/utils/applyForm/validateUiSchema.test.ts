@@ -299,6 +299,68 @@ describe("validateFormData", () => {
       expect(schemaErrors).toBeFalsy();
     });
 
+    it("should validate a Table select cell with declared options", () => {
+      const validUiSchema = [
+        {
+          type: "multiField",
+          name: "modular_budget_table",
+          widget: "Table",
+          definition: ["/properties/direct_cost"],
+          children: {
+            columns: [{ columnHeader: "Direct cost" }],
+            rows: [
+              {
+                cells: [
+                  {
+                    type: "select",
+                    definition: "/properties/direct_cost",
+                    options: ["0.00", "25000.00"],
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ] as UiSchema;
+
+      expect(validateUiSchema(validUiSchema)).toBeFalsy();
+    });
+
+    it("should invalidate a Table select cell without options", () => {
+      const invalidUiSchema = [
+        {
+          type: "multiField",
+          name: "modular_budget_table",
+          widget: "Table",
+          definition: ["/properties/direct_cost"],
+          children: {
+            columns: [{ columnHeader: "Direct cost" }],
+            rows: [
+              {
+                cells: [
+                  {
+                    type: "select",
+                    definition: "/properties/direct_cost",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ] as unknown as UiSchema;
+
+      const schemaErrors = validateUiSchema(invalidUiSchema);
+      expect(Array.isArray(schemaErrors)).toBe(true);
+      expect(
+        Array.isArray(schemaErrors) &&
+          schemaErrors.some(
+            (error) =>
+              error.instancePath === "/0/children/rows/0/cells/0" &&
+              error.message === "must have required property 'options'",
+          ),
+      ).toBe(true);
+    });
+
     it("should invalidate a Table cell with an unsupported numeric format", () => {
       const invalidUiSchema = [
         {
