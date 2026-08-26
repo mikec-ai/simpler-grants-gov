@@ -67,6 +67,7 @@ interface WidgetSupport {
     deletedEntryIndex: number,
   ) => void;
   markFormDirty?: () => void;
+  syncFormData?: () => void;
   attachmentsUploadingCounter?: AttachmentsUploadingCounter;
 }
 
@@ -211,6 +212,12 @@ const ApplyForm = ({
     setFormChanged(true);
   };
 
+  const syncFormData = useCallback((): void => {
+    if (formRef.current) {
+      recalculateFromForm(formRef.current);
+    }
+  }, [recalculateFromForm]);
+
   const handleFieldListEntryDelete = (
     fieldListPath: string,
     deletedEntryIndex: number,
@@ -301,6 +308,7 @@ const ApplyForm = ({
         deletedEntryIndexesByFieldListPath,
         onFieldListEntryDelete: handleFieldListEntryDelete,
         markFormDirty: handleFormEdited,
+        syncFormData,
         attachmentsUploadingCounter,
       },
     }),
@@ -311,6 +319,7 @@ const ApplyForm = ({
       formSchema,
       attachmentsUploadingCounter,
       conditionalRequiredEvaluation.activeRequiredPaths,
+      syncFormData,
     ],
   );
 

@@ -73,6 +73,35 @@ describe("EncodedCheckboxGroupWidget", () => {
     expect(props.onChange).toHaveBeenCalledWith("AC");
   });
 
+  it("synchronizes a first selection before a conditional form rerender", async () => {
+    const user = userEvent.setup();
+    const syncFormData = jest.fn();
+
+    render(
+      <form data-testid="revision-form">
+        <EncodedCheckboxGroupWidget
+          {...props}
+          value={undefined}
+          formContext={{ widgetSupport: { syncFormData } }}
+        />
+      </form>,
+    );
+
+    await user.click(
+      screen.getByRole("checkbox", { name: "A. Increase Award" }),
+    );
+
+    expect(syncFormData).toHaveBeenCalledTimes(1);
+    expect(
+      screen.getByRole("checkbox", { name: "A. Increase Award" }),
+    ).toBeChecked();
+    expect([
+      ...new FormData(
+        screen.getByTestId<HTMLFormElement>("revision-form"),
+      ).entries(),
+    ]).toEqual([["application_type--revision_code", "A"]]);
+  });
+
   it("fails closed when the contract does not match the schema enum", () => {
     expect(() =>
       render(
