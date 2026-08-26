@@ -331,6 +331,79 @@ describe("ApplyForm", () => {
     );
   });
 
+  it("preserves an encoded checkbox selection across conditional rerenders", async () => {
+    const user = userEvent.setup();
+    const revisionCodeSchema = {
+      type: "string",
+      title: "Revision type",
+      enum: ["A", "C", "AC"],
+      "x-encoded-checkbox-group": {
+        choices: [
+          { code: "A", label: "A. Increase Award" },
+          { code: "C", label: "C. Increase Duration" },
+        ],
+        combinations: [
+          { value: "A", members: ["A"] },
+          { value: "C", members: ["C"] },
+          { value: "AC", members: ["A", "C"] },
+        ],
+      },
+    } as RJSFSchema;
+    const encodedSchema: RJSFSchema = {
+      type: "object",
+      properties: {
+        applicationType: {
+          type: "string",
+          title: "Application type",
+          enum: ["New", "Revision"],
+        },
+        revisionCode: revisionCodeSchema,
+      },
+    };
+    const encodedUiSchema: UiSchema = [
+      { type: "field", definition: "/properties/applicationType" },
+      {
+        type: "field",
+        definition: "/properties/revisionCode",
+        widget: "EncodedCheckboxGroup",
+        conditional: {
+          when: {
+            op: "equals",
+            ref: { scope: "root", pointer: "/applicationType" },
+            value: "Revision",
+          },
+          then: { visible: true },
+          otherwise: { visible: false },
+        },
+      },
+    ];
+
+    const { container } = render(
+      <ApplyForm
+        applicationId="application-123"
+        formId="encoded-form"
+        formSchema={encodedSchema}
+        savedFormData={{}}
+        uiSchema={encodedUiSchema}
+        validationWarnings={null}
+        attachments={[]}
+        applicationStatus="in_progress"
+      />,
+    );
+
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: "Application type" }),
+      "Revision",
+    );
+    const increaseAward = await screen.findByRole("checkbox", {
+      name: "A. Increase Award",
+    });
+    await user.click(increaseAward);
+
+    await waitFor(() => expect(increaseAward).toBeChecked());
+    expect(getHiddenInput(container, "revisionCode")).toHaveValue("A");
+  });
+
   it("cannot be edited or saved when application is submitted", () => {
     render(
       <ApplyForm
