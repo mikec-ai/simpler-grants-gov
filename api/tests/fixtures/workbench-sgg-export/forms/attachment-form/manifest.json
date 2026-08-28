@@ -1,0 +1,17 @@
+{
+  "contract": "resolved-form-package/v1",
+  "form": {
+    "id": "attachment-form",
+    "formName": "Attachment Form",
+    "shortFormName": "AttachmentForm_1_2",
+    "formVersion": "1.2",
+    "legacyFormId": 540,
+    "agencyCode": "SGG"
+  },
+  "artifacts": {
+    "schema.json": "generated",
+    "sgg/ui-schema.json": "generated",
+    "sgg/rule-schema.json": "generated",
+    "sgg/authoring-receipt.json": "passthrough"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "contract": "portable-form-sgg-adapter-receipt/v1",
+  "adapter": {
+    "id": "@grants-form-workbench/adapter-sgg",
+    "version": "0.1.0"
+  },
+  "input": {
+    "contract": "resolved-form-package/v1",
+    "formId": "attachment-form",
+    "formVersion": "1.2",
+    "packageSha256": "3ca7a0400faed57aa539fbea8995cffc5a733aa8abaa68d3e2863565deb86b20",
+    "source": {
+      "repository": "https://github.com/mikec-ai/grants-form-spec.git",
+      "revision": "a97da3714733566847349efcc013c6a79045b21b",
+      "path": "specs/forms/attachment-form.tsp",
+      "sha256": "3d0a4bf5c43b602f7f899ceb5136865f7276ce098ed7bb7edc0c84147e7c55f9",
+      "derivation": "generated",
+      "dependencyCoverage": "declared-source-only"
+    }
+  },
+  "output": {
+    "schemaSha256": "7ab882c4c9fcf2772918216ac9f5a64d82d7c2f7bc9483dc4ef3018eec100a05",
+    "uiSchemaSha256": "170f73be1e8d097d8f337a7b23ee30ec15bc8ed144d0d5ee500875f60fa8ecea",
+    "ruleSchemaSha256": "7a4025d2d3ae6edc2a5da1fa04776223bdadfbadba8841588a550d8cc0b13816"
+  },
+  "semanticReview": {
+    "accepted": 0,
+    "proposed": 0,
+    "rejected": 0,
+    "unreviewed": 15
+  }
+}
