@@ -9,7 +9,6 @@ from typing import Any
 
 from src.form_schema.form_spec.loader import _load_banked_form
 
-
 EXPORTED_ARTIFACTS = Path(__file__).parents[3] / "fixtures" / "workbench-sgg-export"
 FORM_ROOT = EXPORTED_ARTIFACTS / "forms" / "attachment-form"
 
