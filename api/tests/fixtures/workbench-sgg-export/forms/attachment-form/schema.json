@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "attachment-form/schema.json",
+  "type": "object",
+  "properties": {
+    "att1": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "First attachment file",
+      "title": "Attachment 1"
+    },
+    "att2": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Second attachment file",
+      "title": "Attachment 2"
+    },
+    "att3": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Third attachment file",
+      "title": "Attachment 3"
+    },
+    "att4": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Fourth attachment file",
+      "title": "Attachment 4"
+    },
+    "att5": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Fifth attachment file",
+      "title": "Attachment 5"
+    },
+    "att6": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Sixth attachment file",
+      "title": "Attachment 6"
+    },
+    "att7": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Seventh attachment file",
+      "title": "Attachment 7"
+    },
+    "att8": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Eighth attachment file",
+      "title": "Attachment 8"
+    },
+    "att9": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Ninth attachment file",
+      "title": "Attachment 9"
+    },
+    "att10": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Tenth attachment file",
+      "title": "Attachment 10"
+    },
+    "att11": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Eleventh attachment file",
+      "title": "Attachment 11"
+    },
+    "att12": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Twelfth attachment file",
+      "title": "Attachment 12"
+    },
+    "att13": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Thirteenth attachment file",
+      "title": "Attachment 13"
+    },
+    "att14": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Fourteenth attachment file",
+      "title": "Attachment 14"
+    },
+    "att15": {
+      "$ref": "../../question-bank/generics/ordered-attachment-slot/schema.json",
+      "description": "Fifteenth attachment file",
+      "title": "Attachment 15"
+    }
+  },
+  "description": "Attachment Form, Grants.gov FID 540, version 1.2."
+}
